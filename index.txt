@@ -1,0 +1,126 @@
+Overview
+.... What is Redox?
+.... The structure
+.... Side-projects
+
+Introduction
+.... What is Redox?
+........ Goals of Redox
+............ Non-gaols
+.... Why Redox?
+.... Why Rust?
+.... Why MIT?
+.... How Redox compares to other operating systems
+
+Getting started
+.... Cloning Redox
+.... Compiling Redox
+.... Using Redox
+
+Design
+.... URLs, schemes and resources
+........ Overview
+........ URLs
+........ Schemes
+........ Resources
+............ Socket-like
+............ File-like
+........ "Everything is an URL"
+............ vs "Everything is a file"
+........ How it works under the hood
+.... The kernel
+........ Syscalls
+............ Linux compatibility
+........ Scheduling
+........ Memory management
+........ Drivers
+.... Trade-offs
+........ Safety and performance
+........ Simplicity and expressiveness
+.... Coreutils
+........ Fail, fail, and fail
+........ Simplicty and minimalism
+........ Supplement utilities
+............ Binutils
+............ Extrautils
+.... ZFS
+........ What ZFS is
+........ The Uberblock
+........ RAID
+........ The VDev tree
+.... Orbital
+........ What Orbital is
+........ Orbclient
+........ Opening a window
+........ Extras
+............ OrbTK
+............ Orbutils
+.... Ion
+........ What Ion is
+........ The design of Ion
+........ The syntax
+........ How it differs from Bash
+.... Oxide
+........ Decentral
+........ Cryptography
+........ The indexes
+........ The repositories
+........ The trusted parties
+.... Sodium
+........ What it is
+........ Understanding the design
+........ Using Sodium efficiently
+
+Development in userspace
+.... What userspace is
+.... Writing an application for Redox
+........ Platform independence
+............ What is available and what is not
+........ Using schemes
+........ Using Orbital
+........ Compiling your program
+........ An full example
+.... Porting a program
+........ Remove dependencies
+........ Cross-compiling
+
+Contributing
+.... Communication
+........ Chat
+.... Direct contributions
+........ Low hanging fruit
+........ Github issues
+............ How to do a bug report correctly
+........ Pull requests
+............ How to do a pull request properly
+.... Indirect contributions
+........ Community
+........ Porting your programs to Redox
+.... Best practices and guidelines
+........ Documentation
+............ Literal programming
+............ Writing docs correcty (TM)
+............ Marking code
+................ XXX
+................ TODO
+................ FIXME
+........ Style
+........ Rusting properly
+............ Writing fast Rust
+............ Avoiding heap allocations
+............ Exiting a program
+............ Avoiding panics in the kernel
+........ Tests
+............ Tests in the kernel
+........ Logging and assertions
+........ Git
+
+Fun
+.... Running Redox on real hardware
+.... Setting up a Redox desktop
+.... Customizing Redox
+
+The future
+.... What is done and what is not
+.... Goals
+.... Redox's target
