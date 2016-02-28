@@ -9,6 +9,7 @@ Introduction
 ............ Non-gaols
 .... Why Redox?
 .... Why Rust?
+........ Heartbleed: A case study
 .... Why MIT?
 .... How Redox compares to other operating systems
 
