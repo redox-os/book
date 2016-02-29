@@ -24,6 +24,7 @@ The design
 .... URLs, schemes and resources
 ........ Overview
 ........ URLs
+............ Ain't they slow?
 ........ Schemes
 ........ Resources
 ............ Socket-like
