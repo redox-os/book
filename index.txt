@@ -118,6 +118,11 @@ Contributing
 ........ Logging and assertions
 ........ Git
 
+Understanding the codebase
+.... Kernel
+........ Environment
+todo
+
 Fun
 .... Running Redox on real hardware
 .... Setting up a Redox desktop
