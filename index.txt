@@ -1,7 +1,8 @@
 Overview
-.... What is Redox?
+.... What Redox is
 .... The structure
 .... Side-projects
+.... Developers
 
 Introduction
 .... What is Redox?
@@ -18,7 +19,7 @@ Getting started
 .... Compiling Redox
 .... Using Redox
 
-Design
+The design
 .... URLs, schemes and resources
 ........ Overview
 ........ URLs
