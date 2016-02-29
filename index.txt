@@ -7,10 +7,11 @@ Overview
 Introduction
 .... What is Redox?
 ........ Goals of Redox
-............ Non-gaols
+............ Non-goals
 .... Why Redox?
 .... Why Rust?
 ........ Heartbleed: A case study
+........ Unsafes
 .... Why MIT?
 .... How Redox compares to other operating systems
 
