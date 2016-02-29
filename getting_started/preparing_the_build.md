@@ -26,7 +26,7 @@ While the following step is not _required_, it is recommended. If you already go
 We will use `multirust` to manage our Rust versions:
 
 ```
-$ curl -sf https://raw.githubusercontent.com/brson/multirust/master/blastoff.sh | sh
+$ curl -sf https://raw.githubusercontent.com/brson/multirust/master/quick-install.sh | sh
 ```
 
 Now, we have to configurate our multirust installation to default to `nightly`:
