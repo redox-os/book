@@ -41,3 +41,8 @@ $ make qemu kvm=no # we disable KVM
 ```
 
 If this doesn't work either, you should go open an issue.
+
+Note
+----
+
+If you encounter any bugs, errors, obstructions, or other annoying things, please report the issue to the Redox repository. Thanks!
