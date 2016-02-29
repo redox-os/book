@@ -18,7 +18,7 @@ Introduction
 Getting started
 .... Cloning Redox
 .... Compiling Redox
-.... Using Redox
+.... Exploring Redox
 
 The design
 .... URLs, schemes and resources
