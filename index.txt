@@ -20,18 +20,24 @@ Getting started
 .... Cloning Redox
 .... Compiling Redox
 .... Exploring Redox
+.... Questions and feedback
 
 The design
 .... URLs, schemes and resources
 ........ Overview
 ........ URLs
-............ Ain't they slow?
+............ Aren't they weakly typed?
+............ Aren't they confusing?
+............ How it works under the hood.
 ........ Schemes
+............ Writing your own scheme
+............ Using schemes efficiently
 ........ Resources
 ............ Socket-like
 ............ File-like
-........ "Everything is an URL"
-............ vs "Everything is a file"
+........ Stitching it all together
+............ "Everything is an URL"
+................ vs "Everything is a file"
 ........ How it works under the hood
 .... The kernel
 ........ Syscalls
