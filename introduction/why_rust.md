@@ -15,7 +15,7 @@ Design do matter, but so does implementation. Avoiding these unexpected memory u
 
 The basic design of the kernel/userspace separation is fairly similar to genuine \*nix systems, at this point. The idea is roughly the same: you seperate kernel and userspace, through strict enforcement by the kernel, which is managing memory and other critical resources.
 
-However, we got an advantage: by having enforced memory and type safety. This is Rust's strong side, the vast majority of "unexpected bugs" (for example, undefined behavior)" are eliminated.
+However, we got an advantage: by having enforced memory and type safety. This is Rust's strong side, the vast majority of "unexpected bugs" (for example, undefined behavior) are eliminated.
 
 The design of Linux or BSD is secure. The implementation is not:
 

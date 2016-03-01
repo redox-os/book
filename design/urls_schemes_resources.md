@@ -3,4 +3,24 @@ URLs, schemes, and resources
 
 This one of the most important design choices Redox makes. These three essential concepts are very entangled.
 
+What does "Everything is an URL" mean?
+--------------------------------------
+
+"Everything is an URL" is a generalization of "Everything is a file", allowing broader use of this unified interface for schemes.
+
+These can be used for effectively modulating the system in a "non-patchworky" manner.
+
+The term is rather misleading, since URL is just the identifier of a scheme and a resource descriptor. So in that sense "Everything is a resource, identified by an URL" is more accurate, but not very catchy.
+
+So, how does it differ from files?
+----------------------------------
+
+You can think of URLs and segregated virtual file systems, which can be arbitrarily structured (they do not have to be tree-like) and arbitrarily defined by a program. Furthermore, they don't have to behave file-like! More on this later.
+
+It opens up a lot of possibilities.
+
+The idea of virtual file systems is not a new one. If you are on a Linux computer, you should try to `cd` to `/proc`, and see what's going on there.
+
+Redox extends this concept to a much more powerful one.
+
 TODO
