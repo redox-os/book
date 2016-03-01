@@ -14,7 +14,7 @@ All these have numerous short-fallings, vulnerability, and bad design choices. R
 
 Take Linux for example:
 
-- Legacy until infinity: Old syscalls stay around forever, drivers for long-unbuyable hardware stay as in the kernel as a mandatory part.
+- Legacy until infinity: Old syscalls stay around forever, drivers for long-unbuyable hardware stay as in the kernel as a mandatory part. While they can be disabled, running them in kernel space is essentially unnecessary, and is one of the biggest sources of system crashes, security issues, and unexpected bugs.
 - Huge codebase: To contribute, you must find a place to fit in to nearly _25 million lines of code_, in just the kernel. This is due to Linux's monolithic architecture.
 - Restrictive license: Linux is licensed under GPL2. More on this in `Why MIT?`.
 - Lack of memory safety: Linux have had numerous issues with memory safety throughout time. C is a fine language, but for such a security critical system, C isn't fit.
