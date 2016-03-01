@@ -38,6 +38,7 @@ The design
 ........ Stitching it all together
 ............ "Everything is an URL"
 ................ vs "Everything is a file"
+............ An example
 ........ How it works under the hood
 .... The kernel
 ........ Syscalls
