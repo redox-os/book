@@ -9,4 +9,4 @@ We take inspiration from Plan9, Minix, and BSD. We are trying to generalize vari
 
 Redox runs on real hardware today.
 
-TODO: Make this better.
+> TODO: Make this better.

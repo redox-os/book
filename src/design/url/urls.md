@@ -41,6 +41,6 @@ fn main() {
 }
 ```
 
-TODO: Maybe do something with the tcp stream. Ping-pong?
+> TODO: Maybe do something with the tcp stream. Ping-pong?
 
-TODO: The terminology may be somewhat confusing for the reader.
+> TODO: The terminology may be somewhat confusing for the reader.

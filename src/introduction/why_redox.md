@@ -23,4 +23,4 @@ Compared to BSD, Linux is completely frontal-lope-missing, in every imaginable w
 
 It is no secret that we're more in favor of BSD, than Linux (although most of us are still Linux users, for various reasons). But BSD isn't quite there yet: most importantly, **it has a monolithic kernel, written in C**.
 
-TODO: Rewrite this 
+> TODO: Rewrite this 

@@ -15,7 +15,7 @@ A resource can be defined as a data type with following methods defined on it:
 3. `seek` - seek the resource, that is move the "cursor" without writing. Many resources do not support this operation. Defaults to `EBADF`.
 4. `close` - close the resource, potentially releasing a lock. Defaults to `EBADF`.
 
-TODO add F-operations
+> TODO add F-operations
 
 The resource type
 -----------------
