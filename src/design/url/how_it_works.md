@@ -1,4 +1,4 @@
-How URLs works under the hood?
+How do URLs work under the hood?
 ==============================
 
 The representation
