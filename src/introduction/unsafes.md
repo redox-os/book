@@ -7,6 +7,6 @@ In that light, a kernel cannot be 100% safe, however the unsafe parts have to be
 
 A quick grep gives us some stats: The kernel has 16.52% unsafe code, a 50% improvement in the last three weeks. Userspace has roughly ~0.2%.
 
-In contrary to Linux, which has a code base with 100% unsafe code, due to the nature of C.
+In constrast to Linux, which has a code base with 100% unsafe code, due to the nature of C.
 
 > TODO: Expand

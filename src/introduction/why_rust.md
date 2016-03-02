@@ -7,15 +7,15 @@ Why write an operating system in Rust? Why even write in Rust?
 
 Rust has enormous advantages, because for operating systems _safety matters_. A lot, actually.
 
-Since operating systems are such an integrated part of computing, it is a very security critical component.
+Since operating systems are such an integrated part of computing, they are a very security critical component.
 
-There have been numerous bugs and vulnerability in Linux, BSD, Glibc, Bash, X, etc. throughout the time, simply due to the lack of memory and type safety. Rust does this right, by enforcing safety statically.
+There have been numerous bugs and vulnerabilities in Linux, BSD, Glibc, Bash, X, etc. throughout time, simply due to the lack of memory and type safety. Rust does this right, by enforcing safety statically.
 
 Design does matter, but so does implementation. Avoiding these unexpected memory unsafe conditions (which are, by far, the biggest source of security critical bugs, since they're, by nature, unexpected). Design is a very transparent source of issues. You know what is going on, you know what was intended and what was not.
 
 The basic design of the kernel/userspace separation is fairly similar to genuine \*nix systems, at this point. The idea is roughly the same: you seperate kernel and userspace, through strict enforcement by the kernel, which is managing memory and other critical resources.
 
-However, we got an advantage: by having enforced memory and type safety. This is Rust's strong side, the vast majority of "unexpected bugs" (for example, undefined behavior) are eliminated.
+However, we have an advantage: enforced memory and type safety. This is Rust's strong side, the vast majority of "unexpected bugs" (for example, undefined behavior) are eliminated.
 
 The design of Linux or BSD is secure. The implementation is not:
 
