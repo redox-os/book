@@ -10,10 +10,10 @@ The syscall interface is very Unix-y. For example, we have `open`, `pipe`, `pipe
 
 Compared to Linux, our syscall interface is much more minimal. This is not because of the stage in development. This is a matter of design. Linux has a lot unnecessary, bloated syscalls (try to run `man syscalls`, and an almost infinite list appears).
 
-"Everything is an URL"
+"Everything is a URL"
 ----------------------
 
-This is an generalization of "Everything is an file", largely inspired by Plan 9. In Redox, "resources" (will be explained later) can be both socket-like and file-like, making them fast enough for using them for virtually everything.
+This is an generalization of "Everything is a file", largely inspired by Plan 9. In Redox, "resources" (will be explained later) can be both socket-like and file-like, making them fast enough for using them for virtually everything.
 
 This way we get a more unified system API.
 
