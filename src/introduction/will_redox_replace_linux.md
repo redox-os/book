@@ -1,4 +1,4 @@
-What Redox replace Linux?
+Will Redox replace Linux?
 =========================
 
 No.
