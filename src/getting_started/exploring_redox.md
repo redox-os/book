@@ -36,7 +36,7 @@ $ cd apps/rusthello
 $ ./main.bin
 ```
 
-The you get prompted various things, such as difficulty, AI setup, and so on. When this is done, Rusthello interactively starts the battle between you and an AI or an AI and an AI.
+Then you will get prompted for various things, such as difficulty, AI setup, and so on. When this is done, Rusthello interactively starts the battle between you and an AI or an AI and an AI.
 
 Exploring OrbTK
 ---------------
