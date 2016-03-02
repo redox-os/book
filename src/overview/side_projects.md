@@ -3,7 +3,7 @@ Side projects
 
 You might have noticed that Redox is more than a kernel. Redox is a complete Rust operating system.
 
-We have a number of Rust side project, which are developed for Redox, to make up a complete, functional OS:
+We have a number of Rust side projects, which are developed for Redox, to make up a complete, functional OS:
 
 - Orbital: The display server of Redox.
 - OrbTK: A widget toolkit.
