@@ -3,14 +3,14 @@ URLs, schemes, and resources
 
 This one of the most important design choices Redox makes. These three essential concepts are very entangled.
 
-What does "Everything is an URL" mean?
+What does "Everything is a URL" mean?
 --------------------------------------
 
-"Everything is an URL" is a generalization of "Everything is a file", allowing broader use of this unified interface for schemes.
+"Everything is a URL" is a generalization of "Everything is a file", allowing broader use of this unified interface for schemes.
 
 These can be used for effectively modulating the system in a "non-patchworky" manner.
 
-The term is rather misleading, since URL is just the identifier of a scheme and a resource descriptor. So in that sense "Everything is a scheme, identified by an URL" is more accurate, but not very catchy.
+The term is rather misleading, since a URL is just the identifier of a scheme and a resource descriptor. So in that sense "Everything is a scheme, identified by an URL" is more accurate, but not very catchy.
 
 So, how does it differ from files?
 ----------------------------------
