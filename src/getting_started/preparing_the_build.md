@@ -5,7 +5,7 @@ Woah! You made it so far, all the way to here. Congrats! Now we gotta build Redo
 
 _If you're lazy, and on an Linux computer. Well, you're today's winner! Just run the bootstrapping script, which does the build preparation for you:_
 
-```
+```sh
 $ curl -sf https://raw.githubusercontent.com/redox-os/redox/master/bootstrap.sh -o bootstrap.sh && bash -e bootstrap.sh
 ```
 
@@ -25,12 +25,12 @@ While the following step is not _required_, it is recommended. If you already ha
 
 We will use `multirust` to manage our Rust versions:
 
-```
+```sh
 $ curl -sf https://raw.githubusercontent.com/brson/multirust/master/quick-install.sh | sh
 ```
 
 Now, we have to configure our multirust installation to default to `nightly`:
 
-```
+```sh
 $ multirust override nightly
 ```

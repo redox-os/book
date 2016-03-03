@@ -6,7 +6,7 @@ Now we have prepared the build, so naturally we're going to build Redox.
 Cloning the repository
 ----------------------
 
-```
+```sh
 $ git clone https://github.com/redox-os/redox.git; git submodule update --init
 ```
 
@@ -15,7 +15,7 @@ Give it a while. Redox is big.
 Yay! Building!
 --------------
 
-```
+```sh
 $ cd /path/to/redox
 $ make -j 4 build
 ```
@@ -28,7 +28,7 @@ Running Redox
 -------------
 
 To run Redox, do:
-```
+```sh
 $ make qemu
 ```
 
@@ -36,7 +36,7 @@ This should open up a Qemu window, booting to Redox.
 
 If it does not work, try:
 
-```
+```sh
 $ make qemu kvm=no # we disable KVM
 ```
 

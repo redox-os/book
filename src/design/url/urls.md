@@ -27,7 +27,7 @@ URLs can be opened, yielding _schemes_, which can be opened to resources, which 
 
 For compatibility reasons, we use a file API similar to the Rust standard library's for opening URLs:
 
-```
+```rust
 use std::fs::OpenOptions;
 use std::io::prelude::*;
 
