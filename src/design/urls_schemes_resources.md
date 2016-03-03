@@ -1,7 +1,7 @@
 URLs, schemes, and resources
 ============================
 
-This one of the most important design choices Redox makes. These three essential concepts are very entangled.
+This is one of the most important design choices Redox makes. These three essential concepts are very entangled.
 
 What does "Everything is a URL" mean?
 --------------------------------------

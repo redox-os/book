@@ -1,16 +1,16 @@
 URLs
 ====
 
-The URL _it self_ is a relatively uninteresting, yet very a important notion for the design of Redox. What is the interesting part is what it represents.
+The URL _itself_ is a relatively uninteresting, yet very important, notion for the design of Redox. The interesting part is what it represents.
 
 The URL
 -------
 
-In short, an URL is an identifier of a resource. They contain two parts:
+In short, a URL is an identifier of a resource. They contain two parts:
 
 1. The scheme part. This part represents, the "receiver", i.e. what scheme will handle the (F)OPEN call. This can be any arbitrary UTF-8 string, and will often simply be the name of your protocol.
 
-2. The reference part. This part represents the "payload" of the URL, namely what the URL refer to. Consider `file`, as an example. An URL starting with `file:` simply has a reference being a path to a file. The reference can be any arbitrary byte string. The parsing, interpretation, and storage of the reference is left to the scheme. For this reason, it is not required to be a tree-like structure.
+2. The reference part. This part represents the "payload" of the URL, namely what the URL refers to. Consider `file`, as an example. A URL starting with `file:` simply has a reference which is a path to a file. The reference can be any arbitrary byte string. The parsing, interpretation, and storage of the reference is left to the scheme. For this reason, it is not required to be a tree-like structure.
 
 So, the string representation of an URL looks like:
 
@@ -20,12 +20,12 @@ So, the string representation of an URL looks like:
 
 Note that `//` is not required, for convenience.
 
-Opening an URL
---------------
+Opening a URL
+-------------
 
-URLs can be opened, yielding _schemes_, which can be opened to resources, which can be read, written and (for some resources) seeked (the are some more operations, these are described later on).I
+URLs can be opened, yielding _schemes_, which can be opened to resources, which can be read, written and (for some resources) seeked (there are some more operations; these are described later on).
 
-For compatibility reasons, we use a file API similar to the Rust standard libraries for opening URLs:
+For compatibility reasons, we use a file API similar to the Rust standard library's for opening URLs:
 
 ```
 use std::fs::OpenOptions;
