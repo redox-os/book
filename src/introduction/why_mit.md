@@ -14,10 +14,10 @@ We wanted to encourage the use, modification, and packaging of Redox in absolute
 But what if someone "steals" the source code?
 ---------------------------------------------
 
-We wouldn't mind if somebody did that. For successfully steal a project, you'd have to do _some_ improvements over the upstream version. You can't sell an apple for $2, if another person stands right next to you, giving them away for free. For this reason, making a (potentially proprietary) fork interesting requires to put some time and money into it.
+We wouldn't mind if somebody did that. In order to successfully steal a project, you'd have to make _some_ improvements over the upstream version. You can't sell an apple for $2, if another person stands right next to you, giving them away for free. For this reason, making a (potentially proprietary) fork interesting requires putting some time and money into it.
 
-There is nothing wrong with building on the top of Redox. You can't _unfairly_ steal a project. That's simply not possible. For a fork to gain interest, you will no matter what have to put effort into it.
+There is nothing wrong with building on top of Redox. You can't _unfairly_ steal a project. That's simply not possible. For a fork to gain interest, you will have to put effort into it no matter what.
 
-Building on the top of Redox, whether it gets to upstream or not, is a thing we appreciate.
+Building on top of Redox, whether it gets to upstream or not, is a thing we appreciate.
 
 We like to have a decentralized structure of the project, allowing people to do whatever they want, no matter how they intend to share it.

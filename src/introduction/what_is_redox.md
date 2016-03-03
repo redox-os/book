@@ -3,17 +3,17 @@ What is Redox?
 
 You might still have the question: What is Redox actually?
 
-Redox is an attempt to make an complete, fully-functioning, general-purpose operating system with focus on safety, correctness, and pragmatism. Redox isn't afraid of dropping the bad parts of POSIX, while preserving a modest Linux API consistency.
+Redox is an attempt to make an complete, fully-functioning, general-purpose operating system with a focus on safety, correctness, and pragmatism. Redox isn't afraid of dropping the bad parts of POSIX, while preserving a modest Linux API compatibility.
 
-Because of certain design choices, we cannot gain a complete 1:1 POSIX compatibility. I will expand on this later.
+Because of certain design choices, we cannot reach complete 1:1 POSIX compatibility. I will expand on this later.
 
-Most importantly, **we will not replicate the mistakes made by other.** This is probably the most important idiom of Redox. In the past, bad design choices were made by Linux, Unix, BSD, HURD, and so on. We all make mistakes, that's no secret, but there is no reason to repeat others' mistakes.
+Most importantly, **we will not replicate the mistakes made by others.** This is probably the most important tenet of Redox. In the past, bad design choices were made by Linux, Unix, BSD, HURD, and so on. We all make mistakes, that's no secret, but there is no reason to repeat others' mistakes.
 
-It should be obvious to the reader that this entails a trade-off, namely compatibility v. correctness. As you can see, breaking certain standards do break compatibility. We take a very pragmatic approach to these:
+It should be obvious to the reader that this entails a trade-off, namely compatibility versus correctness. As you can see, breaking certain standards do break compatibility. We take a very pragmatic approach to these:
 
 We do not reinvent things, just to reinvent them. Don't fix things that are already fixed, fix things which are broken.
 
-To the extend of correctness, we keep Linux compatibility.
+To the extent of correctness, we keep Linux compatibility.
 
 How can we be sure not to make mistakes?
 ----------------------------------------
