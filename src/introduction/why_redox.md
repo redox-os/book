@@ -14,13 +14,13 @@ All these have numerous short-fallings, vulnerability, and bad design choices. R
 
 Take Linux for example:
 
-- Legacy until infinity: Old syscalls stay around forever, drivers for long-unbuyable hardware stay as in the kernel as a mandatory part. While they can be disabled, running them in kernel space is essentially unnecessary, and is one of the biggest sources of system crashes, security issues, and unexpected bugs.
+- Legacy until infinity: Old syscalls stay around forever, drivers for long-unbuyable hardware stay as in the kernel as a mandatory part. While they can be disabled, running them in kernel space is essentially unnecessary, and is, by far, the biggest source of system crashes, security issues, and unexpected bugs.
 - Huge codebase: To contribute, you must find a place to fit in to nearly _25 million lines of code_, in just the kernel. This is due to Linux's monolithic architecture.
 - Restrictive license: Linux is licensed under GPL2. More on this in `Why MIT?`.
 - Lack of memory safety: Linux have had numerous issues with memory safety throughout time. C is a fine language, but for such a security critical system, C isn't fit.
 
 Compared to BSD, Linux is completely frontal-lobe-missing, in every imaginable way. The code base is one big, ugly hack, and the design is bad in so many ways. We don't want such a project!
 
-It is no secret that we're more in favor of BSD, than Linux (although most of us are still Linux users, for various reasons). But BSD isn't quite there yet: most importantly, **it has a monolithic kernel, written in C**.
+It is no secret that we're more in favor of BSD, than Linux (although most of us are still Linux users, for various reasons). But BSD isn't quite there yet: most importantly, **it has a monolithic kernel, written in C**. This means that a single buggy driver can crash, hang, or cause damage to the system.
 
 > TODO: Rewrite this 
