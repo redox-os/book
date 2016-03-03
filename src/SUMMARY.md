@@ -34,7 +34,7 @@
         - [Resources](./design/resource/resources.md)
             - [Socket-like](./design/resource/socket_like.md)
             - [File-like](./design/resource/file_like..md)
-        - [Stitching it all together]()
+        - [Stitching it all together](./design/url_scheme_resource/stiching_it_all_together.md)
             - ["Everything is an URL"]()
                 - [vs "Everything is a file"]()
             - [An example]()
@@ -127,6 +127,8 @@
             - [Tests in the kernel]()
         - [Logging and assertions]()
         - [Git]()
+        - [Writing an issue]()
+        - [Documenting your changes]()
 
 - [Understanding the codebase]()
     - [Kernel]()
