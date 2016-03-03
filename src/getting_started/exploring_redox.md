@@ -29,7 +29,7 @@ Rusthello is an advanced Reversi AI, made by [Enrico](https://github.com/EGhiorz
 
 Oh, let's try it out!
 
-```
+```sh
 # first we `cd` to the Rusthello directory
 $ cd apps/rusthello
 # now, run the binary file
