@@ -8,7 +8,7 @@ Syscalls
 
 The syscall interface is very Unix-y. For example, we have `open`, `pipe`, `pipe2`, `lseek`, `read`, `write`, `brk`, `execv`, and so on. Currently, we support the 31 most common Linux syscalls.
 
-Compared to Linux, our syscall interface is much more minimal. This is not because of the stage in development. This is a matter of design. Linux has a lot unnecessary, bloated syscalls (try to run `man syscalls`, and an almost infinite list appears).
+Compared to Linux, our syscall interface is much more minimal. This is not because of the stage in development. This is a matter of design. Linux has a lot of unnecessary, bloated syscalls (try to run `man syscalls`, and an almost infinite list appears).
 
 "Everything is a URL"
 ----------------------
