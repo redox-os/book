@@ -1,7 +1,7 @@
 Schemes
 =======
 
-Schemes are the natural counter-part to URLs. As described before, URLs are opened to schemes, which can then be communicated with, through scheme operations.
+Schemes are the natural counter-part to URLs. As described before, URLs are opened to schemes, which can then be opened, yielding a resource.
 
 Schemes are named so that the kernel is able to identify them. This name is used in the `scheme` part of the URL.
 
