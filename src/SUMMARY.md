@@ -23,6 +23,8 @@
     - [Exploring Redox](./getting_started/exploring_redox.md)
     - [Questions and feedback](./getting_started/asking_questions_giving_feedback.md)
 
+-------------------------------------------------------------------------------
+
 - [The design](./design/design.md)
     - [URLs, schemes and resources](./design/urls_schemes_resources.md)
         - [URLs](./design/url/urls.md)
@@ -37,7 +39,7 @@
             - [File-like](./design/resource/file_like..md)
         - [Stitching it all together](./design/url_scheme_resource/stiching_it_all_together.md)
             - ["Everything is a URL"](./design/url_scheme_resource/everything_is_a_url.md)
-            - [An example]()
+            - [An example](./design/url_scheme_resource/example.md)
     - [The kernel]()
         - [Microkernels]()
             - [Advantages of microkernels]()
@@ -97,6 +99,8 @@
         - [Remove dependencies]()
         - [Cross-compiling]()
 
+-------------------------------------------------------------------------------
+
 - [Contributing]()
     - [Communication]()
         - [Chat]()
@@ -133,6 +137,8 @@
 - [Understanding the codebase]()
     - [Kernel]()
         - [Environment]()
+
+-------------------------------------------------------------------------------
 
 - [Fun]()
     - [Running Redox on real hardware]()

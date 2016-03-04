@@ -19,11 +19,15 @@ The "core team" (people who are regularly contributing to Redox) is currently:
 
 (alphabetically sorted)
 
+- alicemaz
+- eghiorzi
 - hauleth
 - henrikhodne
 - jackpot51
 - k0pernicus
 - mgattozzi
+- mmstick
+- nounoursheureux
 - roxxik
 - skylerberg
 - stratact
