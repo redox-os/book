@@ -5,7 +5,7 @@ We are quite a few developers at Redox. 40+ people work on it. There are all sor
 
 Our BDFL is Jeremy Soller (Jackpot51), who maintains the kernel, Orbital (and OrbTK), and the overall direction of the project.
 
-The other side projects have different BDFLs:
+The other side projects have different maintainers:
 
 - Ion: Skyler Berg.
 - Sodium: Ticki.
