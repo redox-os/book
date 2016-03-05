@@ -32,6 +32,7 @@
             - [Aren't they confusing?]()
             - [How it works under the hood](./design/url/how_it_works.md)
         - [Schemes](./design/scheme/schemes.md)
+            - [The root scheme](./design/scheme/the_root_scheme.md)
             - [Writing your own scheme](./design/scheme/writing_a_scheme.md)
             - [Using schemes efficiently]()
         - [Resources](./design/resource/resources.md)
