@@ -6,11 +6,11 @@ Arguably, there are quite a lot advantages (and disadvantages too!) of microkern
 Modularity and customizability
 ------------------------------
 
-Monolithic kernels are, well, monolithic. They do not allow as fine-grained control as microkernels. This is due to many essential components are "hard-coded" into the kernel, and thus requires modifications to the kernel itself.
+Monolithic kernels are, well, monolithic. They do not allow as fine-grained control as microkernels. This is due to many essential components being "hard-coded" into the kernel, and thus requiring modifications to the kernel itself.
 
 Microkernels are very modular by nature. You can replace, reload, modify, change, and remove modules, on runtime, without even touching the kernel.
 
-Modern monolithic kernels tries to solve this issue, using kernel modules, but do often still require the system to reboot.
+Modern monolithic kernels try to solve this issue, using kernel modules, but do often still require the system to reboot.
 
 Security
 --------
