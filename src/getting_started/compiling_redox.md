@@ -17,7 +17,7 @@ Yay! Building!
 
 ```sh
 $ cd /path/to/redox
-$ make -j 4 build
+$ make -j 4 qemu
 ```
 
 This is going to take a while. So sit down and relax.
