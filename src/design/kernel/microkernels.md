@@ -7,14 +7,14 @@ The philosophy of microkernels is essentially, that any components, which can ru
 
 The kernel's main task is to act as a medium for communication and segregation of processes. The kernel should provide minimal abstraction over the hardware (that is, drivers which can, should run in user mode).
 
-Microkernels are more secure and less prone to crashes than monolithic kernel. This is due to drivers and other abstraction being less privileged, and thus cannot do damage to the system. Furthermore, microkernels are extremely maintainable, due to their small code size, this can potentially reduce the number of bugs in the kernel.
+Microkernels are more secure and less prone to crashes than monolithic kernels. This is due to drivers and other abstraction being less privileged, and thus cannot do damage to the system. Furthermore, microkernels are extremely maintainable, due to their small code size, this can potentially reduce the number of bugs in the kernel.
 
 As anything else, microkernels do also have disadvantages. We will discuss these later.
 
 Versus monolithic kernels
 -------------------------
 
-Monolithic kernels provides a lot more abstractions than microkernels.
+Monolithic kernels provide a lot more abstractions than microkernels.
 
 ![An illustration](https://upload.wikimedia.org/wikipedia/commons/6/67/OS-structure.svg)
 
