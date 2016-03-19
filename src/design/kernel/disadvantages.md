@@ -4,4 +4,5 @@ Disadvantages of microkernels
 Performance
 -----------
 
-> TODO
+Slower Processing due to communication overhead implemented via Message Passing.
+
