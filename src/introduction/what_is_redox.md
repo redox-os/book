@@ -29,7 +29,7 @@ We will not sacrifice correctness for compatibility. We are not afraid of lookin
 The goals of Redox
 ------------------
 
-We want to be able to use it, without obstructions, as a replacement for Linux on our computers. It should be able to run pretty much all Linux executables with only minimal modifications.
+We want to be able to use it, without obstructions, as a alternative to Linux on our computers. It should be able to run pretty much all Linux executables with only minimal modifications.
 
 We're aiming towards a complete, safe pure Rust ecosystem. This is a design choice, which hopefully improves correctness and security (see `Why Rust?`).
 
