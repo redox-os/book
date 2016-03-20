@@ -36,4 +36,4 @@ We're aiming towards a complete, safe pure Rust ecosystem. This is a design choi
 The non-goals of Redox
 ----------------------
 
-We are not a Unix clone. We are not a crazy scientist, who wants to redesign everything. Generally, we stick to the well-tested and proven correct designs. If it ain't broken don't fix it.
+We are not a Unix clone, nor are we crazy scientists, who wants to redesign everything. Generally, we stick to the well-tested and proven correct designs. If it ain't broken don't fix it.
