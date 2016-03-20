@@ -12,18 +12,6 @@ $ git clone https://github.com/redox-os/redox.git && cd redox && git submodule u
 
 Give it a while. Redox is big.
 
-Yay! Building!
---------------
-
-```sh
-$ cd /path/to/redox
-$ make -j 4 qemu
-```
-
-This is going to take a while. So sit down and relax.
-
-When this is done, the exciting part is starting:
-
 Running Redox
 -------------
 
