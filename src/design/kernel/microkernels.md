@@ -18,7 +18,7 @@ Monolithic kernels provide a lot more abstractions than microkernels.
 
 ![An illustration](https://upload.wikimedia.org/wikipedia/commons/6/67/OS-structure.svg)
 
-The above illustration (from WikiMedia, by Wooptoo) shows how they differ.
+The above illustration ([from Wikimedia](https://commons.wikimedia.org/wiki/File:OS-structure.svg), by Wooptoo, License: Public domain) shows how they differ.
 
 > TODO
 
