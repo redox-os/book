@@ -15,4 +15,4 @@ These operations take some time and might be happening more than once. On microk
 
 With a good approach and some time spend optimizing for performance this should no longer be an issue, but Redox is not there yet.
 
-See also: [Wikipedia on performance of minikernels](https://en.wikipedia.org/wiki/Kernel_operating_system#Performance)
+See also: [Wikipedia on performance of minikernels](https://en.wikipedia.org/wiki/Kernel_%28operating_system%29#Performance)
