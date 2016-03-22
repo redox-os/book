@@ -19,7 +19,7 @@ Take Linux for example:
 - Restrictive license: Linux is licensed under GPL2. More on this in `Why MIT?`.
 - Lack of memory safety: Linux has had numerous issues with memory safety throughout time. C is a fine language, but for such a security critical system, C doesn't fit.
 
-Compared to BSD, Linux is completely frontal-lobe-missing, in every imaginable way. The code base is one big, ugly hack, and the design is bad in so many ways. We don't want such a project!
+Compared to BSD, Linux is relatively poorly designed. The code base is very hackish, and contains numerous bugs. Microkernels are no panacea, but they tend to be more well-written, due to a managable number of lines.  We would like to avoid the monolithic, uncoordinated design of Linux.
 
 It is no secret that we're more in favor of BSD, than Linux (although most of us are still Linux users, for various reasons). But BSD isn't quite there yet: most importantly, **it has a monolithic kernel, written in C**. This means that a single buggy driver can crash, hang, or cause damage to the system.
 
