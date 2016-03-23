@@ -3,7 +3,7 @@ Developers
 
 We are quite a few developers at Redox. 40+ people work on it. There are all sorts of cool people to work with.
 
-Our BDFL is Jeremy Soller (Jackpot51), who maintains the kernel, Orbital (and OrbTK), and the overall direction of the project.
+Our BDFL is Jeremy Soller (Jackpot51), who maintains the kernel, drivers, standard library, Orbital (and OrbTK), and the overall direction of the project.
 
 The other side projects have different maintainers:
 

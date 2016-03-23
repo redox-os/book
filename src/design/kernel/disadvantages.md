@@ -13,6 +13,6 @@ Any modern operating system needs basic security mechanisms such as virtualizati
 
 These operations take some time and might be happening more than once. On microkernel systems this time adds up since compared to a monolithic kernel functionality is split off in several processes, often requiring several context switches to do the same task.
 
-With a good approach and some time spend optimizing for performance this should no longer be an issue, but Redox is not there yet.
+With a good approach and some time spend optimizing for performance this should be a minimal issue, but Redox is not there yet.
 
 See also: [Wikipedia on performance of minikernels](https://en.wikipedia.org/wiki/Kernel_%28operating_system%29#Performance)
