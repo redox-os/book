@@ -1,7 +1,7 @@
 Unsafes
 =======
 
-`unsafe` is a way to tell Rust that "I know what I'm doing!", which is necessary when writing low-level code. You cannot write a kernel without `unsafe`s.
+`unsafe` is a way to tell Rust that "I know what I'm doing!", which is often necessary when writing low-level code, providing safe abstractions. You cannot write a kernel without `unsafe`s.
 
 In that light, a kernel cannot be 100% safe, however the unsafe parts have to be marked with an `unsafe`, which keeps the unsafe parts segregated from the safe code. We seek to eliminate the `unsafe`s where we can, and when we use `unsafe`s, we are extremely careful.
 

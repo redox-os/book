@@ -11,8 +11,6 @@ Any modern operating system needs basic security mechanisms such as virtualizati
 * putting CPU in another mode (kernel mode, user mode)
 * restoring callee registers (callee: process invoked by syscall or IPC)
 
-These operations take some time and might be happening more than once. On microkernel systems this time adds up since compared to a monolithic kernel functionality is split off in several processes, often requiring several context switches to do the same task.
+These are not necessarily slower on microkernels, instead microkernels suffers from having the need to perform these operations more frequently, due to many of the system functionality is performed by userspace processes, often requiring additional context switches.
 
-With a good approach and some time spend optimizing for performance this should be a minimal issue, but Redox is not there yet.
-
-See also: [Wikipedia on performance of minikernels](https://en.wikipedia.org/wiki/Kernel_%28operating_system%29#Performance)
+To this date, microkernels have marginalized the performance difference between monolithic and microkernels, making the performance comparable. This is partly due to a smaller surface area, which can be more manageable to optimize. Unfortunately, Redox isn't quite there yet, we do still have a relatively slow kernel, since not much time have been spend on optimizing it.

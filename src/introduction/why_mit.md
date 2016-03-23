@@ -28,3 +28,5 @@ Building on top of Redox, whether it gets to upstream or not, is a thing we appr
 ---------------------------------------------------------------------------------------
 
 We like to have a decentralized structure of the project, allowing people to do whatever they want, no matter how they intend to share it.
+
+Copyleft licenses are upstream-centric, whereas permissive licenses can be thought of as more downstream-centric. We happen to prioritize downstream more than upstream.
