@@ -4,10 +4,10 @@ Developers
 We are quite a few developers at Redox. 40+ people work on it. There are all sorts of cool people to work with.
 
 Our [BDFL](https://en.wikipedia.org/wiki/Benevolent_dictator_for_life) is [Jackpot51](https://github.com/jackpot51), who maintains:
-- [kernel, drivers, standard library, and Orbital](https://github.com/redox-os/redox)
+- [The kernel, drivers, standard library, and Orbital](https://github.com/redox-os/redox)
 - [The installer](https://github.com/redox-os/installer)
 - [RedoxFS](https://github.com/redox-os/redoxfs)
-- [newlib and C ports](https://github.com/redox-os/libc)
+- [Newlib and C ports](https://github.com/redox-os/libc)
 - [Orbclient](https://github.com/redox-os/orbclient)
 - [OrbTK](https://github.com/redox-os/orbtk)
 - [Orbutils](https://github.com/redox-os/orbutils)
