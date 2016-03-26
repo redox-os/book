@@ -8,7 +8,7 @@ Redox is an attempt to make a complete, fully-functioning, general-purpose opera
 The goals of Redox
 ------------------
 
-We want to be able to use it, without obstructions, as a alternative to Linux on our computers. It should be able to run pretty most Linux programs with only minimal modifications.
+We want to be able to use it, without obstructions, as a alternative to Linux on our computers. It should be able to run most Linux programs with only minimal modifications.
 
 We're aiming towards a complete, safe Rust ecosystem. This is a design choice, which hopefully improves correctness and security (see `Why Rust?`).
 
