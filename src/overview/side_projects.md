@@ -22,7 +22,7 @@ We also have three utility distributions, which are collections of small, useful
 What tools for fitting in the Redox distribution?
 -------------------------------------------------
 
-Some of these tools will in the future be moved out of the default distribution, into seperate optional magnet packages. Example of these are Orbital, OrbTK, Sodium, and so on.
+Some of these tools will in the future be moved out of the default distribution, into seperate optional magnet packages. Examples of these are Orbital, OrbTK, Sodium, and so on.
 
 The listed tools fall into three categories:
 
@@ -30,7 +30,7 @@ The listed tools fall into three categories:
 2. Tools, which are "nice" to have and are inherently simple.
 3. Tools, which are there for establishing consistency within the ecosystem.
 
-The first category should be obvious: an OS without certain core tools is an useless OS. The second category contains the tools which are likely to be non-default in the future, but nonetheless are in the official distribution right now, for the charm. The third category is there for convenience: namely for making sure that the Redox infrastructure is consistent and integrated (e.g., Magnet, OrbTK, and libextra).
+The first category should be obvious: an OS without certain core tools is a useless OS. The second category contains the tools which are likely to be non-default in the future, but nonetheless are in the official distribution right now, for the charm. The third category is there for convenience: namely for making sure that the Redox infrastructure is consistent and integrated (e.g., Magnet, OrbTK, and libextra).
 
 It is important to note we seek to avoid non-Rust tools, for safety and consistency (see [Why Rust]).
 

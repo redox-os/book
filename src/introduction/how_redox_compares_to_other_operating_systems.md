@@ -1,7 +1,7 @@
 How Redox compares to other operating systems
 =============================================
 
-We share quite a lot with quite a lot other operating systems.
+We share quite a lot with quite a lot of other operating systems.
 
 Syscalls
 --------
@@ -29,12 +29,12 @@ Having vastly smaller amounts of code in the kernel makes it easier to find and 
 It should be noted that the extra lines are simply based outside of kernel space, making them less dangerous, not necessarily a smaller number.
 
 The main idea is to have components and drivers that would be inside a monolithic kernel exist in user space and follow the Principle of Least Authority (POLA). This is where every individual component is:
-* Completely isolated in memory and as separate user processes.
-  * The failure of one component does not crash the other components.
-  * Allows foreign and untrusted code to not expose the entire system.
-  * Bugs and malware cannot spread to other components.
-* Has restricted communication which each other.
-* Doesn't have Admin/Super-User privileges.
+* Completely isolated in memory and as separate user processes
+  * The failure of one component does not crash other components
+  * Allows foreign and untrusted code to not expose the entire system
+  * Bugs and malware cannot spread to other components
+* Has restricted communication with other components
+* Doesn't have Admin/Super-User privileges
   * Bugs are moved to user space which reduces their power
 
 All of this increases the reliability of the system significantly. This would be useful for mission-critical applications and for users that want minimal issues with their computer systems.

@@ -20,7 +20,7 @@ Our [BDFL](https://en.wikipedia.org/wiki/Benevolent_dictator_for_life) is [Jackp
 - [Magnet](https://github.com/redox-os/magnet): The package manager.
 - [Sodium](https://github.com/redox-os/sodium): The text editor of Redox.
 - [The implementation of ZFS](https://github.com/redox-os/zfs): ZFS for Redox (originally written by [Tedsta](https://github.com/tedsta))
-- [libextra](https://github.com/redox-os/libextra): Stuff libstd lacks of.
+- [libextra](https://github.com/redox-os/libextra): Stuff libstd lacks.
 - [Binutils](https://github.com/redox-os/binutils): Utilities for manipulating binary files.
 - [Extrautils](https://github.com/redox-os/extrautils): Extra utilities for Redox.
 - [games-for-redox](https://github.com/redox-os/games-for-redox): Funsies.
