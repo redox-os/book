@@ -13,4 +13,4 @@ Any modern operating system needs basic security mechanisms such as virtualizati
 
 These are not necessarily slower on microkernels, instead microkernels suffers from having the need to perform these operations more frequently, due to many of the system functionality is performed by userspace processes, often requiring additional context switches.
 
-To this date, microkernels have marginalized the performance difference between monolithic and microkernels, making the performance comparable. This is partly due to a smaller surface area, which can be more manageable to optimize. Unfortunately, Redox isn't quite there yet, we do still have a relatively slow kernel, since not much time have been spend on optimizing it.
+To this date, microkernels have marginalized the performance difference between monolithic and microkernels, making the performance comparable. This is partly due to a smaller surface area, which can be more manageable to optimize. Unfortunately, Redox isn't quite there yet, we do still have a relatively slow kernel, since not much time has been spent on optimizing it.
