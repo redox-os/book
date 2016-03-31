@@ -11,6 +11,16 @@ $ curl -sf https://raw.githubusercontent.com/redox-os/redox/master/bootstrap.sh 
 
 Oh, you're not lazy? Well, then the next section is for you!
 
+Cloning the repository
+----------------------
+ 
+ ```sh
+ $ git clone https://github.com/redox-os/redox.git && cd redox && git submodule update --init
+ ```
+ 
+ Give it a while. Redox is big.
+ 
+
 Installing the build dependencies manually
 ------------------------------------------
 
