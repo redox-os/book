@@ -3,14 +3,9 @@ Compiling Redox
 
 Now we have prepared the build, so naturally we're going to build Redox.
 
-Cloning the repository
-----------------------
-
 ```sh
-$ git clone https://github.com/redox-os/redox.git && cd redox && git submodule update --init
+$ make all
 ```
-
-Give it a while. Redox is big.
 
 Running Redox
 -------------
