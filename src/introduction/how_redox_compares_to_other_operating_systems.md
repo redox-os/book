@@ -15,14 +15,14 @@ Compared to Linux, our syscall interface is much more minimal. This is not becau
 
 This is an generalization of "Everything is a file", largely inspired by Plan 9. In Redox, "resources" (will be explained later) can be both socket-like and file-like, making them fast enough for using them for virtually everything.
 
-This way we get a more unified system API. We will explain this later, in [URLs, schemes, and resources](./design/urls_schemes_resources.html)
+This way we get a more unified system API. We will explain this later, in [URLs, schemes, and resources].
 
 The kernel
 ----------
 
 Redox's kernel is a microkernel. The architecture is largely inspired by MINIX.
 
-In contrast to Linux or BSD, Redox has only 16,000 lines of kernel code, a number that is often decreasing. Most services are provided in userspace
+ n contrast to Linux or BSD, Redox has only 16,000 lines of kernel code, a number that is often decreasing. Most services are provided in user space
 
 Having vastly smaller amounts of code in the kernel makes it easier to find and fix bugs/security issues more efficiently. Andrew Tanenbaum (author of MINIX) stated that for every 1,000 lines of properly written code, there is a bug. This means that for a monolithic kernel which could average over 15,000,000 lines of code, there could be at least 15,000 bugs. A micro kernel which usually averages 15,000 lines of code would mean that at least 15 bugs exist.
 
@@ -38,3 +38,6 @@ The main idea is to have components and drivers that would be inside a monolithi
   * Bugs are moved to user space which reduces their power
 
 All of this increases the reliability of the system significantly. This would be useful for mission-critical applications and for users that want minimal issues with their computer systems.
+
+
+[URLs, schemes, and resources]: ./design/urls_schemes_resources.html

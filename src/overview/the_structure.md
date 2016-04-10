@@ -7,7 +7,7 @@ The book is broken into 8 parts:
 - Introduction: Explanation of what Redox is and how it compares to other systems.
 - Getting started: Compiling and running Redox.
 - The design: An in-depth introduction to the design and implementation of Redox.
-- Development in userspace: Writing applications for Redox.
+- Development in user space: Writing applications for Redox.
 - Contributing: How you can contribute to Redox.
 - Understanding the codebase: For familiarizing yourself with the codebase.
 - Fun: Top secret chapter.

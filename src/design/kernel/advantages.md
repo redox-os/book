@@ -1,16 +1,16 @@
 Advantages of microkernels
 ==========================
 
-Arguably, there are quite a lot advantages (and disadvantages too!) of microkernels. These will briefly be discussed here:
+There are quite a lot advantages (and disadvantages!) to microkernels, a few of which will be covered here.
 
 Modularity and customizability
 ------------------------------
 
-Monolithic kernels are, well, monolithic. They do not allow as fine-grained control as microkernels. This is due to many essential components being "hard-coded" into the kernel, and thus requiring modifications to the kernel itself.
+Monolithic kernels are, well, monolithic. They do not allow as fine-grained control as microkernels. This is due to many essential components being "hard-coded" into the kernel, and thus requiring modifications to the kernel itself (e.g., device drivers).
 
 Microkernels are very modular by nature. You can replace, reload, modify, change, and remove modules, on runtime, without even touching the kernel.
 
-Modern monolithic kernels try to solve this issue, using kernel modules, but do often still require the system to reboot.
+Modern monolithic kernels try to solve this issue using kernel modules but still often require the system to reboot.
 
 Security
 --------
@@ -24,8 +24,10 @@ In other words: **drivers can do whatever, without restrictions, when running in
 Less crashes
 ------------
 
-Monolithic kernels are, when compared to microkernels, crash-prone. Simple logic bugs can result in a crashed driver, which can, for a kernel space driver, crash the whole system.
+When compared to microkernels, Monolithic kernels tend to be crash-prone. A crashed driver in a Monolithic kernel can crash the whole system whereas with a microkernel there is a separation of concerns which allows the system to handle any crashes safely.
 
-In Linux, this is often seen by errors with drivers dereferencing bad pointers, ultimately resulting in kernel panics.
+In Linux we often see errors with drivers dereferencing bad pointers which ultimately results in kernel panics.
 
-[There is very good documentation in MINIX about how this can be addressed by a microkernel](http://wiki.minix3.org/doku.php?id=www:documentation:reliability)
+[There is very good documentation in MINIX about how this can be addressed by a microkernel.]
+
+[There is very good documentation in MINIX about how this can be addressed by a microkernel.]: http://wiki.minix3.org/doku.php?id=www:documentation:reliability

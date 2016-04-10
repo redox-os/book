@@ -23,4 +23,4 @@ This means that a large number of standard programs and libraries will be compat
 
 The key here is the trade off between correctness and compatibility. Ideally, you should be able achieve both, but unfortunately, you can't always do so.
 
-[Why Rust]: why_rust.html
+[Why Rust]: ./introduction/why_rust.html

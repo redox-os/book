@@ -1,6 +1,15 @@
 Exploring Redox
 ===============
 
+To launch Redox's graphical interface launch `orbital` from the commandline.
+
+```sh
+$ orbital
+```
+
+This should put you into the orbital GUI if you got into a terminal by running
+`make qemu` or `make virtualbox`.
+
 Sodium
 ------
 
@@ -25,7 +34,7 @@ Open up the terminal emulator. Now, write `rem -s 10 -b`. This will set a 10 sec
 Playing around with Rusthello
 -----------------------------
 
-Rusthello is an advanced Reversi AI, made by [Enrico](https://github.com/EGhiorzi). It is highly concurrent, so this proves Redox's multithreading capabilities. It supports various AIs, such as brute forcing, minimax, local optimizations, and hybrid AIs.
+Rusthello is an advanced Reversi AI, made by [Enrico]. It is highly concurrent, so this proves Redox's multithreading capabilities. It supports various AIs, such as brute forcing, minimax, local optimizations, and hybrid AIs.
 
 Oh, let's try it out!
 
@@ -42,3 +51,5 @@ Exploring OrbTK
 ---------------
 
 Click the OrbTK demo app in the menu bar. Now, this will open up a graphical user interface, demonstrating the different widgets, OrbTK currently supports.
+
+[Enrico]: https://github.com/EGhiorzi

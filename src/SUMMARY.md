@@ -16,6 +16,7 @@
     - [How Redox compares to other operating systems](./introduction/how_redox_compares_to_other_operating_systems.md)
     - [The target of Redox]()
     - [Will Redox replace Linux?](./introduction/will_redox_replace_linux.md)
+    - [About this Book](./introduction/about_this_book.md)
 
 - [Getting started]()
     - [Preparing Redox](./getting_started/preparing_the_build.md)
@@ -87,8 +88,8 @@
         - [What it is]()
         - [Understanding the design]()
         - [Using Sodium efficiently]()
-- [Development in userspace]()
-    - [What userspace is]()
+- [Development in user space]()
+    - [What user space is]()
     - [Writing an application for Redox]()
         - [Platform independence]()
             - [What is available and what is not]()

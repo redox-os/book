@@ -34,4 +34,4 @@ The first category should be obvious: an OS without certain core tools is a usel
 
 It is important to note we seek to avoid non-Rust tools, for safety and consistency (see [Why Rust]).
 
-[Why Rust]: introduction/why_rust.html
+[Why Rust]: ./introduction/why_rust.html
