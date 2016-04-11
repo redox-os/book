@@ -22,7 +22,7 @@ Take Linux for example:
 
 ### BSD
 
-It is no secret that we're more in favor of BSD, than Linux (although most of us are still Linux users, for various reasons). This is because of certain security features that allow the construction of a more reliable system, things like [jails](https://www.freebsd.org/doc/handbook/jails.html) and [ZFS](https://www.freebsd.org/doc/handbook/zfs.html).
+It is no secret that we're more in favor of BSD, than Linux (although most of us are still Linux users, for various reasons). This is because of certain security features that allow the construction of a more reliable system, things like [jails] and [ZFS].
 
 BSD isn't quite there yet:
 
@@ -31,7 +31,7 @@ BSD isn't quite there yet:
 
 ### MINIX
 
-And what about MINIX? Its microkernel design is a big influence on the Redox project, especially for reasons like [reliability](http://wiki.minix3.org/doku.php?id=www:documentation:reliability). MINIX is the most in line with Redox's philosophy. It has a similar design, and a similar license.
+And what about MINIX? Its microkernel design is a big influence on the Redox project, especially for reasons like [reliability]. MINIX is the most in line with Redox's philosophy. It has a similar design, and a similar license.
 
 - Use of C - again, we would like drivers and the kernel to be written in Rust, to improve readability and organization, and to catch more potential safety errors. Compared to monolithic kernels, Minix is actually a very well-written and manageable code base, but it is still prone to memory unsafety bugs, for example. These classes of bugs can unfortunately be quite fatal, due to their unexpected nature.
 - Lack of driver support - MINIX does not work well on real hardware, partly due to having less focus on real hardware.
@@ -45,7 +45,10 @@ We have to admit, that we do like the idea of writing something that is our own 
 - Different VFS model, based on URLs, where a program can control an entire segmented filesystem
 - Different driver model, where drivers interface with filesystems like network: and audio: to provide features
 - Different file system, RedoxFS, with a ZFS implementation in progress
-- Userspace written mostly in Rust
+- User space written mostly in Rust
 - Orbital, a new GUI
 
 [Why MIT?]: why_mit.html
+[jails]: https://www.freebsd.org/doc/handbook/jails.html
+[ZFS]: https://www.freebsd.org/doc/handbook/zfs.html
+[reliability]: http://wiki.minix3.org/doku.php?id=www:documentation:reliability

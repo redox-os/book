@@ -5,7 +5,7 @@ Enough theory! Time for an example.
 
 We will implement a scheme which holds a vector, and push elements when you write, and pop them when you read. Let's call it `vec:`.
 
-Let's get goin':
+Let's get going:
 
 The code
 --------
@@ -103,4 +103,4 @@ Now, go ahead and test it!
 Exercise for the reader
 ------------------------
 
-Write a scheme with can run Brainfuck code.
+Write a scheme that can run `Brainfuck` code.

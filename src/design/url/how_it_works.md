@@ -1,10 +1,10 @@
 How do URLs work under the hood?
-==============================
+================================
 
-The representation
-------------------
+Representation
+--------------
 
-Since it is impossible to go from userspace to ring 0 in a typed manner, we have to use some weakly typed representation (that is, we can't use an enum, unless we want to do transmutations and friends). Therefore, we use a string-like representation when moving to kernel space. This is basically just a raw pointer to a C-like, null-terminating string. To avoid further overhead, we use more efficient representations:
+Since it is impossible to go from user space to ring 0 in a typed manner we have to use some weakly typed representation (that is, we can't use an enum, unless we want to do transmutations and friends). Therefore we use a string-like representation when moving to kernel space. This is basically just a raw pointer to a C-like, null-terminating string. To avoid further overhead, we use more efficient representations:
 
 # `Url<'a>`
 
