@@ -26,6 +26,14 @@
 
 -------------------------------------------------------------------------------
 
+- [Exploring Redox](./explore/explore.md)
+    - [Boot Process](./explore/boot_process.md)
+    - [Shell](./explore/shell.md)
+    - [Utilities](./explore/utilities.md)
+    - [GUI](./explore/gui.md)
+
+-------------------------------------------------------------------------------
+
 - [The design](./design/design.md)
     - [URLs, schemes and resources](./design/urls_schemes_resources.md)
         - [URLs](./design/url/urls.md)
