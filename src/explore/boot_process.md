@@ -4,7 +4,7 @@
 The first code to be executed is the boot sector in `kernel/asm/bootsector.asm`. This loads the bootloader from the first partition. In Redox, the bootloader finds the kernel and loads it in full at address 0x100000. It also initializes the memory map and the VESA display mode, as these rely on BIOS functions that cannot be accessed easily once control is switched to the kernel.
 
 ## Kernel
-The kernel is entered through the interrupt table, with interrupt 0xFF. This interrupt is only available in the bootloader. By utilizing this method, all kernel entry can be contained to a single function, the `kernel` function, that serves as the entry point in the `kernel.bin` executable file.
+The kernel is entered through the interrupt table, with interrupt 0xFF. This interrupt is only available in the bootloader. By utilizing this method, all kernel entry can be contained to a single function, the `kernel` function, found in `kernel/main.rs`, that serves as the entry point in the `kernel.bin` executable file.
 
 At this stage, the kernel copies the memory map out of low memory, sets up an initial page mapping, allocates the environment object, defined in `kernel/env/mod.rs`, and begins initializing the drivers and schemes that are embedded in the kernel. This process will print out kernel information such as the following:
 
