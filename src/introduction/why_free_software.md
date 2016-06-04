@@ -7,7 +7,7 @@ To view a list of compatible licenses, please refer to the [GNU List of Licenses
 
 For more information about free software, [please view this page](http://www.gnu.org/philosophy/free-sw.html).
 
-Free Software is Secure
+Free Software is more Secure
 -------------------------------------
 Redox OS is predominately MIT X11-style licensed, including all software, documentation, and fonts. There are only a few exceptions to this:
 - GNU Unifont, which is GPLv2
