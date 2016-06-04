@@ -3,12 +3,12 @@ What is Redox?
 
 You might still have the question: What is Redox actually?
 
-Redox is an attempt to make a complete, fully-functioning, general-purpose operating system with a focus on safety, reliability, correctness, and pragmatism.
+Redox is an attempt to make a complete, fully-functioning, general-purpose operating system with a focus on safety, freedom, reliability, correctness, and pragmatism.
 
 The goals of Redox
 ------------------
 
-We want to be able to use it, without obstructions, as a alternative to Linux on our computers. It should be able to run most Linux programs with only minimal modifications.
+We want to be able to use it, without obstructions, as a alternative to Linux on our computers. It should be able to run most Linux programs with only minimal modifications. (see [Why Free Software])
 
 We're aiming towards a complete, safe Rust ecosystem. This is a design choice, which hopefully improves correctness and security (see [Why Rust]).
 
@@ -23,4 +23,5 @@ This means that a large number of standard programs and libraries will be compat
 
 The key here is the trade off between correctness and compatibility. Ideally, you should be able achieve both, but unfortunately, you can't always do so.
 
+[Why Free Software]: ./introduction/why_free_software.html
 [Why Rust]: ./introduction/why_rust.html

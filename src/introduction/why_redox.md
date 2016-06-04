@@ -17,7 +17,7 @@ Take Linux for example:
 
 - Legacy until infinity: Old syscalls stay around forever, drivers for long-unbuyable hardware stay in the kernel as a mandatory part. While they can be disabled, running them in kernel space is unnecessary, and can be a source of system crashes, security issues, and unexpected bugs.
 - Huge codebase: To contribute, you must find a place to fit in to nearly _25 million lines of code_, in just the kernel. This is due to Linux's monolithic architecture.
-- Restrictive license: Linux is licensed under GPL2, preventing some use cases that we would like to allow. More on this in [Why MIT?].
+- Non-permissive license: Linux is licensed under GPL2, preventing the use of other free software licenses inside of the kernel. More on our use of the MIT X11-style license in [Why Free Software].
 - Lack of memory safety: Linux has had numerous issues with memory safety throughout time. C is a fine language, but for such a security critical system, C is difficult to use safely.
 
 ### BSD
@@ -48,7 +48,7 @@ We have to admit, that we do like the idea of writing something that is our own 
 - User space written mostly in Rust
 - Orbital, a new GUI
 
-[Why MIT?]: why_mit.html
+[Why Free Software]: why_free_software.html
 [jails]: https://www.freebsd.org/doc/handbook/jails.html
 [ZFS]: https://www.freebsd.org/doc/handbook/zfs.html
 [reliability]: http://wiki.minix3.org/doku.php?id=www:documentation:reliability

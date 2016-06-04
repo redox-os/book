@@ -1,7 +1,7 @@
 What Redox is
 =============
 
-Redox is a general purpose operating system and surrounding ecosystem written in pure Rust. Our aim is to provide a fully functioning Unix-like microkernel.
+Redox is a general purpose operating system and surrounding ecosystem written in pure Rust. Our aim is to provide a fully functioning Unix-like microkernel, that is both secure and free.
 
 We have modest compatibility with POSIX, allowing Redox to run many programs without porting.
 
