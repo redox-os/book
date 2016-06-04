@@ -1,7 +1,7 @@
 Why Free Software?
 =======
 
-Redox OS will be packaged only with compatible free software, to ensure that the entire default distribution may be inspected, modified, and redistributed. Software that does not allow these features, i.e. proprietary software, is against the goals of security and freedom and will not be endorsed by Redox OS. We therefore comply with the [GNU Free System Distribution Guidelines](http://www.gnu.org/distros/free-system-distribution-guidelines.html).
+Redox OS will be packaged only with compatible free software, to ensure that the entire default distribution may be *inspected*, *modified*, and *redistributed*. Software that does not allow these features, i.e. proprietary software, is against the goals of security and freedom and will not be endorsed by Redox OS. We therefore comply with the [GNU Free System Distribution Guidelines](http://www.gnu.org/distros/free-system-distribution-guidelines.html).
 
 To view a list of compatible licenses, please refer to the [GNU List of Licenses](http://www.gnu.org/licenses/license-list.html).
 
@@ -17,7 +17,7 @@ Redox OS is predominately MIT X11-style licensed, including all software, docume
 - NASM, which is BSD 2-clause
 
 The MIT X11-style license has the following properties:
-- It gives you, the user of the software, complete and unrestrained access to the software, such that you may inspect, modify, and redistribute your changes
+- It gives you, the user of the software, complete and unrestrained access to the software, such that you may *inspect*, *modify*, and *redistribute* your changes
   - *Inspection* Anyone may inspect the software for security vulnerabilities
   - *Modification* Anyone may modify the software to fix security vulnerabilities
   - *Redistribution* Anyone may redistribute the software to patch the security vulnerabilities
@@ -60,7 +60,7 @@ c.  Restrictions. The manufacturer or installer and Microsoft reserve all
         unauthorized manner.
 ```
 
-These are clauses typical of proprietary software licenses, but disallowed in free software licenses. These clauses makes it possible for Microsoft to sue and seek damages from individuals who attempt to study, modify, or redistribute the software that they have purchased. Redox OS abhors such limitations on your freedom. As Redox OS focuses on security, keep in mind the following:
+These are clauses typical of proprietary software licenses, but disallowed in free software licenses. These clauses makes it possible for Microsoft to sue and seek damages from individuals who attempt to *inspect*, *modify*, or *redistribute* the software that they have installed. Redox OS abhors such limitations on your freedom. As Redox OS focuses on security, keep in mind the following:
 - *Inspection* Software that cannot be legally studied, cannot have security flaws identified by the community. Crackers will take advantage of this, as they have no problem breaking the law, and will identify security flaws and utilize them for their own gains.
 - *Modification* Software that cannot be legally changed, cannot have security flaws fixed by the community. Again, this will lead to identified security flaws being left unfixed for long periods of time.
 - *Distribution* Software that cannot be legally distributed, cannot have security flaws patched by the community. This will lead to a number of vulnerable installations, even after an identified security flaw has been fixed.
