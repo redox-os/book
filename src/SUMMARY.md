@@ -113,7 +113,7 @@
 
 - [Contributing]()
     - [Communication]()
-        - [Chat]()
+        - [Chat](./contributing/chat.md)
     - [Direct contributions]()
         - [Low hanging fruit]()
         - [Github issues]()
