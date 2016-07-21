@@ -43,4 +43,5 @@ Rustup will install the `stable` version of Rust. To run Redox, you have to inst
 
 ```sh
 $ rustup toolchain install nightly
+$ rustup override set nightly
 ```
