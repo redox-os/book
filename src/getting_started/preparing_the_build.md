@@ -3,7 +3,7 @@ Preparing the build.
 
 Woah! You made it so far, all the way to here. Congrats! Now we gotta build Redox.
 
-_If you're lazy, and on an Linux computer. Well, you're today's winner! Just run the bootstrapping script, which does the build preparation for you:_
+_If you're lazy, and on a Linux or MacOs computer. Well, you're today's winner! Just run the bootstrapping script, which does the build preparation for you:_
 
 ```sh
 $ curl -sf https://raw.githubusercontent.com/redox-os/redox/master/bootstrap.sh -o bootstrap.sh && bash -e bootstrap.sh
@@ -33,14 +33,15 @@ $ [your package manager] install make nasm qemu
 
 While the following step is not _required_, it is recommended. If you already have a functioning Rust nightly installation, you can skip this step:
 
-We will use `multirust` to manage our Rust versions:
+We will use `rustup` to manage our Rust versions:
 
 ```sh
-$ curl -sf https://raw.githubusercontent.com/brson/multirust/master/quick-install.sh | sh
+$ curl https://sh.rustup.rs -sSf | sh
 ```
 
-Now, we have to configure our multirust installation to default to `nightly`:
+Rustup will install the `stable` version of Rust. To run Redox, you have to install the `nightly` version of Rust, like this:
 
 ```sh
-$ multirust override nightly
+$ rustup toolchain install nightly
+$ rustup override set nightly
 ```
