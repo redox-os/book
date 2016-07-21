@@ -33,14 +33,10 @@ $ [your package manager] install make nasm qemu
 
 While the following step is not _required_, it is recommended. If you already have a functioning Rust nightly installation, you can skip this step:
 
-We will use `multirust` to manage our Rust versions:
+We will use `rustup` to manage our Rust versions:
 
 ```sh
-$ curl -sf https://raw.githubusercontent.com/brson/multirust/master/quick-install.sh | sh
+$ curl https://sh.rustup.rs -sSf | sh
 ```
 
-Now, we have to configure our multirust installation to default to `nightly`:
-
-```sh
-$ multirust override nightly
-```
+Use a custom installation of Rust, to install the `nightly` version.
