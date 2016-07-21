@@ -39,4 +39,8 @@ We will use `rustup` to manage our Rust versions:
 $ curl https://sh.rustup.rs -sSf | sh
 ```
 
-Use a custom installation of Rust, to install the `nightly` version.
+Rustup will install the `stable` version of Rust. To run Redox, you have to install the `nightly` version of Rust, like this:
+
+```sh
+$ rustup toolchain install nightly
+```
