@@ -3,7 +3,7 @@ Preparing the build.
 
 Woah! You made it so far, all the way to here. Congrats! Now we gotta build Redox.
 
-_If you're lazy, and on an Linux computer. Well, you're today's winner! Just run the bootstrapping script, which does the build preparation for you:_
+_If you're lazy, and on a Linux or MacOs computer. Well, you're today's winner! Just run the bootstrapping script, which does the build preparation for you:_
 
 ```sh
 $ curl -sf https://raw.githubusercontent.com/redox-os/redox/master/bootstrap.sh -o bootstrap.sh && bash -e bootstrap.sh
