@@ -81,11 +81,6 @@
         - [Extras]()
             - [OrbTK]()
             - [Orbutils]()
-    - [Ion]()
-        - [What Ion is]()
-        - [The design of Ion]()
-        - [The syntax]()
-        - [How it differs from Bash]()
     - [Oxide]()
         - [Decentral]()
         - [Cryptography]()
@@ -108,6 +103,11 @@
     - [Porting a program]()
         - [Remove dependencies]()
         - [Cross-compiling]()
+    - [Ion](./userspace/ion/ion.md)
+        - [What Ion is](./userspace/ion/what_ion_is.md)
+        - [The design of Ion]()
+        - [The syntax](./userspace/ion/the_syntax.md)
+        - [How it differs from Bash]()
 
 -------------------------------------------------------------------------------
 
