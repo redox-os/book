@@ -3,11 +3,11 @@
 ## 1. Default shell in Redox
 
 ### What shell is?
-A shell is a layer around operating system kernel a libraries, that allows users to interact with operating system. Shells can either be graphical (GUI) or command-line (CLI).
+A shell is a layer around operating system kernel and libraries, that allows users to interact with operating system. That means shell can be used on any operating system (Ion runs on both Linux and Redox) or implementation of standard library as long as the provided API is the same. Shells can either be graphical (GUI) or command-line (CLI).
 
 ### Text shells
 
-Text shells are programs that provide interactive user interface with an operating system. Shell reads from users as they type and perform some operation according to the input. This is similar to read-eval-print loop (REPL).
+Text shells are programs that provide interactive user interface with an operating system. Shell reads from users as they type and perform some operation according to the input. This is similar to read-eval-print loop (REPL) found in many programming languages (e.g. Python).
 
 ### Typical \*nix shells
 
@@ -29,7 +29,11 @@ Ion can also be used to write simple scripts for common tasks or configuration o
 
 ### Relation to terminals
 
-TODO
+Early [terminals](https://en.wikipedia.org/wiki/Computer_terminal) were devices used to communicate with large computer systems like [IBM mainframes](https://en.wikipedia.org/wiki/IBM_mainframe). Nowadays Unix operating systems usually implement so called virtual terminals (tty stands for teletypewriter ... whoa!) and terminal emulators (e.g. xterm, gnome-terminal).
+
+Terminal is used to read input from keyboard and display textual output of shell and other programs running inside it. This means that terminal converts key strokes into control codes that are further used by shell. The shell provides user with command line prompt (for instance user name and working directory) , line edition capabilities (Ctrl + a,e,u,k...), history and runs other programs (ls, uname, vim etc. ) according to user's input.  
+
+TODO: In Linux we have device files like `/dev/tty`, how is this concept handled in Redox?
 
 <!---
 Sources:
