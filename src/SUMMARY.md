@@ -29,7 +29,7 @@
 - [Exploring Redox](./explore/explore.md)
     - [Boot Process](./explore/boot_process.md)
     - [Shell](./explore/shell.md)
-    - [Utilities](./explore/utilities.md)
+    - [Utilities]()
     - [GUI](./explore/gui.md)
 
 -------------------------------------------------------------------------------
@@ -42,11 +42,11 @@
             - [How it works under the hood](./design/url/how_it_works.md)
         - [Schemes](./design/scheme/schemes.md)
             - [The root scheme](./design/scheme/the_root_scheme.md)
-            - [Writing your own scheme](./design/scheme/writing_a_scheme.md)
+            - [Writing your own scheme]()
             - [Using schemes efficiently]()
         - [Resources](./design/resource/resources.md)
-            - [Socket-like](./design/resource/socket_like.md)
-            - [File-like](./design/resource/file_like..md)
+            - [Socket-like]()
+            - [File-like]()
         - [Stitching it all together](./design/url_scheme_resource/stiching_it_all_together.md)
             - ["Everything is a URL"](./design/url_scheme_resource/everything_is_a_url.md)
             - [An example](./design/url_scheme_resource/example.md)
