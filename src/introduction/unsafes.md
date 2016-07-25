@@ -8,3 +8,5 @@ In that light, a kernel cannot be 100% safe, however the unsafe parts have to be
 A quick grep gives us some stats: The kernel has 16.52% unsafe code, a 50% improvement in the last three weeks. User space has roughly ~0.2%.
 
 This contrasts with kernels written in C, which cannot make guarantees about safety without costly formal analysis.
+
+You can find out more about how `unsafe` works in the [relevant section of the Rust book](https://doc.rust-lang.org/book/unsafe.html).
