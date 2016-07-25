@@ -81,7 +81,7 @@
         - [Extras]()
             - [OrbTK]()
             - [Orbutils]()
-    - [Oxide]()
+    - [Magnet]()
         - [Decentral]()
         - [Cryptography]()
         - [The indexes]()
