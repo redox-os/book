@@ -28,7 +28,7 @@ Installing the build dependencies manually
 I assume you have a package manager, which you know how to use (if not, you have to install the build dependencies manually). We need the following deps: `make` (probably already installed), `nasm` (the assembler, we use in the build process), `qemu` (the hardware emulator, we will use. If you want to run Redox on real hardware, you should read the `fun` chapter):)
 
 ```
-$ [your package manager] install make nasm qemu
+$ [your package manager] install make nasm qemu libfuse-dev
 ```
 
 While the following step is not _required_, it is recommended. If you already have a functioning Rust nightly installation, you can skip this step:
