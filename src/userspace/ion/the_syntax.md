@@ -1,6 +1,6 @@
 # Syntax
 
-How to describe it, formally or using examples?
+> [TODO: How to describe it, formally or using examples?]
 
 ```
 if a == a
