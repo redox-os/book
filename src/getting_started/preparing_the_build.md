@@ -15,7 +15,7 @@ Cloning the repository
 ----------------------
  
  ```sh
- $ git clone https://github.com/redox-os/redox.git && cd redox && git submodule update --init
+ $ git clone https://github.com/redox-os/redox.git && cd redox && git submodule update init
  ```
  
  Give it a while. Redox is big.
