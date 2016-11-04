@@ -11,6 +11,136 @@ Throughout the whole ecosystem of Redox schemes are used as the main communicati
 
 Schemes can be defined both in user space and in kernel space but when possible user space is preferred.
 
+Kernel Schemes
+--------------
+
+The kernel provides a small number of schemes in order to support userspace.
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Links</th>
+    </tr>
+    <tr>
+        <td><code>:</code></td>
+        <td>Root scheme - allows the creation of userspace schemes</td>
+        <td><a href="https://doc.redox-os.org/doc/kernel/scheme/root/index.html">Docs</a></td>
+    </tr>
+    <tr>
+        <td><code>debug:</code></td>
+        <td>Provides access to serial console</td>
+        <td><a href="https://doc.redox-os.org/doc/kernel/scheme/debug/index.html">Docs</a></td>
+    </tr>
+        <td><code>event:</code></td>
+        <td>Allows reading of `Event`s which are registered using <code>fevent</code></td>
+        <td><a href="https://doc.redox-os.org/doc/kernel/scheme/event/index.html">Docs</a></td>
+    </tr>
+    <tr>
+        <td><code>env:</code></td>
+        <td>Access and modify environmental variables</td>
+        <td><a href="https://doc.redox-os.org/doc/kernel/scheme/env/index.html">Docs</a></td>
+    </tr>
+    <tr>
+        <td><code>initfs:</code></td>
+        <td>Readonly filesystem used for initializing the system</td>
+        <td><a href="https://doc.redox-os.org/doc/kernel/scheme/initfs/index.html">Docs</a></td>
+    </tr>
+    <tr>
+        <td><code>irq:</code></td>
+        <td>Allows userspace handling of IRQs</td>
+        <td><a href="https://doc.redox-os.org/doc/kernel/scheme/irq/index.html">Docs</a></td>
+    </tr>
+    <tr>
+        <td><code>null:</code></td>
+        <td>Scheme that will discard all writes, and read no bytes</td>
+        <td><a href="https://doc.redox-os.org/doc/kernel/scheme/null/index.html">Docs</a></td>
+    </tr>
+    <tr>
+        <td><code>pipe:</code></td>
+        <td>Used internally by the kernel to implement <code>pipe</code></td>
+        <td><a href="https://doc.redox-os.org/doc/kernel/scheme/pipe/index.html">Docs</a></td>
+    </tr>
+    <tr>
+        <td><code>sys:</code></td>
+        <td>System information, such as the context list and scheme list</td>
+        <td><a href="https://doc.redox-os.org/doc/kernel/scheme/sys/index.html">Docs</a></td>
+    </tr>
+    <tr>
+        <td><code>zero:</code></td>
+        <td>Scheme that will discard all writes, and always fill read buffers with zero</td>
+        <td><a href="https://doc.redox-os.org/doc/kernel/scheme/zero/index.html">Docs</a></td>
+    </tr>
+</table>
+
+Userspace Schemes
+-----------------
+
+The Redox userspace, starting with initfs:bin/init, will create schemes during initialization. Once the user is able to log in, the following should be established:
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Daemon</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>disk:</code></td>
+        <td><code>ahcid</code></td>
+        <td>Raw access to disks</td>
+    </tr>
+    <tr>
+        <td><code>display:</code></td>
+        <td><code>vesad</code></td>
+        <td>Screen multiplexing of the display, provides text and graphical screens, used by <code>orbital:</code></td>
+    </tr>
+    <tr>
+        <td><code>ethernet:</code></td>
+        <td><code>ethernetd</code></td>
+        <td>Raw ethernet frame send/receive, used by <code>ip:</code></td>
+    </tr>
+    <tr>
+        <td><code>file:</code></td>
+        <td><code>redoxfs</code></td>
+        <td>Root filesystem</td>
+    </tr>
+    <tr>
+        <td><code>ip:</code></td>
+        <td><code>ipd</code></td>
+        <td>Raw IP packet send/receive</td>
+    </tr>
+    <tr>
+        <td><code>network:</code></td>
+        <td><code>e1000d</code><br/><code>rtl8168d</code></td>
+        <td>Link level network send/receive, used by <code>ethernet:</code></td>
+    </tr>
+    <tr>
+        <td><code>orbital:</code></td>
+        <td><code>orbital</code></td>
+        <td>Windowing system</td>
+    </tr>
+    <tr>
+        <td><code>pty:</code></td>
+        <td><code>ptyd</code></td>
+        <td>Psuedoterminals, used by terminal emulators</td>
+    </tr>
+    <tr>
+        <td><code>rand:</code></td>
+        <td><code>randd</code></td>
+        <td>Psuedo-random number generator</td>
+    </tr>
+    <tr>
+        <td><code>tcp:</code></td>
+        <td><code>tcpd</code></td>
+        <td>TCP sockets</td>
+    </tr>
+    <tr>
+        <td><code>udp:</code></td>
+        <td><code>udpd</code></td>
+        <td>UDP sockets</td>
+    </tr>
+</table>
+
 Scheme operations
 -----------------
 
