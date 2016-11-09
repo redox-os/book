@@ -1,7 +1,7 @@
 Microkernels
 ============
 
-Redox's kernel is a microkernel. Microkernels stands out in their design by providing minimal abstractions in kernel-space. Microkernels have an emphasis on user space, unlike Monolithic kernels which have an emphasis on kernel space.
+Redox's kernel is a microkernel. Microkernels stand out in their design by providing minimal abstractions in kernel-space. Microkernels have an emphasis on user space, unlike Monolithic kernels which have an emphasis on kernel space.
 
 The basic philosophy of microkernels is that any component which *can* run in user space *should* run in user space. Kernel-space should only be utilized for the most essential components (e.g., system calls, process separation, resource management, IPC, thread management, etc).
 
@@ -25,7 +25,7 @@ The above illustration ([from Wikimedia], by Wooptoo, License: Public domain) sh
 A note on the current state
 ---------------------------
 
-Redox has ~16,000 lines of kernel code. For comparison the Minix has ~6,000 lines of kernel code.
+Redox has less then 9,000 lines of kernel code. For comparison Minix has ~6,000 lines of kernel code.
 
 We would like to move parts of Redox to user space to get an even smaller kernel.
 
