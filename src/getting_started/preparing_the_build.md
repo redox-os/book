@@ -13,13 +13,14 @@ Oh, you're not lazy? Well, then the next section is for you!
 
 Cloning the repository
 ----------------------
- 
+
  ```sh
- $ git clone https://github.com/redox-os/redox.git && cd redox && git submodule update init
+ $ git clone https://github.com/redox-os/redox.git --origin upstream --recursive && \
+    cd redox && git submodule update --recursive --init
  ```
- 
+
  Give it a while. Redox is big.
- 
+
 
 Installing the build dependencies manually
 ------------------------------------------
