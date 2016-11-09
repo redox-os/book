@@ -26,6 +26,12 @@ If it does not work, try:
 $ make qemu kvm=no # we disable KVM
 ```
 
+or:
+
+```sh
+$ make qemu iommu=no
+```
+
 If this doesn't work either, you should go open an issue.
 
 Note
