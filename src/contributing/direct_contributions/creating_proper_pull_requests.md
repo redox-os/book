@@ -15,7 +15,7 @@ The steps given below are for the main Redox project - submodules and other proj
 5. Alternatively, if you already have a fork and copy of the repo, you can simply check to make sure you're up-to-date
     * Fetch the upstream:`git fetch upstream master`
     * Rebase with local commits:`git rebase upstream/master`
-    * Update the submodules:`git submodule update --init`
+    * Update the submodules:`git submodule update --recursive --init`
 6. Optionally create a separate branch (recommended if you're making multiple changes simultaneously) (`git checkout -b my-branch`)
 7. Make changes
 8. Commit (`git add . --all; git commit -m "my commit"`)
