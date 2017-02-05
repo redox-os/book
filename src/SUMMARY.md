@@ -2,9 +2,9 @@
 
 - [Overview](./overview/welcome.md)
     - [What Redox is](./overview/what_redox_is.md)
-    - [The structure](./overview/the_structure.md)
-    - [Side projects](./overview/side_projects.md)
-    - [Developers](./overview/developers.md)
+    - [The Redox community](./overview/community.md)
+			- [Side projects](./overview/side_projects.md)
+			- [Projects maintainers](./overview/maintainers.md)
 
 - [Introduction]()
     - [What is Redox?](./introduction/what_is_redox.md)
@@ -24,15 +24,11 @@
     - [Exploring Redox](./getting_started/exploring_redox.md)
     - [Questions and feedback](./getting_started/asking_questions_giving_feedback.md)
 
--------------------------------------------------------------------------------
-
 - [Exploring Redox](./explore/explore.md)
     - [Boot Process](./explore/boot_process.md)
     - [Shell](./explore/shell.md)
     - [Utilities]()
     - [GUI](./explore/gui.md)
-
--------------------------------------------------------------------------------
 
 - [The design](./design/design.md)
     - [URLs, schemes and resources](./design/urls_schemes_resources.md)
@@ -109,8 +105,6 @@
         - [The syntax](./userspace/ion/the_syntax.md)
         - [How it differs from Bash]()
 
--------------------------------------------------------------------------------
-
 - [Contributing](./contributing/contributing.md)
     - [Communication]()
         - [Chat](./contributing/communication/chat.md)
@@ -146,8 +140,6 @@
 - [Understanding the codebase]()
     - [Kernel]()
         - [Environment]()
-
--------------------------------------------------------------------------------
 
 - [Fun]()
     - [Running Redox on real hardware]()
