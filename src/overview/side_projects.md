@@ -4,20 +4,21 @@ Side projects
 Redox is a complete Rust operating system.
 In addition to the kernel, we are developing several side projects, including:
 
-- An implementation of ZFS.
-- Ion: The Redox shell.
-- Orbital: The display server of Redox.
-- OrbTK: A widget toolkit.
-- Magnet: Redox's package manager.
-- Sodium: A Vi-like editor.
-- libmalloc: A memory allocator.
-- libextra: Supplement for libstd, used throughout the Redox code base.
-- games-for-redox: A collection of mini-games for Redox (alike BSD-games).
+- [Tfs](https://github.com/ticki/tfs): An implementation of ZFS.
+- [Ion](https://github.com/redox-os/ion): The Redox shell.
+- [Orbital](https://github.com/redox-os/orbital): The display server of Redox.
+- [OrbTK](https://github.com/redox-os/orbtk): A widget toolkit.
+- [Magnet](https://github.com/redox-os/magnet): Redox's package manager.
+- [Sodium](https://github.com/redox-os/sodium): A Vi-like editor.
+- [ralloc](https://github.com/redox-os/ralloc): A memory allocator.
+- [libextra](https://github.com/redox-os/libextra): Supplement for libstd, used throughout the Redox code base.
+- [games-for-redox](https://github.com/redox-os/games): A collection of mini-games for Redox (alike BSD-games).
+- and a few other exciting projects you can explore [here](https://github.com/redox-os).
 
 We also have three utility distributions, which are collections of small, useful command-line programs:
-- Coreutils: A minimal set of utilities essential for a usable system.
-- Extrautils: Extra utilities such as reminders, calendars, spellcheck, and so on.
-- Binutils: Utilities for working with binary files.
+- [Coreutils](https://github.com/redox-os/coreutils): A minimal set of utilities essential for a usable system.
+- [Extrautils](https://github.com/redox-os/extrautils): Extra utilities such as reminders, calendars, spellcheck, and so on.
+- [Binutils](https://github.com/redox-os/binutils): Utilities for working with binary files.
 
 What tools for fitting in the Redox distribution?
 -------------------------------------------------
