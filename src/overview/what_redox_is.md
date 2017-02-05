@@ -9,7 +9,7 @@ We take inspiration from [Plan9], [Minix], [Linux], and [BSD]. We are trying to 
 
 Redox runs on real hardware today.
 
-This book is broken into 8 parts:
+This book is broken into 9 parts:
 
 - [Overview]: A quick'n'dirty overview of Redox.
 - [Introduction]: Explanation of what Redox is and how it compares to other systems.
