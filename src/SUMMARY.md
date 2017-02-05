@@ -2,9 +2,9 @@
 
 - [Overview](./overview/welcome.md)
     - [What Redox is](./overview/what_redox_is.md)
-    - [The structure](./overview/the_structure.md)
-    - [Side projects](./overview/side_projects.md)
-    - [Developers](./overview/developers.md)
+    - [The Redox community](./overview/community.md)
+			- [Side projects](./overview/side_projects.md)
+			- [Projects maintainers](./overview/maintainers.md)
 
 - [Introduction]()
     - [What is Redox?](./introduction/what_is_redox.md)
