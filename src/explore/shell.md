@@ -1,8 +1,8 @@
 # Shell
-ion is the [shell](http://linuxcommand.org/lts0010.php) used in redox. 
+The [shell](http://linuxcommand.org/lts0010.php) used in Redox is ion.
 
-when the shell is call without "-c", it start a main loop
-which can be found inside `Shell.execute()`
+When ion is called without "-c", it starts a main loop,
+which can be found inside `Shell.execute()`.
 
 ```Rust
         self.print_prompt();
@@ -17,11 +17,11 @@ which can be found inside `Shell.execute()`
 ```
 `self.print_prompt();` is used to print the shell prompt.
 
-the `readln()` is a the input reader which code can be found in `crates/ion/src/input_editor`
+The `readln()` function is the input reader. The code can be found in `crates/ion/src/input_editor`.
 
-The documentation about trim can be found [here](https://doc.rust-lang.org/std/primitive.str.html#method.trim).
-if the commands is not empty, the method `on_command` will be called. this method will be developed later.
-then the shell will update variables, and reprint the prompt.
+The documentation about `trim()` can be found [here](https://doc.rust-lang.org/std/primitive.str.html#method.trim).
+If the command is not empty, the `on_command` method will be called.
+Then, the shell will update variables, and reprint the prompt.
 
 
 
@@ -72,12 +72,12 @@ fn on_command(&mut self, command_string: &str, commands: &HashMap<&str, Command>
     }
 }
 ```
-the first thing the `on_command` does it to add the commands into the history with  `self.history.add(command_string.to_string(), &self.variables);`.
+First, `on_command` adds the commands to the shell history with  `self.history.add(command_string.to_string(), &self.variables);`.
 
-Then the script will be parse. the parser code is in `crates/ion/src/peg.rs`
-the parse will return a set of pipelines, each pipeline contains a set of jobs.
+Then the script will be parsed. The parser code is in `crates/ion/src/peg.rs`.
+The parse will return a set of pipelines, with each pipeline containing a set of jobs.
 Each job represents a single command with its arguments.
-you can take a look in `crates/ion/src/peg.rs`
+You can take a look in `crates/ion/src/peg.rs`.
 ```Rust
 pub struct Pipeline {
     pub jobs: Vec<Job>,
@@ -90,25 +90,26 @@ pub struct Job {
     pub background: bool,
 }
 ```
-what will happen after is in brief :
-* if the current block is a collecting block (a for loop or a function declaration) and the current command is end, we close the block:
-   *  if the block is a for loop we run the loop
-   * if the block is a function declaration we push the function to the functions list
-* If the current block is a collecting block but the current command is not end, we add the current command to the block.
+What Happens Next:
+* If the current block is a collecting block (a for loop or a function declaration) and the current command is ended, we close the block:
+   * If the block is a for loop we run the loop.
+   * If the block is a function declaration we push the function to the functions list.
+* If the current block is a collecting block but the current command is not ended, we add the current command to the block.
 * If the current block is not a collecting block, we simply execute the current command.
 
-the code blocks are defined in `crates/ion/src/flow_control.rs`
+The code blocks are defined in `crates/ion/src/flow_control.rs`.
 ```Rust
 pub struct CodeBlock {
     pub pipelines: Vec<Pipeline>,
 }
 ```
-the function code is defined in `crates/ion/src/functions.rs`
+The function code can be found in `crates/ion/src/functions.rs`.
 
-the execution of pipeline content will be executer in `run_pipeline()`
+The execution of pipeline content will be executed in `run_pipeline()`.
 
-the Command class inside `crates/ion/src/main.rs` maps each command with an description and a method
-to be executed. for example :
+The Command class inside `crates/ion/src/main.rs` maps each command with a description and a method
+to be executed.
+For example:
 ```Rust
 commands.insert("cd",
                 Command {
@@ -120,4 +121,4 @@ commands.insert("cd",
                 });
 ```
 `cd` is described by  `"Change the current directory\n    cd <path>"`, and when called the method
-`shell.directory_stack.cd(args, &shell.variables)` will be used. you can see its code in `crates/ion/src/directory_stack.rs`
+`shell.directory_stack.cd(args, &shell.variables)` will be used. You can see its code in `crates/ion/src/directory_stack.rs`.

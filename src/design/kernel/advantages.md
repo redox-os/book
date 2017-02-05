@@ -19,10 +19,10 @@ Microkernels are undoubtedly more secure than monolithic kernels. The minimality
 
 Many security-critical bugs in monolithic kernels stem from services and drivers running unrestricted in kernel mode, without any form of protection.
 
-In other words: **drivers can do whatever, without restrictions, when running in ring 0**.
+In other words: **in monolithic kernels, drivers can do whatever, without restrictions, when running in ring 0**.
 
-Less crashes
-------------
+Fewer crashes
+-------------
 
 When compared to microkernels, Monolithic kernels tend to be crash-prone. A crashed driver in a Monolithic kernel can crash the whole system whereas with a microkernel there is a separation of concerns which allows the system to handle any crashes safely.
 
