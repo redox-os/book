@@ -5,11 +5,7 @@ Redox is a general purpose operating system and surrounding ecosystem written in
 
 We have modest compatibility with [POSIX], allowing Redox to run many programs without porting.
 
-<<<<<<< HEAD
 We take inspiration from [Plan9], [Minix], [Linux], and [BSD]. We are trying to generalize various concepts from other systems, to get one unified design. We will speak about this some more in the [Design] chapter.
-=======
-We take inspiration from Plan9, Minix, Linux, and BSD. We are trying to generalize various concepts from other systems, to get one unified design. We will speak about this some more in the [Design](../design/design.html) chapter.
->>>>>>> dfc5fe37b94bb4c565813c7d71a0d897d956dbf8
 
 Redox runs on real hardware today.
 
