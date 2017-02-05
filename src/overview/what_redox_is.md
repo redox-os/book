@@ -23,7 +23,7 @@ This book is broken into 9 parts:
 
 It is written such that you do not need any prior knowledge in Rust and/or OS development.
 
-[Rust]: https://rust-lang.org  
+[Rust]:  https://www.rust-lang.org  
 [POSIX]: https://en.wikipedia.org/wiki/POSIX
 [Plan9]: http://plan9.bell-labs.com/plan9/index.html
 [Minix]: http://www.minix3.org/

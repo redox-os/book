@@ -3,7 +3,7 @@ The Redox community
 
 We are quite a few developers at Redox. 40+ people work on it. There are all sorts of cool people to work with.
 
-The "core team" (people who are members of the GitHub organization) is currently:
+The "core team" (people who are members of the [GitHub organization](https://github.com/redox-os)) is currently:
 
 (alphabetically sorted)
 
