@@ -7,7 +7,13 @@ We have modest compatibility with [POSIX], allowing Redox to run many programs w
 
 We take inspiration from [Plan9], [Minix], [Linux], and [BSD]. We are trying to generalize various concepts from other systems, to get one unified design. We will speak about this some more in the [Design] chapter.
 
-Redox runs on real hardware today.
+At the time, Redox supports:
+
+* All x86_64 CPUs.
+* Graphics cards with VBE support (all nvidia, intel, and amd cards from the past decade have this).
+* AHCI disks.
+* E1000 or RTL8168 network cards.
+* Mouse and keyboard with PS/2 emulation.
 
 This book is broken into 9 parts:
 
