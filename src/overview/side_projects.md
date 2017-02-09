@@ -4,7 +4,7 @@ Side projects
 Redox is a complete Rust operating system.
 In addition to the kernel, we are developing several side projects, including:
 
-- [Tfs]: An implementation of ZFS.
+- [Tfs]: A file system inspired by ZFS.
 - [Ion]: The Redox shell.
 - [Orbital]: The display server of Redox.
 - [OrbTK]: A widget toolkit.
