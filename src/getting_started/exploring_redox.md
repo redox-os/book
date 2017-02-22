@@ -47,6 +47,6 @@ Then you will get prompted for various things, such as difficulty, AI setup, and
 Exploring OrbTK
 ---------------
 
-Click the OrbTK demo app in the menu bar. Now, this will open up a graphical user interface, demonstrating the different widgets, OrbTK currently supports.
+Click the OrbTK demo app in the menu bar. This will open a graphical user interface that demonstrates the different widgets OrbTK currently supports.
 
 [Enrico]: https://github.com/EGhiorzi
