@@ -14,3 +14,4 @@ Some general guidelines:
 * When `unsafe` is unnecessary, don't use it. 10 lines longer safe code is better than more compact unsafe code!
 * Be sure to mark parts that need work with `TODO`, `FIXME`, `BUG`, `UNOPTIMIZED`, `REWRITEME`, `DOCME`, and `PRETTYFYME`.
 * Use the compiler hint attributes, such as `#[inline]`, `#[cold]`, etc. when it makes sense to do so.
+* Try to banish `unwrap()` and `except()` from your code in order to manage errors properly. Panicking must indicate a bug in the program (not an error you didn't want to manage). If you cannot recover from an error, print a nice error to stderr and exit. Check [Rust's book about unwrapping](https://doc.rust-lang.org/book/error-handling.html#a-brief-interlude-unwrapping-isnt-evil).
