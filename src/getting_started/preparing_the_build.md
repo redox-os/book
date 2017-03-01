@@ -17,7 +17,7 @@ This script fetches build dependencies using a package manager for your platform
 Manual Setup
 ------------
 
-###Cloning the repository
+### Cloning the repository
 
 Change to the folder where you want your copy of Redox to be stored and issue the following command:
 
@@ -29,7 +29,7 @@ Change to the folder where you want your copy of Redox to be stored and issue th
  Give it a while. Redox is big.
 
 
-###Installing the build dependencies
+### Installing the build dependencies
 
 I assume you have a package manager, which you know how to use (if not, you have to install the build dependencies even more manually). We need the following deps: `make` (probably already installed), `nasm` (the assembler, we use in the build process), `qemu` (the hardware emulator, we will use. If you want to run Redox on real hardware, you should read the `fun` chapter):)
 
