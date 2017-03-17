@@ -28,7 +28,7 @@ echo '$identifier'  # stdout: `Some string`
 echo identifier # stdout: `identifier`
 
 # the dollar sign `$` can be escaped with a backslash `\` to echo $identifier:
-echo \$identifier #stdout: ``\$identifier`
+echo \$identifier #stdout: `$identifier`
 
 # You can also remove a variable:
 drop $foo # no value will be available anymore for the identifier `$foo`
@@ -40,7 +40,7 @@ let
 echo ${Variable}
 # This is useful when you for example
 # you want to have a character right after your variable:
-let Name=John; echo Hello, ${Name}!
+let Name=John; echo Hello, ${Name}! # stdout: `Hello, John!`
 
 # Bracket expansion:
 echo h{i,aa,ooo} # stdout: `hi, haa, hooo`
