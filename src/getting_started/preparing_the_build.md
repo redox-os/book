@@ -49,8 +49,7 @@ MacOS Users using Homebrew:
 
 ```
 $ brew install make nasm qemu gcc49 pkg-config Caskroom/cask/osxfuse
-$ brew tap glendc/gcc_cross_compilers
-$ brew install glendc/gcc_cross_compilers/x64-elf-binutils glendc/gcc_cross_compilers/x64-elf-gcc
+$ brew install redox-os/gcc_cross_compilers/x86_64-elf-gcc
 ```
 
 Setting Up Nightly Rust
