@@ -47,7 +47,7 @@ Add a line below it that points to the helloworld program:
     "programs/helloworld",
 ```
 
-Step three: Open redox/mk/userspace. Notice how the target directories for the  binaries are listed after `userspace: \`, and that every line in that block has a `\` after it exept for the last one. Add a `\` to the last line of the block, and add
+Step three: Open redox/mk/userspace/mod.mk. Notice how the target directories for the  binaries are listed after `userspace: \`, and that every line in that block has a `\` after it exept for the last one. Add a `\` to the last line of the block, and add
 
 ```toml
 	filesystem/bin/helloworld
