@@ -6,7 +6,7 @@ Woah! You made it so far, all the way to here. Congrats! Now we gotta build Redo
 Using the bootstrap Script
 --------------------------
 
-If you're on a Linux or Mac OS computer, you can just run the bootstrapping script, which does the build preparation for you. Change to the folder where you want the source code to live and run the following command:
+If you're on a Linux or macOS computer, you can just run the bootstrapping script, which does the build preparation for you. Change to the folder where you want the source code to live and run the following command:
 
 ```sh
 $ curl -sf https://raw.githubusercontent.com/redox-os/redox/master/bootstrap.sh -o bootstrap.sh && bash -e bootstrap.sh
