@@ -13,7 +13,7 @@ There have been numerous bugs and vulnerabilities in Linux, BSD, Glibc, Bash, X,
 
 Design does matter, but so does implementation. Rust attempts to avoid these unexpected memory unsafe conditions (which are a major source of security critical bugs). Design is a very transparent source of issues. You know what is going on, you know what was intended and what was not.
 
-The basic design of the kernel/user space separation is fairly similar to genuine Unix-like systems, at this point. The idea is roughly the same: you seperate kernel and user space, through strict enforcement by the kernel, which manages memory and other critical resources.
+The basic design of the kernel/user space separation is fairly similar to genuine Unix-like systems, at this point. The idea is roughly the same: you separate kernel and user space, through strict enforcement by the kernel, which manages memory and other critical resources.
 
 However, we have an advantage: enforced memory and type safety. This is Rust's strong side, a large number of "unexpected bugs" (for example, undefined behavior) are eliminated.
 
