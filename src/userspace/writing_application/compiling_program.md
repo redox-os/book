@@ -9,7 +9,7 @@ fn main() {
 }
 ```
 
-To compile this program, you are going to need to edit some of your redox source files in such a way that your local redox repository will not be fit for updates via git or pull requests. It is reccomended that you do __not__ add the changes to the git history.
+To compile this program, you are going to need to edit some of your redox source files in such a way that your local redox repository will not be fit for updates via git or pull requests. It is recommended that you do __not__ add the changes to the git history.
 
 Step one: Go to redox/programs, and run `cargo new helloworld --bin`. It should create a directory redox/programs/helloworld with a redox/programs/helloworld/Cargo.toml like this:
 
