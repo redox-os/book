@@ -61,14 +61,14 @@ echo "The maximum amount of commands to retain in the log: $HISTORY_FILE_SIZE"
 echo "Path of the log file: $HISTORY_FILE"
 
 # Now that we know how to echo and use variables,
-# let's learn some of the other basics of bash!
+# let's learn some of the other basics of Ion!
 
 # Our current directory is available through the command `pwd`.
 # `pwd` stands for "print working directory".
 # We can also use the builtin variable `$PWD`.
 # Observe that the following are equivalent:
 echo "I'm in $PWD" # interpolates the variable
-echo "I'm in ${PWD}" # execs `pwd` and interpolates output
+echo "I'm in $(pwd)" # execs `pwd` and interpolates output
 
 # If you get too much output in your terminal, or from a script, the command
 # `clear` clears your screen
@@ -92,7 +92,7 @@ end
 if "" != $USER # ...
 # which works as expected
 
-# Unlike other programming languages, bash is a shell so it works in the context
+# Unlike other programming languages, Ion is a shell so it works in the context
 # of a current directory. You can list files and directories in the current
 # directory with the ls command:
 ls
@@ -120,18 +120,18 @@ cp -r srcDirectory/ dst/ # recursively copy
 # `mv` is also useful for renaming files!
 mv s0urc3.txt dst.txt # sorry, l33t hackers...
 
-# Since bash works in the context of a current directory, you might want to
+# Since Ion works in the context of a current directory, you might want to
 # run your command in some other directory. We have cd for changing location:
 cd ~    # change to home directory, also available as `$HOME`
 cd ..   # go up one directory
         # (^^say, from /home/username/Downloads to /home/username)
 cd /home/username/Documents   # change to specified directory
-cd ~/Documents/..    # still in home directory..isn't it??
+cd ~/Documents/..    # still in home directory...isn't it??
 
 # Use `mkdir` to create new directories.
 mkdir myNewDir
 
-# You can redirect output of one command to another command
+# You can redirect output of a command to a file
 echo "Hello" > hello.txt # will overwrite file if already exists
 echo "Another line" >> hello.txt # will append to an existing file,
                                  # this command will fail if the file does not exist yet
@@ -168,7 +168,7 @@ ask_name_and_say_hello
 test hello world goodbye
 # not passing the correct amount of parameters will result in an error ($?=127)
 
-# Read Ion shell builtins documentation with the ion 'help' builtin command:
+# Read Ion shell builtins documentation with the Ion 'help' builtin command:
 help        # displays available builtin commands
 help cd     # displays help information available for builtin cd command
 ```
