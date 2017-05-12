@@ -9,6 +9,7 @@ Currently, [jackpot51] maintains:
 - [Orbclient]
 - [OrbTK] (with assistance from [stratact])
 - [Orbutils]
+- [pkgutils]
 - The overall direction of the project.
 
 [ticki] maintains:
@@ -19,7 +20,6 @@ Currently, [jackpot51] maintains:
 - [The project "Games for Redox"]
 - [Libextra]
 - [Libmalloc]
-- [Magnet]
 - [Sodium]
 - [TFS, an implementation of ZFS]
 
@@ -37,10 +37,10 @@ Currently, [jackpot51] maintains:
 [Orbclient]: https://github.com/redox-os/orbclient
 [OrbTK]: https://github.com/redox-os/orbtk
 [Orbutils]: https://github.com/redox-os/orbutils
+[pkgutils]: https://github.com/redox-os/pkgutils
 
 [Libmalloc]: https://github.com/redox-os/libmalloc
 [Coreutils]: https://github.com/redox-os/coreutils
-[Magnet]: https://github.com/redox-os/magnet
 [Sodium]: https://github.com/redox-os/sodium
 [TFS, an implementation of ZFS]: https://github.com/redox-os/zfs
 [Tedsta]: https://github.com/tedsta

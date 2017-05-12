@@ -13,7 +13,7 @@ If you are fluent in Rust, but not OS Development:
 
  * Apps development
  * Shell ([Ion](https://github.com/redox-os/ion)) development
- * Package manager ([Magnet](https://github.com/redox-os/magnet)) development
+ * Package manager ([pkgutils](https://github.com/redox-os/pkgutils)) development
  * Other high-level code tasks
 
 If you are fluent in Rust, and have experience with OS Dev:
