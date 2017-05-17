@@ -42,7 +42,7 @@ Currently, [jackpot51] maintains:
 [Libmalloc]: https://github.com/redox-os/libmalloc
 [Coreutils]: https://github.com/redox-os/coreutils
 [Sodium]: https://github.com/redox-os/sodium
-[TFS, an implementation of ZFS]: https://github.com/redox-os/zfs
+[TFS, an implementation of ZFS]: https://github.com/redox-os/tfs
 [Tedsta]: https://github.com/tedsta
 [Libextra]: https://github.com/redox-os/libextra
 [Binutils]: https://github.com/redox-os/binutils
