@@ -12,7 +12,7 @@ echo 'This is the first line'; echo 'This is the second line'
 let identifier = "Some string"
 
 # Note that spaces between the identifier and value are optional:
-let identifier = "Some string"
+let identifier="Some string"
 
 # Using the variable:
 echo $identifier    # stdout: `Some string`
