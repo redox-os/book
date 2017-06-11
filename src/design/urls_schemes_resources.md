@@ -15,7 +15,7 @@ The term is rather misleading, since a URL is just the identifier of a scheme an
 So, how does it differ from files?
 ----------------------------------
 
-You can think of URLs and segregated virtual file systems, which can be arbitrarily structured (they do not have to be tree-like) and arbitrarily defined by a program. Furthermore, "files" don't have to behave file-like! More on this later.
+You can think of URLs as segregated virtual file systems, which can be arbitrarily structured (they do not have to be tree-like) and arbitrarily defined by a program. Furthermore, "files" don't have to behave file-like! More on this later.
 
 It opens up a lot of possibilities.
 > [... TODO]

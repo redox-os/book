@@ -7,7 +7,7 @@ Schemes are named such that the kernel is able to uniquely identify them. This n
 
 Schemes are a generalization of file systems. It should be noted that schemes do not necessarily represent normal files; they are often a "virtual file" (i.e., an abstract unit with certain operations defined on it).
 
-Throughout the whole ecosystem of Redox schemes are used as the main communication primitive because they are a powerful abstraction. With schemes Redox can have one unified I/O interface.
+Throughout the whole ecosystem of Redox, schemes are used as the main communication primitive because they are a powerful abstraction. With schemes Redox can have one unified I/O interface.
 
 Schemes can be defined both in user space and in kernel space but when possible user space is preferred.
 
@@ -68,7 +68,7 @@ The kernel provides a small number of schemes in order to support userspace.
     </tr>
     <tr>
         <td><code>zero:</code></td>
-        <td>Scheme that will discard all writes, and always fill read buffers with zero</td>
+        <td>Scheme that will discard all writes, and always fill read buffers with zeroes</td>
         <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/zero/index.html">Docs</a></td>
     </tr>
 </table>

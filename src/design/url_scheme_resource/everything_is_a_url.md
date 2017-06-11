@@ -5,7 +5,7 @@
 
 By unifying the API in this way, you are able to have a consistent, clean, and flexible interface.
 
-We can't really claim credits of this concept (beyond our exact design and implementation). The idea is not a new one and is very similar to _9P_ from _Plan 9_ by Bell Lab; a similar approach has been taken in Unix and its successors.
+We can't really claim credits of this concept (beyond our exact design and implementation). The idea is not a new one and is very similar to _9P_ from _Plan 9_ by Bell Labs; a similar approach has been taken in Unix and its successors.
 
 How it differs from "Everything is a file"
 ------------------------------------------

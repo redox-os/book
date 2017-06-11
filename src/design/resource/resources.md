@@ -8,7 +8,7 @@ Resources are closely connected to schemes and are sometimes intertwined with sc
 Resource operations
 -------------------
 
-A resource can be defined as a data type with following methods defined on it:
+A resource can be defined as a data type with the following methods defined on it:
 
 1. `read` - read N bytes to a buffer provided as argument. Defaults to `EBADF`
 2. `write` - write a buffer to the resource. Defaults to `EBADF`.
