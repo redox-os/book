@@ -25,7 +25,7 @@ Writing commands without any help from the shell would be very exhausting and im
 
 ## 2. A scripting language
 
-Ion can also be used to write simple scripts for common tasks or system configuration after startup. It is not meant as fully-featured programming language, but more like a glue to connect other programs together.
+Ion can also be used to write simple scripts for common tasks or system configuration after startup. It is not meant as a fully-featured programming language, but more like a glue to connect other programs together.
 
 ### Relation to terminals
 

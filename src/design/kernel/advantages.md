@@ -1,7 +1,7 @@
 Advantages of microkernels
 ==========================
 
-There are quite a lot advantages (and disadvantages!) to microkernels, a few of which will be covered here.
+There are quite a lot of advantages (and disadvantages!) to microkernels, a few of which will be covered here.
 
 Modularity and customizability
 ------------------------------
@@ -24,7 +24,7 @@ In other words: **in monolithic kernels, drivers can do whatever, without restri
 Fewer crashes
 -------------
 
-When compared to microkernels, Monolithic kernels tend to be crash-prone. A crashed driver in a Monolithic kernel can crash the whole system whereas with a microkernel there is a separation of concerns which allows the system to handle any crashes safely.
+When compared to microkernels, Monolithic kernels tend to be crash-prone. A crashed driver in a Monolithic kernel can crash the whole system whereas with a microkernel there is a separation of concerns which allows the system to handle any crash safely.
 
 In Linux we often see errors with drivers dereferencing bad pointers which ultimately results in kernel panics.
 

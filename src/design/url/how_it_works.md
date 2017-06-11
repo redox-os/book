@@ -25,7 +25,7 @@ Opening a URL
 
 Opening URLs happens through the `OPEN` system call. `OPEN` takes a C-like, null-terminating string, and two pointer-sized integers, keeping the open flags and the file mode, respectively.
 
-The path argument of `OPEN` do not have to be an URL. For compatibility reasons, it will default to the `file:` scheme. If otherwise specified, the scheme will be resolved by the registrar (see [The root scheme]), and then opened.
+The path argument of `OPEN` does not have to be an URL. For compatibility reasons, it will default to the `file:` scheme. If otherwise specified, the scheme will be resolved by the registrar (see [The root scheme]), and then opened.
 
 > TODO
 
