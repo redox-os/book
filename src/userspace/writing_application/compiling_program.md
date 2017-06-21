@@ -1,60 +1,100 @@
 # Compiling your program
 
-Consider this "hello world" program:
+Thanks to redox' cookbook, building programs is a snap. In this example, we will be building the helloworld program that `cargo new` automatically generates.
 
+## Step One: Setting up your program
 
-```rust
-fn main() {
-    println!("Hello World!");
-}
+To begin, go to your projects directory, here assumed to be `~/Projects/`. Open the terminal, and run `cargo new helloworld --bin`. For reasons that will become clear later,
+you must make your program compile from a git repository, so run `cd helloworld;git init` to make helloworld a git repo, and `git status` to see which files you need to add to the repo. You should see something like this
+
+```bash
+On branch master
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	.gitignore
+	Cargo.toml
+	src/
+
+nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-To compile this program, you are going to need to edit some of your redox source files in such a way that your local redox repository will not be fit for updates via git or pull requests. It is recommended that you do __not__ add the changes to the git history.
+Add all the files by running `git add .gitignore Cargo.toml src/` and commit by running `git commit -m "Added files to helloworld."`.
 
-Step one: Go to redox/programs, and run `cargo new helloworld --bin`. It should create a directory redox/programs/helloworld with a redox/programs/helloworld/Cargo.toml like this:
-
-```toml
-[package]
-name = "helloworld"
-version = "0.1.0"
-authors = ["Your Name <youremail@example.com>"]
-
-[dependencies]
-```
-You want to compile a binary, so edit it so that it looks like this:
+There is only one more thing that must be done to set up your program. Go to the `Cargo.toml` of your project and add 
 
 ```toml
-[package]
-name = "helloworld"
-version = "0.1.0"
-authors = ["Your Name <youremail@example.com>"]
-
 [[bin]]
 name = "helloworld"
 path = "src/main.rs"
-
-[dependencies]
 ```
+to the bottom. Now the program is sufficiently set up, and it is ready to be added to your redox build.
 
-Step two: Note that binaries compiled from redox/programs have entries in the redox/Cargo.toml like this:
+## Step Two: Adding your program to your redox build
+
+To be able to access your program from redox, it must be added to both the build process and the filesystem. Adding your program to the filesystem is easy: go to your `redox/filesystem.toml` file, and look under the `[packages]` table. It should look like this:
 
 ```toml
-    "programs/userutils",
+[packages]
+#acid = {}
+#binutils = {}
+contain = {}
+coreutils = {}
+#dash = {}
+extrautils = {}
+#games = {}
+#gcc = {}
+#gnu-binutils = {}
+#gnu-make = {}
+installer = {}
+ion = {}
+#lua = {}
+netstack = {}
+netutils = {}
+#newlib = {}
+orbdata = {}
+orbital = {}
+orbterm = {}
+orbutils = {}
+#pixelcannon = {}
+pkgutils = {}
+ptyd = {}
+randd = {}
+redoxfs = {}
+#rust = {}
+smith = {}
+#sodium = {}
+userutils = {}
 ```
 
-Add a line below it that points to the helloworld program:
+Under `userutils = {}` add a line for your own program:
+
 ```toml
-    "programs/helloworld",
+userutils = {}
+helloworld = {}
 ```
 
-Step three: Open redox/mk/userspace/mod.mk. Notice how the target directories for the  binaries are listed after `userspace: \`, and that every line in that block has a `\` after it exept for the last one. Add a `\` to the last line of the block, and add
+Now when building the filesystem, redox will look for a `helloworld` binary.
 
-```toml
-	filesystem/bin/helloworld
+With the file system in order, you can now add your program to the build process by adding a recipie. Spoilers: this is the easy part.
+
+Under `redox/cookbook/recipes/`, make a new directory called helloworld. In helloworld, create a file called `recipe.sh`.
+
+Remember the git repository `~/Projects/helloworld/`? Its about to be relevant. In the file `recipe.sh`, write
+
+```bash
+GIT=~/Projects/helloworld/
 ```
 
-in a line inserted below.
+With that, helloworld will now be built with and accessible from redox.
 
-Step four: Run `make` then `make qemu.` Do not run `make all`: it seems that the binary is not compiled to the correct location if `make all` is run.
+## Step Three: Running your program
 
-Step five: Log in to redox, open the terminal, and run `helloworld`. It should print: "Hello World!"
+Go up to your `redox/` directory and run `make all`. Once it finishes running, run `make qemu`, log in to redox, open the terminal, and run `helloworld.` It should print
+
+```shell
+Hello, world!
+```
