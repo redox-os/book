@@ -59,6 +59,7 @@
     - [Trade-offs]()
         - [Safety and performance]()
         - [Simplicity and expressiveness]()
+    - [Programs and Libraries](./design/programs.md)
     - [Coreutils](./design/coreutils/coreutils.md)
         - [Fail, fail, and fail]()
         - [Simplicty and minimalism]()
