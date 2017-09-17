@@ -1,5 +1,5 @@
-Preparing the build.
-====================
+Preparing the build
+===================
 
 Woah! You made it so far, all the way to here. Congrats! Now we gotta build Redox.
 
@@ -69,3 +69,8 @@ Rustup will install the `stable` version of Rust. To run Redox, you have to inst
 $ rustup toolchain install nightly
 $ rustup override set nightly
 ```
+
+Next steps
+----------
+
+Once this is all set up, you can move on to [compiling Redox](getting_started/compiling_redox.html).

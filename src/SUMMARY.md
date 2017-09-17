@@ -18,8 +18,10 @@
     - [Will Redox replace Linux?](./introduction/will_redox_replace_linux.md)
     - [About this Book](./introduction/about_this_book.md)
 
-- [Getting started]()
-    - [Preparing Redox](./getting_started/preparing_the_build.md)
+- [Getting started](./getting_started/getting_started.md)
+    - [Trying Redox in a virtual machine](./getting_started/try_vm.md)
+    - [Running Redox on real hardware](./getting_started/real_hardware.md)
+    - [Preparing the build](./getting_started/preparing_the_build.md)
     - [Compiling Redox](./getting_started/compiling_redox.md)
     - [Exploring Redox](./getting_started/exploring_redox.md)
     - [Questions and feedback](./getting_started/asking_questions_giving_feedback.md)
@@ -138,7 +140,6 @@
         - [Environment]()
 
 - [Fun]()
-    - [Running Redox on real hardware]()
     - [Setting up a Redox desktop]()
     - [Customizing Redox]()
 
