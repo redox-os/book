@@ -8,3 +8,5 @@ Despite the awkward way it works, the ISO image is the recomended way to try out
 You can create a bootable CD or USB drive from the ISO as with other bootable disk images.
 
 Hardware support is limited at the moment, so your milage may vary. There is no USB HID driver, so a USB keyboard or mouse will not work. There is a PS/2 driver, which works with the keyboards and touchpads in many laptops. For networking, the rtl8168d and e1000d ethernet controllers are currently supported.
+
+Redox isn't currently going to replace your existing OS, but it's a fun thing to try; boot Redox on your computer, and see what works.
