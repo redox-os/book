@@ -138,7 +138,7 @@
         - [Environment]()
 
 - [Fun]()
-    - [Running Redox on real hardware]()
+    - [Running Redox on real hardware](./fun/real_hardware.md)
     - [Setting up a Redox desktop]()
     - [Customizing Redox]()
 
