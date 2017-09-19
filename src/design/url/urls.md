@@ -6,7 +6,7 @@ The URL _itself_ is a relatively uninteresting (yet very important) notion for t
 The URL
 -------
 
-In short, a URL is an identifier of a resource. They contain two parts:
+In short, a URL is an identifier of a resource. It contains two parts:
 
 1. The scheme part. This represents the "receiver", i.e. what scheme will handle the (F)OPEN call. This can be any arbitrary UTF-8 string, and will often simply be the name of your protocol.
 
