@@ -4,7 +4,7 @@ How do URLs work under the hood?
 Representation
 --------------
 
-Since it is impossible to go from user space to ring 0 in a typed manner we have to use some weakly typed representation (that is, we can't use an enum, unless we want to do transmutations and friends). Therefore we use a string-like representation when moving to kernel space. This is basically just a raw pointer to a C-like, null-terminating string. To avoid further overhead, we use more efficient representations:
+Since it is impossible to go from user space to ring 0 in a typed manner, we have to use some weakly typed representation (that is, we can't use an enum, unless we want to do transmutations and friends). Therefore, we use a string-like representation when moving to kernel space. This is basically just a raw pointer to a C-like, null-terminated string. To avoid further overhead, we use more efficient representations:
 
 # `Url<'a>`
 
@@ -23,7 +23,7 @@ Not much fanciness here.
 Opening a URL
 -------------
 
-Opening URLs happens through the `OPEN` system call. `OPEN` takes a C-like, null-terminating string, and two pointer-sized integers, keeping the open flags and the file mode, respectively.
+Opening URLs happens through the `OPEN` system call. `OPEN` takes a C-like, null-terminated string, and two pointer-sized integers, keeping the open flags and the file mode, respectively.
 
 The path argument of `OPEN` does not have to be an URL. For compatibility reasons, it will default to the `file:` scheme. If otherwise specified, the scheme will be resolved by the registrar (see [The root scheme]), and then opened.
 
