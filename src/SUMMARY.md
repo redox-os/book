@@ -33,6 +33,7 @@
     - [GUI](./explore/gui.md)
 
 - [The design](./design/design.md)
+    - [Components](./design/components.md)
     - [URLs, schemes and resources](./design/urls_schemes_resources.md)
         - [URLs](./design/url/urls.md)
             - [Aren't they weakly typed?]()
