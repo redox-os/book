@@ -6,8 +6,6 @@ Redox is made up of several discrete components.
 * ion - shell
 * TFS/RedoxFS - filesystem
 * kernel 
-* termion - ??
-* termios - ??
 * drivers
 * orbital - DE/WM/Display Server
 
