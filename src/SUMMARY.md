@@ -101,9 +101,7 @@
         - [Cross-compiling]()
     - [Ion](./userspace/ion/ion.md)
         - [What Ion is](./userspace/ion/what_ion_is.md)
-        - [The design of Ion]()
-        - [The syntax](./userspace/ion/the_syntax.md)
-        - [How it differs from Bash]()
+        - [The Manual](./userspace/ion/the_manual.md)
 
 - [Contributing](./contributing/contributing.md)
     - [Communication]()
