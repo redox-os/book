@@ -19,7 +19,7 @@ Currently, [jackpot51] maintains:
 - [Extrautils]
 - [The project "Games for Redox"]
 - [Libextra]
-- [Libmalloc]
+- [Ralloc]
 - [Sodium]
 - [TFS, an implementation of ZFS]
 
@@ -39,7 +39,7 @@ Currently, [jackpot51] maintains:
 [Orbutils]: https://github.com/redox-os/orbutils
 [pkgutils]: https://github.com/redox-os/pkgutils
 
-[Libmalloc]: https://github.com/redox-os/libmalloc
+[Ralloc]: https://github.com/redox-os/ralloc
 [Coreutils]: https://github.com/redox-os/coreutils
 [Sodium]: https://github.com/redox-os/sodium
 [TFS, an implementation of ZFS]: https://github.com/redox-os/tfs
@@ -47,6 +47,6 @@ Currently, [jackpot51] maintains:
 [Libextra]: https://github.com/redox-os/libextra
 [Binutils]: https://github.com/redox-os/binutils
 [Extrautils]: https://github.com/redox-os/extrautils
-[The project "Games for Redox"]: https://github.com/redox-os/games-for-redox
+[The project "Games for Redox"]: https://github.com/redox-os/games
 
 [Ion Shell]: https://github.com/redox-os/ion
