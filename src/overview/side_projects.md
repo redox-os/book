@@ -36,7 +36,7 @@ The first category should be obvious: an OS without certain core tools is a usel
 
 It is important to note we seek to avoid non-Rust tools, for safety and consistency (see [Why Rust]).
 
-[TFS]: https://github.com/ticki/tfs
+[TFS]: https://github.com/redox-os/tfs
 [Ion]: https://github.com/redox-os/ion
 [Orbital]: https://github.com/redox-os/orbital
 [OrbTK]: https://github.com/redox-os/orbtk
