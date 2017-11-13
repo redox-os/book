@@ -78,4 +78,4 @@ $ cargo install xargo
 Next steps
 ----------
 
-Once this is all set up, you can move on to [compiling Redox](getting_started/compiling_redox.html).
+Once this is all set up, you can move on to [installing the toolchain](getting_started/installing_the_toolchain.html).
