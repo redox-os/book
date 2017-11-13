@@ -70,6 +70,11 @@ $ rustup toolchain install nightly
 $ rustup override set nightly
 ```
 
+There is one more tool we need from Rust to install Redox. It is called Xargo. Xargo allows us to have a custom `libstd`
+```sh
+$ cargo install xargo
+```
+
 Next steps
 ----------
 
