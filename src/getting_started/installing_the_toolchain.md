@@ -61,3 +61,7 @@ To install the toolchain, run the following commands:
  # Add the tools to your path
  export PATH=$PATH:/path/to/libc/build/prefix/bin
  ```
+Next steps
+----------
+
+Now that we have the build tools and the toolchain, we can finally [compile Redox](getting_started/compiling_redox.html)
