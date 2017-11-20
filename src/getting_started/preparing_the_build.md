@@ -36,7 +36,7 @@ I assume you have a package manager, which you know how to use (if not, you have
 Linux Users:
 
 ```
-$ [your package manager] install make nasm qemu pkg-config libfuse-dev
+$ [your package manager] install cmake make nasm qemu pkg-config libfuse-dev
 ```
 
 MacOS Users using MacPorts:
