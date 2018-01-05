@@ -40,7 +40,7 @@ And what about MINIX? Its microkernel design is a big influence on the Redox pro
 The Need for Something New
 --------------------------
 
-We have to admit, that we do like the idea of writing something that is our own (Not Invented Here syndrome). There are numerous places in the MINIX 3 source code where I would like to make changes, so many that perhaps a rewrite in Rust makes the most sense.
+We have to admit, that we do like the idea of writing something that is our own (Not Invented Here syndrome). There are numerous places in the MINIX 3 source code where we would like to make changes, so many that perhaps a rewrite in Rust makes the most sense.
 
 - Different VFS model, based on URLs, where a program can control an entire segmented filesystem
 - Different driver model, where drivers interface with filesystems like network: and audio: to provide features
