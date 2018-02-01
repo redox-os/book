@@ -52,11 +52,6 @@ The kernel provides a small number of schemes in order to support userspace.
         <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/irq/index.html">Docs</a></td>
     </tr>
     <tr>
-        <td><code>null:</code></td>
-        <td>Scheme that will discard all writes, and read no bytes</td>
-        <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/null/index.html">Docs</a></td>
-    </tr>
-    <tr>
         <td><code>pipe:</code></td>
         <td>Used internally by the kernel to implement <code>pipe</code></td>
         <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/pipe/index.html">Docs</a></td>
@@ -65,11 +60,6 @@ The kernel provides a small number of schemes in order to support userspace.
         <td><code>sys:</code></td>
         <td>System information, such as the context list and scheme list</td>
         <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/sys/index.html">Docs</a></td>
-    </tr>
-    <tr>
-        <td><code>zero:</code></td>
-        <td>Scheme that will discard all writes, and always fill read buffers with zeroes</td>
-        <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/zero/index.html">Docs</a></td>
     </tr>
 </table>
 
@@ -115,6 +105,11 @@ The Redox userspace, starting with initfs:bin/init, will create schemes during i
         <td>Link level network send/receive, used by <code>ethernet:</code></td>
     </tr>
     <tr>
+        <td><code>null:</code></td>
+        <td><code>nulld</code></td>
+        <td>Scheme that will discard all writes, and read no bytes</td>
+    </tr>
+    <tr>
         <td><code>orbital:</code></td>
         <td><code>orbital</code></td>
         <td>Windowing system</td>
@@ -138,6 +133,11 @@ The Redox userspace, starting with initfs:bin/init, will create schemes during i
         <td><code>udp:</code></td>
         <td><code>udpd</code></td>
         <td>UDP sockets</td>
+    </tr>
+    <tr>
+        <td><code>zero:</code></td>
+        <td><code>zerod</code></td>
+        <td>Scheme that will discard all writes, and always fill read buffers with zeroes</td>
     </tr>
 </table>
 

@@ -1,9 +1,9 @@
 Exploring Redox
 ===============
 
-Use F2 or F3 keys to get to a login shell. User `user` can login without password. For `root`, the password is `password` for now. `help` lists builtin commands for your shell (ion). `ls /bin` will show a list of applications you can execute.
+Use F2 key to get to a login shell. User `user` can login without password. For `root`, the password is `password` for now. `help` lists builtin commands for your shell (ion). `ls /bin` will show a list of applications you can execute.
 
-Use F4 key to switch to a graphical user interface (orbital). Log in with the same username/password combinations as above.
+Use F3 key to switch to a graphical user interface (orbital). Log in with the same username/password combinations as above.
 
 Use the F1 key to get back to kernel output.
 

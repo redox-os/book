@@ -3,7 +3,6 @@
 Some general guidelines:
 
 * Use `std::mem::replace` and `std::mem::swap` when you can.
-* `libredox` should be 1-to-1 with the official `libstd`.
 * Use `.into()` and `.to_owned()` over `.to_string()`.
 * Prefer passing references to the data over owned data. (Don't take `String`, take `&str`. Don't take `Vec<T>` take `&[T]`).
 * Use generics, traits, and other abstractions Rust provides.

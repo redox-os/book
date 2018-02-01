@@ -43,8 +43,8 @@ The Need for Something New
 We have to admit, that we do like the idea of writing something that is our own (Not Invented Here syndrome). There are numerous places in the MINIX 3 source code where we would like to make changes, so many that perhaps a rewrite in Rust makes the most sense.
 
 - Different VFS model, based on URLs, where a program can control an entire segmented filesystem
-- Different driver model, where drivers interface with filesystems like network: and audio: to provide features
-- Different file system, RedoxFS, with a ZFS implementation in progress
+- Different driver model, where drivers interface with filesystems like `network:` and `audio:` to provide features
+- Different file system, RedoxFS, with a [TFS] implementation in progress
 - User space written mostly in Rust
 - Orbital, a new GUI
 
@@ -52,3 +52,4 @@ We have to admit, that we do like the idea of writing something that is our own 
 [jails]: https://www.freebsd.org/doc/handbook/jails.html
 [ZFS]: https://www.freebsd.org/doc/handbook/zfs.html
 [reliability]: http://wiki.minix3.org/doku.php?id=www:documentation:reliability
+[TFS]: https://github.com/redox-os/tfs

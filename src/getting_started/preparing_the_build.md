@@ -12,7 +12,7 @@ If you're on a Linux or macOS computer, you can just run the bootstrapping scrip
 $ curl -sf https://raw.githubusercontent.com/redox-os/redox/master/bootstrap.sh -o bootstrap.sh && bash -e bootstrap.sh
 ```
 
-This script fetches build dependencies using a package manager for your platform and clones the Redox code from Github. It checks whether you might already have a dependency and skips the installation in this case. On some systems this is simply done by checking whether the binary exists and doesn't take into account which version of the program you have. This can lead to build errors if you have old versions already installed. In this case, please install the skipped dependencies manually.
+This script fetches build dependencies using a package manager for your platform and clones the Redox code from GitHub. It checks whether you might already have a dependency and skips the installation in this case. On some systems this is simply done by checking whether the binary exists and doesn't take into account which version of the program you have. This can lead to build errors if you have old versions already installed. In this case, please install the skipped dependencies manually.
 
 Manual Setup
 ------------
