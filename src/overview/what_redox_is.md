@@ -9,10 +9,11 @@ We take inspiration from [Plan9], [Minix], [Linux], and [BSD]. We are trying to 
 
 At this time, Redox supports:
 
-* All x86_64 CPUs.  
-* Graphics cards with VBE support (all nvidia, intel, and amd cards from the past decade have this).  
-* AHCI disks.  
-* E1000 or RTL8168 network cards.  
+* All x86-64 CPUs.
+* Graphics cards with VBE support (all Nvidia, Intel, and AMD cards from the past decade have this).
+* AHCI disks.
+* E1000 or RTL8168 network cards.
+* Intel HDA audio controllers.
 * Mouse and keyboard with PS/2 emulation.
 
 This book is broken into 9 parts:
@@ -29,7 +30,7 @@ This book is broken into 9 parts:
 
 It is written such that you do not need any prior knowledge in Rust and/or OS development.
 
-[Rust]:  https://www.rust-lang.org  
+[Rust]:  https://www.rust-lang.org
 [POSIX]: https://en.wikipedia.org/wiki/POSIX
 [Plan9]: http://9p.io/plan9/index.html
 [Minix]: http://www.minix3.org/

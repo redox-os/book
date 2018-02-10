@@ -21,12 +21,12 @@ Currently, [jackpot51] maintains:
 - [Libextra]
 - [Ralloc]
 - [Sodium]
-- [TFS, an implementation of ZFS]
+- [TFS, a next-generation file system]
 
-[skylerberg] maintains the [Ion Shell].
+[mmstick] maintains the [Ion Shell].
 
 [jackpot51]: https://github.com/jackpot51
-[skylerberg]: https://github.com/skylerberg
+[mmstick]: https://github.com/mmstick
 [stratact]: https://github.com/stratact
 [ticki]: https://github.com/ticki
 
@@ -42,7 +42,7 @@ Currently, [jackpot51] maintains:
 [Ralloc]: https://github.com/redox-os/ralloc
 [Coreutils]: https://github.com/redox-os/coreutils
 [Sodium]: https://github.com/redox-os/sodium
-[TFS, an implementation of ZFS]: https://github.com/redox-os/tfs
+[TFS, a next-generation file system]: https://github.com/redox-os/tfs
 [Tedsta]: https://github.com/tedsta
 [Libextra]: https://github.com/redox-os/libextra
 [Binutils]: https://github.com/redox-os/binutils

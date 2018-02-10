@@ -8,42 +8,54 @@ The "core team" (people who are members of the [GitHub organization](https://git
 (alphabetically sorted)
 
 - [alicemaz]
-- [eghiorzi]
+- [arcterus]
+- [aurelien-git]
+- [batonius]
+- [ca1ek]
+- [cwood1]
+- [dlrobertson]
 - [hauleth]
-- [henrikhodne]
+- [ids1024]
 - [jackpot51] (who is our [BDFL])
 - [k0pernicus]
 - [mgattozzi]
 - [mmstick]
+- [movingtomars]
 - [nounoursheureux]
 - [polymetric1]
-- [roxxik]
+- [pythoneer]
+- [sajattack]
 - [skylerberg]
 - [stratact]
-- [tedsta]
 - [ticki]
 
-Some of those developers maintain several projects.  
-If you are looking to contribute to a project, you can contact the developer who is responsible that maintain the project using [this list]. 
+Some of those developers maintain several projects.
+If you are looking to contribute to a project, you can contact the developer who is responsible that maintain the project using [this list].
 
 But [don't]. [forget]. [all]. [the]. [other]. [awesome]. [contributors].
 
 [BDFL]: https://en.wikipedia.org/wiki/Benevolent_dictator_for_life
 
 [alicemaz]: https://github.com/alicemaz
-[eghiorzi]: https://github.com/eghiorzi
+[arcterus]: https://github.com/arcterus
+[aurelien-git]: https://github.com/aurelien-git
+[batonius]: https://github.com/batonius
+[ca1ek]: https://github.com/ca1ek
+[cwood1]: https://github.com/cwood1
+[dlrobertson]: https://github.com/dlrobertson
 [hauleth]: https://github.com/hauleth
-[henrikhodne]: https://github.com/henrikhodne
+[ids1024]: https://github.com/ids1024
 [jackpot51]: https://github.com/jackpot51
 [k0pernicus]: https://github.com/k0pernicus
 [mgattozzi]: https://github.com/mgattozzi
 [mmstick]: https://github.com/mmstick
+[movingtomars]: https://github.com/movingtomars
 [nounoursheureux]: https://github.com/nounoursheureux
 [polymetric1]: https://github.com/polymetric1
-[roxxik]: https://github.com/roxxik
+[pythoneer]: https://github.com/pythoneer
+[sajattack]: https://github.com/sajattack
 [skylerberg]: https://github.com/skylerberg
 [stratact]: https://github.com/stratact
-[tedsta]: https://github.com/tedsta
 [ticki]: https://github.com/ticki
 
 [this list]: ./overview/maintainers.html

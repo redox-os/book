@@ -37,4 +37,6 @@ If this doesn't work either, you should go open an issue.
 Note
 ----
 
-If you encounter any bugs, errors, obstructions, or other annoying things, please report the issue to the Redox repository. Thanks!
+If you encounter any bugs, errors, obstructions, or other annoying things, please report the issue to the [Redox repository]. Thanks!
+
+[Redox repository]: https://github.com/redox-os/redox
