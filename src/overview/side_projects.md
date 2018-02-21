@@ -21,7 +21,12 @@ We also have three utility distributions, which are collections of small, useful
 - [Extrautils]: Extra utilities such as reminders, calendars, spellcheck, and so on.
 - [Binutils]: Utilities for working with binary files.
 
-What tools for fitting in the Redox distribution?
+We also actively contribute to third party projects that are heavily used in Redox.
+
+ - [uutils/coreutils]: Cross-platform Rust rewrite of the GNU coreutils.
+ - [m-labs/smoltcp]: The network stack used by Redox.
+
+What tools are fitting for the Redox distribution?
 -------------------------------------------------
 
 Some of these tools will in the future be moved out of the default distribution, into seperate optional packages. Examples of these are Orbital, OrbTK, Sodium, and so on.
@@ -50,5 +55,8 @@ It is important to note we seek to avoid non-Rust tools, for safety and consiste
 [Coreutils]: https://github.com/redox-os/coreutils
 [Extrautils]: https://github.com/redox-os/extrautils
 [Binutils]: https://github.com/redox-os/binutils
+
+[uutils/coreutils]: https://github.com/uutils/coreutils
+[m-labs/smoltcp]: https://github.com/m-labs/smoltcp
 
 [Why Rust]: ./introduction/why_rust.html

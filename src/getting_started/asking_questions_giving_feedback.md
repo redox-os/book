@@ -1,7 +1,7 @@
-Asking questions, giving feedback or anything goes contact
-==========================================================
+Asking questions, giving feedback, or anything else
+===================================================
 
-If you have questions, feedback or anything else for us, you should join #redox at the Mozilla IRC network (`irc.mozilla.org`). Originally, we used FreeNode, but switched to Mozilla IRC, due to the Rust channel also being there.
+The quickest and most open way to **communicate with the Redox team** is on our **chat server**. Currently, you can only get an invite by sending an email request to [info@redox-os.org](mailto:info@redox-os.org), which might take a little while, since it's not automated. Simply say you'd like to join the chat. We're working on an better way to do this, but this is the best way right now.
 
 Alternatively you can use [our Forum].
 
