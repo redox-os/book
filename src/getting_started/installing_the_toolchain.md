@@ -1,6 +1,8 @@
 Installing the toolchain
 ========================
 
+The redox toolchain is required in order to compile certain parts of redox. This basically entails installing a patched version of gcc.
+
 ### Ubuntu and other Debian based systems
 
 To install the toolchain, run the following commands:
@@ -20,11 +22,11 @@ sudo apt install x86-64-unknown-redox-gcc
 
 ### Arch Linux
 To install the toolchain, run the following commands:
- ```bash 
+ ```bash
  # Clone libc
  git clone --recursive git@github.com:redox-os/libc
  
- # Go to the packages 
+ # Go to the packages
  cd libc/packages/arch
  
  # Start with binutils
@@ -50,7 +52,7 @@ To install the toolchain, run the following commands:
 
 ### Other distros/Mac OS X
 To install the toolchain, run the following commands:
- ```bash 
+ ```bash
  # Clone libc
  git clone --recursive git@github.com:redox-os/libc
  
