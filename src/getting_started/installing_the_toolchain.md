@@ -66,4 +66,4 @@ To install the toolchain, run the following commands:
 Next steps
 ----------
 
-Now that we have the build tools and the toolchain, we can finally [compile Redox](getting_started/compiling_redox.html)
+Now that we have the build tools and the toolchain, we can [prepare our build](getting_started/preparing_the_build.html).
