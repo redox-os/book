@@ -55,7 +55,7 @@ $ brew install redox-os/gcc_cross_compilers/x86_64-elf-gcc
 Setting Up Nightly Rust
 -----------------------
 
-While the following step is not _required_, it is recommended. If you already have a functioning Rust nightly installation, you can skip this step:
+The following step is not required _if_ you already have a functioning Rust nightly installation. Nightly is required.
 
 We will use `rustup` to manage our Rust versions:
 
@@ -63,12 +63,7 @@ We will use `rustup` to manage our Rust versions:
 $ curl https://sh.rustup.rs -sSf | sh
 ```
 
-Rustup will install the `stable` version of Rust. To run Redox, you have to install the `nightly` version of Rust, like this:
-
-```sh
-$ rustup toolchain install nightly
-$ rustup override set nightly
-```
+You may need to run rustup to install the recommended nightly version.
 
 There is one more tool we need from Rust to install Redox. It is called Xargo. Xargo allows us to have a custom `libstd`
 ```sh
