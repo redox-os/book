@@ -31,7 +31,7 @@ Open up the terminal emulator. Now, write `rem -s 10 -b`. This will set a 10 sec
 Playing around with Rusthello
 -----------------------------
 
-Rusthello is an advanced Reversi AI, made by [Enrico]. It is highly concurrent, so this proves Redox's multithreading capabilities. It supports various AIs, such as brute forcing, minimax, local optimizations, and hybrid AIs.
+Rusthello is an advanced Reversi AI, made by [HenryTheCat]. It is highly concurrent, so this proves Redox's multithreading capabilities. It supports various AIs, such as brute forcing, minimax, local optimizations, and hybrid AIs.
 
 Oh, let's try it out!
 
@@ -49,4 +49,4 @@ Exploring OrbTK
 
 Click the OrbTK demo app in the menu bar. This will open a graphical user interface that demonstrates the different widgets OrbTK currently supports.
 
-[Enrico]: https://github.com/EGhiorzi
+[HenryTheCat]: https://github.com/HenryTheCat
