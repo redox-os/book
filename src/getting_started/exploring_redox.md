@@ -36,10 +36,10 @@ Rusthello is an advanced Reversi AI, made by [HenryTheCat]. It is highly concurr
 Oh, let's try it out!
 
 ```sh
-# first we `cd` to the Rusthello directory
-$ cd apps/rusthello
-# now, run the binary file
-$ ./main.bin
+# install rusthello by typing command
+$ sudo pkg install games
+# start it with command
+$ rusthello
 ```
 
 Then you will get prompted for various things, such as difficulty, AI setup, and so on. When this is done, Rusthello interactively starts the battle between you and an AI or an AI and an AI.
