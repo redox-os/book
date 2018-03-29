@@ -12,3 +12,10 @@ qemu-system-x86_64 -serial mon:stdio -d cpu_reset -d guest_errors -smp 4 -m 1024
 ```
 
 Change `redox_VERSION.bin` to the `.bin` file you just downloaded.
+
+Once the system is fully booted, you will be greeted by the RedoxOS login screen. In order to login, enter the following information:
+
+```
+User = root
+password = password
+```
