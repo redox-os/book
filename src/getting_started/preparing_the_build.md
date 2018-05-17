@@ -70,6 +70,12 @@ There is one more tool we need from Rust to install Redox. It is called Xargo. X
 $ cargo install xargo
 ```
 
+Once it is installed, add its install directory to your path by running the following
+```sh
+$ export PATH=${PATH}:~/.cargo/bin
+```
+This line can be added to your shell start-up file, like .bashrc, so that it is automatically set up for you in future.
+
 Next steps
 ----------
 
