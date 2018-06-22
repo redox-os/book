@@ -24,7 +24,7 @@
     - [Installing the toolchain](./getting_started/installing_the_toolchain.md)
     - [Preparing the build](./getting_started/preparing_the_build.md)
     - [Compiling Redox](./getting_started/compiling_redox.md)
-    - [Exploring Redox](./getting_started/exploring_redox.md)
+    - [Trying Out Redox](./getting_started/trying_out_redox.md)
     - [Questions and feedback](./getting_started/asking_questions_giving_feedback.md)
 
 - [Exploring Redox](./explore/explore.md)

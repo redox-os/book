@@ -1,4 +1,4 @@
-Exploring Redox
+Trying Out Redox
 ===============
 
 Use F2 key to get to a login shell. User `user` can login without password. For `root`, the password is `password` for now. `help` lists builtin commands for your shell (ion). `ls /bin` will show a list of applications you can execute.
@@ -10,12 +10,15 @@ Use the F1 key to get back to kernel output.
 Sodium
 ------
 
-Sodium is Redox's Vi-like editor. In the menu-bar, pick the icon with `Na` on it. This should now open up an editor window.
+Sodium is Redox's Vi-like editor. To try it out,
+1. Open the terminal by clicking the icon in the button bar
+2. Type `sudo pkg install sodium` to install Sodium. You will need network for this.
+3. Type `sodium`. This should now open up a separate editor window.
 
 A short list of the Sodium defaults:
 
-- `hjkl`: Navigation.
-- `ia`: Go to insert mode.
+- `hjkl`: Navigation keys.
+- `ia`: Go to insert/append mode.
 - `;`: Go to command-line mode.
 - shift-space: Go to normal mode.
 
