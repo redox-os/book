@@ -25,28 +25,28 @@ Currently, [jackpot51] maintains:
 
 [mmstick] maintains the [Ion Shell].
 
-[jackpot51]: https://github.com/jackpot51
-[mmstick]: https://github.com/mmstick
-[stratact]: https://github.com/stratact
-[ticki]: https://github.com/ticki
+[jackpot51]: https://gitlab.redox-os.org/jackpot51
+[mmstick]: https://gitlab.redox-os.org/mmstick
+[stratact]: https://gitlab.redox-os.org/stratact
+[ticki]: https://gitlab.redox-os.org/ticki
 
-[The kernel, drivers, standard library, and Orbital]: https://github.com/redox-os/redox
-[The installer]: https://github.com/redox-os/installer
-[RedoxFS]: https://github.com/redox-os/redoxfs
-[Newlib and C ports]: https://github.com/redox-os/libc
-[Orbclient]: https://github.com/redox-os/orbclient
-[OrbTK]: https://github.com/redox-os/orbtk
-[Orbutils]: https://github.com/redox-os/orbutils
-[pkgutils]: https://github.com/redox-os/pkgutils
+[The kernel, drivers, standard library, and Orbital]: https://gitlab.redox-os.org/redox-os/redox
+[The installer]: https://gitlab.redox-os.org/redox-os/installer
+[RedoxFS]: https://gitlab.redox-os.org/redox-os/redoxfs
+[Newlib and C ports]: https://gitlab.redox-os.org/redox-os/libc
+[Orbclient]: https://gitlab.redox-os.org/redox-os/orbclient
+[OrbTK]: https://gitlab.redox-os.org/redox-os/orbtk
+[Orbutils]: https://gitlab.redox-os.org/redox-os/orbutils
+[pkgutils]: https://gitlab.redox-os.org/redox-os/pkgutils
 
-[Ralloc]: https://github.com/redox-os/ralloc
-[Coreutils]: https://github.com/redox-os/coreutils
-[Sodium]: https://github.com/redox-os/sodium
-[TFS, a next-generation file system]: https://github.com/redox-os/tfs
-[Tedsta]: https://github.com/tedsta
-[Libextra]: https://github.com/redox-os/libextra
-[Binutils]: https://github.com/redox-os/binutils
-[Extrautils]: https://github.com/redox-os/extrautils
-[The project "Games for Redox"]: https://github.com/redox-os/games
+[Ralloc]: https://gitlab.redox-os.org/redox-os/ralloc
+[Coreutils]: https://gitlab.redox-os.org/redox-os/coreutils
+[Sodium]: https://gitlab.redox-os.org/redox-os/sodium
+[TFS, a next-generation file system]: https://gitlab.redox-os.org/redox-os/tfs
+[Tedsta]: https://gitlab.redox-os.org/tedsta
+[Libextra]: https://gitlab.redox-os.org/redox-os/libextra
+[Binutils]: https://gitlab.redox-os.org/redox-os/binutils
+[Extrautils]: https://gitlab.redox-os.org/redox-os/extrautils
+[The project "Games for Redox"]: https://gitlab.redox-os.org/redox-os/games
 
-[Ion Shell]: https://github.com/redox-os/ion
+[Ion Shell]: https://gitlab.redox-os.org/redox-os/ion

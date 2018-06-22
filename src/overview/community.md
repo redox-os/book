@@ -3,7 +3,7 @@ The Redox community
 
 We are quite a few developers at Redox. 40+ people work on it. There are all sorts of cool people to work with.
 
-The "core team" (people who are members of the [GitHub organization](https://github.com/redox-os)) is currently:
+The "core team" (people who are members of the [GitLab organization](https://gitlab.redox-os.org/redox-os)) is currently:
 
 (alphabetically sorted)
 
@@ -42,28 +42,28 @@ But [don't]. [forget]. [all]. [the]. [other]. [awesome]. [contributors].
 [batonius]: https://github.com/batonius
 [ca1ek]: https://github.com/ca1ek
 [cwood1]: https://github.com/cwood1
-[dlrobertson]: https://github.com/dlrobertson
+[dlrobertson]: https://gitlab.redox-os.org/dlrobertson
 [hauleth]: https://github.com/hauleth
-[ids1024]: https://github.com/ids1024
-[jackpot51]: https://github.com/jackpot51
+[ids1024]: https://gitlab.redox-os.org/ids1024
+[jackpot51]: https://gitlab.redox-os.org/jackpot51
 [k0pernicus]: https://github.com/k0pernicus
 [mgattozzi]: https://github.com/mgattozzi
-[mmstick]: https://github.com/mmstick
+[mmstick]: https://gitlab.redox-os.org/mmstick
 [movingtomars]: https://github.com/movingtomars
 [nounoursheureux]: https://github.com/nounoursheureux
 [polymetric1]: https://github.com/polymetric1
 [pythoneer]: https://github.com/pythoneer
-[sajattack]: https://github.com/sajattack
+[sajattack]: https://gitlab.redox-os.org/sajattack
 [skylerberg]: https://github.com/skylerberg
-[stratact]: https://github.com/stratact
+[stratact]: https://gitlab.redox-os.org/stratact
 [ticki]: https://github.com/ticki
 
 [this list]: ./overview/maintainers.html
 
-[don't]: https://github.com/redox-os/redox/graphs/contributors
-[forget]: https://github.com/redox-os/coreutils/graphs/contributors
-[all]: https://github.com/redox-os/sodium/graphs/contributors
-[the]: https://github.com/redox-os/ion/graphs/contributors
-[other]: https://github.com/redox-os/orbtk/graphs/contributors
-[awesome]: https://github.com/redox-os/orbclient/graphs/contributors
-[contributors]: https://github.com/redox-os/redox/graphs/contributors
+[don't]: https://gitlab.redox-os.org/redox-os/redox/graphs/master
+[forget]: https://gitlab.redox-os.org/redox-os/coreutils/graphs/master
+[all]: https://gitlab.redox-os.org/redox-os/sodium/graphs/master
+[the]: https://gitlab.redox-os.org/redox-os/ion/graphs/master
+[other]: https://gitlab.redox-os.org/redox-os/orbtk/graphs/master
+[awesome]: https://gitlab.redox-os.org/redox-os/orbclient/graphs/master
+[contributors]: https://gitlab.redox-os.org/redox-os/redox/graphs/master

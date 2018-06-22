@@ -1,8 +1,8 @@
 About this Book
 ===============
 
-This book is written in [Markdown], built using [mdBook]. The source files can be found (and forked) on GitHub at [github.com/redox-os/book/].
+This book is written in [Markdown], built using [mdBook]. The source files can be found (and forked) on GitLab at [gitlab.redox-os.org/redox-os/book/].
 
 [Markdown]: http://daringfireball.net/projects/markdown/basics
 [mdBook]: https://github.com/azerupi/mdBook
-[github.com/redox-os/book/]: https://github.com/redox-os/book/
+[gitlab.redox-os.org/redox-os/book/]: https://gitlab.redox-os.org/redox-os/book/

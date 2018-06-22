@@ -52,4 +52,4 @@ We have to admit, that we do like the idea of writing something that is our own 
 [jails]: https://www.freebsd.org/doc/handbook/jails.html
 [ZFS]: https://www.freebsd.org/doc/handbook/zfs.html
 [reliability]: http://wiki.minix3.org/doku.php?id=www:documentation:reliability
-[TFS]: https://github.com/redox-os/tfs
+[TFS]: https://gitlab.redox-os.org/redox-os/tfs

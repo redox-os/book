@@ -24,7 +24,7 @@ sudo apt install x86-64-unknown-redox-gcc
 To install the toolchain, run the following commands:
  ```bash
  # Clone libc
- git clone --recursive git@github.com:redox-os/libc
+ git clone --recursive git@gitlab.redox-os.org:redox-os/libc
  
  # Go to the packages
  cd libc/packages/arch
@@ -54,7 +54,7 @@ To install the toolchain, run the following commands:
 To install the toolchain, run the following commands:
  ```bash
  # Clone libc
- git clone --recursive git@github.com:redox-os/libc
+ git clone --recursive git@gitlab.redox-os.org:redox-os/libc
  
  # Run the setup script
  cd libc
