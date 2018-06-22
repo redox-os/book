@@ -3,7 +3,7 @@ Trying Redox in a virtual machine
 
 The ISO image is *not* the prefered way to run Redox in a virtual machine. Currently the ISO image loads the entire hard disk image (including unused space) into memory. In the future, the live disk should be improved so that doesn't happen.
 
-Instead, you want to use the hard disk image, which you can find on the [release pages](https://github.com/redox-os/redox/releases) as a `.bin.gz` file. Download and extract that file.
+Instead, you want to use the hard disk image, which you can find on the [release pages](https://gitlab.redox-os.org/redox-os/redox/tags) as a `.bin.gz` file. Download and extract that file.
 
 You can then run it in your prefered emulator; this command will run qemu with various features Redox can use enables:
 

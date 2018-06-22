@@ -41,22 +41,22 @@ The first category should be obvious: an OS without certain core tools is a usel
 
 It is important to note we seek to avoid non-Rust tools, for safety and consistency (see [Why Rust]).
 
-[TFS]: https://github.com/redox-os/tfs
-[Ion]: https://github.com/redox-os/ion
-[Orbital]: https://github.com/redox-os/orbital
-[OrbTK]: https://github.com/redox-os/orbtk
-[pkgutils]: https://github.com/redox-os/pkgutils
-[Sodium]: https://github.com/redox-os/sodium
-[ralloc]: https://github.com/redox-os/ralloc
-[libextra]: https://github.com/redox-os/libextra
-[games-for-redox]: https://github.com/redox-os/games
-[here]: https://github.com/redox-os
+[TFS]: https://gitlab.redox-os.org/redox-os/tfs
+[Ion]: https://gitlab.redox-os.org/redox-os/ion
+[Orbital]: https://gitlab.redox-os.org/redox-os/orbital
+[OrbTK]: https://gitlab.redox-os.org/redox-os/orbtk
+[pkgutils]: https://gitlab.redox-os.org/redox-os/pkgutils
+[Sodium]: https://gitlab.redox-os.org/redox-os/sodium
+[ralloc]: https://gitlab.redox-os.org/redox-os/ralloc
+[libextra]: https://gitlab.redox-os.org/redox-os/libextra
+[games-for-redox]: https://gitlab.redox-os.org/redox-os/games
+[here]: https://gitlab.redox-os.org/redox-os
 
-[Coreutils]: https://github.com/redox-os/coreutils
-[Extrautils]: https://github.com/redox-os/extrautils
-[Binutils]: https://github.com/redox-os/binutils
+[Coreutils]: https://gitlab.redox-os.org/redox-os/coreutils
+[Extrautils]: https://gitlab.redox-os.org/redox-os/extrautils
+[Binutils]: https://gitlab.redox-os.org/redox-os/binutils
 
-[uutils/coreutils]: https://github.com/uutils/coreutils
-[m-labs/smoltcp]: https://github.com/m-labs/smoltcp
+[uutils/coreutils]: https://gitlab.redox-os.org/uutils/coreutils
+[m-labs/smoltcp]: https://gitlab.redox-os.org/m-labs/smoltcp
 
 [Why Rust]: ./introduction/why_rust.html

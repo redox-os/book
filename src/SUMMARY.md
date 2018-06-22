@@ -104,7 +104,7 @@
         - [Reddit](./contributing/communication/reddit.md)
     - [Direct contributions](./contributing/direct_contributions/index.md)
         - [Low hanging fruit](./contributing/direct_contributions/low_hanging_fruit.md)
-        - [GitHub issues](./contributing/direct_contributions/github_issues.md)
+        - [GitLab issues](./contributing/direct_contributions/gitlab_issues.md)
             - [How to do a bug report correctly](./contributing/direct_contributions/creating_proper_bug_reports.md)
         - [Pull requests](./contributing/direct_contributions/pull_requests.md)
             - [How to do a pull request properly](./contributing/direct_contributions/creating_proper_pull_requests.md)

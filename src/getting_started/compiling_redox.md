@@ -39,4 +39,4 @@ Note
 
 If you encounter any bugs, errors, obstructions, or other annoying things, please report the issue to the [Redox repository]. Thanks!
 
-[Redox repository]: https://github.com/redox-os/redox
+[Redox repository]: https://gitlab.redox-os.org/redox-os/redox
