@@ -1,11 +1,11 @@
 Why Free Software?
 =======
 
-Redox OS will be packaged only with compatible free software, to ensure that the entire default distribution may be *inspected*, *modified*, and *redistributed*. Software that does not allow these features, i.e. proprietary software, is against the goals of security and freedom and will not be endorsed by Redox OS. We therefore comply with the [GNU Free System Distribution Guidelines](http://www.gnu.org/distros/free-system-distribution-guidelines.html).
+Redox OS will be packaged only with compatible free software, to ensure that the entire default distribution may be *inspected*, *modified*, and *redistributed*. Software that does not allow these features, i.e. proprietary software, is against the goals of security and freedom and will not be endorsed by Redox OS. We therefore comply with the [GNU Free System Distribution Guidelines](https://www.gnu.org/distros/free-system-distribution-guidelines.html).
 
-To view a list of compatible licenses, please refer to the [GNU List of Licenses](http://www.gnu.org/licenses/license-list.html).
+To view a list of compatible licenses, please refer to the [GNU List of Licenses](https://www.gnu.org/licenses/license-list.html).
 
-For more information about free software, [please view this page](http://www.gnu.org/philosophy/free-sw.html).
+For more information about free software, [please view this page](https://www.gnu.org/philosophy/free-sw.html).
 
 Free Software is more Secure
 -------------------------------------
