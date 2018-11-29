@@ -1,7 +1,7 @@
-"Everything is an URL"
+"Everything is a URL"
 ======================
 
-"Everything is an URL" is an important principle in the design of Redox. Roughly speaking it means that the API, design, and ecosystem is centered around URLs, schemes, and resources as the main communication primitive. Applications communicate with each other, the system, daemons, etc, using URLs. As such, programs do not have to create their own constructs for communication.
+"Everything is a URL" is an important principle in the design of Redox. Roughly speaking it means that the API, design, and ecosystem is centered around URLs, schemes, and resources as the main communication primitive. Applications communicate with each other, the system, daemons, etc, using URLs. As such, programs do not have to create their own constructs for communication.
 
 By unifying the API in this way, you are able to have a consistent, clean, and flexible interface.
 
