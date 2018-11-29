@@ -12,7 +12,7 @@ In short, a URL is an identifier of a resource. It contains two parts:
 
 2. The reference part. This represents the "payload" of the URL, namely what the URL refers to. Consider `file`, as an example. A URL starting with `file:` simply has a reference which is a path to a file. The reference can be any arbitrary byte string. The parsing, interpretation, and storage of the reference is left to the scheme. For this reason, it is not required to be a tree-like structure.
 
-So, the string representation of an URL looks like:
+So, the string representation of a URL looks like:
 
 ```
 [scheme]:[reference]

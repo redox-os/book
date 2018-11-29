@@ -10,7 +10,7 @@ What does "Everything is a URL" mean?
 
 These can be used for effectively modulating the system in a "non-patchworky" manner.
 
-The term is rather misleading, since a URL is just the identifier of a scheme and a resource descriptor. So in that sense "Everything is a scheme, identified by an URL" is more accurate, but not very catchy.
+The term is rather misleading, since a URL is just the identifier of a scheme and a resource descriptor. So in that sense "Everything is a scheme, identified by a URL" is more accurate, but not very catchy.
 
 So, how does it differ from files?
 ----------------------------------
