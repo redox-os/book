@@ -21,7 +21,6 @@
 - [Getting started](./getting_started/getting_started.md)
     - [Trying Redox in a virtual machine](./getting_started/try_vm.md)
     - [Running Redox on real hardware](./getting_started/real_hardware.md)
-    - [Installing the toolchain](./getting_started/installing_the_toolchain.md)
     - [Preparing the build](./getting_started/preparing_the_build.md)
     - [Compiling Redox](./getting_started/compiling_redox.md)
     - [Trying Out Redox](./getting_started/trying_out_redox.md)
