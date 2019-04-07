@@ -91,4 +91,4 @@ At this point, the user will now be able to access the [Shell](./explore/shell.h
 Here is an overview of the initialization process with scheme creation and usage.
 For simplicity's sake, we do not depict all scheme interaction but at least the major ones.
 
-![Redox initialization graph](./explore/init.svg "Redox initialization graph")
+![Redox initialization graph](./init.svg "Redox initialization graph")
