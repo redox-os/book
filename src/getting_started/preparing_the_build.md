@@ -42,13 +42,13 @@ $ [your package manager] install cmake make nasm qemu pkg-config libfuse-dev wge
 MacOS Users using MacPorts:
 
 ```
-$ sudo port install make nasm qemu gcc49 pkg-config osxfuse x86_64-elf-gcc
+$ sudo port install make nasm qemu gcc7 pkg-config osxfuse x86_64-elf-gcc
 ```
 
 MacOS Users using Homebrew:
 
 ```
-$ brew install make nasm qemu gcc49 pkg-config Caskroom/cask/osxfuse
+$ brew install make nasm qemu gcc@7 pkg-config Caskroom/cask/osxfuse
 $ brew install redox-os/gcc_cross_compilers/x86_64-elf-gcc
 ```
 
