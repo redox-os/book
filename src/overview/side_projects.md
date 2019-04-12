@@ -56,7 +56,7 @@ It is important to note we seek to avoid non-Rust tools, for safety and consiste
 [Extrautils]: https://gitlab.redox-os.org/redox-os/extrautils
 [Binutils]: https://gitlab.redox-os.org/redox-os/binutils
 
-[uutils/coreutils]: https://gitlab.redox-os.org/uutils/coreutils
-[m-labs/smoltcp]: https://gitlab.redox-os.org/m-labs/smoltcp
+[uutils/coreutils]: https://github.com/uutils/coreutils
+[m-labs/smoltcp]: https://github.com/m-labs/smoltcp
 
 [Why Rust]: ./introduction/why_rust.html
