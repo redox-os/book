@@ -79,4 +79,4 @@ This line can be added to your shell start-up file, like .bashrc, so that it is 
 Next steps
 ----------
 
-Once this is all set up, we can finally [compile Redox](getting_started/compiling_redox.html).
+Once this is all set up, we can finally [compile Redox](compiling_redox.html).
