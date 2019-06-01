@@ -11,7 +11,7 @@
     * `qemu-system-x86_64 -version` or your actual hardware specs, if applicable
   * The operating system you used to build Redox
     * `uname -a` or an alternative format
-4. Make sure that your bug doesn't already have an issue on GitLab. If you submit a duplicate, you should accept that you may be ridiculed for it, though you'll still be helped. Feel free to ask in the Redox [chat](./contributing/communication/chat.html) if you're uncertain as to whether your issue is new
+4. Make sure that your bug doesn't already have an issue on GitLab. If you submit a duplicate, you should accept that you may be ridiculed for it, though you'll still be helped. Feel free to ask in the Redox [chat](//contributing/communication/chat.html) if you're uncertain as to whether your issue is new
 5. Create a GitLab issue following the template
     * Non-bug report issues may ignore this template
 6. Watch the issue and be available for questions

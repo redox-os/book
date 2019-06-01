@@ -84,7 +84,7 @@ The login program accepts a username, currently any username may be used, prints
 ############################
 ```
 
-At this point, the user will now be able to access the [Shell](./explore/shell.html)
+At this point, the user will now be able to access the [Shell](//explore/shell.html)
 
 ## Graphical overview
 

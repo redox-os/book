@@ -59,4 +59,4 @@ It is important to note we seek to avoid non-Rust tools, for safety and consiste
 [uutils/coreutils]: https://github.com/uutils/coreutils
 [m-labs/smoltcp]: https://github.com/m-labs/smoltcp
 
-[Why Rust]: ./introduction/why_rust.html
+[Why Rust]: //introduction/why_rust.html
