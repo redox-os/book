@@ -8,5 +8,4 @@ Redox is meant to be an *insanely* customizable system, allowing a user to tear 
 
 - [Boot Process](//explore/boot_process.html)
 - [Shell](//explore/shell.html)
-- [Utilities](./explore/utilities.html)
 - [GUI](//explore/gui.html)
