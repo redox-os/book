@@ -7,4 +7,4 @@ Please notice that this book is currently being written.
 
 This book was written by Ticki with the help of LazyOxen, Steve Klabnik, ElijahCaine, and Jackpot51.
 
-If you want to skip straight to trying out Redox, see [getting started](//getting_started/getting_started.html).
+If you want to skip straight to trying out Redox, see [getting started](getting_started/getting_started.html).

@@ -6,6 +6,7 @@ We will start with the boot system, continuing to the shell and command-line uti
 
 Redox is meant to be an *insanely* customizable system, allowing a user to tear it down to a very small command-line distro, or build it up to a full desktop environment with ease.
 
-- [Boot Process](//explore/boot_process.html)
-- [Shell](//explore/shell.html)
-- [GUI](//explore/gui.html)
+- [Boot Process](./explore/boot_process.html)
+- [Shell](./explore/shell.html)
+- [Utilities](./explore/utilities.html)
+- [GUI](./explore/gui.html)
