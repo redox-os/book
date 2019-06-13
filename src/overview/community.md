@@ -58,7 +58,7 @@ But [don't]. [forget]. [all]. [the]. [other]. [awesome]. [contributors].
 [stratact]: https://gitlab.redox-os.org/stratact
 [ticki]: https://github.com/ticki
 
-[this list]: ./overview/maintainers.html
+[this list]: ./maintainers.html
 
 [don't]: https://gitlab.redox-os.org/redox-os/redox/graphs/master
 [forget]: https://gitlab.redox-os.org/redox-os/coreutils/graphs/master

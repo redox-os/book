@@ -21,7 +21,7 @@ The steps given below are for the main Redox project - submodules and other proj
 8. Commit (`git add . --all; git commit -m "my commit"`)
 9. Optionally run [rustfmt](https://gitlab.redox-os.org/rust-lang-nursery/rustfmt) on the files you changed and commit again if it did anything (check with `git diff` first)
 10. Test your changes with `make qemu` or `make virtualbox` (you might have to use `make qemu kvm=no`, formerly `make qemu_no_kvm`)
-(see [Best Practices and Guidelines](./contributing/best_practices/overview.html))
+(see [Best Practices and Guidelines](../best_practices/overview.html))
 11. Pull from upstream (`git fetch upstream; git rebase upstream/master`) (Note: try not to use `git pull`, it is equivalent to doing `git fetch upstream; git merge master upstream/master`, which is not usually preferred for local/fork repositories, although it is fine in some cases.)
 12. Repeat step 9 to make sure the rebase still builds and starts
 13. Push to your fork (`git push origin my-branch`)

@@ -37,9 +37,9 @@ It is written such that you do not need any prior knowledge in Rust and/or OS de
 [Linux]: https://en.wikipedia.org/wiki/Linux
 [BSD]: http://www.bsd.org/
 
-[Design]: ./design/design.html
-[Overview]: ./overview/welcome.html
-[Introduction]: ./introduction/why_redox.html
-[Getting started]: ./getting_started/preparing_the_build.html
-[The design]: ./design/design.html
-[Contributing]: ./contributing/chat.html
+[Design]: ../design/design.html
+[Overview]: ./welcome.html
+[Introduction]: ../introduction/why_redox.html
+[Getting started]: ../getting_started/preparing_the_build.html
+[The design]: ../design/design.html
+[Contributing]: ../contributing/chat.html
