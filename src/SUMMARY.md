@@ -56,7 +56,7 @@
 [//]: # (            - [Performance of microkernels]())
 [//]: # (        - [Syscalls]())
 [//]: # (            - [Linux compatibility]())
-        - [Scheduling](./design/scheduling)
+        - [Scheduling](./design/scheduling.md)
         - [Memory management](./design/memory)
         - [Drivers](./design/drivers)
 [//]: # (    - [Trade-offs]())
