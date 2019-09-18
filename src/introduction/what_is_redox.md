@@ -1,27 +1,44 @@
-What is Redox?
-==============
+# What is Redox?
 
-You might still have the question: What is Redox actually?
+Redox is a general purpose operating system written in pure [Rust]. Our aim is to provide a fully functioning Unix-like microkernel, that is both secure and free.
 
-Redox is an attempt to make a complete, fully-functioning, general-purpose operating system with a focus on safety, freedom, reliability, correctness, and pragmatism.
+We have modest compatibility with [POSIX], allowing Redox to run many programs without porting.
 
-The goals of Redox
-------------------
+We take inspiration from [Plan9], [Minix], [Linux], and [BSD]. Redox aims to synthesize years of research and hard won experience into a system that feels modern and familiar. 
 
-We want to be able to use it, without obstructions, as an alternative to Linux on our computers. It should be able to run most Linux programs with only minimal modifications. (see [Why Free Software])
+At this time, Redox supports:
 
-We're aiming towards a complete, safe Rust ecosystem. This is a design choice, which hopefully improves correctness and security (see [Why Rust]).
+* All x86-64 CPUs.
+* Graphics cards with VBE support (all Nvidia, Intel, and AMD cards from the past decade have this).
+* AHCI disks.
+* E1000 or RTL8168 network cards.
+* Intel HDA audio controllers.
+* Mouse and keyboard with PS/2 emulation.
 
-We want to improve the security design when compared to other Unix-like kernels by using safe defaults and disallowing insecure configurations where possible.
+This book is broken into the following chapters:
 
-The non-goals of Redox
-----------------------
+- [Introduction]: Explanation of what Redox is and how it compares to other systems.
+- [Getting started]: Compiling and running Redox.
+- [The design]: An in-depth introduction to the design and implementation of Redox.
+- Development in user space: Writing applications for Redox.
+- [Contributing]: How you can contribute to Redox.
+- Understanding the codebase: For familiarizing yourself with the codebase.
+- Fun: Top secret chapter.
+- The future: What Redox aims to be.
 
-We are not a Linux clone, or POSIX-compliant, nor are we crazy scientists, who wish to redesign everything. Generally, we stick to well-tested and proven correct designs. If it ain't broken don't fix it.
+It is written such that you do not need any prior knowledge in Rust and/or OS development.
 
-This means that a large number of standard programs and libraries will be compatible with Redox. Some things that do not align with our design decisions will have to be ported.
+[Rust]:  https://www.rust-lang.org
+[POSIX]: https://en.wikipedia.org/wiki/POSIX
+[Plan9]: http://9p.io/plan9/index.html
+[Minix]: http://www.minix3.org/
+[Linux]: https://en.wikipedia.org/wiki/Linux
+[BSD]: http://www.bsd.org/
 
-The key here is the trade off between correctness and compatibility. Ideally, you should be able achieve both, but unfortunately, you can't always do so.
+[Design]: ../design/design.html
+[Overview]: ./welcome.html
+[Introduction]: ../introduction/why_redox.html
+[Getting started]: ../getting_started/preparing_the_build.html
+[The design]: ../design/design.html
+[Contributing]: ../contributing/chat.html
 
-[Why Free Software]: ./why_free_software.html
-[Why Rust]: ./why_rust.html

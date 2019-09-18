@@ -1,19 +1,15 @@
 Why Redox?
 ==========
 
-A natural question this raises is: Why do we need yet another OS? There are plenty out there already.
+There are plenty of operating systems out there. It's natural to wonder why we should build a new one. Wouldn't it be better to contribute to an existing project?
 
-The answer is: You don't. No-one _needs_ an OS.
+The Redox community believes that existing projects fall short, and that our goals are best served by a new project built from scratch.
 
-Why not contribute somewhere else? Linux? BSD? MINIX?
------------------------------------------------------
+Let's consider 3 existing projects.
 
 ### Linux
-There are numerous other OS's, kernels, whatever that lack for contributors, and are in desperate need of more coders. Many times, this is for a good reason. Failures in management, a lack of money, inspiration, or innovation, or a limited set of applications have all caused projects to dwindle and eventually fail.
 
-All these have numerous short-fallings, vulnerability, and bad design choices. Redox isn't and won't be perfect, but we seek to improve over other OSes.
-
-Take Linux for example:
+Linux runs the world, and boots on everything from high performance servers to tiny embedded devices. And many Redox community members run Linux as their main workstations. But Linux is not an ideal platform for new innovation in OS development.
 
 - Legacy until infinity: Old syscalls stay around forever, drivers for long-unbuyable hardware stay in the kernel as a mandatory part. While they can be disabled, running them in kernel space is unnecessary, and can be a source of system crashes, security issues, and unexpected bugs.
 - Huge codebase: To contribute, you must find a place to fit in to nearly _25 million lines of code_, in just the kernel. This is due to Linux's monolithic architecture.
@@ -22,9 +18,9 @@ Take Linux for example:
 
 ### BSD
 
-It is no secret that we're more in favor of BSD, than Linux (although most of us are still Linux users, for various reasons). This is because of certain security features that allow the construction of a more reliable system, things like [jails] and [ZFS].
+It is no secret that we're more in favor of BSD. The BSD community has led the way in many innovations in the past 2 decades. Things like [jails] and [ZFS] yield more reliable systems, and other operating systems are still catching up.
 
-BSD isn't quite there yet:
+But BSD doesn't meet our needs:
 
 - It still has a monolithic kernel. This means that a single buggy driver can crash, hang, or, in the worst case, cause damage to the system.
 - The use of C in the kernel makes it probable to write code with memory safety issues.
