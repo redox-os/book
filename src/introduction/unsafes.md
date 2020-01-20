@@ -9,4 +9,4 @@ A quick grep gives us some stats: the kernel has about 70 invocations of `unsafe
 
 This contrasts with kernels written in C, which cannot make guarantees about safety without costly formal analysis.
 
-You can find out more about how `unsafe` works in the [relevant section of the Rust book](https://doc.rust-lang.org/book/unsafe.html).
+You can find out more about how `unsafe` works in the [relevant section of the Rust book](https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html).
