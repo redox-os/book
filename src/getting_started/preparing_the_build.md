@@ -48,7 +48,7 @@ $ sudo port install make nasm qemu gcc7 pkg-config osxfuse x86_64-elf-gcc
 MacOS Users using Homebrew:
 
 ```
-$ brew install make nasm qemu gcc@7 pkg-config Caskroom/cask/osxfuse
+$ brew install automake bison gettext libtool make nasm qemu gcc@7 pkg-config Caskroom/cask/osxfuse
 $ brew install redox-os/gcc_cross_compilers/x86_64-elf-gcc
 ```
 
