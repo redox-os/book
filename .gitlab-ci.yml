@@ -1,0 +1,6 @@
+image : hrektts/mdbook:latest
+
+build:
+    script:
+        - mdbook build
+

@@ -16,7 +16,7 @@ The "core team" (people who are members of the [GitLab organization](https://git
 - [dlrobertson]
 - [hauleth]
 - [ids1024]
-- [jackpot51] (who is our [BDFL])
+- [jackpot51] (Our [BDFL])
 - [k0pernicus]
 - [mgattozzi]
 - [mmstick]
