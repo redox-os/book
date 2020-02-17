@@ -1,9 +1,16 @@
-# The Redox Operating-System book
+# The Redox Book
 
-## How to build the book ?
+## Development
 
-You can use whatever _Markdown to PDF_ tool to build the book.  
-If you don't know which tool to use, we advise you to choose [mdBook](https://github.com/azerupi/mdBook), a Rust tool to create online books from Markdown.
+We use [mdBook](https://github.com/azerupi/mdBook), a Rust tool to create online 
+books from Markdown.
+
+Start a development server on http://localhost:3000 with the following command
+
+```
+mdbook serve
+```
 
 Some graphics are in svg and are associated with their corresponding .xml source file.
 You can edit the graphic by using the .xml on [draw.io](https://www.draw.io/).
+
