@@ -1,6 +1,11 @@
 image : hrektts/mdbook:latest
 
+before_script:
+  - apt-get update -qq
+  - apt-get install -qq libssl-dev pkg-config build-essential curl git
+  - (test -x $HOME/.cargo/bin/mdbook-linkcheck || cargo install mdbook-linkcheck)
+
 build:
-    script:
-        - mdbook build
+  script:
+    - mdbook build
 

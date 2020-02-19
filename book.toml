@@ -5,6 +5,10 @@ description = "This book carefully describes the design, implementation, directi
 multilingual = false
 src = "src"
 
-
 [output.html]
 theme = "./theme"
+
+[output.linkcheck]
+# web links can spuriously fail on CI
+follow-web-links = false
+
