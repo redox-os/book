@@ -9,18 +9,18 @@ Let's consider 3 existing projects.
 
 ### Linux
 
-Linux runs the world, and boots on everything from high performance servers to tiny embedded devices. And many Redox community members run Linux as their main workstations. But Linux is not an ideal platform for new innovation in OS development.
+Linux runs the world, and boots on everything from high performance servers to tiny embedded devices. Indeed, many Redox community members run Linux as their main workstations. However, Linux is not an ideal platform for new innovation in OS development.
 
-- Legacy until infinity: Old syscalls stay around forever, drivers for long-unbuyable hardware stay in the kernel as a mandatory part. While they can be disabled, running them in kernel space is unnecessary, and can be a source of system crashes, security issues, and unexpected bugs.
+- Legacy until infinity: Old syscalls stay around forever, drivers for long-unbuyable hardware stay in the kernel as mandatory parts. While they can be disabled, running them in kernel space is unnecessary, and can be a source of system crashes, security issues, and unexpected bugs.
 - Huge codebase: To contribute, you must find a place to fit in to nearly _25 million lines of code_, in just the kernel. This is due to Linux's monolithic architecture.
-- Non-permissive license: Linux is licensed under GPL2, preventing the use of other free software licenses inside of the kernel. More on our use of the MIT X11-style license in [Why Free Software].
+- Non-permissive license: Linux is licensed under GPL2, preventing the use of other free software licenses inside of the kernel.
 - Lack of memory safety: Linux has had numerous issues with memory safety throughout time. C is a fine language, but for such a security critical system, C is difficult to use safely.
 
 ### BSD
 
 It is no secret that we're more in favor of BSD. The BSD community has led the way in many innovations in the past 2 decades. Things like [jails] and [ZFS] yield more reliable systems, and other operating systems are still catching up.
 
-But BSD doesn't meet our needs:
+That said, BSD doesn't meet our needs either:
 
 - It still has a monolithic kernel. This means that a single buggy driver can crash, hang, or, in the worst case, cause damage to the system.
 - The use of C in the kernel makes it probable to write code with memory safety issues.
@@ -42,10 +42,10 @@ We have to admit, that we do like the idea of writing something that is our own 
 - Different driver model, where drivers interface with filesystems like `network:` and `audio:` to provide features
 - Different file system, RedoxFS, with a [TFS] implementation in progress
 - User space written mostly in Rust
-- Orbital, a new GUI
+- [Orbital], a new GUI
 
-[Why Free Software]: ./why_free_software.html
 [jails]: https://www.freebsd.org/doc/handbook/jails.html
 [ZFS]: https://www.freebsd.org/doc/handbook/zfs.html
 [reliability]: http://wiki.minix3.org/doku.php?id=www:documentation:reliability
 [TFS]: https://gitlab.redox-os.org/redox-os/tfs
+[Orbital]: https://gitlab.redox-os.org/redox-os/orbital

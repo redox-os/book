@@ -29,7 +29,7 @@ We also actively contribute to third party projects that are heavily used in Red
 What tools are fitting for the Redox distribution?
 -------------------------------------------------
 
-Some of these tools will in the future be moved out of the default distribution, into seperate optional packages. Examples of these are Orbital, OrbTK, Sodium, and so on.
+Some of these tools will in the future be moved out of the default distribution, into separate optional packages. Examples of these are Orbital, OrbTK, Sodium, and so on.
 
 The listed tools fall into three categories:
 
