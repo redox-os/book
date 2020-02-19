@@ -14,17 +14,11 @@ At this time, Redox supports:
 * E1000 or RTL8168 network cards.
 * Intel HDA audio controllers.
 * Mouse and keyboard with PS/2 emulation.
+*TODO: update*
 
 This book is broken into the following chapters:
 
-- [Introduction]: Explanation of what Redox is and how it compares to other systems.
-- [Getting started]: Compiling and running Redox.
-- [The design]: An in-depth introduction to the design and implementation of Redox.
-- Development in user space: Writing applications for Redox.
-- [Contributing]: How you can contribute to Redox.
-- Understanding the codebase: For familiarizing yourself with the codebase.
-- Fun: Top secret chapter.
-- The future: What Redox aims to be.
+*TODO*
 
 It is written such that you do not need any prior knowledge in Rust and/or OS development.
 
@@ -32,7 +26,7 @@ It is written such that you do not need any prior knowledge in Rust and/or OS de
 [POSIX]: https://en.wikipedia.org/wiki/POSIX
 [Plan9]: http://9p.io/plan9/index.html
 [Minix]: http://www.minix3.org/
-[Linux]: https://en.wikipedia.org/wiki/Linux
+[Linux]: https://www.linuxfoundation.org
 [BSD]: http://www.bsd.org/
 
 [Design]: ../design/design.html
