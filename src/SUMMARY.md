@@ -1,6 +1,6 @@
 # The Redox Operating-System
 
-- [Introduction](./introduction/welcome.md)
+- [Introduction](./welcome.md)
     - [What is Redox?](./introduction/what_is_redox.md)
     - [Our Goals](./introduction/our_goals.md)
     - [Our Philosophy](./introduction/philosophy.md)
