@@ -84,11 +84,11 @@ The login program accepts a username, currently any username may be used, prints
 ############################
 ```
 
-At this point, the user will now be able to access the [Shell](./shell.html)
+At this point, the user will now be able to access the [Shell](./ch03-03-shell.md)
 
 ## Graphical overview
 
 Here is an overview of the initialization process with scheme creation and usage.
 For simplicity's sake, we do not depict all scheme interaction but at least the major ones.
 
-![Redox initialization graph](./init.svg "Redox initialization graph")
+![Redox initialization graph](./assets/init.svg "Redox initialization graph")

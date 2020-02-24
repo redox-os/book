@@ -29,4 +29,4 @@ The path argument of `OPEN` does not have to be a URL. For compatibility reasons
 
 > TODO
 
-[The root scheme]: ../scheme/the_root_scheme.html
+[The root scheme]: ./ch04-07-the-root-scheme.md
