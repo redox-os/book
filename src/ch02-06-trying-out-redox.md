@@ -57,9 +57,9 @@ Click the OrbTK demo app in the menu bar. This will open a graphical user interf
 Exploring netsurf-fb
 --------------------
 You may click on the world icon to start the netsurf-fb.  Please start the netsurf-fb app at the shell.
-You can launch netsurf from the terminal and pipe its output to a file.
+You can launch netsurf-fb from the terminal and redirect its "Standard Output" message stream and "Standard Error" message stream to the one file in the following case "/root/netsurfStdoutAndStderr.txt".
 ```
-/usr/bin/netsurf-fb > netsurfDebug.txt
+/usr/bin/netsurf-fb &> /root/netsurfStdoutAndStderr.txt 
 ```
 
 Now shutdown redox:  ctrl+alt+G and mouse-click the qemu app's close icon.
@@ -79,9 +79,19 @@ mount
 /dev/fuse on /home/davidm/rustos/redox/build/filesystem type fuse (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
 ```
 
-Using your favorite text editor, have a look at /home/davidm/rustos/redox/build/filesystem/root/netsurfDebug.txt
+Using your favorite text editor, have a look at /home/davidm/rustos/redox/build/filesystem/root/netsurfStdoutAndStderr.txt
 
-When you are done looking at that netsurfDebug.txt file you can unmount the redox file system image.
+Here is an example:
+```
+$ cat /home/davidm/rustos/redox/build/filesystem/root/netsurfStdoutAndStderr.txt 
+WARNING: You are using the SDL orbital video driver!
+Setting mode 800x600@32
+setsockopt(12, 6, 1, 0x180000ff54c, 4)
+thread '<unnamed>' panicked at 'socket doesn't match either tcp, udp or chan schemes', src/platform/redox/socket.rs:150:14
+fatal runtime error: failed to initiate panic, error 5
+```
+
+When you are done looking at that netsurfStdoutAndStderr.txt file you can unmount the redox file system image.
 ```
 make unmount
 ```
