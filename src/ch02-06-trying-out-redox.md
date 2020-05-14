@@ -53,3 +53,35 @@ Exploring OrbTK
 Click the OrbTK demo app in the menu bar. This will open a graphical user interface that demonstrates the different widgets OrbTK currently supports.
 
 [HenryTheCat]: https://github.com/HenryTheCat
+
+Exploring netsurf-fb
+--------------------
+You may click on the world icon to start the netsurf-fb.  Please start the netsurf-fb app at the shell.
+You can launch netsurf from the terminal and pipe its output to a file.
+```
+/usr/bin/netsurf-fb > netsurfDebug.txt
+```
+
+Now shutdown redox:  ctrl+alt+G and mouse-click the qemu app's close icon.
+
+Once you're back at a terminal, mount the redox file system image:
+```
+make mount
+```
+The above gives you a new mountpoint:
+```
+/home/davidm/rustos/redox/build/filesystem
+```
+
+If you want to see all the mountpoint details you can run the "mount" command:
+```
+mount
+/dev/fuse on /home/davidm/rustos/redox/build/filesystem type fuse (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
+```
+
+Using your favorite text editor, have a look at /home/davidm/rustos/redox/build/filesystem/root/netsurfDebug.txt
+
+When you are done looking at that netsurfDebug.txt file you can unmount the redox file system image.
+```
+make unmount
+```
