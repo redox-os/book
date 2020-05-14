@@ -76,6 +76,49 @@ $ export PATH=${PATH}:~/.cargo/bin
 ```
 This line can be added to your shell start-up file, like .bashrc, so that it is automatically set up for you in future.
 
+Updating Rust
+-------------
+Get into the habit to update your rust nightly toolchain whenever you can to get all the goodness going into it ASAP.
+```
+rustup update
+```
+
+Updating Xargo
+--------------
+Sometimes xargo gets updated too.  Please use the "--force" in order to fetch any updates for xargo to be installed.
+```
+cargo install xargo --force
+```
+
+Updating/Building Redox Sources Cycle
+-------------------------------------
+Currently, the best way to update the Redox Sources is the following:
+
+Update repository and all submodules to latest version
+```
+make pull
+```
+
+Update cookbook recipe source
+```
+make fetch
+```
+
+Ensure a rebuild of the filesystem image occurs
+```
+touch filesystem.toml
+```
+
+Actually being building the default image
+```
+make
+```
+
+Finally run default image in QEMU
+```
+make qemu
+```
+
 Next steps
 ----------
 
