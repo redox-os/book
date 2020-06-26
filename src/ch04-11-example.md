@@ -126,4 +126,4 @@ Exercises for the reader
 
 + Compile and run the `VecScheme` example on the Redox platform;
 + There is also a Scheme trait, which is immutable. Come up with some use cases for this one;
-+ Write a scheme that can run `Brainfuck` code;
++ Write a scheme that can run code for your favorite esoteric programming language;
