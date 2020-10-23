@@ -10,7 +10,7 @@ Redox OS is predominately MIT X11-style licensed, including all software, docume
 - GNU Unifont, which is GPLv2
 - Fira font, which is SIL Open Font License 1.1
 - Faba and Moka icons, which are GPLv3
-- Newlib C library, [which is a number of free software licenses, mostly BSD](https://github.com/bminor/newlib/blob/master/COPYING.NEWLIB)
+- Newlib C library, [which has a number of free software licenses, mostly BSD](https://github.com/bminor/newlib/blob/master/COPYING.NEWLIB)
 - NASM, which is BSD 2-clause
 *TODO: update*
 
