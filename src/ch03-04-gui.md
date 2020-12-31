@@ -20,22 +20,25 @@ An application chooser that opens a file in a matching program
 - If more than one application is found, a chooser will be shown
 
 ## Applications
-The following are GUI utilities that can be found in the `/apps/` directory.
+The following are GUI utilities that can be found in the `/ui/bin` directory.
 
 ## Calculator
 A calculator that provides similar functionality to the `calc` program
 
+## Calendar
+A simple calendar program
+
+## Character Map
+A simple program that displays the current character map
+
 ## Editor
 A simple editor that is similar to notepad
 
-## File Browser
+## File Manager
 A file browser that displays icons, names, sizes, and details for files. It uses the `launcher` command to open files when they are clicked
 
-## Image Viewer
+## Viewer
 A simple image viewer
-
-## Pixelcannon
-A 3d renderer that can be used for benchmarking the Orbital desktop.
 
 ## Sodium
 A vi-like editor that provides syntax highlighting
