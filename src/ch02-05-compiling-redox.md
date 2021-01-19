@@ -8,7 +8,7 @@ Now we have:
 
 We are ready to build the entire Redox Operating System Image.
 
-#### Build Entire Redux
+#### Build Redox image
 
 ```sh
 $ cd ~/tryredox/redox/
