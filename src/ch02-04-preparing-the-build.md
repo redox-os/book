@@ -47,197 +47,6 @@ Open with your favourite text editor(vim or emacs) **redox/mk/config.mk**
 
 **What are the interesting settings users might want to change?**
 
-
-### Add Your Own Packages Or Other Packages Before Starting To Build
-
-We'll practice with two small examples **rdxhelloworld** and **rdxhellorocket**
-
-#### rdxhelloworld : Step 1 Create The Default Rust Project And Name It
-
-Open the terminal, and run:
-```
-cd ~/tryredox/
-cargo new rdxhelloworld --bin
-```
-
-#### rdxhelloworld : Step 2 Initialize It As A Git Repository
-
-```
-cd ~/tryredox/rdxhelloworld
-rm -rf .git
-git init
-```
-
-#### rdxhelloworld : Step 3 Add The Files To The Git Repository
-
-Add all the files by running
-```
-git add Cargo.toml src/main.rs
-```
-
-#### rdxhelloworld : Step 4 Add A bin section to Cargo.toml
-
-Open up Cargo.toml
-```
-cd ~/tryredox/rdxhelloworld
-gedit Cargo.toml &
-```
-
-and add the following at the bottom of the file:
-```
-[[bin]]
-name = "rdxhelloworld"
-path = "src/main.rs"
-```
-
-#### rdxhelloworld : Step 5 Commit The Changes To The Files To The Git Repository
-
-```
-git commit -m "Added files to rdxhelloworld" Cargo.toml src/main.rs
-```
-
-#### rdxhelloworld : Step 6 Create Your Custom Redox Package recipe.sh
-
-Add a recipe to redox-os cookbook that points where to find the sources to build.
-It will fetch them, place them and build them within **~/tryredox/redox/cookbook/recipes/rdxhelloworld/** when "make all" is invoked.
-
-Create a respective package directory and open up a **recipe.sh** file
-```
-cd ~/tryredox
-mkdir -p redox/cookbook/recipes/rdxhelloworld
-gedit redox/cookbook/recipes/rdxhelloworld/recipe.sh &
-```
-
-and fill it with this:
-```
-GIT=/home/david/tryredox/rdxhelloworld/
-```
-
-#### rdxhelloworld : Step 7 Add Your Package To Redox Filesystem.toml
-
-```
-cd ~/tryredox
-gedit redox/filesystem.toml &
-```
-
-within the packages section add rdxhelloworld like this
-```
-[packages]
-rdxhelloworld = {}
-```
-
-Ok we're done.  After the build is done, this package's binary will appear in the redox image as **/bin/rdxhelloworld**
-
-#### rdxhellorocket : Step 1 Create The Default Rust Project And Name It
-
-Let's start again with the rdxhellorocket rust project, git repo, redox cookbook recipe and redox filesystem package to help clarify the pattern.
-
-Open the terminal, and run:
-```
-cd ~/tryredox/
-cargo new rdxhellorocket --bin
-```
-
-#### rdxhellorocket : Step 2 Initialize It As A Git Repository
-
-```
-cd ~/tryredox/rdxhellorocket
-rm -rf .git
-git init
-```
-
-#### rdxhellorocket : Step 3 Add The Files To The Git Repository
-
-Add all the files by running
-```
-git add Cargo.toml src/main.rs
-```
-
-#### rdxhellorocket : Step 4.1 Add A bin section to Cargo.toml
-
-Open up Cargo.toml
-```
-cd ~/tryredox/rdxhellorocket
-gedit Cargo.toml &
-```
-
-and add the following at the bottom of the file:
-```
-[[bin]]
-name = "rdxhellorocket"
-path = "src/main.rs"
-```
-
-also add Rocket as a dependency:
-```
-[dependencies]
-rocket = "0.4.6"
-```
-
-#### rdxhellorocket : Step 4.2 Add Rocket HelloRocket Main Code to src/main.rs
-
-https://rocket.rs/v0.4/guide/getting-started/#hello-world
-
-Open up src/main.rs
-```
-cd ~/tryredox/rdxhellorocket
-gedit src/main.rs &
-```
-
-and replace its contents with the following:
-```
-#![feature(proc_macro_hygiene, decl_macro)]
-
-#[macro_use] extern crate rocket;
-
-#[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
-}
-
-fn main() {
-    rocket::ignite().mount("/", routes![index]).launch();
-}
-```
-
-#### rdxhellorocket : Step 5 Commit The Changes To The Files To The Git Repository
-
-```
-git commit -m "Added files to rdxhellorocket" Cargo.toml src/main.rs
-```
-
-#### rdxhellorocket : Step 6 Create Your Custom Redox Package recipe.sh
-
-Add a recipe to redox-os cookbook that points where to find the sources to build.
-It will fetch them, place them and build them within **~/tryredox/redox/cookbook/recipes/rdxhellorocket/** when "make all" is invoked.
-
-Create a respective package directory and open up a **recipe.sh** file
-```
-cd ~/tryredox
-mkdir -p redox/cookbook/recipes/rdxhellorocket
-gedit redox/cookbook/recipes/rdxhellorocket/recipe.sh &
-```
-
-and fill it with this:
-```
-GIT=/home/david/tryredox/rdxhellorocket/
-```
-
-#### rdxhellorocket : Step 7 Add Your Package To Redox Filesystem.toml
-
-```
-cd ~/tryredox
-gedit redox/filesystem.toml &
-```
-
-within the packages section add rdxhellorocket like this
-```
-[packages]
-rdxhellorocket = {}
-```
-
-Ok we're done.  After the build is done, this package's binary will appear in the redox image as **/bin/rdxhellorocket**
-
 Advanced Users
 --------------
 
@@ -306,18 +115,13 @@ export PATH=${PATH}:~/.cargo/bin
 ### Updating The Sources
 
 #### How to update submodules using make pull
-WIP this section needs more work
-
-** which one should we do first? make pull or make fetch?**
 
 ```
 cd ~/tryredox/redox
 make pull
 ```
-#### How to update package sources using make fetch
-WIP this section needs more work
 
-** which one should we do first? make pull or make fetch?**
+#### How to update package sources using make fetch
 
 ```
 cd ~/tryredox/redox
@@ -331,7 +135,7 @@ cd ~/tryredox/redox
 make distclean # important to remove x86_64 stuff
 git remote update
 git fetch
-git restore mk/config.mk 
+git restore mk/config.mk
 git checkout aarch64-rebase
 git pull
 git submodule update --init --recursive
