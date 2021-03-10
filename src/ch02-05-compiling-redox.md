@@ -10,9 +10,16 @@ We are ready to build the entire Redox Operating System Image.
 
 #### Build Redox image
 
+Building Redox-OS for **x86_64**:
 ```sh
 $ cd ~/tryredox/redox/
 $ time make all
+```
+
+Building Redox-OS for **aarch64/arm64**:
+```sh
+$ cd ~/tryredox/redox/
+time ./aarch64.sh
 ```
 
 Give it a while. Redox is big.
