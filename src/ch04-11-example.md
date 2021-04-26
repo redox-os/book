@@ -2,28 +2,30 @@
 
 Enough theory! Time for an example.
 
-We will implement a scheme which holds a vector. It will push elements when
-it receives writes, and pops them when it is read. Let's call it `vec:`.
+We will implement a scheme which holds a vector. The scheme will push elements
+to the vector when it receives writes, and pop them when it is read. Let's call
+it `vec:`.
 
 The complete source for this example can be found at
 [redox-os/vec_scheme_example](https://gitlab.redox-os.org/redox-os/vec_scheme_example).
 
 ## Setup
 
-In order to build and run this example in a redox environment, you'll need to
-compile the OS from source. The process for getting a program included in a
-redox build is laid out in [chapter 5](ch05-03-compiling-program.md). Follow
-that example to get a hello world program running.
+In order to build and run this example in a Redox environment, you'll need to
+be set up to compile the OS from source. The process for getting a program
+included in a local Redox build is laid out in
+[chapter 5](ch05-03-compiling-program.md). Pause here and follow that guide if
+you want to get this example running.
 
-This page assumes that `vec` was used as the name of the
-program instead of `helloworld`; the project's files are assumed to be at
+This example assumes that `vec` was used as the name of the crate instead of
+`helloworld`. The crate should therefore be located at
 `cookbook/recipes/vec/source`.
 
-After following the hello world guide, modify the `Cargo.toml` so that it looks
-something like this:
+Modify the `Cargo.toml` for the `vec` crate so that it looks something like
+this:
 ```toml
 [package]
-name = "vec_scheme"
+name = "vec"
 version = "0.1.0"
 edition = "2018"
 
@@ -39,14 +41,13 @@ path = "src/client.rs"
 redox_syscall = "^0.2.6"
 ```
 
-Notice there are two binaries here. We'll need another program to interact with
-our scheme, since shell tools like `cat` use more operations than we strictly
+Notice that there are two binaries here. We'll need another program to interact with
+our scheme, since CLI tools like `cat` use more operations than we strictly
 need to implement for our scheme. The client uses only the standard library.
 
 ## The Scheme Daemon
 
-Create `src/scheme.rs` in your cargo project. We'll need a couple of symbols as
-we work through the code:
+Create `src/scheme.rs` in the crate. Start by `use`ing a couple of symbols.
 
 ```rust
 use std::cmp::min;
@@ -75,15 +76,15 @@ impl VecScheme {
 }
 ```
 
-Before implementing the scheme operations on our scheme struct, let's discuss
-breifly the way that this struct will be used. Our binary (`vec_scheme`) will
+Before implementing the scheme operations on our scheme struct, let's breifly
+discuss the way that this struct will be used. Our program (`vec_scheme`) will
 create the `vec` scheme by opening the corresponding scheme handler in the root
-scheme (`:vec`).  Let's implement a `main()` that does that:
+scheme (`:vec`).  Let's implement a `main()` that intializes our scheme struct
+and registers the new scheme:
 
 ```rust
 fn main() {
     let mut scheme = VecScheme::new();
-    let mut packet = Packet::default();
 
     let mut handler = File::create(":vec")
         .expect("Failed to create the vec scheme");
@@ -94,11 +95,13 @@ When other programs open/read/write/etc against our scheme, the
 Redox kernel will make those requests available to our program via this
 scheme handler. Our scheme will read that data, handle the requests, and send
 responses back to the kernel by writing to the scheme handler. The kernel will
-then pass the results of operations back to whoever made the requests.
+then pass the results of operations back to the caller.
 
 ```rust
 fn main() {
     // ...
+
+    let mut packet = Packet::default();
 
     loop {
         // Wait for the kernel to send us requests
@@ -123,13 +126,14 @@ fn main() {
 
 Now let's deal with the specific operations on our scheme. The
 `scheme.handle(...)` call dispatches requests to these methods, so that we
-don't need to worry about the gory details of picking apart the `Packet` struct
-itself.
+don't need to worry about the gory details of the `Packet` struct.
 
 In most Unix systems (Redox included!), a program needs to open a file before it
-can do very much with it. Our scheme is just a "virtual filesystem", so opens
-are the way any program starts a conversation with our scheme. Let's set that
-up:
+can do very much with it. Since our scheme is just a "virtual filesystem",
+programs call `open` with the path to the "file" they want to interact with
+when they want to start a conversation with our scheme.
+
+For our vec scheme, let's push whatever path we're given to the vec:
 
 ```rust
 impl SchemeMut for VecScheme {
@@ -142,16 +146,16 @@ impl SchemeMut for VecScheme {
 
 Say a program calls `open("vec:/hello")`. That call will work it's way through
 the kernel and end up being dispatched to this function through our
-`Scheme::handle` call. Just for fun, we push the path that we're passed to the
-vec.
+`Scheme::handle` call.
 
 The usize that we return here will be passed back to us as the `id` parameter of
 the other scheme operations. This way we can keep track of different open files.
 In this case, we won't make a distinction between two different programs talking
 to us and simply return zero.
 
-Now let's do our read and write operations. These are the real meat of our
-scheme.
+Similarly, when a process opens a file, the kernel returns a number (the file
+descriptor) that the process can use to read and write to that file. Now let's
+implement the read and write operations for `VecScheme`.
 
 ```rust
 impl SchemeMut for VecScheme {
@@ -184,10 +188,10 @@ impl SchemeMut for VecScheme {
 }
 ```
 
-Note that all the methods of the `SchemeMut` trait provide default
-implementations. These all return errors since they should be treated as
+Note that each of the methods of the `SchemeMut` trait provide a default
+implementation. These will all return errors since they are essentially
 unimplemented. There's one more method we need to implement in order to prevent
-errors for anybody using our scheme:
+errors for users of our scheme:
 
 ```rust
 impl SchemeMut for VecScheme {
@@ -230,22 +234,23 @@ fn main() {
 }
 ```
 
-We simply open some file in our scheme, write some bytes to it, read some bytes
-from it, and then spit those bytes out on stdout. Remember, it doesn't matter
-what path we use, since all our scheme does is add it to the global vec.
+We simply open some "file" in our scheme, write some bytes to it, read some
+bytes from it, and then spit those bytes out on stdout. Remember, it doesn't
+matter what path we use, since all our scheme does is add that path to the vec.
+In this sense, the vec scheme implements a global vector.
 
 ## Running the Scheme
 
-Since you've already set up the program to build and run in the redox VM,
-simply:
+Since we've already set up the program to build and run in the redox VM,
+simply run:
 - `touch filesystem.toml`
 - `make qemu`
 
-You'll need multiple terminal windows in the qemu windows for this one. You'll
-notice that both binaries we defined in our `Cargo.toml` can now be found in
-`file:/bin` (`vec_scheme` and `vec`). In one terminal window, run `vec_scheme`.
-It should just hang out there. In another terminal, run `vec` and observe the
-output. It's that simple!
+We'll need multiple terminal windows open in the QEMU window for this step.
+Notice that both binaries we defined in our `Cargo.toml` can now be found in
+`file:/bin` (`vec_scheme` and `vec`). In one terminal window, run
+`sudo vec_scheme`. A program needs to run as root in order to register a new
+scheme. In another terminal, run `vec` and observe the output.
 
 ## Exercises for the reader
 

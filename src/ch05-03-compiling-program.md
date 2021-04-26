@@ -1,9 +1,11 @@
 # Including a Program in a Redox Build
 
-Thanks to redox' cookbook, building programs is a snap. This example walks
-through setting up the hello world program that `cargo new` automatically
-generates to be included in a build of the operating system (from source).
-This process is largely the same for other rust programs and even non-rust
+Redox's cookbook makes packaging a program to include in a build fairly
+straightforward. This example walks through adding the "hello world"
+program that `cargo new` automatically generates to a local build of the
+operating system.
+
+This process is largely the same for other rust crates and even non-rust
 programs.
 
 ## Step One: Setting up the recipe
@@ -41,10 +43,10 @@ the first build, or simply copy the sources into the `source` directory.
 
 ## Step Three: Add the program to the redox build
 
-To be able to access your program from redox, it must be added to the
-filesystem. Open `filesystem.toml` and find the `[packages]` table. During the
-filesystem build, the build system uses cookbook to package all the
-applicationsin this table, and then installs those packages to the new
+To be able to access a program from within Redox, it must be added to the
+filesystem. Open `redox/filesystem.toml` and find the `[packages]` table.
+During the filesystem (re)build, the build system uses cookbook to package all
+the applicationsin this table, and then installs those packages to the new
 filesystem. Simply add `helloworld = {}` anywhere in this table.
 
 ```toml
@@ -72,14 +74,13 @@ helloworld = {}
 ```
 
 In order to rebuild the filesystem image to reflect changes in the `source`
-directory, it is nessesary to `touch filesystem.toml` before running `make qemu`.
-
+directory, it is nessesary to run `touch filesystem.toml` before running make.
 
 ## Step Three: Running your program
 
-Go up to your `redox/` directory and run `make all`. Once it finishes running,
-run `make qemu`, log in to redox, open the terminal, and run `helloworld`.
-It should print
+Go up to your `redox/` directory and run `make all`. Once the rebuild is
+finished, run `make qemu`, log in to Redox, open the terminal, and run
+`helloworld`. It should print
 
 ```shell
 Hello, world!
@@ -87,3 +88,4 @@ Hello, world!
 
 Note that the `helloworld` binary can be found in `file:/bin` in the VM (`ls
 file:/bin`).
+
