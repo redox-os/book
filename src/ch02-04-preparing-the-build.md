@@ -143,6 +143,12 @@ git rev-parse HEAD
 git pull
 ```
 
+### Install Additional Tools To Build And Run ARM 64-bit Redox-Os Image
+```
+sudo apt-get install u-boot-tools
+sudo apt-get install qemu-system-arm qemu-efi
+```
+
 Next steps
 ----------
 
