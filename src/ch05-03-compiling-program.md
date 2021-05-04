@@ -1,41 +1,53 @@
-# Compiling your program
+# Including a Program in a Redox Build
 
-Thanks to redox' cookbook, building programs is a snap. In this example, we will be building the helloworld program that `cargo new` automatically generates.
+Redox's cookbook makes packaging a program to include in a build fairly
+straightforward. This example walks through adding the "hello world"
+program that `cargo new` automatically generates to a local build of the
+operating system.
 
-## Step One: Setting up your program
+This process is largely the same for other rust crates and even non-rust
+programs.
 
-To begin, go to your projects directory, here assumed to be `~/Projects/`. Open the terminal, and run `cargo new helloworld --bin`. For reasons that will become clear later,
-you must make your program compile from a git repository, so run `cd helloworld;git init` to make helloworld a git repo, and `git status` to see which files you need to add to the repo. You should see something like this
+## Step One: Setting up the recipe
 
-```bash
-On branch master
-
-Initial commit
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-	.gitignore
-	Cargo.toml
-	src/
-
-nothing added to commit but untracked files present (use "git add" to track)
-```
-
-Add all the files by running `git add .gitignore Cargo.toml src/` and commit by running `git commit -m "Added files to helloworld."`.
-
-There is only one more thing that must be done to set up your program. Go to the `Cargo.toml` of your project and add 
+The cookbook will only build programs that have a recipe defined in
+`cookbook/recipes`. To create a recipe for hello world, first create a
+directory `cookbook/recipes/helloworld`. Inside this directory create a file
+`recipe.toml` and add these lines to it:
 
 ```toml
-[[bin]]
-name = "helloworld"
-path = "src/main.rs"
+[build]
+template = "cargo"
 ```
-to the bottom. Now the program is sufficiently set up, and it is ready to be added to your redox build.
 
-## Step Two: Adding your program to your redox build
+The `[build]` section defines how cookbook should build our project. There are
+several templates but `"cargo"` should be used for rust projects.
 
-To be able to access your program from redox, it must be added to both the build process and the filesystem. Adding your program to the filesystem is easy: go to your `redox/filesystem.toml` file, and look under the `[packages]` table. It should look like this:
+Cookbook will fetch the sources for a program from a git or tarball URL
+specified in the `[source]` section of this file if
+`cookbook/recipes/program_name/source` does not exist, and will also fetch
+updates when running `make fetch`.
+
+For this example, there is no upstream URL to fetch the sources from, hence no
+`[source]` section. Instead, we will simply develop in the `source` directory.
+
+## Step Two: Writing the program
+
+Since this is a hello world example, this step is very straightforward. Simply
+create `cookbook/recipes/helloworld/source`. In that directory, run `cargo
+init --name="helloworld"`.
+
+For cargo projects that already exist, either include a URL to the git
+repository in the recipe and let cookbook pull the sources automatically during
+the first build, or simply copy the sources into the `source` directory.
+
+## Step Three: Add the program to the redox build
+
+To be able to access a program from within Redox, it must be added to the
+filesystem. Open `redox/filesystem.toml` and find the `[packages]` table.
+During the filesystem (re)build, the build system uses cookbook to package all
+the applicationsin this table, and then installs those packages to the new
+filesystem. Simply add `helloworld = {}` anywhere in this table.
 
 ```toml
 [packages]
@@ -45,21 +57,9 @@ contain = {}
 coreutils = {}
 #dash = {}
 extrautils = {}
-#games = {}
-#gcc = {}
-#gnu-binutils = {}
-#gnu-make = {}
-installer = {}
-ion = {}
-#lua = {}
-netstack = {}
-netutils = {}
-#newlib = {}
-orbdata = {}
-orbital = {}
-orbterm = {}
-orbutils = {}
-#pixelcannon = {}
+#
+# 100+ omitted for brevity
+#
 pkgutils = {}
 ptyd = {}
 randd = {}
@@ -68,33 +68,24 @@ redoxfs = {}
 smith = {}
 #sodium = {}
 userutils = {}
-```
 
-Under `userutils = {}` add a line for your own program:
-
-```toml
-userutils = {}
+# Add this line:
 helloworld = {}
 ```
 
-Now when building the filesystem, redox will look for a `helloworld` binary.
-
-With the file system in order, you can now add your program to the build process by adding a recipie. Spoilers: this is the easy part.
-
-Under `redox/cookbook/recipes/`, make a new directory called helloworld. In helloworld, create a file called `recipe.sh`.
-
-Remember the git repository `~/Projects/helloworld/`? Its about to be relevant. In the file `recipe.sh`, write
-
-```bash
-GIT=~/Projects/helloworld/
-```
-
-With that, helloworld will now be built with and accessible from redox.
+In order to rebuild the filesystem image to reflect changes in the `source`
+directory, it is nessesary to run `touch filesystem.toml` before running make.
 
 ## Step Three: Running your program
 
-Go up to your `redox/` directory and run `make all`. Once it finishes running, run `make qemu`, log in to redox, open the terminal, and run `helloworld.` It should print
+Go up to your `redox/` directory and run `make all`. Once the rebuild is
+finished, run `make qemu`, log in to Redox, open the terminal, and run
+`helloworld`. It should print
 
 ```shell
 Hello, world!
 ```
+
+Note that the `helloworld` binary can be found in `file:/bin` in the VM (`ls
+file:/bin`).
+

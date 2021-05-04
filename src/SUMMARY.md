@@ -47,8 +47,7 @@
             - [Extrautils](./ch04-23-extrautils.md)
 
 - [Development in user space](./ch05-01-user-space.md)
-    - [Writing an application for Redox](./ch05-02-writing-application.md)
-        - [Compiling your program](./ch05-03-compiling-program.md)
+    - [Including a Program in a Redox Build](./ch05-03-compiling-program.md)
     - [Ion](./ch05-04-ion.md)
         - [What Ion is](./ch05-05-what-ion-is.md)
         - [The Manual](./ch05-06-the-manual.md)
