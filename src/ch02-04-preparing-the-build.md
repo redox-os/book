@@ -128,7 +128,7 @@ cd ~/tryredox/redox
 make fetch
 ```
 
-### Change Sources To Build ARM 64-bit Redox-Os Image
+### Change Sources To Build ARM 64-bit Redox OS Image
 WIP this section needs more work
 ```
 cd ~/tryredox/redox
@@ -141,6 +141,12 @@ git pull
 git submodule update --init --recursive
 git rev-parse HEAD
 git pull
+```
+
+### Install Additional Tools To Build And Run ARM 64-bit Redox OS Image
+```
+sudo apt-get install u-boot-tools
+sudo apt-get install qemu-system-arm qemu-efi
 ```
 
 Next steps
