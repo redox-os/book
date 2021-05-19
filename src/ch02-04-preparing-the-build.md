@@ -72,10 +72,22 @@ Please be patient this can take 5 minutes to an hour depending on the hardware a
 
 ### Install Pre-Requisite Packages
 
-#### Linux Users:
+#### Pop OS Linux Users:
 
 ```
-$ [your package manager] install cmake make nasm qemu pkg-config libfuse-dev wget gperf libhtml-parser-perl autoconf flex autogen po4a expat
+$ sudo apt-get install cmake make nasm qemu pkg-config libfuse-dev wget gperf libhtml-parser-perl autoconf flex autogen po4a expat openssl automake aclocal
+```
+
+#### ArchLinux Users:
+
+```
+$ sudo pacman -S cmake make nasm qemu pkg-config libfuse-dev wget gperf libhtml-parser-perl autoconf flex autogen po4a expat openssl automake aclocal
+```
+
+#### Fedora/Redhat/Centos Linux Users:
+
+```
+$ sudo dnf install cmake make nasm qemu pkg-config libfuse-dev wget gperf libhtml-parser-perl autoconf flex autogen po4a expat openssl automake aclocal
 ```
 
 #### MacOS Users using MacPorts:
