@@ -89,6 +89,7 @@ $ sudo pacman -S cmake make nasm qemu pkg-config libfuse-dev wget gperf libhtml-
 ```
 $ sudo dnf install cmake make nasm qemu pkg-config libfuse-dev wget gperf libhtml-parser-perl autoconf flex autogen po4a expat openssl automake aclocal
 $ sudo dnf install gettext-devel bison flex perl-HTML-Parser libtool perl-Pod-Xhtml gperf libpng-devel patch
+$ sudo dnf install perl-Pod-Html
 ```
 
 #### MacOS Users using MacPorts:
