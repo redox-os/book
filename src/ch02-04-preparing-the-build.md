@@ -81,7 +81,8 @@ $ sudo apt-get install cmake make nasm qemu pkg-config libfuse-dev wget gperf li
 #### ArchLinux Users:
 
 ```
-$ sudo pacman -S cmake make nasm qemu pkg-config libfuse-dev wget gperf libhtml-parser-perl autoconf flex autogen po4a expat openssl automake aclocal
+$ sudo pacman -S cmake make nasm qemu pkg-config fuse2 wget gperf perl-html-parser  autoconf flex autogen po4a expat openssl automake 
+$ sudo pacman -S bison flex libtool patch gettext libpng
 ```
 
 #### Fedora/Redhat/Centos Linux Users:
