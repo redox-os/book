@@ -8,13 +8,15 @@ Now we have:
 
 We are ready to build the entire Redox Operating System Image.
 
-#### Build Redox image
+#### Build Redox-OS Image For x86_64
 
 Building Redox-OS for **x86_64**:
 ```sh
 $ cd ~/tryredox/redox/
 $ time make all
 ```
+
+#### Build Redox-OS Image For aarch64/arm64
 
 Building Redox-OS for **aarch64/arm64**:
 ```sh
