@@ -95,7 +95,7 @@ $ sudo dnf install perl-Pod-Html
 #### MacOS Users using MacPorts:
 
 ```
-$ sudo port install make nasm qemu gcc7 pkg-config osxfuse x86_64-elf-gcc
+$ sudo port install make coreutils findutils nasm qemu gcc7 pkg-config wget cmake osxfuse x86_64-elf-gcc
 ```
 
 #### MacOS Users using Homebrew:
