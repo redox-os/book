@@ -8,12 +8,18 @@ Now we have:
 
 We are ready to build the entire Redox Operating System Image.
 
-#### Build Redox image
+#### Build Redox images
 
-Building Redox-OS for **x86_64**:
+Building Redox-OS Hard-Drive Image for **x86_64**:
 ```sh
 $ cd ~/tryredox/redox/
-$ time make all
+time make build/harddrive.img
+```
+
+Building Redox-OS Live CD/Thumb-Drive Image for **x86_64**:
+```sh
+$ cd ~/tryredox/redox/
+time make build/livedisk.iso
 ```
 
 Building Redox-OS for **aarch64/arm64**:
@@ -23,11 +29,11 @@ time ./aarch64.sh
 ```
 
 Give it a while. Redox is big.
-- "make all" fetches the sources for the core tools from the Redox-os source servers, then builds them.
+- The two main targets harddrive and livedisk fetch some sources for the core tools from the Redox-os source servers, then builds them.  As it progressively cooks each package, it fetches the respective package's sources and builds it.
 - creates a few empty files holding different parts of the final image filesystem.
 - using the newly built core tools, it builds the non-core packages into one of those filesystem parts
 - fills the remaining filesystem parts appropriately with stuff built by the core tools to help boot Redox.
-- merges the the different filesystem parts into a final Redox Operating System harddrive image ready-to-run in Qemu.
+- merges the the different filesystem parts into a final Redox Operating System respective image ready-to-run in Qemu.
 
 #### Cleaning Previous Build Cycles
 
