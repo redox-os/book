@@ -8,8 +8,9 @@ src = "src"
 [output.html]
 theme = "./theme"
 
-[output.linkcheck]
-# web links can spuriously fail on CI
-follow-web-links = false
-# do not require to build book
-optional = true
+# Disabled until issues can be fixed
+# [output.linkcheck]
+# # web links can spuriously fail on CI
+# follow-web-links = false
+# # do not require to build book
+# optional = true
