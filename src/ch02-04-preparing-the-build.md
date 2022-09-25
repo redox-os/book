@@ -1,9 +1,11 @@
 Preparing the build
 ===================
 
-Woah! You made it so far, all the way to here. Congrats! Now we gotta build Redox.
+Woah! You made it this far, all the way to here. Congrats! Now we gotta build Redox.
 
-FIRST-TIME BEGINNERS
+The build process fetches files from the Redox Gitlab server. From time to time, files in gitlab might be marked private temporarily, which may result in you being asked to provide a username and password during the build process. If this happens and you don't have a Redox gitlab login, try again later, and if it continues to happen, you can let us know through [chat](./ch06-03-chat.html), or send an email to [info@redox-os.org](mailto:info@redox-os.org)
+
+FIRST TIME BUILD (Recommended)
 --------------------
 
 ### Bootstrap Pre-Requisites And Fetch Sources
@@ -16,49 +18,46 @@ $ cd ~/tryredox
 $ curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
 $ bash -e bootstrap.sh
 ```
-
+You will be asked to confirm various installations. Answer in the affirmative (*y* or *1* as appropriate).
 The above does the following:
  - creates a parent folder called "tryredox". Within that folder, it will create another folder called "redox" where all the sources will reside.
  - installs the pre-requisite packages using your operating system's package manager(popos/ubuntu/debian apt, redhat/centos/fedora dnf, archlinux pacman).
  - clones the Redox code from GitLab and checks out a redox-team tagged version of the different subprojects intended for the community to test and submit success/bug reports for.
 
-Please be patient this can take 5 minutes to an hour depending on the hardware and network you're running it on.
+Please be patient, this can take 5 minutes to an hour depending on the hardware and network you're running it on. Once it completes, update your path in the current shell with
+```sh
+$ source ~/.cargo/env
+```
 
-### Tweaking the filesystem size
+### Tweaking the filesystem size and contents
 
 The filesystem size is specified in MegaBytes.  The default is 256MB.
 
-You probably might want a bigger size like 20GB(20480MB).
+You might want a bigger size, like 2GB(2048MB). For the *livedisk* system, don't exceed the size of your RAM, and leave room for the system to run.
  - Open with your favourite text editor(vim or emacs) **redox/mk/config.mk**
    ```
-   cd ~/tryredox/
-   gedit redox/mk/config.mk &
+   $ cd ~/tryredox/redox
+   $ gedit mk/config.mk &
    ```
  - Look for **FILESYSTEM_SIZE** and change the value in MegaBytes
    ```
-   FILESYSTEM_SIZE?=20480
+   FILESYSTEM_SIZE?=2048
    ```
 
-### Customize Settings In config.mk Before Starting To Build
+You can add programs to the filesystem by following the instructions [here](./ch05-03-compiling-program.html).
 
-WIP this section needs more work.
-
-Open with your favourite text editor(vim or emacs) **redox/mk/config.mk**
-
-**What are the interesting settings users might want to change?**
-
-Advanced Users
+ADVANCED USERS
 --------------
 
 Advanced users may accomplish the same as the above bootstrap.sh script with the following steps.
 
-Be forewarned, the documentation can't keep up with the bootstrap.sh script since there are so many distros from which to build Redox-Os from: MacOS, PopOS, Archlinux, Redhat/Centos/Fedora.
+Be forewarned, the documentation can't keep up with the bootstrap.sh script since there are so many distros from which to build Redox: MacOS, Pop!_OS/Ubuntu/Debian, Arch Linux, Redhat/Centos/Fedora.
 
-NOTE:  The core redox-os developers use PopOs to build Redox-Os.  We recommend to use PopOs for repeatable zero-painpoint Redox-os builds.
+NOTE:  The core redox-os developers use Pop!_OS to build Redox.  We recommend using Pop!_OS for repeatable zero-painpoint Redox builds.
 
 ### Clone the repository
 
-Change to the folder where you want your copy of Redox to be stored and issue the following command:
+Create a directory and clone the repository.
 
  ```sh
 $ mkdir -p ~/tryredox
@@ -70,12 +69,18 @@ $ git submodule update --recursive --init
 Please be patient this can take 5 minutes to an hour depending on the hardware and network you're running it on.
 
 
-### Install Pre-Requisite Packages
+### Install Pre-Requisite Packages and Emulators
 
-#### Pop OS Linux Users:
+#### Pop!_OS/Ubuntu/Debian Users:
 
 ```
-$ sudo apt-get install cmake make nasm qemu pkg-config libfuse-dev wget gperf libhtml-parser-perl autoconf flex autogen po4a expat openssl automake aclocal
+$ sudo apt-get install autoconf autopoint bison build-essential cmake curl file flex genisoimage git gperf 
+$ sudo apt-get install libc6-dev-i386 libexpat-dev libfuse-dev libgmp-dev libhtml-parser-perl libpng-dev libtool
+$ sudo apt-get install m4 nasm pkg-config po4a syslinux-utils texinfo
+
+$ sudo apt-get qemu qemu-system-x86
+or
+$ sudo apt-get vitualbox
 ```
 
 #### ArchLinux Users:
@@ -105,26 +110,24 @@ $ brew install automake bison gettext libtool make nasm qemu gcc@7 pkg-config Ca
 $ brew install redox-os/gcc_cross_compilers/x86_64-elf-gcc
 ```
 
-Install Rust Stable And Nightly
--------------------------------
+### Install Rust Stable And Nightly
 
 Install Rust, make the nightly version your default toolchain, the list the installed toolchains:
 
 ```sh
 $ curl https://sh.rustup.rs -sSf | sh
+$ source ~/.cargo/env
 $ rustup default nightly
 $ rustup toolchain list
 $ cargo install --force --version 0.3.20 xargo
+$ cargo install --force --version 0.1.1 cargo-config
 ```
 
 NOTE: **xargo** allows redox-os to have a custom `libstd`
 
 NOTE: **~/.cargo/bin** has been added to your PATH for the running session.
 
-Add the following line to your shell start-up file, like ".bashrc" or ".bash_profile" for future rust sessions:
-```
-export PATH=${PATH}:~/.cargo/bin
-```
+The line `. "$HOME/.cargo/env` will have been added to your shell start-up file, ".bashrc", but you may wish to add it elsewhere or modify it according to your own environment.
 
 ### Updating The Sources
 
@@ -163,7 +166,11 @@ sudo apt-get install u-boot-tools
 sudo apt-get install qemu-system-arm qemu-efi
 ```
 
+### Tweaking the filesystem size and contents
+
+You can modify the size and contents of the filesystem for emulation and liveboot as described in the FIRST-TIME BUILD section above.
+
 Next steps
 ----------
 
-Once this is all set up, we can finally [compile Redox](./ch02-05-compiling-redox.md).
+Once this is all set up, we can finally [compile Redox](./ch02-05-compiling-redox.html).
