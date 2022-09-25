@@ -1,11 +1,23 @@
 Trying Out Redox
 ===============
 
-Use F2 key to get to a login shell. User `user` can login without password. For `root`, the password is `password` for now. `help` lists builtin commands for your shell (ion). `ls /bin` will show a list of applications you can execute.
+After a successful build, you can run Redox on an emulator with
+```sh
+$ make qemu
+or
+$ make virtualbox
+```
 
-Use F3 key to switch to a graphical user interface (orbital). Log in with the same username/password combinations as above.
+To install Redox on real hardware, after `make live`, copy `~/tryredox/redox/build/livedisk.iso` to a USB thumbdrive with your preferred USB writer, using the "clone" method, and boot your computer from the USB drive.
 
-Use the F1 key to get back to kernel output.
+During boot, Redox will ask you to select from a list of supported screen resolutions. Once you have selected your resolution, the boot process will complete and the Redox login screen will appear.
+
+User `user` can login without a password. For `root`, the password is `password`. Once logged in, you can use Redox's **Orbital** UI much like a typical desktop UI. Click on the Terminal icon to start a shell window, using Redox's **Ion** shell. `help` lists builtin commands for your shell. `ls /bin` will show a list of applications you can execute.
+
+On real hardware, to switch between **Orbital** and the console, use the following keys:
+- F1: Display the console log messages
+- F2: Open a text-only terminal
+- F3: Return to the **Orbital** UI
 
 Sodium
 ------
@@ -50,6 +62,6 @@ Then you will get prompted for various things, such as difficulty, AI setup, and
 Exploring OrbTK
 ---------------
 
-Click the OrbTK demo app in the menu bar. This will open a graphical user interface that demonstrates the different widgets OrbTK currently supports.
+If available, click the OrbTK demo app in the menu bar. This will open a graphical user interface that demonstrates the different widgets OrbTK currently supports.
 
 [HenryTheCat]: https://github.com/HenryTheCat

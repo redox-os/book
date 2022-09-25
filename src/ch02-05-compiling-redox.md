@@ -1,35 +1,40 @@
-Building/Compiling The Entire Redox Project
+Compiling The Entire Redox Project
 ===========================================
 
 Now we have:
  - fetched the sources
  - tweaked the settings to our liking
- - possibly added our very own source/binary package to the Filesystem.toml
+ - possibly added our very own source/binary package to the filesystem
 
 We are ready to build the entire Redox Operating System Image.
 
-#### Build Redox images
+### Build Redox images
 
-Building Redox-OS Hard-Drive Image for **x86_64**:
+#### Building an image for emulation
 ```sh
-$ cd ~/tryredox/redox/
-time make build/harddrive.img
+$ cd ~/tryredox/redox
+$ make all
 ```
+will make the target `build/hardrive.img`, which you can run with an emulator. See [Trying Redox in a virtual machine](./ch02-02-try-vm.html).
 
-Building Redox-OS Live CD/Thumb-Drive Image for **x86_64**:
+
+
+#### Building Redox Live CD/USB Image for **x86_64**
 ```sh
-$ cd ~/tryredox/redox/
-time make build/livedisk.iso
+$ cd ~/tryredox/redox
+$ time make live
 ```
+will make the target `build/livedisk.iso`, which can be copied to a USB drive or CD for booting or installation. See [Running Redox on real hardware](./ch02-03-real-hardware.html).
 
-Building Redox-OS for **aarch64/arm64**:
+
+#### Building Redox for **aarch64/arm64**
 ```sh
 $ cd ~/tryredox/redox/
-time ./aarch64.sh
+$ time ./aarch64.sh
 ```
 
 Give it a while. Redox is big.
-- The two main targets harddrive and livedisk fetch some sources for the core tools from the Redox-os source servers, then builds them.  As it progressively cooks each package, it fetches the respective package's sources and builds it.
+- The two main targets `build/harddrive.img` and `build/livedisk.iso` fetch some sources for the core tools from the Redox-os source servers, then builds them.  As it progressively cooks each package, it fetches the respective package's sources and builds it.
 - creates a few empty files holding different parts of the final image filesystem.
 - using the newly built core tools, it builds the non-core packages into one of those filesystem parts
 - fills the remaining filesystem parts appropriately with stuff built by the core tools to help boot Redox.
