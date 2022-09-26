@@ -1,11 +1,6 @@
 # Our Philosophy
 
-Redox OS is predominately MIT X11-style licensed, including all software, documentation, and fonts. There are only a few exceptions to this:
-- GNU Unifont, which is GPLv2
-- Fira font, which is SIL Open Font License 1.1
-- Faba and Moka icons, which are GPLv3
-- NASM, which is BSD 2-clause
-*TODO: update*
+Redox OS is predominately MIT X11-style licensed, including all software, documentation, and fonts. There are only a few exceptions to this, which are all licensed under other compatible open source licenses.
 
 The MIT X11-style license has the following properties:
 - It gives you, the user of the software, complete and unrestrained access to the software, such that you may *inspect*, *modify*, and *redistribute* your changes
