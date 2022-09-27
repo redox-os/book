@@ -5,5 +5,5 @@ This is the Redox book, which will go through (almost) everything about Redox: d
 
 *Please note that this book is currently being (re)written.*
 
-If you want to skip straight to trying out Redox, see [Getting started](./ch02-01-getting-started.md).
+If you want to skip straight to trying out Redox, see [Getting started](./ch02-01-getting-started.html).
 
