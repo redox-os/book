@@ -1,6 +1,6 @@
 # Running Redox in a virtual machine
 
-To try Redox using a virtual machine such as QEMU or VirtualBox, download the `redox_harddrive.img` file, which you can find [here](https://static.redox-os.org/releases/0.8.0).
+To try Redox using a virtual machine such as QEMU or VirtualBox, download the `redox_harddrive.img` file, which you can find [here](https://static.redox-os.org/img/).
 
 You can then run it in your preferred emulator. If you don't have an emulator installed, use the following command (Pop!_OS/Ubuntu/Debian) to install qemu:
 ```sh
@@ -16,7 +16,7 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 4 -m 
 	-drive file=$HOME/Downloads/redox_harddrive.img,format=raw
 ```
 
-Change `$HOME/Downloads/redox_harddrive.img` to the name of the file you downloaded, or change the name of the file to `redox_harddrive.img`. 
+Change `$HOME/Downloads/redox_harddrive.img` to the name of the file you downloaded. 
 
 ### Using the emulation
 

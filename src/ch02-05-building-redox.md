@@ -51,7 +51,7 @@ There are several other settings you can modify, have a look at `redox/mk/config
 
 ### Add/remove packages in the filesystem
 
-If you want to try a headless server or one of the other predefined configurations, in `redox/mk/config.mk`, change **FILESYSTEM_CONFIG** to point to one of the `.toml` configuration files in `config/x86_68`, e.g. `config/$(ARCH)/server.toml` or whichever filesystem config suits your purposes. You may need to adjust **FILESYSTEM_SIZE** to accommodate the contents of your configuration. You can add programs to the filesystem by following the instructions [here](./ch05-03-compiling-program.html).
+If you want to try a headless server or one of the other predefined configurations, in `mk/config.mk`, change **FILESYSTEM_CONFIG** to point to one of the `.toml` configuration files in `config/x86_64`, e.g. `config/x86_64/server.toml` or whichever filesystem config suits your purposes. The demo configuration is `config/x86_64/demo.toml`. You may need to adjust **FILESYSTEM_SIZE** to accommodate the contents of your configuration. You can add programs to the filesystem by following the instructions [here](./ch05-03-compiling-program.html).
 
 
 ## Compiling The Entire Redox Project
@@ -78,7 +78,7 @@ Give it a while. Redox is big. This will do the following:
 - create a few empty files holding different parts of the final image filesystem.
 - using the newly built core tools, build the non-core packages into one of those filesystem parts.
 - fill the remaining filesystem parts appropriately with stuff built by the core tools to help boot Redox.
-- merge the the different filesystem parts into a final Redox Operating System respective image ready-to-run in Qemu.
+- merge the different filesystem parts into a final Redox Operating System respective image ready-to-run in Qemu.
 
 
 ### Run in an emulator

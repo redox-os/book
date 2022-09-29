@@ -54,8 +54,6 @@ The set of packages to be installed in the filesystem is determined by **FILESYS
    FILESYSTEM_CONFIG=config/$(ARCH)/desktop.toml
    ...
    FILESYSTEM_SIZE?=2048
-   ...
-
    ```
 
 There are several other settings you can modify, have a look at **redox/mk/config.mk** to see what applies to you. 

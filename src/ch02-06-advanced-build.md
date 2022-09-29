@@ -101,7 +101,7 @@ make fetch
 
 ### Tweaking the filesystem size and contents
 
-You can modify the size and contents of the filesystem for emulation and *livedisk* as described in **Tweak the filesystem** size and **Add/remove packages in the filesystem** of [Building Redox](./ch02-05-building-redox.html).
+You can modify the size and contents of the filesystem for emulation and *livedisk* as described in **Tweak the filesystem size** and **Add/remove packages in the filesystem** of [Building Redox](./ch02-05-building-redox.html).
 
 Next steps
 ----------
