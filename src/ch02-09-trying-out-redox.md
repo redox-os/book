@@ -1,24 +1,6 @@
 Trying Out Redox
 ===============
 
-After a successful build, you can run Redox on an emulator with
-```sh
-$ make qemu
-or
-$ make virtualbox
-```
-
-To install Redox on real hardware, after `make live`, copy `~/tryredox/redox/build/livedisk.iso` to a USB thumbdrive with your preferred USB writer, using the "clone" method, and boot your computer from the USB drive.
-
-During boot, Redox will ask you to select from a list of supported screen resolutions. Once you have selected your resolution, the boot process will complete and the Redox login screen will appear.
-
-User `user` can login without a password. For `root`, the password is `password`. Once logged in, you can use Redox's **Orbital** UI much like a typical desktop UI. Click on the Terminal icon to start a shell window, using Redox's **Ion** shell. `help` lists builtin commands for your shell. `ls /bin` will show a list of applications you can execute.
-
-On real hardware, to switch between **Orbital** and the console, use the following keys:
-- F1: Display the console log messages
-- F2: Open a text-only terminal
-- F3: Return to the **Orbital** UI
-
 Sodium
 ------
 
