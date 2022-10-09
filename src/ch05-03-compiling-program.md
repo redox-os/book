@@ -13,11 +13,13 @@ $ cp config/x86_64/desktop.toml config/x86_64/myfiles.toml
 $ gedit config/x86_64/myfiles.toml &
 ```
 
-Add the package to the configuration.
+Look for the `[packages]` secion and add the package to the configuration.
 ```toml
+...
 [packages]
 ...
 sodium = {}
+...
 ```
 
 And point the **FILESYSTEM_CONFIG** at your `.toml` configuration definition.
@@ -27,11 +29,16 @@ $ gedit mk/config.mk &
 ```toml
 ...
 FILESYSTEM_CONFIG?=config/x86_64/myfiles.toml
+...
 ```
 
-And that's it! Sort of. Some packages may have dependencies, which will have their own recipes. You can look at the `recipe.toml` or `recipe.sh` file in the `cookbook/recipes/packagename` directory to see what dependencies exist for your package, and verify that you have a recipe for each dependency as well.
+And that's it! Sort of. Some packages may have dependencies, which will have their own recipes. You can look at the `recipe.toml` or `recipe.sh` file in the `cookbook/recipes/packagename` directory to see what dependencies exist for your package, and verify that you have a recipe for each dependency as well. Some packages may also require libraries such as `sdl` or build tools such as `ninja-build`. Make sure you install those required items. See [Install Prerequisite Packages](./ch02-06-advanced-build.html#install-pre-requisite-packages-and-emulators) for examples.
 
-## Hello World
+### Modifying an Existing Package
+
+If you want to make contributions to an existing Redox package, you can do your work in the directory `cookbook/recipes/packagename/source`. The cookbook process will not fetch sources if they are already present in that folder.
+
+## Create your own - Hello World
 
 To create your own program to be included, you will need to create the recipe. This example walks through adding the "hello world"
 program that `cargo new` automatically generates to a local build of the operating system.
@@ -75,10 +82,10 @@ the first build, or simply copy the sources into the `source` directory.
 ### Step Three: Add the program to the redox build
 
 To be able to access a program from within Redox, it must be added to the
-filesystem. Open `redox/filesystem.toml` and find the `[packages]` table.
+filesystem. As [above](#existing-package), create a filesystem config `config/x86_64/myfiles.toml` or similar by copying an existing configuration, and modify `mk/config.mk` to refer to it. Open `config/x86_64/myfiles.toml` and add `helloworld = {}` to the `[packages]` section.
 During the filesystem (re)build, the build system uses cookbook to package all
-the applicationsin this table, and then installs those packages to the new
-filesystem. Simply add `helloworld = {}` anywhere in this table.
+the applications in this table, and then installs those packages to the new
+filesystem.
 
 ```toml
 [packages]
@@ -105,7 +112,7 @@ helloworld = {}
 ```
 
 In order to rebuild the filesystem image to reflect changes in the `source`
-directory, it is nessesary to run `touch filesystem.toml` before running make.
+directory, it may be necessary to run `touch config/x86_64/myfiles.toml` before running make.
 
 ## Step Three: Running your program
 
@@ -117,6 +124,5 @@ finished, run `make qemu`, log in to Redox, open the terminal, and run
 Hello, world!
 ```
 
-Note that the `helloworld` binary can be found in `file:/bin` in the VM (`ls
-file:/bin`).
+Note that the `helloworld` binary can be found in `file:/bin` on Redox (`ls file:/bin`).
 

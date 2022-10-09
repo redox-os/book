@@ -12,7 +12,7 @@ Before logging-in, you'll need:
  - your web browser open at https://gitlab.redox-os.org/redox-os/
  - your phone
  - your 2FA App installed on your phone.
- - to add https://gitlab.redox-os.org/redox-os/ as a site in your 2FA App.  Once added and the site listed, underneith you'll see 2 sets of 3 digits, 6 digits in all. i.e. **258 687**. That's the 2FA Verification Code.  It changes every so often around every minute.
+ - to add https://gitlab.redox-os.org/redox-os/ as a site in your 2FA App.  Once added and the site listed, underneath you'll see 2 sets of 3 digits, 6 digits in all. i.e. **258 687**. That's the 2FA Verification Code.  It changes every so often around every minute.
 
 ##### Available 2FA Apps for Android
  
@@ -25,6 +25,7 @@ Before logging-in, you'll need:
  On Apple iphone, you may use:
   - 2stable Authenticator https://9to5mac.com/2021/05/11/2fa-authenticator-app-2stable-iphone-mac-apple-watch-ipad/
   - **Tofu** Authenticator(open-source) https://apps.apple.com/us/app/tofu-authenticator/id1082229305
+  - iOS built-in authenticator https://support.apple.com/guide/iphone/automatically-fill-in-verification-codes-ipha6173c19f/ios
  
 ##### Logging-In With An Google Android Phone
 
@@ -44,4 +45,4 @@ Here are the steps:
  - Enter your username/email
  - Enter your password
  - Click the Submit button
- - Finally you will be prompted for a 2FA verification code from your phone. Go to your iPhone, go to 2stable/**Tofu** Authenticator, find the site gitlab redox and underneith those 6 digits in looking something like **258 687** that's your 2FA code.  Enter those 6 digits into the prompt on your computer.  Click Verify.  Done.  You're logged into Gitlab.
+ - Finally you will be prompted for a 2FA verification code from your phone. Go to your iPhone, go to 2stable/**Tofu** Authenticator or to your Settings->Passwords for iOS Authenticator, find the site gitlab redox and underneath those 6 digits in looking something like **258 687** that's your 2FA code.  Enter those 6 digits into the prompt on your computer.  Click Verify.  Done.  You're logged into Gitlab.
