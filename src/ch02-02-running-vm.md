@@ -4,7 +4,7 @@ To try Redox using a virtual machine such as QEMU or VirtualBox, download the `r
 
 You can then run it in your preferred emulator. If you don't have an emulator installed, use the following command (Pop!_OS/Ubuntu/Debian) to install qemu:
 ```sh
-$ sudo apt-get install qemu-system-x86
+sudo apt-get install qemu-system-x86
 ```
 This command will run qemu with various features Redox can use enabled:
 
@@ -20,7 +20,7 @@ Change `$HOME/Downloads/redox_harddrive.img` to the name of the file you downloa
 
 ### Using the emulation
 
-As the system boots, it will ask you for a screen size to use, e.g. `1024x768`. After selecting a size, the system will complete the boot, start the **Orbital** GUI, and display a Redox login screen. Login as user `user` with no password. The password for `root` is `password`. Use Ctrl+Alt+G to toggle the mouse behavior if you need to zoom out or exit the emulation. If your emulated cursor is out of alignment with your mouse position, type Ctrl+Alt+G to regain full cursor control, then click on your emulated cursor.
+As the system boots, it will ask you for a screen resolution to use, e.g. `1024x768`. After selecting a screen size, the system will complete the boot, start the **Orbital** GUI, and display a Redox login screen. Login as user `user` with no password. The password for `root` is `password`. Use **Ctrl+Alt+G** to toggle the mouse behavior if you need to zoom out or exit the emulation. If your emulated cursor is out of alignment with your mouse position, type **Ctrl+Alt+G** to regain full cursor control, then click on your emulated cursor. **Ctrl+Alt+F** toggles between full screen and window views.
 
 See [Trying Out Redox](./ch02-09-trying-out-redox.html) for things to try.
 

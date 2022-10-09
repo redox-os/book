@@ -4,15 +4,19 @@ As of the latest release (0.8.0), Redox can now be installed on a partition on c
 
 Hardware support is limited at the moment, so your milage may vary. USB HID drivers are a work in progress but are not currently included, so a USB keyboard or mouse will not work. There is a PS/2 driver, which works with the keyboards and touchpads in many laptops. For networking, the rtl8168d and e1000d ethernet controllers are currently supported.
 
+On some computers, hardware incompatibilities, e.g. disk driver issues, can slow Redox performance. This is not reflective of Redox in general, so if you find that Redox is slow on your computer, please try it on a different model for a better experience.
+
 The current ISO image uses a bootloader to load the filesystem into memory (*livedisk*) and emulates a hard drive. You can use the system in this mode without installing. Although its use of memory is inefficient, it is fully functional and does not require changes to your drive. The ISO image is a great way to try out Redox on real hardware. 
 
 ### Creating a bootable USB drive or CD
 
-You can obtain an ISO image either by downloading the [latest release](https://static.redox-os.org/img/), or by [building one](./ch02-05-building-redox.html). Copy the ISO image to USB drive using the "clone" method with your preferred USB writer. You can also use the ISO image on a CD.
+You can obtain an ISO image either by downloading the [latest release](https://static.redox-os.org/img/), or by [building one](./ch02-05-building-redox.html). Copy the ISO image to USB drive using the "clone" method with your preferred USB writer. You can also use the ISO image on a CD/DVD (ensure the ISO will fit on your disk).
 
 ### Booting the system
 
-Once the ISO image boots, the system will display the **Orbital** GUI. Log in as user `user` with no password. The password for `root` is `password`. Feel free to try out the system. You can get a list of commands by typing `ls /bin` in a Terminal window.
+Once the ISO image boots, the system will display the **Orbital** GUI. Log in as user `user` with no password. The password for `root` is `password`.
+
+See [Trying Out Redox](./ch02-09-trying-out-redox.html) for things to try.
 
 To switch between **Orbital** and the console, use the following keys:
 - F1: Display the console log messages

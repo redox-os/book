@@ -10,49 +10,55 @@ The build process for the current release (0.8.0) is tested on Pop!_OS/Ubuntu/De
 
 ### Bootstrap Prerequisites And Fetch Sources
 
-If you're on a Linux or macOS computer, you can just run the bootstrapping script, which does the build preparation for you. Run the following commands:
+If you're on a supported Linux distro or macOS computer (support to be updated), you can just run the bootstrapping script, which does the build preparation for you. First, ensure that you have the program `curl` installed:
 
 ```sh
-$ sudo apt-get install curl
-$ mkdir -p ~/tryredox
-$ cd ~/tryredox
-$ curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
-$ time bash -e bootstrap.sh
+sudo apt-get install curl # Pop!_OS/Ubuntu/Debian - adjust for your system
+```
+
+Then run the following commands:
+```
+mkdir -p ~/tryredox
+cd ~/tryredox
+curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
+time bash -e bootstrap.sh
 ```
 
 You will be asked to confirm various installations. Answer in the affirmative (*y* or *1* as appropriate).
 The above does the following:
+ - installs the program "curl" if it is not already installed
  - creates a parent folder called "tryredox". Within that folder, it will create another folder called "redox" where all the sources will reside.
- - installs the pre-requisite packages using your operating system's package manager(Pop!_OS/Ubuntu/Debian apt, Redhat/Centos/Fedora dnf, Arch Linux pacman).
+ - installs the pre-requisite packages using your operating system's package manager(Pop!_OS/Ubuntu/Debian `apt`, Redhat/Centos/Fedora `dnf`, Arch Linux `pacman`).
  - clones the Redox code from GitLab and checks out a redox-team tagged version of the different subprojects intended for the community to test and submit success/bug reports for.
 
  Note that `curl -sf` operates silently, so if there are errors, you may get an empty or incorrect version of bootstrap.sh. Check for typos in the command and try again. If you continue to have problems, join the [chat](./ch06-03-chat.html) and let us know.
 
 Please be patient, this can take 5 minutes to an hour depending on the hardware and network you're running it on. Once it completes, update your path in the current shell with
-```sh
-$ source ~/.cargo/env
+```sh2048
+source ~/.cargo/env
 ```
 
-### Tweak the filesystem size
+### Setting Config Values
 
-The filesystem size is specified in MegaBytes.  The default is 256MB. You might want a bigger size, like 2GB(2048MB). The filesystem needs to be large enough to accommodate the packages that are included in the filesystem. For the *livedisk* system, don't exceed the size of your RAM, and leave room for the system to run.
+#### Tweak the filesystem size
 
- - Open with your favourite text editor(vim or emacs) `redox/mk/config.mk`
+The filesystem size is specified in Megabytes (MB).  The default is 256MB. You might want a bigger size, like 1GB(1024MB). The filesystem needs to be large enough to accommodate the packages that are included in the filesystem. For the *livedisk* system, don't exceed the size of your RAM, and leave room for the system to run.
+
+ - Open with your favourite text editor (gedit, vim or emacs) `redox/mk/config.mk`
+   ```sh
+   cd ~/tryredox/redox
+   gedit mk/config.mk &
    ```
-   $ cd ~/tryredox/redox
-   $ gedit mk/config.mk &
+ - Look for **FILESYSTEM_SIZE** and change the value in Megabytes
    ```
- - Look for **FILESYSTEM_SIZE** and change the value in MegaBytes
-   ```
-   FILESYSTEM_SIZE?=2048
+   FILESYSTEM_SIZE?=1024
    ```
 
 There are several other settings you can modify, have a look at `redox/mk/config.mk` to see what applies to you. 
 
-### Add/remove packages in the filesystem
+#### Add/remove packages in the filesystem
 
 If you want to try a headless server or one of the other predefined configurations, in `mk/config.mk`, change **FILESYSTEM_CONFIG** to point to one of the `.toml` configuration files in `config/x86_64`, e.g. `config/x86_64/server.toml` or whichever filesystem config suits your purposes. The demo configuration is `config/x86_64/demo.toml`. You may need to adjust **FILESYSTEM_SIZE** to accommodate the contents of your configuration. You can add programs to the filesystem by following the instructions [here](./ch05-03-compiling-program.html).
-
 
 ## Compiling The Entire Redox Project
 
@@ -68,8 +74,8 @@ We are ready to build the entire Redox Operating System Image.
 To build all the components, and the packages to be included in the filesystem.
 
 ```sh
-$ cd ~/tryredox/redox
-$ time make all
+cd ~/tryredox/redox
+time make all
 ```
 This will make the target `build/hardrive.img`, which you can run with an emulator.
 
@@ -85,18 +91,18 @@ Give it a while. Redox is big. This will do the following:
 
 You can immediately run this image in an emulator with the following command.
 ```sh
-$ make qemu
+make qemu
 ```
 
-The emulator will display the Redox GUI. See **Using the emulation** in [Running in a virtual machine](./ch02-02-running-vm.html) for general instructions and [Trying out Redox](./ch02-09-trying-out-redox.html) for things to try.
+The emulator will display the Redox GUI. See [Using the emulation](./ch02-02-running-vm.html#using-the-emulation) for general instructions and [Trying out Redox](./ch02-09-trying-out-redox.html) for things to try.
 
 #### Run with no GUI
 
 To run the emulation with no GUI, use
 ```
-$ script ~/my_log.txt
-$ make qemu vga=no
-$ exit
+script ~/my_log.txt
+make qemu vga=no
+exit
 ```
 Running with no GUI is the recommended method of capturing console and debug output from the system or from your text-only program. The `script` command creates a new shell, capturing all input and output from the text console to the log file with the given name. Remember to type `exit` after the emulation terminates, in order to properly flush the output to the log file and terminate `script`'s shell.
 
@@ -113,16 +119,16 @@ Here are the steps to configure Qemu Tap:
 
 For a *livedisk* or installable image, use:
 ```sh
-$ cd ~/tryredox/redox
-$ time make live
+cd ~/tryredox/redox
+time make live
 ```
-This will make the target `build/livedisk.iso`, which can be copied to a USB drive or CD for booting or installation. See **Creating a bootable USB drive or CD** in [Running Redox on real hardware](./ch02-03-real-hardware.html) for instructions on creating a USB drive and booting from it.
+This will make the target `build/livedisk.iso`, which can be copied to a USB drive or CD for booting or installation. See [Creating a bootable USB drive or CD](./ch02-03-real-hardware.html#creating-a-bootable-usb-drive-or-cd) for instructions on creating a USB drive and booting from it.
 
 
 Note
 ----
 
-If you intend on contributing to Redox or its subprojects, please read [Creating a Proper Pull Request](./ch06-10-creating-proper-pull-requests.html) so you understand our use of forks and set up your repository appropriately.
+If you intend on contributing to Redox or its subprojects, please read [Creating a Proper Pull Request](./ch06-10-creating-proper-pull-requests.html) so you understand our use of forks and set up your repository appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
 
 If you encounter any bugs, errors, obstructions, or other annoying things, please join the [Redox chat](./ch06-03-chat.html) or report the issue to the [Redox repository]. Thanks!
 

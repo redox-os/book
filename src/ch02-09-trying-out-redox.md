@@ -1,13 +1,53 @@
-Trying Out Redox
-===============
+# Trying Out Redox
 
-Sodium
-------
+There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the Demo system. There are both emulator and *livedisk* versions of the Demo system, available for download [here](https://static.redox-os.org/img). Currently, Redox does not have wifi support, so if you need wifi for some of the things you want to do, you are best to [Run Redox in a Virtual Machine](./ch02-02-running-vm.html). Most of the suggestions below do not require network access, except where multiplayer mode is available.
 
-Sodium is Redox's Vi-like editor. To try it out,
-1. Open the terminal by clicking the icon in the button bar
-2. Type `sudo pkg install sodium` to install Sodium. You will need network for this.
-3. Type `sodium`. This should now open up a separate editor window.
+Many of the available commands are in the folders `/bin` and `/ui/bin`, which will be in your command path. Open a Terminal window and type `ls file:/bin` (or just `ls /bin`) to see some of the available commands. Some of the games listed below are in `/games`, which is not in your command path by default, so you may have to specify the full path for the command.
+
+## Games with SDL Graphics
+### Freedoom
+
+Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can find the Freedoom website at <https://freedoom.github.io/>. PrBoom can be found at <https://prboom.sourceforge.net/>. Open a Terminal window and try `/games/freedoom1` or `/games/freedoom2`.
+
+Hit `Esc` and use the arrow keys to select Options->Setup->Key Bindings for keyboard help.
+
+
+### Sopwith
+
+Sopwith is a game allows you to control a small plane. Originally written in 1984, it used PC graphics, but is now available using the SDL library. In a Terminal window type `sopwith`.
+- Comma ( , ) - Pull back
+- Slash ( / ) - Push forward
+- Period ( . ) - Flip aircraft
+- Space - Fire gun
+- B - Drop Bomb
+
+## Terminal Window Games Written in Rust
+
+Also check out some games that have been written in Rust, and use the Terminal Window for simple graphics. In a Terminal window, enter one of the following commands:
+- `baduk` - Baduk/Go 
+- `dem` - Democracy 
+- `flappy` - Flappy Bird clone 
+- `ice` - Ice Sliding Puzzle 
+- `minesweeper` - Minesweeper but it wraps 
+- `reblox` - Falling blocks 
+- `redoku` - Sudoku 
+- `snake` - Snake 
+
+## Rusthello
+
+Rusthello is an advanced Reversi AI, made by [HenryTheCat](https://github.com/HenryTheCat). It is highly concurrent, so this acts as a demonstration of Redox's multithreading capabilities. It supports various AIs, such as brute force, minimax, local optimizations, and hybrid AIs.
+
+In a Terminal window, type `rusthello`.
+
+Then you will get prompted for various things, such as difficulty, AI setup, and so on. When this is done, Rusthello interactively starts the battle between you and an AI or an AI and an AI.
+
+## Periodic Table
+
+The Periodic Table `/ui/bin/periodictable` is a demonstration of the **OrbTk** user interface toolkit, which is part of the **Redox Orbital** user interface.
+
+## Sodium
+
+Sodium is Redox's Vi-like editor. To try it out, open a terminal window and type `sodium`.
 
 A short list of the Sodium defaults:
 
@@ -17,33 +57,3 @@ A short list of the Sodium defaults:
 - shift-space: Go to normal mode.
 
 For a more extensive list, write `;help`.
-
-Setting a reminder/countdown
-----------------------------
-
-To demonstrate the ANSI support, we will play around with fancy reminders.
-
-Open up the terminal emulator. Now, write `rem -s 10 -b`. This will set a 10 sec. countdown with progress bar.
-
-Playing around with Rusthello
------------------------------
-
-Rusthello is an advanced Reversi AI, made by [HenryTheCat]. It is highly concurrent, so this proves Redox's multithreading capabilities. It supports various AIs, such as brute forcing, minimax, local optimizations, and hybrid AIs.
-
-Oh, let's try it out!
-
-```sh
-# install rusthello by typing command
-$ sudo pkg install games
-# start it with command
-$ rusthello
-```
-
-Then you will get prompted for various things, such as difficulty, AI setup, and so on. When this is done, Rusthello interactively starts the battle between you and an AI or an AI and an AI.
-
-Exploring OrbTK
----------------
-
-If available, click the OrbTK demo app in the menu bar. This will open a graphical user interface that demonstrates the different widgets OrbTK currently supports.
-
-[HenryTheCat]: https://github.com/HenryTheCat
