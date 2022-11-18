@@ -1,5 +1,4 @@
-Questions, Feedback, Reporting Issues 
-=====================================
+# Questions, Feedback, Reporting Issues 
 
 Join the [Redox-os Chat Server].  It is the best method to **chat with the Redox team**.  Hang out with other Redox fans!
 The redox-os Chat Server holds many channels focusing on different aspects of Redox development and usage.

@@ -1,6 +1,6 @@
 # Installing Redox on a drive
 
-Once you have [downloaded](./ch02-03-real-hardware.html) or [built](./ch02-05-building-redox.html) your ISO image, you can install it to your internal HDD or SSD. **Please back up your system** before attempting to install. Note that at this time (Release 0.8.0), you cannot install onto a USB drive, or use a USB drive for your Redox filesystem. 
+Once you have [downloaded](./ch02-03-real-hardware.html) or [built](./ch02-05-building-redox.html) your ISO image, you can install it to your internal HDD or SSD. **Please back up your system** before attempting to install. Note that at this time (Release 0.8.0), you cannot install onto a USB drive, or use a USB drive for your Redox filesystem, but you can install from it. 
 
 After starting your *livedisk* system from a USB thumbdrive or from CD, log in as user `user` with an empty password. Open a Terminal window and type 
 ```sh
