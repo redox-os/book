@@ -1,10 +1,11 @@
 # Trying Out Redox
 
-There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the Demo system. There are both emulator and *livedisk* versions of the Demo system, available for download [here](https://static.redox-os.org/img). Currently, Redox does not have wifi support, so if you need wifi for some of the things you want to do, you are best to [Run Redox in a Virtual Machine](./ch02-02-running-vm.html). Most of the suggestions below do not require network access, except where multiplayer mode is available.
+There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the **Demo** system. There are both emulator and *livedisk* versions of the Demo system, available for download [here](https://static.redox-os.org/img). Currently, Redox does not have wifi support, so if you need wifi for some of the things you want to do, you are best to [Run Redox in a Virtual Machine](./ch02-02-running-vm.html). Most of the suggestions below do not require network access, except where multiplayer mode is available.
 
 Many of the available commands are in the folders `/bin` and `/ui/bin`, which will be in your command path. Open a Terminal window and type `ls file:/bin` (or just `ls /bin`) to see some of the available commands. Some of the games listed below are in `/games`, which is not in your command path by default, so you may have to specify the full path for the command.
 
 ## Games with SDL Graphics
+
 ### Freedoom
 
 Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can find the Freedoom website at <https://freedoom.github.io/>. PrBoom can be found at <https://prboom.sourceforge.net/>. Open a Terminal window and try `/games/freedoom1` or `/games/freedoom2`.
@@ -21,6 +22,10 @@ Sopwith is a game allows you to control a small plane. Originally written in 198
 - Space - Fire gun
 - B - Drop Bomb
 
+### Syobonaction
+
+Syobon Action is 2D side-scrolling platformer that you won't enjoy. In a Terminal window, type `syobonaction`. It's recommended that you read the [Github page](https://github.com/angelXwind/OpenSyobonAction) so you don't blame us.
+
 ## Terminal Window Games Written in Rust
 
 Also check out some games that have been written in Rust, and use the Terminal Window for simple graphics. In a Terminal window, enter one of the following commands:
@@ -29,7 +34,7 @@ Also check out some games that have been written in Rust, and use the Terminal W
 - `flappy` - Flappy Bird clone 
 - `ice` - Ice Sliding Puzzle 
 - `minesweeper` - Minesweeper but it wraps 
-- `reblox` - Falling blocks 
+- `reblox` - Tetris-like falling blocks 
 - `redoku` - Sudoku 
 - `snake` - Snake 
 

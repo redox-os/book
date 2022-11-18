@@ -7,7 +7,6 @@ In addition to the kernel, we are developing several side projects, including:
 - [TFS]: A file system inspired by ZFS.
 - [Ion]: The Redox shell.
 - [Orbital]: The display server of Redox.
-- [OrbTK]: A widget toolkit.
 - [pkgutils]: Redox's package management library and its command-line frontend.
 - [Sodium]: A Vi-like editor.
 - [ralloc]: A memory allocator.
