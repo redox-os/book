@@ -4,7 +4,7 @@ Once you have [downloaded](./ch02-03-real-hardware.html) or [built](./ch02-05-bu
 
 After starting your *livedisk* system from a USB thumbdrive or from CD, log in as user `user` with an empty password. Open a Terminal window and type 
 ```sh
-sudo redox_install_tui
+sudo redox_installer_tui
 ```
 
 If Redox recognizes your drive, it will prompt you to select a partition to install on. Choose carefully, as it will erase all the data on that partition. Note that if your drive is not recognized, it may offer you the option to install on `disk/live` (the in-memory *livedisk*). Don't do this, as it will crash Redox. 
