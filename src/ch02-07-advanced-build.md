@@ -118,7 +118,7 @@ The tools that build Redox are specific to each processor architecture. These to
 
 ## Cookbook
 
-The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls whether the packages are downloaded or built. See [Including Programs](./ch05-03-including-programs.html) for examples of using the Cookbook toolset. If you will be developing packages to include in Redox, it is worthwhile to have a look at the tools in the `cookbook` directory.
+The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls whether the packages are downloaded or built. See [Including Programs in Redox](./ch05-02-including-programs.html) for examples of using the Cookbook toolset. If you will be developing packages to include in Redox, it is worthwhile to have a look at the tools in the `cookbook` directory.
 
 ## Creating a Build Environment Shell
 

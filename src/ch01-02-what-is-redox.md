@@ -22,7 +22,7 @@ This book is broken into the following chapters:
 - [Chapter 2](./ch02-01-getting-started.html) - Building and Running Redox
 - [Chapter 3](./ch03-01-explore.html) - Redox Execution
 - [Chapter 4](./ch04-01-design.html) - Redox Conceptual Overview (Work in Progress)
-- [Chapter 5](./ch05-01-user-space.html) - Developing Redox Programs and Packages
+- [Chapter 5](./ch05-01-developing-for-redox.md) - Developing for Redox
 - [Chapter 6](./ch06-01-contributing.html) - Contributing and Communicating with the Team
 
 It is written such that you do not need any prior knowledge in Rust and/or OS development.

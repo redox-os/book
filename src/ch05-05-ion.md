@@ -1,4 +1,6 @@
-# What Ion Is
+# Ion
+
+Ion is the underlying library for shells and command execution in Redox, as well as the default shell. Ion has it's own manual, which you can find [here](https://doc.redox-os.org/ion-manual/).
 
 ## 1. The default shell in Redox
 
