@@ -51,11 +51,11 @@
             - [Binutils](./ch04-22-binutils.md)
             - [Extrautils](./ch04-23-extrautils.md)
 
-- [Development in user space](./ch05-01-user-space.md)
-    - [Including a Program in a Redox Build](./ch05-03-including-programs.md)
-    - [Ion](./ch05-04-ion.md)
-        - [What Ion is](./ch05-05-what-ion-is.md)
-        - [The Manual](./ch05-06-the-manual.md)
+- [Developing for Redox](./ch05-01-developing-for-redox.md)
+    - [Including Programs in Redox](./ch05-02-including-programs.md)
+    - [Troubleshooting the Build](./ch05-03-troubleshooting.md)
+    - [Coding and Building](./ch05-04-coding-and-building.md)
+    - [What Ion is](./ch05-05-ion.md)
 
 - [Contributing](./ch06-01-contributing.md)
     - [Communication](./ch06-02-communication.md)

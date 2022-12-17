@@ -28,7 +28,7 @@ The build process is using **Podman**'s `keep-id` feature, which allows your reg
 
 - Envionment and Command Line Variables, other than ARCH, CONFIG_NAME and FILESYSTEM_CONFIG, are not passed to the part of `make` that is done in **Podman**. You must set any other config variables in `mk/config.mk` and not on the command line or in your environment.
 
-- If you are building your own software to include in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Packages to the Build](#adding-packages-to-the-build).
+- If you are building your own software to include in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Libraries to the Build](#adding-libraries-to-the-build).
 
 ## TL;DR - [New](#new-working-directory) or [Existing](#existing-working-directory) Working Directory
 
@@ -101,6 +101,8 @@ PODMAN_BUILD?=1
 
 Most of the packages required for the build are installed in the container as part of the build process. However, some packages need to be installed on the host computer. You may also need to install an emulator such as **QEMU**. This is done for you in `podman_bootstrap.sh`, but you can do a minimum install by following the instructions below.
 
+Note that the Redox filesystem parts are merged using [FUSE](https://github.com/libfuse/libfuse). `podman_bootstrap.sh` installs `libfuse` for most platforms, if it is not already included. If you have problems with the final assembly of Redox, check that `libfuse` is installed and you are able to use it.
+
 ### Pop!_OS
 
 ```sh
@@ -167,7 +169,7 @@ where `` `id -un` `` is your User ID and `` `id -gn` `` is your effective Group 
 
 ## Debugging your Build Process
 
-If you are developing your own components and wish to do one-time debugging to determine what package you are missing in the **Podman Build** environment, the following instructions can help. Note that your changes will not be persistent. After debugging, **you must** [Add your Packages to the Build](#adding-packages-to-the-build). With `PODMAN_BUILD=1`, run the command:
+If you are developing your own components and wish to do one-time debugging to determine what library you are missing in the **Podman Build** environment, the following instructions can help. Note that your changes will not be persistent. After debugging, **you must** [Add your Libraries to the Build](#adding-libraries-to-the-build). With `PODMAN_BUILD=1`, run the command:
 ```sh
 make container_shell
 ```
@@ -181,15 +183,10 @@ or, if you need to change `ARCH` or `CONFIG_NAME`,
 ./build.sh -a ARCH -c CONFIG_NAME repo
 ```
 
-If you need `root` privileges, while you are **still running** the above `bash` shell, go to a separate **Terminal** or **Console** window on the host and type:
+If you need `root` privileges, while you are **still running** the above `bash` shell, go to a separate **Terminal** or **Console** window on the host, and type:
 ```sh
-podman ps
-```
-
-This will list all running containers. There should be only one, but if there is more than one, consider only the newest. In the last column of the display, the container will have a randomly generated name `ADJECTIVE_NOUN`, e.g. `boring_dickens`. Replace the word `CONTAINER` with that name and type:
-
-```sh
-podman exec --user=0 -it CONTAINER bash
+cd ~/tryredox/redox
+make container_su
 ```
 
 You will then be running bash with `root` privilege in the container, and you can use `apt-get` or whatever tools you need, and it will affect the environment of the user-level `container_shell` above. Do not precede the commands with `sudo` as you are already `root`. And remember that you are in an **Ubuntu** instance.
@@ -198,7 +195,7 @@ You will then be running bash with `root` privilege in the container, and you ca
 
 Type `exit` on both shells once you have determined how to solve your problem.
 
-## Adding Packages to the Build
+## Adding Libraries to the Build
 
 The default **Containerfile**, `podman/redox-base-containerfile`, imports all required packages for a normal Redox build.
 

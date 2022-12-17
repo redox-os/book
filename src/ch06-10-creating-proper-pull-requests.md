@@ -46,7 +46,7 @@ The steps given below are for the main Redox project - submodules and other proj
   git add . --all
   git commit -m "COMMIT MESSAGE"
   ```
-9.  Optionally run [rustfmt](https://gitlab.redox-os.org/rust-lang-nursery/rustfmt) on the files you changed and commit again if it did anything (check with `git diff` first).
+9.  Optionally run [rustfmt](https://github.com/rust-lang/rustfmt) on the files you changed and commit again if it did anything (check with `git diff` first).
 10. Test your changes with `make qemu` or `make virtualbox`.
 11. Pull from upstream:
   ```sh

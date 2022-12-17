@@ -14,7 +14,7 @@ The complete source for this example can be found at
 In order to build and run this example in a Redox environment, you'll need to
 be set up to compile the OS from source. The process for getting a program
 included in a local Redox build is laid out in
-[chapter 5](ch05-03-compiling-program.md). Pause here and follow that guide if
+[chapter 5](./ch05-02-including-programs.html). Pause here and follow that guide if
 you want to get this example running.
 
 This example assumes that `vec` was used as the name of the crate instead of

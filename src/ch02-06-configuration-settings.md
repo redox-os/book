@@ -9,14 +9,14 @@ Other important configuration information is contained in the **filesystem confi
 
 ## Filesystem Config
 
-Which packages and programs to include in the Redox image are determined by a **filesystem config** file, which is a `.toml` file, such as `config/x86_64/desktop.toml`. Open `desktop.toml` and have a look through it.
+Which packages and programs to include in the Redox image are determined by a **filesystem config** file, which is a `.toml` file, such as `config/x86_64/demo.toml`. Open `demo.toml` and have a look through it.
 ```sh
-gedit config/x86_64/desktop.toml &
+gedit config/x86_64/demo.toml &
 ```
 
 For each supported processor architecture, there are one or more filesystem configs to choose from. For `x86_64`, there are `desktop`, `demo` and `server` configurations, as well as a few others. For `i686`, there are also some stripped down configurations for legacy systems with minimal RAM. Have a look in the directory `config/x86_64` for some examples.
 
-For more details on the filesystem config, and how to include extra packages in your build, please see [Including Programs](./ch05-03-including-programs.html).
+For more details on the filesystem config, and how to include extra packages in your build, please see [Including Programs in Redox](./ch05-02-including-programs.html).
 
 Feel free to create your own **filesystem config**.
 
@@ -35,12 +35,14 @@ make FILESYSTEM_SIZE=512 qemu
 
 ## ARCH, FILESYSTEM_CONFIG and CONFIG_NAME
 
-In `mk/config.mk`, you will find the variables `ARCH`, `FILESYSTEM_CONFIG` and `CONFIG_NAME`. These three variables determine what system you are building. If you want to change them, you can edit `mk/config.mk` and replace the values. Or, you can set the values in your environment or on your `make` command line, e.g. `export ARCH=i686; make all` or `make ARCH=i686 all`. The first example sets the value for the lifetime of the current shell, while the second sets the value only or the current `make`.
+In `mk/config.mk`, you will find the variables `ARCH`, `CONFIG_NAME` and `FILESYSTEM_CONFIG`. These three variables determine what system you are building. 
 
 - `ARCH`: the processor architecture that you are building the system for. Currently supported architectures are `x86_64` (the default), `i686` and `aarch64`. 
-- `FILESYSTEM_CONFIG`: a file that describes the packages and files to include in the filesystem. See [Filesystem Config](#filesystem-config) above. The default is `config/$ARCH/desktop.toml`.
-- `CONFIG_NAME`: used to determine part of the name of the Redox image. Normally the *basename* of `FILESYSTEM_CONFIG`, e.g. `desktop`. 
- 
+- `CONFIG_NAME`: used to determine part of the name of the Redox image, and normally used to build the `FILESYSTEM_CONFIG` name (`desktop` by default). 
+- `FILESYSTEM_CONFIG`: a file that describes the packages and files to include in the filesystem. See [Filesystem Config](#filesystem-config) above. The default is `config/$ARCH/$CONFIG_NAME.toml`, but you can change it if your config file is in a different location.
+
+If you want to change them, you can edit `mk/config.mk` and replace the values. Or, you can set the values in your environment or on your `make` command line, e.g. `export ARCH=i686; make all` or `make ARCH=i686 all`. The first example sets the value for the lifetime of the current shell, while the second sets the value only or the current `make`.
+
 The Redox image that is built is named `build/$ARCH/$CONFIG_NAME/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`.
 
 ### build.sh

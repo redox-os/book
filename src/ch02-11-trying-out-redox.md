@@ -1,6 +1,8 @@
 # Trying Out Redox
 
-There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the **Demo** system. There are both emulator and *livedisk* versions of the Demo system, available for download [here](https://static.redox-os.org/img). Currently, Redox does not have wifi support, so if you need wifi for some of the things you want to do, you are best to [Run Redox in a Virtual Machine](./ch02-02-running-vm.html). Most of the suggestions below do not require network access, except where multiplayer mode is available.
+There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the **Demo** system. There are both emulator and *livedisk* versions of the Demo system, available for download [here](https://static.redox-os.org/releases/0.8.0/x86_64). Currently, Redox does not have wifi support, so if you need wifi for some of the things you want to do, you are best to [Run Redox in a Virtual Machine](./ch02-02-running-vm.html). Most of the suggestions below do not require network access, except where multiplayer mode is available.
+
+On the Demo system, click on the Redox symbol in the bottom left corner of the screen. This brings up a menu, which, for the Demo system, has some games listed. Feel free to give them a try!
 
 Many of the available commands are in the folders `/bin` and `/ui/bin`, which will be in your command path. Open a Terminal window and type `ls file:/bin` (or just `ls /bin`) to see some of the available commands. Some of the games listed below are in `/games`, which is not in your command path by default, so you may have to specify the full path for the command.
 
@@ -11,7 +13,6 @@ Many of the available commands are in the folders `/bin` and `/ui/bin`, which wi
 Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can find the Freedoom website at <https://freedoom.github.io/>. PrBoom can be found at <https://prboom.sourceforge.net/>. Open a Terminal window and try `/games/freedoom1` or `/games/freedoom2`.
 
 Hit `Esc` and use the arrow keys to select Options->Setup->Key Bindings for keyboard help.
-
 
 ### Sopwith
 

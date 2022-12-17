@@ -37,11 +37,6 @@ The kernel provides a small number of schemes in order to support userspace.
         <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/event/index.html">Docs</a></td>
     </tr>
     <tr>
-        <td><code>env:</code></td>
-        <td>Access and modify environmental variables</td>
-        <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/env/index.html">Docs</a></td>
-    </tr>
-    <tr>
         <td><code>initfs:</code></td>
         <td>Readonly filesystem used for initializing the system</td>
         <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/initfs/index.html">Docs</a></td>

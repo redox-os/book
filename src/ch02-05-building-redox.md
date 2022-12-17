@@ -6,7 +6,7 @@ The build process fetches files from the Redox Gitlab server. From time to time,
 
 ## Supported Distros and Podman Build
 
-The build process for the current release (0.8.0) is tested on Pop!_OS/Ubuntu/Debian. There is partial support for native build on several other distros, but the recommended build environment for other distros is our [Podman Build](./ch02-08-podman-build.html).
+This build process for the current release (0.8.0) is for Pop!_OS/Ubuntu/Debian. The recommended build environment for other distros is our [Podman Build](./ch02-08-podman-build.html). Please follow those instructions instead. There is partial support for non-Debian distros in `bootstrap.sh`, but it is not maintained.
 
 ## Preparing the Build
 
@@ -69,6 +69,8 @@ Give it a while. Redox is big. This will do the following:
 - using the newly built core tools, build the non-core packages into one of those filesystem parts.
 - fill the remaining filesystem parts appropriately with stuff built by the core tools to help boot Redox.
 - merge the different filesystem parts into a final Redox Operating System image ready-to-run in an emulator.
+
+Note that the filesystem parts are merged using the [FUSE](https://github.com/libfuse/libfuse). Bootstrap.sh installs `libfuse`. If you have problems with the final assembly of Redox, check that `libfuse` is installed and you are able to use it.
 
 ### build.sh
 
