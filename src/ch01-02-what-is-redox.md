@@ -4,17 +4,16 @@ Redox is a general purpose operating system written in pure [Rust]. Our aim is t
 
 We have modest compatibility with [POSIX], allowing Redox to run many programs without porting.
 
-We take inspiration from [Plan9], [Minix], [Linux], and [BSD]. Redox aims to synthesize years of research and hard won experience into a system that feels modern and familiar. 
+We take inspiration from [Plan9], [Minix], [Linux], and [BSD]. Redox aims to synthesize years of research and hard won experience into a system that feels modern and familiar.
 
 At this time, Redox supports:
 
-* All x86-64 CPUs.
-* Graphics cards with VBE support (all Nvidia, Intel, and AMD cards from the past decade have this).
-* AHCI disks.
+* All x86-64 CPUs, and most i686 CPUs since the Pentium II.
+* Graphics cards with VBE and/or GOP support (all Nvidia, Intel, and AMD cards from the past decade have this).
+* AHCI, IDE, and NVMe disks.
 * E1000 or RTL8168 network cards.
-* Intel HDA audio controllers.
+* Intel HDA and AC'97 audio controllers.
 * Mouse and keyboard with PS/2 emulation.
-*TODO: update*
 
 This book is broken into the following chapters:
 
@@ -33,5 +32,3 @@ It is written such that you do not need any prior knowledge in Rust and/or OS de
 [Minix]: http://www.minix3.org/
 [Linux]: https://www.linuxfoundation.org
 [BSD]: http://www.bsd.org/
-
-
