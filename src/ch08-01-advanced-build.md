@@ -4,9 +4,9 @@ In this section, we provide the gory details that may be handy to know if you ar
 
 ## Setting up your Environment
 
-If you intend on contributing to Redox or its subprojects, please read [Creating a Proper Pull Request](./ch06-10-creating-proper-pull-requests.html) so you understand our use of forks, and set up your repository appropriately. 
+If you intend on contributing to Redox or its subprojects, please read [Creating a Proper Pull Request](./ch12-03-creating-proper-pull-requests.md) so you understand our use of forks, and set up your repository appropriately. 
 
-Although it is strongly recommended you use the [Building Redox](./ch02-05-building-redox.html) process or [Podman Build](./ch02-08-podman-build.html) instead of the process described here, advanced users may accomplish the same as the **bootstrap.sh** script with the following steps, which are provided by way of example for Pop!_OS/Ubuntu/Debian. For other platforms, have a look at the file [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) to help determine what packages to install for your distro.
+Although it is strongly recommended you use the [Building Redox](./ch02-05-building-redox.md) process or [Podman Build](./ch02-06-podman-build.md) instead of the process described here, advanced users may accomplish the same as the **bootstrap.sh** script with the following steps, which are provided by way of example for Pop!_OS/Ubuntu/Debian. For other platforms, have a look at the file [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) to help determine what packages to install for your distro.
 
 Be forewarned, for distros other than Pop!_OS/Ubuntu/Debian, neither `bootstrap.sh` nor this document are fully maintained, as the recommended environment is **Podman**. The core redox-os developers use Pop!_OS to build Redox.  We recommend using Pop!_OS for repeatable zero-painpoint Redox builds.
 
@@ -14,7 +14,7 @@ The steps to perform are
 - [Clone the repository](#clone-the-repository)
 - [Install the Pre-requisite packages](#install-pre-requisite-packages-and-emulators)
 - [Install Rust](#install-rust-stable-and-nightly)
-- Adjust your [Configuration Settings](./ch02-06-configuration-settings.html)
+- Adjust your [Configuration Settings](./ch02-07-configuration-settings.md)
 - Build the system
 
 ## Clone the repository
@@ -118,7 +118,7 @@ The tools that build Redox are specific to each processor architecture. These to
 
 ## Cookbook
 
-The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls whether the packages are downloaded or built. See [Including Programs in Redox](./ch05-02-including-programs.html) for examples of using the Cookbook toolset. If you will be developing packages to include in Redox, it is worthwhile to have a look at the tools in the `cookbook` directory.
+The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls whether the packages are downloaded or built. See [Including Programs in Redox](./ch09-01-including-programs.md) for examples of using the Cookbook toolset. If you will be developing packages to include in Redox, it is worthwhile to have a look at the tools in the `cookbook` directory.
 
 ## Creating a Build Environment Shell
 
@@ -137,8 +137,8 @@ make pull
 
 ## Changing the filesystem size and contents
 
-You can modify the size and contents of the filesystem for emulation and *livedisk* as described in [Configuration Settings](./ch02-06-configuration-settings.html).
+You can modify the size and contents of the filesystem for emulation and *livedisk* as described in [Configuration Settings](./ch02-07-configuration-settings.md).
 
 ## Next steps
 
-Once this is all set up, we can finally Compile! See [Compiling The Entire Redox Project](./ch02-05-building-redox.html#compiling-the-entire-redox-project).
+Once this is all set up, we can finally Compile! See [Compiling The Entire Redox Project](./ch02-05-building-redox.md#compiling-the-entire-redox-project).

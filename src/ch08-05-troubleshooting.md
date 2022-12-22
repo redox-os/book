@@ -23,9 +23,9 @@ If you are missing the `cookbook` project or other components, ensure that you u
 
 When you run `make all`, the following steps occur.
 
-### Config.mk
+### .config and mk/config.mk
 
-`make` scans `mk/config.mk` for settings, such as the target architecture, config name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-06-configuration-settings.html) to make sure you have the settings that are best for you.
+`make` scans [.config](./ch02-07-configuration-settings.md#config) and [mk/config.mk](./ch02-07-configuration-settings.md#mkconfigmk) for settings, such as the target architecture, config name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-07-configuration-settings.md) to make sure you have the settings that are best for you.
 
 ### Prefix
 
@@ -35,14 +35,14 @@ If you have a problem with the toolchain, try `rm -rf prefix`, and everything wi
 
 ### Podman
 
-If enabled, the Podman environment is set up. [Podman](./ch02-08-podman-build.html) is recommended for distros other than Pop!_OS/Ubuntu/Debian.
+If enabled, the Podman environment is set up. [Podman](./ch02-06-podman-build.md) is recommended for distros other than Pop!_OS/Ubuntu/Debian.
 
-If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./ch02-08-podman-build.html#debugging-your-build-process).
+If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./ch02-06-podman-build.md#debugging-your-build-process).
 If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
 
 ### Filesystem Config
 
-The list of Redox packages to be built is read from the filesystem config file, which is specified in `mk/config.mk`. If your package is not being included in the build, check that you have set `CONFIG_NAME` or `FILESYSTEM_CONFIG`, then check the config file.
+The list of Redox packages to be built is read from the [filesystem config](./ch02-07-configuration-settings.md#filesystem-config) file, which is specified in [.config](./ch02-07-configuration-settings.md#config) or `mk/config.mk`. If your package is not being included in the build, check that you have set `CONFIG_NAME` or `FILESYSTEM_CONFIG`, then check the config file.
 
 ### Fetch
 
@@ -56,7 +56,7 @@ After all packages are fetched, a tag file is created as `build/$ARCH/$CONFIG_NA
 
 Each package is built according to the `recipe.toml` file. The compiled package is placed in the `target` directory, in a subdirectory named based on the target architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Xargo`. These commands make assumptions about $PATH and $PWD, so they might not work if you are using them outside the build process.
 
-If you have a problem with a package you are building, try `rm -rf target` in the `PACKAGE` directory. A common problem when building on non-Debian systems is that certain packages will fail to build due to missing libraries. Try using [Podman Build](./ch02-08-podman-build.html).
+If you have a problem with a package you are building, try `rm -rf target` in the `PACKAGE` directory. A common problem when building on non-Debian systems is that certain packages will fail to build due to missing libraries. Try using [Podman Build](./ch02-06-podman-build.md).
 
 After all packages are cooked, a tag file is created as `build/$ARCH/$CONFIG_NAME/repo.tag`. If this file is present, cooking is skipped. You can remove it manually, or use `make rebuild`, which will force refetching and rebuilding.
 
@@ -64,4 +64,4 @@ After all packages are cooked, a tag file is created as `build/$ARCH/$CONFIG_NAM
 
 To build the final Redox image, `redox_installer` uses [FUSE](https://github.com/libfuse/libfuse), creating a virtual filesystem and copying the packages into it. This is done outside of Podman, even if you are using Podman Build.
 
-On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.sh` might not install it correctly. Investigate whether you can address your FUSE issues, or join the [chat](./ch06-03-chat.md) if you need advice.
+On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.sh` might not install it correctly. Investigate whether you can address your FUSE issues, or join the [chat](./ch13-01-chat.md) if you need advice.

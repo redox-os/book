@@ -10,7 +10,7 @@ The current ISO image uses a bootloader to load the filesystem into memory (*liv
 
 ### Creating a bootable USB drive or CD
 
-You can obtain a *livedisk* ISO image either by downloading the [latest release](https://static.redox-os.org/releases/0.8.0/x86_64/), or by [building one](./ch02-05-building-redox.html). The [demo ISO](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_livedisk.iso) is recommended for most laptops. After downloading completes, check the [SHA sum](https://static.redox-os.org/releases/0.8.0/x86_64/SHA256SUM):
+You can obtain a *livedisk* ISO image either by downloading the [latest release](https://static.redox-os.org/releases/0.8.0/x86_64/), or by [building one](./ch02-05-building-redox.md). The [demo ISO](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_livedisk.iso) is recommended for most laptops. After downloading completes, check the [SHA sum](https://static.redox-os.org/releases/0.8.0/x86_64/SHA256SUM):
 ```sh
 sha256sum $HOME/Downloads/redox_demo_x86_64*_livedisk.iso
 ```
@@ -21,13 +21,13 @@ Copy the ISO image to a USB drive using the "clone" method with your preferred U
 
 Once the ISO image boots, the system will display the **Orbital** GUI. Log in as user `user` with no password. The password for `root` is `password`.
 
-See [Trying Out Redox](./ch02-11-trying-out-redox.html) for things to try.
+See [Trying Out Redox](./ch02-04-trying-out-redox.md) for things to try.
 
 To switch between **Orbital** and the console, use the following keys:
 - F1: Display the console log messages
 - F2: Open a text-only terminal
 - F3: Return to the **Orbital** GUI
 
-If you want to be able to boot Redox from your HDD or SSD, follow the [Installation](./ch02-04-installing.html) instructions.
+If you want to be able to boot Redox from your HDD or SSD, follow the [Installation](./ch02-03-installing.md) instructions.
 
 Redox isn't currently going to replace your existing OS, but it's a fun thing to try; boot Redox on your computer, and see what works.

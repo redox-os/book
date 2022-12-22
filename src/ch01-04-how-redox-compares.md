@@ -36,4 +36,4 @@ The main idea is to have components and drivers that would be inside a monolithi
 
 All of this increases the reliability of the system significantly. This is useful for mission-critical applications and for users that want minimal issues with their computer systems.
 
-[URLs, schemes, and resources]: ./ch04-03-urls-schemes-resources.md
+[URLs, schemes, and resources]: ./ch05-00-urls-schemes-resources.md

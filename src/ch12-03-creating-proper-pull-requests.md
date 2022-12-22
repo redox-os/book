@@ -13,7 +13,7 @@ The steps given below are for the main Redox project - submodules and other proj
   git clone git@gitlab.redox-os.org:redox-os/redox.git --origin upstream --recursive
   ```
   - Use HTTPS if you don't know which one to use. (Recommended: learn about SSH if you don't want to have to login every time you push/pull!)
-  - If you used `bootstrap.sh` (see [Building Redox](./ch02-05-building-redox.html)), this was done for you and you can skip this step.
+  - If you used `bootstrap.sh` (see [Building Redox](./ch02-05-building-redox.md)), this was done for you and you can skip this step.
 2. Change to the newly created redox directory and rebase to ensure you're using the latest changes: 
   ```sh
   cd redox

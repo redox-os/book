@@ -1,7 +1,7 @@
 # Including Programs in Redox
 
 Redox's **Cookbook** toolchain makes packaging a program to include in a build fairly
-straightforward. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./ch05-04-coding-and-building.html), we discuss the development cycle in more detail.
+straightforward. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./ch09-02-coding-and-building.md), we discuss the development cycle in more detail.
 
 ## Existing Package
 
@@ -9,7 +9,7 @@ Redox has many frequently used packages and programs that are available for incl
 
 ### Set up the Redox Build Environment
 
-- Follow the steps in [Building Redox](./ch02-05-building-redox.html) or [Podman Build](./ch02-08-podman-build.html) to create the Redox Build Environment on your host computer.
+- Follow the steps in [Building Redox](./ch02-05-building-redox.md) or [Podman Build](./ch02-06-podman-build.md) to create the Redox Build Environment on your host computer.
 - Check that `CONFIG_NAME` in `mk/config.mk` is `desktop`.
 - Build the system as described. This will take quite a while the first time.
 - Run the system in **QEMU**.
@@ -24,7 +24,7 @@ Redox has many frequently used packages and programs that are available for incl
 
 ### Set up your Configuration
 
-Read through [Configuration Settings](./ch02-06-configuration-settings.md). Then do the following.
+Read through [Configuration Settings](./ch02-07-configuration-settings.md). Then do the following.
 - From your `redox` base directory, copy an existing configuration, then edit it.
   ```sh
   cd ~/tryredox/redox
@@ -43,15 +43,13 @@ Read through [Configuration Settings](./ch02-06-configuration-settings.md). Then
   ...
   ```
 
-- Change your `CONFIG_NAME` in `mk/config.mk` to refer to your `myfiles.toml` configuration definition.
+- Change your `CONFIG_NAME` in [.config](./ch02-07-configuration-settings.md#config) to refer to your `myfiles.toml` configuration definition.
   ```sh
-  gedit mk/config.mk &
+  gedit .config &
   ```
-  ```toml
-  ...
-  # Change this line:
-  CONFIG_NAME=myfiles
-  ...
+  ```
+  # Add this line:
+  CONFIG_NAME?=myfiles
   ```
 - Save all your changes and exit the editor.
 
@@ -71,11 +69,11 @@ And that's it! Sort of.
 
 ### Dependencies
 
-Some packages may have dependencies, which will have their own recipes. You can look at the `recipe.toml` or `recipe.sh` file in the `cookbook/recipes/PACKAGE` directory to see what dependencies exist for your package, and verify that you have a recipe for each dependency as well. Some packages may also require libraries such as `sdl` or build tools such as `ninja-build`. Make sure you install those required items. See [Install Prerequisite Packages](./ch02-07-advanced-build.html#install-pre-requisite-packages-and-emulators)  or [Podman Adding Libraries](./ch02-08-podman-build.html#adding-libraries-to-the-build) for examples.
+Some packages may have dependencies, which will have their own recipes. You can look at the `recipe.toml` or `recipe.sh` file in the `cookbook/recipes/PACKAGE` directory to see what dependencies exist for your package, and verify that you have a recipe for each dependency as well. Some packages may also require libraries such as `sdl` or build tools such as `ninja-build`. Make sure you install those required items. See [Install Prerequisite Packages](./ch08-01-advanced-build.md#install-pre-requisite-packages-and-emulators)  or [Podman Adding Libraries](./ch08-02-advanced-podman-build.md#adding-libraries-to-the-build) for examples.
 
 ## Modifying an Existing Package
 
-If you want to make changes to an existing Redox package for your own purposes, you can do your work in the directory `cookbook/recipes/PACKAGE/source`. The cookbook process will not fetch sources if they are already present in that folder. However, if you intend to do significant work or to contribute changes to Redox, please follow [Coding and Building](./ch05-04-coding-and-building.md).
+If you want to make changes to an existing Redox package for your own purposes, you can do your work in the directory `cookbook/recipes/PACKAGE/source`. The cookbook process will not fetch sources if they are already present in that folder. However, if you intend to do significant work or to contribute changes to Redox, please follow [Coding and Building](./ch09-02-coding-and-building.md).
 
 ## Create your own - Hello World
 
@@ -117,7 +115,7 @@ This creates a `Cargo.toml` file and a `src` directory with the Hello World prog
 ### Adding the program to the Redox build
 
 To be able to access a program from within Redox, it must be added to the
-filesystem. As [above](#existing-package), create a filesystem config `config/x86_64/myfiles.toml` or similar by copying an existing configuration, and modify `CONFIG_NAME` in `mk/config.mk` to be `myfiles`. Open `config/x86_64/myfiles.toml` and add `helloworld = {}` to the `[packages]` section.
+filesystem. As [above](#existing-package), create a filesystem config `config/x86_64/myfiles.toml` or similar by copying an existing configuration, and modify `CONFIG_NAME` in [.config](./ch02-07-configuration-settings.md#config) to be `myfiles`. Open `config/x86_64/myfiles.toml` and add `helloworld = {}` to the `[packages]` section.
 During the creation of the Redox image, the build system installs those packages on the image filesystem.
 
 ```toml

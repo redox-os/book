@@ -13,7 +13,7 @@ Linux runs the world, and boots on everything from high performance servers to t
 
 - Legacy until infinity: Old syscalls stay around forever, drivers for long-unbuyable hardware stay in the kernel as mandatory parts. While they can be disabled, running them in kernel space is unnecessary, and can be a source of system crashes, security issues, and unexpected bugs.
 - Huge codebase: To contribute, you must find a place to fit in to nearly _25 million lines of code_, in just the kernel. This is due to Linux's monolithic architecture.
-- Non-permissive license: Linux is licensed under GPL2, preventing the use of other free software licenses inside of the kernel. For more on why, see [Our Philosophy](./ch01-04-philosophy.md).
+- Non-permissive license: Linux is licensed under GPL2, preventing the use of other free software licenses inside of the kernel. For more on why, see [Our Philosophy](./ch01-02-philosophy.md).
 - Lack of memory safety: Linux has had numerous issues with memory safety throughout time. C is a fine language, but for such a security critical system, C is difficult to use safely.
 
 ### BSD

@@ -1,15 +1,16 @@
 # The Redox Operating-System
 
+[Introduction](./ch00-00-introduction.md)
+
 # Introduction and Getting Started
 
-- [Introduction](./ch01-00-welcome.md)
-  - [What is Redox?](./ch01-01-what-is-redox.md)
-  - [Our Goals](./ch01-02-our-goals.md)
-  - [Our Philosophy](./ch01-03-philosophy.md)
-  - [Why a New OS?](./ch01-04-why-redox.md)
-  - [Comparing Redox to Other OSes](./ch01-05-how-redox-compares.md)
-  - [Why Rust?](./ch01-06-why-rust.md)
-  - [Side projects](./ch01-07-side-projects.md)
+- [Introducing Redox](./ch01-00-introducing-redox.md)
+  - [Our Goals](./ch01-01-our-goals.md)
+  - [Our Philosophy](./ch01-02-philosophy.md)
+  - [Why a New OS?](./ch01-03-why-redox.md)
+  - [Comparing Redox to Other OSes](./ch01-04-how-redox-compares.md)
+  - [Why Rust?](./ch01-05-why-rust.md)
+  - [Side projects](./ch01-06-side-projects.md)
 
 - [Getting started](./ch02-00-getting-started.md)
   - [Running Redox in a virtual machine](./ch02-01-running-vm.md)

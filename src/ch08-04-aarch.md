@@ -1,6 +1,6 @@
 # Working with AArch64/Arm64
 
-The Redox Build system now supports building for multiple processor architectures in the same directory tree. Building for `i686` or `aarch64` only requires that you set the `ARCH` Make variable to the correct value. Normally, you would do this in `mk/config.mk`, but you can also do this temporarily in the environment (`export ARCH=aarch64`) or you can use [build.sh](./ch02-06-configuration-settings.html#buildsh).
+The Redox Build system now supports building for multiple processor architectures in the same directory tree. Building for `i686` or `aarch64` only requires that you set the `ARCH` Make variable to the correct value. Normally, you would do this in [.config](./ch02-07-configuration-settings.md#config), but you can also do this temporarily in the environment (`export ARCH=aarch64`) or you can use [build.sh](./ch02-07-configuration-settings.md#buildsh).
 
 AArch64 has limited support in this release (0.8.0), proceed at your own risk.
 
@@ -8,7 +8,7 @@ AArch64 has limited support in this release (0.8.0), proceed at your own risk.
 
 ### Bootstrap Pre-Requisites And Fetch Sources
 
-Follow the instructions for running **bootstrap.sh** to set up your environment - [Building Redox](./ch02-05-building-redox.html) or [Podman Build](./ch02-08-podman-build.html).
+Follow the instructions for running **bootstrap.sh** to set up your environment - [Building Redox](./ch02-05-building-redox.md) or [Podman Build](./ch02-06-podman-build.md).
 
 ### Install Emulator Package
 
@@ -26,15 +26,15 @@ sudo apt-get install qemu-system-arm qemu-efi
 
 ### Config Values
 
-Before your first build, be sure to set the `ARCH` variable in `mk/config.mk` to your architecture type, in this case `aarch64`. You can change several other configurable settings, such as the filesystem contents, etc. See [Configuration Settings](./ch02-06-configuration-settings.html).
+Before your first build, be sure to set the `ARCH` variable in [.config](./ch02-07-configuration-settings.md#config) to your architecture type, in this case `aarch64`. You can change several other configurable settings, such as the filesystem contents, etc. See [Configuration Settings](./ch02-07-configuration-settings.md).
 
 ### Add packages to the filesystem.
 
-You can add programs to the filesystem by following the instructions [here](./ch05-02-including-programs.html).
+You can add programs to the filesystem by following the instructions [here](./ch09-01-including-programs.md).
 
 ### ADVANCED USERS
 
-For more details on the build process, please read [Advanced Build](./ch02-07-advanced-build.html).
+For more details on the build process, please read [Advanced Build](./ch08-01-advanced-build.md).
 
 ## Compiling The Entire Redox Project
 
@@ -93,7 +93,7 @@ This should boot to Redox. The desktop GUI will be disabled, but you will be pro
 
 Expose Redox to other computers within a LAN. Configure Qemu with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
 
-Join the [Redox chat](./ch06-03-chat.html) if this is something you are interested in pursuing.
+Join the [Redox chat](./ch13-01-chat.md) if this is something you are interested in pursuing.
 
 ### Note
 

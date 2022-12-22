@@ -1,105 +1,16 @@
-# Podman Build
+# Advanced Podman Build
 
-To make the Redox build process more consistent across platforms, we are using **Rootless Podman** for major parts of the build. **Podman** is invoked automatically and transparently within the Makefiles.
+To make the Redox build process more consistent across platforms, we are using **Rootless Podman** for major parts of the build. The basics of using Podman are described [here](./ch02-06-podman-build.md). This chapter provides a detailed discussion, including tips, tricks and troubleshooting, as well as some extra detail for those who might want to leverage or improve Redox's use of Podman.
 
-The TL;DR version is [here](#tldr---new-or-existing-working-directory).
+## Build Environment
 
-You can find out more about Podman [here](https://docs.podman.io/en/latest/Introduction.html).
-
-## Disabling Podman Build
-
-By default, Podman Build is disabled. The variable `PODMAN_BUILD` in `mk/config.mk` defaults to zero, so that **Podman** will not be invoked. If you find that it is enabled but you want it disabled, set `PODMAN_BUILD?=0` in `mk/config.mk`, and ensure it is not set in your environment, `unset PODMAN_BUILD`.
-
-## Podman Build Overview
-
-**Podman** is a *virtual machine manager* that creates *containers* to execute a virtual machine *image*. In our case, we are creating an **Ubuntu** image, with a **Rust** installation and all the packages needed to build the system.
-
-The build process is performed in your normal working directory, e.g. `~/tryredox/redox`. Compilation of the Redox components is performed in the container, but the final Redox image (`build/$ARCH/$CONFIG/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`) is constructed using [FUSE](https://github.com/libfuse/libfuse) running directly on your host machine.
-
-Setting `PODMAN_BUILD` to 1 in `mk/config.mk`, on the `make` command line (e.g. `make PODMAN_BUILD=1 all`) or in the environment (e.g. `export PODMAN_BUILD=1; make all`) will cause **Podman** to be invoked when building.
-
-First, a **base image** called `redox_base` will be constructed, with all the necessary packages for the build. A "home" directory will also be created in `build/podman`. This is the home directory of your container alter ego, `poduser`. It will contain the `rustup` install, and the `.bashrc`. This takes some time, but is only done when necessary. The *tag* file [build/container.tag](#buildcontainertag) is also created at this time to prevent unnecessary image builds.
-
-Then, various `make` commands are executed in **containers** built from the **base image**. The files are constructed in your working directory tree, just as they would for a non-Podman build. In fact, if all necessary packages are installed on your host system, you can switch Podman on and off relatively seamlessly, although there is no benefit to doing so.
-
-The build process is using **Podman**'s `keep-id` feature, which allows your regular User ID to be mapped to `poduser` in the container. The first time a container is built, it takes some time to set up this mapping. After the first container is built, new containers can be built almost instantly.
-
-### NOTES
-
-- Envionment and Command Line Variables, other than ARCH, CONFIG_NAME and FILESYSTEM_CONFIG, are not passed to the part of `make` that is done in **Podman**. You must set any other config variables in `mk/config.mk` and not on the command line or in your environment.
+- Environment and Command Line Variables, other than ARCH, CONFIG_NAME and FILESYSTEM_CONFIG, are not passed to the part of `make` that is done in **Podman**. You must set any other config variables, e.g. `REPO_BINARY`, in [.config](./ch02-07-configuration-settings.md#config) and not on the command line or in your environment.
 
 - If you are building your own software to include in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Libraries to the Build](#adding-libraries-to-the-build).
 
-## TL;DR - [New](#new-working-directory) or [Existing](#existing-working-directory) Working Directory
-
-### New Working Directory 
-
-If you have already read the [Building Redox](./ch02-05-building-redox.html) instructions, but you wish to use **Podman Build**, follow these steps.
-
-- Make sure you have the `curl` command. E.g. for Pop!_OS/Ubuntu/Debian:
-```sh
-which curl || sudo apt-get install curl 
-```
-- Make a directory, get a copy of `podman_bootstrap.sh` and run it. This will clone the repository and install **Podman**.
-```sh
-mkdir -p ~/tryredox
-cd ~/tryredox
-curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.sh -o podman_bootstrap.sh
-time bash -e podman_bootstrap.sh
-```
-- Change to the `redox` directory.
-```sh
-cd ~/tryredox/redox
-```
-- Edit `mk/config.mk` and change `PODMAN_BUILD` to 1.
-```sh
-gedit mk/config.mk &
-```
-```
-...
-PODMAN_BUILD?=1
-...
-```
-- Build the system. This will take some time.
-```sh
-time make all
-```
-
-### Existing Working Directory
-
-If you already have the source tree, you can use these steps.
-
-- Change to your working directory and get the updates to the build files.
-```sh
-cd ~/tryredox/redox
-git fetch upstream master
-git rebase upstream/master
-```
-
-- Install **Podman**. Many distros require additional packages. Check the [Minimum Installation](#minimum-installation) instructions to see what is needed for your distro. Or, run the following in your working directory:
-```sh
-./podman_bootstrap.sh -d
-```
-
-- Set `PODMAN_BUILD` to 1 and run `make`. The first container setup can take 15 minutes or more, but it is comparable in speed to native build after that.
-```sh
-export PODMAN_BUILD=1
-make all
-```
-
-To ensure `PODMAN_BUILD` is properly set for future builds, edit `mk/config.mk` and change its value.
-```sh
-gedit mk/config.mk &
-```
-```
-...
-PODMAN_BUILD?=1
-...
-```
-
 ## Minimum Installation
 
-Most of the packages required for the build are installed in the container as part of the build process. However, some packages need to be installed on the host computer. You may also need to install an emulator such as **QEMU**. This is done for you in `podman_bootstrap.sh`, but you can do a minimum install by following the instructions below.
+Most of the packages required for the build are installed in the container as part of the build process. However, some packages need to be installed on the host computer. You may also need to install an emulator such as **QEMU**. For most Linux distros, this is done for you in `podman_bootstrap.sh`, but you can do a minimum install by following the instructions below.
 
 Note that the Redox filesystem parts are merged using [FUSE](https://github.com/libfuse/libfuse). `podman_bootstrap.sh` installs `libfuse` for most platforms, if it is not already included. If you have problems with the final assembly of Redox, check that `libfuse` is installed and you are able to use it.
 
@@ -199,7 +110,7 @@ Type `exit` on both shells once you have determined how to solve your problem.
 
 The default **Containerfile**, `podman/redox-base-containerfile`, imports all required packages for a normal Redox build.
 
-However, you cannot easily add packages after the **base image** is created. You must add them to your own Containerfile. 
+However, you cannot easily add packages after the **base image** is created. You must add them to your own Containerfile and rebuild the container image. 
 
 Copy `podman/redox-base-containerfile` and add to the list of packages in the initial `apt-get`.
 ```sh
@@ -216,7 +127,7 @@ gedit podman/my-containerfile &
 Make sure you include the continuation character `\` at the end of each line except after the last package.
 
 
-Then, edit `mk/config.mk`, and change the variable `CONTAINERFILE` to point to your Containerfile, e.g.
+Then, edit [.config](./ch02-07-configuration-settings.md#config), and change the variable `CONTAINERFILE` to point to your Containerfile, e.g.
 ```
 CONTAINERFILE?=podman/my-containerfile
 ```
@@ -227,7 +138,7 @@ If you feel the need to have more than one image, you can change the variable `I
 
 ## Summary of Podman-related Make Targets, Variables and Podman Commands
 
-- `PODMAN_BUILD`: If set to 1 in `mk/config.mk`, or in the environment, or on the `make` command line, much of the build process takes place in **Podman**.
+- `PODMAN_BUILD`: If set to 1 in [.config](./ch02-07-configuration-settings.md#config), or in the environment, or on the `make` command line, much of the build process takes place in **Podman**.
 
 - `CONTAINERFILE`: The name of the containerfile used to build the image. This file includes the `apt-get` command that installs all the necessary packages into the image. If you need to add packages to the build, edit your own containerfile and change this variable to point to it.
 
@@ -253,17 +164,17 @@ If you are interested in how we are able to use your working directory for build
 
 We are using **Rootless Podman**'s `--userns keep-id` feature. Because Podman is being run Rootless, the *container's* `root` user is actually mapped to your User ID on the host. Without the `keep-id` option, a regular user in the container maps to a phantom user outside the container. With the `keep-id` option, a user in the container that has the same User ID as your host User ID, will have the same permissions as you.
 
-During the creation of the **base image**, Podman invokes **Buildah** to build the image. Buildah does not allow User IDs to be shared between the host and the container in the same way that Podman does. So the base image is created without `keep-id`, then the first container created from the image, having `keep-id` enabled, triggers a remapping. Once that remapping is done, it is reused for each subsequent container.
+During the creation of the **base image**, Podman invokes [Buildah](https://buildah.io/) to build the image. Buildah does not allow User IDs to be shared between the host and the container in the same way that Podman does. So the base image is created without `keep-id`, then the first container created from the image, having `keep-id` enabled, triggers a remapping. Once that remapping is done, it is reused for each subsequent container.
 
-The working directory is made available in the container by **mounting** it as a **volume**. The **Podman** option 
+The working directory is made available in the container by **mounting** it as a **volume**. The **Podman** option:
 ```
 --volume "`pwd`":$(CONTAINER_WORKDIR):Z
 ```
 takes the directory that `make` was started in as the host working directory, and **mounts** it at the location `$CONTAINER_WORKDIR`, normally set to `/mnt/redox`. The `:Z` at the end of the name indicates that the mounted directory should not be shared between simultaneous container instances. It is optional on some Linux distros, and not optional on others.
 
-For our invocation of Podman, we set the PATH environment variable as an option to `podman run`. This is to avoid the need for our `make` command to run `.bashrc`, which would add extra complexity. The `ARCH`, `CONFIG_NAME` and `FILESYSTEM_CONFIG` variables are passed in the environment to allow you to override the values in `mk/config.mk`, e.g. by setting them on your `make` command line or by using `build.sh`.
+For our invocation of Podman, we set the PATH environment variable as an option to `podman run`. This is to avoid the need for our `make` command to run `.bashrc`, which would add extra complexity. The `ARCH`, `CONFIG_NAME` and `FILESYSTEM_CONFIG` variables are passed in the environment to allow you to override the values in `mk/config.mk` or `.config`, e.g. by setting them on your `make` command line or by using `build.sh`.
 
-We also set `PODMAN_BUILD=0` in the environment, to ensure that the instance of `make` running in the container knows not to invoke **Podman**. This overrides the value set in `mk/config.mk`.
+We also set `PODMAN_BUILD=0` in the environment, to ensure that the instance of `make` running in the container knows not to invoke **Podman**. This overrides the value set in `.config`.
 
 In the **Containerfile**, we use as few `RUN` commands as possible, as **Podman** commits the image after each command. And we avoid using `ENTRYPOINT` to allow us to specify the `podman run` command as a list of arguments, rather than just a string to be processed by the entrypoint shell.
 
