@@ -1,12 +1,12 @@
 # Building Redox
 
-Congrats on making it this far! Now we gotta build Redox. This process is for **x86_64** machines. There are also similar processes for [i686](./ch02-09-i686.html) and [AArch64/Arm64](./ch02-10-aarch.html).
+Congrats on making it this far! Now we gotta build Redox. This process is for **x86_64** machines. There are also similar processes for [i686](./ch08-03-i686.md) and [AArch64/Arm64](./ch08-04-aarch.md).
 
-The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox gitlab login, try again later, and if it continues to happen, you can let us know through [chat](./ch06-03-chat.html), or send an email to [info@redox-os.org](mailto:info@redox-os.org)
+The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox gitlab login, try again later, and if it continues to happen, you can let us know through [chat](./ch13-01-chat.md).
 
 ## Supported Distros and Podman Build
 
-This build process for the current release (0.8.0) is for Pop!_OS/Ubuntu/Debian. The recommended build environment for other distros is our [Podman Build](./ch02-08-podman-build.html). Please follow those instructions instead. There is partial support for non-Debian distros in `bootstrap.sh`, but it is not maintained.
+This build process for the current release (0.8.0) is for Pop!_OS/Ubuntu/Debian. The recommended build environment for other distros is our [Podman Build](./ch02-06-podman-build.md). Please follow those instructions instead. There is partial support for non-Debian distros in `bootstrap.sh`, but it is not maintained.
 
 ## Preparing the Build
 
@@ -33,7 +33,7 @@ The above does the following:
  - installs the pre-requisite packages using your operating system's package manager(Pop!_OS/Ubuntu/Debian `apt`, Redhat/Centos/Fedora `dnf`, Arch Linux `pacman`).
  - clones the Redox code from GitLab and checks out a redox-team tagged version of the different subprojects intended for the community to test and submit success/bug reports for.
 
-Note that `curl -sf` operates silently, so if there are errors, you may get an empty or incorrect version of bootstrap.sh. Check for typos in the command and try again. If you continue to have problems, join the [chat](./ch06-03-chat.html) and let us know.
+Note that `curl -sf` operates silently, so if there are errors, you may get an empty or incorrect version of bootstrap.sh. Check for typos in the command and try again. If you continue to have problems, join the [chat](./ch13-01-chat.md) and let us know.
 
 Please be patient, this can take 5 minutes to an hour depending on the hardware and network you're running it on. Once it completes, update your path in the current shell with
 ```sh2048
@@ -42,7 +42,7 @@ source ~/.cargo/env
 
 ### Setting Config Values
 
-The build system uses several configuration files, which contain settings that you may wish to change. These are detailed in [Configuration Files](./ch02-06-configuration-settings.html). By default, the system builds for an `x86_64` architecture, using the `desktop` configuration (`config/x86_64/desktop.toml`). There is a shell script [build.sh](#buildsh) that will allow you to choose the architecture and filesystem contents easily.
+The build system uses several configuration files, which contain settings that you may wish to change. These are detailed in [Configuration Files](./ch02-07-configuration-settings.md). By default, the system builds for an `x86_64` architecture, using the `desktop` configuration (`config/x86_64/desktop.toml`). Set the desired `ARCH` and `CONFIG_FILE` in [.config](./ch02-07-configuration-settings.md#config). There is also a shell script [build.sh](#buildsh) that will allow you to choose the architecture and filesystem contents easily, although it is only a temporary change.
 
 ## Compiling The Entire Redox Project
 
@@ -74,13 +74,13 @@ Note that the filesystem parts are merged using the [FUSE](https://github.com/li
 
 ### build.sh
 
-`build.sh` is a shell script that allows you to easily specify the architecture you are building for, and the filesystem contents. When you are doing Redox development, you should set them in `mk/config.mk` (see [Configuration Settings](./ch02-06-configuration-settings.md)). But if you are just trying things out, use `build.sh` to run `make` for you. e.g.:
+`build.sh` is a shell script that allows you to easily specify the architecture you are building for, and the filesystem contents. When you are doing Redox development, you should set them in `.config` (see [Configuration Settings](./ch02-07-configuration-settings.md)). But if you are just trying things out, use `build.sh` to run `make` for you. e.g.:
 
 - `./build.sh -a i686 -c server live` - Run `make` for an `i686` architecture, using the `server` configuration, `config/i686/server.toml`. The resulting image is `build/i686/server/livedisk.iso`, which can be used for installation from a USB.
 
-- `./build.sh -f config/aarch64/desktop.toml all` - Run `make` for an `arm64/AArch64` architecture, using the `desktop` configuration, `config/aarch64/desktop.toml`. The resulting image is `build/aarch64/desktop/harddrive.img`, which can be run in an emulator such as **QEMU**.
+- `./build.sh -f config/aarch64/desktop.toml qemu` - Run `make` for an `arm64/AArch64` architecture, using the `desktop` configuration, `config/aarch64/desktop.toml`. The resulting image is `build/aarch64/desktop/harddrive.img`, which is then run in the emulator **QEMU**.
 
-Details of `build.sh` and other settings are described in [Configuration Settings](./ch02-06-configuration-settings.html).
+If you use `build.sh`, it's recommended that you do so consistently, as `make` will not be aware of which version of the system you previously built with `build.sh`. Details of `build.sh` and other settings are described in [Configuration Settings](./ch02-07-configuration-settings.md).
 
 ### Run in an emulator
 
@@ -95,7 +95,7 @@ Note that if you built the system using `build.sh` to change architecture or fil
 ```
 will build `build/i686/server/harddrive.img` (if it does not exist) and run it in the **QEMU** emulator.
 
-The emulator will display the Redox GUI. See [Using the emulation](./ch02-02-running-vm.html#using-the-emulation) for general instructions and [Trying out Redox](./ch02-11-trying-out-redox.html) for things to try.
+The emulator will display the Redox GUI. See [Using the emulation](./ch02-01-running-vm.md#using-the-emulation) for general instructions and [Trying out Redox](./ch02-04-trying-out-redox.md) for things to try.
 
 #### Run with no GUI
 
@@ -113,7 +113,7 @@ If you have problems running the emulation, you can try `make qemu kvm=no` or `m
 
 Expose Redox to other computers within a LAN. Configure Qemu with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
 
-Join the [Redox chat](./ch06-03-chat.html) if this is something you are interested in pursuing.
+Join the [Redox chat](./ch13-01-chat.html) if this is something you are interested in pursuing.
 
 ### Building Redox Live CD/USB Image
 
@@ -122,13 +122,13 @@ For a *livedisk* or installable image, use:
 cd ~/tryredox/redox
 time make live
 ```
-This will make the target `build/x86_64/desktop/livedisk.iso`, which can be copied to a USB drive or CD for booting or installation. See [Creating a bootable USB drive or CD](./ch02-03-real-hardware.html#creating-a-bootable-usb-drive-or-cd) for instructions on creating a USB drive and booting from it.
+This will make the target `build/x86_64/desktop/livedisk.iso`, which can be copied to a USB drive or CD for booting or installation. See [Creating a bootable USB drive or CD](./ch02-02-real-hardware.md#creating-a-bootable-usb-drive-or-cd) for instructions on creating a USB drive and booting from it.
 
 
 ## Note
 
-If you intend on contributing to Redox or its subprojects, please read [Creating a Proper Pull Request](./ch06-10-creating-proper-pull-requests.html) so you understand our use of forks and set up your repository appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
+If you intend on contributing to Redox or its subprojects, please read [Creating a Proper Pull Request](./ch12-03-creating-proper-pull-requests.md) so you understand our use of forks and set up your repository appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
 
-If you encounter any bugs, errors, obstructions, or other annoying things, please join the [Redox chat](./ch06-03-chat.html) or report the issue to the [Redox repository]. Thanks!
+If you encounter any bugs, errors, obstructions, or other annoying things, please join the [Redox chat](./ch13-01-chat.md) or report the issue to the [Redox repository]. Thanks!
 
 [Redox repository]: https://gitlab.redox-os.org/redox-os/redox
