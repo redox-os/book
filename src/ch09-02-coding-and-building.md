@@ -118,6 +118,17 @@ Congratulations! You have modified a program and built the system! Next, create 
   ```
 In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. Follow the instructions for [Running on Real Hardware](./ch02-02-real-hardware.md) and test out your change.
 
+## A Note about Drivers
+
+Drivers are a special case for rebuild. The source for drivers is fetched both for the `drivers` recipe and the `drivers-initfs` recipe. The `initfs` recipe also copies some drivers from `drivers-initfs` during the build process. If your driver is included in `initfs`, you need to keep all three in sync. The easiest solution is to write a build shell script something like the following, which should be run in your `redox` base directory. (**Note**: This assumes your driver code edits are in the directory `cookbook/recipes/drivers`. Don't accidentally remove your edited code.)
+
+```sh
+rm -rf cookbook/recipes/drivers-initfs/{source,target} cookbook/recipes/initfs/target
+cp -R cookbook/recipes/drivers/source cookbook/recipes/drivers-initfs
+
+make rebuild qemu
+```
+
 ## Shortening the Rebuild Cycle
 
 To skip some of the steps in a full `rebuild`, here are some tricks.
