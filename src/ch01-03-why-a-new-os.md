@@ -10,11 +10,9 @@ Wherever possible, Redox code is written in [Rust](https://www.rust-lang.org/). 
 
 The [Microkernel Architecture](https://en.wikipedia.org/wiki/Microkernel) moves as much software as possible out of the operating system kernel. Drivers, application services and other operating system functionality run as independent processes. The kernel's main responsibility is the coordination of these processes, and the allocation of system resources to the processes.
 
-Most kernels* use an event-handler design. Hardware interrupts and application system calls each trigger an event, invoking the appropriate handler. The kernel runs in supervisor mode, with access to all the system's resources. In [Monolithic Kernels](https://en.wikipedia.org/wiki/Monolithic_kernel), the operating system's entire response to an event must be completed in supervisor mode. An error in the kernel, or even a misbehaving piece of hardware, can cause the system to enter a state where it is unable to respond to *any* event. And because of the large amount of code in the kernel, the potential for vulnerabilities while in supervisor mode is vastly greater than for a microkernel design.
+Most kernels, other than some real-time operating systems, use an event-handler design. Hardware interrupts and application system calls each trigger an event, invoking the appropriate handler. The kernel runs in supervisor mode, with access to all the system's resources. In [Monolithic Kernels](https://en.wikipedia.org/wiki/Monolithic_kernel), the operating system's entire response to an event must be completed in supervisor mode. An error in the kernel, or even a misbehaving piece of hardware, can cause the system to enter a state where it is unable to respond to *any* event. And because of the large amount of code in the kernel, the potential for vulnerabilities while in supervisor mode is vastly greater than for a microkernel design.
 
 In Redox, drivers and many application services can run in user mode, similar to user applications, and the system can restrict them so they can only access the resources they require for their designated purpose. If a driver fails or panics, it can be ignored or restarted with no impact on the rest of the system. A misbehaving piece of hardware might impact system performance or cause the loss of a service, but the kernel will continue to function and to provide whatever services remain available.
-
-*(other than some real-time operating systems)
 
 ## Advanced Filesystem
 
