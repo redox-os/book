@@ -127,8 +127,8 @@ This will make the target `build/x86_64/desktop/livedisk.iso`, which can be copi
 
 ## Note
 
-If you intend on contributing to Redox or its subprojects, please read [Creating a Proper Pull Request](./ch12-03-creating-proper-pull-requests.md) so you understand our use of forks and set up your repository appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
+If you intend on contributing to Redox or its subprojects, please read [Creating a Proper Pull Request](./ch12-04-creating-proper-pull-requests.md) so you understand our use of forks and set up your repository appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
 
-If you encounter any bugs, errors, obstructions, or other annoying things, please join the [Redox chat](./ch13-01-chat.md) or report the issue to the [Redox repository]. Thanks!
+If you encounter any bugs, errors, obstructions, or other annoying things, please join the [Redox chat](./ch13-01-chat.md) or [report the issue](./ch12-03-creating-proper-bug-reports.md) to the [Redox repository]. Thanks!
 
 [Redox repository]: https://gitlab.redox-os.org/redox-os/redox

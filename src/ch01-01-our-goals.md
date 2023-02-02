@@ -16,5 +16,5 @@ This means that a large number of standard programs and libraries will be compat
 
 The key here is the trade off between correctness and compatibility. Ideally, you should be able achieve both, but unfortunately, you can't always do so.
 
-[Why Rust]: ./ch01-05-why-rust.md
+[Why Rust]: ./ch01-06-why-rust.md
 
