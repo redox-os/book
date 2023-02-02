@@ -4,7 +4,7 @@ Let's walk through contributing to the Redox subpackage `games`, which is a coll
 
 ## Working with Git
 
-Before starting development, read through [Creating a Proper Pull Request](./ch12-03-creating-proper-pull-requests.md), which describes how the Redox team uses Git.
+Before starting development, read through [Creating Proper Pull Requests], which describes how the Redox team uses Git.
 
 In this example, we will discuss creating a **fork** of the `games` package, pretending you are going to create a `Merge Request` for your changes. **Don't actually do this**. Only create a fork when you have a permanent change you want to contribute to Redox.
 
@@ -57,7 +57,7 @@ To set up this package for contributing, do the following in your `Coding` shell
   git clone https://gitlab.redox-os.org/redox-os/games.git --origin upstream --recursive
   mv games source
   ```
-- If you are making a permanent change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating a Proper Pull Request](./ch12-03-creating-proper-pull-requests.md), replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games).
+- If you are making a permanent change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests], replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
 
 ## Edit your Code
 
@@ -73,13 +73,13 @@ To set up this package for contributing, do the following in your `Coding` shell
 
 ## Check your Code on Linux
 
-Most Redox applications also work on Linux without being modified. You can build and test your program on Linux.
-- From within the `Coding` shell, go to the `source` directory and use `cargo` to check for errors.
+Most Redox applications are source-compatible with Linux without being modified. You can (and should) build and test your program on Linux.
+- From within the `Coding` shell, go to the `source` directory and use the Linux version of `cargo` to check for errors.
   ```sh
   cargo check
   ```
   You could also use `cargo clippy`, but `minesweeper` is not clean enough to pass.
-- The `games` package creates more than one executable, so to test `minesweeper` on Linux, you need to specify it to `Cargo`. In the `source` directory, do:
+- The `games` package creates more than one executable, so to test `minesweeper` on Linux, you need to specify it to `cargo`. In the `source` directory, do:
   ```sh
   cargo run --bin minesweeper
   ```
@@ -118,16 +118,11 @@ Congratulations! You have modified a program and built the system! Next, create 
   ```
 In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. Follow the instructions for [Running on Real Hardware](./ch02-02-real-hardware.md) and test out your change.
 
-## A Note about Drivers
+## Checking In your Changes
 
-Drivers are a special case for rebuild. The source for drivers is fetched both for the `drivers` recipe and the `drivers-initfs` recipe. The `initfs` recipe also copies some drivers from `drivers-initfs` during the build process. If your driver is included in `initfs`, you need to keep all three in sync. The easiest solution is to write a build shell script something like the following, which should be run in your `redox` base directory. (**Note**: This assumes your driver code edits are in the directory `cookbook/recipes/drivers`. Don't accidentally remove your edited code.)
+Don't do this now, but if you were to have permanent changes to contribute to a package, at this point, you would `git push` and create a Merge Request, as described in [Creating Proper Pull Requests].
 
-```sh
-rm -rf cookbook/recipes/drivers-initfs/{source,target} cookbook/recipes/initfs/target
-cp -R cookbook/recipes/drivers/source cookbook/recipes/drivers-initfs
-
-make rebuild qemu
-```
+If you were contributing a new package, such as porting a Rust application to Redox, you would need to check in the `recipe.toml` file. It goes in the `cookbook` subproject. You may also need to modify a filesystem config file, such as `config/demo.toml`. It goes in the `redox` project. You must fork and do a proper Pull Request for each of these projects. Please coordinate with the Redox team via [Chat](./ch13-01-chat.md) before doing this.
 
 ## Shortening the Rebuild Cycle
 
@@ -135,12 +130,14 @@ To skip some of the steps in a full `rebuild`, here are some tricks.
 
 ### Build your Package for Redox
 
-You can build just the `games` package, rather than having `make rebuild` check every package for changes. This can help shorten the build cycle if you are trying to resolve issues such as linking to libraries.
+You can build just the `games` package, rather than having `make rebuild` check every package for changes. This can help shorten the build cycle if you are trying to resolve issues such as compilation errors or linking to libraries.
 - In your `Build` shell, in the `redox` directory, type:
   ```sh
   make r.games
   ```
   Redox's makefiles have a rule for `r.PACKAGE`, where `PACKAGE` is the name of a Redox package. It will make that package, ready to load into the Redox filesystem.
+
+Once your Redox package has been successfully built, you can use `make rebuild` to create the image, or, if you are confident you have made all packages successfully, you can skip a complete rebuild and just [make a new image](#make-a-new-image).
 
 ### Make a New Image
 
@@ -177,11 +174,46 @@ If you feel the need to skip creating a new image, and you want to directly add 
   ```
   The new version of `minesweeper` is now in your Redox filesystem.
 
-### Checking In your Changes
+## Getting files onto and off of Redox QEMU
 
-Don't do this now, but if you were to have permanent changes to contribute to a package, at this point, you would `git push` and create a Merge Request, as described in [Creating a Proper Pull Request](./ch12-03-creating-proper-pull-requests.md).
+If you need to move text files, such as shell scripts or command output, from or to your Redox instance running on QEMU, use your Terminal window that you used to start QEMU. To capture the output of a Redox command, run `script` before starting QEMU.
+  ```sh
+  script qemu.log
+  make qemu
+  redox login: user
+  # execute your commands, with output to the terminal
+  # exit QEMU
+  # exit the shell started by script
+  exit
+  ```
+  The command output will now be in the file qemu.log. Note that if you did not exit the `script` shell, the output may not be complete.
 
-If you were contributing a new package, such as porting a Rust application to Redox, you would need to check in the `recipe.toml` file. It goes in the `cookbook` subproject. You may also need to modify a filesystem config file, such as `config/demo.toml`. It goes in the `redox` project. You must fork and do a proper Pull Request for each of these projects. Please coordinate with the Redox team via [Chat](./ch13-01-chat.md) before doing this.
+  To transfer a text file, such as a shell script, onto Redox, use the Terminal window with copy/paste.
+  ```sh
+  redox login: user
+  cat > myscript.sh << EOF
+  # Copy the text to the clipboard and use the Terminal window paste
+  EOF
+  ```
+
+If your file is large, or non-ascii, or you have many files to copy, you can use the process described in [Patch an Image](#patch-an-image). However, you do so at your own risk.
+
+Files you create while running QEMU remain in the Redox image, so long as you do not rebuild the image. Similarly, files you add to the image will be present when you run QEMU, so long as you do not rebuild the image.
+
+Make sure you are **not running QEMU**. Run `make mount`. You can now use your file browser to navigate to `build/x86_64/myfiles/filesystem`. Copy your files into or out of the Redox filesystem as required. Make sure to exit your file browser window, and use `make unmount` before running `make qemu`.
+
+Note that in some circumstances, `make qemu` may trigger a rebuild (e.g. `make` detects an out of date file). If that happens, the files you copied into the Redox image will be lost.
+
+## A Note about Drivers
+
+Drivers are a special case for rebuild. The source for drivers is fetched both for the `drivers` recipe and the `drivers-initfs` recipe. The `initfs` recipe also copies some drivers from `drivers-initfs` during the build process. If your driver is included in `initfs`, you need to keep all three in sync. The easiest solution is to write a build shell script something like the following, which should be run in your `redox` base directory. (**Note**: This assumes your driver code edits are in the directory `cookbook/recipes/drivers`. Don't accidentally remove your edited code.)
+
+```sh
+rm -rf cookbook/recipes/drivers-initfs/{source,target} cookbook/recipes/initfs/target
+cp -R cookbook/recipes/drivers/source cookbook/recipes/drivers-initfs
+
+make rebuild qemu
+```
 
 ## VS Code Tips and Tricks
 
@@ -228,3 +260,5 @@ VS Code cannot grok the gestalt of Redox, so it doesn't work very well if you st
 ### Don't Build the System in a VS Code Terminal
 
 In general, it's not recommended to do a system build from within VS Code. Use your `Build` window. This gives you the flexibility to exit Code without terminating the build.
+
+[Creating Proper Pull Requests]: ./ch12-04-creating-proper-pull-requests.md

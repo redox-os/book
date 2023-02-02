@@ -48,7 +48,7 @@ This book is broken into the following chapters:
 - [Developing for Redox](./ch09-00-developing-for-redox.md)
 - [Contributing](./ch10-00-contributing.md)
 - [Best practices and guidelines](./ch11-00-best-practices.md)
-- [Using Git](./ch12-00-using-git.md)
+- [Using Redox GitLab](./ch12-00-using-redox-gitlab.md)
 - [Communication](./ch13-00-communication.md)
  
 

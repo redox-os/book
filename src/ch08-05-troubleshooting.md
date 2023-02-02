@@ -65,3 +65,4 @@ After all packages are cooked, a tag file is created as `build/$ARCH/$CONFIG_NAM
 To build the final Redox image, `redox_installer` uses [FUSE](https://github.com/libfuse/libfuse), creating a virtual filesystem and copying the packages into it. This is done outside of Podman, even if you are using Podman Build.
 
 On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.sh` might not install it correctly. Investigate whether you can address your FUSE issues, or join the [chat](./ch13-01-chat.md) if you need advice.
+

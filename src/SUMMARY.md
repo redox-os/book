@@ -72,7 +72,6 @@
   - [Coding and Building](./ch09-02-coding-and-building.md)
 
 - [Contributing](./ch10-00-contributing.md)
-  - [Direct contributions](./ch10-01-direct-contributions.md)
   - [Low hanging fruit](./ch10-02-low-hanging-fruit.md)
   - [Book ToDos](./ch10-03-book-todos.md)
 
@@ -83,11 +82,10 @@
   - [Rusting properly](./ch11-04-rusting-properly.md)
   - [Avoiding panics in the kernel](./ch11-05-avoiding-kernel-panics.md)
 
-- [Using Git](./ch12-00-using-git.md)
-  - [How to do a bug report correctly](./ch12-01-creating-proper-bug-reports.md)
-  - [Pull requests](./ch12-02-pull-requests.md)
-  - [How to do a pull request properly](./ch12-03-creating-proper-pull-requests.md)
-  - [Git Guidelines](./ch12-04-git-guidelines.md)
+- [Using Redox GitLab](./ch12-00-using-redox-gitlab.md)
+  - [Signing in to GitLab](./ch12-01-signing-in-to-gitlab.md)
+  - [Creating Proper Bug Reports](./ch12-03-creating-proper-bug-reports.md)
+  - [How to do a pull request properly](./ch12-04-creating-proper-pull-requests.md)
 
 - [Communication](./ch13-00-communication.md)
   - [Chat](./ch13-01-chat.md)
