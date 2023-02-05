@@ -32,6 +32,7 @@ Documentation about microkernels
 [HelenOS FAQ]: http://www.helenos.org/wiki/FAQ
 [Microkernels performance paper]: https://os.inf.tu-dresden.de/pubs/sosp97/
 [seL4 whitepaper]: https://sel4.systems/About/seL4-whitepaper.pdf
+[Fuchsia documentation]: https://fuchsia.dev/fuchsia-src/get-started/learn/intro
 
 A note on the current state
 ---------------------------
