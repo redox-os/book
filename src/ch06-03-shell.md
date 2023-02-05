@@ -39,8 +39,6 @@ TODO: In Linux we have device files like `/dev/tty`, how is this concept handled
 
 # Shell
 
-The shell used in Redox is ion.
-
 When ion is called without "-c", it starts a main loop,
 which can be found inside `Shell.execute()`.
 
