@@ -49,8 +49,8 @@
 - [Programs and Libraries](./ch06-00-programs-libraries.md)
   - [Components](./ch06-01-components.md)
   - [GUI](./ch06-02-gui.md)
-  - [Shell](./ch06-04-shell.md)
-  - [System Tools](./ch06-05-system-tools.md)
+  - [Shell](./ch06-03-shell.md)
+  - [System Tools](./ch06-04-system-tools.md)
 
 # Developing with and for Redox
 
