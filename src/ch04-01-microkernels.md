@@ -20,7 +20,14 @@ Monolithic kernels provide a lot more abstractions than microkernels.
 
 The above illustration ([from Wikimedia], by Wooptoo, License: Public domain) shows how they differ.
 
-> TODO
+Documentation about microkernels
+--------------------------------
+
+https://wiki.osdev.org/Microkernel
+https://wiki.minix3.org/doku.php?id=www:documentation:start
+https://wiki.minix3.org/doku.php?id=www:documentation:features
+https://wiki.minix3.org/doku.php?id=faq
+http://www.minix3.org/docs/jorrit-herder/osr-jul06.pdf
 
 A note on the current state
 ---------------------------
