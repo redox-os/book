@@ -17,6 +17,11 @@ The performance difference between monolithic and microkernels has been marginal
 
 Unfortunately, Redox isn't quite there yet. We still have a relatively slow kernel since not much time has been spent on optimizing it.
 
+[Context switch documentation]
+[Microkernels performance paper]
+
 [context switch]: https://en.wikipedia.org/wiki/Context_switch
 [MMU]: https://en.wikipedia.org/wiki/Memory_management_unit
 [TLB]: https://en.wikipedia.org/wiki/Translation_lookaside_buffer
+[Microkernels performance paper]: https://os.inf.tu-dresden.de/pubs/sosp97/
+[Context switch documentation]: https://wiki.osdev.org/Context_Switching

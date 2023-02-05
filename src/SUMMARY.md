@@ -49,12 +49,8 @@
 - [Programs and Libraries](./ch06-00-programs-libraries.md)
   - [Components](./ch06-01-components.md)
   - [GUI](./ch06-02-gui.md)
-  - [What Ion is](./ch06-03-ion.md)
-  - [Shell](./ch06-04-shell.md)
-  - [Coreutils](./ch06-05-coreutils.md)
-  - [Supplement utilities](./ch06-06-supplementary-utilities.md)
-  - [Binutils](./ch06-07-binutils.md)
-  - [Extrautils](./ch06-08-extrautils.md)
+  - [Shell](./ch06-03-shell.md)
+  - [System Tools](./ch06-04-system-tools.md)
 
 # Developing with and for Redox
 
