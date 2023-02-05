@@ -32,10 +32,13 @@ The filesystem init continues the loading of drivers for all other functionality
 
 ## Login
 
-After the init processes have set up drivers and daemons, it is possible for the user to log in to the system. The login program accepts a username, with a default user of `user`, prints the `/etc/motd` file, and then executes the user's login shell, usually `ion`. At this point, the user will now be able to access the [Shell](./ch06-03-ion.md)
+After the init processes have set up drivers and daemons, it is possible for the user to log in to the system. The login program accepts a username, with a default user of `user`, prints the `/etc/motd` file, and then executes the user's login shell, usually `ion`. At this point, the user will now be able to access the [Shell](./ch06-03-shell.md)
 
 ## Graphical overview
 
 Here is an overview of the initialization process with scheme creation and usage. For simplicity's sake, we do not depict all scheme interaction but at least the major ones. **THIS IS CURRENTLY OUT OF DATE, BUT STILL INFORMATIVE**
 
+- [Boot process documentation]
+
 ![Redox initialization graph](./assets/init.svg "Redox initialization graph")
+[Boot process documentation]: https://wiki.osdev.org/Boot_Sequence

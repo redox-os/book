@@ -12,3 +12,9 @@ Programs could directly invoke Redox syscalls, but most call library functions t
   * The Rust libstd now includes an implementation of its system-dependent parts (such as file access and setting environment variables) for Redox, in `src/libstd/sys/redox`. Most of libstd works in Redox, so many command-line Rust programs can be compiled for Redox.
 
 The Redox ["cookbook" project](https://gitlab.redox-os.org/redox-os/cookbook) includes recipes for compiling C and Rust projects into Redox binaries.
+
+- [OS internals documentation]
+- [ELF documentation]
+
+[OS internals documentation]: https://wiki.osdev.org/How_kernel,_compiler,_and_C_library_work_together
+[ELF documentation]: https://wiki.osdev.org/ELF
