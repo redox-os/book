@@ -11,7 +11,7 @@ Compared to Linux, our syscall interface is much more minimal. This is not becau
 
 ### "Everything is a URL"
 
-This is an generalization of "Everything is a file", largely inspired by Plan 9. In Redox, [resources](https://doc.redox-os.org/book/ch05-05-resources.html) can be both socket-like and file-like, making them fast enough to use for virtually everything.
+This is an generalization of "Everything is a file", largely inspired by Plan 9. In Redox, [resources] can be both socket-like and file-like, making them fast enough to use for virtually everything.
 
 This way, we get a more unified system API. We will explain this later, in [URLs, schemes, and resources].
 
@@ -37,3 +37,4 @@ The main idea is to have components and drivers that would be inside a monolithi
 All of this increases the reliability of the system significantly. This is useful for mission-critical applications and for users that want minimal issues with their computer systems.
 
 [URLs, schemes, and resources]: ./ch05-00-urls-schemes-resources.md
+[resources]: https://doc.redox-os.org/book/ch05-05-resources.html

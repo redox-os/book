@@ -29,6 +29,11 @@ Redox extends this concept to a much more powerful one.
 Documentation about this design
 -------------------------------
 
+- [Drew DeVault - In praise of Plan 9]
+- [Plan 9 documentation]
+- [Plan 9 wiki]
+- [9P documentation]
+
 [Drew DeVault - In praise of Plan 9]: https://drewdevault.com/2022/11/12/In-praise-of-Plan-9.html
 [Plan 9 documentation]: https://plan9.io/sys/doc/
 [Plan 9 wiki]: https://plan9.io/wiki/plan9/plan_9_wiki/
