@@ -58,5 +58,5 @@ It is written such that you do not need any prior knowledge in Rust and/or OS de
 [POSIX]: https://en.wikipedia.org/wiki/POSIX
 [Plan9]: http://9p.io/plan9/index.html
 [Minix]: http://www.minix3.org/
-[Linux]: https://www.linuxfoundation.org
+[Linux]: https://www.kernel.org/
 [BSD]: http://www.bsd.org/
