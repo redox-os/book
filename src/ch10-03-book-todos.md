@@ -18,18 +18,18 @@ Redox has many subprojects that combine to provide a complete system. You can he
 
 ## Open ToDos on the book
 
-- https://doc.redox-os.org/book/ch01-03-why-a-new-os.html#advanced-filesystem
-- https://doc.redox-os.org/book/ch01-05-how-redox-compares.html#everything-is-a-url
-- https://doc.redox-os.org/book/ch04-01-microkernels.html#versus-monolithic-kernels
-- https://doc.redox-os.org/book/ch04-05-drivers.html#drivers
-- https://doc.redox-os.org/book/ch04-06-memory.html#memory-management
-- https://doc.redox-os.org/book/ch05-00-urls-schemes-resources.html#so-how-does-it-differ-from-files
-- https://doc.redox-os.org/book/ch05-01-urls.html#opening-a-url
-- https://doc.redox-os.org/book/ch05-02-how-it-works.html#opening-a-url
-- https://doc.redox-os.org/book/ch05-04-root-scheme.html#registering-a-scheme
-- https://doc.redox-os.org/book/ch05-05-resources.html#resource-operations
-- https://doc.redox-os.org/book/ch05-05-resources.html#the-resource-type
-- https://doc.redox-os.org/book/ch05-06-stitching-it-all-together.html#stiching-it-all-together
-- https://doc.redox-os.org/book/ch08-00-build-process.html (empty)
-- https://doc.redox-os.org/book/ch10-01-direct-contributions.html (empty)
-- https://doc.redox-os.org/book/ch12-00-using-git.html (empty)
+- [Advanced Filesystem](https://doc.redox-os.org/book/ch01-03-why-a-new-os.html#advanced-filesystem)
+- [Everything is a URL](https://doc.redox-os.org/book/ch01-05-how-redox-compares.html#everything-is-a-url)
+- [Versus monolithic kernels](https://doc.redox-os.org/book/ch04-01-microkernels.html#versus-monolithic-kernels)
+- [Drivers](https://doc.redox-os.org/book/ch04-05-drivers.html#drivers)
+- [Memory Management](https://doc.redox-os.org/book/ch04-06-memory.html#memory-management)
+- [URLs, Schemes and Resources](https://doc.redox-os.org/book/ch05-00-urls-schemes-resources.html#so-how-does-it-differ-from-files)
+- [Opening a URL #1](https://doc.redox-os.org/book/ch05-01-urls.html#opening-a-url)
+- [Opening a URL #2](https://doc.redox-os.org/book/ch05-02-how-it-works.html#opening-a-url)
+- [Registering a Scheme](https://doc.redox-os.org/book/ch05-04-root-scheme.html#registering-a-scheme)
+- [Resource Operations](https://doc.redox-os.org/book/ch05-05-resources.html#resource-operations)
+- [The Resource Type](https://doc.redox-os.org/book/ch05-05-resources.html#the-resource-type)
+- [Stitching It All Together](https://doc.redox-os.org/book/ch05-06-stitching-it-all-together.html#stiching-it-all-together)
+- [Build Process](https://doc.redox-os.org/book/ch08-00-build-process.html) (empty)
+- [Direct Contributions](https://doc.redox-os.org/book/ch10-01-direct-contributions.html) (empty)
+- [Uing Git](https://doc.redox-os.org/book/ch12-00-using-git.html) (empty)
