@@ -14,14 +14,14 @@ ihdad - Intel HD Audio chipsets.
 ixgbed - Intel 10 Gigabit ethernet.
 nvmed - NVMe.
 pcid - PCI.
-pcspkrd
+pcspkrd - PC speaker
 ps2d] - PS/2
 rtl8168d - Realtek ethernet.
 sb16d - Sound Blaster audio.
-vboxd
+vboxd - VirtualBox
 vesad - VESA.
 xhcid - xHCI.
-usbctl
+usbctl - USB control.
 usbhidd - USB HID.
 usbscsid - USB SCSI.
 
