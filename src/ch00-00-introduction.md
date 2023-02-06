@@ -8,7 +8,7 @@ This is the **Redox OS** book, which will go through (almost) everything about R
 
 If you want to skip straight to trying out Redox, see [Getting started](./ch02-00-getting-started.md).
 
-If you want to contribute to Redox, learn about [Developing for Redox](./ch07-00-developing-overview.md) and have a look at [CONTRIBUTING.md](https://gitlab.redox-os.org/redox-os/redox/blob/master/CONTRIBUTING.md).
+If you want to contribute to Redox, read these guides: [Developing for Redox](./ch07-00-developing-overview.md), [Low-Hanging Fruit](./ch10-02-low-hanging-fruit.md) and [CONTRIBUTING.md](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/CONTRIBUTING.md).
 
 ## What is Redox?
 
