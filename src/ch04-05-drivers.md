@@ -5,9 +5,9 @@ These are the currently implemented devices/hardware interfaces.
 - ac97d - Realtek audio chipsets.
 - acpid - ACPI.
 - ahcid - SATA.
-- alxd - Atheros ethernet.
+- alxd - Atheros ethernet (incomplete).
 - bgad - Bochs emulator/debugger.
-- block-io-wrapper
+- block-io-wrapper - Library used by other drivers.
 - e1000d - Intel Gigabit ethernet.
 - ided - IDE.
 - ihdad - Intel HD Audio chipsets.
@@ -17,12 +17,12 @@ These are the currently implemented devices/hardware interfaces.
 - pcspkrd - PC speaker
 - ps2d - PS/2
 - rtl8168d - Realtek ethernet.
-- sb16d - Sound Blaster audio.
-- vboxd - VirtualBox virtual machine.
+- sb16d - Sound Blaster audio (incomplete).
+- vboxd - VirtualBox guest.
 - vesad - VESA.
-- xhcid - xHCI.
-- usbctl - USB control.
-- usbhidd - USB HID.
-- usbscsid - USB SCSI.
+- xhcid - xHCI (incomplete).
+- usbctl - USB control (incomplete).
+- usbhidd - USB HID (incomplete).
+- usbscsid - USB SCSI (incomplete).
 
 #### [Drivers repository](https://gitlab.redox-os.org/redox-os/drivers)
