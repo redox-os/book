@@ -1,6 +1,6 @@
 # Drivers
 
-These are the currently supported devices/hardware interfaces.
+These are the currently implemented devices/hardware interfaces.
 
 - ac97d - Realtek audio chipsets.
 - acpid - ACPI.
@@ -25,4 +25,4 @@ These are the currently supported devices/hardware interfaces.
 - usbhidd - USB HID.
 - usbscsid - USB SCSI.
 
-##### [Drivers repository](https://gitlab.redox-os.org/redox-os/drivers)
+#### [Drivers repository](https://gitlab.redox-os.org/redox-os/drivers)
