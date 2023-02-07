@@ -5,8 +5,8 @@ These are the currently implemented devices/hardware interfaces.
 - ac97d - Realtek audio chipsets.
 - acpid - ACPI.
 - ahcid - SATA.
-- alxd
-- bgad
+- alxd - Atheros ethernet.
+- bgad - Bochs emulator/debugger.
 - block-io-wrapper
 - e1000d - Intel Gigabit ethernet.
 - ided - IDE.
@@ -18,7 +18,7 @@ These are the currently implemented devices/hardware interfaces.
 - ps2d - PS/2
 - rtl8168d - Realtek ethernet.
 - sb16d - Sound Blaster audio.
-- vboxd - VirtualBox
+- vboxd - VirtualBox virtual machine.
 - vesad - VESA.
 - xhcid - xHCI.
 - usbctl - USB control.
