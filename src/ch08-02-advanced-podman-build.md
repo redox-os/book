@@ -136,12 +136,7 @@ If your Containerfile is newer than `build/container.tag`, a new **image** will 
 
 If you feel the need to have more than one image, you can change the variable `IMAGE_TAG` in `mk/podman.mk` to give the image a different name.
 
-# Troubleshooting Podman
-
-If enabled, the Podman environment is set up. [Podman](./ch02-06-podman-build.md) is recommended for distros other than Pop!_OS/Ubuntu/Debian.
-
-If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./ch02-06-podman-build.md#debugging-your-build-process).
-If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
+## Troubleshooting Podman
 
 If you had problems setting Podman to rootless mode, use these commands:
 
