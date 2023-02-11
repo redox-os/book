@@ -140,9 +140,9 @@ If you feel the need to have more than one image, you can change the variable `I
 
 If you have problems setting Podman to rootless mode, use these commands:
 
-(These commands were taken from the official [Podman rootless wiki], then it could be broken/wrong in the future, read the wiki to see if the commands match, we will try to update the method to work with everyone)
+(These commands were taken from the official [Podman rootless wiki] and [Shortcomings of Rootless Podman], then it could be broken/wrong in the future, read the wiki to see if the commands match, we will try to update the method to work with everyone)
 
-- Install Podman on your system.
+- Install `podman`, `crun`, `slirp4netns` and `fuse-overlayfs` on your system.
 - `podman ps -a` - this command will show all your Podman containers, if you want to remove all of them, run `podman system reset`.
 - Take this [step] if necessary (if the Podman of your distribution use cgroup V2), you will need to edit the `containers.conf` file on `/etc/containers` or your user folder at `~/.config/containers`, change the line `runtime = "runc"` to `runtime = "crun"`.
 - Execute `cat /etc/subuid` and `cat /etc/subgid` to see user/group IDs (UIDs/GIDs) available for Podman.
@@ -167,6 +167,7 @@ Let us know if you have improvements for Podman troubleshooting on [Redox Dev] r
 `sudo sysctl -w "net.ipv4.ping_group_range=0 $MAX_GID"`
 
 [Podman rootless wiki]: https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md
+[Shortcomings of Rootless Podman]: https://github.com/containers/podman/blob/main/rootless.md
 [step]: https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md#cgroup-v2-support
 [Redox Support]: https://matrix.to/#/#redox-support:matrix.org
 [Redox Dev]: https://matrix.to/#/#redox-dev:matrix.org
