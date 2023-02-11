@@ -158,7 +158,7 @@ You can use the values `100000-165535` for your user, just edit the two text fil
 
 `sudo sysctl net.ipv4.ip_unprivileged_port_start=443` - This command will allow port connection without root.
 
-- Done, you can have a working Podman build now (if you still have problems with Podman, check the [Troubleshooting](./ch08-05-troubleshooting.md) chapter or call us on the [Redox Support] room)
+- Hopefully, you have a working Podman build now (if you still have problems with Podman, check the [Troubleshooting](./ch08-05-troubleshooting.md) chapter or join us on the [Redox Support] room)
 
 Let us know if you have improvements for Podman troubleshooting on [Redox Dev] room.
 
