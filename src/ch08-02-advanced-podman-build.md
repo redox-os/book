@@ -147,11 +147,11 @@ If you have problems setting Podman to rootless mode, use these commands:
 - Take this [step] if necessary (if the Podman of your distribution use cgroup V2), you will need to edit the `containers.conf` file on `/etc/containers` or your user folder at `~/.config/containers`, change the line `runtime = "runc"` to `runtime = "crun"`.
 - Execute `cat /etc/subuid` and `cat /etc/subgid` to see user/group IDs (UIDs/GIDs) available for Podman.
 
-You can use the values `100000-165535` for your user, just edit the two text files, we recommend `sudo nano /etc/subuid` and `sudo nano /etc/subgid`, when you finish, press Ctrl+X to save the changes.
-
 If you don't want to edit the file, you can use this command:
 
-`usermod --add-subuids 100000-165535 --add-subgids 100000-165535 yourusername`
+`sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 yourusername`
+
+You can use the values `100000-165535` for your user, just edit the two text files, we recommend `sudo nano /etc/subuid` and `sudo nano /etc/subgid`, when you finish, press Ctrl+X to save the changes.
 
 - After the change on the UID/GID values, execute the command `podman system migrate`.
 - If you have a network problem on the container, execute the command:
