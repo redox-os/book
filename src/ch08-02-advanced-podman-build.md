@@ -142,7 +142,7 @@ If you have problems setting Podman to rootless mode, use these commands:
 
 (These commands were taken from the official [Podman rootless wiki] and [Shortcomings of Rootless Podman], then it could be broken/wrong in the future, read the wiki to see if the commands match, we will try to update the method to work with everyone)
 
-- Install `podman`, `crun`, `slirp4netns` and `fuse-overlayfs` on your system.
+- Install `podman`, `crun`, `slirp4netns` and `fuse-overlayfs` packages on your system.
 - `podman ps -a` - this command will show all your Podman containers, if you want to remove all of them, run `podman system reset`.
 - Take this [step] if necessary (if the Podman of your distribution use cgroup V2), you will need to edit the `containers.conf` file on `/etc/containers` or your user folder at `~/.config/containers`, change the line `runtime = "runc"` to `runtime = "crun"`.
 - Execute `cat /etc/subuid` and `cat /etc/subgid` to see user/group IDs (UIDs/GIDs) available for Podman.
