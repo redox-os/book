@@ -142,7 +142,7 @@ If you have problems setting Podman to rootless mode, use these commands:
 
 (These commands were taken from the official [Podman rootless wiki], then it could be broken/wrong in the future, read the wiki to see if the commands match, we will try to update the method to work with everyone)
 
-- Install Podman on your distribution
+- Install Podman on your system.
 - `podman ps -a` - this command will show all your Podman containers, if you want to remove all of them, run `podman system reset`.
 - Make this [step] if necessary (if the Podman of your distribution use cgroup V2), you will need to edit the `containers.conf` file on `/etc/containers` or your user folder at `~/.config/containers`, change the line `runtime = "runc"` to `runtime = "crun"`.
 - Execute `cat /etc/subuid` and `cat /etc/subgid` to see your user/group IDs (UIDs/GIDs) on system.
