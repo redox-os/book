@@ -162,10 +162,6 @@ You can use the values `100000-165535` for your user, just edit the two text fil
 
 Let us know if you have improvements for Podman troubleshooting on [Redox Dev] room.
 
-- If you want to use the tool `ping` on the containers, execute this command:
-
-`sudo sysctl -w "net.ipv4.ping_group_range=0 $MAX_GID"`
-
 [Podman rootless wiki]: https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md
 [Shortcomings of Rootless Podman]: https://github.com/containers/podman/blob/main/rootless.md
 [step]: https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md#cgroup-v2-support
