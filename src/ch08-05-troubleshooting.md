@@ -40,6 +40,8 @@ If enabled, the Podman environment is set up. [Podman](./ch02-06-podman-build.md
 If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./ch02-06-podman-build.md#debugging-your-build-process).
 If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
 
+If you have others problems with Podman, read the [Troubleshooting Podman](./ch08-02-advanced-podman-build.md#troubleshooting-podman) chapter.
+
 ### Filesystem Config
 
 The list of Redox packages to be built is read from the [filesystem config](./ch02-07-configuration-settings.md#filesystem-config) file, which is specified in [.config](./ch02-07-configuration-settings.md#config) or `mk/config.mk`. If your package is not being included in the build, check that you have set `CONFIG_NAME` or `FILESYSTEM_CONFIG`, then check the config file.
