@@ -19,7 +19,7 @@ The steps to perform are
 
 ## Understanding Cross-Compilation for Redox
 
-Redox build is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox toolchain runs on Linux, and produces Redox executables. When you see apt-get libxxx-dev, this is a case of the toolchain needing library source so it can compile a recipe into a Redox executable. Anything that is installed with apt-get but is not libxxx-dev is just part of the toolchain, and does not go on Redox.
+Redox build is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox toolchain runs on Linux, and produces Redox executables. When you see `apt-get libxxx-dev`, this is a case of the toolchain needing library source so it can compile a recipe into a Redox executable. Anything that is installed with apt-get but is not libxxx-dev is just part of the toolchain, and does not go on Redox.
 
 In the background, `bootstrap.sh` downloads the Redox toolchain, then recipes are compiled using the Redox toolchain and the library sources (`libxxx-dev` packages).
 
@@ -31,7 +31,7 @@ If your software is written in Rust, it will use Xargo (Redox-aware Cargo) and r
 
 If your software is written in C/C++ or is a non-Rust program, it will use relibc (Redox C library) to link your program to Redox system calls.
 
-- [OSDev article](https://wiki.osdev.org/Why_do_I_need_a_Cross_Compiler%3F)
+- [OSDev article on cross-compiling](https://wiki.osdev.org/Why_do_I_need_a_Cross_Compiler%3F)
 
 ## Clone the repository
 
