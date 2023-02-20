@@ -27,7 +27,7 @@ If you are using Podman, the `podman_bootstrap.sh` will download an Ubuntu image
 
 The recipes produce Redox-specific executables. At the end of the build process, these executables are installed inside the QEMU image.
 
-The `relibc` (Redox C Library) provide the Redox system calls to any software.
+The `relibc` (Redox C Library) provides the Redox system calls to any software.
 
 - [OSDev article on cross-compiling](https://wiki.osdev.org/Why_do_I_need_a_Cross_Compiler%3F)
 
