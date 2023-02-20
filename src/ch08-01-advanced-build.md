@@ -17,6 +17,22 @@ The steps to perform are
 - Adjust your [Configuration Settings](./ch02-07-configuration-settings.md)
 - Build the system
 
+## Understanding Cross-Compilation for Redox
+
+Redox build is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox toolchain runs on Linux, and produces Redox executables. When you see `apt-get libxxx-dev`, this is a case of the toolchain needing library source so it can compile a recipe into a Redox executable. Anything that is installed with apt-get but is not libxxx-dev is just part of the toolchain, and does not go on Redox.
+
+In the background, `bootstrap.sh` downloads the Redox toolchain, then recipes are compiled using the Redox toolchain and the library sources (`libxxx-dev` packages).
+
+If you are using Podman, the `podman_bootstrap.sh` will download an Ubuntu image and install the Redox toolchain. The recipes will be compiled in the container using the Redox toolchain and library sources (`libxxx-dev` packages).
+
+The recipes produce Redox-specific executables. At the end of the build process, these executables are installed inside the QEMU image.
+
+If your software is written in Rust, it will use Xargo (Redox-aware Cargo) and rustc.
+
+If your software is written in C/C++ or is a non-Rust program, it will use relibc (Redox C library) to link your program to Redox system calls.
+
+- [OSDev article on cross-compiling](https://wiki.osdev.org/Why_do_I_need_a_Cross_Compiler%3F)
+
 ## Clone the repository
 
 Create a directory and clone the repository.
