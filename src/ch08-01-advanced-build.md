@@ -125,11 +125,6 @@ then
 source ~/.cargo/env
 rustup default nightly
 rustup toolchain list
-cargo install --force --version 0.3.20 xargo
-cargo install --force --version 0.1.1 cargo-config
-```
-
-NOTE: **xargo** allows Redox to have a custom `libstd`
 
 NOTE: `~/.cargo/bin` has been added to your PATH for the running session.
 
