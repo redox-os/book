@@ -27,7 +27,7 @@ If you are using Podman, the `podman_bootstrap.sh` will download an Ubuntu image
 
 The recipes produce Redox-specific executables. At the end of the build process, these executables are installed inside the QEMU image.
 
-The `relibc` (Redox C Library) provide the Redox system calls to any software.
+The `relibc` (Redox C Library) provides the Redox system calls to any software.
 
 - [OSDev article on cross-compiling](https://wiki.osdev.org/Why_do_I_need_a_Cross_Compiler%3F)
 
@@ -125,11 +125,6 @@ then
 source ~/.cargo/env
 rustup default nightly
 rustup toolchain list
-cargo install --force --version 0.3.20 xargo
-cargo install --force --version 0.1.1 cargo-config
-```
-
-NOTE: **xargo** allows Redox to have a custom `libstd`
 
 NOTE: `~/.cargo/bin` has been added to your PATH for the running session.
 
