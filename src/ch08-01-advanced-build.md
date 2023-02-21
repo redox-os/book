@@ -125,6 +125,8 @@ then
 source ~/.cargo/env
 rustup default nightly
 rustup toolchain list
+cargo install --force --version 0.1.1 cargo-config
+```
 
 NOTE: `~/.cargo/bin` has been added to your PATH for the running session.
 
