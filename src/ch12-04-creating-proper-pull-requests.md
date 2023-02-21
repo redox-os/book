@@ -66,4 +66,4 @@ The steps given below are for the main Redox project - submodules and other proj
     ```
 14. On [Redox Gitlab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Describe your changes. **Submit!**
 
-15 - Post your merge request link on [Redox Merge Request room](https://matrix.to/#/#redox-mrs:matrix.org).
+15 - Send your merge request link on [Redox Merge Request room](https://matrix.to/#/#redox-mrs:matrix.org).
