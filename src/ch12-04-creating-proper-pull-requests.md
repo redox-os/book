@@ -21,7 +21,7 @@ The steps given below are for the main Redox project - submodules and other proj
     cd redox
     git rebase upstream master
     ```
-3. You should have a fork of the repository on GitLab and a local copy on your computer. The local copy should have two remotes; `upstream` and `origin`, `upstream` should be set to the main repository and `origin` should be your fork. Log into Redox Gitlab and fork the [Repository](https:/gitlab.redox-os.org/redox-os/redox) - look for the button in the upper right.
+3. You should have a fork of the repository on GitLab and a local copy on your computer. The local copy should have two remotes; `upstream` and `origin`, `upstream` should be set to the main repository and `origin` should be your fork. Log into Redox Gitlab and fork the [Repository](https://gitlab.redox-os.org/redox-os/redox) - look for the button in the upper right.
 4. Add your fork to your list of git remotes with
   - HTTPS: 
     ```sh
