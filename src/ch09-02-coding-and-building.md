@@ -149,6 +149,14 @@ Now that all the packages are built, you can make a Redox image without the step
   ```
   `make image` skips building any packages (assuming the last full make succeeded), but it ensures a new image is created, which should include the package you built in the previous step.
 
+### Most Quick Trick To Test Changes
+
+Run:
+
+- `make r.recipe && make image && make qemu`
+
+This command will [build just your modified recipe](#build-your-package-for-redox), then [update your QEMU image with your modified recipe](#make-a-new-image) and run QEMU with a GUI.
+
 ### Patch an Image
 
 If you feel the need to skip creating a new image, and you want to directly add a file to the existing Redox image, it is possible to do so. However, this is not recommended. You should use a recipe to make the process repeatable. But here is how to access the Redox image as if it were a Linux filesystem.
