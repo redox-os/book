@@ -3,6 +3,12 @@
 Redox's **Cookbook** toolchain makes packaging a program to include in a build fairly
 straightforward. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./ch09-02-coding-and-building.md), we discuss the development cycle in more detail.
 
+The Cookbook build system uses [TOML](https://toml.io/en/) file format for configuration files, these are the available templates for your `recipe.toml` files:
+
+- `template = "cargo"` - compile with Cargo (Rust programs).
+- `template = "configure"` - compile with `configure` and `make`.
+- `template = "custom"` - template that run your custom script (script =).
+
 ## Existing Package
 
 Redox has many frequently used packages and programs that are available for inclusion. Each package has a recipe in the directory `cookbook/recipes/packagename`. Adding an existing package to your build is as simple as adding it to `config/$ARCH/myfiles.toml`, or whatever name you choose for your `.toml` configuration definition. Here we will add the `games` package, which contains several low-def games.
