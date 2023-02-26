@@ -1,6 +1,6 @@
 # Running Redox on real hardware
 
-As of Release 0.8.0, Redox can now be installed on a partition on certain hard drives and internal SSDs, including some vintage systems. USB drives are not yet supported during runtime, although they can be used for installation and *livedisk* boot. Check the release notes for additional details on supported hardware. Systems with unsupported drives can still use the *livedisk* method described below. Ensure you backup your data before trying Redox on your hardware.
+Since version 0.8.0, Redox can now be installed on a partition on certain hard drives and internal SSDs, including some vintage systems. USB drives are not yet supported during runtime, although they can be used for installation and *livedisk* boot. Check the release notes for additional details on supported hardware. Systems with unsupported drives can still use the *livedisk* method described below. Ensure you backup your data before trying Redox on your hardware.
 
 Hardware support is limited at the moment, so your milage may vary. USB HID drivers are a work in progress but are not currently included, so a USB keyboard or mouse will not work. There is a PS/2 driver, which works with the keyboards and touchpads in many (but not all) laptops. For networking, the rtl8168d and e1000d ethernet controllers are currently supported.
 
@@ -10,7 +10,7 @@ The current ISO image uses a bootloader to load the filesystem into memory (*liv
 
 ### Creating a bootable USB drive or CD
 
-You can obtain a *livedisk* ISO image either by downloading the [latest release](https://static.redox-os.org/releases/0.8.0/x86_64/), or by [building one](./ch02-05-building-redox.md). The [demo ISO](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_livedisk.iso) is recommended for most laptops. After downloading completes, check the [SHA sum](https://static.redox-os.org/releases/0.8.0/x86_64/SHA256SUM):
+You can obtain a *livedisk* ISO image either by downloading the [latest build](https://static.redox-os.org/img/), or by [building one](./ch02-05-building-redox.md). The demo ISO is recommended for most laptops. After downloading completes, check the SHA sum:
 ```sh
 sha256sum $HOME/Downloads/redox_demo_x86_64*_livedisk.iso
 ```

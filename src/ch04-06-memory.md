@@ -1,6 +1,6 @@
 # Memory management
 
-_TODO_
+We still need to document our memory system.
 
 - [Memory management documentation]
 

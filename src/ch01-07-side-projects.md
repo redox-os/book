@@ -4,26 +4,28 @@ Side projects
 Redox is a complete Rust operating system.
 In addition to the kernel, we are developing several side projects, including:
 
-- [RedoxFS]: A file system inspired by ZFS.
-- [Ion]: The Redox shell.
-- [Orbital]: The display server of Redox.
-- [pkgutils]: Redox's package management library and its command-line frontend.
-- [Sodium]: A Vi-like editor.
-- [ralloc]: A memory allocator.
-- [libextra]: Supplement for libstd, used throughout the Redox code base.
-- [games-for-redox]: A collection of mini-games for Redox (alike BSD-games).
-- and a few other exciting projects you can explore [here].
+- [RedoxFS](https://gitlab.redox-os.org/redox-os/redoxfs) - Redox file system inspired by ZFS.
+- [Ion](https://gitlab.redox-os.org/redox-os/ion) - The Redox shell.
+- [Orbital](https://gitlab.redox-os.org/redox-os/orbital) - The desktop environment/display server of Redox.
+- [orbclient](https://gitlab.redox-os.org/redox-os/orbclient) - Orbital client library.
+- [OrbTK](https://gitlab.redox-os.org/redox-os/orbtk) - Cross-platform Rust-written GUI toolkit.
+- [pkgutils](https://gitlab.redox-os.org/redox-os/pkgutils) - Redox package management library and its command-line frontend.
+- [Sodium](https://gitlab.redox-os.org/redox-os/sodium) - A Vi-like editor.
+- [ralloc](https://gitlab.redox-os.org/redox-os/ralloc) - A memory allocator.
+- [libextra](https://gitlab.redox-os.org/redox-os/libextra) - Supplement for libstd, used throughout the Redox code base.
+- [games-for-redox](https://gitlab.redox-os.org/redox-os/games) - A collection of mini-games for Redox (alike BSD-games).
+- and a few other exciting projects you can explore [here](https://gitlab.redox-os.org/redox-os).
 
 We also have three utility distributions, which are collections of small, useful command-line programs:
 
-- [Coreutils]: A minimal set of utilities essential for a usable system.
-- [Extrautils]: Extra utilities such as reminders, calendars, spellcheck, and so on.
-- [Binutils]: Utilities for working with binary files.
+- [Coreutils](https://gitlab.redox-os.org/redox-os/coreutils) - A minimal set of utilities essential for a usable system.
+- [Extrautils](https://gitlab.redox-os.org/redox-os/extrautils) -  Extra utilities such as reminders, calendars, spellcheck, and so on.
+- [Binutils](https://gitlab.redox-os.org/redox-os/binutils) - Utilities for working with binary files.
 
 We also actively contribute to third party projects that are heavily used in Redox.
 
- - [uutils/coreutils]: Cross-platform Rust rewrite of the GNU coreutils.
- - [m-labs/smoltcp]: The network stack used by Redox.
+ - [uutils/coreutils](https://github.com/uutils/coreutils) - Cross-platform Rust rewrite of the GNU coreutils.
+ - [smoltcp](https://github.com/m-labs/smoltcp) - The network stack used by Redox.
 
 What tools are fitting for the Redox distribution?
 -------------------------------------------------
@@ -38,24 +40,4 @@ The listed tools fall into three categories:
 
 The first category should be obvious: an OS without certain core tools is a useless OS. The second category contains the tools which are likely to be non-default in the future, but nonetheless are in the official distribution right now, for the charm. The third category is there for convenience: namely for making sure that the Redox infrastructure is consistent and integrated (e.g., pkgutils, OrbTK, and libextra).
 
-It is important to note we seek to avoid non-Rust tools, for safety and consistency (see [Why Rust]).
-
-[RedoxFS]: https://gitlab.redox-os.org/redox-os/redoxfs
-[Ion]: https://gitlab.redox-os.org/redox-os/ion
-[Orbital]: https://gitlab.redox-os.org/redox-os/orbital
-[OrbTK]: https://gitlab.redox-os.org/redox-os/orbtk
-[pkgutils]: https://gitlab.redox-os.org/redox-os/pkgutils
-[Sodium]: https://gitlab.redox-os.org/redox-os/sodium
-[ralloc]: https://gitlab.redox-os.org/redox-os/ralloc
-[libextra]: https://gitlab.redox-os.org/redox-os/libextra
-[games-for-redox]: https://gitlab.redox-os.org/redox-os/games
-[here]: https://gitlab.redox-os.org/redox-os
-
-[Coreutils]: https://gitlab.redox-os.org/redox-os/coreutils
-[Extrautils]: https://gitlab.redox-os.org/redox-os/extrautils
-[Binutils]: https://gitlab.redox-os.org/redox-os/binutils
-
-[uutils/coreutils]: https://github.com/uutils/coreutils
-[m-labs/smoltcp]: https://github.com/m-labs/smoltcp
-
-[Why Rust]: ./ch01-06-why-rust.md
+It is important to note we seek to avoid non-Rust tools, for safety and consistency (see [Why Rust](./ch01-06-why-rust.md)).

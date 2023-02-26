@@ -12,11 +12,11 @@ If you want to contribute to Redox, read these guides: [Developing for Redox](./
 
 ## What is Redox?
 
-Redox OS is a general purpose operating system written in [Rust]. Our aim is to provide a fully functioning Unix-like microkernel, that is both secure and free.
+Redox OS is a general purpose operating system written in [Rust](https://www.rust-lang.org). Our aim is to provide a fully functioning Unix-like microkernel, that is both secure and free.
 
-We have modest compatibility with [POSIX], allowing Redox to run many programs without porting.
+We have modest compatibility with [POSIX](https://en.wikipedia.org/wiki/POSIX), allowing Redox to run many programs without porting.
 
-We take inspiration from [Plan9], [Minix], [Linux], and [BSD]. Redox aims to synthesize years of research and hard won experience into a system that feels modern and familiar.
+We take inspiration from [Plan 9](http://9p.io/plan9/index.html), [Minix](http://www.minix3.org/), [Linux](https://www.kernel.org/), and [BSD](http://www.bsd.org/). Redox aims to synthesize years of research and hard won experience into a system that feels modern and familiar.
 
 At this time, Redox supports:
 
@@ -53,10 +53,3 @@ This book is broken into the following chapters:
  
 
 It is written such that you do not need any prior knowledge in Rust and/or OS development.
-
-[Rust]:  https://www.rust-lang.org
-[POSIX]: https://en.wikipedia.org/wiki/POSIX
-[Plan9]: http://9p.io/plan9/index.html
-[Minix]: http://www.minix3.org/
-[Linux]: https://www.kernel.org/
-[BSD]: http://www.bsd.org/

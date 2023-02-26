@@ -16,23 +16,23 @@ Versus monolithic kernels
 
 Monolithic kernels provide a lot more abstractions than microkernels.
 
-![An illustration]
+![An illustration](https://upload.wikimedia.org/wikipedia/commons/6/67/OS-structure.svg)
 
-The above illustration ([from Wikimedia], by Wooptoo, License: Public domain) shows how they differ.
+The above illustration ([from Wikimedia](https://commons.wikimedia.org/wiki/File:OS-structure.svg), by Wooptoo, License: Public domain) shows how they differ.
 
 Documentation about microkernels
 --------------------------------
 
-- [OSDev technical wiki]
-- [Minix documentation]
-- [Minix features]
-- [Minix reliability]
-- [Minix paper]
-- [GNU Hurd documentation]
-- [HelenOS FAQ]
-- [Microkernels performance paper]
-- [seL4 whitepaper]
-- [Fuchsia documentation]
+- [OSDev technical wiki](https://wiki.osdev.org/Microkernel)
+- [Minix documentation](https://wiki.minix3.org/doku.php?id=www:documentation:start)
+- [Minix features](https://wiki.minix3.org/doku.php?id=www:documentation:features)
+- [Minix reliability](https://wiki.minix3.org/doku.php?id=www:documentation:reliability)
+- [Minix paper](http://www.minix3.org/docs/jorrit-herder/osr-jul06.pdf)
+- [GNU Hurd documentation](https://www.gnu.org/software/hurd/hurd/documentation.html)
+- [HelenOS FAQ](http://www.helenos.org/wiki/FAQ)
+- [Microkernels performance paper](https://os.inf.tu-dresden.de/pubs/sosp97/)
+- [seL4 whitepaper](https://sel4.systems/About/seL4-whitepaper.pdf)
+- [Fuchsia documentation](https://fuchsia.dev/fuchsia-src/get-started/learn/intro)
 
 A note on the current state
 ---------------------------
@@ -40,16 +40,3 @@ A note on the current state
 Redox has less than 9,000 lines of kernel code. For comparison Minix has ~6,000 lines of kernel code.
 
 We would like to move parts of Redox to user space to get an even smaller kernel.
-
-[An illustration]: https://upload.wikimedia.org/wikipedia/commons/6/67/OS-structure.svg
-[from Wikipedia]: https://commons.wikimedia.org/wiki/File:OS-structure.svg
-[OSDev technical wiki]: https://wiki.osdev.org/Microkernel
-[Minix documentation]: https://wiki.minix3.org/doku.php?id=www:documentation:start
-[Minix features]: https://wiki.minix3.org/doku.php?id=www:documentation:features
-[Minix reliability]: https://wiki.minix3.org/doku.php?id=www:documentation:reliability
-[Minix paper]: http://www.minix3.org/docs/jorrit-herder/osr-jul06.pdf
-[GNU Hurd documentation]: https://www.gnu.org/software/hurd/hurd/documentation.html
-[HelenOS FAQ]: http://www.helenos.org/wiki/FAQ
-[Microkernels performance paper]: https://os.inf.tu-dresden.de/pubs/sosp97/
-[seL4 whitepaper]: https://sel4.systems/About/seL4-whitepaper.pdf
-[Fuchsia documentation]: https://fuchsia.dev/fuchsia-src/get-started/learn/intro

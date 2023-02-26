@@ -8,7 +8,7 @@ If you identify a problem with the system that has not been identified previousl
 
 3. Make sure the issue is reproducible (trigger it several times). Try to identify the minimum number of steps to reproduce it. If the issue happens inconsistently, it may still be worth filing a bug report for it, but indicate approximately how often the bug occurs.
 
-4. If it is a significant problem, join us on [Chat] and ask if it is a known problem, or if someone plans to address it in the short term.
+4. If it is a significant problem, join us on [Chat](./ch13-01-chat.md) and ask if it is a known problem, or if someone plans to address it in the short term.
 
 5. Identify the Redox package that is causing the issue. If a particular command is the source of the problem, look for a repo on Redox GitLab with the same name. Or, for certain programs such as games or command line utilities, you can search for the package containing the command with `grep -rnw COMMAND --include Cargo.toml`, where `COMMAND` is the name of the command causing the problem. The location of the `Cargo.toml` file can help indicate which Redox package contains the command. This is where you should expect to report the issue.
 
@@ -45,10 +45,8 @@ If you identify a problem with the system that has not been identified previousl
      - The operating system you used to build Redox
        - `uname -a` or an alternative format
 
-10. Make sure that your bug doesn't already have an issue on GitLab. Feel free to ask in the Redox [Chat] if you're uncertain as to whether your issue is new
+10. Make sure that your bug doesn't already have an issue on GitLab. Feel free to ask in the Redox [Chat](./ch13-01-chat.md) if you're uncertain as to whether your issue is new
 
 11. Create a GitLab issue following the template. Non-bug report issues may ignore this template
 
 12. Watch the issue and be available for questions
-
-[Chat]: ./ch13-01-chat.md

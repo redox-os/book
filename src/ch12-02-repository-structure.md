@@ -1,6 +1,6 @@
 # Repository Structure
 
-Redox GitLab consists of a large number of **Projects** and **Subprojects**. The difference between a Project and a Subproject is somewhat blurred in Redox GitLab, so we generally refer to the `redox` project as the main project and the others as subprojects. On the [Redox GitLab] website, you will find the projects organized as a very large, flat alphabetical list. This is not indicative of the role or importance of the various projects.
+Redox GitLab consists of a large number of **Projects** and **Subprojects**. The difference between a Project and a Subproject is somewhat blurred in Redox GitLab, so we generally refer to the `redox` project as the main project and the others as subprojects. On the [Redox GitLab](https://gitlab.redox-os.org/) website, you will find the projects organized as a very large, flat alphabetical list. This is not indicative of the role or importance of the various projects.
 
 ## The Redox Project
 
@@ -16,7 +16,7 @@ The **recipe** for a Redox package contains the instructions to fetch and build 
 
 ## Cookbook
 
-The `cookbook` subproject contains the mechanism for building the Redox packages. **It also contains the recipes**. If a recipe is modified, it is updated in the `cookbook` subproject. In order for the updated recipe to get included in your fetched cookbook, the `redox` project needs to be updated with the new `cookbook` SHA. Connect with us on [Chat] if a recipe is not getting updated.
+The `cookbook` subproject contains the mechanism for building the Redox packages. **It also contains the recipes**. If a recipe is modified, it is updated in the `cookbook` subproject. In order for the updated recipe to get included in your fetched cookbook, the `redox` project needs to be updated with the new `cookbook` SHA. Connect with us on [Chat](./ch13-01-chat.md) if a recipe is not getting updated.
 
 ## Crates
 
@@ -32,6 +32,4 @@ In some cases, the Redox GitLab has a fork of another repository, in order to ad
 
 When you are contributing to Redox, you are expected to make your changes in a Personal Fork of the relevant project, then create a Merge Request (PR) to have your changes pulled from your fork into the master. Note that your personal fork is required to have public visibility.
 
-In some rare situations, e.g. for experimental features or projects with licensing that is not compatible with Redox, a recipe may pull in sources located in a personal repository. Before using one of these recipes, please check with us on [Chat] to understand why the project is set up this way, and do not commit a Redox config file containing such a recipe without permission.
-
-[Chat]: ./ch13-01-chat.md
+In some rare situations, e.g. for experimental features or projects with licensing that is not compatible with Redox, a recipe may pull in sources located in a personal repository. Before using one of these recipes, please check with us on [Chat](./ch13-01-chat.md) to understand why the project is set up this way, and do not commit a Redox config file containing such a recipe without permission.

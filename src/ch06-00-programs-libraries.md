@@ -13,8 +13,5 @@ Programs could directly invoke Redox syscalls, but most call library functions t
 
 The Redox ["cookbook" project](https://gitlab.redox-os.org/redox-os/cookbook) includes recipes for compiling C and Rust projects into Redox binaries.
 
-- [OS internals documentation]
-- [ELF documentation]
-
-[OS internals documentation]: https://wiki.osdev.org/How_kernel,_compiler,_and_C_library_work_together
-[ELF documentation]: https://wiki.osdev.org/ELF
+- [OS internals documentation](https://wiki.osdev.org/How_kernel,_compiler,_and_C_library_work_together)
+- [ELF documentation](https://wiki.osdev.org/ELF)
