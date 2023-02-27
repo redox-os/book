@@ -19,11 +19,13 @@ The steps to perform are
 
 ## Understanding Cross-Compilation for Redox
 
-Redox build is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox toolchain runs on Linux, and produces Redox executables. When you see `apt-get libxxx-dev`, this is a case of the toolchain needing library source so it can compile a recipe into a Redox executable. Anything that is installed with apt-get but is not libxxx-dev is just part of the toolchain, and does not go on Redox.
+Redox build is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox toolchain runs on Linux, and produces Redox executables. Anything that is installed with apt-get is just part of the toolchain, and does not go on Redox.
 
-In the background, `bootstrap.sh` downloads the Redox toolchain, then recipes are compiled using the Redox toolchain and the library sources (`libxxx-dev` packages).
+Each library (dependency) needs to have it's own recipe and added on the `recipe.toml` of the recipe before compilation (dependencies = []), as recipes will fetch sources most of the time, we don't have the "-dev/-devel" separation seen in most Unix/Linux packages.
 
-If you are using Podman, the `podman_bootstrap.sh` will download an Ubuntu image and install the Redox toolchain. The recipes will be compiled in the container using the Redox toolchain and library sources (`libxxx-dev` packages).
+In the background, `bootstrap.sh` downloads the Redox toolchain, then recipes are compiled using the Redox toolchain.
+
+If you are using Podman, the `podman_bootstrap.sh` will download an Ubuntu image and install the Redox toolchain. The recipes will be compiled in the container using the Redox toolchain.
 
 The recipes produce Redox-specific executables. At the end of the build process, these executables are installed inside the QEMU image.
 
