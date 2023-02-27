@@ -1,6 +1,6 @@
 # Running Redox on real hardware
 
-As of Release 0.8.0, Redox can now be installed on a partition on certain hard drives and internal SSDs, including some vintage systems. USB drives are not yet supported during runtime, although they can be used for installation and *livedisk* boot. Check the release notes for additional details on supported hardware. Systems with unsupported drives can still use the *livedisk* method described below. Ensure you backup your data before trying Redox on your hardware.
+Since version 0.8.0, Redox can now be installed on a partition on certain hard drives and internal SSDs, including some vintage systems. USB drives are not yet supported during runtime, although they can be used for installation and *livedisk* boot. Check the release notes for additional details on supported hardware. Systems with unsupported drives can still use the *livedisk* method described below. Ensure you backup your data before trying Redox on your hardware.
 
 Hardware support is limited at the moment, so your milage may vary. USB HID drivers are a work in progress but are not currently included, so a USB keyboard or mouse will not work. There is a PS/2 driver, which works with the keyboards and touchpads in many (but not all) laptops. For networking, the rtl8168d and e1000d ethernet controllers are currently supported.
 

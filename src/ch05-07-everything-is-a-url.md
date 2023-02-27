@@ -12,7 +12,4 @@ How it differs from "Everything is a file"
 
 With "Everything is a file" all sorts of devices, processes, and kernel parameters can be accessed as files in a regular filesystem. This leads to absurd situations like the hard disk containing the root filesystem `/` contains a folder named `dev` with device files including `sda` which contains the root filesystem. Situations like this are missing any logic. Furthermore many file properties don't make sense on these 'special files': What is the size of `/dev/null` or a configuration option in sysfs?
 
-In contrast to "Everything is a file", Redox does not enforce a common tree node for all kinds of resources. Instead resources are distinguished by protocol. This way USB devices don't end up in a "filesystem", but a protocol-based scheme like `EHCI`. Real files are accessible through a scheme called `file`, which is widely used and specified in [RFC 1630] and [RFC 1738].
-
-[RFC 1630]: https://tools.ietf.org/html/rfc1630
-[RFC 1738]: https://tools.ietf.org/html/rfc1738
+In contrast to "Everything is a file", Redox does not enforce a common tree node for all kinds of resources. Instead resources are distinguished by protocol. This way USB devices don't end up in a "filesystem", but a protocol-based scheme like `EHCI`. Real files are accessible through a scheme called `file`, which is widely used and specified in [RFC 1630](https://tools.ietf.org/html/rfc1630) and [RFC 1738](https://tools.ietf.org/html/rfc1738).

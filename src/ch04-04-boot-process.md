@@ -38,7 +38,6 @@ After the init processes have set up drivers and daemons, it is possible for the
 
 Here is an overview of the initialization process with scheme creation and usage. For simplicity's sake, we do not depict all scheme interaction but at least the major ones. **THIS IS CURRENTLY OUT OF DATE, BUT STILL INFORMATIVE**
 
-- [Boot process documentation]
+- [Boot process documentation](https://wiki.osdev.org/Boot_Sequence)
 
 ![Redox initialization graph](./assets/init.svg "Redox initialization graph")
-[Boot process documentation]: https://wiki.osdev.org/Boot_Sequence

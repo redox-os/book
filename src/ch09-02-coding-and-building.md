@@ -4,7 +4,7 @@ Let's walk through contributing to the Redox subpackage `games`, which is a coll
 
 ## Working with Git
 
-Before starting development, read through [Creating Proper Pull Requests], which describes how the Redox team uses Git.
+Before starting development, read through [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), which describes how the Redox team uses Git.
 
 In this example, we will discuss creating a **fork** of the `games` package, pretending you are going to create a `Merge Request` for your changes. **Don't actually do this**. Only create a fork when you have a permanent change you want to contribute to Redox.
 
@@ -274,5 +274,3 @@ VS Code cannot grok the gestalt of Redox, so it doesn't work very well if you st
 ### Don't Build the System in a VS Code Terminal
 
 In general, it's not recommended to do a system build from within VS Code. Use your `Build` window. This gives you the flexibility to exit Code without terminating the build.
-
-[Creating Proper Pull Requests]: ./ch12-04-creating-proper-pull-requests.md

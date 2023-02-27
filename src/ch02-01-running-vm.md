@@ -1,6 +1,6 @@
 # Running Redox in a virtual machine
 
-The downloadable images for Release 0.8.0 of Redox are located [here](https://static.redox-os.org/releases/0.8.0/x86_64/). To try Redox using a virtual machine such as QEMU or VirtualBox, download the `demo_harddrive.img` file, which for Release 0.8.0, is [redox_demo_x86_64_2022-11-23_638_harddrive.img](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_harddrive.img). After downloading, check the [SHA sum](https://static.redox-os.org/releases/0.8.0/x86_64/SHA256SUM) to ensure it has downloaded correctly.
+The downloadable images for Redox are located [here](https://static.redox-os.org/releases/0.8.0/x86_64/). To try Redox using a virtual machine such as QEMU or VirtualBox, download the [demo_harddrive](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_harddrive.img) file, check the [SHA sum](https://static.redox-os.org/releases/0.8.0/x86_64/SHA256SUM) to ensure it has downloaded correctly.
 
 ```sh
 sha256sum $HOME/Downloads/redox_demo_x86_64*_harddrive.img
@@ -31,7 +31,7 @@ As the system boots, it will ask you for a screen resolution to use, e.g. `1024x
 
 See [Trying Out Redox](./ch02-04-trying-out-redox.md) for things to try.
 
-If you want to try Redox in **server** mode, add `-nographic -vga none` to the command line above. You may wish to switch to the `redox_server` edition. There are also [i686 editions](https://static.redox-os.org/img/i686) available, although these are not part of the release.
+If you want to try Redox in **server** mode, add `-nographic -vga none` to the command line above. You may wish to switch to the `redox_server` edition. There are also i686 editions available, although these are not part of the release.
 
 ## Running on Windows
 
