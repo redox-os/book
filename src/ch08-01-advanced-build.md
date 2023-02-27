@@ -21,7 +21,7 @@ The steps to perform are
 
 Redox build is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox toolchain runs on Linux, and produces Redox executables. Anything that is installed with apt-get/your package manager is just part of the toolchain and does not go on Redox.
 
-Each library (dependency) needs to have it's own recipe and added on the `recipe.toml` of the recipe before compilation (dependencies = ["library1","library2"]), as recipes will fetch sources most of the time, Redox don't have the `-dev/-devel` (runtime/sources) separation seen in most Unix/Linux packages.
+Each library (dependency) needs to have it's own recipe and added on the `recipe.toml` of the recipe before compilation (dependencies = ["library1","library2"]), as recipes will fetch sources most of the time, Redox doesn't have the `-dev/-devel` (runtime/sources) separation seen in most Unix/Linux packages.
 
 In the background, `bootstrap.sh` downloads the Redox toolchain, then recipes are compiled using the Redox toolchain.
 
