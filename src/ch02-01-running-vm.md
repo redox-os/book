@@ -1,6 +1,6 @@
 # Running Redox in a virtual machine
 
-The downloadable images for Redox are located [here](https://static.redox-os.org/img/). To try Redox using a virtual machine such as QEMU or VirtualBox, download the `demo_harddrive.img` file, check the SHA sum to ensure it has downloaded correctly.
+The downloadable images for Redox are located [here](https://static.redox-os.org/releases/0.8.0/x86_64/). To try Redox using a virtual machine such as QEMU or VirtualBox, download the [demo_harddrive](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_harddrive.img) file, check the [SHA sum](https://static.redox-os.org/releases/0.8.0/x86_64/SHA256SUM) to ensure it has downloaded correctly.
 
 ```sh
 sha256sum $HOME/Downloads/redox_demo_x86_64*_harddrive.img
@@ -37,7 +37,7 @@ If you want to try Redox in **server** mode, add `-nographic -vga none` to the c
 
 To install **QEMU** on Windows, follow the instructions [here](https://www.qemu.org/download/#windows). The installation of **QEMU** will probably not update your command path, so the necessary QEMU command needs to be specified using its full path. Or, you can add the installation folder to your `Path` Environment Variable if you will be using it regularly.
 
-Following the instructions for Linux above, download the same redox_demo image. Then, in a Command window, `cd` to the location of the downloaded Redox image and run the following very long command:
+Following the instructions for Linux above, download the same [redox_demo](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_harddrive.img) image. Then, in a Command window, `cd` to the location of the downloaded Redox image and run the following very long command:
 
 ```
 "C:\Program Files\qemu\qemu-system-x86_64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048 -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug -machine q35 -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -drive file=redox_demo_x86_64_2022-11-23_638_harddrive.img,format=raw

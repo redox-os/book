@@ -10,7 +10,7 @@ The current ISO image uses a bootloader to load the filesystem into memory (*liv
 
 ### Creating a bootable USB drive or CD
 
-You can obtain a *livedisk* ISO image either by downloading the [latest build](https://static.redox-os.org/img/), or by [building one](./ch02-05-building-redox.md). The demo ISO is recommended for most laptops. After downloading completes, check the SHA sum:
+You can obtain a *livedisk* ISO image either by downloading the [latest release](https://static.redox-os.org/releases/0.8.0/x86_64/), or by [building one](./ch02-05-building-redox.md). The [demo ISO](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_livedisk.iso) is recommended for most laptops. After downloading completes, check the [SHA sum](https://static.redox-os.org/releases/0.8.0/x86_64/SHA256SUM):
 ```sh
 sha256sum $HOME/Downloads/redox_demo_x86_64*_livedisk.iso
 ```
