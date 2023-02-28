@@ -66,6 +66,7 @@
 - [Developing for Redox](./ch09-00-developing-for-redox.md)
   - [Including Programs in Redox](./ch09-01-including-programs.md)
   - [Coding and Building](./ch09-02-coding-and-building.md)
+  - [Testing Practices](./ch09-03-testing-practices.md)
 
 - [Contributing](./ch10-00-contributing.md)
   - [Low hanging fruit](./ch10-02-low-hanging-fruit.md)
