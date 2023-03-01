@@ -66,21 +66,23 @@
 - [Developing for Redox](./ch09-00-developing-for-redox.md)
   - [Including Programs in Redox](./ch09-01-including-programs.md)
   - [Coding and Building](./ch09-02-coding-and-building.md)
-  - [Testing Practices](./ch09-03-testing-practices.md)
+
+- [Contributing](./ch10-00-contributing.md)
 
 - [Best practices and guidelines](./ch11-00-best-practices.md)
   - [Literate programming](./ch11-01-literate-programming.md)
   - [Writing docs correctly](./ch11-02-writing-docs-correctly.md)
   - [Style](./ch11-03-style.md)
   - [Rusting properly](./ch11-04-rusting-properly.md)
-  - [Avoiding panics in the kernel](./ch11-05-avoiding-kernel-panics.md)
+  - [Avoiding Panics](./ch11-05-avoiding-panics.md)
+  - [Testing Practices](./ch11-06-testing-practices.md)
 
 - [Using Redox GitLab](./ch12-00-using-redox-gitlab.md)
   - [Signing in to GitLab](./ch12-01-signing-in-to-gitlab.md)
   - [Repository Structure](./ch12-02-repository-structure.md)
   - [Creating Proper Bug Reports](./ch12-03-creating-proper-bug-reports.md)
   - [How to do a pull request properly](./ch12-04-creating-proper-pull-requests.md)
-  - [Issues](./ch12-05-issues.md)
+  - [Filing Issues](./ch12-05-filing-issues.md)
 
 - [Communication](./ch13-00-communication.md)
   - [Chat](./ch13-01-chat.md)
