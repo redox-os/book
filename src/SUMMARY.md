@@ -69,7 +69,7 @@
   - [Testing Practices](./ch09-03-testing-practices.md)
 
 - [Contributing](./ch10-00-contributing.md)
-  - [Low hanging fruit](./ch10-02-low-hanging-fruit.md)
+  - [Low hanging fruit](./ch10-01-low-hanging-fruit.md)
 
 - [Best practices and guidelines](./ch11-00-best-practices.md)
   - [Literate programming](./ch11-01-literate-programming.md)
@@ -83,9 +83,7 @@
   - [Repository Structure](./ch12-02-repository-structure.md)
   - [Creating Proper Bug Reports](./ch12-03-creating-proper-bug-reports.md)
   - [How to do a pull request properly](./ch12-04-creating-proper-pull-requests.md)
+  - [Issues](./ch12-05-issues.md)
 
 - [Communication](./ch13-00-communication.md)
   - [Chat](./ch13-01-chat.md)
-  - [Reddit](./ch13-02-reddit.md)
-  - [GitLab issues](./ch13-03-gitlab-issues.md)
-  - [Community](./ch13-04-community.md)
