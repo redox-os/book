@@ -70,7 +70,6 @@
 
 - [Contributing](./ch10-00-contributing.md)
   - [Low hanging fruit](./ch10-02-low-hanging-fruit.md)
-  - [Book ToDos](./ch10-03-book-todos.md)
 
 - [Best practices and guidelines](./ch11-00-best-practices.md)
   - [Literate programming](./ch11-01-literate-programming.md)
