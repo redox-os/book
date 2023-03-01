@@ -8,7 +8,7 @@ This is the **Redox OS** book, which will go through (almost) everything about R
 
 If you want to skip straight to trying out Redox, see [Getting started](./ch02-00-getting-started.md).
 
-If you want to contribute to Redox, read these guides: [Developing for Redox](./ch07-00-developing-overview.md), [Low-Hanging Fruit](./ch10-02-low-hanging-fruit.md) and [CONTRIBUTING.md](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/CONTRIBUTING.md).
+If you want to contribute to Redox, read these guides: [CONTRIBUTING.md](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/CONTRIBUTING.md), [Low-Hanging Fruit](./ch10-01-low-hanging-fruit.md) and [Developing for Redox](./ch07-00-developing-overview.md).
 
 ## What is Redox?
 
@@ -49,7 +49,7 @@ This book is broken into the following chapters:
 - [Contributing](./ch10-00-contributing.md)
 - [Best practices and guidelines](./ch11-00-best-practices.md)
 - [Using Redox GitLab](./ch12-00-using-redox-gitlab.md)
-- [Communication](./ch13-00-communication.md)
+- [Chat](./ch13-01-chat.md)
  
 
 It is written such that you do not need any prior knowledge in Rust and/or OS development.
