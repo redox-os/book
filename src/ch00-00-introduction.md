@@ -46,7 +46,6 @@ This book is broken into the following chapters:
 - [Developing Overview](./ch07-00-developing-overview.md)
 - [The Redox Build Process](./ch08-00-build-process.md)
 - [Developing for Redox](./ch09-00-developing-for-redox.md)
-- [Contributing](./ch10-00-contributing.md)
 - [Best practices and guidelines](./ch11-00-best-practices.md)
 - [Using Redox GitLab](./ch12-00-using-redox-gitlab.md)
 - [Chat](./ch13-01-chat.md)
