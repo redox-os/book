@@ -7,7 +7,5 @@ Please feel free to jump around as you read through this part of the book and pl
 The following topics are covered here:
 - [The Build Process](./ch08-00-build-process.md)
 - [Developing for Redox](./ch09-00-developing-for-redox.md)
-- [More on Contributing](./ch10-00-contributing.md)
 - [Best Practices](./ch11-00-best-practices.md)
 - [Using Redox GitLab](./ch12-00-using-redox-gitlab.md)
-- [Communicating with the Redox Team](./ch13-00-communication.md)

@@ -7,7 +7,7 @@ Redox is made up of several discrete components.
 * TFS/RedoxFS - filesystem
 * kernel 
 * drivers
-* orbital - DE/WM/Display Server
+* orbital - display server/window manager/desktop environment
 
 ## Orbital subcomponents
 * orbterm - terminal
@@ -15,9 +15,9 @@ Redox is made up of several discrete components.
 * orbaudio - audio
 * orbutils - bunch of applications
 * orblogin - login prompt
-* orbtk - like gtk but orb
+* orbtk - cross-platform Rust GUI toolkit, similar to GTK
 * orbfont - font rendering library
-* orbclient - display client 
+* orbclient - display client
 * orbimage - image rendering library 
 
 ## Core Applications
@@ -31,4 +31,3 @@ Redox is made up of several discrete components.
   * file manager
   * launcher
   * viewer
-

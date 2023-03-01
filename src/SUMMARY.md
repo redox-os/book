@@ -68,9 +68,6 @@
   - [Coding and Building](./ch09-02-coding-and-building.md)
   - [Testing Practices](./ch09-03-testing-practices.md)
 
-- [Contributing](./ch10-00-contributing.md)
-  - [Low hanging fruit](./ch10-01-low-hanging-fruit.md)
-
 - [Best practices and guidelines](./ch11-00-best-practices.md)
   - [Literate programming](./ch11-01-literate-programming.md)
   - [Writing docs correctly](./ch11-02-writing-docs-correctly.md)

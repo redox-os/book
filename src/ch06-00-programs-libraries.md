@@ -6,8 +6,8 @@ Redox can run programs. Some programs are interpreted by a runtime for the progr
 
 Programs could directly invoke Redox syscalls, but most call library functions that are higher-level and more comfortable to use. You link your program with the libraries it needs.
 * Most C and C++ programs call functions in a [C standard library](https://en.wikipedia.org/wiki/C_standard_library) ("libc") such as `fopen`
-  * Redox includes a Rust implementation of the Standard C library called [relibc](https://gitlab.redox-os.org/redox-os/relibc/). This is how programs such as git can run on Redox. relibc has some POSIX compatibility.
-* Rust programs implicitly or explicitly call functions in the Rust standard library (libstd).
+  * Redox includes a Rust implementation of the Standard C library called [relibc](https://gitlab.redox-os.org/redox-os/relibc/). This is how programs such as Git can run on Redox. relibc has some [POSIX compatibility](https://en.wikipedia.org/wiki/C_POSIX_library).
+* Rust programs implicitly or explicitly call functions in the Rust standard library ([libstd](https://doc.rust-lang.org/std/)).
   * The Rust libstd now includes an implementation of its system-dependent parts (such as file access and setting environment variables) for Redox, in `src/libstd/sys/redox`. Most of libstd works in Redox, so many command-line Rust programs can be compiled for Redox.
 
 The Redox [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook) project includes recipes for compiling C and Rust projects into Redox binaries.
