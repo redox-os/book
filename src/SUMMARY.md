@@ -11,7 +11,7 @@
   - [Redox Use Cases](./ch01-04-redox-use-cases.md)
   - [Comparing Redox to Other OSes](./ch01-05-how-redox-compares.md)
   - [Why Rust?](./ch01-06-why-rust.md)
-  - [Side projects](./ch01-07-side-projects.md)
+  - [Side Projects](./ch01-07-side-projects.md)
 
 - [Getting started](./ch02-00-getting-started.md)
   - [Running Redox in a virtual machine](./ch02-01-running-vm.md)
@@ -33,7 +33,7 @@
   - [Disadvantages of microkernels](./ch04-03-disadvantages.md)
   - [Boot Process](./ch04-04-boot-process.md)
   - [Drivers](./ch04-05-drivers.md)
-  - [Memory management](./ch04-06-memory.md)
+  - [Memory Management](./ch04-06-memory.md)
   - [Scheduling](./ch04-07-scheduling.md)
 
 - [URLs, schemes and resources](./ch05-00-urls-schemes-resources.md)
@@ -60,27 +60,29 @@
   - [Advanced Build](./ch08-01-advanced-build.md)
   - [Advanced Podman Build](./ch08-02-advanced-podman-build.md)
   - [Working with i686](./ch08-03-i686.md)
-  - [Working with AArch64/Arm64](./ch08-04-aarch.md)
+  - [Working with AArch64/ARM64](./ch08-04-aarch.md)
   - [Troubleshooting the Build](./ch08-05-troubleshooting.md)
 
 - [Developing for Redox](./ch09-00-developing-for-redox.md)
   - [Including Programs in Redox](./ch09-01-including-programs.md)
   - [Coding and Building](./ch09-02-coding-and-building.md)
-  - [Testing Practices](./ch09-03-testing-practices.md)
+
+- [Contributing](./ch10-00-contributing.md)
 
 - [Best practices and guidelines](./ch11-00-best-practices.md)
   - [Literate programming](./ch11-01-literate-programming.md)
   - [Writing docs correctly](./ch11-02-writing-docs-correctly.md)
   - [Style](./ch11-03-style.md)
   - [Rusting properly](./ch11-04-rusting-properly.md)
-  - [Avoiding panics in the kernel](./ch11-05-avoiding-kernel-panics.md)
+  - [Avoiding Panics](./ch11-05-avoiding-panics.md)
+  - [Testing Practices](./ch11-06-testing-practices.md)
 
 - [Using Redox GitLab](./ch12-00-using-redox-gitlab.md)
   - [Signing in to GitLab](./ch12-01-signing-in-to-gitlab.md)
   - [Repository Structure](./ch12-02-repository-structure.md)
   - [Creating Proper Bug Reports](./ch12-03-creating-proper-bug-reports.md)
   - [How to do a pull request properly](./ch12-04-creating-proper-pull-requests.md)
-  - [Issues](./ch12-05-issues.md)
+  - [Filing Issues](./ch12-05-filing-issues.md)
 
 - [Communication](./ch13-00-communication.md)
   - [Chat](./ch13-01-chat.md)

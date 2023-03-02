@@ -27,7 +27,7 @@ When using `git` commands such as `git push`, `git` may ask you to provide a pas
 ### Requirements Before Logging Into GitLab
 
 Before logging-in, you'll need:
- - your web browser open at https://gitlab.redox-os.org/redox-os/
+ - your web browser open at [Redox GitLab](https://gitlab.redox-os.org/redox-os/)
  - your phone
  - your 2FA App installed on your phone.
  - to add https://gitlab.redox-os.org/redox-os/ as a site in your 2FA App.  Once added and the site listed, underneath you'll see 2 sets of 3 digits, 6 digits in all. i.e. **258 687**. That's the 2FA Verification Code.  It changes every so often around every minute.
@@ -48,8 +48,8 @@ Before logging-in, you'll need:
 ### Logging-In With An Android Phone
 
 Here are the steps:
- - From your computer web browser, open https://gitlab.redox-os.org/redox-os/
- - Click the SignIn button
+ - From your computer web browser, open the [Redox GitLab](https://gitlab.redox-os.org/redox-os/)
+ - Click the Sign In button
  - Enter your username/email
  - Enter your password
  - Click the Submit button
@@ -58,8 +58,8 @@ Here are the steps:
 ### Logging-In With An iPhone
 
 Here are the steps:
- - From your computer web browser, open https://gitlab.redox-os.org/redox-os/
- - Click the SignIn button
+ - From your computer web browser, open the [Redox GitLab](https://gitlab.redox-os.org/redox-os/)
+ - Click the Sign In button
  - Enter your username/email
  - Enter your password
  - Click the Submit button

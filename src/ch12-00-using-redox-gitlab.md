@@ -1,4 +1,4 @@
-# Using Redox Gitlab
+# Using Redox GitLab
 
 The Redox project is hosted here: [Redox GitLab](https://gitlab.redox-os.org/). You can download or clone the Redox source from there. However, if you wish to contribute, you will need a Redox Gitlab account.
 

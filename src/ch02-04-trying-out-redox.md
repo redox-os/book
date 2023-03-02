@@ -10,7 +10,7 @@ Many of the available commands are in the folders `/bin` and `/ui/bin`, which wi
 
 ### Freedoom
 
-Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can find the Freedoom website at <https://freedoom.github.io/>. PrBoom can be found at <https://prboom.sourceforge.net/>. Click on the **Redox** logo on the bottom left, and choose `Games`, then choose `Freedoom`. Or open a Terminal window and try `/games/freedoom1` or `/games/freedoom2`.
+Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can find the Freedoom website [here](https://freedoom.github.io/). PrBoom can be found [here](https://prboom.sourceforge.net/). Click on the **Redox** logo on the bottom left, and choose `Games`, then choose `Freedoom`. Or open a Terminal window and try `/games/freedoom1` or `/games/freedoom2`.
 
 Hit `Esc` and use the arrow keys to select Options->Setup->Key Bindings for keyboard help.
 
@@ -29,7 +29,7 @@ Sopwith is a game allows you to control a small plane. Originally written in 198
 
 ### Syobonaction
 
-Syobon Action is 2D side-scrolling platformer that you won't enjoy. In a Terminal window, type `syobonaction`. It's recommended that you read the [Github page](https://github.com/angelXwind/OpenSyobonAction) so you don't blame us.
+Syobon Action is 2D side-scrolling platformer that you won't enjoy. In a Terminal window, type `syobonaction`. It's recommended that you read the [GitHub page](https://github.com/angelXwind/OpenSyobonAction) so you don't blame us.
 
 ## Terminal Window Games Written in Rust
 
