@@ -4,7 +4,7 @@ Redox GitLab consists of a large number of **Projects** and **Subprojects**. The
 
 ## The Redox Project
 
-The `redox` project is actually just the root of the build system. It does not contain any of the code that the final Redox image will include. It includes the Makefiles, configuration files, and a few scripts to simplify setup and building. The `redox` project can be found on or about [page 9](https://gitlab.redox-os.org/redox-os?page=9), or by appending the name [redox](https://gitlab.redox-os.org/redox-os/redox) to the GitLab path.
+The `redox` project is actually just the root of the build system. It does not contain any of the code that the final Redox image will include. It includes the Makefiles, configuration files, and a few scripts to simplify setup and building. The `redox` project can be found [here](https://gitlab.redox-os.org/redox-os/redox).
 
 Doing a `git clone` of `redox.git` with `--recursive` fetches the full build system, as described in the `.gitmodules` file. The submodules are referred to using an SHA to identify what commit to use, so it's possible that your fetched subprojects do not have the latest from their `master` branch. Once the latest SHA reference is merged into `redox`, you can update to get the latest version of the subproject.
 
@@ -12,7 +12,7 @@ Doing a `git clone` of `redox.git` with `--recursive` fetches the full build sys
 
 The many **packages** that are assembled into the Redox image are built from the corresponding subprojects. The name of a Redox package almost always matches the name of its subproject, although this is not enforced.
 
-The **recipe** for a Redox package contains the instructions to fetch and build the package, for its inclusion in the Redox image. The recipe is stored with the [Cookbook](#cookbook), not with with package.
+The **recipe** for a Redox package contains the instructions to fetch and build the package, for its inclusion in the Redox image. The recipe is stored with the Cookbook, not with with package.
 
 ## Cookbook
 

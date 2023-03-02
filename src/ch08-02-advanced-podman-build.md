@@ -6,7 +6,7 @@ To make the Redox build process more consistent across platforms, we are using *
 
 - Environment and Command Line Variables, other than ARCH, CONFIG_NAME and FILESYSTEM_CONFIG, are not passed to the part of `make` that is done in **Podman**. You must set any other config variables, e.g. `REPO_BINARY`, in [.config](./ch02-07-configuration-settings.md#config) and not on the command line or in your environment.
 
-- If you are building your own software to include in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Libraries to the Build](#adding-libraries-to-the-build).
+- If you are building your own software to include in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Libraries to the Build](#adding-ubuntu-packages-to-the-build).
 
 ## Minimum Installation
 
@@ -106,7 +106,9 @@ You will then be running bash with `root` privilege in the container, and you ca
 
 Type `exit` on both shells once you have determined how to solve your problem.
 
-## Adding Libraries to the Build
+## Adding Ubuntu Packages to the Build
+
+This method can be used if you want to make changes/testing inside the Ubuntu container with `make env`.
 
 The default **Containerfile**, `podman/redox-base-containerfile`, imports all required packages for a normal Redox build.
 
@@ -135,6 +137,8 @@ CONTAINERFILE?=podman/my-containerfile
 If your Containerfile is newer than `build/container.tag`, a new **image** will be created. You can force the image to be rebuilt with `make container_clean`.
 
 If you feel the need to have more than one image, you can change the variable `IMAGE_TAG` in `mk/podman.mk` to give the image a different name.
+
+If you just want to install the packages temporarily, run `make env`, open a new terminal tab/windows, run `make container_su` and use `apt install` on this tab/window.
 
 ## Troubleshooting Podman
 

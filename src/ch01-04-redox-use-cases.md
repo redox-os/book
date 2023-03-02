@@ -10,7 +10,7 @@ Redox has plans underway for [virtualization](https://en.wikipedia.org/wiki/OS-l
 
 ## Desktop
 
-The development of Redox for the desktop is well underway. Although support for accelerated graphics is limited at this time, Redox does include a graphical user interface, and integration with GUI libraries like [Iced](https://github.com/iced-rs/iced) and [Slint](https://github.com/slint-ui/slint) are ongoing efforts.
+The development of Redox for the desktop is well underway. Although support for accelerated graphics is limited at this time, Redox does include a graphical user interface, and integration with GUI libraries like [Iced](https://iced.rs/) and [Slint](https://slint-ui.com/) are ongoing efforts.
 
 A Demo version of Redox is available with several games and applications to try. However, the most important objective for desktop Redox is for hosting the development of Redox. We are working through issues with some of our build tools, and other developer tools such as editors have not been tested under daily use, but we continue to make this a priority.
 

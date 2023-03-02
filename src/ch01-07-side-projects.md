@@ -1,4 +1,4 @@
-Side projects
+Side Projects
 =============
 
 Redox is a complete Rust operating system.

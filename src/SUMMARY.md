@@ -11,7 +11,7 @@
   - [Redox Use Cases](./ch01-04-redox-use-cases.md)
   - [Comparing Redox to Other OSes](./ch01-05-how-redox-compares.md)
   - [Why Rust?](./ch01-06-why-rust.md)
-  - [Side projects](./ch01-07-side-projects.md)
+  - [Side Projects](./ch01-07-side-projects.md)
 
 - [Getting started](./ch02-00-getting-started.md)
   - [Running Redox in a virtual machine](./ch02-01-running-vm.md)
@@ -33,7 +33,7 @@
   - [Disadvantages of microkernels](./ch04-03-disadvantages.md)
   - [Boot Process](./ch04-04-boot-process.md)
   - [Drivers](./ch04-05-drivers.md)
-  - [Memory management](./ch04-06-memory.md)
+  - [Memory Management](./ch04-06-memory.md)
   - [Scheduling](./ch04-07-scheduling.md)
 
 - [URLs, schemes and resources](./ch05-00-urls-schemes-resources.md)
@@ -60,7 +60,7 @@
   - [Advanced Build](./ch08-01-advanced-build.md)
   - [Advanced Podman Build](./ch08-02-advanced-podman-build.md)
   - [Working with i686](./ch08-03-i686.md)
-  - [Working with AArch64/Arm64](./ch08-04-aarch.md)
+  - [Working with AArch64/ARM64](./ch08-04-aarch.md)
   - [Troubleshooting the Build](./ch08-05-troubleshooting.md)
 
 - [Developing for Redox](./ch09-00-developing-for-redox.md)

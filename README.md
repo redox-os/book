@@ -54,7 +54,7 @@ Redox has many subprojects that combine to provide a complete system. You can he
 
 This list have all hyperlink names with external links inside the book (in case we need to change them easily)
 
-- "CONTRIBUTING.md" - Introduction
+- "CONTRIBUTING" - Introduction
 - "Rust" - Introduction
 - "POSIX" - Introduction
 - "Plan 9" - Introduction
@@ -72,7 +72,7 @@ This list have all hyperlink names with external links inside the book (in case 
 - "virtualization" - Redox Use Cases
 - "Iced" - Redox Use Cases
 - "Slint" - Redox Use Cases
-- "relevant section of the Rust book" - Why Rust?
+- "relevant section" - Why Rust?
 - "RedoxFS" - Side projects
 - "Ion" - Side projects
 - "Orbital" - Side projects
@@ -98,19 +98,17 @@ This list have all hyperlink names with external links inside the book (in case 
 - "demo ISO" - Running Redox on real hardware
 - "SHA sum" - Running Redox on real hardware
 - "here" - Trying Out Redox
-- "https://freedoom.github.io/" - Trying Out Redox
-- "https://prboom.sourceforge.net/" - Trying Out Redox
-- "Github page" - Trying Out Redox
+- "GitHub page" - Trying Out Redox
 - "HenryTheCat" - Trying Out Redox
 - "FUSE" - Building Redox
 - "Redox repository" - Building Redox
 - "here" - Podman Build
 - "FUSE" - Podman Build
-- "our Discourse Redox-os Forum" - Questions and feedback
-- "GitLab Redox Project Issues" - Questions and feedback
+- "Discourse Forum" - Questions and feedback
+- "Redox GitLab  Issues" - Questions and feedback
 - "New Issue" - Questions and feedback
 - "MINIX" - The kernel
-- "from Wikimedia" - Microkernels
+- "Wikimedia" - Microkernels
 - "OSDev technical wiki" - Microkernels
 - "Minix documentation" - Microkernels
 - "Minix features" - Microkernels
@@ -121,7 +119,7 @@ This list have all hyperlink names with external links inside the book (in case 
 - "Microkernels performance paper" - Microkernels
 - "seL4 whitepaper" - Microkernels
 - "Fuchsia documentation" - Microkernels
-- "There is very good documentation in MINIX about how this can be addressed by a microkernel" - Advantages of microkernels
+- "MINIX" - Advantages of microkernels
 - "context switch" - Disadvantages of microkernels
 - "MMU" - Disadvantages of microkernels
 - "TLB" - Disadvantages of microkernels
@@ -153,7 +151,7 @@ This list have all hyperlink names with external links inside the book (in case 
 - "here" - Shell
 - "terminals" - Shell
 - "IBM mainframes" - Shell
-- "CONTRIBUTING.md" - Developing Overview
+- "CONTRIBUTING" - Developing Overview
 - "cross-compilation" - Advanced Build
 - "OSDev article on cross-compiling" - Advanced Build
 - "FUSE" - Advanced Podman Build
@@ -170,7 +168,7 @@ This list have all hyperlink names with external links inside the book (in case 
 - "script" - Coding and Building
 - "trick" - Coding and Building
 - "here" - Literate programming
-- "Rust's book about Error Handling" - Rusting Properly
+- "Error Handling" - Rusting Properly
 - "Redox GitLab" - Using Redox Gitlab
 - "Redox GitLab" - Signing in to GitLab
 - "here" - Signing in to GitLab
@@ -181,12 +179,11 @@ This list have all hyperlink names with external links inside the book (in case 
 - "Tofu Authenticator (open-source)" - Signing in to GitLab
 - "iOS built-in authenticator" - Signing in to GitLab
 - "Redox GitLab" - Repository Structure
-- "redox" - Repository Structure
 - "Repository" - Creating Proper Pull Requests
 - "rustfmt" - Creating Proper Pull Requests
 - "Redox Merge Request room" - Creating Proper Pull Requests
 - "Redox Space" - Chat
-- "Redox Support room" - Chat
-- "Redox OS/Dev" - Chat
-- "Redox OS/General" - Chat
+- "Redox Support" - Chat
+- "Redox Dev" - Chat
+- "Redox General" - Chat
 - "Mattermost" - Chat

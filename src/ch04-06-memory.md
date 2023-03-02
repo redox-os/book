@@ -1,4 +1,4 @@
-# Memory management
+# Memory Management
 
 We still need to document our memory system.
 
