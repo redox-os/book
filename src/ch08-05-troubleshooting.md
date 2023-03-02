@@ -68,3 +68,12 @@ To build the final Redox image, `redox_installer` uses [FUSE](https://github.com
 
 On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.sh` might not install it correctly. Investigate whether you can address your FUSE issues, or join the [chat](./ch13-01-chat.md) if you need advice.
 
+## Solving Compilation Problems
+
+1. - Check your Rust version (run `make env`, then `cargo --version`), make sure you have **the latest version of Rust nightly!**
+
+- [rustup.rs](https://www.rustup.rs) is recommended for managing Rust versions. If you already have it, run `rustup`.
+
+1. - Run `make clean pull` to remove all your compiled binaries and update the sources.
+1. - Check if your `make` and `nasm` are up to date
+1. - Sometimes there are pull requests that briefly break the build, so check on chat if anyone else is experiencing your problems.
