@@ -70,7 +70,7 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
 
 ## Solving Compilation Problems
 
-1. - Check your Rust version (run `make env`, then `cargo --version`), make sure you have **the latest version of Rust nightly!**
+1. - Check your Rust version (run `make env` and `cargo --version`, then `exit`), make sure you have **the latest version of Rust nightly!**
 
 - [rustup.rs](https://www.rustup.rs) is recommended for managing Rust versions. If you already have it, run `rustup`.
 
