@@ -18,7 +18,7 @@ So, how does it differ from files?
 You can think of URLs as segregated virtual file systems, which can be arbitrarily structured (they do not have to be tree-like) and arbitrarily defined by a program. Furthermore, "files" don't have to behave file-like! More on this later.
 
 It opens up a lot of possibilities.
-> [... TODO]
+> (... TODO)
 
 The idea of virtual file systems is not a new one. If you are on a Linux computer, you should try to `cd` to `/proc`, and see what's going on there.
 
