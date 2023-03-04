@@ -57,7 +57,7 @@ To set up this package for contributing, do the following in your `Coding` shell
   git clone https://gitlab.redox-os.org/redox-os/games.git --origin upstream --recursive
   mv games source
   ```
-- If you are making a permanent change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests], replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
+- If you are making a permanent change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
 
 - If you want to Git Clone a remote repoitory (main repoitory/your fork), you can add these sections on your `recipe.toml`:
   ```
@@ -126,7 +126,7 @@ In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. 
 
 ## Checking In your Changes
 
-Don't do this now, but if you were to have permanent changes to contribute to a package, at this point, you would `git push` and create a Merge Request, as described in [Creating Proper Pull Requests].
+Don't do this now, but if you were to have permanent changes to contribute to a package, at this point, you would `git push` and create a Merge Request, as described in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md).
 
 If you were contributing a new package, such as porting a Rust application to Redox, you would need to check in the `recipe.toml` file. It goes in the `cookbook` subproject. You may also need to modify a filesystem config file, such as `config/demo.toml`. It goes in the `redox` project. You must fork and do a proper Pull Request for each of these projects. Please coordinate with the Redox team via [Chat](./ch13-01-chat.md) before doing this.
 
