@@ -24,15 +24,16 @@ Documentation about microkernels
 --------------------------------
 
 - [OSDev technical wiki](https://wiki.osdev.org/Microkernel)
+- [Message passing documentation](https://wiki.osdev.org/Message_Passing)
 - [Minix documentation](https://wiki.minix3.org/doku.php?id=www:documentation:start)
 - [Minix features](https://wiki.minix3.org/doku.php?id=www:documentation:features)
 - [Minix reliability](https://wiki.minix3.org/doku.php?id=www:documentation:reliability)
-- [Minix paper](http://www.minix3.org/docs/jorrit-herder/osr-jul06.pdf)
 - [GNU Hurd documentation](https://www.gnu.org/software/hurd/hurd/documentation.html)
-- [HelenOS FAQ](http://www.helenos.org/wiki/FAQ)
-- [Microkernels performance paper](https://os.inf.tu-dresden.de/pubs/sosp97/)
-- [seL4 whitepaper](https://sel4.systems/About/seL4-whitepaper.pdf)
 - [Fuchsia documentation](https://fuchsia.dev/fuchsia-src/get-started/learn/intro)
+- [HelenOS FAQ](http://www.helenos.org/wiki/FAQ)
+- [Minix paper](http://www.minix3.org/docs/jorrit-herder/osr-jul06.pdf)
+- [seL4 whitepaper](https://sel4.systems/About/seL4-whitepaper.pdf)
+- [Microkernels performance paper](https://os.inf.tu-dresden.de/pubs/sosp97/)
 
 A note on the current state
 ---------------------------
