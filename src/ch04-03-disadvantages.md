@@ -15,8 +15,8 @@ These are not inherently slower on microkernels, but microkernels suffer from ha
 
 The performance difference between monolithic and microkernels has been marginalized over time, making their performance comparable. This is partly due to a smaller surface area which can be easier to optimize.
 
-Unfortunately, Redox isn't quite there yet. We still have a relatively slow kernel since not much time has been spent on optimizing it.
-
 - [Context switch documentation](https://wiki.osdev.org/Context_Switching
 )
 - [Microkernels performance paper](https://os.inf.tu-dresden.de/pubs/sosp97/)
+
+Unfortunately, Redox isn't quite there yet. We still have a relatively slow kernel since not much time has been spent on optimizing it.
