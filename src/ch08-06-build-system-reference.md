@@ -31,9 +31,9 @@ You can combine `make` targets, but order is significant. For example, `make r.g
   - `make virtualbox` - The same as `make qemu`, but for [VirtualBox](https://www.virtualbox.org/).
   - `make live` - Creates a bootable image, `$(BUILD)/livedisk.iso`. Packages are not usually rebuilt. 
   - `make r.PACKAGE` - Executes a single package recipe, checking if the package source has changed, and creating the executable, etc. Substitute the name of the package for PACKAGE, e.g. `make r.games`. The package is built even if it is not in your filesystem config.
+  - `make c.PACKAGE` - Removes build output for the package `PACKAGE`.
   - `make image` - Builds a new image, `$(BUILD)/harddrive.img`, without checking if any packages have changed. Not recommended, but it can save you some time if you are just updating one package with `make r.PACKAGE`.
   - `make clean` - Removes all build output, except for some build tools and files specific to Podman Build. Note that `make clean` may require some tools to be built.
-  - `make c.PACKAGE` - Removes build output for the package `PACKAGE`.
   - `make pull` - Updates the sources for the build system and the recipes, but not for the packages.
   - `make fetch` - Gets package sources, according to each recipe, without building them. Only the packages that are included in your `(CONFIG_NAME).toml` are fetched. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
   - `make repo` - Builds the package sources, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
