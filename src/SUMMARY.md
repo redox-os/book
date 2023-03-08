@@ -62,6 +62,7 @@
   - [Working with i686](./ch08-03-i686.md)
   - [Working with AArch64/ARM64](./ch08-04-aarch.md)
   - [Troubleshooting the Build](./ch08-05-troubleshooting.md)
+  - [Build System Quick Reference](./ch08-06-build-system-reference.md)
 
 - [Developing for Redox](./ch09-00-developing-for-redox.md)
   - [Including Programs in Redox](./ch09-01-including-programs.md)
