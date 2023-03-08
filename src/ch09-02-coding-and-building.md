@@ -218,6 +218,15 @@ Make sure you are **not running QEMU**. Run `make mount`. You can now use your f
 
 Note that in some circumstances, `make qemu` may trigger a rebuild (e.g. `make` detects an out of date file). If that happens, the files you copied into the Redox image will be lost.
 
+## Working with an unpublished version of a crate
+
+Some recipes use Cargo dependencies (Cargo.toml) with recipe dependencies (recipe.toml), if you are making a change to one of these Cargo dependencies, your merged changes will take a while to appear on [crates.io](https://crates.io/) as we publish to there instead of using our GitLab fork.
+
+To test your changes quickly, follow these tutorials on Cargo documentation:
+
+- [Overriding Dependencies](https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html)
+- [Working with an unpublished minor version](https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html#working-with-an-unpublished-minor-version)
+
 ## A Note about Drivers
 
 Drivers are a special case for rebuild. The source for drivers is fetched both for the `drivers` recipe and the `drivers-initfs` recipe. The `initfs` recipe also copies some drivers from `drivers-initfs` during the build process. If your driver is included in `initfs`, you need to keep all three in sync. The easiest solution is to write a build shell script something like the following, which should be run in your `redox` base directory. (**Note**: This assumes your driver code edits are in the directory `cookbook/recipes/drivers`. Don't accidentally remove your edited code.)
