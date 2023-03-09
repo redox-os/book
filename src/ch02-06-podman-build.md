@@ -46,7 +46,6 @@ time bash -e podman_bootstrap.sh
 cd ~/tryredox/redox
 ```
 - Check that the file [.config](./ch02-07-configuration-settings.md#config) was created in the `redox` base directory, and contains the line `PODMAN_BUILD?=1`.
-```
 - Build the system. This will take some time.
 ```sh
 time make all
