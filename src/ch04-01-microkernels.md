@@ -38,6 +38,6 @@ Documentation about microkernels
 A note on the current state
 ---------------------------
 
-Redox has less than 9,000 lines of kernel code. For comparison Minix has ~6,000 lines of kernel code.
+Redox has less than 25,000 lines of kernel code. For comparison Minix has ~6,000 lines of kernel code.
 
 We would like to move parts of Redox to user space to get an even smaller kernel.
