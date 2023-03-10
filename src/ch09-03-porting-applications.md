@@ -47,7 +47,7 @@ insert your script here
 
 ## Testing
 
-Insert your recipe name below the last item in `[packages]` on your TOML config (`desktop.toml`, for example).
+Insert your recipe name below the last item in `[packages]` on your TOML config (`config/x86_64/desktop.toml`, for example).
 
 - Example - `recipe-name = {}`
 
