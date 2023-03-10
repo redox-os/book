@@ -18,7 +18,8 @@ Your `recipe.toml` file will look like this:
 git = "software-repository-link.git"
 tar = "software-tarball-link.tar.gz"
 patches = [
-    "name.patch"
+    "patch1.patch",
+    "patch2.patch"
 ]
 [build]
 template = "name"
