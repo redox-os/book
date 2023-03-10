@@ -5,9 +5,9 @@ straightforward. First, we will show how to add an existing program for inclusio
 
 The Cookbook build system uses [TOML](https://toml.io/en/) file format for configuration files, these are the available templates for your `recipe.toml` files:
 
-- `template = "cargo"` - compile with Cargo (Rust programs).
+- `template = "cargo"` - compile with `cargo` (Rust programs).
 - `template = "configure"` - compile with `configure` and `make`.
-- `template = "custom"` - template that run your custom script (script =).
+- `template = "custom"` - run your custom script `script =` and compile.
 
 ## Existing Package
 
