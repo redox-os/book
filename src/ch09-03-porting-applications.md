@@ -16,6 +16,7 @@ Your `recipe.toml` file will look like this:
 ```
 [source]
 git = "software-repository-link.git"
+branch = "branch-name"
 tar = "software-tarball-link.tar.gz"
 patches = [
     "patch1.patch",
@@ -32,6 +33,7 @@ insert your script here
 """
 ```
 - Insert `git =` to clone your software repository, if it's not available the build system will build the contents inside the `source` folder on recipe directory.
+- Insert `branch =` if your want to use other branch.
 - Insert `tar =` to download/extract tarballs, this can be used instead of `git =`.
 - Insert `patches =` to use patch files, they need to be in the same directory of `recipe.toml` (not needed if your program compile/run without patches).
 - Insert `dependencies =` if your software have dependencies, to make it work your dependencies/libraries need their own recipes (if your software doesn't need this, remove it from your `recipe.toml`).
