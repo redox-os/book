@@ -37,6 +37,7 @@ dependencies = [
     "runtime2"
 ]
 ```
+- Don't remove/forget the `[build]` section (`[source]` section can be removed if you don't use `git =` and `tar =`).
 - Insert `git =` to clone your software repository, if it's not available the build system will build the contents inside the `source` folder on recipe directory.
 - Insert `branch =` if your want to use other branch.
 - Insert `tar =` to download/extract tarballs, this can be used instead of `git =`.
