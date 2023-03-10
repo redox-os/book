@@ -44,3 +44,13 @@ insert your script here
 - `template = "cargo"` - compile with `cargo` (Rust programs).
 - `template = "configure"` - compile with `configure` and `make` (non-CMake programs).
 - `template = "custom"` - run your custom script `script =` and compile (Any build system/installation process).
+
+## Testing
+
+Insert your recipe name below the last item in `[packages]` on your TOML config (`desktop.toml`, for example).
+
+- Example - `recipe-name = {}`
+
+It will make Redox rebuild/load your recipe always.
+
+If you don't want to modify your TOML config, use this [command](./ch09-02-coding-and-building.md#most-quick-trick-to-test-changes)
