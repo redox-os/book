@@ -2,7 +2,7 @@
 
 The [Including Programs in Redox](./ch09-01-including-programs.md) page explain how to create pure Rust program recipes, here we will explain how to create non-Rust programs or mixed Rust programs (Rust + C/C++ libraries, for example).
 
-Create a folder in `cookbook/recipes` with a file named as `recipe.toml inside, we will edit this file to fit the program needs.
+Create a folder in `cookbook/recipes` with a file named as `recipe.toml` inside, we will edit this file to fit the program needs.
 
 - Commands example:
 ```
