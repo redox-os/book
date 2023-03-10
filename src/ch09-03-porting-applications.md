@@ -26,11 +26,16 @@ patches = [
 template = "name"
 dependencies = [
     "library1",
-    "library2",
+    "library2"
 ]
 script = """
 insert your script here
 """
+[package]
+dependencies = [
+    "runtime1",
+    "runtime2"
+]
 ```
 - Insert `git =` to clone your software repository, if it's not available the build system will build the contents inside the `source` folder on recipe directory.
 - Insert `branch =` if your want to use other branch.
@@ -38,6 +43,11 @@ insert your script here
 - Insert `patches =` to use patch files, they need to be in the same directory of `recipe.toml` (not needed if your program compile/run without patches).
 - Insert `dependencies =` if your software have dependencies, to make it work your dependencies/libraries need their own recipes (if your software doesn't need this, remove it from your `recipe.toml`).
 - Insert `script =` to run your custom script (`script =` is enabled when you define your `template =` as `custom`).
+
+Note that there are two `dependencies =`, one below the `[build]` section and other below `[package]` section.
+
+- Below `[build]` - development libraries
+- Below `[package]` - runtime dependencies
 
 ## Cookbook Templates
 
