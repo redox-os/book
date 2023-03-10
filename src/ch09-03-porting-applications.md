@@ -46,8 +46,10 @@ dependencies = [
 
 Note that there are two `dependencies =`, one below the `[build]` section and other below `[package]` section.
 
-- Below `[build]` - development libraries
-- Below `[package]` - runtime dependencies
+- Below `[build]` - development libraries.
+- Below `[package]` - runtime dependencies (data files).
+
+All recipes are statically compiled, thus you don't need to package libraries and applications separated for binary linking, simplifying the configuration/packaging process.
 
 ## Cookbook Templates
 
