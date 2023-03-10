@@ -49,7 +49,7 @@ Note that there are two `dependencies =`, one below the `[build]` section and ot
 - Below `[build]` - development libraries.
 - Below `[package]` - runtime dependencies (data files).
 
-All recipes are **statically compiled**, thus you don't need to package libraries and applications separated for binary linking, simplifying the configuration/packaging process.
+All recipes are **statically compiled**, thus you don't need to package libraries and applications separated for binary linking, improving security and simplifying the configuration/packaging.
 
 ## Cookbook Templates
 
