@@ -67,6 +67,7 @@
 - [Developing for Redox](./ch09-00-developing-for-redox.md)
   - [Including Programs in Redox](./ch09-01-including-programs.md)
   - [Coding and Building](./ch09-02-coding-and-building.md)
+  - [Porting Applications using Recipes](./ch09-03-porting-applications.md)
 
 - [Contributing](./ch10-00-contributing.md)
 
