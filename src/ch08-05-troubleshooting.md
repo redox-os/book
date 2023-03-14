@@ -77,3 +77,9 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
 1. - Run `make clean pull` to remove all your compiled binaries and update the sources.
 1. - Check if your `make` and `nasm` are up to date
 1. - Sometimes there are pull requests that briefly break the build, so check on chat if anyone else is experiencing your problems.
+
+## Kernel Panics in QEMU
+
+If you receive a kernel panic in QEMU, capture a screenshot and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).
+
+Run `pkill qemu-system` to kill the frozen QEMU process.
