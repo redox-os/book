@@ -8,7 +8,7 @@ The build system creates and/or uses several files that you may want to know abo
   - `.config` - Where you change your build system settings. It is loaded by the Makefile. It is ignored by `git`.
   - `mk/config.mk` - The build system's own settings are here. You can override these settings in your `.config`, don't change them here.
   - `mk/*.mk` - The rest of the makefiles. You should not need to change them.
-  - `podman/redox-base-containerfile` - The file used to create the image used by Podman Build. The installation of Ubuntu packages needed for the build is done here. See [Adding Libraries to the Build](./ch08-02-advanced-podman-build.md#adding-libraries-to-the-build) if you need to add additional Ubuntu packages.
+  - `podman/redox-base-containerfile` - The file used to create the image used by Podman Build. The installation of Ubuntu packages needed for the build is done here. See [Adding Ubuntu Packages to the Build](./ch08-02-advanced-podman-build.md#adding-ubuntu-packages-to-the-build) if you need to add additional Ubuntu packages.
   - `config/$(ARCH)/$(CONFIG_NAME).toml` - The packages to be included in the Redox image that will be built, e.g. `config/x86_64/desktop.toml`.
   - `cookbook/recipes/PACKAGE/recipe.toml` - For each Redox package (represented here as `PACKAGE`), there is a directory that contains its recipe, usually `recipe.toml`, but in some older recipes, `recipe.sh` is used. The recipe contains instructions for obtaining sources via download or git, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other packages to be built, even if the dependencies are not otherwise part of your Redox build.
   - `cookbook/*` - Part of the cookbook system, these scripts and utilities help build the recipes.
@@ -45,3 +45,14 @@ You can combine `make` targets, but order is significant. For example, `make r.g
   - `make container_clean` - If you are using Podman Build, this will discard images and other files created by it.
   - `make container_touch` - If you have removed the file `build/container.tag`, but the container image is still usable, this will recreate the `container.tag` file and avoid rebuilding the container image.
   - `make container_kill` - If you have started a build using Podman Build, and you want to stop it, `Ctrl-C` may not be sufficient. Use this command to terminate the most recently created container.
+
+### Scripts
+
+You can use these scripts to perform actions not implemented as commands in the Cookbook build system.
+
+- `scripts/changelog.sh` - show the changelog of all Redox components/recipes.
+- `scripts/find-recipe.sh` - show all files installed by a recipe package.
+- `scripts/rebuild-recipe.sh` - alternative to `make r.recipe` and `make c.recipe` that clean your recipe source/binary (delete `source`, `source.tar` and `target` in recipe folder) to make a new clean build.
+
+Write the path of the script and the name of your recipe:
+> `scripts/rebuild-recipe.sh recipe`

@@ -6,7 +6,7 @@ To make the Redox build process more consistent across platforms, we are using *
 
 - Environment and Command Line Variables, other than ARCH, CONFIG_NAME and FILESYSTEM_CONFIG, are not passed to the part of `make` that is done in **Podman**. You must set any other config variables, e.g. `REPO_BINARY`, in [.config](./ch02-07-configuration-settings.md#config) and not on the command line or in your environment.
 
-- If you are building your own software to include in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Libraries to the Build](#adding-ubuntu-packages-to-the-build).
+- If you are building your own software to include in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Ubuntu Packages to the Build](#adding-ubuntu-packages-to-the-build).
 
 ## Minimum Installation
 

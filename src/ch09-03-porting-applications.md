@@ -50,20 +50,29 @@ Note that there are two `dependencies =`, one below the `[build]` section and ot
 - Below `[build]` - development libraries.
 - Below `[package]` - runtime dependencies (data files).
 
-All recipes are **statically compiled**, thus you don't need to package libraries and applications separated for binary linking, improving security and simplifying the configuration/packaging.
+All recipes are [statically compiled](https://en.wikipedia.org/wiki/Static_build), thus you don't need to package libraries and applications separated for binary linking, improving security and simplifying the configuration/packaging.
+
+- [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox)
 
 ## Cookbook Templates
 
-- `template = "cargo"` - compile with `cargo` (Rust programs).
+- `template = "cargo"` - compile with `cargo` (pure/mixed Rust programs).
 - `template = "configure"` - compile with `configure` and `make` (non-CMake programs).
 - `template = "custom"` - run your custom script `script =` and compile (Any build system/installation process).
 
-## Testing
+## Testing/Building
 
-Insert your recipe name below the last item in `[packages]` on your TOML config (`config/x86_64/desktop.toml`, for example).
+To build your recipe, run - `make r.recipe-name`
 
-- Example - `recipe-name = {}`
+If you want to insert this recipe permanently in your QEMU image add your recipe name below the last item in `[packages]` on your TOML config (`config/x86_64/desktop.toml`, for example).
 
-It will make Redox rebuild/load your recipe always.
+- Example - `recipe-name = {}` or `recipe-name = "recipe"` (if you have `REPO_BINARY=1` in your `.config`).
 
-If you don't want to modify your TOML config, use this [command](./ch09-02-coding-and-building.md#most-quick-trick-to-test-changes)
+To install your compiled recipe on QEMU image, run `make image`.
+
+## Cleanup
+
+If you have some problems (outdated recipe), try to run these commands:
+
+- `make c.recipe` - it will wipe your old recipe binary.
+- `scripts/rebuild-recipe.sh recipe-name` - it will delete your recipe source/binary and compile (fresh build).
