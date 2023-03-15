@@ -55,4 +55,6 @@ You can use these scripts to perform actions not implemented as commands in the 
 - `scripts/rebuild-recipe.sh` - alternative to `make r.recipe` and `make c.recipe` that clean your recipe source/binary (delete `source`, `source.tar` and `target` in recipe folder) to make a new clean build.
 
 Write the path of the script and the name of your recipe:
-> `scripts/rebuild-recipe.sh recipe`
+```
+scripts/rebuild-recipe.sh recipe
+```
