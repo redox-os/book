@@ -2,6 +2,8 @@
 
 The best way to communicate with the Redox team is on Matrix Chat. You can join the [Redox Space](https://matrix.to/#/#redox:matrix.org) and see the  rooms that are available.
 
+Matrix has several different clients. [Element](https://element.io/) is a commonly used choice.
+
 We follow the [Rust Code Of Conduct](https://www.rust-lang.org/policies/code-of-conduct) as rules of the chat rooms.
 
 If you don't joined the Redox Space, these are the rooms available:
