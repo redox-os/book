@@ -70,6 +70,10 @@ If you want to insert this recipe permanently in your QEMU image add your recipe
 
 To install your compiled recipe on QEMU image, run `make image`.
 
+If you had a problem, use this command to log any possible errors on your terminal output:
+
+- `make r.recipe-name 2>&1 | tee recipe-name.log`
+
 ## Cleanup
 
 If you have some problems (outdated recipe), try to run these commands:

@@ -21,20 +21,23 @@
   - [Building Redox](./ch02-05-building-redox.md)
   - [Podman Build](./ch02-06-podman-build.md)
   - [Configuration Settings](./ch02-07-configuration-settings.md)
-  - [Questions and feedback](./ch02-08-asking-questions.md)
+  - [Downloading packages with pkg](./ch02-08-pkg.md)
+  - [Questions and feedback](./ch02-09-asking-questions.md)
 
 # Architecture and Design
 
 - [Design Overview](./ch03-00-design-overview.md)
 
-- [The kernel](./ch04-00-kernel.md)
+- [System Design](./ch04-00-system-design.md)
   - [Microkernels](./ch04-01-microkernels.md)
-  - [Advantages of microkernels](./ch04-02-advantages.md)
-  - [Disadvantages of microkernels](./ch04-03-disadvantages.md)
-  - [Boot Process](./ch04-04-boot-process.md)
-  - [Drivers](./ch04-05-drivers.md)
-  - [Memory Management](./ch04-06-memory.md)
-  - [Scheduling](./ch04-07-scheduling.md)
+  - [Redox kernel](./ch04-02-kernel.md)
+  - [Boot Process](./ch04-03-boot-process.md)
+  - [Memory Management](./ch04-04-memory.md)
+  - [Scheduling](./ch04-05-scheduling.md)
+  - [System Services in User Space](./ch04-06-user-space.md)
+  - [Drivers](./ch04-07-drivers.md)
+  - [RedoxFS](./ch04-08-redoxfs.md)
+  - [Graphics and Windowing](./ch04-09-graphics-windowing.md)
 
 - [URLs, schemes and resources](./ch05-00-urls-schemes-resources.md)
   - [URLs](./ch05-01-urls.md)

@@ -25,36 +25,31 @@ The kernel provides a small number of schemes in order to support userspace.
     <tr>
         <td><code>:</code></td>
         <td>Root scheme - allows the creation of userspace schemes</td>
-        <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/root/index.html">Docs</a></td>
+        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/root.rs">Docs</a></td>
     </tr>
     <tr>
         <td><code>debug:</code></td>
         <td>Provides access to serial console</td>
-        <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/debug/index.html">Docs</a></td>
+        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/debug.rs">Docs</a></td>
     </tr>
         <td><code>event:</code></td>
         <td>Allows reading of `Event`s which are registered using <code>fevent</code></td>
-        <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/event/index.html">Docs</a></td>
-    </tr>
-    <tr>
-        <td><code>initfs:</code></td>
-        <td>Readonly filesystem used for initializing the system</td>
-        <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/initfs/index.html">Docs</a></td>
+        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/event.rs">Docs</a></td>
     </tr>
     <tr>
         <td><code>irq:</code></td>
         <td>Allows userspace handling of IRQs</td>
-        <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/irq/index.html">Docs</a></td>
+        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/irq.rs">Docs</a></td>
     </tr>
     <tr>
         <td><code>pipe:</code></td>
         <td>Used internally by the kernel to implement <code>pipe</code></td>
-        <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/pipe/index.html">Docs</a></td>
+        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/pipe.rs">Docs</a></td>
     </tr>
     <tr>
         <td><code>sys:</code></td>
         <td>System information, such as the context list and scheme list</td>
-        <td><a href="https://doc.redox-os.org/kernel/kernel/scheme/sys/index.html">Docs</a></td>
+        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/sys/mod.r">Docs</a></td>
     </tr>
 </table>
 

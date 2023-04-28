@@ -143,9 +143,13 @@ You can build just the `games` package, rather than having `make rebuild` check 
   ```
   Redox's makefiles have a rule for `r.PACKAGE`, where `PACKAGE` is the name of a Redox package. It will make that package, ready to load into the Redox filesystem.
 
-Once your Redox package has been successfully built, you can use `make rebuild` to create the image, or, if you are confident you have made all packages successfully, you can skip a complete rebuild and just [make a new image](#make-a-new-image).
+Once your Redox package has been successfully built, you can use `make rebuild` to create the image, or, if you are confident you have made all packages successfully, you can skip a complete rebuild and just [make a new image](#make-a-new-qemu-image).
 
-### Make a New Image
+If you had a problem, use this command to log any possible errors on your terminal output:
+
+- `make r.recipe-name 2>&1 | tee recipe-name.log`
+
+### Make a New QEMU Image
 
 Now that all the packages are built, you can make a Redox image without the step of checking for modifications. 
 - In your `Build` shell, in the `redox` directory, do:
@@ -161,9 +165,9 @@ Run:
 
 - `make r.recipe && make image && make qemu`
 
-This command will [build just your modified recipe](#build-your-package-for-redox), then [update your QEMU image with your modified recipe](#make-a-new-image) and run QEMU with a GUI.
+This command will [build just your modified recipe](#build-your-package-for-redox), then [update your QEMU image with your modified recipe](#make-a-new-qemu-image) and run QEMU with a GUI.
 
-### Patch an Image
+### Insert Files On QEMU Image
 
 If you feel the need to skip creating a new image, and you want to directly add a file to the existing Redox image, it is possible to do so. However, this is not recommended. You should use a recipe to make the process repeatable. But here is how to access the Redox image as if it were a Linux filesystem.
 
@@ -188,7 +192,7 @@ If you feel the need to skip creating a new image, and you want to directly add 
   ```
   The new version of `minesweeper` is now in your Redox filesystem.
 
-## Getting files onto and off of Redox QEMU
+## Insert Text Files On Redox QEMU
 
 If you need to move text files, such as shell scripts or command output, from or to your Redox instance running on QEMU, use your Terminal window that you used to start QEMU. To capture the output of a Redox command, run `script` before starting QEMU.
   ```sh
@@ -210,7 +214,7 @@ If you need to move text files, such as shell scripts or command output, from or
   EOF
   ```
 
-If your file is large, or non-ascii, or you have many files to copy, you can use the process described in [Patch an Image](#patch-an-image). However, you do so at your own risk.
+If your file is large, or non-ascii, or you have many files to copy, you can use the process described in [Patch an Image](#insert-files-on-qemu-image). However, you do so at your own risk.
 
 Files you create while running QEMU remain in the Redox image, so long as you do not rebuild the image. Similarly, files you add to the image will be present when you run QEMU, so long as you do not rebuild the image.
 
