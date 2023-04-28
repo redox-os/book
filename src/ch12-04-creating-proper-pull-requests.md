@@ -78,3 +78,5 @@ The steps given below are for the main Redox project - submodules and other proj
 1. Click in the "Merge Requests" on the left side.
 1. Select your fork branch and create the merge request.
 1. If your merge requests is ready, send the link on [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room.
+
+- Remember that you will need to update your forks manually in web interface (delete the fork/create a new fork if the upstream repository push commits from other contributors).

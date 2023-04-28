@@ -71,11 +71,15 @@ Read through [Configuration Settings](./ch02-07-configuration-settings.md). Then
 - Open a `Terminal` window by clicking it on the icon in the toolbar at the bottom of the Redox screen, and type `ls /bin`. You will see that `minesweeper` **is** listed.
 - In the terminal window, type `minesweeper`. Play the game using the arrow keys or `WSAD`,`space` to reveal a spot, `f` to flag a spot when you suspect a mine is present. When you type `f`, an `F` character will appear.
 
+If you had a problem, use this command to log any possible errors on your terminal output:
+
+- `make r.recipe-name 2>&1 | tee recipe-name.log`
+
 And that's it! Sort of. 
 
 ### Dependencies
 
-Some packages may have dependencies, which will have their own recipes. You can look at the `recipe.toml` or `recipe.sh` file in the `cookbook/recipes/PACKAGE` directory to see what dependencies exist for your package, and verify that you have a recipe for each dependency as well. Some packages may also require libraries such as `sdl` or build tools such as `ninja-build`. Make sure you install those required items. See [Install Prerequisite Packages](./ch08-01-advanced-build.md#install-pre-requisite-packages-and-emulators)  or [Podman Adding Libraries](./ch08-02-advanced-podman-build.md#adding-libraries-to-the-build) for examples.
+Some packages may have dependencies, which will have their own recipes. You can look at the `recipe.toml` or `recipe.sh` file in the `cookbook/recipes/PACKAGE` directory to see what dependencies exist for your package, and verify that you have a recipe for each dependency as well. Some packages may also require libraries such as `sdl` or build tools such as `ninja-build`. Make sure you install those required items. See [Install Prerequisite Packages](./ch08-01-advanced-build.md#install-pre-requisite-packages-and-emulators)  or [Podman Adding Libraries](./ch08-02-advanced-podman-build.md#adding-ubuntu-packages-to-the-build) for examples.
 
 ## Modifying an Existing Package
 

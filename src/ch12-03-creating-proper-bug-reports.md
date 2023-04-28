@@ -16,7 +16,7 @@ If you identify a problem with the system that has not been identified previousl
 
 7. If the problem occurs during build, record the build log using `script` or `tee`, e.g.
     ```sh
-    make r.games | tee build.log
+    make r.recipe-name 2>&1 | tee recipe-name.log
     ```
     If the problem occurs while using the Redox command line, use `script` in combination with your Terminal window.
     ```sh

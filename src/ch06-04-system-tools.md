@@ -17,3 +17,8 @@ Extrautils
 ----------
 
 Some additional command line tools are included in extrautils, such as `less`, `grep`, and `dmesg`.
+
+Contain
+-------
+
+This program provides containers (namespaces) on Redox.
