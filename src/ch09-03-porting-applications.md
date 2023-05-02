@@ -1,6 +1,6 @@
 # Porting Applications using Recipes
 
-The [Including Programs in Redox](./ch09-01-including-programs.md) page explain how to create pure Rust program recipes, here we will explain how to create non-Rust programs or mixed Rust programs (Rust + C/C++ libraries, for example).
+The [Including Programs in Redox](./ch09-01-including-programs.md) page explain how to port pure Rust programs, here we will explain how to port non-Rust programs or mixed Rust programs (Rust + C/C++ libraries, for example).
 
 Create a folder in `cookbook/recipes` with a file named as `recipe.toml` inside, we will edit this file to fit the program needs.
 
@@ -56,9 +56,31 @@ All recipes are [statically compiled](https://en.wikipedia.org/wiki/Static_build
 
 ## Cookbook Templates
 
-- `template = "cargo"` - compile with `cargo` (pure/mixed Rust programs).
-- `template = "configure"` - compile with `configure` and `make` (non-CMake programs).
-- `template = "custom"` - run your custom script `script =` and compile (Any build system/installation process).
+- `template = "cargo"` - compile with `cargo` (Rust programs, you can't use the `script =` field).
+- `template = "configure"` - compile with `configure` and `make` (you can't use the `script =` field).
+- `template = "custom"` - run your custom `script =` field and compile (Any build system/installation process).
+
+The `script =` field runs shell commands, to find the Cookbook shell commands, read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
+
+## Dependencies
+
+Most C/C++ softwares place build system dependencies together with his own dependencies (development libraries), if you see the "Build Instructions" of most software, you will notice that it have packages without the `-dev` prefix and `-dev` packages.
+
+Install the packages for your Linux distribution on the "Build Instructions" of the software, see if it compiles on your Linux first (if packages for your distribution is not available, search for Debian/Ubuntu equivalents).
+
+The packages without the `-dev` prefix can be runtime dependencies (linked at runtime) or build system dependencies (necessary to configure the compilation process), you will need to test this, feel free to ask us on [Chat](./ch13-01-chat.md).
+
+We recommend that you add the `-dev` dependencies first, generally the Linux distribution package web interface place the library official website on package page, you will copy the tarball link or Git repository link and paste on your `recipe.toml`, according to TOML syntax (`tar = "link"` or `git = "link"`).
+
+Create a recipe for each dependency and add inside of your main recipe `dependencies = []` section (`"recipe-name",`).
+
+Run `make r.recipe-name` and see if it don't give errors, if it give an error it can be a dependency that require patches or missing runtime/build system dependencies, try to investigate both methods until the software compile successfully.
+
+If you run `make r.recipe-name` and it compile successfully with just `-dev` recipes, feel free to add the packages without the `-dev` prefix on the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script or [redox-base-containerfile](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman/redox-base-containerfile) for Podman builds.
+
+The `bootstrap.sh` script and `redox-base-containerfile` covers the build system packages needed by the recipes on [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
+
+(You need to do this because each software is different, the major reason is "Build Instructions" organization)
 
 ## Testing/Building
 
@@ -73,6 +95,8 @@ To install your compiled recipe on QEMU image, run `make image`.
 If you had a problem, use this command to log any possible errors on your terminal output:
 
 - `make r.recipe-name 2>&1 | tee recipe-name.log`
+
+The recipe sources will be extracted/cloned on the `source` folder inside of your recipe folder, the binaries go to `target` folder.
 
 ## Cleanup
 

@@ -99,12 +99,22 @@ The `TARGET` is any of the available `make` targets, although the recommended ta
 
   The default value for `ARCH` is `x86_64` and for `CONFIG_NAME` is `desktop`, which produces a default value for `FILESYSTEM_CONFIG` of `config/x86_64/desktop.toml`.
 
+## REPO_BINARY
+
+If `REPO_BINARY` set to 1 (`REPO_BINARY?=1`), your build system will become binary-based for recipes, this is useful for some purposes, such as making development builds, test package status and save time with heavy softwares.
+
+You can have a mixed binary/source build, when you enable `REPO_BINARY` it treat every recipe with a `{}` a binary package and recipes with `"recipe"` are treated as source, both inside of your TOML config (`config/$ARCH/$CONFIG_NAME.toml`), example:
+```
+recipe1 = {} # binary package
+recipe2 = "recipe" # source
+```
 ## Other Config Values
 
 You can override other variables in your [.config](#config). Some interesting values in `mk/config.mk` are:
 
-- `PREFIX_BINARY`, `REPO_BINARY`: If set to 1, the corresponding tools (**prefix**) or Redox packages (**repo**) are not compiled, rather their binaries are fetched from the **Redox Gitlab** repository. This can save lots of time during your first build. Note: If you are using **Podman**, you must set these variables in [.config](#config) in order for your change to have any effect. Setting them in the environment or on the command line may not be effective.
+- `PREFIX_BINARY` - If set to 1 (`PREFIX_BINARY?=1`), the build system don't compile from toolchain sources but download/install them from Redox CI server. This can save lots of time during your first build. Note: If you are using **Podman**, you must set these variables in [.config](#config) in order for your change to have any effect. Setting them in the environment or on the command line may not be effective.
+- `REPO_BINARY` - If set to 1 (`REPO_BINARY?=1`), the build system don't compile from recipe sources but download/install packages from Redox package server.
 - `FILESYSTEM_SIZE`: The size in MB of the filesystem contained in the Redox image. See [Filesystem Size](#filesystem-size) before changing it.
 - `REDOXFS_MKFS_FLAGS`: Flags to the program that builds the Redox filesystem. `--encrypt` enables disk encryption.
-- `PODMAN_BUILD`: If set to 1, the build environment is constructed in **Podman**. See [Podman Build](./ch02-06-podman-build.md).
+- `PODMAN_BUILD`: If set to 1 (`PODMAN_BUILD?=1`), the build environment is constructed in **Podman**. See [Podman Build](./ch02-06-podman-build.md).
 - `CONTAINERFILE`: The Podman containerfile. See [Podman Build](./ch02-06-podman-build.md).

@@ -5,9 +5,11 @@ straightforward. First, we will show how to add an existing program for inclusio
 
 The Cookbook build system uses [TOML](https://toml.io/en/) file format for configuration files, these are the available templates for your `recipe.toml` files:
 
-- `template = "cargo"` - compile with `cargo` (Rust programs).
-- `template = "configure"` - compile with `configure` and `make`.
-- `template = "custom"` - run your custom script `script =` and compile.
+- `template = "cargo"` - compile with `cargo` (Rust programs, you can't use the `script =` field).
+- `template = "configure"` - compile with `configure` and `make` (you can't use the `script =` field).
+- `template = "custom"` - run your custom `script =` field and compile (Any build system/installation process).
+
+The `script =` field runs shell commands, to find the Cookbook shell commands, read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
 
 ## Existing Package
 
@@ -79,7 +81,91 @@ And that's it! Sort of.
 
 ### Dependencies
 
-Some packages may have dependencies, which will have their own recipes. You can look at the `recipe.toml` or `recipe.sh` file in the `cookbook/recipes/PACKAGE` directory to see what dependencies exist for your package, and verify that you have a recipe for each dependency as well. Some packages may also require libraries such as `sdl` or build tools such as `ninja-build`. Make sure you install those required items. See [Install Prerequisite Packages](./ch08-01-advanced-build.md#install-pre-requisite-packages-and-emulators)  or [Podman Adding Libraries](./ch08-02-advanced-podman-build.md#adding-ubuntu-packages-to-the-build) for examples.
+The majority of Rust programs use crates without C/C++ dependencies (Build Instructions without Linux distribution packages), on these cases you just need to port the necessary crates (if they give errors) or implement missing stuff on `relibc` (you will need to update the Rust `libc` crate).
+
+If the "Build Instructions" of the Rust program have Linux distribution packages to install, it's a mixed Rust/C/C++ program, read [Dependencies](./ch09-03-porting-applications.md#dependencies) to port these programs.
+
+## Using a Script
+
+The "script" template type executes shell commands. However, in order to keep scripts small, a lot of the script definition is done for you. [Pre-script](#pre-script) goes before your `script` content, and [Post-script](#post-script) goes after.
+
+### Pre-script
+
+```
+# Add cookbook bins to path
+export PATH="${COOKBOOK_ROOT}/bin:${PATH}"
+
+# This puts cargo build artifacts in the build directory
+export CARGO_TARGET_DIR="${COOKBOOK_BUILD}/target"
+
+# This adds the sysroot includes for most C compilation
+#TODO: check paths for spaces!
+export CFLAGS="-I${COOKBOOK_SYSROOT}/include"
+export CPPFLAGS="-I${COOKBOOK_SYSROOT}/include"
+
+# This adds the sysroot libraries and compiles binaries statically for most C compilation
+#TODO: check paths for spaces!
+export LDFLAGS="-L${COOKBOOK_SYSROOT}/lib --static"
+
+# These ensure that pkg-config gets the right flags from the sysroot
+export PKG_CONFIG_ALLOW_CROSS=1
+export PKG_CONFIG_PATH=
+export PKG_CONFIG_LIBDIR="${COOKBOOK_SYSROOT}/lib/pkgconfig"
+export PKG_CONFIG_SYSROOT_DIR="${COOKBOOK_SYSROOT}"
+
+# cargo template
+COOKBOOK_CARGO="${COOKBOOK_REDOXER}"
+COOKBOOK_CARGO_FLAGS=(
+    --path "${COOKBOOK_SOURCE}"
+    --root "${COOKBOOK_STAGE}"
+    --locked
+    --no-track
+)
+function cookbook_cargo {
+    "${COOKBOOK_CARGO}" install "${COOKBOOK_CARGO_FLAGS[@]}"
+}
+
+# configure template
+COOKBOOK_CONFIGURE="${COOKBOOK_SOURCE}/configure"
+COOKBOOK_CONFIGURE_FLAGS=(
+    --host="${TARGET}"
+    --prefix=""
+    --disable-shared
+    --enable-static
+)
+COOKBOOK_MAKE="make"
+COOKBOOK_MAKE_JOBS="$(nproc)"
+function cookbook_configure {
+    "${COOKBOOK_CONFIGURE}" "${COOKBOOK_CONFIGURE_FLAGS[@]}"
+    "${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}"
+    "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}"
+}
+```
+
+### Post-script
+
+```
+# Strip binaries
+if [ -d "${COOKBOOK_STAGE}/bin" ]
+then
+    find "${COOKBOOK_STAGE}/bin" -type f -exec "${TARGET}-strip" -v {} ';'
+fi
+
+# Remove libtool files
+if [ -d "${COOKBOOK_STAGE}/lib" ]
+then
+    find "${COOKBOOK_STAGE}/lib" -type f -name '*.la' -exec rm -fv {} ';'
+fi
+
+# Remove cargo install files
+for file in .crates.toml .crates2.json
+do
+    if [ -f "${COOKBOOK_STAGE}/${file}" ]
+    then
+        rm -v "${COOKBOOK_STAGE}/${file}"
+    fi
+done
+```
 
 ## Modifying an Existing Package
 
