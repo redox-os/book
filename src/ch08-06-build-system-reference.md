@@ -2,16 +2,18 @@
 
 The build system creates and/or uses several files that you may want to know about. There are also several `make` targets mentioned above, and a few extras that you may find useful. Here's a quick summary. All file paths are relative to your `redox` base directory.
 
-### Build System Files
+### Build System Organization
 
   - `Makefile` - The main makefile for the system, it loads all the other makefiles.
   - `.config` - Where you change your build system settings. It is loaded by the Makefile. It is ignored by `git`.
   - `mk/config.mk` - The build system's own settings are here. You can override these settings in your `.config`, don't change them here.
   - `mk/*.mk` - The rest of the makefiles. You should not need to change them.
   - `podman/redox-base-containerfile` - The file used to create the image used by Podman Build. The installation of Ubuntu packages needed for the build is done here. See [Adding Ubuntu Packages to the Build](./ch08-02-advanced-podman-build.md#adding-ubuntu-packages-to-the-build) if you need to add additional Ubuntu packages.
-  - `config/$(ARCH)/$(CONFIG_NAME).toml` - The packages to be included in the Redox image that will be built, e.g. `config/x86_64/desktop.toml`.
-  - `cookbook/recipes/PACKAGE/recipe.toml` - For each Redox package (represented here as `PACKAGE`), there is a directory that contains its recipe, usually `recipe.toml`, but in some older recipes, `recipe.sh` is used. The recipe contains instructions for obtaining sources via download or git, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other packages to be built, even if the dependencies are not otherwise part of your Redox build.
-  - `cookbook/*` - Part of the cookbook system, these scripts and utilities help build the recipes.
+  - `config/$(ARCH)/$(CONFIG_NAME).toml` - The TOML config of your current build with system settings/paths and recipes/packages to be included in the Redox image that will be built, e.g. `config/x86_64/desktop.toml`.
+  - `cookbook/recipes/recipe-name/recipe.toml` - For each Redox package (represented here as `recipe-name`), there is a directory that contains its recipe, usually `recipe.toml`, but in some older recipes, `recipe.sh` is used. The recipe contains instructions for obtaining sources via tarball or git, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
+  - `cookbook/recipes/recipe-name/source` - The directory where the recipe sources are extracted/cloned to this folder.
+  - `cookbook/recipes/recipe-name/target` - The directory where the recipe binary is stored, this binary will become a package when `make all`, `make rebuild` or `make r.recipe-name` is called, this package will be installed on the QEMU image, generally at `/bin` or `/lib`.
+  - `cookbook/*` - Part of the Cookbook system, these scripts and utilities help build the recipes.
   - `prefix/*` - Tools used by the cookbook system. They are normally downloaded during the first system build. If you are having a problem with the build system, you can remove the `prefix` directory and it will be recreated during the next build.
   - `$(BUILD)` - The directory where the build system will place the final image. Usually `build/$(ARCH)/$(CONFIG_NAME)`, e.g. `build/x86_64/desktop`.
   - `$(BUILD)/harddrive.img` - The Redox image file, to be used by QEMU or VirtualBox for virtual machine execution on a Linux host.
@@ -21,22 +23,22 @@ The build system creates and/or uses several files that you may want to know abo
   - `build/podman` - The directory where Podman Build places the container user's home directory, including the container's Rust installation. Use `make container_clean` to remove it. In some situations, you may need to remove this directory manually, possibly with root privileges.
   - `build/container.tag` - An empty file, created during the first Podman Build, so Podman Build knows a reusable Podman image is available. Use `make container_clean` to force a rebuild of the Podman image on your next `make rebuild`.
   
-### Make Targets
+### Make Commands
 
 You can combine `make` targets, but order is significant. For example, `make r.games image` will build the `games` package and create a new Redox image, but `make image r.games` will make the Redox image before it builds the package.
 
   - `make all` - Builds the entire system, checking for changes and only building as required. Only use this for the first build. If the system was successfully built previously, this command may report `Nothing to be done for 'all'`, even if some packages have changed. Use `make rebuild` instead.
-  - `make rebuild` - Builds the entire system. Forces a check of package recipes for changes. This may include downloading changes from gitlab. This should be your normal `make` target.
+  - `make rebuild` - Rebuilds the entire system. Forces a check of recipes for changes. This may include downloading changes from GitLab. This should be your normal `make` target.
   - `make qemu` - If a `$(BUILD)/harddrive.img` file exists, QEMU is run using that image. If you want to force a rebuild first, use `make rebuild qemu`. Sometimes `make qemu` will detect a change and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`.
   - `make virtualbox` - The same as `make qemu`, but for [VirtualBox](https://www.virtualbox.org/).
   - `make live` - Creates a bootable image, `$(BUILD)/livedisk.iso`. Packages are not usually rebuilt. 
-  - `make r.PACKAGE` - Executes a single package recipe, checking if the package source has changed, and creating the executable, etc. Substitute the name of the package for PACKAGE, e.g. `make r.games`. The package is built even if it is not in your filesystem config.
-  - `make c.PACKAGE` - Removes build output for the package `PACKAGE`.
-  - `make image` - Builds a new image, `$(BUILD)/harddrive.img`, without checking if any packages have changed. Not recommended, but it can save you some time if you are just updating one package with `make r.PACKAGE`.
-  - `make clean` - Removes all build output, except for some build tools and files specific to Podman Build. Note that `make clean` may require some tools to be built.
-  - `make pull` - Updates the sources for the build system and the recipes, but not for the packages.
-  - `make fetch` - Gets package sources, according to each recipe, without building them. Only the packages that are included in your `(CONFIG_NAME).toml` are fetched. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
-  - `make repo` - Builds the package sources, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
+  - `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. Change the `recipe-name` part with the name of your recipe, e.g. `make r.games`. The package is built even if it is not in your filesystem config.
+  - `make c.recipe-name` - Removes the binary of the recipe `recipe-name`.
+  - `make image` - Builds a new QEMU image, `$(BUILD)/harddrive.img`, without checking if any recipes have changed. Not recommended, but it can save you some time if you are just updating one recipe with `make r.recipe-name`.
+  - `make clean` - Removes all recipe binaries (Note that `make clean` may require some tools to be built).
+  - `make pull` - Update the sources for the build system without building.
+  - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are fetched. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
+  - `make repo` - Package the recipe binaries, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
   - `make gdb` - Connects `gdb` to the Redox image in QEMU. Join us on [chat](./ch13-01-chat.md) if you want to use this.
   - `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
   - `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
@@ -58,3 +60,7 @@ Write the path of the script and the name of your recipe:
 ```
 scripts/rebuild-recipe.sh recipe
 ```
+
+### Configuration
+
+- [Configuration Settings](./ch02-07-configuration-settings.md)
