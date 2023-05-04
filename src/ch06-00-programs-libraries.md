@@ -10,7 +10,9 @@ Programs could directly invoke Redox syscalls, but most call library functions t
 * Rust programs implicitly or explicitly call functions in the Rust standard library ([libstd](https://doc.rust-lang.org/std/)).
   * The Rust libstd now includes an implementation of its system-dependent parts (such as file access and setting environment variables) for Redox, in `src/libstd/sys/redox`. Most of libstd works in Redox, so many command-line Rust programs can be compiled for Redox.
 
-The Redox [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook) project includes recipes for compiling C and Rust projects into Redox binaries.
+The Redox [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook) project includes recipes for compiling C/C++ and Rust projects into Redox binaries.
+
+The porting of programs on Redox is done case-by-case, if a program needs just small patches, they are included as `.patch` files on the recipe folder, but if big or dirty patches are needed, Redox create a fork of it on GitLab and rebase for a while in the `redox` branch of the fork (this pattern is the same for all forks).
 
 - [OS internals documentation](https://wiki.osdev.org/How_kernel,_compiler,_and_C_library_work_together)
 - [ELF documentation](https://wiki.osdev.org/ELF)

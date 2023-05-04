@@ -44,7 +44,7 @@ git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --rec
 cd redox
 git submodule update --recursive --init
  ```
-Please be patient, this can take 5 minutes to an hour depending on the hardware and network you're running it on.
+Please be patient, this can take minutes to hours depending on the hardware and network you're running it on.
 
 In addition to installing the various packages needed for building Redox, **bootstrap.sh** and **podman_bootstrap.sh** both clone the repository, so if you used either script, you have completed Step 1. 
 
@@ -61,58 +61,68 @@ to install the package dependencies without re-fetching any source. If you wish 
 
 Install the package dependencies:
 ```sh
-sudo apt-get install autoconf autopoint bison build-essential cmake curl file \
-        flex genisoimage git gperf m4 nasm pkg-config po4a \
-        libc6-dev-i386 libexpat-dev libfuse-dev libgmp-dev \
-        libhtml-parser-perl libpng-dev libtool syslinux-utils texinfo
+sudo apt-get install git autoconf autopoint bison build-essential cmake curl file flex genisoimage git gperf libc6-dev-i386 libexpat-dev libfuse-dev libgmp-dev libhtml-parser-perl libpng-dev libtool libjpeg-dev libvorbis-dev libsdl2-ttf-dev libosmesa6-dev m4 nasm pkg-config po4a syslinux-utils texinfo libsdl1.2-dev ninja-build meson python3-mako
 ```
 
-Install an emulator:
+- If you want to use QEMU, run:
 ```sh
-sudo apt-get install qemu-system-x86
+sudo apt-get install qemu-system-x86 qemu-kvm
 ```
-or
+- If you want to use VirtualBox, run:
 ```sh
 sudo apt-get install virtualbox
 ```
 
-If you intend to include **Rust** in your filesystem config, or any of the games with graphics,
-```sh
-sudo apt-get install libsdl1.2-dev ninja-build meson python3-mako
-```
-
-### Arch Linux Users
+### Fedora Users
 
 If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the prerequisite packages yourself. Some of them are listed here.
 
 ```sh
-sudo pacman -S cmake fuse git gperf perl-html-parser nasm wget texinfo bison flex po4a rsync inetutils
+sudo dnf install git file autoconf vim bison flex genisoimage gperf glibc-devel.i686 expat expat-devel fuse-devel fuse3-devel gmp-devel perl-HTML-Parser libpng-devel libtool libjpeg-turbo-devel libvorbis-devel SDL2_ttf-devel mesa-libOSMesa-devel m4 nasm po4a syslinux texinfo sdl12-compat-devel ninja-build meson python3-mako make gcc gcc-c++ openssl patch automake perl-Pod-Html perl-FindBin gperf curl gettext-devel perl-Pod-Xhtml pkgconf-pkg-config cmake
 ```
 
-### Fedora/Redhat/Centos Linux Users
-
-If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the prerequisite packages yourself. Some of them are listed here.
-
+- If you want to use QEMU, run:
+```sh
+sudo dnf install qemu-system-x86 qemu-kvm
 ```
-sudo dnf install cmake make nasm qemu pkg-config fuse-devel gperf perl-HTML-Parser po4a automake gcc gcc-c++ glibc-devel.i686
-sudo dnf install gettext-devel bison flex libtool perl-Pod-Xhtml libpng-devel patch texinfo  perl-FindBin
-```
+- If you want to use VirtualBox, install from VirtualBox [Linux Downloads](https://www.virtualbox.org/wiki/Linux_Downloads) page.
 
 ### MacOS Users using MacPorts:
 
 If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the prerequisite packages yourself. Some of them are listed here.
 
 ```
-sudo port install make nasm qemu qemu-system-x86_64 gcc7 pkg-config osxfuse x86_64-elf-gcc coreutils findutils gcc49 gcc-4.9 nasm pkgconfig osxfuse x86_64-elf-gcc cmake
+sudo port install git coreutils findutils gcc49 gcc-4.9 nasm pkgconfig osxfuse x86_64-elf-gcc cmake ninja po4a texinfo
+```
+
+- If you want to use QEMU, run:
+```sh
+sudo port install qemu qemu-system-x86_64
+```
+- If you want to use VirtualBox, run:
+```sh
+sudo port install virtualbox
 ```
 
 ### MacOS Users using Homebrew:
 
 If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the prerequisite packages yourself. Some of them are listed here.
 
+```sh
+brew install git automake bison gettext libtool make nasm gcc@7 gcc-7 pkg-config cmake ninja po4a macfuse findutils textinfo
 ```
-brew install automake bison gettext libtool make nasm qemu gcc@7 pkg-config Caskroom/cask/osxfuse
+and
+```sh
 brew install redox-os/gcc_cross_compilers/x86_64-elf-gcc
+```
+
+- If you want to use QEMU, run:
+```sh
+brew install qemu qemu-system-x86_64
+```
+- If you want to use VirtualBox, run:
+```sh
+brew install virtualbox
 ```
 
 ## Install Rust Stable And Nightly
@@ -140,7 +150,7 @@ The tools that build Redox are specific to each processor architecture. These to
 
 ## Cookbook
 
-The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls whether the packages are downloaded or built. See [Including Programs in Redox](./ch09-01-including-programs.md) for examples of using the Cookbook toolset. If you will be developing packages to include in Redox, it is worthwhile to have a look at the tools in the `cookbook` directory.
+The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls if the recipes are compiled from sources or use binary packages from Redox CI server, read the section [REPO_BINARY](./ch02-07-configuration-settings.md#repo_binary) for more details. See [Including Programs in Redox](./ch09-01-including-programs.md) for examples of using the Cookbook toolset. If you will be developing recipes to include in Redox, it is worthwhile to have a look at the tools in the `cookbook` directory.
 
 ## Creating a Build Environment Shell
 
@@ -152,14 +162,14 @@ This command also works with **Podman Build**, creating a shell in Podman and se
 
 ## Updating The Sources
 
-If you want to update the Redox build system or if some of the recipes have changed, you can update those parts of the system with `make pull`. However, this will not update source for the packages.
+If you want to update the Redox build system or if some of the recipes have changed, you can update those parts of the system with `make pull`. However, this will not update source for the recipes.
 
 ```sh
 cd ~/tryredox/redox
 make pull
 ```
 
-If you want to update the source for the packages, use `make rebuild`, or remove the file `$(BUILD)/fetch.tag` then use `make fetch`.
+If you want to update the source for the recipes, use `make rebuild`, or remove the file `$(BUILD)/fetch.tag` then use `make fetch`.
 
 ## Changing the filesystem size and contents
 

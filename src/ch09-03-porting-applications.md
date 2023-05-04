@@ -2,10 +2,12 @@
 
 The [Including Programs in Redox](./ch09-01-including-programs.md) page explain how to port pure Rust programs, here we will explain how to port non-Rust programs or mixed Rust programs (Rust + C/C++ libraries, for example).
 
+(Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
+
 Create a folder in `cookbook/recipes` with a file named as `recipe.toml` inside, we will edit this file to fit the program needs.
 
 - Commands example:
-```
+```sh
 cd ~/tryredox/redox
 mkdir cookbook/recipes/program_example
 nano cookbook/recipes/program_example/recipe.toml
@@ -70,7 +72,7 @@ Install the packages for your Linux distribution on the "Build Instructions" of 
 
 The packages without the `-dev` prefix can be runtime dependencies (linked at runtime) or build system dependencies (necessary to configure the compilation process), you will need to test this, feel free to ask us on [Chat](./ch13-01-chat.md).
 
-We recommend that you add the `-dev` dependencies first, generally the Linux distribution package web interface place the library official website on package page, you will copy the tarball link or Git repository link and paste on your `recipe.toml`, according to TOML syntax (`tar = "link"` or `git = "link"`).
+We recommend that you add the `-dev` dependencies first, generally the Linux distribution package web interface place the library official website on package page, inside the dependency website you will copy the tarball link or Git repository link and paste on your `recipe.toml`, according to TOML syntax (`tar = "link"` or `git = "link"`).
 
 Create a recipe for each dependency and add inside of your main recipe `dependencies = []` section (`"recipe-name",`).
 
@@ -93,8 +95,9 @@ If you want to insert this recipe permanently in your QEMU image add your recipe
 To install your compiled recipe on QEMU image, run `make image`.
 
 If you had a problem, use this command to log any possible errors on your terminal output:
-
-- `make r.recipe-name 2>&1 | tee recipe-name.log`
+```sh
+make r.recipe-name 2>&1 | tee recipe-name.log
+```
 
 The recipe sources will be extracted/cloned on the `source` folder inside of your recipe folder, the binaries go to `target` folder.
 

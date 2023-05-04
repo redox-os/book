@@ -38,6 +38,7 @@
   - [Drivers](./ch04-07-drivers.md)
   - [RedoxFS](./ch04-08-redoxfs.md)
   - [Graphics and Windowing](./ch04-09-graphics-windowing.md)
+  - [Security](./ch04-10-security.md)
 
 - [URLs, schemes and resources](./ch05-00-urls-schemes-resources.md)
   - [URLs](./ch05-01-urls.md)
@@ -71,6 +72,7 @@
   - [Including Programs in Redox](./ch09-01-including-programs.md)
   - [Coding and Building](./ch09-02-coding-and-building.md)
   - [Porting Applications using Recipes](./ch09-03-porting-applications.md)
+  - [Porting Case Study](./ch09-04-porting-case-study.md)
 
 - [Contributing](./ch10-00-contributing.md)
 

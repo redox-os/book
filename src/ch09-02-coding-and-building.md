@@ -2,6 +2,8 @@
 
 Let's walk through contributing to the Redox subpackage `games`, which is a collection of low-def games. We are going to modify `minesweeper` to display **P** instead of **F** on flagged spots.
 
+(Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
+
 ## Working with Git
 
 Before starting development, read through [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), which describes how the Redox team uses Git.
@@ -84,6 +86,8 @@ Most Redox applications are source-compatible with Linux without being modified.
   ```sh
   cargo check
   ```
+(Since much of the code in `games` is older (pre-2018 Rust), you will get several warnings. They can be ignored)
+
   You could also use `cargo clippy`, but `minesweeper` is not clean enough to pass.
 - The `games` package creates more than one executable, so to test `minesweeper` on Linux, you need to specify it to `cargo`. In the `source` directory, do:
   ```sh
