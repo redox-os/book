@@ -1,5 +1,7 @@
 # Including Programs in Redox
 
+(Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
+
 Redox's **Cookbook** toolchain makes packaging a program to include in a build fairly
 straightforward. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./ch09-02-coding-and-building.md), we discuss the development cycle in more detail.
 
