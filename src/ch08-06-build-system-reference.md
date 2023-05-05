@@ -12,7 +12,19 @@ The build system creates and/or uses several files that you may want to know abo
   - `config/$(ARCH)/$(CONFIG_NAME).toml` - The TOML config of your current build with system settings/paths and recipes/packages to be included in the Redox image that will be built, e.g. `config/x86_64/desktop.toml`.
   - `cookbook/recipes/recipe-name/recipe.toml` - For each Redox package (represented here as `recipe-name`), there is a directory that contains its recipe, usually `recipe.toml`, but in some older recipes, `recipe.sh` is used. The recipe contains instructions for obtaining sources via tarball or git, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
   - `cookbook/recipes/recipe-name/source` - The directory where the recipe sources are extracted/cloned to this folder.
-  - `cookbook/recipes/recipe-name/target` - The directory where the recipe binary is stored, this binary will become a package when `make all`, `make rebuild` or `make r.recipe-name` is called, this package will be installed on the QEMU image, generally at `/bin` or `/lib`.
+  - `cookbook/recipes/recipe-name/target` - The directory where the recipe binaries are stored (based on processor architecture).
+  - `cookbook/recipes/recipe-name/target/$(ARCH)` - The directory for the recipes binaries of the processor architecture.
+  - `cookbook/recipes/recipe-name/target/$(ARCH)/build` - The directory of the recipe build system.
+  
+    If the build system is `cargo`, this directory will contain the `target` folder with build artifacts.
+  
+    If the build system is `configure` (autotools/autoconf), this is the directory that the `configure` script is run from and where the build artifacts will be stored.
+  - `cookbook/recipes/recipe-name/target/$(ARCH)/stage` - The directory where recipe binaries go before the packaging, after `make all`, `make rebuild` or `make r.recipe-name` call, the installer will extract the recipe package on the QEMU image, generally at `/bin` or `/lib` on Redox filesystem hierarchy.
+  - `cookbook/recipes/recipe-name/target/$(ARCH)/sysroot` - The directory of recipe build dependencies (libraries), for example: `lib/libexample.a`
+  - `cookbook/recipes/recipe-name/target/$(ARCH)/stage.pkgar` - Redox package file.
+  - `cookbook/recipes/recipe-name/target/$(ARCH)/stage.sig` - Signature for the `tar` package format.
+  - `cookbook/recipes/recipe-name/target/$(ARCH)/stage.tar.gz` - Legacy `tar` package format, produced for compatibility reasons as we work to migrate the repositories over to `pkgar`.
+  - `cookbook/recipes/recipe-name/target/$(ARCH)/stage.toml` - Contains the runtime dependencies of the package and is part of both packaging formats.
   - `cookbook/*` - Part of the Cookbook system, these scripts and utilities help build the recipes.
   - `prefix/*` - Tools used by the cookbook system. They are normally downloaded during the first system build. If you are having a problem with the build system, you can remove the `prefix` directory and it will be recreated during the next build.
   - `$(BUILD)` - The directory where the build system will place the final image. Usually `build/$(ARCH)/$(CONFIG_NAME)`, e.g. `build/x86_64/desktop`.

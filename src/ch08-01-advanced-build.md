@@ -104,6 +104,11 @@ sudo port install qemu qemu-system-x86_64
 sudo port install virtualbox
 ```
 
+If you have some problem, try to install this Perl module:
+```sh
+cpan install HTML::Entities
+```
+
 ### MacOS Users using Homebrew:
 
 If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the prerequisite packages yourself. Some of them are listed here.
@@ -123,6 +128,10 @@ brew install qemu qemu-system-x86_64
 - If you want to use VirtualBox, run:
 ```sh
 brew install virtualbox
+```
+If you have some problem, try to install this Perl module:
+```sh
+cpan install HTML::Entities
 ```
 
 ## Install Rust Stable And Nightly

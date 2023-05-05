@@ -4,13 +4,19 @@ In case you need to do some troubleshooting of the build process, this is a brie
 
 ## Setting Up
 
-### Bootstrap.sh
+### bootstrap.sh
 
-When you run `bootstrap.sh` or `podman_bootstrap.sh`, the Linux packages and libraries required to support the toolchain and build process are installed. Then the `redox` project is cloned from the Redox GitLab. The `redox` project does not contain the Redox source, it mainly contains the build system. The `cookbook` subproject, which contains recipes for all the packages to be included in Redox, is also copied as part of the clone.
+When you run `bootstrap.sh` or `podman_bootstrap.sh`, the Linux tools and libraries required to support the toolchain and build process are installed. Then the `redox` project is cloned from the Redox GitLab. The `redox` project does not contain the Redox sources, it mainly contains the build system. The `cookbook` subproject, which contains recipes for all the packages to be included in Redox, is also copied as part of the clone.
 
-Not all Linux distros are supported by `bootstrap.sh`, so if you are on an unsupported distro, try `podman_bootstrap.sh`, or have a look at [podman_bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman_bootstrap.sh) and try to complete the setup up manually.
+Not all Linux distributions are supported by `bootstrap.sh`, so if you are on an unsupported distribution, try `podman_bootstrap.sh` for [Podman](https://podman.io/) builds, or have a look at [podman_bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman_bootstrap.sh) and try to complete the setup up manually.
 
-### Git Clone
+If you want to support your distribution/OS without Podman, you can try to install the Debian/Ubuntu package equivalents for your distribution/OS from your package manager/software store, you can see them on [this](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh#L228) section of `bootstrap.sh`.
+
+The `bootstrap.sh` script and `redox-base-containerfile` covers the build system packages needed by the recipes on [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
+
+(Note that some distributions/OSes may have environment problems hard to fix, on these systems Podman will avoid some headaches)
+
+### git clone
 
 If you did not use `bootstrap.sh` or `podman_bootstrap.sh` to set up your environment, you can get the sources with
 ```sh
@@ -25,7 +31,7 @@ When you run `make all`, the following steps occur.
 
 ### .config and mk/config.mk
 
-`make` scans [.config](./ch02-07-configuration-settings.md#config) and [mk/config.mk](./ch02-07-configuration-settings.md#mkconfigmk) for settings, such as the target architecture, config name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-07-configuration-settings.md) to make sure you have the settings that are best for you.
+`make` scans [.config](./ch02-07-configuration-settings.md#config) and [mk/config.mk](./ch02-07-configuration-settings.md#mkconfigmk) for settings, such as the processor architecture, config name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-07-configuration-settings.md) to make sure you have the settings that are best for you.
 
 ### Prefix
 
@@ -48,17 +54,17 @@ The list of Redox packages to be built is read from the [filesystem config](./ch
 
 ### Fetch
 
-Each package's source is downloaded using `git` or `tar`, according to the `[source]` section of `cookbook/recipes/PACKAGE/recipe.toml` (where PACKAGE is the name of the package). Source is placed in `cookbook/recipes/PACKAGE/source`. Some packages use the older `recipe.sh` instead. 
+Each recipe source is downloaded using `git` or `tar`, according to the `[source]` section of `cookbook/recipes/RECIPE/recipe.toml` (where RECIPE is the name of the recipe). Source is placed in `cookbook/recipes/RECIPE/source`. Some packages use the older `recipe.sh` instead. 
 
 If you are doing work on a package, you may want to comment out the `[source]` section of the recipe. To discard your changes to the source for a package, or to update to the latest version, uncomment the `[source]` section of the recipe, and use `rm -rf source target` in the `PACKAGE` directory to remove both the source and any compiled code.
 
-After all packages are fetched, a tag file is created as `build/$ARCH/$CONFIG_NAME/fetch.tag`, e.g. `build/x86_64/desktop/fetch.tag`. If this file is present, fetching is skipped. You can remove it manually, or use `make rebuild`, if you want to force refetching.
+After all recipes are fetched, a tag file is created as `build/$ARCH/$CONFIG_NAME/fetch.tag`, e.g. `build/x86_64/desktop/fetch.tag`. If this file is present, fetching is skipped. You can remove it manually, or use `make rebuild`, if you want to force refetching.
 
 ### Cook
 
-Each package is built according to the `recipe.toml` file. The compiled package is placed in the `target` directory, in a subdirectory named based on the target architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Xargo`. These commands make assumptions about $PATH and $PWD, so they might not work if you are using them outside the build process.
+Each recipe is built according to the `recipe.toml` file. The compiled recipe is placed in the `target` directory, in a subdirectory named based on the processor architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Cargo`. These commands make assumptions about $PATH and $PWD, so they might not work if you are using them outside the build process.
 
-If you have a problem with a package you are building, try `rm -rf target` in the `PACKAGE` directory. A common problem when building on non-Debian systems is that certain packages will fail to build due to missing libraries. Try using [Podman Build](./ch02-06-podman-build.md).
+If you have a problem with a package you are building, try `rm -rf target` in the `RECIPE` directory. A common problem when building on non-Debian systems is that certain packages will fail to build due to missing libraries. Try using [Podman Build](./ch02-06-podman-build.md).
 
 After all packages are cooked, a tag file is created as `build/$ARCH/$CONFIG_NAME/repo.tag`. If this file is present, cooking is skipped. You can remove it manually, or use `make rebuild`, which will force refetching and rebuilding.
 
@@ -76,7 +82,7 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
 
 1. - Run `make clean pull` to remove all your compiled binaries and update the sources.
 1. - Check if your `make` and `nasm` are up to date
-1. - Sometimes there are pull requests that briefly break the build, so check on chat if anyone else is experiencing your problems.
+1. - Sometimes there are merge requests that briefly break the build, so check on chat if anyone else is experiencing your problems.
 
 ## Kernel Panics in QEMU
 
