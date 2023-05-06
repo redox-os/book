@@ -1,6 +1,6 @@
 # Porting Applications using Recipes
 
-The [Including Programs in Redox](./ch09-01-including-programs.md) page explain how to port pure Rust programs, here we will explain how to port non-Rust programs or mixed Rust programs (Rust + C/C++ libraries, for example).
+The [Including Programs in Redox](./ch09-01-including-programs.md) page explain how to port/modify pure Rust programs, here we will explain the advanced way to port Rust programs, mixed Rust programs (Rust + C/C++ libraries, for example) and C/C++ programs.
 
 (Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
 
@@ -22,13 +22,13 @@ branch = "branch-name"
 tar = "software-tarball-link.tar.gz"
 patches = [
     "patch1.patch",
-    "patch2.patch"
+    "patch2.patch",
 ]
 [build]
 template = "name"
 dependencies = [
     "library1",
-    "library2"
+    "library2",
 ]
 script = """
 insert your script here
@@ -36,7 +36,7 @@ insert your script here
 [package]
 dependencies = [
     "runtime1",
-    "runtime2"
+    "runtime2",
 ]
 ```
 - Don't remove/forget the `[build]` section (`[source]` section can be removed if you don't use `git =` and `tar =`).
@@ -58,6 +58,8 @@ All recipes are [statically compiled](https://en.wikipedia.org/wiki/Static_build
 
 ## Cookbook Templates
 
+The template is the type of the program/library build system, programs using an Autotools build system will have a `configure` file on the root of the repository/tarball source, programs using CMake build system will have a `CMakeLists.txt` file with all available CMake flags and a `cmake` folder, programs using Meson build system will have a `meson.build` file, Rust programs will have a `Cargo.toml` file.
+
 - `template = "cargo"` - compile with `cargo` (Rust programs, you can't use the `script =` field).
 - `template = "configure"` - compile with `configure` and `make` (you can't use the `script =` field).
 - `template = "custom"` - run your custom `script =` field and compile (Any build system/installation process).
@@ -66,13 +68,13 @@ The `script =` field runs shell commands, to find the Cookbook shell commands, r
 
 ## Dependencies
 
-Most C/C++ softwares place build system dependencies together with his own dependencies (development libraries), if you see the "Build Instructions" of most software, you will notice that it have packages without the `-dev` prefix and `-dev` packages.
+Most C/C++/mixed Rust softwares place build system dependencies together with his own dependencies (development libraries), if you see the "Build Instructions" of most software, you will notice that it have packages without the `-dev` prefix and `-dev` packages (pure Rust programs don't use C/C++ libraries but his crates can use).
 
 Install the packages for your Linux distribution on the "Build Instructions" of the software, see if it compiles on your Linux first (if packages for your distribution is not available, search for Debian/Ubuntu equivalents).
 
 The packages without the `-dev` prefix can be runtime dependencies (linked at runtime) or build system dependencies (necessary to configure the compilation process), you will need to test this, feel free to ask us on [Chat](./ch13-01-chat.md).
 
-We recommend that you add the `-dev` dependencies first, generally the Linux distribution package web interface place the library official website on package page, inside the dependency website you will copy the tarball link or Git repository link and paste on your `recipe.toml`, according to TOML syntax (`tar = "link"` or `git = "link"`).
+We recommend that you add the `-dev` dependencies first, generally the Linux distribution package web interface place the library official website on package page (you can use the Debian testing [packages list](https://packages.debian.org/testing/allpackages) to search them with `Ctrl+F`, all package names are clickable and the homepage of them is available on the right side of the package description/details), inside the dependency website you will copy the tarball link or Git repository link and paste on your `recipe.toml`, according to TOML syntax (`tar = "link"` or `git = "link"`).
 
 Create a recipe for each dependency and add inside of your main recipe `dependencies = []` section (`"recipe-name",`).
 
@@ -85,6 +87,8 @@ The `bootstrap.sh` script and `redox-base-containerfile` covers the build system
 (You need to do this because each software is different, the major reason is "Build Instructions" organization)
 
 ## Testing/Building
+
+(Compile on your Linux distribution before this step to see if all build system dependencies and software libraries are correct)
 
 To build your recipe, run - `make r.recipe-name`
 
