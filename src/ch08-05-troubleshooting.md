@@ -84,6 +84,31 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
 1. - Check if your `make` and `nasm` are up to date
 1. - Sometimes there are merge requests that briefly break the build, so check on chat if anyone else is experiencing your problems.
 
+### Update relibc
+
+An outdated relibc copy can contain bugs (already fixed on recent versions) or outdated crates, to fix this, run:
+```sh
+make pull
+cd relibc
+cargo update
+touch relibc
+make prefix
+make rebuild
+```
+
+### Update crates
+
+Always update the crates of your recipe after the first compilation of the recipe and compile it again.
+
+- Go to the `source` folder of your recipe and run `cargo update`, example:
+
+```sh
+cd cookbook/recipes/recipe-name/source
+cargo update
+make c.recipe-name
+make r.recipe-name
+
+
 ## Kernel Panics in QEMU
 
 If you receive a kernel panic in QEMU, capture a screenshot and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).
