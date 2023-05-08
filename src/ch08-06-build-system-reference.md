@@ -10,6 +10,10 @@ The build system creates and/or uses several files that you may want to know abo
   - `mk/*.mk` - The rest of the makefiles. You should not need to change them.
   - `podman/redox-base-containerfile` - The file used to create the image used by Podman Build. The installation of Ubuntu packages needed for the build is done here. See [Adding Ubuntu Packages to the Build](./ch08-02-advanced-podman-build.md#adding-ubuntu-packages-to-the-build) if you need to add additional Ubuntu packages.
   - `config/$(ARCH)/$(CONFIG_NAME).toml` - The TOML config of your current build with system settings/paths and recipes/packages to be included in the Redox image that will be built, e.g. `config/x86_64/desktop.toml`.
+  - `config/$(ARCH)/server.toml` - The server variant with system components only (try this config if you have boot problems on QEMU/real hardware).
+  - `config/$(ARCH)/desktop.toml` - The default build config with system components and the Orbital desktop environment.
+  - `config/$(ARCH)/demo.toml` - The desktop build with optional programs and games.
+  - `config/$(ARCH)/ci.toml` - The continuous integration config, recipes added here become packages on [CI server](https://static.redox-os.org/pkg/).
   - `cookbook/recipes/recipe-name/recipe.toml` - For each Redox package (represented here as `recipe-name`), there is a directory that contains its recipe, usually `recipe.toml`, but in some older recipes, `recipe.sh` is used. The recipe contains instructions for obtaining sources via tarball or git, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
   - `cookbook/recipes/recipe-name/source` - The directory where the recipe sources are extracted/cloned to this folder.
   - `cookbook/recipes/recipe-name/target` - The directory where the recipe binaries are stored (based on processor architecture).

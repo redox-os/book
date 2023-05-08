@@ -4,6 +4,10 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page explain 
 
 (Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
 
+## Recipe
+
+A recipe is how we call a software port on Redox, on this section we will explain the recipe structure and things to consider.
+
 Create a folder in `cookbook/recipes` with a file named as `recipe.toml` inside, we will edit this file to fit the program needs.
 
 - Commands example:
@@ -52,10 +56,6 @@ Note that there are two `dependencies =`, one below the `[build]` section and ot
 - Below `[build]` - development libraries.
 - Below `[package]` - runtime dependencies (data files).
 
-All recipes are [statically compiled](https://en.wikipedia.org/wiki/Static_build), thus you don't need to package libraries and applications separated for binary linking, improving security and simplifying the configuration/packaging.
-
-- [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox)
-
 ## Cookbook Templates
 
 The template is the type of the program/library build system, programs using an Autotools build system will have a `configure` file on the root of the repository/tarball source, programs using CMake build system will have a `CMakeLists.txt` file with all available CMake flags and a `cmake` folder, programs using Meson build system will have a `meson.build` file, Rust programs will have a `Cargo.toml` file.
@@ -65,6 +65,24 @@ The template is the type of the program/library build system, programs using an 
 - `template = "custom"` - run your custom `script =` field and compile (Any build system/installation process).
 
 The `script =` field runs shell commands, to find the Cookbook shell commands, read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
+
+## Sources
+
+Each software has different locations for its tarballs, sometimes they aren't available and you will need to use the Git repository.
+
+- If you want a easy way to find software tarballs, see the [FreeBSD Ports](https://github.com/freebsd/freebsd-ports) GitHub mirror.
+
+Inside each `Makefile` of each port folder, you will see a `MASTER_SITES` field, this is where the tarball mirrors go, while the `distinfo` file covers the tarball name/checksum used.
+
+The FreeBSD Ports Makefile covers the build dependencies and build system options too.
+
+- If you want an easy way to find programs/libraries, see the Debian testing [packages list](https://packages.debian.org/testing/allpackages).
+
+You can search them with `Ctrl+F`, all package names are clickable and the homepage of them is available on the right side of the package description/details.
+
+The Debian package page covers the build dependencies too, the `depends` are the necessary dependencies, the items `recommends`, `suggests` and `enhances` is to expand the software functionality, not needed to make it work/compile.
+
+Debian packages are the most easy to find programs/libraries because they are the most used by software developers to describe build dependencies.
 
 ## Dependencies
 
@@ -86,6 +104,8 @@ The `bootstrap.sh` script and `redox-base-containerfile` covers the build system
 
 (You need to do this because each software is different, the major reason is "Build Instructions" organization)
 
+All recipes are [statically compiled](https://en.wikipedia.org/wiki/Static_build), thus you don't need to package libraries and applications separated for binary linking, improving security and simplifying the configuration/packaging.
+
 ## Testing/Building
 
 (Compile on your Linux distribution before this step to see if all build system dependencies and software libraries are correct)
@@ -105,9 +125,28 @@ make r.recipe-name 2>&1 | tee recipe-name.log
 
 The recipe sources will be extracted/cloned on the `source` folder inside of your recipe folder, the binaries go to `target` folder.
 
+## Update crates
+
+Always update the crates of your recipe after the first compilation of the recipe and compile it again.
+
+- Go to the `source` folder of your recipe and run `cargo update`, example:
+
+```sh
+cd cookbook/recipes/recipe-name/source
+cargo update
+make c.recipe-name
+make r.recipe-name
+
+
 ## Cleanup
 
 If you have some problems (outdated recipe), try to run these commands:
 
 - `make c.recipe` - it will wipe your old recipe binary.
 - `scripts/rebuild-recipe.sh recipe-name` - it will delete your recipe source/binary and compile (fresh build).
+
+## Submitting MRs
+
+If you want to add your recipe on [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook) to become a Redox package on [CI server](https://static.redox-os.org/pkg/), you can submit your merge request with proper dependencies and comments.
+
+We recommend that you make a commit for each new recipe and say the build dependencies on comments, it's preferable that you test it before the MR, but you can send it non-tested with a `#TODO` on the first line of the `recipe.toml` file.

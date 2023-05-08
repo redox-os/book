@@ -128,6 +128,18 @@ Congratulations! You have modified a program and built the system! Next, create 
   ```
 In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. Follow the instructions for [Running on Real Hardware](./ch02-02-real-hardware.md) and test out your change.
 
+### Update crates
+
+Always update the crates of your recipe after the first compilation of the recipe and compile it again.
+
+- Go to the `source` folder of your recipe and run `cargo update`, example:
+
+```sh
+cd cookbook/recipes/recipe-name/source
+cargo update
+make c.recipe-name
+make r.recipe-name
+
 ## Checking In your Changes
 
 Don't do this now, but if you were to have permanent changes to contribute to a package, at this point, you would `git push` and create a Merge Request, as described in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md).

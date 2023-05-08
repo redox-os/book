@@ -87,6 +87,18 @@ The majority of Rust programs use crates without C/C++ dependencies (Build Instr
 
 If the "Build Instructions" of the Rust program have Linux distribution packages to install, it's a mixed Rust/C/C++ program, read [Dependencies](./ch09-03-porting-applications.md#dependencies) to port these programs.
 
+### Update crates
+
+Always update the crates of your recipe after the first compilation of the recipe and compile it again.
+
+- Go to the `source` folder of your recipe and run `cargo update`, example:
+
+```sh
+cd cookbook/recipes/recipe-name/source
+cargo update
+make c.recipe-name
+make r.recipe-name
+
 ## Using a Script
 
 The "script" template type executes shell commands. However, in order to keep scripts small, a lot of the script definition is done for you. [Pre-script](#pre-script) goes before your `script` content, and [Post-script](#post-script) goes after.

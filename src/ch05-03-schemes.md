@@ -56,7 +56,7 @@ The kernel provides a small number of schemes in order to support userspace.
 Userspace Schemes
 -----------------
 
-The Redox userspace, starting with initfs:bin/init, will create schemes during initialization. Once the user is able to log in, the following should be established:
+The Redox userspace, starting with `initfs:bin/init`, will create schemes during initialization. Once the user is able to log in, the following should be established:
 
 <table>
     <tr>

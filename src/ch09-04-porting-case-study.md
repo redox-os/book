@@ -13,10 +13,11 @@ We are using full pathnames for clarity, you don't need to.
 Before we start, we need to build the software for our Linux system and make sure it works.
 This is not part of the porting, it's just to make sure our problems are not coming from the Linux version of the software.
 We follow the normal build instructions for the software we are porting.
-```
+```sh
 cd ~
 git clone https://github.com/Byron/gitoxide.git
 cd gitoxide
+cargo update
 cargo run --bin ein
 ```
 
@@ -250,6 +251,8 @@ extern "C" fn tzset() ...
 Now let's build the system. The command `touch relibc` changes the timestamp on the `relibc` directory, which will cause the library to be updated. We then clean and rebuild `gitoxide`.
 ```
 cd ~/redox-gitoxide/redox
+cd relibc
+cargo update
 touch relibc
 make prefix
 make c.gitoxide
