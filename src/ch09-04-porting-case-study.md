@@ -17,7 +17,6 @@ We follow the normal build instructions for the software we are porting.
 cd ~
 git clone https://github.com/Byron/gitoxide.git
 cd gitoxide
-cargo update
 cargo run --bin ein
 ```
 
@@ -212,7 +211,7 @@ dependencies = [
 ]
 template = "custom"
 script = """
-export OPENSSL_DIR=${COOKBOOK_ROOT}/recipes/openssl/${TARGET}/stage
+export OPENSSL_DIR="${COOKBOOK_SYSROOT}"
 export OPENSSL_STATIC="true"
 cookbook_cargo
 """
@@ -253,6 +252,7 @@ Now let's build the system. The command `touch relibc` changes the timestamp on 
 cd ~/redox-gitoxide/redox
 cd relibc
 cargo update
+cd ..
 touch relibc
 make prefix
 make c.gitoxide
