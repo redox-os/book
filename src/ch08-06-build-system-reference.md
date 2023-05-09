@@ -14,6 +14,10 @@ The build system creates and/or uses several files that you may want to know abo
   - `config/$(ARCH)/desktop.toml` - The default build config with system components and the Orbital desktop environment.
   - `config/$(ARCH)/demo.toml` - The desktop build with optional programs and games.
   - `config/$(ARCH)/ci.toml` - The continuous integration config, recipes added here become packages on [CI server](https://static.redox-os.org/pkg/).
+  - `config/$(ARCH)/dev.toml - The desktop build with GCC and Rust included.
+  - `config/$(ARCH)/resist.toml` - The build with the `resist` POSIX test suite.
+  - `config/$(ARCH)/acid.toml` - The build with the `acid` stress test suite.
+  - `config/$(ARCH)/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing in the moment.
   - `cookbook/recipes/recipe-name/recipe.toml` - For each Redox package (represented here as `recipe-name`), there is a directory that contains its recipe, usually `recipe.toml`, but in some older recipes, `recipe.sh` is used. The recipe contains instructions for obtaining sources via tarball or git, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
   - `cookbook/recipes/recipe-name/source` - The directory where the recipe sources are extracted/cloned to this folder.
   - `cookbook/recipes/recipe-name/target` - The directory where the recipe binaries are stored (based on processor architecture).
@@ -49,6 +53,7 @@ You can combine `make` targets, but order is significant. For example, `make r.g
   - `make virtualbox` - The same as `make qemu`, but for [VirtualBox](https://www.virtualbox.org/).
   - `make live` - Creates a bootable image, `$(BUILD)/livedisk.iso`. Packages are not usually rebuilt. 
   - `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. Change the `recipe-name` part with the name of your recipe, e.g. `make r.games`. The package is built even if it is not in your filesystem config.
+  - `make r.recipe2 r.recipe2` - Build two or more recipes with one command (cumulative compilation).
   - `make c.recipe-name` - Removes the binary of the recipe `recipe-name`.
   - `make image` - Builds a new QEMU image, `$(BUILD)/harddrive.img`, without checking if any recipes have changed. Not recommended, but it can save you some time if you are just updating one recipe with `make r.recipe-name`.
   - `make clean` - Removes all recipe binaries (Note that `make clean` may require some tools to be built).

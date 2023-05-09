@@ -130,7 +130,11 @@ In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. 
 
 ### Update crates
 
-Always update the crates of your recipe after the first compilation of the recipe and compile it again.
+In some cases the `Cargo.lock` of some Rust program can have a version of some crate that don't have Redox patches (old) or broken Redox support (changes on code that make the target OS fail), this will give you an error during the recipe compilation.
+
+The reason of fixed crate versions is explained [here](https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries).
+
+To fix this, update the crates of your recipe after the first compilation of the recipe and compile it again.
 
 - Go to the `source` folder of your recipe and run `cargo update`, example:
 

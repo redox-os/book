@@ -23,6 +23,7 @@ Your `recipe.toml` file will look like this:
 [source]
 git = "software-repository-link.git"
 branch = "branch-name"
+rev = "commit-revision"
 tar = "software-tarball-link.tar.gz"
 patches = [
     "patch1.patch",
@@ -43,9 +44,10 @@ dependencies = [
     "runtime2",
 ]
 ```
-- Don't remove/forget the `[build]` section (`[source]` section can be removed if you don't use `git =` and `tar =`).
+- Don't remove/forget the `[build]` section (`[source]` section can be removed if you don't use `git =` and `tar =` or have the `source` folder present on your recipe folder).
 - Insert `git =` to clone your software repository, if it's not available the build system will build the contents inside the `source` folder on recipe directory.
 - Insert `branch =` if your want to use other branch.
+- Insert `rev =` if you want to use a commit revision (SHA1).
 - Insert `tar =` to download/extract tarballs, this can be used instead of `git =`.
 - Insert `patches =` to use patch files, they need to be in the same directory of `recipe.toml` (not needed if your program compile/run without patches).
 - Insert `dependencies =` if your software have dependencies, to make it work your dependencies/libraries need their own recipes (if your software doesn't need this, remove it from your `recipe.toml`).
@@ -64,19 +66,37 @@ The template is the type of the program/library build system, programs using an 
 - `template = "configure"` - compile with `configure` and `make` (you can't use the `script =` field).
 - `template = "custom"` - run your custom `script =` field and compile (Any build system/installation process).
 
-The `script =` field runs shell commands, to find the Cookbook shell commands, read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
+The `script =` field runs any shell command, it's useful if the software use a script to build from source or need custom options that Cookbook don't support.
+
+To find the supported Cookbook shell commands, read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
 
 ## Sources
 
-Each software has different locations for its tarballs, sometimes they aren't available and you will need to use the Git repository.
+### Git Repositories
 
-- If you want a easy way to find software tarballs, see the [FreeBSD Ports](https://github.com/freebsd/freebsd-ports) GitHub mirror.
+We recommend that you use the SHA1 commit revisions of the latest stable version instead of tarballs, if you are on GitHub they appear as a collapsed code on the "Releases" page or "Tags" page.
+
+You can look this [GitLab example](https://gitlab.redox-os.org/redox-os/redox/-/commit/c8634bd9890afdac4438d1ff99631d600d469264), if you see this same commit [here](https://gitlab.redox-os.org/redox-os/redox/-/releases/0.8.0), it appears collapsed as "c8634bd9" and is clickable, you can find it on [this](https://gitlab.redox-os.org/redox-os/redox/-/tags/0.8.0) tag too.
+
+The first two lines of your `recipe.toml` will looks like this:
+```
+[source]
+git = "repository-link.git"
+rev = "commit-revision-hash"
+```
+This same logic applies for every Git frontend and is more easy to find, manage and patch than tarballs.
+
+### Tarballs
+
+Each software has different locations for its tarballs, sometimes they aren't available and you will need to use the Git repository with the stable version commit revision (SHA1).
+
+If you want a easy way to find software tarballs, see the [FreeBSD Ports](https://github.com/freebsd/freebsd-ports) GitHub mirror.
 
 Inside each `Makefile` of each port folder, you will see a `MASTER_SITES` field, this is where the tarball mirrors go, while the `distinfo` file covers the tarball name/checksum used.
 
 The FreeBSD Ports Makefile covers the build dependencies and build system options too.
 
-- If you want an easy way to find programs/libraries, see the Debian testing [packages list](https://packages.debian.org/testing/allpackages).
+If you want an easy way to find programs/libraries, see the Debian testing [packages list](https://packages.debian.org/testing/allpackages).
 
 You can search them with `Ctrl+F`, all package names are clickable and the homepage of them is available on the right side of the package description/details.
 
@@ -127,7 +147,11 @@ The recipe sources will be extracted/cloned on the `source` folder inside of you
 
 ## Update crates
 
-Always update the crates of your recipe after the first compilation of the recipe and compile it again.
+In some cases the `Cargo.lock` of some Rust program can have a version of some crate that don't have Redox patches (old) or broken Redox support (changes on code that make the target OS fail), this will give you an error during the recipe compilation.
+
+The reason of fixed crate versions is explained [here](https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries).
+
+To fix this, update the crates of your recipe after the first compilation of the recipe and compile it again.
 
 - Go to the `source` folder of your recipe and run `cargo update`, example:
 
