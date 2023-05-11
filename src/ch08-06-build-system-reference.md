@@ -55,7 +55,9 @@ You can combine `make` targets, but order is significant. For example, `make r.g
   - `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. Change the `recipe-name` part with the name of your recipe, e.g. `make r.games`. The package is built even if it is not in your filesystem config.
   - `make r.recipe2 r.recipe2` - Build two or more recipes with one command (cumulative compilation).
   - `make c.recipe-name` - Removes the binary of the recipe `recipe-name`.
+  - `make c.recipe2 c.recipe2` - Clean two or more recipe binaries with one command (cumulative cleanup).
   - `make image` - Builds a new QEMU image, `$(BUILD)/harddrive.img`, without checking if any recipes have changed. Not recommended, but it can save you some time if you are just updating one recipe with `make r.recipe-name`.
+  - `make c.recipe r.recipe image qemu` - Clean a recipe binary, build a recipe source, create a new QEMU image and open QEMU (the build system support cumulative cross-option).
   - `make clean` - Removes all recipe binaries (Note that `make clean` may require some tools to be built).
   - `make pull` - Update the sources for the build system without building.
   - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are fetched. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.

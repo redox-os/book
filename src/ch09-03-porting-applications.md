@@ -76,7 +76,7 @@ To find the supported Cookbook shell commands, read the [source code](https://gi
 
 We recommend that you use the SHA1 commit revisions of the latest stable version instead of tarballs, if you are on GitHub they appear as a collapsed code on the "Releases" page or "Tags" page.
 
-You can look this [GitLab example](https://gitlab.redox-os.org/redox-os/redox/-/commit/c8634bd9890afdac4438d1ff99631d600d469264), if you see this same commit [here](https://gitlab.redox-os.org/redox-os/redox/-/releases/0.8.0), it appears collapsed as "c8634bd9" and is clickable, you can find it on [this](https://gitlab.redox-os.org/redox-os/redox/-/tags/0.8.0) tag too.
+You can look this [example](https://github.com/redox-os/redox/commit/4f8c725f32a434ada132ca3296d31d4bbb75f850), if you see this same commit [here](https://github.com/redox-os/redox/releases/tag/0.5.0), it appears collapsed as "4f8c725" and is clickable.
 
 The first two lines of your `recipe.toml` will looks like this:
 ```
@@ -89,12 +89,6 @@ This same logic applies for every Git frontend and is more easy to find, manage 
 ### Tarballs
 
 Each software has different locations for its tarballs, sometimes they aren't available and you will need to use the Git repository with the stable version commit revision (SHA1).
-
-If you want a easy way to find software tarballs, see the [FreeBSD Ports](https://github.com/freebsd/freebsd-ports) GitHub mirror.
-
-Inside each `Makefile` of each port folder, you will see a `MASTER_SITES` field, this is where the tarball mirrors go, while the `distinfo` file covers the tarball name/checksum used.
-
-The FreeBSD Ports Makefile covers the build dependencies and build system options too.
 
 If you want an easy way to find programs/libraries, see the Debian testing [packages list](https://packages.debian.org/testing/allpackages).
 

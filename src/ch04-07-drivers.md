@@ -10,6 +10,6 @@ These are the most used kernel functions by Redox drivers.
 - `physmap` - maps physical memory frames to driver-accessible virtual memory pages.
 - `irq:` - allows getting events from interrupts. It is used primarily by listening for its file descriptors using the `event:` scheme.
 
-If you want to write a driver, you must read the code of the existent ones or the most close driver type for your device.
+If you want to write a driver, you can see this [example](https://gitlab.redox-os.org/redox-os/exampled) driver or read the code of the existent ones or the most close driver type for your device.
 
 ### - [Drivers repository](https://gitlab.redox-os.org/redox-os/drivers)
