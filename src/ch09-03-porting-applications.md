@@ -68,23 +68,11 @@ The template is the type of the program/library build system, programs using an 
 
 The `script =` field runs any shell command, it's useful if the software use a script to build from source or need custom options that Cookbook don't support.
 
-To find the supported Cookbook shell commands, read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
+To find the supported Cookbook shell commands, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
+
+- [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
 
 ## Sources
-
-### Git Repositories
-
-We recommend that you use the SHA1 commit revisions of the latest stable version instead of tarballs, if you are on GitHub they appear as a collapsed code on the "Releases" page or "Tags" page.
-
-You can look this [example](https://github.com/redox-os/redox/commit/4f8c725f32a434ada132ca3296d31d4bbb75f850), if you see this same commit [here](https://github.com/redox-os/redox/releases/tag/0.5.0), it appears collapsed as "4f8c725" and is clickable.
-
-The first two lines of your `recipe.toml` will looks like this:
-```
-[source]
-git = "repository-link.git"
-rev = "commit-revision-hash"
-```
-This same logic applies for every Git frontend and is more easy to find, manage and patch than tarballs.
 
 ### Tarballs
 
@@ -97,6 +85,20 @@ You can search them with `Ctrl+F`, all package names are clickable and the homep
 The Debian package page covers the build dependencies too, the `depends` are the necessary dependencies, the items `recommends`, `suggests` and `enhances` is to expand the software functionality, not needed to make it work/compile.
 
 Debian packages are the most easy to find programs/libraries because they are the most used by software developers to describe build dependencies.
+
+### Git Repositories
+
+You can use SHA1 commit hashes of the latest stable version instead of tarballs, if you are on GitHub they appear as a collapsed code on the "Releases" page or "Tags" page.
+
+You can look this [example](https://github.com/redox-os/redox/commit/4f8c725f32a434ada132ca3296d31d4bbb75f850), if you see this same commit [here](https://github.com/redox-os/redox/releases/tag/0.5.0), it appears collapsed as "4f8c725" and is clickable.
+
+The first two lines of your `recipe.toml` will looks like this:
+```
+[source]
+git = "repository-link.git"
+rev = "commit-revision-hash"
+```
+This same logic applies for every Git frontend and is more easy to find, manage and patch than tarballs.
 
 ## Dependencies
 

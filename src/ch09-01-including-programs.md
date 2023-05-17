@@ -11,7 +11,11 @@ The Cookbook build system uses [TOML](https://toml.io/en/) file format for confi
 - `template = "configure"` - compile with `configure` and `make` (you can't use the `script =` field).
 - `template = "custom"` - run your custom `script =` field and compile (Any build system/installation process).
 
-The `script =` field runs shell commands, to find the Cookbook shell commands, read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
+The `script =` field runs any shell command, it's useful if the software use a script to build from source or need custom options that Cookbook don't support.
+
+To find the supported Cookbook shell commands, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
+
+- [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
 
 ## Existing Package
 
