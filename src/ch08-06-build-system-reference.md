@@ -19,6 +19,7 @@ The build system creates and/or uses several files that you may want to know abo
   - `config/$(ARCH)/acid.toml` - The build with the `acid` stress test suite.
   - `config/$(ARCH)/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing in the moment.
   - `cookbook/recipes/recipe-name/recipe.toml` - For each Redox package (represented here as `recipe-name`), there is a directory that contains its recipe, usually `recipe.toml`, but in some older recipes, `recipe.sh` is used. The recipe contains instructions for obtaining sources via tarball or git, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
+  - `cookbook/recipes/recipe-name/source.tar` - The tarball of the recipe (renamed).
   - `cookbook/recipes/recipe-name/source` - The directory where the recipe sources are extracted/cloned to this folder.
   - `cookbook/recipes/recipe-name/target` - The directory where the recipe binaries are stored (based on processor architecture).
   - `cookbook/recipes/recipe-name/target/${TARGET}` - The directory for the recipes binaries of the processor architecture.
