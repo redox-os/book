@@ -71,12 +71,13 @@ The steps given below are for the main Redox project - submodules and other proj
 
 ## Using GitLab web interface
 
-1. Open the project repository that you want and click in "Fork" to create your fork.
-1. Click in "Web IDE" to open the GitLab IDE for browsers and make your changes.
-1. Click in "Create commit" to apply your changes (try to not flood your fork with little commits, it's Ok to make bigger commits).
-1. Return to the main page of your fork (you can click on the name in the top left position inside of Web IDE).
-1. Click in the "Merge Requests" on the left side.
-1. Select your fork branch and create the merge request.
-1. If your merge requests is ready, send the link on [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room.
+1. Open the repository that you want and click in "Web IDE".
+1. Make your changes on repository files and click on "Source Control" button on the left side.
+1. Name your commits and apply them to specific branches (each new branch will be based on the current master branch, that way you don't need to create forks and update them, just send the proper commits to the proper branches, it's recommended that each new branch is a different change, more easy to review and merge).
+1. After the new branch creation a pop-up window will appear suggesting to create a MR, if you are ready, click on the "Create MR" button.
+1. If you want to make more changes, finish them, return to the repository page and click on the "Branches" link.
+1. Each branch will have a "Create merge request" button, click on the branches that you want to merge.
+1. Name your MR and create (you can squash your commits after merge to not flood the upstream with commits)
+1. If your merge request is ready, send the link on [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room.
 
-- Remember that you will need to update your forks manually in web interface (delete the fork/create a new fork if the upstream repository push commits from other contributors).
+- Remember that if you use forks on GitLab web interface you will need to update your forks manually in web interface (delete the fork/create a new fork if the upstream repository push commits from other contributors, if you don't do this, there's a chance that your merged commits will come in the next MR).
