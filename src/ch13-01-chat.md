@@ -1,6 +1,6 @@
 # Chat
 
-The best way to communicate with the Redox team is on Matrix Chat. You can join the [Redox Space](https://matrix.to/#/#redox:matrix.org) and see the  rooms that are available.
+The best way to communicate with the Redox team is on Matrix Chat. You can join the [Redox Space](https://matrix.to/#/#redox:matrix.org) and see the  rooms that are available (these rooms are English-only, we don't accept other languages because we don't understand them).
 
 Matrix has several different clients. [Element](https://element.io/) is a commonly used choice.
 
