@@ -76,7 +76,9 @@ To find the supported Cookbook shell commands, look the recipes using a `script 
 
 ### Tarballs
 
-Each software has different locations for its tarballs, sometimes they aren't available and you will need to use the Git repository with the stable version commit revision (SHA1).
+Tarballs are the most easy way to compile a software because the build system is already configured, while being more fast to download and process (the computer don't need to process Git deltas, even with GitHub tarballs which are compressed Git repositories).
+
+(In cases where you don't find tarballs, GitHub tarballs will be available on the "Releases" and "Tags" pages with a `tar.gz` name in the download button, copy this link and paste on the `tar =` field of your `recipe.toml`).
 
 If you want an easy way to find programs/libraries, see the Debian testing [packages list](https://packages.debian.org/testing/allpackages).
 
@@ -88,7 +90,11 @@ Debian packages are the most easy to find programs/libraries because they are th
 
 ### Git Repositories
 
-You can use SHA1 commit hashes of the latest stable version instead of tarballs, if you are on GitHub they appear as a collapsed code on the "Releases" page or "Tags" page.
+In cases where source/GitHub tarballs aren't available, you can use the commit hash of the latest stable version.
+
+If you are on GitHub they appear as a collapsed code on the "Releases" page or "Tags" page.
+
+(If you want to use the development version of the software, you can just use the Git repository link without a commit hash, but if some commit broke the compilation, you use the last working commit hash on the `rev =` field)
 
 You can look this [example](https://github.com/redox-os/redox/commit/4f8c725f32a434ada132ca3296d31d4bbb75f850), if you see this same commit [here](https://github.com/redox-os/redox/releases/tag/0.5.0), it appears collapsed as "4f8c725" and is clickable.
 
