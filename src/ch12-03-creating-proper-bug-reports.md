@@ -10,9 +10,9 @@ If you identify a problem with the system that has not been identified previousl
 
 4. If it is a significant problem, join us on [Chat](./ch13-01-chat.md) and ask if it is a known problem, or if someone plans to address it in the short term.
 
-5. Identify the Redox package that is causing the issue. If a particular command is the source of the problem, look for a repo on Redox GitLab with the same name. Or, for certain programs such as games or command line utilities, you can search for the package containing the command with `grep -rnw COMMAND --include Cargo.toml`, where `COMMAND` is the name of the command causing the problem. The location of the `Cargo.toml` file can help indicate which Redox package contains the command. This is where you should expect to report the issue.
+5. Identify the recipe that is causing the issue. If a particular command is the source of the problem, look for a repository on Redox GitLab with the same name. Or, for certain programs such as `games` or command line utilities, you can search for the package containing the command with `grep -rnw COMMAND --include Cargo.toml`, where `COMMAND` is the name of the command causing the problem. The location of the `Cargo.toml` file can help indicate which recipe contains the command. This is where you should expect to report the issue.
 
-6. If the problem involves multiple packages, kernel interactions with other programs, or general build problems, then you should plan to log the issue against the `redox` repository.
+6. If the problem involves multiple recipes, kernel interactions with other programs, or general build problems, then you should plan to log the issue against the `redox` repository.
 
 7. If the problem occurs during build, record the build log using `script` or `tee`, e.g.
     ```sh
@@ -33,7 +33,7 @@ If you identify a problem with the system that has not been identified previousl
     exit
     ```
 
-8. Join us in the chat 
+8. Join us in the chat.
 
 9. Record build information like:
      - The rust toolchain you used to build Redox
@@ -45,8 +45,10 @@ If you identify a problem with the system that has not been identified previousl
      - The operating system you used to build Redox
        - `uname -a` or an alternative format
 
-10. Make sure that your bug doesn't already have an issue on GitLab. Feel free to ask in the Redox [Chat](./ch13-01-chat.md) if you're uncertain as to whether your issue is new
+10. Format your log on the message in Markdown syntax to avoid a flood on the chat, you can see how to do it [here](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#quoting-code).
 
-11. Create a GitLab issue following the template. Non-bug report issues may ignore this template
+11. Make sure that your bug doesn't already have an issue on GitLab. Feel free to ask in the Redox [Chat](./ch13-01-chat.md) if you're uncertain as to whether your issue is new.
 
-12. Watch the issue and be available for questions
+12. Create a GitLab issue following the template. Non-bug report issues may ignore this template.
+
+13. Watch the issue and be available for questions.

@@ -58,7 +58,17 @@ Note that there are two `dependencies =`, one below the `[build]` section and ot
 - Below `[build]` - development libraries.
 - Below `[package]` - runtime dependencies (data files).
 
-## Cookbook Templates
+## Cookbook
+
+The GCC/Clang compilers on Linux will use `glibc` (GNU C Library) by default on linking, it will create Linux ELF binaries that don't work on Redox because `glibc` don't use the Redox syscalls.
+
+To make the compiler use the `relibc` (Redox C Library), the Cookbook system needs to tell the build system of the software to use it, it's done with environment variables.
+
+The Cookbook have templates to avoid custom commands, but it's not always possible because some build systems are customized or not adapted for Cookbook compilation.
+
+(Each build system has different environment variables to enable cross-compilation and pass a custom C library for the compiler)
+
+### Templates
 
 The template is the type of the program/library build system, programs using an Autotools build system will have a `configure` file on the root of the repository/tarball source, programs using CMake build system will have a `CMakeLists.txt` file with all available CMake flags and a `cmake` folder, programs using Meson build system will have a `meson.build` file, Rust programs will have a `Cargo.toml` file.
 
@@ -71,6 +81,45 @@ The `script =` field runs any shell command, it's useful if the software use a s
 To find the supported Cookbook shell commands, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
 
 - [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
+
+### Custom Template
+
+The "custom" template enable the `script =` field to be used, this field will run any command supported by your shell.
+
+- CMake script template
+```
+script = """
+    COOKBOOK_CONFIGURE="cmake"
+    COOKBOOK_CONFIGURE_FLAGS=(
+	-DCMAKE_BUILD_TYPE=Release
+	-DCMAKE_CROSSCOMPILING=True
+	-DCMAKE_EXE_LINKER_FLAGS="-static"
+	-DCMAKE_INSTALL_PREFIX="/"
+)
+"""
+```
+
+More CMake options can be added with a `-D` before them, the customization of CMake compilation is very easy.
+
+- Cargo packages script template
+```
+script = """
+cookbook_cargo_packages program-name
+"""
+```
+
+This script is used for Rust programs that use folders inside the repository for compilation, you can use the folder name or program name.
+
+This will fix the "found virtual manifest instead of package manifest" error.
+
+- Cargo examples script template
+```
+script = """
+cookbook_cargo_examples example-name
+"""
+```
+
+This script is used for examples on Rust programs.
 
 ## Sources
 
@@ -134,6 +183,8 @@ All recipes are [statically compiled](https://en.wikipedia.org/wiki/Static_build
 
 To build your recipe, run - `make r.recipe-name`
 
+If the compilation was successful, the recipe will be packaged and don't give errors.
+
 If you want to insert this recipe permanently in your QEMU image add your recipe name below the last item in `[packages]` on your TOML config (`config/x86_64/desktop.toml`, for example).
 
 - Example - `recipe-name = {}` or `recipe-name = "recipe"` (if you have `REPO_BINARY=1` in your `.config`).
@@ -162,7 +213,7 @@ cd cookbook/recipes/recipe-name/source
 cargo update
 make c.recipe-name
 make r.recipe-name
-
+```
 
 ## Cleanup
 

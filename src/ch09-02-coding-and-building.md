@@ -143,6 +143,7 @@ cd cookbook/recipes/recipe-name/source
 cargo update
 make c.recipe-name
 make r.recipe-name
+```
 
 ## Checking In your Changes
 
