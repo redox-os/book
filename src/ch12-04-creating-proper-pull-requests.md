@@ -2,7 +2,7 @@
 
 It's completely fine to just submit a small pull request without first making an issue, but if it's a big change that will require a lot of planning and reviewing, it's best you start with writing an issue first.
 
-The steps given below are for the main Redox project - submodules and other projects may vary, though most of the approach is the same.
+The steps given below are for the main Redox project repository - submodules and other projects may vary, though most of the approach is the same.
 
 ## Using Git in terminal
 
