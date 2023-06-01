@@ -56,17 +56,25 @@ dependencies = [
 Note that there are two `dependencies =`, one below the `[build]` section and other below `[package]` section.
 
 - Below `[build]` - development libraries.
-- Below `[package]` - runtime dependencies (data files).
+- Below `[package]` - runtime dependencies (packages installed on Redox or data files).
 
 ## Cookbook
 
-The GCC/Clang compilers on Linux will use `glibc` (GNU C Library) by default on linking, it will create Linux ELF binaries that don't work on Redox because `glibc` don't use the Redox syscalls.
+The GCC/LLVM compiler frontends on Linux will use `glibc` (GNU C Library) by default on linking, it will create Linux ELF binaries that don't work on Redox because `glibc` don't use the Redox syscalls.
 
 To make the compiler use the `relibc` (Redox C Library), the Cookbook system needs to tell the build system of the software to use it, it's done with environment variables.
 
 The Cookbook have templates to avoid custom commands, but it's not always possible because some build systems are customized or not adapted for Cookbook compilation.
 
 (Each build system has different environment variables to enable cross-compilation and pass a custom C library for the compiler)
+
+### Cross Compilation
+
+Cookbook default behavior is cross-compilation because it brings more flexiblity to the build system, it make the compiler use `relibc` or compile to a different processor architecture.
+
+By default Cookbook respect the architecture of your host system but you can change it easily on your `.config` file (`ARCH?=` field).
+
+(We recommend that you don't set the processor architecture inside the `recipe.toml` script field, because you lost flexibility, can't merge the recipe for CI server and could forget this custom setting)
 
 ### Templates
 
@@ -157,11 +165,11 @@ This same logic applies for every Git frontend and is more easy to find, manage 
 
 ## Dependencies
 
-Most C/C++/mixed Rust softwares place build system dependencies together with his own dependencies (development libraries), if you see the "Build Instructions" of most software, you will notice that it have packages without the `-dev` prefix and `-dev` packages (pure Rust programs don't use C/C++ libraries but his crates can use).
+Most C/C++/mixed Rust softwares, place build system dependencies together with his own dependencies (development libraries), if you see the "Build Instructions" of most software, you will notice that it have packages without the `-dev` suffix and `-dev` packages (pure Rust programs don't use C/C++ libraries but his crates can use).
 
-Install the packages for your Linux distribution on the "Build Instructions" of the software, see if it compiles on your Linux first (if packages for your distribution is not available, search for Debian/Ubuntu equivalents).
+Install the packages for your Linux distribution on the "Build Instructions" of the software, see if it compiles on your system first (if packages for your distribution is not available, search for Debian/Ubuntu equivalents).
 
-The packages without the `-dev` prefix can be runtime dependencies (linked at runtime) or build system dependencies (necessary to configure the compilation process), you will need to test this, feel free to ask us on [Chat](./ch13-01-chat.md).
+The packages without the `-dev` suffix can be runtime dependencies (linked at runtime) or build system dependencies (necessary to configure the compilation process), you will need to test this, feel free to ask us on [Chat](./ch13-01-chat.md).
 
 We recommend that you add the `-dev` dependencies first, generally the Linux distribution package web interface place the library official website on package page (you can use the Debian testing [packages list](https://packages.debian.org/testing/allpackages) to search them with `Ctrl+F`, all package names are clickable and the homepage of them is available on the right side of the package description/details), inside the dependency website you will copy the tarball link or Git repository link and paste on your `recipe.toml`, according to TOML syntax (`tar = "link"` or `git = "link"`).
 
@@ -169,7 +177,7 @@ Create a recipe for each dependency and add inside of your main recipe `dependen
 
 Run `make r.recipe-name` and see if it don't give errors, if it give an error it can be a dependency that require patches or missing runtime/build system dependencies, try to investigate both methods until the software compile successfully.
 
-If you run `make r.recipe-name` and it compile successfully with just `-dev` recipes, feel free to add the packages without the `-dev` prefix on the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script or [redox-base-containerfile](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman/redox-base-containerfile) for Podman builds.
+If you run `make r.recipe-name` and it compile successfully with just `-dev` recipes, feel free to add the packages without the `-dev` suffix on the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script or [redox-base-containerfile](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman/redox-base-containerfile) for Podman builds.
 
 The `bootstrap.sh` script and `redox-base-containerfile` covers the build system packages needed by the recipes on [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
 
@@ -226,4 +234,6 @@ If you have some problems (outdated recipe), try to run these commands:
 
 If you want to add your recipe on [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook) to become a Redox package on [CI server](https://static.redox-os.org/pkg/), you can submit your merge request with proper dependencies and comments.
 
-We recommend that you make a commit for each new recipe and say the build dependencies on comments, it's preferable that you test it before the MR, but you can send it non-tested with a `#TODO` on the first line of the `recipe.toml` file.
+We recommend that you make a commit for each new recipe and is preferable that you test it before the MR, but you can send it non-tested with a `#TODO` on the first line of the `recipe.toml` file.
+
+After the `#TODO` comment you will explain what is missing on your recipe (apply a space after the `TODO`, if you forget it the `grep` can't scan properly), that way we can `grep` for `#TODO` and anyone can improve the recipe easily (don't forget the `#` character before the text, the TOML syntax treat every text after this as a comment, not a code).
