@@ -19,7 +19,7 @@ The steps to perform are
 
 ## Understanding Cross-Compilation for Redox
 
-Redox build is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox toolchain runs on Linux, and produces Redox executables. Anything that is installed with your package manager is just part of the toolchain and does not go on Redox.
+Redox build is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox [toolchain](https://static.redox-os.org/toolchain/) runs on Linux, and produces Redox executables. Anything that is installed with your package manager is just part of the toolchain and does not go on Redox.
 
 Each library (dependency) needs to have it's own recipe and added on the `recipe.toml` of the recipe before compilation:
 ```
