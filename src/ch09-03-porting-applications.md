@@ -68,6 +68,10 @@ The Cookbook have templates to avoid custom commands, but it's not always possib
 
 (Each build system has different environment variables to enable cross-compilation and pass a custom C library for the compiler)
 
+### Custom Compiler
+
+Cookbook use a custom GCC/LLVM/rustc with Redox patches to compile recipes with `relibc` linking, you can check them [here](https://static.redox-os.org/toolchain/).
+
 ### Cross Compilation
 
 Cookbook default behavior is cross-compilation because it brings more flexiblity to the build system, it make the compiler use `relibc` or compile to a different processor architecture.
