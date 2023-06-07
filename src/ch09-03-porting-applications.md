@@ -107,6 +107,10 @@ script = """
 	-DCMAKE_CROSSCOMPILING=True
 	-DCMAKE_EXE_LINKER_FLAGS="-static"
 	-DCMAKE_INSTALL_PREFIX="/"
+    -DCMAKE_PREFIX_PATH="${COOKBOOK_SYSROOT}"
+    -DCMAKE_SYSTEM_NAME=Generic
+    -DCMAKE_SYSTEM_PROCESSOR="$(echo "${TARGET}" | cut -d - -f1)"
+    -DCMAKE_VERBOSE_MAKEFILE=On
 )
 """
 ```
@@ -171,6 +175,8 @@ This same logic applies for every Git frontend and is more easy to find, manage 
 
 Most C/C++/mixed Rust softwares, place build system dependencies together with his own dependencies (development libraries), if you see the "Build Instructions" of most software, you will notice that it have packages without the `-dev` suffix and `-dev` packages (pure Rust programs don't use C/C++ libraries but his crates can use).
 
+- The compiler will build the development libraries as `.a` files (static linking) or `.so` files (dynamic linking), the `.a` files will be mixed in the final binary while the `.so` files will be out of the binary (stored on the `/lib` directory of the system).
+
 Install the packages for your Linux distribution on the "Build Instructions" of the software, see if it compiles on your system first (if packages for your distribution is not available, search for Debian/Ubuntu equivalents).
 
 The packages without the `-dev` suffix can be runtime dependencies (linked at runtime) or build system dependencies (necessary to configure the compilation process), you will need to test this, feel free to ask us on [Chat](./ch13-01-chat.md).
@@ -188,6 +194,8 @@ The `bootstrap.sh` script and `redox-base-containerfile` covers the build system
 (You need to do this because each software is different, the major reason is "Build Instructions" organization)
 
 All recipes are [statically compiled](https://en.wikipedia.org/wiki/Static_build), thus you don't need to package libraries and applications separated for binary linking, improving security and simplifying the configuration/packaging.
+
+The only exception for static linking would be the LLVM, as it makes the binary very big, thus it will be dynamic.
 
 ## Testing/Building
 
