@@ -112,6 +112,7 @@ script = """
     -DCMAKE_SYSTEM_PROCESSOR="$(echo "${TARGET}" | cut -d - -f1)"
     -DCMAKE_VERBOSE_MAKEFILE=On
 )
+cookbook_configure
 """
 ```
 
