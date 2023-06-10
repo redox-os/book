@@ -101,16 +101,17 @@ The "custom" template enable the `script =` field to be used, this field will ru
 - CMake script template
 ```
 script = """
-    COOKBOOK_CONFIGURE="cmake"
-    COOKBOOK_CONFIGURE_FLAGS=(
-	-DCMAKE_BUILD_TYPE=Release
-	-DCMAKE_CROSSCOMPILING=True
-	-DCMAKE_EXE_LINKER_FLAGS="-static"
-	-DCMAKE_INSTALL_PREFIX="/"
+COOKBOOK_CONFIGURE="cmake"
+COOKBOOK_CONFIGURE_FLAGS=(
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_CROSSCOMPILING=True
+    -DCMAKE_EXE_LINKER_FLAGS="-static"
+    -DCMAKE_INSTALL_PREFIX="/"
     -DCMAKE_PREFIX_PATH="${COOKBOOK_SYSROOT}"
     -DCMAKE_SYSTEM_NAME=Generic
     -DCMAKE_SYSTEM_PROCESSOR="$(echo "${TARGET}" | cut -d - -f1)"
     -DCMAKE_VERBOSE_MAKEFILE=On
+"${COOKBOOK_SOURCE}"
 )
 cookbook_configure
 """
@@ -125,9 +126,22 @@ cookbook_cargo_packages program-name
 """
 ```
 
+(you can use `cookbook_cargo_packages program1 program2` if it's more than one package)
+
 This script is used for Rust programs that use folders inside the repository for compilation, you can use the folder name or program name.
 
 This will fix the "found virtual manifest instead of package manifest" error.
+
+- Cargo flags script template
+```
+script = """
+cookbook_cargo --features flag-name
+"""
+```
+
+(you can use `cookbook_cargo --features flag1 flag2` if it's more than one flag)
+
+Some Rust softwares have Cargo flags for customization, search them to match your needs or make some program compile.
 
 - Cargo examples script template
 ```
@@ -135,6 +149,8 @@ script = """
 cookbook_cargo_examples example-name
 """
 ```
+
+(you can use `cookbook_cargo_examples example1 example2` if it's more than one example)
 
 This script is used for examples on Rust programs.
 
