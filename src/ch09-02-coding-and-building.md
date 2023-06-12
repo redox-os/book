@@ -111,7 +111,7 @@ After making changes to your package, you should `make rebuild`, which will chec
 
 - You can now scan through `build.log` to check for errors. The file is large and contains many ANSI Escape Sequences, so it can be hard to read. However, if you encountered a fatal build error, it will be at the end of the log, so skip to the bottom and scan upwards.
 
-## Test your Changes
+## Test Your Changes
 
 In the Redox instance started by `make qemu`, test your changes to `minesweeper`.
 - Log in with user `user` and no password.
@@ -127,6 +127,19 @@ Congratulations! You have modified a program and built the system! Next, create 
   make live
   ```
 In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. Follow the instructions for [Running on Real Hardware](./ch02-02-real-hardware.md) and test out your change.
+
+### Test Your Changes (out of the Redox build system)
+
+[Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) is the tool used to build/run Rust programs (and C/C++ programs with zero dependencies) for Redox, it download the Redox toolchain and make Cargo use it.
+
+#### Commands
+
+- `cargo install redoxer` - install `redoxer` tool.
+- `redoxer toolchain` - install `redoxer` toolchain.
+- `redoxer build` - build project with `redoxer`.
+- `redoxer run` - run project with `redoxer`.
+- `redoxer test` - test project with `redoxer`.
+- `redoxer exec echo hello` - run arbitrary executable with `redoxer`.
 
 ### Update crates
 
