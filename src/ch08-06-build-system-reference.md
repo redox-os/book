@@ -85,6 +85,24 @@ Write the path of the script and the name of your recipe:
 scripts/rebuild-recipe.sh recipe
 ```
 
+### Update relibc
+
+An outdated relibc copy can contain bugs (already fixed on recent versions) or outdated crates, to update the relibc sources and build it, run:
+```sh
+make pull
+touch relibc
+make prefix
+make rebuild
+```
+
+Sometimes you need to update the relibc crates, run these commands between the `make pull` and `touch relibc` commands:
+
+```sh
+cd relibc
+cargo update
+cd ..
+```
+
 ### Configuration
 
 - [Configuration Settings](./ch02-07-configuration-settings.md)
