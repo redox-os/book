@@ -32,6 +32,14 @@ If you used [podman_bootstrap.sh](./ch02-06-podman-build.md#new-working-director
 
 The purpose of `.config` is to allow you to change your configuration settings without worrying that they will end up in a Pull Request. `.config` is in the `.gitignore` list, so you won't accidentally commit it.
 
+### Architecture Names
+
+The Redox build system support cross-compilation to any processor architecture defined by the `ARCH` environment variable, these are the supported architectures based on the folders inside the [config](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config) folder.
+
+- i686 - `i686`
+- x86_64 - `x86_64`
+- ARM64 - `aarch64`
+
 ## Filesystem Config
 
 Which packages and programs to include in the Redox image are determined by a **filesystem config** file, which is a `.toml` file, such as `config/x86_64/demo.toml`. Open `demo.toml` and have a look through it.
