@@ -34,7 +34,7 @@ The purpose of `.config` is to allow you to change your configuration settings w
 
 ### Architecture Names
 
-The Redox build system support cross-compilation to any processor architecture defined by the `ARCH?` environment variable, these are the supported architectures based on the folders inside the [config](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config) folder.
+The Redox build system support cross-compilation to any processor architecture defined by the `ARCH` environment variable, these are the supported architectures based on the folders inside the [config](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config) folder.
 
 - i686 - `i686`
 - x86_64 - `x86_64`
