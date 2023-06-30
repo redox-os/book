@@ -94,30 +94,17 @@ make prefix
 make rebuild
 ```
 
-Sometimes you need to update the relibc crates, run these commands between the `make pull` and `touch relibc` commands:
+Sometimes you need to update some relibc crate, run these commands between the `make pull` and `touch relibc` commands:
 
 ```sh
 cd relibc
-cargo update
+cargo update -p crate-name
 cd ..
 ```
 
 ### Update crates
 
-In some cases the `Cargo.lock` of some Rust program can have a version of some crate that don't have Redox patches (old) or broken Redox support (changes on code that make the target OS fail), this will give you an error during the recipe compilation.
-
-The reason of fixed crate versions is explained [here](https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries).
-
-To fix this, update the crates of your recipe after the first compilation of the recipe and compile it again.
-
-- Go to the `source` folder of your recipe and run `cargo update`, example:
-
-```sh
-cd cookbook/recipes/recipe-name/source
-cargo update
-make c.recipe-name
-make r.recipe-name
-
+- [Porting Applications using Recipes](./ch09-03-porting-applications.md#update-crates)
 
 ## Kernel Panics in QEMU
 

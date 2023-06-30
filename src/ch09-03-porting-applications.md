@@ -241,13 +241,86 @@ In some cases the `Cargo.lock` of some Rust program can have a version of some c
 
 The reason of fixed crate versions is explained [here](https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries).
 
-To fix this, update the crates of your recipe after the first compilation of the recipe and compile it again.
+To fix this, you will need to update the crates of your recipe after the first compilation of the recipe and build it again, see the ways to do it below.
+
+### One or more crates
+
+Most of the time you just need to update some crates to have Redox support, this will avoid random breaks on the dependency chain of the program (due to ABI changes) thus you can update one or more crates to reduce the chance of breaks.
+
+We recommend that you do this based on the errors you get during the compilation, this method have more chance to make some program work on Redox.
+
+- Go to the `source` folder of your recipe and run `cargo update -p crate-name`, example:
+
+```sh
+cd cookbook/recipes/recipe-name/source && cargo update -p crate1 crate2 && cd -
+make c.recipe-name
+make r.recipe-name
+```
+
+### All crates
+
+This method will update all crates of the dependency chain to the latest version, be aware that some crates break the ABI frequently and make the program stop to work, that's why you must try the "One crate" method first.
+
+(Try this method if you want to test the latest improvements on the libraries)
 
 - Go to the `source` folder of your recipe and run `cargo update`, example:
 
 ```sh
-cd cookbook/recipes/recipe-name/source
-cargo update
+cd cookbook/recipes/recipe-name/source && cargo update && cd -
+make c.recipe-name
+make r.recipe-name
+```
+
+## Patch crates
+
+### Redox forks
+
+It's possible that some not ported crate have a Redox fork with patches, you can search the crate name [here](https://gitlab.redox-os.org/), generally the Redox patches stay in the `redox` branch or `redox-version` branch that follow the crate version.
+
+To use this Redox fork on your Rust program, add this text on the end of the `Cargo.toml` in the program source code:
+
+```
+[patch.crates-io]
+crate-name = { git = "repository-link", branch = "redox" }
+```
+
+It will make Cargo replace the patched crate in the entire dependency chain, after that, run:
+
+```sh
+make c.recipe-name
+make r.recipe-name
+```
+
+Or (if the above doesn't work)
+
+```sh
+cd cookbook/recipes/recipe-name/source && cargo update -p crate-name && cd -
+make c.recipe-name
+make r.recipe-name
+```
+
+### Local patches
+
+If you want to patch some crate offline with your patches, add this text on the `Cargo.toml` of the program:
+
+```
+[patch.crates-io]
+crate-name = { path = "patched-crate-folder" }
+```
+
+It will make Cargo replace the crate based on this folder in the program source code - `cookbook/recipes/your-recipe/source/patched-crate-folder` (you don't need to manually create this folder if you `git clone` the crate source code on the program source directory)
+
+Inside this folder you will apply the patches on the crate source and build the recipe:
+
+```sh
+make c.recipe-name
+make r.recipe-name
+```
+
+Or
+
+```sh
+cd cookbook/recipes/recipe-name/source && cargo update -p crate-name && cd -
 make c.recipe-name
 make r.recipe-name
 ```
