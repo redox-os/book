@@ -31,6 +31,8 @@ Current features:
 - Calculator
 - Terminal Emulator
 
+If you hold the **Super** key (generally the key with a Windows logo) it will show all keyboard shortcuts in a pop-up.
+
 ### Accelerated Graphics
 
 We don't have GPU drivers yet but [LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html) from Mesa3D is working.
