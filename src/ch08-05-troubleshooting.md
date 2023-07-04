@@ -120,7 +120,7 @@ cargo tree --target=x86_64-unknown-redox
 
 This command will draw the dependency tree and you will need to find the crate name on the hierarchy.
 
-If you don't want to find it, you can use a `less` + `grep` pipe to see all crate versions used in the tree, sadly `less` and `grep` don't preserve the tree hierarchy, thus it's only useful to see versions and if some patched crate works (if the patched crate works all crate matches will report the most recent version).
+If you don't want to find it, you can use a `grep` pipe to see all crate versions used in the tree, sadly `grep` don't preserve the tree hierarchy, thus it's only useful to see versions and if some patched crate works (if the patched crate works all crate matches will report the most recent version).
 
 To do this, run:
 
