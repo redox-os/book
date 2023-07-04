@@ -271,6 +271,12 @@ make c.recipe-name
 make r.recipe-name
 ```
 
+### Verify the dependency tree
+
+If you use the above methods but the program is still using old crate versions, see this section:
+
+- [Verify the dependency tree](./ch08-05-troubleshooting.md#verify-the-dependency-tree)
+
 ## Patch crates
 
 ### Redox forks

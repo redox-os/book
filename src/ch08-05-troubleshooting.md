@@ -106,6 +106,28 @@ cd ..
 
 - [Porting Applications using Recipes](./ch09-03-porting-applications.md#update-crates)
 
+### Verify the dependency tree
+
+Some crates take a long time to do a new release (years in some cases), thus these releases will hold old versions of other crates, versions where the Redox support is not available (causing errors during the program compilation).
+
+The `redox_syscall` crate is the most affected by this, some crates hold a very old version of it and will require patches (`cargo update -p` alone doesn't work).
+
+To identify which crates are using old versions of Redox crates you will need to verify the dependency tree of the program, inside the program source directory, run:
+
+```sh
+cargo tree --target=x86_64-unknown-redox
+```
+
+This command will draw the dependency tree and you will need to find the crate name on the hierarchy.
+
+If you don't want to find it, you can use a `grep` pipe to see all crate versions used in the tree, sadly `grep` don't preserve the tree hierarchy, thus it's only useful to see versions and if some patched crate works (if the patched crate works all crate matches will report the most recent version).
+
+To do this, run:
+
+```sh
+cargo tree --target=x86_64-unknown-redox | grep crate-name
+```
+
 ## Kernel Panics in QEMU
 
 If you receive a kernel panic in QEMU, capture a screenshot and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).
