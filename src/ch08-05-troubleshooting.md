@@ -125,7 +125,7 @@ If you don't want to find it, you can use a `less` + `grep` pipe to see all crat
 To do this, run:
 
 ```sh
-cargo tree --target=x86_64-unknown-redox | less | grep crate-name
+cargo tree --target=x86_64-unknown-redox | grep crate-name
 ```
 
 ## Kernel Panics in QEMU
