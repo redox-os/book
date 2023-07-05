@@ -104,7 +104,7 @@ The build system pin the last working commit of the submodules, if some submodul
 Whenever a fix or new feature is merged on the submodules, the upstream build system must update the commit hash, to workaround this you can run `git pull` on the folder of the submodule directly, example:
 
 ```sh
-make pull && cd submodule-folder-name && git pull && cd ..
+make pull && cd submodule-folder-name && git checkout master && git pull && cd ..
 ```
 
 ## Update relibc
