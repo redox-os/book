@@ -2,7 +2,7 @@
 
 The build system creates and/or uses several files that you may want to know about. There are also several `make` targets mentioned above, and a few extras that you may find useful. Here's a quick summary. All file paths are relative to your `redox` base directory.
 
-### Build System Organization
+## Build System Organization
 
   - `Makefile` - The main makefile for the system, it loads all the other makefiles.
   - `.config` - Where you change your build system settings. It is loaded by the Makefile. It is ignored by `git`.
@@ -44,7 +44,7 @@ The build system creates and/or uses several files that you may want to know abo
   - `build/podman` - The directory where Podman Build places the container user's home directory, including the container's Rust installation. Use `make container_clean` to remove it. In some situations, you may need to remove this directory manually, possibly with root privileges.
   - `build/container.tag` - An empty file, created during the first Podman Build, so Podman Build knows a reusable Podman image is available. Use `make container_clean` to force a rebuild of the Podman image on your next `make rebuild`.
   
-### Make Commands
+## Make Commands
 
 You can combine `make` targets, but order is significant. For example, `make r.games image` will build the `games` package and create a new Redox image, but `make image r.games` will make the Redox image before it builds the package.
 
@@ -72,7 +72,7 @@ You can combine `make` targets, but order is significant. For example, `make r.g
   - `make container_touch` - If you have removed the file `build/container.tag`, but the container image is still usable, this will recreate the `container.tag` file and avoid rebuilding the container image.
   - `make container_kill` - If you have started a build using Podman Build, and you want to stop it, `Ctrl-C` may not be sufficient. Use this command to terminate the most recently created container.
 
-### Scripts
+## Scripts
 
 You can use these scripts to perform actions not implemented as commands in the Cookbook build system.
 
@@ -85,7 +85,29 @@ Write the path of the script and the name of your recipe:
 scripts/rebuild-recipe.sh recipe
 ```
 
-### Update relibc
+## Pinned commits
+
+The build system pin the last working commit of the submodules, if some submodule is broken because of some commit, the pinned commit avoid the fetch of this broken commit, thus pinned commits increase the development stability (broken changes aren't passed for developers/testers).
+
+(When you run `make pull` the build system update the submodule folders based on the last pinned commit)
+
+### Current pinned submodules
+
+- `cookbook`
+- `installer`
+- `redoxfs`
+- `relibc`
+- `rust`
+
+### Manual submodule update
+
+Whenever a fix or new feature is merged on the submodules, the upstream build system must update the commit hash, to workaround this you can run `git pull` on the folder of the submodule directly, example:
+
+```sh
+make pull && cd submodule-folder-name && git checkout master && git pull && cd ..
+```
+
+## Update relibc
 
 An outdated relibc copy can contain bugs (already fixed on recent versions) or outdated crates, to update the relibc sources and build it, run:
 ```sh
@@ -103,6 +125,6 @@ cargo update
 cd ..
 ```
 
-### Configuration
+## Configuration
 
 - [Configuration Settings](./ch02-07-configuration-settings.md)
