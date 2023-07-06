@@ -85,6 +85,55 @@ Write the path of the script and the name of your recipe:
 scripts/rebuild-recipe.sh recipe
 ```
 
+## Crates
+
+Some Redox projects have crates on `crates.io`, thus they use a version-based development, if some change is sent to their repository they need to release a new version on `crates.io`, it will have some delay.
+
+### Current projects with crates
+
+- [redox_syscall](https://crates.io/crates/redox_syscall)
+- [redoxfs](https://crates.io/crates/redoxfs)
+- [redoxer](https://crates.io/crates/redoxer)
+- [redox_installer](https://crates.io/crates/redox_installer)
+- [redox-users](https://crates.io/crates/redox_users)
+- [redox-buffer-pool](https://crates.io/crates/redox-buffer-pool)
+- [redox_log](https://crates.io/crates/redox-log)
+- [redox_termios](https://crates.io/crates/redox_termios)
+- [redox-daemon](https://crates.io/crates/redox-daemon)
+- [redox_event](https://crates.io/crates/redox_event)
+- [redox_event_update](https://crates.io/crates/redox_event_update)
+- [redox_pkgutils](https://crates.io/crates/redox_pkgutils)
+- [redox_uefi](https://crates.io/crates/redox_uefi)
+- [redox_uefi_alloc](https://crates.io/crates/redox_uefi_alloc)
+- [redox_dmi](https://crates.io/crates/redox_dmi)
+- [redox_hwio](https://crates.io/crates/redox_hwio)
+- [redox_intelflash](https://crates.io/crates/redox_intelflash)
+- [redox_liner](https://crates.io/crates/redox_liner)
+- [redox_simple_endian](https://crates.io/crates/redox_simple_endian)
+- [redox_uefi_std](https://crates.io/crates/redox_uefi_std)
+- [ralloc](https://crates.io/crates/ralloc)
+- [orbclient](https://crates.io/crates/orbclient)
+- [orbclient_window_shortcuts](https://crates.io/crates/orbclient_window_shortcuts)
+- [orbfont](https://crates.io/crates/orbfont)
+- [orbimage](https://crates.io/crates/orbimage)
+- [orbterm](https://crates.io/crates/orbterm)
+- [orbutils](https://crates.io/crates/orbutils)
+- [slint_orbclient](https://crates.io/crates/slint_orbclient)
+- [ralloc_shim](https://crates.io/crates/ralloc_shim)
+- [ransid](https://crates.io/crates/ransid)
+- [gitrepoman](https://crates.io/crates/gitrepoman)
+- [pkgar](https://crates.io/crates/pkgar)
+- [pkgar-core](https://crates.io/crates/pkgar-core)
+- [pkgar-repo](https://crates.io/crates/pkgar-repo)
+- [termion](https://crates.io/crates/termion)
+- [reagent](https://crates.io/crates/reagent)
+- [gdb-protocol](https://crates.io/crates/gdb-protocol)
+- [orbtk](https://crates.io/crates/orbtk)
+- [orbtk_orbclient](https://crates.io/crates/orbtk_orbclient)
+- [orbtk-render](https://crates.io/crates/orbtk-render)
+- [orbtk-shell](https://crates.io/crates/orbtk-shell)
+- [orbtk-tinyskia](https://crates.io/crates/orbtk-tinyskia)
+
 ## Pinned commits
 
 The build system pin the last working commit of the submodules, if some submodule is broken because of some commit, the pinned commit avoid the fetch of this broken commit, thus pinned commits increase the development stability (broken changes aren't passed for developers/testers).
