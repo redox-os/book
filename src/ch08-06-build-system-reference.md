@@ -134,6 +134,10 @@ Some Redox projects have crates on `crates.io`, thus they use a version-based de
 - [orbtk-shell](https://crates.io/crates/orbtk-shell)
 - [orbtk-tinyskia](https://crates.io/crates/orbtk-tinyskia)
 
+### Manual patching
+
+If you don't want to wait a new release on `crates.io`, you can patch the crate temporarily by fetching the version you need from GitLab and changing the crate version in `Cargo.toml` to `crate-name = { path = "path/to/crate" }`.
+
 ## Pinned commits
 
 The build system pin the last working commit of the submodules, if some submodule is broken because of some commit, the pinned commit avoid the fetch of this broken commit, thus pinned commits increase the development stability (broken changes aren't passed for developers/testers).
