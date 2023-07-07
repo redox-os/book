@@ -1,19 +1,25 @@
-Side Projects
-=============
+# Side Projects
 
-Redox is a complete Rust operating system.
-In addition to the kernel, we are developing several side projects, including:
+Redox is a complete Rust operating system, in addition to the kernel, we are developing several side projects, including:
 
 - [RedoxFS](https://gitlab.redox-os.org/redox-os/redoxfs) - Redox file system inspired by ZFS.
 - [Ion](https://gitlab.redox-os.org/redox-os/ion) - The Redox shell.
 - [Orbital](https://gitlab.redox-os.org/redox-os/orbital) - The desktop environment/display server of Redox.
 - [orbclient](https://gitlab.redox-os.org/redox-os/orbclient) - Orbital client library.
-- [OrbTK](https://gitlab.redox-os.org/redox-os/orbtk) - Cross-platform Rust-written GUI toolkit.
-- [pkgutils](https://gitlab.redox-os.org/redox-os/pkgutils) - Redox package management library and its command-line frontend.
-- [Sodium](https://gitlab.redox-os.org/redox-os/sodium) - A Vi-like editor.
+- [pkgutils](https://gitlab.redox-os.org/redox-os/pkgutils) - Redox package manager, with a command-line frontend and library.
+- [relibc](https://gitlab.redox-os.org/redox-os/relibc) - Redox C library.
 - [ralloc](https://gitlab.redox-os.org/redox-os/ralloc) - A memory allocator.
 - [libextra](https://gitlab.redox-os.org/redox-os/libextra) - Supplement for libstd, used throughout the Redox code base.
-- [games-for-redox](https://gitlab.redox-os.org/redox-os/games) - A collection of mini-games for Redox (alike BSD-games).
+- [audiod](https://gitlab.redox-os.org/redox-os/audiod) - Redox audio server.
+- [bootloader](https://gitlab.redox-os.org/redox-os/bootloader) - Redox boot loader.
+- [init](https://gitlab.redox-os.org/redox-os/init) - Redox init system.
+- [installer](https://gitlab.redox-os.org/redox-os/installer) - Redox buildsystem builder.
+- [netstack](https://gitlab.redox-os.org/redox-os/netstack) - Redox network stack.
+- [redoxer](https://gitlab.redox-os.org/redox-os/redoxer) - A tool to run/test Rust programs inside of a Redox VM.
+- [redox-linux](https://gitlab.redox-os.org/redox-os/redox-linux) - Redox userland on Linux.
+- [Sodium](https://gitlab.redox-os.org/redox-os/sodium) - A Vi-like editor.
+- [games](https://gitlab.redox-os.org/redox-os/games) - A collection of mini-games for Redox (alike BSD-games).
+- [OrbTK](https://gitlab.redox-os.org/redox-os/orbtk) - Cross-platform Rust-written GUI toolkit.
 - and a few other exciting projects you can explore [here](https://gitlab.redox-os.org/redox-os).
 
 We also have three utility distributions, which are collections of small, useful command-line programs:
