@@ -4,6 +4,31 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page explain 
 
 (Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
 
+- [Recipe](#recipe)
+- [Cookbook](#cookbook)
+    - [Custom Compiler](#custom-compiler)
+    - [Cross Compilation](#cross-compilation)
+    - [Templates](#templates)
+    - [Custom Template](#custom-template)
+        - [CMake script template](#cmake-script-template)
+        - [Cargo packages script template](#cargo-packages-script-template)
+        - [Cargo flags script template](#cargo-flags-script-template)
+        - [Cargo examples script template](#cargo-examples-script-template)
+- [Sources](#sources)
+    - [Tarballs](#tarballs)
+    - [Git Repositories](#git-repositories)
+- [Dependencies](#dependencies)
+- [Testing/Building](#testingbuilding)
+- [Update crates](#update-crates)
+    - [One or more crates](#one-or-more-crates)
+    - [All crates](#all-crates)
+    - [Verify the dependency tree](#verify-the-dependency-tree)
+- [Patch crates](#patch-crates)
+    - [Redox forks](#redox-forks)
+    - [Local patches](#local-patches)
+- [Cleanup](#cleanup)
+- [Submitting MRs](#submitting-mrs)
+
 ## Recipe
 
 A recipe is how we call a software port on Redox, on this section we will explain the recipe structure and things to consider.
@@ -98,7 +123,8 @@ To find the supported Cookbook shell commands, look the recipes using a `script 
 
 The "custom" template enable the `script =` field to be used, this field will run any command supported by your shell.
 
-- CMake script template
+#### CMake script template
+
 ```
 script = """
 COOKBOOK_CONFIGURE="cmake"
@@ -119,7 +145,8 @@ cookbook_configure
 
 More CMake options can be added with a `-D` before them, the customization of CMake compilation is very easy.
 
-- Cargo packages script template
+#### Cargo packages script template
+
 ```
 script = """
 cookbook_cargo_packages program-name
@@ -132,7 +159,8 @@ This script is used for Rust programs that use folders inside the repository for
 
 This will fix the "found virtual manifest instead of package manifest" error.
 
-- Cargo flags script template
+#### Cargo flags script template
+
 ```
 script = """
 cookbook_cargo --features flag-name
@@ -143,7 +171,8 @@ cookbook_cargo --features flag-name
 
 Some Rust softwares have Cargo flags for customization, search them to match your needs or make some program compile.
 
-- Cargo examples script template
+#### Cargo examples script template
+
 ```
 script = """
 cookbook_cargo_examples example-name
