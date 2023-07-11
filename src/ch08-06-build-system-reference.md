@@ -2,6 +2,18 @@
 
 The build system creates and/or uses several files that you may want to know about. There are also several `make` targets mentioned above, and a few extras that you may find useful. Here's a quick summary. All file paths are relative to your `redox` base directory.
 
+- [Build System Organization](#build-system-organization)
+- [Make Commands](#make-commands)
+- [Scripts](#scripts)
+- [Crates](#crates)
+  - [Current projects with crates](#current-projects-with-crates)
+  - [Manual patching](#manual-patching)
+- [Pinned commits](#pinned-commits)
+  - [Current pinned submodules](#current-pinned-submodules)
+  - [Manual submodule update](#manual-submodule-update)
+- [Update relibc](#update-relibc)
+- [Configuration](#configuration)
+
 ## Build System Organization
 
   - `Makefile` - The main makefile for the system, it loads all the other makefiles.

@@ -2,6 +2,23 @@
 
 In case you need to do some troubleshooting of the build process, this is a brief overview of the Redox toolchain, with some troubleshooting tips. This chapter is a work in progress.
 
+- [Setting Up](#setting-up)
+    - [bootstrap.sh](#bootstrapsh)
+    - [git clone](#git-clone)
+- [Building the System](#building-the-system)
+    - [.config and mk/config.mk](#config-and-mkconfigmk)
+    - [Prefix](#prefix)
+    - [Podman](#podman)
+    - [Filesystem Config](#filesystem-config)
+    - [Fetch](#fetch)
+    - [Cook](#cook)
+    - [Create the Image with  FUSE](#create-the-image-with-fuse)
+- [Solving Compilation Problems](#solving-compilation-problems)
+    - [Update relibc](#update-relibc)
+    - [Update crates](#update-crates)
+    - [Verify the dependency tree](#verify-the-dependency-tree)
+- [Kernel Panics in QEMU](#kernel-panics-in-qemu)
+
 ## Setting Up
 
 ### bootstrap.sh

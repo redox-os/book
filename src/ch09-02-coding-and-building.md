@@ -4,6 +4,34 @@ Let's walk through contributing to the Redox subpackage `games`, which is a coll
 
 (Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
 
+- [Working with Git](#working-with-git)
+- [Using Multiple Windows](#using-multiple-windows)
+- [Set up your Configuration](#set-up-your-configuration)
+- [The Recipe](#the-recipe)
+- [Git Clone](#git-clone)
+- [Edit your Code](#edit-your-code)
+- [Check your Code on Linux](#check-your-code-on-linux)
+- [The Full Rebuild Cycle](#the-full-rebuild-cycle)
+- [Test Your Changes](#test-your-changes)
+  - [Test Your Changes (out of the Redox build system)](#test-your-changes-out-of-the-redox-build-system)
+- [Update crates](#update-crates)
+- [Checking In your Changes](#checking-in-your-changes)
+- [Shortening the Rebuild Cycle](#shortening-the-rebuild-cycle)
+  - [Build your Package for Redox](#build-your-package-for-redox)
+  - [Make a New QEMU Image](#make-a-new-qemu-image)
+  - [Most Quick Trick To Test Changes](#most-quick-trick-to-test-changes)
+  - [Insert Files On QEMU Image](#insert-files-on-qemu-image)
+  - [Insert Text Files On Redox QEMU](#insert-text-files-on-redox-qemu)
+- [Working with an unpublished version of a crate](#working-with-an-unpublished-version-of-a-crate)
+- [A Note about Drivers](#a-note-about-drivers)
+- [VS Code Tips and Tricks](#vs-code-tips-and-tricks)
+  - [Start in the "source" folder](#start-in-the-source-folder)
+  - [Add it to your "Favorites" bar](#add-it-to-your-favorites-bar)
+  - [Wait a Couple of Minutes](#wait-a-couple-of-minutes)
+  - [Save Often](#save-often)
+  - [Don't Use it for the whole of Redox](#dont-use-it-for-the-whole-of-redox)
+  - [Don't Build the System in a VS Code Terminal](#dont-build-the-system-in-a-vs-code-terminal)
+
 ## Working with Git
 
 Before starting development, read through [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), which describes how the Redox team uses Git.
@@ -38,15 +66,15 @@ Edit the recipe so it does not try to automatically clone the sources.
 - Create a `Terminal` window running `bash` on your host system, which we will call your `Coding` shell.
 - Change to the `games` directory.
 - Open `recipe.toml` in an editor.
-  ```sh
-  cd ~/tryredox/redox/cookbook/recipes/games
-  gedit recipe.toml &
-  ```
+```sh
+cd ~/tryredox/redox/cookbook/recipes/games
+gedit recipe.toml &
+```
 - Comment out the `[source]` section at the top of the file.
-  ```toml
-  # [source]
-  # git = "https://gitlab.redox-os.org/redox-os/games.git"
-  ```
+```toml
+# [source]
+# git = "https://gitlab.redox-os.org/redox-os/games.git"
+```
 - Save your changes.
 
 ## Git Clone
@@ -54,19 +82,21 @@ Edit the recipe so it does not try to automatically clone the sources.
 To set up this package for contributing, do the following in your `Coding` shell.
 - Delete the source and target directories in `cookbook/recipes/games`.
 - Clone the package into the `source` directory, either specifying it in the `git clone` or by moving it after `clone`.
-  ```sh
-  rm -rf source target
-  git clone https://gitlab.redox-os.org/redox-os/games.git --origin upstream --recursive
-  mv games source
-  ```
+```sh
+rm -rf source target
+git clone https://gitlab.redox-os.org/redox-os/games.git --origin upstream --recursive
+mv games source
+```
 - If you are making a permanent change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
 
 - If you want to Git Clone a remote repoitory (main repoitory/your fork), you can add these sections on your `recipe.toml`:
-  ```
-    [source]
-    git = your_git_link
-    branch = your_branch (optional)
+
 ```
+[source]
+git = your_git_link
+branch = your_branch (optional)
+```
+
 ## Edit your Code
 
 - Using your favorite code editor, make your changes. We use `gedit` in this example, from your `Coding` shell. You can also use [VS Code](#vs-code-tips-and-tricks).
@@ -75,39 +105,39 @@ To set up this package for contributing, do the following in your `Coding` shell
   gedit src/minesweeper/main.rs &
   ```
 - Search for the line containing the definition of the `FLAGGED` constant (around line 36), and change it to `P`.
-  ```
-  const FLAGGED: &'static str = "P";
-  ```
+```
+const FLAGGED: &'static str = "P";
+```
 
 ## Check your Code on Linux
 
 Most Redox applications are source-compatible with Linux without being modified. You can (and should) build and test your program on Linux.
 - From within the `Coding` shell, go to the `source` directory and use the Linux version of `cargo` to check for errors.
-  ```sh
-  cargo check
-  ```
+```sh
+cargo check
+```
 (Since much of the code in `games` is older (pre-2018 Rust), you will get several warnings. They can be ignored)
 
   You could also use `cargo clippy`, but `minesweeper` is not clean enough to pass.
 - The `games` package creates more than one executable, so to test `minesweeper` on Linux, you need to specify it to `cargo`. In the `source` directory, do:
-  ```sh
-  cargo run --bin minesweeper
-  ```
+```sh
+cargo run --bin minesweeper
+```
 
 ## The Full Rebuild Cycle
 
 After making changes to your package, you should `make rebuild`, which will check for any changes to packages and make a new Redox image. `make all` and `make qemu` do not check for packages that need to be rebuilt, so if you use them, your changes may not be included in the system. Once you are comfortable with this process, you can try [some tricks to save time](#shortening-the-rebuild-cycle).
 - Within your `Build` shell, in your `redox` directory, do:
 
-  ```sh
-  script build.log
-  make rebuild
-  exit
-  ```
+```sh
+script build.log
+make rebuild
+exit
+```
 
-  The [script](https://manpages.ubuntu.com/manpages/jammy/man1/script.1.html) command starts a new shell and logs all the output from the `make` command.
+The [script](https://manpages.ubuntu.com/manpages/jammy/man1/script.1.html) command starts a new shell and logs all the output from the `make` command.
   
-  The `exit` command is to exit from `script`. Remember to exit the `script` shell to ensure all log messages are written to `build.log`. There's also a [trick](https://manpages.ubuntu.com/manpages/jammy/man1/script.1.html#signals) to flush the log.
+The `exit` command is to exit from `script`. Remember to exit the `script` shell to ensure all log messages are written to `build.log`. There's also a [trick](https://manpages.ubuntu.com/manpages/jammy/man1/script.1.html#signals) to flush the log.
 
 - You can now scan through `build.log` to check for errors. The file is large and contains many ANSI Escape Sequences, so it can be hard to read. However, if you encountered a fatal build error, it will be at the end of the log, so skip to the bottom and scan upwards.
 
@@ -123,9 +153,10 @@ In the Redox instance started by `make qemu`, test your changes to `minesweeper`
 Congratulations! You have modified a program and built the system! Next, create a bootable Redox with your change. 
 - If you are still running QEMU, type `Ctrl-Alt-G` and click the upper right corner of the Redox window to exit.
 - In your `Build` shell, in the `redox` directory, do:
-  ```sh
-  make live
-  ```
+```sh
+make live
+```
+
 In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. Follow the instructions for [Running on Real Hardware](./ch02-02-real-hardware.md) and test out your change.
 
 ### Test Your Changes (out of the Redox build system)
@@ -141,7 +172,7 @@ In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. 
 - `redoxer test` - test project with `redoxer`.
 - `redoxer exec echo hello` - run arbitrary executable with `redoxer`.
 
-### Update crates
+## Update crates
 
 - [Porting Applications using Recipes](./ch09-03-porting-applications.md#update-crates)
 
@@ -159,10 +190,11 @@ To skip some of the steps in a full `rebuild`, here are some tricks.
 
 You can build just the `games` package, rather than having `make rebuild` check every package for changes. This can help shorten the build cycle if you are trying to resolve issues such as compilation errors or linking to libraries.
 - In your `Build` shell, in the `redox` directory, type:
-  ```sh
-  make r.games
-  ```
-  Redox's makefiles have a rule for `r.PACKAGE`, where `PACKAGE` is the name of a Redox package. It will make that package, ready to load into the Redox filesystem.
+
+```sh
+make r.games
+```
+Redox's makefiles have a rule for `r.PACKAGE`, where `PACKAGE` is the name of a Redox package. It will make that package, ready to load into the Redox filesystem.
 
 Once your Redox package has been successfully built, you can use `make rebuild` to create the image, or, if you are confident you have made all packages successfully, you can skip a complete rebuild and just [make a new image](#make-a-new-qemu-image).
 
@@ -174,11 +206,13 @@ If you had a problem, use this command to log any possible errors on your termin
 
 Now that all the packages are built, you can make a Redox image without the step of checking for modifications. 
 - In your `Build` shell, in the `redox` directory, do:
-  ```sh
-  make image
-  make qemu
-  ```
-  `make image` skips building any packages (assuming the last full make succeeded), but it ensures a new image is created, which should include the package you built in the previous step.
+
+```sh
+make image
+make qemu
+```
+
+- `make image` skips building any packages (assuming the last full make succeeded), but it ensures a new image is created, which should include the package you built in the previous step.
 
 ### Most Quick Trick To Test Changes
 
@@ -195,45 +229,55 @@ If you feel the need to skip creating a new image, and you want to directly add 
 - **NOTE:** You must ensure that Redox is not running in QEMU when you do this.
 
 - In your `Build` shell, in the `redox` directory, type:
-  ```sh
-  make mount
-  ```
-  The Redox image is now mounted as a directory at `build/x86_64/myfiles/filesystem`.
-- Remove the old `minesweeper` and replace it with your new version. In the `Build` shell,
-  ```sh
-  cd ~/tryredox/redox/build/x86_64/myfiles/filesystem
-  rm ./bin/minesweeper
-  cp ~/tryredox/redox/cookbook/recipes/games/target/x86_64-unknown-redox/stage/bin/minesweeper ./bin
-  ```
-- Unmount the filesystem and test your image. **NOTE:** You must unmount before you start QEMU.
-  ```sh
-  cd ~/tryredox/redox
-  make unmount
-  make qemu
-  ```
-  The new version of `minesweeper` is now in your Redox filesystem.
 
-## Insert Text Files On Redox QEMU
+```sh
+make mount
+```
+
+The Redox image is now mounted as a directory at `build/x86_64/myfiles/filesystem`.
+
+- Remove the old `minesweeper` and replace it with your new version. In the `Build` shell.
+
+```sh
+cd ~/tryredox/redox/build/x86_64/myfiles/filesystem
+rm ./bin/minesweeper
+cp ~/tryredox/redox/cookbook/recipes/games/target/x86_64-unknown-redox/stage/bin/minesweeper ./bin
+```
+
+- Unmount the filesystem and test your image. **NOTE:** You must unmount before you start QEMU.
+
+```sh
+cd ~/tryredox/redox
+make unmount
+make qemu
+```
+
+The new version of `minesweeper` is now in your Redox filesystem.
+
+### Insert Text Files On Redox QEMU
 
 If you need to move text files, such as shell scripts or command output, from or to your Redox instance running on QEMU, use your Terminal window that you used to start QEMU. To capture the output of a Redox command, run `script` before starting QEMU.
-  ```sh
-  script qemu.log
-  make qemu
-  redox login: user
-  # execute your commands, with output to the terminal
-  # exit QEMU
-  # exit the shell started by script
-  exit
-  ```
-  The command output will now be in the file qemu.log. Note that if you did not exit the `script` shell, the output may not be complete.
 
-  To transfer a text file, such as a shell script, onto Redox, use the Terminal window with copy/paste.
-  ```sh
-  redox login: user
-  cat > myscript.sh << EOF
-  # Copy the text to the clipboard and use the Terminal window paste
+```sh
+script qemu.log
+make qemu
+redox login: user
+# execute your commands, with output to the terminal
+# exit QEMU
+# exit the shell started by script
+exit
+```
+
+The command output will now be in the file qemu.log. Note that if you did not exit the `script` shell, the output may not be complete.
+
+To transfer a text file, such as a shell script, onto Redox, use the Terminal window with copy/paste.
+
+```sh
+redox login: user
+cat > myscript.sh << EOF
+# Copy the text to the clipboard and use the Terminal window paste
   EOF
-  ```
+```
 
 If your file is large, or non-ascii, or you have many files to copy, you can use the process described in [Patch an Image](#insert-files-on-qemu-image). However, you do so at your own risk.
 
@@ -259,7 +303,6 @@ Drivers are a special case for rebuild. The source for drivers is fetched both f
 ```sh
 rm -rf cookbook/recipes/drivers-initfs/{source,target} cookbook/recipes/initfs/target
 cp -R cookbook/recipes/drivers/source cookbook/recipes/drivers-initfs
-
 make rebuild qemu
 ```
 
@@ -279,12 +322,13 @@ After installing the `rust-analyzer` extension as described in the overview, you
 
 Using VS Code on individual packages works pretty well, although it sometimes take a couple of minutes to kick in. Here are some things to know.
 
-### Start in the "source" dir
+### Start in the "source" folder
 
 In your `Coding` shell, start VS Code, specifying the `source` directory.
-  ```sh
-  code ~/tryredox/redox/cookbook/recipes/games/source
-  ```
+
+```sh
+code ~/tryredox/redox/cookbook/recipes/games/source
+```
 Or if you are in the `source` directory, just `code .` with the period meaning the `source` dir.
 
 ### Add it to your "Favorites" bar

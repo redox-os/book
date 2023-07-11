@@ -2,6 +2,22 @@
 
 (Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
 
+- [Existing package](#existing-package)
+  - [Set up the Redox Build Environment](#set-up-the-redox-build-environment)
+  - [Set up your Configuration](#set-up-your-configuration)
+  - [Build the System](#build-the-system)
+  - [Dependencies](#dependencies)
+  - [Update crates](#update-crates)
+- [Using a Script](#using-a-script)
+  - [Pre-script](#pre-script)
+  - [Post-script](#post-script)
+- [Modifying an Existing Package](#modifying-an-existing-package)
+- [Create your own - Hello World](#create-your-own---hello-world)
+  - [Setting up the recipe](#setting-up-the-recipe)
+  - [Writing the program](#writing-the-program)
+  - [Adding the program to the Redox build](#adding-the-program-to-the-redox-build)
+- [Running your program](#running-your-program)
+
 Redox's **Cookbook** toolchain makes packaging a program to include in a build fairly
 straightforward. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./ch09-02-coding-and-building.md), we discuss the development cycle in more detail.
 
@@ -106,6 +122,7 @@ cd cookbook/recipes/recipe-name/source
 cargo update
 make c.recipe-name
 make r.recipe-name
+```
 
 ## Using a Script
 
