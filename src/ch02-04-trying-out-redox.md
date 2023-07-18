@@ -6,44 +6,11 @@ On the Demo system, click on the Redox symbol in the bottom left corner of the s
 
 Many of the available commands are in the folders `/bin` and `/ui/bin`, which will be in your command path. Open a Terminal window and type `ls file:/bin` (or just `ls /bin`) to see some of the available commands. Some of the games listed below are in `/games`, which is not in your command path by default, so you may have to specify the full path for the command.
 
-## Games with SDL Graphics
+## Programs
 
-### Freedoom
+### General programs
 
-Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can find the Freedoom website [here](https://freedoom.github.io/). PrBoom can be found [here](https://prboom.sourceforge.net/). Click on the **Redox** logo on the bottom left, and choose `Games`, then choose `Freedoom`. Or open a Terminal window and try `/games/freedoom1` or `/games/freedoom2`.
-
-Hit `Esc` and use the arrow keys to select Options->Setup->Key Bindings for keyboard help.
-
-### Neverball and Nevergolf
-
-Neverball and Nevergolf are 3D pinball and golf respectively. Click on the **Redox** logo on the bottom left, and choose `Games`, then choose from the menu.
-
-### Sopwith
-
-Sopwith is a game allows you to control a small plane. Originally written in 1984, it used PC graphics, but is now available using the SDL library. In a Terminal window type `sopwith`.
-- Comma ( , ) - Pull back
-- Slash ( / ) - Push forward
-- Period ( . ) - Flip aircraft
-- Space - Fire gun
-- B - Drop Bomb
-
-### Syobonaction
-
-Syobon Action is 2D side-scrolling platformer that you won't enjoy. In a Terminal window, type `syobonaction`. It's recommended that you read the [GitHub page](https://github.com/angelXwind/OpenSyobonAction) so you don't blame us.
-
-## Terminal Window Games Written in Rust
-
-Also check out some games that have been written in Rust, and use the Terminal Window for simple graphics. In a Terminal window, enter one of the following commands:
-- `baduk` - Baduk/Go 
-- `dem` - Democracy 
-- `flappy` - Flappy Bird clone 
-- `ice` - Ice Sliding Puzzle 
-- `minesweeper` - Minesweeper but it wraps 
-- `reblox` - Tetris-like falling blocks 
-- `redoku` - Sudoku 
-- `snake` - Snake 
-
-## Rusthello
+#### Rusthello
 
 Rusthello is an advanced Reversi AI, made by [HenryTheCat](https://github.com/HenryTheCat). It is highly concurrent, so this acts as a demonstration of Redox's multithreading capabilities. It supports various AIs, such as brute force, minimax, local optimizations, and hybrid AIs.
 
@@ -51,11 +18,11 @@ In a Terminal window, type `rusthello`.
 
 Then you will get prompted for various things, such as difficulty, AI setup, and so on. When this is done, Rusthello interactively starts the battle between you and an AI or an AI and an AI.
 
-## Periodic Table
+#### Periodic Table
 
 The Periodic Table `/ui/bin/periodictable` is a demonstration of the **OrbTk** user interface toolkit, which is part of the **Redox Orbital** user interface.
 
-## Sodium
+#### Sodium
 
 Sodium is Redox's Vi-like editor. To try it out, open a terminal window and type `sodium`.
 
@@ -67,3 +34,42 @@ A short list of the Sodium defaults:
 - shift-space: Go to normal mode.
 
 For a more extensive list, write `;help`.
+
+
+### Games with a SDL backend
+
+#### Freedoom
+
+Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can find the Freedoom website [here](https://freedoom.github.io/). PrBoom can be found [here](https://prboom.sourceforge.net/). Click on the **Redox** logo on the bottom left, and choose `Games`, then choose `Freedoom`. Or open a Terminal window and try `/games/freedoom1` or `/games/freedoom2`.
+
+Hit `Esc` and use the arrow keys to select Options->Setup->Key Bindings for keyboard help.
+
+#### Neverball and Nevergolf
+
+Neverball and Nevergolf are 3D pinball and golf respectively. Click on the **Redox** logo on the bottom left, and choose `Games`, then choose from the menu.
+
+#### Sopwith
+
+Sopwith is a game allows you to control a small plane. Originally written in 1984, it used PC graphics, but is now available using the SDL library. In a Terminal window type `sopwith`.
+- Comma ( , ) - Pull back
+- Slash ( / ) - Push forward
+- Period ( . ) - Flip aircraft
+- Space - Fire gun
+- B - Drop Bomb
+
+#### Syobonaction
+
+Syobon Action is 2D side-scrolling platformer that you won't enjoy. In a Terminal window, type `syobonaction`. It's recommended that you read the [GitHub page](https://github.com/angelXwind/OpenSyobonAction) so you don't blame us.
+
+### Terminal Games Written in Rust
+
+Also check out some games that have been written in Rust, and use the Terminal Window for simple graphics. In a Terminal window, enter one of the following commands:
+
+- `baduk` - Baduk/Go 
+- `dem` - Democracy 
+- `flappy` - Flappy Bird clone 
+- `ice` - Ice Sliding Puzzle 
+- `minesweeper` - Minesweeper but it wraps 
+- `reblox` - Tetris-like falling blocks 
+- `redoku` - Sudoku 
+- `snake` - Snake 
