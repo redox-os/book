@@ -18,11 +18,23 @@ The last step is to adapt our Mesa3D [fork](https://gitlab.redox-os.org/redox-os
 
 ### Orbital
 
-Orbital provides a display server, window manager and compositor.
+The Orbital desktop environment provides a display server, window manager and compositor.
 
-The display server is written in Rust, thus being an alternative to Wayland/X11.
+- The display server is more simple than Wayland, making the porting task more quick and easy.
 
-Current features:
+#### Libraries
+
+The programs written for these libraries can run on Orbital.
+
+- SDL1.2
+- SDL2
+- winit
+- softbuffer
+- Slint (use winit/softbuffer)
+- Iced (use winit/softbuffer)
+- egui (can use winit or SDL2)
+
+#### Features
 
 - Custom Resolutions
 - App Launcher (bottom bar)
