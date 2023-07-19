@@ -44,38 +44,45 @@ The `relibc` (Redox C Library) provides the Redox system calls to any software.
 
 Create a directory and clone the repository.
 
- ```sh
+```sh
 mkdir -p ~/tryredox
 cd ~/tryredox
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
 cd redox
 git submodule update --recursive --init
- ```
+```
+
 Please be patient, this can take minutes to hours depending on the hardware and network you're running it on.
 
 In addition to installing the various packages needed for building Redox, **bootstrap.sh** and **podman_bootstrap.sh** both clone the repository, so if you used either script, you have completed Step 1. 
 
 ## Install Pre-Requisite Packages and Emulators
 
-If you cloned the source tree *before* running **bootstrap.sh**, you can use
+If you cloned the source tree *before* running **bootstrap.sh**, you can use:
+
 ```sh
 cd ~/tryredox/redox
 ./bootstrap.sh -d
 ```
+
 to install the package dependencies without re-fetching any source. If you wish to install the dependencies yourself, some examples are given below.
 
 ### Pop!_OS/Ubuntu/Debian Users
 
 Install the package dependencies:
+
 ```sh
 sudo apt-get install git autoconf autopoint bison build-essential cmake curl file flex genisoimage git gperf libc6-dev-i386 libexpat-dev libfuse-dev libgmp-dev libhtml-parser-perl libpng-dev libtool libjpeg-dev libvorbis-dev libsdl2-ttf-dev libosmesa6-dev m4 nasm pkg-config po4a syslinux-utils texinfo libsdl1.2-dev ninja-build meson python3-mako
 ```
 
 - If you want to use QEMU, run:
+
 ```sh
 sudo apt-get install qemu-system-x86 qemu-kvm
 ```
+
 - If you want to use VirtualBox, run:
+
 ```sh
 sudo apt-get install virtualbox
 ```
@@ -89,29 +96,35 @@ sudo dnf install git file autoconf vim bison flex genisoimage gperf glibc-devel.
 ```
 
 - If you want to use QEMU, run:
+
 ```sh
 sudo dnf install qemu-system-x86 qemu-kvm
 ```
+
 - If you want to use VirtualBox, install from VirtualBox [Linux Downloads](https://www.virtualbox.org/wiki/Linux_Downloads) page.
 
 ### MacOS Users using MacPorts:
 
 If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the prerequisite packages yourself. Some of them are listed here.
 
-```
+```sh
 sudo port install git coreutils findutils gcc49 gcc-4.9 nasm pkgconfig osxfuse x86_64-elf-gcc cmake ninja po4a texinfo
 ```
 
 - If you want to use QEMU, run:
+
 ```sh
 sudo port install qemu qemu-system-x86_64
 ```
+
 - If you want to use VirtualBox, run:
+
 ```sh
 sudo port install virtualbox
 ```
 
 If you have some problem, try to install this Perl module:
+
 ```sh
 cpan install HTML::Entities
 ```
@@ -124,19 +137,25 @@ If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can atte
 brew install git automake bison gettext libtool make nasm gcc@7 gcc-7 pkg-config cmake ninja po4a macfuse findutils textinfo
 ```
 and
+
 ```sh
 brew install redox-os/gcc_cross_compilers/x86_64-elf-gcc
 ```
 
 - If you want to use QEMU, run:
+
 ```sh
 brew install qemu qemu-system-x86_64
 ```
+
 - If you want to use VirtualBox, run:
+
 ```sh
 brew install virtualbox
 ```
+
 If you have some problem, try to install this Perl module:
+
 ```sh
 cpan install HTML::Entities
 ```
@@ -148,7 +167,9 @@ Install Rust, make the nightly version your default toolchain, then list the ins
 ```sh
 curl https://sh.rustup.rs -sSf | sh
 ```
+
 then
+
 ```sh
 source ~/.cargo/env
 rustup default nightly
@@ -171,9 +192,11 @@ The **Cookbook** system is an essential part of the Redox build system. Each Red
 ## Creating a Build Environment Shell
 
 If you are working on specific components of the system, and will be using some of the tools in the `cookbook` directory and bypassing `make`, you may wish to create a build environment shell. This shell includes the `prefix` tools in your path. You can do this with:
+
 ```sh
 make env
 ```
+
 This command also works with **Podman Build**, creating a shell in Podman and setting PATH to include the necessary build tools.
 
 ## Updating The Sources

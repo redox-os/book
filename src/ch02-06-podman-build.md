@@ -41,12 +41,16 @@ cd ~/tryredox
 curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.sh -o podman_bootstrap.sh
 time bash -e podman_bootstrap.sh
 ```
+
 - Change to the `redox` directory.
+
 ```sh
 cd ~/tryredox/redox
 ```
+
 - Check that the file [.config](./ch02-07-configuration-settings.md#config) was created in the `redox` base directory, and contains the line `PODMAN_BUILD?=1`.
 - Build the system. This will take some time.
+
 ```sh
 time make all
 ```
@@ -63,11 +67,13 @@ git rebase upstream/master
 ```
 
 - Install **Podman**. Many distros require additional packages. Check the [Minimum Installation](./ch08-02-advanced-podman-build.md#minimum-installation) instructions to see what is needed for your distro. Or, run the following in your `redox` base` directory:
+
 ```sh
 ./podman_bootstrap.sh -d
 ```
 
 - Set `PODMAN_BUILD` to 1 and run `make`. The first container setup can take 15 minutes or more, but it is comparable in speed to native build after that.
+
 ```sh
 export PODMAN_BUILD=1
 make all
@@ -75,6 +81,7 @@ make qemu
 ```
 
 To ensure `PODMAN_BUILD` is properly set for future builds, edit [.config](./ch02-07-configuration-settings.md#config) in your base `redox` directory and change its value.
+
 ```sh
 gedit .config &
 ```

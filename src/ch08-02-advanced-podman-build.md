@@ -26,7 +26,7 @@ sudo apt-get install podman
 sudo apt-get install podman curl git make libfuse-dev
 ```
 
-### ArchLinux
+### Arch Linux
 
 ```sh
 sudo pacman -S --needed git podman fuse
@@ -45,33 +45,42 @@ The building of the **image** is controlled by the *tag* file `build/container.t
 Many targets in the Makefiles `mk/*.mk` include `build/container.tag` as a dependency. If the *tag* file is missing, building any of those targets may trigger an image to be created, which can take some time.
 
 When you move to a new working directory, if you want to save a few minutes, and you are confident that your **image** is correct and your `poduser` home directory `build/podman/poduser` is valid, you can do
+
 ```sh
 make container_touch
 ```
+
 This will create the file `build/container.tag` without rebuilding the image. However, it will fail if the image does not exist. If it fails, just do a normal `make`, it will create the container when needed.
 
 ## Cleaning Up
 
-To remove the **base image**, any lingering containers, `poduser`'s home directory, including the **Rust** install, and `build/container.tag`, use
+To remove the **base image**, any lingering containers, `poduser`'s home directory, including the **Rust** install, and `build/container.tag`, use:
+
 ```sh
 make container_clean
 ```
 
 To check that everything has been removed,
+
 ```sh
 podman ps -a
 podman images
 ```
+
 will show any remaining images or containers. If you need to do further cleanup,
+
 ```
 podman system reset
 ```
+
 will remove **all** images and containers. You still may need to remove `build/container.tag` if you did not do `make container_clean`. 
 
 In some rare instances, `poduser`'s home directory can have bad file permissions, and you may need to do 
+
 ```sh
 sudo chown -R `id -un`:`id -gn` build/podman
 ```
+
 where `` `id -un` `` is your User ID and `` `id -gn` `` is your effective Group ID. Be sure to `make container_clean` after that.
 
 **Note:**
@@ -81,20 +90,25 @@ where `` `id -un` `` is your User ID and `` `id -gn` `` is your effective Group 
 ## Debugging your Build Process
 
 If you are developing your own components and wish to do one-time debugging to determine what library you are missing in the **Podman Build** environment, the following instructions can help. Note that your changes will not be persistent. After debugging, **you must** [Add your Libraries to the Build](#adding-libraries-to-the-build). With `PODMAN_BUILD=1`, run the command:
+
 ```sh
 make container_shell
 ```
 
 This will start a `bash` shell in the **Podman** container environment, as a normal user without `sudo` privilege. Within that environment, you can build the Redox components with:
+
 ```sh
 make repo
 ```
+
 or, if you need to change `ARCH` or `CONFIG_NAME`,
+
 ```sh
 ./build.sh -a ARCH -c CONFIG_NAME repo
 ```
 
 If you need `root` privileges, while you are **still running** the above `bash` shell, go to a separate **Terminal** or **Console** window on the host, and type:
+
 ```sh
 cd ~/tryredox/redox
 make container_su
@@ -115,6 +129,7 @@ The default **Containerfile**, `podman/redox-base-containerfile`, imports all re
 However, you cannot easily add packages after the **base image** is created. You must add them to your own Containerfile and rebuild the container image. 
 
 Copy `podman/redox-base-containerfile` and add to the list of packages in the initial `apt-get`.
+
 ```sh
 cp podman/redox-base-containerfile podman/my-containerfile
 gedit podman/my-containerfile &
@@ -130,6 +145,7 @@ Make sure you include the continuation character `\` at the end of each line exc
 
 
 Then, edit [.config](./ch02-07-configuration-settings.md#config), and change the variable `CONTAINERFILE` to point to your Containerfile, e.g.
+
 ```
 CONTAINERFILE?=podman/my-containerfile
 ```
@@ -210,8 +226,10 @@ In the **Containerfile**, we use as few `RUN` commands as possible, as **Podman*
 
 Containers in our build process are run with `--rm` to ensure the container is discarded after each use. This prevents a proliferation of used containers. However, when you use `make container_clean`, you may notice multiple items being deleted. These are the partial images created as each `RUN` command is executed while building.
 
-Container images and container data is normally stored in the directory `$HOME/.local/share/containers/storage`. The command
+Container images and container data is normally stored in the directory `$HOME/.local/share/containers/storage`. The command:
+
 ```sh
 podman system reset
 ```
+
 removes that directory in its entirety. However, the contents of any **volume** are left alone.

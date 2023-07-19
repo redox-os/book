@@ -66,15 +66,19 @@ Edit the recipe so it does not try to automatically clone the sources.
 - Create a `Terminal` window running `bash` on your host system, which we will call your `Coding` shell.
 - Change to the `games` directory.
 - Open `recipe.toml` in an editor.
+
 ```sh
 cd ~/tryredox/redox/cookbook/recipes/games
 gedit recipe.toml &
 ```
+
 - Comment out the `[source]` section at the top of the file.
+
 ```toml
 # [source]
 # git = "https://gitlab.redox-os.org/redox-os/games.git"
 ```
+
 - Save your changes.
 
 ## Git Clone
@@ -82,16 +86,18 @@ gedit recipe.toml &
 To set up this package for contributing, do the following in your `Coding` shell.
 - Delete the source and target directories in `cookbook/recipes/games`.
 - Clone the package into the `source` directory, either specifying it in the `git clone` or by moving it after `clone`.
+
 ```sh
 rm -rf source target
 git clone https://gitlab.redox-os.org/redox-os/games.git --origin upstream --recursive
 mv games source
 ```
+
 - If you are making a permanent change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
 
 - If you want to Git Clone a remote repoitory (main repoitory/your fork), you can add these sections on your `recipe.toml`:
 
-```
+```toml
 [source]
 git = your_git_link
 branch = your_branch (optional)
@@ -100,10 +106,12 @@ branch = your_branch (optional)
 ## Edit your Code
 
 - Using your favorite code editor, make your changes. We use `gedit` in this example, from your `Coding` shell. You can also use [VS Code](#vs-code-tips-and-tricks).
-  ```sh
-  cd source
-  gedit src/minesweeper/main.rs &
-  ```
+
+```sh
+cd source
+gedit src/minesweeper/main.rs &
+```
+
 - Search for the line containing the definition of the `FLAGGED` constant (around line 36), and change it to `P`.
 ```
 const FLAGGED: &'static str = "P";
@@ -113,13 +121,16 @@ const FLAGGED: &'static str = "P";
 
 Most Redox applications are source-compatible with Linux without being modified. You can (and should) build and test your program on Linux.
 - From within the `Coding` shell, go to the `source` directory and use the Linux version of `cargo` to check for errors.
+
 ```sh
 cargo check
 ```
+
 (Since much of the code in `games` is older (pre-2018 Rust), you will get several warnings. They can be ignored)
 
   You could also use `cargo clippy`, but `minesweeper` is not clean enough to pass.
 - The `games` package creates more than one executable, so to test `minesweeper` on Linux, you need to specify it to `cargo`. In the `source` directory, do:
+
 ```sh
 cargo run --bin minesweeper
 ```
@@ -144,6 +155,7 @@ The `exit` command is to exit from `script`. Remember to exit the `script` shell
 ## Test Your Changes
 
 In the Redox instance started by `make qemu`, test your changes to `minesweeper`.
+
 - Log in with user `user` and no password.
 - Open a `Terminal` window.
 - Type `minesweeper`.
@@ -153,6 +165,7 @@ In the Redox instance started by `make qemu`, test your changes to `minesweeper`
 Congratulations! You have modified a program and built the system! Next, create a bootable Redox with your change. 
 - If you are still running QEMU, type `Ctrl-Alt-G` and click the upper right corner of the Redox window to exit.
 - In your `Build` shell, in the `redox` directory, do:
+
 ```sh
 make live
 ```
@@ -194,13 +207,14 @@ You can build just the `games` package, rather than having `make rebuild` check 
 ```sh
 make r.games
 ```
+
 Redox's makefiles have a rule for `r.PACKAGE`, where `PACKAGE` is the name of a Redox package. It will make that package, ready to load into the Redox filesystem.
 
 Once your Redox package has been successfully built, you can use `make rebuild` to create the image, or, if you are confident you have made all packages successfully, you can skip a complete rebuild and just [make a new image](#make-a-new-qemu-image).
 
 If you had a problem, use this command to log any possible errors on your terminal output:
 
-- `make r.recipe-name 2>&1 | tee recipe-name.log`
+- `make c.recipe-name r.recipe-name 2>&1 | tee recipe-name.log`
 
 ### Make a New QEMU Image
 
@@ -211,6 +225,11 @@ Now that all the packages are built, you can make a Redox image without the step
 make image
 make qemu
 ```
+Or
+
+```sh
+make image qemu
+```
 
 - `make image` skips building any packages (assuming the last full make succeeded), but it ensures a new image is created, which should include the package you built in the previous step.
 
@@ -218,7 +237,17 @@ make qemu
 
 Run:
 
-- `make r.recipe && make image && make qemu`
+```sh
+make c.recipe-name
+make r.recipe-name
+make image
+make qemu
+```
+Or
+
+```sh
+make c.recipe-name r.recipe-name image qemu
+```
 
 This command will [build just your modified recipe](#build-your-package-for-redox), then [update your QEMU image with your modified recipe](#make-a-new-qemu-image) and run QEMU with a GUI.
 
@@ -303,7 +332,8 @@ Drivers are a special case for rebuild. The source for drivers is fetched both f
 ```sh
 rm -rf cookbook/recipes/drivers-initfs/{source,target} cookbook/recipes/initfs/target
 cp -R cookbook/recipes/drivers/source cookbook/recipes/drivers-initfs
-make rebuild qemu
+make rebuild
+make qemu
 ```
 
 ## VS Code Tips and Tricks
@@ -329,6 +359,7 @@ In your `Coding` shell, start VS Code, specifying the `source` directory.
 ```sh
 code ~/tryredox/redox/cookbook/recipes/games/source
 ```
+
 Or if you are in the `source` directory, just `code .` with the period meaning the `source` dir.
 
 ### Add it to your "Favorites" bar
