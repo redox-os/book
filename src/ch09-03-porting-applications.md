@@ -36,6 +36,7 @@ A recipe is how we call a software port on Redox, on this section we will explai
 Create a folder in `cookbook/recipes` with a file named as `recipe.toml` inside, we will edit this file to fit the program needs.
 
 - Commands example:
+
 ```sh
 cd ~/tryredox/redox
 mkdir cookbook/recipes/program_example
@@ -44,7 +45,7 @@ nano cookbook/recipes/program_example/recipe.toml
 
 Your `recipe.toml` file will look like this:
 
-```
+```toml
 [source]
 git = "software-repository-link.git"
 branch = "branch-name"
@@ -69,6 +70,7 @@ dependencies = [
     "runtime2",
 ]
 ```
+
 - Don't remove/forget the `[build]` section (`[source]` section can be removed if you don't use `git =` and `tar =` or have the `source` folder present on your recipe folder).
 - Insert `git =` to clone your software repository, if it's not available the build system will build the contents inside the `source` folder on recipe directory.
 - Insert `branch =` if your want to use other branch.
@@ -125,7 +127,7 @@ The "custom" template enable the `script =` field to be used, this field will ru
 
 #### CMake script template
 
-```
+```toml
 script = """
 COOKBOOK_CONFIGURE="cmake"
 COOKBOOK_CONFIGURE_FLAGS=(
@@ -147,7 +149,7 @@ More CMake options can be added with a `-D` before them, the customization of CM
 
 #### Cargo packages script template
 
-```
+```toml
 script = """
 cookbook_cargo_packages program-name
 """
@@ -161,7 +163,7 @@ This will fix the "found virtual manifest instead of package manifest" error.
 
 #### Cargo flags script template
 
-```
+```toml
 script = """
 cookbook_cargo --features flag-name
 """
@@ -173,7 +175,7 @@ Some Rust softwares have Cargo flags for customization, search them to match you
 
 #### Cargo examples script template
 
-```
+```toml
 script = """
 cookbook_cargo_examples example-name
 """
@@ -210,11 +212,13 @@ If you are on GitHub they appear as a collapsed code on the "Releases" page or "
 You can look this [example](https://github.com/redox-os/redox/commit/4f8c725f32a434ada132ca3296d31d4bbb75f850), if you see this same commit [here](https://github.com/redox-os/redox/releases/tag/0.5.0), it appears collapsed as "4f8c725" and is clickable.
 
 The first two lines of your `recipe.toml` will looks like this:
-```
+
+```toml
 [source]
 git = "repository-link.git"
 rev = "commit-revision-hash"
 ```
+
 This same logic applies for every Git frontend and is more easy to find, manage and patch than tarballs.
 
 ## Dependencies
@@ -258,8 +262,9 @@ If you want to insert this recipe permanently in your QEMU image add your recipe
 To install your compiled recipe on QEMU image, run `make image`.
 
 If you had a problem, use this command to log any possible errors on your terminal output:
+
 ```sh
-make r.recipe-name 2>&1 | tee recipe-name.log
+make c.recipe-name r.recipe-name 2>&1 | tee recipe-name.log
 ```
 
 The recipe sources will be extracted/cloned on the `source` folder inside of your recipe folder, the binaries go to `target` folder.
@@ -281,9 +286,19 @@ We recommend that you do this based on the errors you get during the compilation
 - Go to the `source` folder of your recipe and run `cargo update -p crate-name`, example:
 
 ```sh
-cd cookbook/recipes/recipe-name/source && cargo update -p crate1 crate2 && cd -
+cd cookbook/recipes/recipe-name/source
+cargo update -p crate1 crate2
+cd -
 make c.recipe-name
 make r.recipe-name
+```
+Or
+
+```sh
+cd cookbook/recipes/recipe-name/source
+cargo update -p crate1 crate2
+cd -
+make c.recipe-name r.recipe-name
 ```
 
 ### All crates
@@ -295,9 +310,19 @@ This method will update all crates of the dependency chain to the latest version
 - Go to the `source` folder of your recipe and run `cargo update`, example:
 
 ```sh
-cd cookbook/recipes/recipe-name/source && cargo update && cd -
+cd cookbook/recipes/recipe-name/source
+cargo update
+cd -
 make c.recipe-name
 make r.recipe-name
+```
+Or
+
+```sh
+cd cookbook/recipes/recipe-name/source
+cargo update
+cd -
+make c.recipe-name r.recipe-name
 ```
 
 ### Verify the dependency tree
@@ -314,7 +339,7 @@ It's possible that some not ported crate have a Redox fork with patches, you can
 
 To use this Redox fork on your Rust program, add this text on the end of the `Cargo.toml` in the program source code:
 
-```
+```toml
 [patch.crates-io]
 crate-name = { git = "repository-link", branch = "redox" }
 ```
@@ -322,23 +347,23 @@ crate-name = { git = "repository-link", branch = "redox" }
 It will make Cargo replace the patched crate in the entire dependency chain, after that, run:
 
 ```sh
-make c.recipe-name
-make r.recipe-name
+make c.recipe-name r.recipe-name
 ```
 
 Or (if the above doesn't work)
 
 ```sh
-cd cookbook/recipes/recipe-name/source && cargo update -p crate-name && cd -
-make c.recipe-name
-make r.recipe-name
+cd cookbook/recipes/recipe-name/source
+cargo update -p crate-name
+cd -
+make c.recipe-name r.recipe-name
 ```
 
 ### Local patches
 
 If you want to patch some crate offline with your patches, add this text on the `Cargo.toml` of the program:
 
-```
+```toml
 [patch.crates-io]
 crate-name = { path = "patched-crate-folder" }
 ```
@@ -348,16 +373,16 @@ It will make Cargo replace the crate based on this folder in the program source 
 Inside this folder you will apply the patches on the crate source and build the recipe:
 
 ```sh
-make c.recipe-name
-make r.recipe-name
+make c.recipe-name r.recipe-name
 ```
 
 Or
 
 ```sh
-cd cookbook/recipes/recipe-name/source && cargo update -p crate-name && cd -
-make c.recipe-name
-make r.recipe-name
+cd cookbook/recipes/recipe-name/source
+cargo update -p crate-name
+cd -
+make c.recipe-name r.recipe-name
 ```
 
 ## Cleanup

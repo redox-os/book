@@ -35,7 +35,8 @@ The `bootstrap.sh` script and `redox-base-containerfile` covers the build system
 
 ### git clone
 
-If you did not use `bootstrap.sh` or `podman_bootstrap.sh` to set up your environment, you can get the sources with
+If you did not use `bootstrap.sh` or `podman_bootstrap.sh` to set up your environment, you can get the sources with:
+
 ```sh
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
 ```
@@ -77,7 +78,7 @@ If you are doing work on a package, you may want to comment out the `[source]` s
 
 After all recipes are fetched, a tag file is created as `build/$ARCH/$CONFIG_NAME/fetch.tag`, e.g. `build/x86_64/desktop/fetch.tag`. If this file is present, fetching is skipped. You can remove it manually, or use `make rebuild`, if you want to force refetching.
 
-### Cook
+### Cookbook
 
 Each recipe is built according to the `recipe.toml` file. The compiled recipe is placed in the `target` directory, in a subdirectory named based on the processor architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Cargo`. These commands make assumptions about $PATH and $PWD, so they might not work if you are using them outside the build process.
 
@@ -103,23 +104,13 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
 
 ### Update relibc
 
-An outdated relibc copy can contain bugs (already fixed on recent versions) or outdated crates, to update the relibc sources and build it, run:
-```sh
-make pull
-touch relibc
-make prefix
-make rebuild
-```
+An outdated relibc copy can contain bugs (already fixed on recent versions) or outdated crates.
 
-Sometimes you need to update some relibc crate, run these commands between the `make pull` and `touch relibc` commands:
-
-```sh
-cd relibc
-cargo update -p crate-name
-cd ..
-```
+- [Update relibc](./ch08-06-build-system-reference.md#update-relibc)
 
 ### Update crates
+
+Sometimes a Rust program use an old crate version without Redox support.
 
 - [Porting Applications using Recipes](./ch09-03-porting-applications.md#update-crates)
 

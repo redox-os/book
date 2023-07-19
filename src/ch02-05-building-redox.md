@@ -19,7 +19,7 @@ which curl || sudo apt-get install curl # Pop!_OS/Ubuntu/Debian - adjust for you
 ```
 
 Then run the following commands:
-```
+```sh
 mkdir -p ~/tryredox
 cd ~/tryredox
 curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
@@ -35,8 +35,9 @@ The above does the following:
 
 Note that `curl -sf` operates silently, so if there are errors, you may get an empty or incorrect version of bootstrap.sh. Check for typos in the command and try again. If you continue to have problems, join the [chat](./ch13-01-chat.md) and let us know.
 
-Please be patient, this can take 5 minutes to an hour depending on the hardware and network you're running it on. Once it completes, update your path in the current shell with
-```sh2048
+Please be patient, this can take 5 minutes to an hour depending on the hardware and network you're running it on. Once it completes, update your path in the current shell with:
+
+```sh
 source ~/.cargo/env
 ```
 
@@ -99,12 +100,20 @@ The emulator will display the Redox GUI. See [Using the emulation](./ch02-01-run
 
 #### Run with no GUI
 
-To run the emulation with no GUI, use
+To run the emulation with no GUI, use:
+
+```sh
+make qemu vga=no
 ```
+
+If you want to capture the terminal output, use:
+
+```sh
 script ~/my_log.txt
 make qemu vga=no
 exit
 ```
+
 Running with no GUI is the recommended method of capturing console and debug output from the system or from your text-only program. The `script` command creates a new shell, capturing all input and output from the text console to the log file with the given name. Remember to type `exit` after the emulation terminates, in order to properly flush the output to the log file and terminate `script`'s shell.
 
 If you have problems running the emulation, you can try `make qemu kvm=no` or `make qemu iommu=no` to turn off various virtualization features. These can also be used as arguments to `build.sh`.
@@ -118,10 +127,12 @@ Join the [Redox chat](./ch13-01-chat.html) if this is something you are interest
 ### Building Redox Live CD/USB Image
 
 For a *livedisk* or installable image, use:
+
 ```sh
 cd ~/tryredox/redox
 time make live
 ```
+
 This will make the target `build/x86_64/desktop/livedisk.iso`, which can be copied to a USB drive or CD for booting or installation. See [Creating a bootable USB drive or CD](./ch02-02-real-hardware.md#creating-a-bootable-usb-drive-or-cd) for instructions on creating a USB drive and booting from it.
 
 

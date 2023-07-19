@@ -12,6 +12,9 @@ The build system creates and/or uses several files that you may want to know abo
   - [Current pinned submodules](#current-pinned-submodules)
   - [Manual submodule update](#manual-submodule-update)
 - [Update relibc](#update-relibc)
+  - [All recipes](#all-recipes)
+  - [One recipe](#one-recipe)
+  - [Update relibc crates](#update-relibc-crates)
 - [Configuration](#configuration)
 
 ## Build System Organization
@@ -66,9 +69,9 @@ You can combine `make` targets, but order is significant. For example, `make r.g
   - `make virtualbox` - The same as `make qemu`, but for [VirtualBox](https://www.virtualbox.org/).
   - `make live` - Creates a bootable image, `$(BUILD)/livedisk.iso`. Packages are not usually rebuilt. 
   - `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. Change the `recipe-name` part with the name of your recipe, e.g. `make r.games`. The package is built even if it is not in your filesystem config.
-  - `make r.recipe2 r.recipe2` - Build two or more recipes with one command (cumulative compilation).
+  - `make r.recipe1 r.recipe2` - Build two or more recipes with one command (cumulative compilation).
   - `make c.recipe-name` - Removes the binary of the recipe `recipe-name`.
-  - `make c.recipe2 c.recipe2` - Clean two or more recipe binaries with one command (cumulative cleanup).
+  - `make c.recipe1 c.recipe2` - Clean two or more recipe binaries with one command (cumulative cleanup).
   - `make image` - Builds a new QEMU image, `$(BUILD)/harddrive.img`, without checking if any recipes have changed. Not recommended, but it can save you some time if you are just updating one recipe with `make r.recipe-name`.
   - `make c.recipe r.recipe image qemu` - Clean a recipe binary, build a recipe source, create a new QEMU image and open QEMU (the build system support cumulative cross-option).
   - `make clean` - Removes all recipe binaries (Note that `make clean` may require some tools to be built).
@@ -93,8 +96,9 @@ You can use these scripts to perform actions not implemented as commands in the 
 - `scripts/rebuild-recipe.sh` - alternative to `make r.recipe` and `make c.recipe` that clean your recipe source/binary (delete `source`, `source.tar` and `target` in recipe folder) to make a new clean build.
 
 Write the path of the script and the name of your recipe:
-```
-scripts/rebuild-recipe.sh recipe
+
+```sh
+scripts/rebuild-recipe.sh recipe-name
 ```
 
 ## Crates
@@ -169,18 +173,54 @@ The build system pin the last working commit of the submodules, if some submodul
 Whenever a fix or new feature is merged on the submodules, the upstream build system must update the commit hash, to workaround this you can run `git pull` on the folder of the submodule directly, example:
 
 ```sh
-make pull && cd submodule-folder-name && git checkout master && git pull && cd ..
+make pull
+cd submodule-folder-name
+git checkout master
+git pull
+cd ..
 ```
 
 ## Update relibc
 
 An outdated relibc copy can contain bugs (already fixed on recent versions) or outdated crates, to update the relibc sources and build it, run:
+
 ```sh
 make pull
 touch relibc
 make prefix
-make rebuild
 ```
+
+### All recipes
+
+To pass the new relibc changes for all recipes (system components are the most common use case) you will need to rebuild all recipes, unfortunately it's not possible to use `make rebuild` because it can't detect the relibc changes to trigger a complete rebuild.
+
+To clean all recipe binaries and trigger a complete rebuild, run:
+
+```sh
+make clean
+make all
+```
+Or
+
+```sh
+make clean all
+```
+
+### One recipe
+
+To pass the new relibc changes to one recipe, run:
+
+```sh
+make c.recipe-name
+make r.recipe-name
+```
+Or
+
+```sh
+make c.recipe-name r.recipe-name
+```
+
+### Update relibc crates
 
 Sometimes you need to update the relibc crates, run these commands between the `make pull` and `touch relibc` commands:
 

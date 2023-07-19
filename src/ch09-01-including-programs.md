@@ -43,10 +43,13 @@ Redox has many frequently used packages and programs that are available for incl
 - Check that `CONFIG_NAME` in `mk/config.mk` is `desktop`.
 - Build the system as described. This will take quite a while the first time.
 - Run the system in **QEMU**.
-  ```sh
-  cd ~/tryredox/redox
-  make qemu
-  ```
+
+```sh
+cd ~/tryredox/redox
+make qemu
+```
+
+
   Assuming you built the default configuration `desktop` for `x86_64`, none of the Redox games (e.g. `/bin/minesweeper`) have been included yet.
 - On your Redox emulation, log into the system as user `user` with an empty password.
 - Open a `Terminal` window by clicking on the icon in the toolbar at the bottom of the Redox screen, and type `ls /bin`. You will see that `minesweeper` **is not** listed.
@@ -56,11 +59,13 @@ Redox has many frequently used packages and programs that are available for incl
 
 Read through [Configuration Settings](./ch02-07-configuration-settings.md). Then do the following.
 - From your `redox` base directory, copy an existing configuration, then edit it.
-  ```sh
-  cd ~/tryredox/redox
-  cp config/x86_64/desktop.toml config/x86_64/myfiles.toml
-  gedit config/x86_64/myfiles.toml &
-  ```
+
+```sh
+cd ~/tryredox/redox
+cp config/x86_64/desktop.toml config/x86_64/myfiles.toml
+gedit config/x86_64/myfiles.toml &
+```
+
 - Look for the `[packages]` secion and add the package to the configuration. You can add the package anywhere in the `[packages]` section, but by convention, we add them to the end or to an existing related area of the section.
   ```toml
   ...
@@ -86,11 +91,19 @@ Read through [Configuration Settings](./ch02-07-configuration-settings.md). Then
 ### Build the System
 
 - In your base `redox` folder, e.g. `~/tryredox/redox`, build the system and run it in **QEMU**.
-  ```sh
-  cd ~/tryredox/redox
-  make all
-  make qemu
-  ```
+
+```sh
+cd ~/tryredox/redox
+make all
+make qemu
+```
+Or
+
+```sh
+cd ~/tryredox/redox
+make all qemu
+```
+
 - On your Redox emulation, log into the system as user `user` with an empty password.
 - Open a `Terminal` window by clicking it on the icon in the toolbar at the bottom of the Redox screen, and type `ls /bin`. You will see that `minesweeper` **is** listed.
 - In the terminal window, type `minesweeper`. Play the game using the arrow keys or `WSAD`,`space` to reveal a spot, `f` to flag a spot when you suspect a mine is present. When you type `f`, an `F` character will appear.
@@ -111,18 +124,7 @@ If the "Build Instructions" of the Rust program have Linux distribution packages
 
 In some cases the `Cargo.lock` of some Rust program can have a version of some crate that don't have Redox patches (old) or broken Redox support (changes on code that make the target OS fail), this will give you an error during the recipe compilation.
 
-The reason of fixed crate versions is explained [here](https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries).
-
-To fix this, update the crates of your recipe after the first compilation of the recipe and compile it again.
-
-- Go to the `source` folder of your recipe and run `cargo update`, example:
-
-```sh
-cd cookbook/recipes/recipe-name/source
-cargo update
-make c.recipe-name
-make r.recipe-name
-```
+- [Update crates](./ch09-03-porting-applications.md#update-crates)
 
 ## Using a Script
 
@@ -262,6 +264,7 @@ helloworld = {}
 ```
 
 Then, to build the Redox image, including your program, go to your `redox` base directory and run `make rebuild`.
+
 ```sh
 cd ~/tryredox/redox
 make rebuild
