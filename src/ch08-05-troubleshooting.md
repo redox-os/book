@@ -18,6 +18,7 @@ In case you need to do some troubleshooting of the build process, this is a brie
     - [Update crates](#update-crates)
     - [Verify the dependency tree](#verify-the-dependency-tree)
 - [Kernel Panics in QEMU](#kernel-panics-in-qemu)
+    - [Kill the Frozen QEMU Process](#kill-the-frozen-qemu-process)
 
 ## Setting Up
 
@@ -140,4 +141,10 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 
 If you receive a kernel panic in QEMU, capture a screenshot and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).
 
-Run `pkill qemu-system` to kill the frozen QEMU process.
+### Kill the Frozen QEMU Process
+
+Run:
+
+```sh
+pkill qemu-system
+```
