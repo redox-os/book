@@ -91,9 +91,10 @@ The above illustration from [Wikimedia](https://commons.wikimedia.org/wiki/File:
 - [Minix paper](http://www.minix3.org/docs/jorrit-herder/osr-jul06.pdf)
 - [seL4 whitepaper](https://sel4.systems/About/seL4-whitepaper.pdf)
 - [Microkernels performance paper](https://os.inf.tu-dresden.de/pubs/sosp97/)
+- [Tanenbaum-Torvalds debate](https://en.wikipedia.org/wiki/Tanenbaum%E2%80%93Torvalds_debate)
 
 ## A note on the current state
 
-Redox has less than 25,000 lines of kernel code. For comparison Minix has ~6,000 lines of kernel code.
+Redox has less than 30,000 lines of kernel code. For comparison Minix has ~6,000 lines of kernel code.
 
 We would like to move parts of Redox to user space to get an even smaller kernel.

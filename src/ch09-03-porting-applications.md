@@ -10,10 +10,20 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page explain 
     - [Cross Compilation](#cross-compilation)
     - [Templates](#templates)
     - [Custom Template](#custom-template)
+        - [Cargo script template](#cargo-script-template)
+        - [Configure script template](#configure-script-template)
         - [CMake script template](#cmake-script-template)
         - [Cargo packages script template](#cargo-packages-script-template)
         - [Cargo flags script template](#cargo-flags-script-template)
         - [Cargo examples script template](#cargo-examples-script-template)
+        - [Add the Cookbook "bin" folder to the PATH](#add-the-cookbook-bin-folder-to-the-path)
+        - [Insert Cargo build artifacts in the build directory](#insert-cargo-build-artifacts-in-the-build-directory)
+        - [Add the "sysroot" includes for most C compilation](#add-the-sysroot-includes-for-most-c-compilation)
+        - [Add the "sysroot" libraries and build binaries statically for most C compilation](#add-the-sysroot-libraries-and-build-binaries-statically-for-most-c-compilation)
+        - [Ensure that pkg-config gets the right flags from the "sysroot"](#ensure-that-pkg-config-gets-the-right-flags-from-the-sysroot)
+        - [Strip binaries](#strip-binaries)
+        - [Remove libtool files](#remove-libtool-files)
+        - [Remove Cargo install files](#remove-cargo-install-files)
 - [Sources](#sources)
     - [Tarballs](#tarballs)
     - [Git Repositories](#git-repositories)
@@ -125,6 +135,44 @@ To find the supported Cookbook shell commands, look the recipes using a `script 
 
 The "custom" template enable the `script =` field to be used, this field will run any command supported by your shell.
 
+#### Cargo script template
+
+```toml
+script = """
+COOKBOOK_CARGO="${COOKBOOK_REDOXER}"
+COOKBOOK_CARGO_FLAGS=(
+    --path "${COOKBOOK_SOURCE}"
+    --root "${COOKBOOK_STAGE}"
+    --locked
+    --no-track
+)
+function cookbook_cargo {
+    "${COOKBOOK_CARGO}" install "${COOKBOOK_CARGO_FLAGS[@]}"
+}
+"""
+```
+
+#### Configure script template
+
+```toml
+script = """
+COOKBOOK_CONFIGURE="${COOKBOOK_SOURCE}/configure"
+COOKBOOK_CONFIGURE_FLAGS=(
+    --host="${TARGET}"
+    --prefix=""
+    --disable-shared
+    --enable-static
+)
+COOKBOOK_MAKE="make"
+COOKBOOK_MAKE_JOBS="$(nproc)"
+function cookbook_configure {
+    "${COOKBOOK_CONFIGURE}" "${COOKBOOK_CONFIGURE_FLAGS[@]}"
+    "${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}"
+    "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}"
+}
+"""
+```
+
 #### CMake script template
 
 ```toml
@@ -184,6 +232,72 @@ cookbook_cargo_examples example-name
 (you can use `cookbook_cargo_examples example1 example2` if it's more than one example)
 
 This script is used for examples on Rust programs.
+
+#### Add the Cookbook "bin" folder to the PATH
+
+```toml
+export PATH="${COOKBOOK_ROOT}/bin:${PATH}"
+```
+
+#### Insert Cargo build artifacts in the build directory
+
+```toml
+export CARGO_TARGET_DIR="${COOKBOOK_BUILD}/target"
+```
+
+#### Add the "sysroot" includes for most C compilation
+
+```toml
+#TODO: check paths for spaces!
+export CFLAGS="-I${COOKBOOK_SYSROOT}/include"
+export CPPFLAGS="-I${COOKBOOK_SYSROOT}/include"
+```
+
+#### Add the "sysroot" libraries and build binaries statically for most C compilation
+
+```toml
+#TODO: check paths for spaces!
+export LDFLAGS="-L${COOKBOOK_SYSROOT}/lib --static"
+```
+
+#### Ensure that pkg-config gets the right flags from the "sysroot"
+
+```toml
+export PKG_CONFIG_ALLOW_CROSS=1
+export PKG_CONFIG_PATH=
+export PKG_CONFIG_LIBDIR="${COOKBOOK_SYSROOT}/lib/pkgconfig"
+export PKG_CONFIG_SYSROOT_DIR="${COOKBOOK_SYSROOT}"
+```
+
+#### Strip binaries
+
+```toml
+if [ -d "${COOKBOOK_STAGE}/bin" ]
+then
+    find "${COOKBOOK_STAGE}/bin" -type f -exec "${TARGET}-strip" -v {} ';'
+fi
+```
+
+#### Remove libtool files
+
+```toml
+if [ -d "${COOKBOOK_STAGE}/lib" ]
+then
+    find "${COOKBOOK_STAGE}/lib" -type f -name '*.la' -exec rm -fv {} ';'
+fi
+```
+
+#### Remove Cargo install files
+
+```toml
+for file in .crates.toml .crates2.json
+do
+    if [ -f "${COOKBOOK_STAGE}/${file}" ]
+    then
+        rm -v "${COOKBOOK_STAGE}/${file}"
+    fi
+done
+```
 
 ## Sources
 
@@ -251,7 +365,11 @@ The only exception for static linking would be the LLVM, as it makes the binary 
 
 (Compile on your Linux distribution before this step to see if all build system dependencies and software libraries are correct)
 
-To build your recipe, run - `make r.recipe-name`
+To build your recipe, run:
+
+```sh
+make r.recipe-name
+```
 
 If the compilation was successful, the recipe will be packaged and don't give errors.
 
@@ -389,8 +507,17 @@ make c.recipe-name r.recipe-name
 
 If you have some problems (outdated recipe), try to run these commands:
 
-- `make c.recipe` - it will wipe your old recipe binary.
-- `scripts/rebuild-recipe.sh recipe-name` - it will delete your recipe source/binary and compile (fresh build).
+- This command will wipe your old recipe binary.
+
+```sh
+make c.recipe
+```
+
+- This script will delete your recipe source/binary and compile (fresh build).
+
+```sh
+scripts/rebuild-recipe.sh recipe-name
+```
 
 ## Submitting MRs
 

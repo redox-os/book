@@ -14,11 +14,13 @@ Most kernels, other than some real-time operating systems, use an event-handler 
 
 In Redox, drivers and many application services can run in user mode, similar to user applications, and the system can restrict them so they can only access the resources they require for their designated purpose. If a driver fails or panics, it can be ignored or restarted with no impact on the rest of the system. A misbehaving piece of hardware might impact system performance or cause the loss of a service, but the kernel will continue to function and to provide whatever services remain available.
 
+Thus Redox is an unique opportunity to show the microkernel potential for the mainstream operating systems universe.
+
 ## Advanced Filesystem
 
 Redox provides an advanced filesystem, [RedoxFS](https://gitlab.redox-os.org/redox-os/redoxfs). It includes many of the attributes of [ZFS](https://en.wikipedia.org/wiki/OpenZFS), but in a more modular design. 
 
-TODO: Additional details on RedoxFS features.
+More details on RedoxFS can be found [here](./ch04-08-redoxfs.md)
 
 ## Unix-like Utilities and API
 

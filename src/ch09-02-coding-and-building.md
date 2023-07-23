@@ -214,11 +214,14 @@ Once your Redox package has been successfully built, you can use `make rebuild` 
 
 If you had a problem, use this command to log any possible errors on your terminal output:
 
-- `make c.recipe-name r.recipe-name 2>&1 | tee recipe-name.log`
+```sh
+make c.recipe-name r.recipe-name 2>&1 | tee recipe-name.log
+```
 
 ### Make a New QEMU Image
 
 Now that all the packages are built, you can make a Redox image without the step of checking for modifications. 
+
 - In your `Build` shell, in the `redox` directory, do:
 
 ```sh

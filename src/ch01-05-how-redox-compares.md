@@ -3,7 +3,7 @@ How Redox Compares to Other Operating Systems
 
 We share quite a lot with other operating systems.
 
-### Syscalls
+### System calls
 
 The Redox syscall interface is Unix-y. For example, we have `open`, `pipe`, `pipe2`, `lseek`, `read`, `write`, `brk`, `execv`, and so on. Currently, we support the 31 most common Linux syscalls.
 

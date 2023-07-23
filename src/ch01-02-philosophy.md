@@ -12,4 +12,4 @@ The MIT X11-style license has the following properties:
 
 The license does not restrict the software that may run on Redox, however -- and thanks to the microkernel architecture, even traditionally tightly-coupled components such as drivers can be distributed separately, so maintainers are free to choose whatever license they like for their projects.
 
-
+Redox intends to be free forever, because we aim to be a foundational piece in creating secure and resilient systems.
