@@ -28,6 +28,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page explain 
     - [Tarballs](#tarballs)
     - [Git Repositories](#git-repositories)
 - [Dependencies](#dependencies)
+    - [Bundled Libraries](#bundled-libraries)
 - [Testing/Building](#testingbuilding)
 - [Update crates](#update-crates)
     - [One or more crates](#one-or-more-crates)
@@ -360,6 +361,24 @@ The `bootstrap.sh` script and `redox-base-containerfile` covers the build system
 All recipes are [statically compiled](https://en.wikipedia.org/wiki/Static_build), thus you don't need to package libraries and applications separated for binary linking, improving security and simplifying the configuration/packaging.
 
 The only exception for static linking would be the LLVM, as it makes the binary very big, thus it will be dynamic.
+
+### Bundled Libraries
+
+Some programs use bundled libraries during the compilation, using CMake or a Python script, the most common case is using CMake (emulators do this in most cases).
+
+The reason for this can be more portability or a patched library with optimizations for a specific task of the program.
+
+In some cases some bundled library needs a Redox patch, if not it will give a compilation error.
+
+Most programs using CMake will try to detect the system libraries on the build environment, if not they will use the bundled libraries.
+
+The "system libraries" on this case is the recipes specified on the `dependencies = []` section of your `recipe.toml`.
+
+If you are using a recipe from the `master` branch as dependency, check if you find a `.patch` file on the recipe folder or if the `recipe.toml` has a `git =` field pointing to the Redox GitLab.
+
+If you find one of these (or if you patched the recipe), you should specify it on the `dependencies = []` section, if not you can use the bundled libraries without problems.
+
+Generally programs with CMake use a `-DUSE_SYSTEM` flag to control this behavior.
 
 ## Testing/Building
 
