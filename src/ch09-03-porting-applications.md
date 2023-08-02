@@ -5,6 +5,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page explain 
 (Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
 
 - [Recipe](#recipe)
+    - [Quick Recipe Template](#quick-recipe-template)
 - [Cookbook](#cookbook)
     - [Custom Compiler](#custom-compiler)
     - [Cross Compilation](#cross-compilation)
@@ -96,6 +97,27 @@ Note that there are two `dependencies =`, one below the `[build]` section and ot
 
 - Below `[build]` - development libraries.
 - Below `[package]` - runtime dependencies (packages installed on Redox or data files).
+
+### Quick Recipe Template
+
+This is a recipe template for a quick porting workflow.
+
+```toml
+#TODO 
+[source]
+tar = "tarball-link"
+[build]
+template = "build-system"
+dependencies = [
+    "library1",
+]
+```
+
+You can quickly copy/paste this template on each `recipe.toml`, that way you spent less time writting and has less chances for typos.
+
+If the program use a Git repository, you can easily rename the `tar` to `git`.
+
+If the program don't need dependencies, you can quickly remove the `dependencies = []` section.
 
 ## Cookbook
 
