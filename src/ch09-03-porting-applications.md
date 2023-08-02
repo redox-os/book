@@ -38,6 +38,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page explain 
     - [Redox forks](#redox-forks)
     - [Local patches](#local-patches)
 - [Cleanup](#cleanup)
+- [Search Text On Recipes](#search-text-on-recipes)
 - [Submitting MRs](#submitting-mrs)
 
 ## Recipe
@@ -537,6 +538,17 @@ make c.recipe
 ```sh
 scripts/rebuild-recipe.sh recipe-name
 ```
+
+## Search Text on Recipes
+
+To speed up your porting workflow you can use the `grep` tool to search the recipe configuration:
+
+```sh
+cd cookbook/recipes
+grep -rnw "text" --include "recipe.toml"
+```
+
+This command will search all match texts in the `recipe.toml` files of each recipe folder.
 
 ## Submitting MRs
 
