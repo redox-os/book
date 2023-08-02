@@ -15,6 +15,7 @@ Let's walk through contributing to the Redox subpackage `games`, which is a coll
 - [Test Your Changes](#test-your-changes)
   - [Test Your Changes (out of the Redox build system)](#test-your-changes-out-of-the-redox-build-system)
 - [Update crates](#update-crates)
+- [Search Text On Files](#search-text-on-files)
 - [Checking In your Changes](#checking-in-your-changes)
 - [Shortening the Rebuild Cycle](#shortening-the-rebuild-cycle)
   - [Build your Package for Redox](#build-your-package-for-redox)
@@ -188,6 +189,35 @@ In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. 
 ## Update crates
 
 - [Porting Applications using Recipes](./ch09-03-porting-applications.md#update-crates)
+
+## Search Text On Files
+
+To find which package contains a particular command, crate or function call, you can use the `grep` command.
+
+This will speed up your development workflow.
+
+- Command examples
+
+```sh
+grep -rnw "redox-syscall" --include "Cargo.toml"
+```
+
+This command will find any "Cargo.toml" file that contains the phrase "redox-syscall". Helpful for finding which package contains a command or uses a crate.
+
+```sh
+grep -rni "physmap" --include "*.rs"
+```
+
+This command will find any ".rs" file that contains the string "physmap". Helpful for finding where a function is used or defined.
+
+Options context:
+
+- `-n` - display the line number of the specified text on each file.
+- `-r` - Search directories recursively.
+- `-w` - Match only whole words.
+- `-i` - Ignore case distinctions in patterns and data.
+
+- [grep explanation](https://www.geeksforgeeks.org/grep-command-in-unixlinux/) - GeeksforGeeks article explaining the `grep` program.
 
 ## Checking In your Changes
 
