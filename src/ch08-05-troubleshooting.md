@@ -73,17 +73,17 @@ The list of Redox packages to be built is read from the [filesystem config](./ch
 
 ### Fetch
 
-Each recipe source is downloaded using `git` or `tar`, according to the `[source]` section of `cookbook/recipes/RECIPE/recipe.toml` (where RECIPE is the name of the recipe). Source is placed in `cookbook/recipes/RECIPE/source`. Some packages use the older `recipe.sh` instead. 
+Each recipe source is downloaded using `git` or `tar`, according to the `[source]` section of `cookbook/recipes/recipe-name/recipe.toml`. Source is placed in `cookbook/recipes/recipe-name/source`. Some recipes use the older `recipe.sh` format instead. 
 
-If you are doing work on a package, you may want to comment out the `[source]` section of the recipe. To discard your changes to the source for a package, or to update to the latest version, uncomment the `[source]` section of the recipe, and use `rm -rf source target` in the `PACKAGE` directory to remove both the source and any compiled code.
+If you are doing work on a recipe, you may want to comment out the `[source]` section of the recipe. To discard your changes to the source for a recipe, or to update to the latest version, uncomment the `[source]` section of the recipe, and use `rm -rf source target` in the recipe directory to remove both the source and any compiled code.
 
 After all recipes are fetched, a tag file is created as `build/$ARCH/$CONFIG_NAME/fetch.tag`, e.g. `build/x86_64/desktop/fetch.tag`. If this file is present, fetching is skipped. You can remove it manually, or use `make rebuild`, if you want to force refetching.
 
 ### Cookbook
 
-Each recipe is built according to the `recipe.toml` file. The compiled recipe is placed in the `target` directory, in a subdirectory named based on the processor architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Cargo`. These commands make assumptions about $PATH and $PWD, so they might not work if you are using them outside the build process.
+Each recipe is built according to the `recipe.toml` file. The compiled recipe is placed in the `target` directory, in a subdirectory named based on the processor architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Cargo`. These commands make assumptions about `$PATH` and `$PWD`, so they might not work if you are using them outside the build process.
 
-If you have a problem with a package you are building, try `rm -rf target` in the `RECIPE` directory. A common problem when building on non-Debian systems is that certain packages will fail to build due to missing libraries. Try using [Podman Build](./ch02-06-podman-build.md).
+If you have a problem with a package you are building, try `rm -rf target` in the recipe directory. A common problem when building on non-Debian systems is that certain packages will fail to build due to missing libraries. Try using [Podman Build](./ch02-06-podman-build.md).
 
 After all packages are cooked, a tag file is created as `build/$ARCH/$CONFIG_NAME/repo.tag`. If this file is present, cooking is skipped. You can remove it manually, or use `make rebuild`, which will force refetching and rebuilding.
 
@@ -95,13 +95,30 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
 
 ## Solving Compilation Problems
 
-1. - Check your Rust version (run `make env` and `cargo --version`, then `exit`), make sure you have **the latest version of Rust nightly!**
+1. - Check your Rust version (run `make env` and `cargo --version`, then `exit`), make sure you have **the latest version of Rust nightly!**.
 
 - [rustup.rs](https://www.rustup.rs) is recommended for managing Rust versions. If you already have it, run `rustup`.
 
+1. - Check if your `make` and `nasm` are up-to-date.
 1. - Run `make clean pull` to remove all your compiled binaries and update the sources.
-1. - Check if your `make` and `nasm` are up to date
 1. - Sometimes there are merge requests that briefly break the build, so check on chat if anyone else is experiencing your problems.
+1. - Sometimes both the source and the binary of some recipe is wrong, thus remove the `source` and `target` folders of the recipe and trigger a new build to know if it works.
+
+- Example:
+
+```sh
+rm -rf cookbook/recipes/recipe-name/source
+rm -rf cookbook/recipes/recipe-name/target
+make r.recipe-name
+```
+
+Or
+
+```sh
+rm -rf cookbook/recipes/recipe-name/source
+make c.recipe-name
+make r.recipe-name
+```
 
 ### Update relibc
 
