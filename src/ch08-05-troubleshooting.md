@@ -95,30 +95,30 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
 
 ## Solving Compilation Problems
 
-1. - Check your Rust version (run `make env` and `cargo --version`, then `exit`), make sure you have **the latest version of Rust nightly!**.
+- Check your Rust version (run `make env` and `cargo --version`, then `exit`), make sure you have **the latest version of Rust nightly!**.
 
-- [rustup.rs](https://www.rustup.rs) is recommended for managing Rust versions. If you already have it, run `rustup`.
+    - [rustup.rs](https://www.rustup.rs) is recommended for managing Rust versions. If you already have it, run `rustup`.
 
-1. - Check if your `make` and `nasm` are up-to-date.
-1. - Run `make clean pull` to remove all your compiled binaries and update the sources.
-1. - Sometimes there are merge requests that briefly break the build, so check on chat if anyone else is experiencing your problems.
-1. - Sometimes both the source and the binary of some recipe is wrong, thus remove the `source` and `target` folders of the recipe and trigger a new build to know if it works.
+- Check if your `make` and `nasm` are up-to-date.
+- Run `make clean pull` to remove all your compiled binaries and update the sources.
+- Sometimes there are merge requests that briefly break the build, so check on chat if anyone else is experiencing your problems.
+- Sometimes both the source and the binary of some recipe is wrong, thus remove the `source` and `target` folders of the recipe and trigger a new build to know if it works.
 
-- Example:
+    - Example:
 
-```sh
-rm -rf cookbook/recipes/recipe-name/source
-rm -rf cookbook/recipes/recipe-name/target
-make r.recipe-name
-```
+    ```sh
+    rm -rf cookbook/recipes/recipe-name/source
+    rm -rf cookbook/recipes/recipe-name/target
+    make r.recipe-name
+    ```
 
-Or
+    Or
 
-```sh
-rm -rf cookbook/recipes/recipe-name/source
-make c.recipe-name
-make r.recipe-name
-```
+    ```sh
+    rm -rf cookbook/recipes/recipe-name/source
+    make c.recipe-name
+    make r.recipe-name
+    ```
 
 ### Update relibc
 
