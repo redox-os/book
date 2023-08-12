@@ -2,7 +2,7 @@
 
 Congrats on making it this far! Now we gotta build Redox. This process is for **x86_64** machines. There are also similar processes for [i686](./ch08-03-i686.md) and [AArch64/Arm64](./ch08-04-aarch.md).
 
-The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox gitlab login, try again later, and if it continues to happen, you can let us know through [chat](./ch13-01-chat.md).
+The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox GitLab login, try again later, and if it continues to happen, you can let us know through [chat](./ch13-01-chat.md).
 
 ## Supported Distros and Podman Build
 

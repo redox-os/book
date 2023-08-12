@@ -46,11 +46,13 @@ The build system creates and/or uses several files that you may want to know abo
 ### Build System Configuration
 
 - `config/$(ARCH)/$(CONFIG_NAME).toml` - The TOML config of your current build with system settings/paths and recipes/packages to be included in the Redox image that will be built, e.g. `config/x86_64/desktop.toml`.
-- `config/$(ARCH)/server.toml` - The server variant with system components only (try this config if you have boot problems on QEMU/real hardware).
+- `config/$(ARCH)/server.toml` - The `server` variant with system components only (try this config if you have boot problems on QEMU/real hardware).
 - `config/$(ARCH)/desktop.toml` - The default build config with system components and the Orbital desktop environment.
-- `config/$(ARCH)/demo.toml` - The desktop build with optional programs and games.
-- `config/$(ARCH)/ci.toml` - The continuous integration config, recipes added here become packages on [CI server](https://static.redox-os.org/pkg/).
-- `config/$(ARCH)/dev.toml` - The desktop build with GCC and Rust included.
+- `config/$(ARCH)/demo.toml` - The `demo` variant with optional programs and games.
+- `config/$(ARCH)/ci.toml` - The continuous integration configuration, recipes added here become packages on [CI server](https://static.redox-os.org/pkg/).
+- `config/$(ARCH)/dev.toml` - The development variant with GCC and Rust included.
+- `config/$(ARCH)/desktop-minimal.toml` - The minimal `desktop` variant for low-end computers.
+- `config/$(ARCH)/server-minimal.toml` - The minimal `server` variant for low-end computers.
 - `config/$(ARCH)/resist.toml` - The build with the `resist` POSIX test suite.
 - `config/$(ARCH)/acid.toml` - The build with the `acid` stress test suite.
 - `config/$(ARCH)/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing in the moment.
@@ -108,6 +110,9 @@ You can combine `make` targets, but order is significant. For example, `make r.g
 
 - `make rebuild` - Rebuild all recipes with changes (it don't detect changes on the Redox toolchain), including download changes from GitLab, it should be your normal `make` target.
 - `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. Change the `recipe-name` part with the name of your recipe, e.g. `make r.games`. The package is built even if it is not in your filesystem config.
+
+(This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate)
+
 - `make r.recipe1 r.recipe2` - Build two or more recipes with one command (cumulative compilation).
 - `make c.recipe-name` - Removes the binary and intermediate build artifacts of the recipe.
 - `make c.recipe1 c.recipe2` - Clean two or more recipe binaries with one command (cumulative cleanup).
@@ -265,6 +270,13 @@ make c.recipe-name r.recipe-name
 ### Update relibc crates
 
 Sometimes you need to update the relibc crates, run these commands between the `make pull` and `touch relibc` commands:
+
+```sh
+cd relibc
+cargo update -p crate
+cd ..
+```
+Or
 
 ```sh
 cd relibc

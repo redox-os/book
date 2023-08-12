@@ -424,7 +424,7 @@ To install your compiled recipe on QEMU image, run `make image`.
 If you had a problem, use this command to log any possible errors on your terminal output:
 
 ```sh
-make c.recipe-name r.recipe-name 2>&1 | tee recipe-name.log
+make r.recipe-name 2>&1 | tee recipe-name.log
 ```
 
 The recipe sources will be extracted/cloned on the `source` folder inside of your recipe folder, the binaries go to `target` folder.
@@ -449,10 +449,9 @@ We recommend that you do this based on the errors you get during the compilation
 cd cookbook/recipes/recipe-name/source
 cargo update -p crate1 crate2
 cd -
-make c.recipe-name
 make r.recipe-name
 ```
-Or
+Or (if you still get the error)
 
 ```sh
 cd cookbook/recipes/recipe-name/source
@@ -473,10 +472,9 @@ This method will update all crates of the dependency chain to the latest version
 cd cookbook/recipes/recipe-name/source
 cargo update
 cd -
-make c.recipe-name
 make r.recipe-name
 ```
-Or
+Or (if you still get the error)
 
 ```sh
 cd cookbook/recipes/recipe-name/source
@@ -507,10 +505,24 @@ crate-name = { git = "repository-link", branch = "redox" }
 It will make Cargo replace the patched crate in the entire dependency chain, after that, run:
 
 ```sh
-make c.recipe-name r.recipe-name
+make r.recipe-name
 ```
 
 Or (if the above doesn't work)
+
+```sh
+make c.recipe-name r.recipe-name
+```
+
+Or
+
+```sh
+cd cookbook/recipes/recipe-name/source
+cargo update -p crate-name
+cd -
+make r.recipe-name
+```
+Or
 
 ```sh
 cd cookbook/recipes/recipe-name/source
@@ -530,20 +542,7 @@ crate-name = { path = "patched-crate-folder" }
 
 It will make Cargo replace the crate based on this folder in the program source code - `cookbook/recipes/your-recipe/source/patched-crate-folder` (you don't need to manually create this folder if you `git clone` the crate source code on the program source directory)
 
-Inside this folder you will apply the patches on the crate source and build the recipe:
-
-```sh
-make c.recipe-name r.recipe-name
-```
-
-Or
-
-```sh
-cd cookbook/recipes/recipe-name/source
-cargo update -p crate-name
-cd -
-make c.recipe-name r.recipe-name
-```
+Inside this folder you will apply the patches on the crate source and build the recipe.
 
 ## Cleanup
 

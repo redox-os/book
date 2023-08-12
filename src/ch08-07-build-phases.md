@@ -66,9 +66,13 @@ This is the command used to check/build the recipes with changes, see its phases
 
 This is the command used to build a recipe, see its phases below.
 
-1. See if the `source` folder is present, if not, download the source from the method specified inside the `recipe.toml`.
-2. Build the specified recipe with the Redox toolchain (rustc, gcc, llvm and relibc).
-3. Package the recipe.
+1. Search where the recipe is stored.
+2. See if the `source` folder is present, if not, download the source from the method specified inside the `recipe.toml`.
+3. Build the recipe dependencies as static objects (for static linking).
+4. Start the compilation based on the template of the `recipe.toml`.
+5. If the recipe is using Cargo, it will download the crates, build them and link on the final binary of the program.
+6. If the recipe is using GNU Autotools, CMake or Meson, they will check the build environment and library headers to link on the final binary of the program.
+7. Package the recipe.
 
 Typically, `make r.recipe` is used with `make image` to quickly build a recipe and create an image to test it.
 
