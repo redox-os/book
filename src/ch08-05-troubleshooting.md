@@ -11,9 +11,10 @@ In case you need to do some troubleshooting of the build process, this is a brie
     - [Podman](#podman)
     - [Filesystem Config](#filesystem-config)
     - [Fetch](#fetch)
-    - [Cook](#cook)
+    - [Cookbook](#cookbook)
     - [Create the Image with  FUSE](#create-the-image-with-fuse)
 - [Solving Compilation Problems](#solving-compilation-problems)
+    - [Update your branch](#update-your-branch)
     - [Update relibc](#update-relibc)
     - [Update crates](#update-crates)
     - [Verify the dependency tree](#verify-the-dependency-tree)
@@ -119,6 +120,30 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
     make c.recipe-name
     make r.recipe-name
     ```
+
+### Update your branch
+
+If you are doing local changes on the build system, probably you left your branch active on the folder (instead of `master` branch).
+
+New branches don't sync automatically with `master`, thus if the `master` branch receive new commits, you wouldn't use them because your branch is outdated.
+
+To fix this, run:
+
+```sh
+git checkout master
+git pull
+git checkout your-branch
+git merge master
+```
+Or
+
+```sh
+git checkout master
+git pull
+git merge your-branch master
+```
+
+If you want an anonymous merge, read [this](./ch09-02-coding-and-building.md#anonymous-commits).
 
 ### Update relibc
 

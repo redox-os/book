@@ -5,6 +5,7 @@ Let's walk through contributing to the Redox subpackage `games`, which is a coll
 (Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
 
 - [Working with Git](#working-with-git)
+  - [Anonymous commits](#anonymous-commits)
 - [Using Multiple Windows](#using-multiple-windows)
 - [Set up your Configuration](#set-up-your-configuration)
 - [The Recipe](#the-recipe)
@@ -38,6 +39,29 @@ Let's walk through contributing to the Redox subpackage `games`, which is a coll
 Before starting development, read through [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), which describes how the Redox team uses Git.
 
 In this example, we will discuss creating a **fork** of the `games` package, pretending you are going to create a `Merge Request` for your changes. **Don't actually do this**. Only create a fork when you have a permanent change you want to contribute to Redox.
+
+### Anonymous commits
+
+If you are new to Git, it request your username and email before the first commit on some offline repository, if you don't want to insert your personal information, run:
+
+- Repository
+
+```sh
+cd your-repository-folder
+git config user.name 'Anonymous'
+git config user.email '<>'
+```
+
+This command will make you anonymous only on this repository.
+
+- Global
+
+```sh
+git config --global user.name 'Anonymous'
+git config --global user.email '<>'
+```
+
+This command will make you anonymous in all repositories of your user.
 
 ## Using Multiple Windows
 
