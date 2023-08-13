@@ -40,6 +40,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page explain 
     - [Local patches](#local-patches)
 - [Cleanup](#cleanup)
 - [Search Text On Recipes](#search-text-on-recipes)
+- [Search for functions on relibc](#search-for-functions-on-relibc)
 - [Submitting MRs](#submitting-mrs)
 
 ## Recipe
@@ -570,6 +571,17 @@ grep -rnw "text" --include "recipe.toml"
 ```
 
 This command will search all match texts in the `recipe.toml` files of each recipe folder.
+
+## Search for functions on relibc
+
+Sometimes your program is not building because relibc lack the necessary functions, to verify if they are implemented, run these commands:
+
+```sh
+cd relibc
+grep -nrw "function-name" --include "*.rs"
+```
+
+You will insert the function name in `function-name`.
 
 ## Submitting MRs
 
