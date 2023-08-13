@@ -20,6 +20,7 @@ The build system creates and/or uses several files that you may want to know abo
 - [Pinned commits](#pinned-commits)
   - [Current pinned submodules](#current-pinned-submodules)
   - [Manual submodule update](#manual-submodule-update)
+- [Update the build system](#update-the-build-system)
 - [Update relibc](#update-relibc)
   - [All recipes](#all-recipes)
   - [One recipe](#one-recipe)
@@ -226,6 +227,19 @@ git checkout master
 git pull
 cd ..
 ```
+
+## Update the build system
+
+This is the recommended way to update your sources/binaries.
+
+```sh
+make pull
+touch relibc
+make prefix
+make rebuild
+```
+
+Some new changes will require a complete rebuild (run `make clean all`) or a new fresh build system (run `bootstrap.sh` again), but the commands above cover the most cases.
 
 ## Update relibc
 
