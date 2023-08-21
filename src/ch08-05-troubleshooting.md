@@ -18,6 +18,7 @@ In case you need to do some troubleshooting of the build process, this is a brie
     - [Update relibc](#update-relibc)
     - [Update crates](#update-crates)
     - [Verify the dependency tree](#verify-the-dependency-tree)
+- [Debug Methods](#debug-methods)
 - [Kernel Panics in QEMU](#kernel-panics-in-qemu)
     - [Kill the Frozen QEMU Process](#kill-the-frozen-qemu-process)
 
@@ -178,6 +179,19 @@ To do this, run:
 ```sh
 cargo tree --target=x86_64-unknown-redox | grep crate-name
 ```
+
+## Debug Methods
+
+
+- Use the following command for advanced logging:
+
+```sh
+make qemu 2>&1 | tee file-name.log
+```
+
+- You can write to the `debug:` scheme, which will output on the console, but you must be `root`. This is useful if you are debugging an app where you need to use Orbital but still want to capture messages.
+
+- Currently, the build system strips function names and other symbols from programs, as support for symbols is not implemented on Redox.
 
 ## Kernel Panics in QEMU
 
