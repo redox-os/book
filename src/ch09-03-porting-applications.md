@@ -608,7 +608,7 @@ You will insert the function name in `function-name`.
 
 ## Create a BLAKE3 hash for your recipe
 
-If you want to create the BLAKE3 hash of the tarball of your recipe, use the `b3sum` tool, it can be installed from `crates.io` with `cargo install b3sum`.
+You need to create a BLAKE3 hash of your recipe tarball if you want to merge it on upstream, for this you can use the `b3sum` tool, it can be installed from `crates.io` with `cargo install b3sum`.
 
 After the first run of the `make r.recipe-name` command, run these commands:
 
