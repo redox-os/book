@@ -16,6 +16,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page explain 
         - [CMake script template](#cmake-script-template)
         - [Cargo packages script template](#cargo-packages-script-template)
         - [Cargo flags script template](#cargo-flags-script-template)
+            - [Disable the default Cargo flags](#disable-the-default-cargo-flags)
         - [Cargo examples script template](#cargo-examples-script-template)
         - [Add the Cookbook "bin" folder to the PATH](#add-the-cookbook-bin-folder-to-the-path)
         - [Insert Cargo build artifacts in the build directory](#insert-cargo-build-artifacts-in-the-build-directory)
@@ -41,6 +42,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page explain 
 - [Cleanup](#cleanup)
 - [Search Text On Recipes](#search-text-on-recipes)
 - [Search for functions on relibc](#search-for-functions-on-relibc)
+- [Create a BLAKE3 hash for your recipe](#create-a-blake3-hash-for-your-recipe)
 - [Submitting MRs](#submitting-mrs)
 
 ## Recipe
@@ -57,7 +59,7 @@ mkdir cookbook/recipes/program_example
 nano cookbook/recipes/program_example/recipe.toml
 ```
 
-Your `recipe.toml` file will look like this:
+Your `recipe.toml` file could look like this:
 
 ```toml
 [source]
@@ -65,12 +67,13 @@ git = "software-repository-link.git"
 branch = "branch-name"
 rev = "commit-revision"
 tar = "software-tarball-link.tar.gz"
+blake3 = "your-hash"
 patches = [
     "patch1.patch",
     "patch2.patch",
 ]
 [build]
-template = "name"
+template = "build-system"
 dependencies = [
     "library1",
     "library2",
@@ -90,6 +93,7 @@ dependencies = [
 - Insert `branch =` if your want to use other branch.
 - Insert `rev =` if you want to use a commit revision (SHA1).
 - Insert `tar =` to download/extract tarballs, this can be used instead of `git =`.
+- Insert `blake3 =` to add [BLAKE3](https://en.wikipedia.org/wiki/BLAKE_(hash_function)) checksum verification for the tarball of your recipe.
 - Insert `patches =` to use patch files, they need to be in the same directory of `recipe.toml` (not needed if your program compile/run without patches).
 - Insert `dependencies =` if your software have dependencies, to make it work your dependencies/libraries need their own recipes (if your software doesn't need this, remove it from your `recipe.toml`).
 - Insert `script =` to run your custom script (`script =` is enabled when you define your `template =` as `custom`).
@@ -104,7 +108,7 @@ Note that there are two `dependencies =`, one below the `[build]` section and ot
 This is a recipe template for a quick porting workflow.
 
 ```toml
-#TODO 
+#TODO Not compiled or tested
 [source]
 tar = "tarball-link"
 [build]
@@ -112,6 +116,9 @@ template = "build-system"
 dependencies = [
     "library1",
 ]
+#script = """
+#insert your script here
+#"""
 ```
 
 You can quickly copy/paste this template on each `recipe.toml`, that way you spent less time writting and has less chances for typos.
@@ -119,6 +126,10 @@ You can quickly copy/paste this template on each `recipe.toml`, that way you spe
 If the program use a Git repository, you can easily rename the `tar` to `git`.
 
 If the program don't need dependencies, you can quickly remove the `dependencies = []` section.
+
+If you need to use the `custom` template, remove the three `#` symbols around the `script =` field.
+
+After the `#TODO` you will write your current port status.
 
 ## Cookbook
 
@@ -246,6 +257,16 @@ cookbook_cargo --features flag-name
 
 Some Rust softwares have Cargo flags for customization, search them to match your needs or make some program compile.
 
+##### Disable the default Cargo flags
+
+It's common that some flag of the program doesn't work on Redox, if you don't want to spend much time testing flags that work and don't work, you can disable all of them to see if the most basic setting of the program works with this script:
+
+```toml
+script = """
+cookbook_cargo --no-default-features
+"""
+```
+
 #### Cargo examples script template
 
 ```toml
@@ -364,11 +385,13 @@ This same logic applies for every Git frontend and is more easy to find, manage 
 
 Most C/C++/mixed Rust softwares, place build system dependencies together with his own dependencies (development libraries), if you see the "Build Instructions" of most software, you will notice that it have packages without the `-dev` suffix and `-dev` packages (pure Rust programs don't use C/C++ libraries but his crates can use).
 
+The packages with the `-dev` suffix are development libraries (they provide headers), while the packages without this suffix are runtime dependencies or build tools (necessary to configure/run the build process), you will need to test this, feel free to ask us on [Chat](./ch13-01-chat.md).
+
+Mixed Rust programs have crates ending with `-sys` to use C/C++ libraries of the system, sometimes they bundle them.
+
 - The compiler will build the development libraries as `.a` files (static linking) or `.so` files (dynamic linking), the `.a` files will be mixed in the final binary while the `.so` files will be out of the binary (stored on the `/lib` directory of the system).
 
 Install the packages for your Linux distribution on the "Build Instructions" of the software, see if it compiles on your system first (if packages for your distribution is not available, search for Debian/Ubuntu equivalents).
-
-The packages without the `-dev` suffix can be runtime dependencies (linked at runtime) or build system dependencies (necessary to configure the compilation process), you will need to test this, feel free to ask us on [Chat](./ch13-01-chat.md).
 
 We recommend that you add the `-dev` dependencies first, generally the Linux distribution package web interface place the library official website on package page (you can use the Debian testing [packages list](https://packages.debian.org/testing/allpackages) to search them with `Ctrl+F`, all package names are clickable and the homepage of them is available on the right side of the package description/details), inside the dependency website you will copy the tarball link or Git repository link and paste on your `recipe.toml`, according to TOML syntax (`tar = "link"` or `git = "link"`).
 
@@ -582,6 +605,19 @@ grep -nrw "function-name" --include "*.rs"
 ```
 
 You will insert the function name in `function-name`.
+
+## Create a BLAKE3 hash for your recipe
+
+If you want to create the BLAKE3 hash of the tarball of your recipe, use the `b3sum` tool, it can be installed from `crates.io` with `cargo install b3sum`.
+
+After the first run of the `make r.recipe-name` command, run these commands:
+
+```sh
+cd cookbook/recipes/your-recipe-folder/source.tar
+b3sum source.tar
+```
+
+It will print the generated BLAKE3 hash, copy and paste on the `blake3 =` field of your `recipe.toml`.
 
 ## Submitting MRs
 

@@ -26,6 +26,7 @@ Let's walk through contributing to the Redox subpackage `games`, which is a coll
   - [Insert Text Files On Redox QEMU](#insert-text-files-on-redox-qemu)
 - [Working with an unpublished version of a crate](#working-with-an-unpublished-version-of-a-crate)
 - [A Note about Drivers](#a-note-about-drivers)
+- [Development Tips](#development-tips)
 - [VS Code Tips and Tricks](#vs-code-tips-and-tricks)
   - [Start in the "source" folder](#start-in-the-source-folder)
   - [Add it to your "Favorites" bar](#add-it-to-your-favorites-bar)
@@ -392,6 +393,19 @@ cp -R cookbook/recipes/drivers/source cookbook/recipes/drivers-initfs
 make rebuild
 make qemu
 ```
+
+## Development Tips
+
+- Make sure your build system is up-to-date, read [this](./ch08-06-build-system-reference.md#update-the-build-system) section in case of doubt.
+- If some program can't build or work properly, remember that something could be missing/hiding on [relibc](https://gitlab.redox-os.org/redox-os/relibc), some function or bug.
+- If you have some error on QEMU, remember to test different settings or check your operating system (Debian, Ubuntu and Pop OS! are the recommend Linux distributions to do testing/development for Redox).
+- Remember to log all errors, you can use this command as example:
+
+```sh
+your-command 2>&1 | tee file-name.log
+```
+
+- If you have a problem that seems to not have a solution, think on simple/stupid things, sometimes you are very confident on your method and forget obvious things (it's very common).
 
 ## VS Code Tips and Tricks
 
