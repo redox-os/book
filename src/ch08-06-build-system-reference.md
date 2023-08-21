@@ -120,6 +120,8 @@ You can combine `make` targets, but order is significant. For example, `make r.g
 - `make c.recipe r.recipe image qemu` - Clean a recipe binary, build a recipe source, create a new QEMU image and open QEMU (the build system support cumulative cross-option).
 - `make clean` - Removes all recipe binaries (Note that `make clean` may require some tools to be built).
 - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are fetched. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
+- `make unfetch` - Remove all recipe sources.
+- `make distclean` - Remove all recipe sources and binaries (a complete `make clean`).
 - `make repo` - Package the recipe binaries, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
 
 ### QEMU/VirtualBox
