@@ -16,7 +16,8 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page explain 
         - [CMake script template](#cmake-script-template)
         - [Cargo packages script template](#cargo-packages-script-template)
         - [Cargo flags script template](#cargo-flags-script-template)
-            - [Disable the default Cargo flags](#disable-the-default-cargo-flags)
+        - [Disable the default Cargo flags](#disable-the-default-cargo-flags)
+        - [Enable all Cargo flags](#enable-all-cargo-flags)
         - [Cargo examples script template](#cargo-examples-script-template)
         - [Add the Cookbook "bin" folder to the PATH](#add-the-cookbook-bin-folder-to-the-path)
         - [Insert Cargo build artifacts in the build directory](#insert-cargo-build-artifacts-in-the-build-directory)
@@ -257,13 +258,23 @@ cookbook_cargo --features flag-name
 
 Some Rust softwares have Cargo flags for customization, search them to match your needs or make some program compile.
 
-##### Disable the default Cargo flags
+#### Disable the default Cargo flags
 
 It's common that some flag of the program doesn't work on Redox, if you don't want to spend much time testing flags that work and don't work, you can disable all of them to see if the most basic setting of the program works with this script:
 
 ```toml
 script = """
 cookbook_cargo --no-default-features
+"""
+```
+
+#### Enable all Cargo flags
+
+If you want to enable all flags of the program, use:
+
+```toml
+script = """
+cookbook_cargo --all-features
 """
 ```
 
