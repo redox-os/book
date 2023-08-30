@@ -26,6 +26,7 @@ The build system creates and/or uses several files that you may want to know abo
   - [One recipe](#one-recipe)
   - [Update relibc crates](#update-relibc-crates)
 - [Configuration](#configuration)
+- [Understanding Cross-Compilation for Redox](#understanding-cross-compilation-for-redox)
 - [Build Phases](#build-phases)
 
 ## Build System Organization
@@ -303,6 +304,30 @@ cd ..
 ## Configuration
 
 - [Configuration Settings](./ch02-07-configuration-settings.md)
+
+## Understanding Cross-Compilation for Redox
+
+The Redox build system is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox [toolchain](https://static.redox-os.org/toolchain/) runs on Linux, and produces Redox executables. Anything that is installed with your package manager is just part of the toolchain and does not go on Redox.
+
+Each library (dependency) needs to have it's own recipe which goes to the `dependencies = []` field of the `recipe.toml` on some recipe folder:
+
+```toml
+dependencies = [
+    "library1",
+    "library2",
+]
+```
+As the recipes are [statically linked](https://en.wikipedia.org/wiki/Static_build), Redox doesn't have the `-dev/-devel` (runtime/sources) separation seen in most Unix/Linux packages.
+
+In the background, `make all` downloads the Redox toolchain to build all recipes (patched forks of rustc, GCC and LLVM).
+
+If you are using Podman, the `podman_bootstrap.sh` will download an Ubuntu container and `make all` will install the Redox toolchain, all recipes will be compiled in the container.
+
+The recipes produce Redox-specific executables. At the end of the build process, these executables are installed inside the QEMU image.
+
+The `relibc` (Redox C Library) provides the Redox [system calls](https://docs.rs/redox_syscall/latest/syscall/) to any software.
+
+- [OSDev article on cross-compiling](https://wiki.osdev.org/Why_do_I_need_a_Cross_Compiler%3F)
 
 ## Build Phases
 

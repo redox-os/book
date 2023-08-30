@@ -1,8 +1,8 @@
 # Porting Applications using Recipes
 
-The [Including Programs in Redox](./ch09-01-including-programs.md) page explain how to port/modify pure Rust programs, here we will explain the advanced way to port Rust programs, mixed Rust programs (Rust + C/C++ libraries, for example) and C/C++ programs.
+The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an example to port/modify a pure Rust program, here we will explain the advanced way to port Rust programs, mixed Rust programs (Rust + C/C++ libraries, for example) and C/C++ programs.
 
-(Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
+(Before reading this page you **must** read the [Build System Quick Reference](./ch08-06-build-system-reference.md) and [Coding and Building](./ch09-02-coding-and-building.md) pages)
 
 - [Recipe](#recipe)
     - [Quick Recipe Template](#quick-recipe-template)
@@ -117,9 +117,6 @@ template = "build-system"
 dependencies = [
     "library1",
 ]
-#script = """
-#insert your script here
-#"""
 ```
 
 You can quickly copy/paste this template on each `recipe.toml`, that way you spent less time writting and has less chances for typos.
@@ -127,8 +124,6 @@ You can quickly copy/paste this template on each `recipe.toml`, that way you spe
 If the program use a Git repository, you can easily rename the `tar` to `git`.
 
 If the program don't need dependencies, you can quickly remove the `dependencies = []` section.
-
-If you need to use the `custom` template, remove the three `#` symbols around the `script =` field.
 
 After the `#TODO` you will write your current port status.
 
