@@ -4,6 +4,10 @@ It's completely fine to just submit a small pull request without first making an
 
 The steps given below are for the main Redox project repository - submodules and other projects may vary, though most of the approach is the same.
 
+**If you marked your MR as ready don't add new commits, because it will trouble the Jeremy's review, making him lost time by reading the text again**
+
+**If you need to add new commits mark the MR as draft again**
+
 ## Using Git in terminal
 
 1. In an appropriate directory, e.g. `~/tryredox`, clone the Redox repository to your computer using one of the following commands:
