@@ -406,6 +406,8 @@ your-command 2>&1 | tee file-name.log
 ```
 
 - If you have a problem that seems to not have a solution, think on simple/stupid things, sometimes you are very confident on your method and forget obvious things (it's very common).
+- If you want a more quick review of your Merge Request, make it small, Jeremy will read it more fast.
+- If your big Merge Request is taking too long to merge try to shrink it with other small MRs, make sure it don't break anything, if this method break your changes, don't shrink.
 
 ## VS Code Tips and Tricks
 
