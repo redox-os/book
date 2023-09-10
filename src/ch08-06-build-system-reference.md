@@ -131,6 +131,10 @@ You can combine `make` targets, but order is significant. For example, `make r.g
 - `make qemu vga=no` - Start QEMU without a GUI (also disable Orbital).
 - `make qemu kvm=no` - Start QEMU without the Linux KVM acceleration.
 - `make qemu iommu=no` - Start QEMU without the IOMMU.
+- `make qemu audio=no` - Disable all audio drivers.
+- `make qemu usb=no` - Disable all USB drivers.
+- `make qemu efi=yes` - Enable UEFI.
+- `make qemu live=yes` - Start a live disk (loads the entire image into RAM).
 - `make qemu vga=no kvm=no` - Cumulative QEMU options is supported.
 - `make image` - Builds a new QEMU image, `$(BUILD)/harddrive.img`, without checking if any recipes have changed. Not recommended, but it can save you some time if you are just updating one recipe with `make r.recipe-name`.
 - `make gdb` - Connects `gdb` to the Redox image in QEMU. Join us on [chat](./ch13-01-chat.md) if you want to use this.
