@@ -578,13 +578,13 @@ Inside this folder you will apply the patches on the crate source and build the 
 
 If you have some problems (outdated recipe), try to run these commands:
 
-- This command will wipe your old recipe binary.
+- This command will wipe your old recipe binary/source.
 
 ```sh
-make c.recipe
+make c.recipe-name d.recipe-name
 ```
 
-- This script will delete your recipe source/binary and compile (fresh build).
+- This script will delete your recipe binary/source and build (fresh build).
 
 ```sh
 scripts/rebuild-recipe.sh recipe-name
