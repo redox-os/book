@@ -116,13 +116,14 @@ You can combine `make` targets, but order is significant. For example, `make r.g
 (This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate)
 
 - `make r.recipe1 r.recipe2` - Build two or more recipes with one command (cumulative compilation).
-- `make c.recipe-name` - Removes the binary and intermediate build artifacts of the recipe.
+- `make c.recipe-name` - Clean the binary and intermediate build artifacts of the recipe.
 - `make c.recipe1 c.recipe2` - Clean two or more recipe binaries with one command (cumulative cleanup).
 - `make c.recipe r.recipe image qemu` - Clean a recipe binary, build a recipe source, create a new QEMU image and open QEMU (the build system support cumulative cross-option).
-- `make clean` - Removes all recipe binaries (Note that `make clean` may require some tools to be built).
+- `make d.recipe-name` - Clean the recipe source.
+- `make clean` - Clean all recipe binaries (Note that `make clean` may require some tools to be built).
 - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are fetched. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
-- `make unfetch` - Remove all recipe sources.
-- `make distclean` - Remove all recipe sources and binaries (a complete `make clean`).
+- `make unfetch` - Clean all recipe sources.
+- `make distclean` - Clean all recipe sources and binaries (a complete `make clean`).
 - `make repo` - Package the recipe binaries, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
 
 ### QEMU/VirtualBox
