@@ -581,7 +581,7 @@ If you have some problems (outdated recipe), try to run these commands:
 - This command will wipe your old recipe binary/source.
 
 ```sh
-make c.recipe-name d.recipe-name
+make c.recipe-name u.recipe-name
 ```
 
 - This script will delete your recipe binary/source and build (fresh build).
