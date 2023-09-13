@@ -130,6 +130,7 @@ You can combine `make` targets, but order is significant. For example, `make r.g
 
 - `make qemu` - If a `$(BUILD)/harddrive.img` file exists, QEMU is run using that image. If you want to force a rebuild first, use `make rebuild qemu`. Sometimes `make qemu` will detect a change and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`.
 - `make qemu vga=no` - Start QEMU without a GUI (also disable Orbital).
+- `make qemu vga=virtio` - Start QEMU with the VirtIO GPU driver (2D acceleration).
 - `make qemu kvm=no` - Start QEMU without the Linux KVM acceleration.
 - `make qemu iommu=no` - Start QEMU without the IOMMU.
 - `make qemu audio=no` - Disable all audio drivers.
