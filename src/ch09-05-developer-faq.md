@@ -18,6 +18,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
     - [I only made a small change to my program. What's the quickest way to test it in QEMU?](#i-only-made-a-small-change-to-my-program-whats-the-quickest-way-to-test-it-in-qemu)
     - [How can I install the packages needed by recipes without a new download of the build system?](#how-can-i-install-the-packages-needed-by-recipes-without-a-new-download-of-the-build-system)
     - [How can I cross-compile to ARM from a x86-64 computer?](#how-can-i-cross-compile-to-arm-from-a-x86-64-computer)
+    - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
 - [Troubleshooting Questions](#troubleshooting-questions)
     - [Scripts](#scripts)
         - [I can't download the bootstrap scripts, how can I fix this?](#i-cant-download-the-bootstrap-scripts-how-can-i-fix-this)
@@ -101,7 +102,25 @@ make r.recipe-name image qemu
 
 ### How can I cross-compile to ARM from a x86-64 computer?
 
-- - Insert the `ARCH?=aarch64` environment variable on your `.config` file and run `make all`.
+- Insert the `ARCH?=aarch64` environment variable on your `.config` file and run `make all`.
+
+### Why does Redox have Assembly code?
+
+[Assembly](https://en.wikipedia.org/wiki/Assembly_language) is the core of low-level because it's a processor-specific language and deal with things that aren't possible or feasible to do in high-level languages like Rust.
+
+Sometimes required or preferred for accessing hardware, or for carefully optimized hot spots.
+
+Reasons to use Assembly instead of Rust:
+
+- Deal with low-level things (those that can't be handled by Rust)
+- Writing constant time algorithms for cryptography
+- Optimizations
+
+Places where Assembly is used:
+
+- kernel - interrupt and system call entry routines, context switching, special CPU instructions and registers.
+- drivers - port IO need special instructions (x86_64).
+- relibc - some parts of the C runtime.
 
 ## Troubleshooting Questions
 
