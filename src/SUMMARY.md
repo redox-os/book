@@ -44,7 +44,7 @@
   - [URLs](./ch05-01-urls.md)
   - [How it works under the hood](./ch05-02-how-it-works.md)
   - [Schemes](./ch05-03-schemes.md)
-  - [The root scheme](./ch05-04-root-scheme.md)
+  - [Scheme Operation](./ch05-04-scheme-operation.md)
   - [Resources](./ch05-05-resources.md)
   - [Stitching it all together](./ch05-06-stitching-it-all-together.md)
   - ["Everything is a URL"](./ch05-07-everything-is-a-url.md)

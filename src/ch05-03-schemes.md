@@ -1,5 +1,4 @@
-Schemes
-=======
+# Schemes
 
 Schemes are the natural counter-part to URLs. URLs are opened to schemes, which can then be opened to yield a resource.
 
@@ -9,10 +8,24 @@ Schemes are a generalization of file systems. It should be noted that schemes do
 
 Throughout the whole ecosystem of Redox, schemes are used as the main communication primitive because they are a powerful abstraction. With schemes Redox can have one unified I/O interface.
 
-Schemes can be defined both in user space and in kernel space but when possible user space is preferred.
+## Kernel vs. Userspace Schemes
 
-Kernel Schemes
---------------
+Schemes are implmented by **scheme providers**. A [userspace scheme](#userspace-schemes) is implemented by a program running in user space, usually with `root` permissions. A [kernel scheme](#kernel-schemes) is implemented by the kernel directly. When possible, schemes should be implemented in userspace. Only critical schemes are implemented in kernel space.
+
+## Scheme Operations
+
+In order to provide "virtual file" behavior, schemes generally implement file-like operations. However, it is up to the scheme provider to determine what each file-like operation means. For example, `seek` to an SSD driver scheme might simply add to a file offset, but to a floppy disk controller scheme, it might cause the physical movement of disk read-write heads.
+
+Typical scheme operations include:
+
+- `open` - Create a **handle** to a logical entity provided by the scheme. e.g. `File::create("tcp:127.0.0.1:6142")` in a regular program would be converted by the kernel into `open("127.0.0.1:6142")` and sent to the "tcp:" scheme provider. The "tcp:" scheme provider would parse the name and return a handle that represents a connection to Internet address "127.0.0.1", port "6142".
+- `read` - get some data from the thing represented by the handle, normally consuming that data so the next `read` will return new data.
+- `write` - send some data to the thing represented by the handle to be saved, sent or written.
+- `seek` - change the logical location that the next `read` or `write` will occur. This may or may not cause some action by the scheme provider.
+
+Schemes may choose to provide other standard operations, such as `mkdir`, but the meaning of the operation is up to the scheme. `mkdir` might create a directory entry, or it might create some type of substructure or container relevant to that particular scheme.
+
+## Kernel Schemes
 
 The kernel provides a small number of schemes in order to support userspace.
 
@@ -53,8 +66,7 @@ The kernel provides a small number of schemes in order to support userspace.
     </tr>
 </table>
 
-Userspace Schemes
------------------
+## Userspace Schemes
 
 The Redox userspace, starting with `initfs:bin/init`, will create schemes during initialization. Once the user is able to log in, the following should be established:
 
@@ -131,19 +143,3 @@ The Redox userspace, starting with `initfs:bin/init`, will create schemes during
     </tr>
 </table>
 
-Scheme operations
------------------
-
-What makes a scheme a scheme? Scheme operations!
-
-A scheme is just a data structure with certain functions defined on it:
-
-1. `open` - open the scheme. `open` is used for initially starting communication with a scheme; it is an optional method, and will default to returning `ENOENT`.
-
-2. `mkdir` - make a new sub-structure. Note that the name is a little misleading (and it might even be renamed in the future), since in many schemes `mkdir` won't make a `directory`, but instead perform some form of substructure creation.
-
-Optional methods include:
-
-1. `unlink` - remove a link (that is a binding from one substructure to another).
-
-2. `link` - add a link.
