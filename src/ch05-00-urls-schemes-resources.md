@@ -1,35 +1,19 @@
-URLs, Schemes, and Resources
-============================
+# URLs, Schemes, and Resources
 
-This is one of the most important design choices Redox makes. These three essential concepts are very entangled.
+An essential design choice made for Redox is to refer to resources using URL-style naming. This gives Redox the ability to
+- treat resources (files, devices, etc.) in a consistent manner
+- provide resource-specific behaviors with a common interface
+- allow management of names and namespaces to provide sandboxing and other security features
+- enable device drivers and other system resource management to communicate with each other using the same mechanisms available to user programs
 
-What does "Everything is a URL" mean?
---------------------------------------
+## What is a Resource
 
-"Everything is a URL" is a generalization of "Everything is a file", allowing broader use of this unified interface for schemes.
+A resource is anything that a program might wish to access, usually referenced by some name. It may be a file in a filesystem, or frame buffer on a graphics device, or a dataset provided by some other computer.
 
-These can be used for effectively modulating the system in a "non-patchworky" manner.
+## What is a URL
 
-The term is rather misleading, since a URL is just the identifier of a scheme and a resource descriptor. So in that sense "Everything is a scheme, identified by a URL" is more accurate, but not very catchy.
+A [Uniform Resource Locator](https://en.wikipedia.org/wiki/URL) (URL) is a string that identifies some thing (resource) that a program wants to refer to. It follows a format that can be divided easily into component parts. In order to fully understand the meaning and interpretation of a URL, it is important to also understand [URI](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier) and [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name).
 
-So, how does it differ from files?
-----------------------------------
+## What is a Scheme
 
-You can think of URLs as segregated virtual file systems, which can be arbitrarily structured (they do not have to be tree-like) and arbitrarily defined by a program. Furthermore, "files" don't have to behave file-like! More on this later.
-
-It opens up a lot of possibilities.
-> (... TODO)
-
-The idea of virtual file systems is not a new one. If you are on a Linux computer, you should try to `cd` to `/proc`, and see what's going on there.
-
-Redox extends this concept to a much more powerful one.
-
-> TODO
-
-Documentation about this design
--------------------------------
-
-- [Drew DeVault - In praise of Plan 9](https://drewdevault.com/2022/11/12/In-praise-of-Plan-9.html)
-- [Plan 9 documentation](https://plan9.io/sys/doc/)
-- [Plan 9 wiki](https://plan9.io/wiki/plan9/plan_9_wiki/)
-- [9P documentation](http://9p.cat-v.org/documentation/)
+For the purposes of Redox, a URL includes a **scheme** that identifies the starting point for finding a resource, and a **path** that gives the details of which specific resource is desired. The **scheme** is the first part of the URL, up to (and for our purposes including) the first `:`. In a normal web URL, e.g. `https://en.wikipedia.org/wiki/Uniform_Resource_Name`, `https:` represents the communication protocol to be used. For Redox, we extend this concept to include not only protocols, but other resource types, such as `file:`, `display:`, etc., which we call schemes.
