@@ -52,7 +52,7 @@ When you run `make all`, the following steps occur.
 
 ### .config and mk/config.mk
 
-`make` scans [.config](./ch02-07-configuration-settings.md#config) and [mk/config.mk](./ch02-07-configuration-settings.md#mkconfigmk) for settings, such as the processor architecture, config name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-07-configuration-settings.md) to make sure you have the settings that are best for you.
+`make` scans [.config](./ch02-07-configuration-settings.md#config) and [mk/config.mk](./ch02-07-configuration-settings.md#mkconfigmk) for settings, such as the CPU architecture, config name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-07-configuration-settings.md) to make sure you have the settings that are best for you.
 
 ### Prefix
 
@@ -83,7 +83,7 @@ After all recipes are fetched, a tag file is created as `build/$ARCH/$CONFIG_NAM
 
 ### Cookbook
 
-Each recipe is built according to the `recipe.toml` file. The compiled recipe is placed in the `target` directory, in a subdirectory named based on the processor architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Cargo`. These commands make assumptions about `$PATH` and `$PWD`, so they might not work if you are using them outside the build process.
+Each recipe is built according to the `recipe.toml` file. The compiled recipe is placed in the `target` directory, in a subdirectory named based on the CPU architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Cargo`. These commands make assumptions about `$PATH` and `$PWD`, so they might not work if you are using them outside the build process.
 
 If you have a problem with a package you are building, try `rm -rf target` in the recipe directory. A common problem when building on non-Debian systems is that certain packages will fail to build due to missing libraries. Try using [Podman Build](./ch02-06-podman-build.md).
 

@@ -14,7 +14,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
     - [How can I insert files to the QEMU image?](#how-can-i-insert-files-to-the-qemu-image)
     - [How can I change my build variant?](#how-can-i-change-my-build-variant)
     - [How can I increase the filesystem size of my QEMU image?](#how-can-i-increase-the-filesystem-size-of-my-qemu-image)
-    - [How can I change the processor architecture of my build system?](#how-can-i-change-the-processor-architecture-of-my-build-system)
+    - [How can I change the CPU architecture of my build system?](#how-can-i-change-the-cpu-architecture-of-my-build-system)
     - [I only made a small change to my program. What's the quickest way to test it in QEMU?](#i-only-made-a-small-change-to-my-program-whats-the-quickest-way-to-test-it-in-qemu)
     - [How can I install the packages needed by recipes without a new download of the build system?](#how-can-i-install-the-packages-needed-by-recipes-without-a-new-download-of-the-build-system)
     - [How can I cross-compile to ARM from a x86-64 computer?](#how-can-i-cross-compile-to-arm-from-a-x86-64-computer)
@@ -80,7 +80,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
 
 - Change the `filesystem_size` field of your build configuration (`config/ARCH/your-config.toml`) and run `make image`, read [this](./ch02-07-configuration-settings.md#filesystem-size) section for more details.
 
-### How can I change the processor architecture of my build system?
+### How can I change the CPU architecture of my build system?
 
 - Insert the `ARCH?=your-arch-code` environment variable on your `.config` file and run `make all`, read [this](./ch02-07-configuration-settings.md#config) section for more details.
 
@@ -106,7 +106,7 @@ make r.recipe-name image qemu
 
 ### Why does Redox have Assembly code?
 
-[Assembly](https://en.wikipedia.org/wiki/Assembly_language) is the core of low-level because it's a processor-specific language and deal with things that aren't possible or feasible to do in high-level languages like Rust.
+[Assembly](https://en.wikipedia.org/wiki/Assembly_language) is the core of low-level because it's a CPU-specific language and deal with things that aren't possible or feasible to do in high-level languages like Rust.
 
 Sometimes required or preferred for accessing hardware, or for carefully optimized hot spots.
 

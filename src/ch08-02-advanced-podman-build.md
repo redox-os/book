@@ -132,8 +132,9 @@ Copy `podman/redox-base-containerfile` and add to the list of packages in the in
 
 ```sh
 cp podman/redox-base-containerfile podman/my-containerfile
-gedit podman/my-containerfile &
+nano podman/my-containerfile
 ```
+
 ```
 ...
         xxd \
@@ -141,6 +142,7 @@ gedit podman/my-containerfile &
         MY_PACKAGE \
 ...
 ```
+
 Make sure you include the continuation character `\` at the end of each line except after the last package.
 
 

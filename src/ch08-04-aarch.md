@@ -1,6 +1,6 @@
 # Working with AArch64/Arm64
 
-The Redox Build system now supports building for multiple processor architectures in the same directory tree. Building for `i686` or `aarch64` only requires that you set the `ARCH` Make variable to the correct value. Normally, you would do this in [.config](./ch02-07-configuration-settings.md#config), but you can also do this temporarily in the environment (`export ARCH=aarch64`) or you can use [build.sh](./ch02-07-configuration-settings.md#buildsh).
+The Redox Build system now supports building for multiple CPU architectures in the same directory tree. Building for `i686` or `aarch64` only requires that you set the `ARCH` Make variable to the correct value. Normally, you would do this in [.config](./ch02-07-configuration-settings.md#config), but you can also do this temporarily in the environment (`export ARCH=aarch64`) or you can use [build.sh](./ch02-07-configuration-settings.md#buildsh).
 
 AArch64 has limited support in this release (0.8.0), proceed at your own risk.
 
