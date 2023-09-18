@@ -34,7 +34,7 @@ The purpose of `.config` is to allow you to change your configuration settings w
 
 ### Architecture Names
 
-The Redox build system support cross-compilation to any processor architecture defined by the `ARCH` environment variable, these are the supported architectures based on the folders inside the [config](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config) folder.
+The Redox build system support cross-compilation to any CPU architecture defined by the `ARCH` environment variable, these are the supported architectures based on the folders inside the [config](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config) folder.
 
 - i686 - `i686`
 - x86_64 - `x86_64`
@@ -47,7 +47,7 @@ Which packages and programs to include in the Redox image are determined by a **
 gedit config/x86_64/demo.toml &
 ```
 
-For each supported processor architecture, there are one or more filesystem configs to choose from. For `x86_64`, there are `desktop`, `demo` and `server` configurations, as well as a few others. For `i686`, there are also some stripped down configurations for legacy systems with minimal RAM. Have a look in the directory `config/x86_64` for some examples.
+For each supported CPU architecture, there are one or more filesystem configs to choose from. For `x86_64`, there are `desktop`, `demo` and `server` configurations, as well as a few others. For `i686`, there are also some stripped down configurations for legacy systems with minimal RAM. Have a look in the directory `config/x86_64` for some examples.
 
 For more details on the filesystem config, and how to include extra packages in your build, please see [Including Programs in Redox](./ch09-01-including-programs.md).
 
@@ -70,7 +70,7 @@ make FILESYSTEM_SIZE=512 qemu
 
 In `mk/config.mk`, you will find the variables `ARCH`, `CONFIG_NAME` and `FILESYSTEM_CONFIG`. These three variables determine what system you are building. 
 
-- `ARCH`: the processor architecture that you are building the system for. Currently supported architectures are `x86_64` (the default), `i686` and `aarch64`. 
+- `ARCH`: the CPU architecture that you are building the system for. Currently supported architectures are `x86_64` (the default), `i686` and `aarch64`. 
 - `CONFIG_NAME`: used to determine part of the name of the Redox image, and normally used to build the `FILESYSTEM_CONFIG` name (`desktop` by default). 
 - `FILESYSTEM_CONFIG`: a file that describes the packages and files to include in the filesystem. See [Filesystem Config](#filesystem-config) above. The default is `config/$ARCH/$CONFIG_NAME.toml`, but you can change it if your config file is in a different location.
 
@@ -99,7 +99,7 @@ The `TARGET` is any of the available `make` targets, although the recommended ta
 
   If you **do** specify `-f FILESYSTEM_CONFIG`, but not `-a` or `-c`, the file path determines the other values. Normally the file would be located at e.g. `config/x86_64/desktop.toml`. `ARCH` is determined from the second last element of the path. If the second last element is not a known `ARCH` value, you must specify `-a ARCH`. `CONFIG_NAME` is determined from the *basename* of the file.
 
-- `-a ARCH` is the processor architecture you are building for, `x86_64`, `i686` or `aarch64`. The uppercase options `-X`, `-6` and `-A` can be used as shorthand for `-a x86_64`, `-a i686` and `-a aarch64` respectively.
+- `-a ARCH` is the CPU architecture you are building for, `x86_64`, `i686` or `aarch64`. The uppercase options `-X`, `-6` and `-A` can be used as shorthand for `-a x86_64`, `-a i686` and `-a aarch64` respectively.
   
 - `-c CONFIG_NAME` is the name of the configuration, which appears in both the name of the image being built and (usually) the filesystem config.
 
