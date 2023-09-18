@@ -9,6 +9,8 @@ it `vec:`.
 The complete source for this example can be found at
 [redox-os/vec_scheme_example](https://gitlab.redox-os.org/redox-os/vec_scheme_example).
 
+> TODO the example has not been saved to the repo
+
 ## Setup
 
 In order to build and run this example in a Redox environment, you'll need to
@@ -209,6 +211,8 @@ is destroyed, and Rust is no exception.
 To see all the possitble operations on schemes, check out the
 [API docs](https://docs.rs/redox_syscall/).
 
+> TODO There is no scheme documentation at this link
+
 ## A Simple Client
 
 As mentioned earlier, we need to create a very simple client in order to use our
@@ -243,7 +247,8 @@ In this sense, the vec scheme implements a global vector.
 
 Since we've already set up the program to build and run in the redox VM,
 simply run:
-- `touch filesystem.toml`
+- `make r.scheme`
+- `make image`
 - `make qemu`
 
 We'll need multiple terminal windows open in the QEMU window for this step.

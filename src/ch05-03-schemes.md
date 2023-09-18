@@ -1,29 +1,34 @@
 # Schemes
 
-Schemes are the natural counter-part to URLs. URLs are opened to schemes, which can then be opened to yield a resource.
+Within Redox, a scheme may be thought of in a few ways. It is all of these things.
 
-Schemes are named such that the kernel is able to uniquely identify them. This name is used in the `scheme` part of the URL.
-
-Schemes are a generalization of file systems. It should be noted that schemes do not necessarily represent normal files; they are often a "virtual file" (i.e., an abstract unit with certain operations defined on it).
-
-Throughout the whole ecosystem of Redox, schemes are used as the main communication primitive because they are a powerful abstraction. With schemes Redox can have one unified I/O interface.
+- It is the **type** of a resource, such as "file", "M.2 drive", "tcp connection", etc. (Note that these are not valid scheme names, they are just given by way of example.)
+- It is the starting point for locating the resource, i.e. it is the root of the path to the resource, which the system can then use in establishing a connection to the resource.
+- It is a **uniquely named service** that is provided by some driver or daemon program, with the full URL identifying a specific resource accessed via that service.
 
 ## Kernel vs. Userspace Schemes
 
-Schemes are implmented by **scheme providers**. A [userspace scheme](#userspace-schemes) is implemented by a program running in user space, usually with `root` permissions. A [kernel scheme](#kernel-schemes) is implemented by the kernel directly. When possible, schemes should be implemented in userspace. Only critical schemes are implemented in kernel space.
+Schemes are implemented by **scheme providers**. A [userspace scheme](#userspace-schemes) is implemented by a program running in user space, currently requiring `root` permission. A [kernel scheme](#kernel-schemes) is implemented by the kernel directly. When possible, schemes should be implemented in userspace. Only critical schemes are implemented in kernel space.
 
-## Scheme Operations
+## Accessing Resources
 
 In order to provide "virtual file" behavior, schemes generally implement file-like operations. However, it is up to the scheme provider to determine what each file-like operation means. For example, `seek` to an SSD driver scheme might simply add to a file offset, but to a floppy disk controller scheme, it might cause the physical movement of disk read-write heads.
 
 Typical scheme operations include:
 
-- `open` - Create a **handle** to a logical entity provided by the scheme. e.g. `File::create("tcp:127.0.0.1:6142")` in a regular program would be converted by the kernel into `open("127.0.0.1:6142")` and sent to the "tcp:" scheme provider. The "tcp:" scheme provider would parse the name and return a handle that represents a connection to Internet address "127.0.0.1", port "6142".
+- `open` - Create a **handle** (file descriptor) to a resource provided by the scheme. e.g. `File::create("tcp:127.0.0.1:3000")` in a regular program would be converted by the kernel into `open("127.0.0.1:3000")` and sent to the "tcp:" scheme provider. The "tcp:" scheme provider would parse the name, establish a connection to Internet address "127.0.0.1", port "3000", and return a handle that represents that connection.
 - `read` - get some data from the thing represented by the handle, normally consuming that data so the next `read` will return new data.
 - `write` - send some data to the thing represented by the handle to be saved, sent or written.
 - `seek` - change the logical location that the next `read` or `write` will occur. This may or may not cause some action by the scheme provider.
 
 Schemes may choose to provide other standard operations, such as `mkdir`, but the meaning of the operation is up to the scheme. `mkdir` might create a directory entry, or it might create some type of substructure or container relevant to that particular scheme.
+
+Some schemes implement `fmap`, which creates a memory-mapped area that is shared between the scheme resource and the scheme user. It allows direct memory operations on the resource, rather than reading and writing to a file descriptor. The most common use case for `fmap` is for a device driver to access the physical addresses of a memory-mapped device, using the `memory:` kernel scheme. It is also used for frame buffers in the graphics subsystem.
+
+> TODO add F-operations.
+
+> TODO Explain file-like vs. socket-like schemes.
+
 
 ## Kernel Schemes
 
@@ -62,13 +67,18 @@ The kernel provides a small number of schemes in order to support userspace.
     <tr>
         <td><code>sys:</code></td>
         <td>System information, such as the context list and scheme list</td>
-        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/sys/mod.r">Docs</a></td>
+        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/sys/mod.rs">Docs</a></td>
+    </tr>
+    <tr>
+        <td><code>memory:</code></td>
+        <td>Access to memory, typically physical memory addresses</td>
+        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/memory.rs">Docs</a></td>
     </tr>
 </table>
 
 ## Userspace Schemes
 
-The Redox userspace, starting with `initfs:bin/init`, will create schemes during initialization. Once the user is able to log in, the following should be established:
+Redox creates userspace schemes during initialization, starting various daemon-style programs, each of which can provide one or more schemes.
 
 <table>
     <tr>
