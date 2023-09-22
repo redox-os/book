@@ -36,6 +36,19 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
     - [How to determine the dependencies of some program?](#how-to-determine-the-dependencies-of-some-program)
     - [How can I configure the build system of the recipe?](#how-can-i-configure-the-build-system-of-the-recipe)
     - [How can I search for functions on relibc?](#how-can-i-search-for-functions-on-relibc)
+- [Scheme Questions](#scheme-questions)
+    - [What is a scheme?](#what-is-a-scheme)
+    - [When does a regular program need to use a scheme?](#when-does-a-regular-program-need-to-use-a-scheme)
+    - [When would I write a program to implement a scheme?](#when-would-i-write-a-program-to-implement-a-scheme)
+    - [How do I use a scheme for sandboxing a program?](#how-do-i-use-a-scheme-for-sandboxing-a-program)
+    - [How can I see all user-space schemes?](#how-can-i-see-all-user-space-schemes)
+    - [How can I see all kernel schemes?](#how-can-i-see-all-kernel-schemes)
+    - [What is the difference between kernel and user-space schemes?](#what-is-the-difference-between-kernel-and-user-space-schemes)
+- [User-Space Questions](#user-space-questions)
+    - [How does a user-space daemon provide file-like services?](#how-does-a-user-space-daemon-provide-file-like-services)
+- [Kernel Questions](#kernel-questions)
+    - [Which CPU architectures the kernel support?](#which-cpu-architectures-the-kernel-support)
+    - [How the system calls are used by user-space daemons?](#how-the-system-calls-are-used-by-user-space-daemons)
 - [GitLab Questions](#gitlab-questions)
     - [I have a project/program with breaking changes but my merge request was not accepted, can I maintain the project in a separated repository on the Redox GitLab?](#i-have-a-projectprogram-with-breaking-changes-but-my-merge-request-was-not-accepted-can-i-maintain-the-project-in-a-separated-repository-on-the-redox-gitlab)
     - [I have a merge request with many commits, should I squash them after merge?](#i-have-a-merge-request-with-many-commits-should-i-squash-them-after-merge)
@@ -185,6 +198,54 @@ All recipes follow this syntax - `recipe = {}` below the `[packages]` section, t
 ### How can I search for functions on relibc?
 
 - Read [this](./ch09-03-porting-applications.md#search-for-functions-on-relibc) section.
+
+## Scheme Questions
+
+### What is a scheme?
+
+- Read [this](./ch05-00-urls-schemes-resources.md) page.
+
+### When does a regular program need to use a scheme?
+
+- Most schemes are used internally by the system or by relibc, you don't need to access them directly. One exception is the pseudoterminal for your command window, which is accessed using the value of `$TTY`, which might have a value of e.g. "pty:18". Some low-level graphics programming might require you to access your display, which might have a value of e.g. "display:3".
+
+### When would I write a program to implement a scheme?
+
+- If you are implementing a service daemon or a device driver, you will need to implement a scheme.
+
+### How do I use a scheme for sandboxing a program?
+
+- The [contain](https://gitlab.redox-os.org/redox-os/contain) program provides a partial implementation of Sandboxing using schemes and namespaces.
+
+### How can I see all user-space schemes?
+
+- Read [this](./ch05-03-schemes.md#userspace-schemes) section.
+
+### How can I see all kernel schemes?
+
+- Read [this](./ch05-03-schemes.md#kernel-schemes) section.
+
+### What is the difference between kernel and user-space schemes?
+
+- Read [this](./ch05-03-schemes.md#kernel-vs-userspace-schemes) section.
+
+## User-Space Questions
+
+### How does a user-space daemon provide file-like services?
+
+- When a regular program calls open, read, write, etc. on a file-like resource, the kernel translates that to a message of type syscall::data::Packet, describing the file operation, and makes it available for reading on the appropriate daemon's scheme file descriptor. See [this](./ch05-06-scheme-operation.md#providing-a-scheme) section for more information.
+
+## Kernel Questions
+
+### Which CPU architectures the kernel support?
+
+- i686 with limitations
+- x86_64
+- ARM64 with limitations
+
+### How the system calls are used by user-space daemons?
+
+- All user-space daemons use the system calls through [relibc](https://gitlab.redox-os.org/redox-os/relibc) like any normal program.
 
 ## GitLab Questions
 
