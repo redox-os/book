@@ -21,6 +21,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
         - [Disable the default Cargo flags](#disable-the-default-cargo-flags)
         - [Enable all Cargo flags](#enable-all-cargo-flags)
         - [Cargo examples script template](#cargo-examples-script-template)
+        - [Script template](#script-template)
         - [Add the Cookbook "bin" folder to the PATH](#add-the-cookbook-bin-folder-to-the-path)
         - [Insert Cargo build artifacts in the build directory](#insert-cargo-build-artifacts-in-the-build-directory)
         - [Add the "sysroot" includes for most C compilation](#add-the-sysroot-includes-for-most-c-compilation)
@@ -333,6 +334,61 @@ cookbook_cargo_examples example-name
 (you can use `cookbook_cargo_examples example1 example2` if it's more than one example)
 
 This script is used for examples on Rust programs.
+
+#### Script template
+
+If you want to package a script as executable program use this recipe template:
+
+- One script
+
+```toml
+script = """
+mkdir -pv "${COOKBOOK_STAGE}"/bin
+cp "${COOKBOOK_SOURCE}"/script-name.py "${COOKBOOK_STAGE}"/bin/script-name
+chmod a+x "${COOKBOOK_STAGE}"/bin/script-name
+"""
+```
+
+(Rename the "script-name" parts with your script name)
+
+This script will rename your script name (remove the `.py` extension, for example), make it executable and package.
+
+- Multiple scripts
+
+```toml
+script = """
+mkdir -pv "${COOKBOOK_STAGE}"/bin
+for script in "${COOKBOOK_SOURCE}"/*
+do
+  shortname=`basename "$script" ".py"`
+  cp -v "$script" "${COOKBOOK_STAGE}"/bin/"$shortname"
+  chmod a+x "${COOKBOOK_STAGE}"/bin/"$shortname"
+done
+"""
+```
+
+This script will rename all scripts to remove the `.py` extension, mark all scripts as executable and package.
+
+- Shebang
+
+It's the magic behind executable scripts as it make the system interpret the script as an ELF binary, if your script doesn't have a shebang on the beginning it can't work as an executable program.
+
+To fix this, use this script:
+
+```toml
+script = """
+mkdir -pv "${COOKBOOK_STAGE}"/bin
+cp "${COOKBOOK_SOURCE}"/script-name.py "${COOKBOOK_STAGE}"/bin/script-name
+sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/bin/script-name
+chmod a+x "${COOKBOOK_STAGE}"/bin/script-name
+"""
+```
+
+The `sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/bin/script-name` command will add the shebang on the beginning of your script.
+
+The `python3` is the script interpreter in this case, use `bash` or `lua` or whatever interpreter is appropriate for your case..
+
+There are many combinations for these script templates, you can download scripts without the `[source]` section, make customized installations, etc.
 
 #### Add the Cookbook "bin" folder to the PATH
 
