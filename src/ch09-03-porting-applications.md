@@ -22,6 +22,8 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
         - [Enable all Cargo flags](#enable-all-cargo-flags)
         - [Cargo examples script template](#cargo-examples-script-template)
         - [Script template](#script-template)
+            - [Adapted scripts](#adapted-scripts)
+            - [Non-adapted scripts](#non-adapted-scripts)
         - [Add the Cookbook "bin" folder to the PATH](#add-the-cookbook-bin-folder-to-the-path)
         - [Insert Cargo build artifacts in the build directory](#insert-cargo-build-artifacts-in-the-build-directory)
         - [Add the "sysroot" includes for most C compilation](#add-the-sysroot-includes-for-most-c-compilation)
@@ -337,11 +339,43 @@ This script is used for examples on Rust programs.
 
 #### Script template
 
-If you want to package a script as executable program use this recipe template:
+##### Adapted scripts
+
+This script is for scripts adapted to be packaged, they have shebangs and rename the file to remove the script extension.
 
 - One script
 
-```toml
+```
+script = """
+mkdir -pv "${COOKBOOK_STAGE}"/bin
+cp "${COOKBOOK_SOURCE}"/script-name "${COOKBOOK_STAGE}"/bin/script-name
+chmod a+x "${COOKBOOK_STAGE}"/bin/script-name
+"""
+```
+
+This script will move the script from the `source` folder to the `stage` folder and mark it as executable to be packaged.
+
+(Probably you need to mark it as executable, we don't know if all scripts carry executable permission)
+
+- Multiple scripts
+
+```
+script = """
+mkdir -pv "${COOKBOOK_STAGE}"/bin
+cp "${COOKBOOK_SOURCE}"/* "${COOKBOOK_STAGE}"/bin
+chmod a+x "${COOKBOOK_STAGE}"/bin/*
+"""
+```
+
+This script will move the scripts from the `source` folder to the `stage` folder and mark them as executable to be packaged.
+
+##### Non-adapted scripts
+
+You need to use these scripts for scripts not adapted for packaging, you need to add shebangs, rename the file to remove the script extension (`.py`) and mark as executable (`chmod a+x`).
+
+- One script
+
+```
 script = """
 mkdir -pv "${COOKBOOK_STAGE}"/bin
 cp "${COOKBOOK_SOURCE}"/script-name.py "${COOKBOOK_STAGE}"/bin/script-name
@@ -355,7 +389,7 @@ This script will rename your script name (remove the `.py` extension, for exampl
 
 - Multiple scripts
 
-```toml
+```
 script = """
 mkdir -pv "${COOKBOOK_STAGE}"/bin
 for script in "${COOKBOOK_SOURCE}"/*
@@ -375,7 +409,7 @@ It's the magic behind executable scripts as it make the system interpret the scr
 
 To fix this, use this script:
 
-```toml
+```
 script = """
 mkdir -pv "${COOKBOOK_STAGE}"/bin
 cp "${COOKBOOK_SOURCE}"/script-name.py "${COOKBOOK_STAGE}"/bin/script-name
