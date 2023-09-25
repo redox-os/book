@@ -83,7 +83,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
 
 ### How can I insert files to the QEMU image?
 
-- Read [this](./ch09-02-coding-and-building.md#insert-files-on-qemu-image) section.
+- If you use a [recipe](./ch09-02-coding-and-building.md#insert-files-on-the-qemu-image-using-a-recipe) your changes will persist after a `make image` but you can also [mount](./ch09-02-coding-and-building.md#insert-files-on-the-qemu-image) the Redox filesystem.
 
 ### How can I change my build variant?
 
