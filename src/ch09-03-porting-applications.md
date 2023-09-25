@@ -218,22 +218,16 @@ function cookbook_cargo {
 
 ```
 script = """
-COOKBOOK_CONFIGURE="${COOKBOOK_SOURCE}/configure"
-COOKBOOK_CONFIGURE_FLAGS=(
-    --host="${TARGET}"
-    --prefix=""
-    --disable-shared
-    --enable-static
+COOKBOOK_CONFIGURE_FLAGS+=(
+    --program-flag
 )
-COOKBOOK_MAKE="make"
-COOKBOOK_MAKE_JOBS="$(nproc)"
-function cookbook_configure {
-    "${COOKBOOK_CONFIGURE}" "${COOKBOOK_CONFIGURE_FLAGS[@]}"
-    "${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}"
-    "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}"
-}
+cookbook_configure
 """
 ```
+
+This script template is used for a GNU Autotools build system with flags, some programs need these flags for customization.
+
+Change or copy/paste the "--program-flag" according to your needs.
 
 #### CMake script template
 
