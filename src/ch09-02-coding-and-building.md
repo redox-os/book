@@ -22,8 +22,9 @@ Let's walk through contributing to the Redox subpackage `games`, which is a coll
   - [Build your Package for Redox](#build-your-package-for-redox)
   - [Make a New QEMU Image](#make-a-new-qemu-image)
   - [Most Quick Trick To Test Changes](#most-quick-trick-to-test-changes)
-  - [Insert Files On QEMU Image](#insert-files-on-qemu-image)
-  - [Insert Text Files On Redox QEMU](#insert-text-files-on-redox-qemu)
+  - [Insert Text Files On QEMU (quickest method)](#insert-text-files-on-qemu-quickest-method)
+  - [Insert files on the QEMU image using a recipe](#insert-files-on-the-qemu-image-using-a-recipe)
+  - [Insert Files On The QEMU Image](#insert-files-on-the-qemu-image)
 - [Working with an unpublished version of a crate](#working-with-an-unpublished-version-of-a-crate)
 - [A Note about Drivers](#a-note-about-drivers)
 - [Development Tips](#development-tips)
@@ -309,39 +310,7 @@ make c.recipe-name r.recipe-name image qemu
 
 This command will [build just your modified recipe](#build-your-package-for-redox), then [update your QEMU image with your modified recipe](#make-a-new-qemu-image) and run QEMU with a GUI.
 
-### Insert Files On QEMU Image
-
-If you feel the need to skip creating a new image, and you want to directly add a file to the existing Redox image, it is possible to do so. However, this is not recommended. You should use a recipe to make the process repeatable. But here is how to access the Redox image as if it were a Linux filesystem.
-
-- **NOTE:** You must ensure that Redox is not running in QEMU when you do this.
-
-- In your `Build` shell, in the `redox` directory, type:
-
-```sh
-make mount
-```
-
-The Redox image is now mounted as a directory at `build/x86_64/myfiles/filesystem`.
-
-- Remove the old `minesweeper` and replace it with your new version. In the `Build` shell.
-
-```sh
-cd ~/tryredox/redox/build/x86_64/myfiles/filesystem
-rm ./bin/minesweeper
-cp ~/tryredox/redox/cookbook/recipes/games/target/x86_64-unknown-redox/stage/bin/minesweeper ./bin
-```
-
-- Unmount the filesystem and test your image. **NOTE:** You must unmount before you start QEMU.
-
-```sh
-cd ~/tryredox/redox
-make unmount
-make qemu
-```
-
-The new version of `minesweeper` is now in your Redox filesystem.
-
-### Insert Text Files On Redox QEMU
+### Insert Text Files On QEMU (quickest method)
 
 If you need to move text files, such as shell scripts or command output, from or to your Redox instance running on QEMU, use your Terminal window that you used to start QEMU. To capture the output of a Redox command, run `script` before starting QEMU.
 
@@ -373,6 +342,90 @@ Files you create while running QEMU remain in the Redox image, so long as you do
 Make sure you are **not running QEMU**. Run `make mount`. You can now use your file browser to navigate to `build/x86_64/myfiles/filesystem`. Copy your files into or out of the Redox filesystem as required. Make sure to exit your file browser window, and use `make unmount` before running `make qemu`.
 
 Note that in some circumstances, `make qemu` may trigger a rebuild (e.g. `make` detects an out of date file). If that happens, the files you copied into the Redox image will be lost.
+
+### Insert files on the QEMU image using a recipe
+
+You can use a Redox package to put your files inside of the Redox filesystem, on this example we will use the recipe `myfiles` for this:
+
+- Create the `myfiles` recipe and the `source` folder:
+
+```sh
+mkdir cookbook/recipes/myfiles
+mkdir cookbook/recipes/myfiles/source
+```
+
+- Create the `recipe.toml` file with:
+
+```sh
+nano cookbook/recipes/myfiles/recipe.toml
+```
+
+- Inside your `recipe.toml` you will paste this content:
+
+```toml
+[build]
+template = "custom"
+script = """
+mkdir -pv "${COOKBOOK_STAGE}"/home/user
+cp -rv "${COOKBOOK_SOURCE}"/* "${COOKBOOK_STAGE}"/home/user
+"""
+```
+
+- Press Ctrl+X, then Y and Enter to save the file.
+- Add the recipe below the `[packages]` section on your build configuration at `config/cpu-arch/your-config.toml`
+
+```
+...
+myfiles = {}
+...
+```
+- Build the recipe and create a new QEMU image:
+
+```sh
+make r.myfiles image
+```
+
+- Open QEMU to verify your files:
+
+```sh
+make qemu
+```
+
+This recipe will make the Cookbook package all the files on the `source` folder to be installed on the `/home/user` directory on your Redox filesystem.
+
+This is the only way keep your files after the `make image` command.
+
+### Insert Files On The QEMU Image
+
+If you feel the need to skip creating a new image, and you want to directly add a file to the existing Redox image, it is possible to do so. However, this is not recommended. You should use a recipe to make the process repeatable. But here is how to access the Redox image as if it were a Linux filesystem.
+
+- **NOTE:** You must ensure that Redox is not running in QEMU when you do this.
+
+- In your `Build` shell, in the `redox` directory, type:
+
+```sh
+make mount
+```
+
+The Redox image is now mounted as a directory at `build/x86_64/myfiles/filesystem`.
+
+- Remove the old `minesweeper` and replace it with your new version. In the `Build` shell.
+
+```sh
+cd ~/tryredox/redox/build/x86_64/myfiles/filesystem
+rm ./bin/minesweeper
+cp ~/tryredox/redox/cookbook/recipes/games/target/x86_64-unknown-redox/stage/bin/minesweeper ./bin
+```
+
+- Unmount the filesystem and test your image. **NOTE:** You must unmount before you start QEMU.
+
+```sh
+cd ~/tryredox/redox
+make unmount
+make qemu
+```
+
+The new version of `minesweeper` is now in your Redox filesystem.
 
 ## Working with an unpublished version of a crate
 
