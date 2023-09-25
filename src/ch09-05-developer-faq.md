@@ -173,7 +173,7 @@ source ~/.cargo/env
 
 - It happens because your system has an environment problem or missing packages, remove the recipe from your build configuration file to workaround this.
 
-All recipes follow this syntax - `recipe = {}` below the `[packages]` section, the configuration files is placed at - `config/your-arch`.
+All recipes follow this syntax `recipe = {}` below the `[packages]` section, the configuration files is placed at `config/your-arch`.
 
 #### When I run make r.recipe I get a syntax error, how can I fix that?
 
@@ -215,7 +215,7 @@ All recipes follow this syntax - `recipe = {}` below the `[packages]` section, t
 
 ### How do I use a scheme for sandboxing a program?
 
-- The [contain](https://gitlab.redox-os.org/redox-os/contain) program provides a partial implementation of Sandboxing using schemes and namespaces.
+- The [contain](https://gitlab.redox-os.org/redox-os/contain) program provides a partial implementation of sandboxing using schemes and namespaces.
 
 ### How can I see all user-space schemes?
 
@@ -233,7 +233,7 @@ All recipes follow this syntax - `recipe = {}` below the `[packages]` section, t
 
 ### How does a user-space daemon provide file-like services?
 
-- When a regular program calls open, read, write, etc. on a file-like resource, the kernel translates that to a message of type syscall::data::Packet, describing the file operation, and makes it available for reading on the appropriate daemon's scheme file descriptor. See [this](./ch05-06-scheme-operation.md#providing-a-scheme) section for more information.
+- When a regular program calls `open`, `read`, `write`, etc. on a file-like resource, the kernel translates that to a message of type `syscall::data::Packet`, describing the file operation, and makes it available for reading on the appropriate daemon's scheme file descriptor. See [this](./ch05-06-scheme-operation.md#providing-a-scheme) section for more information.
 
 ## Kernel Questions
 
