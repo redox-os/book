@@ -137,6 +137,7 @@ After the `#TODO` you will write your current port status.
 
 If you want to apply changes on the program source/binary you can use these variables on your commands:
 
+- `${COOKBOOK_RECIPE}` - Represents the recipe folder.
 - `${COOKBOOK_SOURCE}` - Represents the `source` folder at `cookbook/recipes/recipe-name/source` (program source).
 - `${COOKBOOK_SYSROOT}` - Represents the `sysroot` folder at `cookbook/recipes/recipe-name/target/${TARGET}` (library sources).
 - `${COOKBOOK_STAGE}` - Represents the `stage` folder at `cookbook/recipes/recipe-name/target/${TARGET}` (recipe binaries).
