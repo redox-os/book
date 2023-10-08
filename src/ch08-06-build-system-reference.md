@@ -21,6 +21,7 @@ The build system downloads/creates several files that you may want to know about
 - [Pinned commits](#pinned-commits)
   - [Current pinned submodules](#current-pinned-submodules)
   - [Manual submodule update](#manual-submodule-update)
+- [Git auto-checkout](#git-auto-checkout)
 - [Update the build system](#update-the-build-system)
 - [Update relibc](#update-relibc)
   - [All recipes](#all-recipes)
@@ -270,6 +271,17 @@ cd submodule-folder-name
 git checkout master
 git pull
 cd ..
+```
+
+## Git auto-checkout
+
+In the first run of the `make all` command the build system will download all recipes sources, when the `make rebuild` and `make r.recipe` commands are used they will Git checkout (change the active branch) of the recipe source to `master` (only recipes that fetch Git repositories are affected, thus all Redox components).
+
+If you are working in a separated branch on the recipe source you can't build your changes, to avoid this comment out the `[source]` and `git =` fields from your `recipe.toml` :
+
+```
+#[source]
+#git = "some-repository-link"
 ```
 
 ## Update the build system
