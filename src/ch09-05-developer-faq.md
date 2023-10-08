@@ -36,6 +36,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
     - [How to determine the dependencies of some program?](#how-to-determine-the-dependencies-of-some-program)
     - [How can I configure the build system of the recipe?](#how-can-i-configure-the-build-system-of-the-recipe)
     - [How can I search for functions on relibc?](#how-can-i-search-for-functions-on-relibc)
+    - [Which are the upstream requirements to accept my recipe?](#which-are-the-upstream-requirements-to-accept-my-recipe)
 - [Scheme Questions](#scheme-questions)
     - [What is a scheme?](#what-is-a-scheme)
     - [When does a regular program need to use a scheme?](#when-does-a-regular-program-need-to-use-a-scheme)
@@ -198,6 +199,10 @@ All recipes follow this syntax `recipe = {}` below the `[packages]` section, the
 ### How can I search for functions on relibc?
 
 - Read [this](./ch09-03-porting-applications.md#search-for-functions-on-relibc) section.
+
+### Which are the upstream requirements to accept my recipe?
+
+- Read [this](./ch09-03-porting-applications.md#package-policy).
 
 ## Scheme Questions
 
