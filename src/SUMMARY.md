@@ -92,7 +92,6 @@
   - [Creating Proper Bug Reports](./ch12-03-creating-proper-bug-reports.md)
   - [How to do a pull request properly](./ch12-04-creating-proper-pull-requests.md)
   - [Filing Issues](./ch12-05-filing-issues.md)
-  - [Branch-based workflow](./ch12-06-branch-workflow.md)
 
 - [Communication](./ch13-00-communication.md)
   - [Chat](./ch13-01-chat.md)

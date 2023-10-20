@@ -140,7 +140,7 @@ You can combine `make` targets, but order is significant. For example, `make r.g
 - `make qemu iommu=no` - Start QEMU without the IOMMU.
 - `make qemu audio=no` - Disable all audio drivers.
 - `make qemu usb=no` - Disable all USB drivers.
-- `make qemu efi=yes` - Enable UEFI.
+- `make qemu efi=yes` - Enable the UEFI boot loader (it supports more screen resolutions).
 - `make qemu live=yes` - Start a live disk (loads the entire image into RAM).
 - `make qemu vga=no kvm=no` - Cumulative QEMU options is supported.
 - `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. Not recommended, but it can save you some time if you are just updating one recipe with `make r.recipe-name`.
@@ -289,8 +289,7 @@ If you are working in a separated branch on the recipe source you can't build yo
 This is the recommended way to update your sources/binaries.
 
 ```sh
-make pull
-make rebuild
+make pull rebuild
 ```
 
 (If the `make pull` command download new commits of the `relibc` submodule, you will need to run the commands of the section below)
@@ -314,24 +313,12 @@ To pass the new relibc changes for all recipes (system components are the most c
 To clean all recipe binaries and trigger a complete rebuild, run:
 
 ```sh
-make clean
-make all
-```
-Or
-
-```sh
 make clean all
 ```
 
 ### One recipe
 
 To pass the new relibc changes to one recipe, run:
-
-```sh
-make c.recipe-name
-make r.recipe-name
-```
-Or
 
 ```sh
 make c.recipe-name r.recipe-name
@@ -343,10 +330,10 @@ Sometimes you need to update the relibc crates, run these commands between the `
 
 ```sh
 cd relibc
-cargo update -p crate
+cargo update -p crate-name
 cd ..
 ```
-Or
+Or (to update all crates, may break the ABI)
 
 ```sh
 cd relibc

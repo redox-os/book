@@ -1,6 +1,6 @@
 # Including Programs in Redox
 
-(Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
+(Before reading this page you must read the [Build System Quick Reference](./ch08-06-build-system-reference.md) page)
 
 - [Existing package](#existing-package)
   - [Set up the Redox Build Environment](#set-up-the-redox-build-environment)
@@ -18,20 +18,7 @@
   - [Adding the program to the Redox build](#adding-the-program-to-the-redox-build)
 - [Running your program](#running-your-program)
 
-Redox's **Cookbook** toolchain makes packaging a program to include in a build fairly
-straightforward. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./ch09-02-coding-and-building.md), we discuss the development cycle in more detail.
-
-The Cookbook build system uses [TOML](https://toml.io/en/) file format for configuration files, these are the available templates for your `recipe.toml` files:
-
-- `template = "cargo"` - compile with `cargo` (Rust programs, you can't use the `script =` field).
-- `template = "configure"` - compile with `configure` and `make` (you can't use the `script =` field).
-- `template = "custom"` - run your custom `script =` field and compile (Any build system/installation process).
-
-The `script =` field runs any shell command, it's useful if the software use a script to build from source or need custom options that Cookbook don't support.
-
-To find the supported Cookbook shell commands, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
-
-- [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
+The Cookbook system makes the packaging process very simple. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./ch09-02-coding-and-building.md), we discuss the development cycle in more detail.
 
 ## Existing Package
 

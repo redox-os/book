@@ -1,8 +1,6 @@
 # Coding and Building
 
-Let's walk through contributing to the Redox subpackage `games`, which is a collection of low-def games. We are going to modify `minesweeper` to display **P** instead of **F** on flagged spots.
-
-(Before reading this page you **must** read the [Understanding Cross-Compilation for Redox](./ch08-01-advanced-build.md#understanding-cross-compilation-for-redox) and [Build System Quick Reference](./ch08-06-build-system-reference.md) pages)
+(Before reading this page you must read the [Build System Quick Reference](./ch08-06-build-system-reference.md) page)
 
 - [Working with Git](#working-with-git)
   - [Anonymous commits](#anonymous-commits)
@@ -38,9 +36,9 @@ Let's walk through contributing to the Redox subpackage `games`, which is a coll
 
 ## Working with Git
 
-Before starting development, read through [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), which describes how the Redox team uses Git.
+Before starting the development, read through [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), which describes how the Redox team uses Git.
 
-In this example, we will discuss creating a **fork** of the `games` package, pretending you are going to create a `Merge Request` for your changes. **Don't actually do this**. Only create a fork when you have a permanent change you want to contribute to Redox.
+In this example, we will discuss creating a **fork** of the `games` package, pretending you are going to create a `Merge Request` for your changes. **Don't actually do this**. Only create a fork when you have changes that you want to send to Redox upstream.
 
 ### Anonymous commits
 
@@ -85,7 +83,9 @@ Keep the `Terminal` window open. That will be your `Build` shell.
 
 ## The Recipe
 
-The `games` package is built in the folder `cookbook/recipes/games`. When you `clone` the `redox` base package, it includes a file `cookbook/recipes/games/recipe.toml`. The recipe tells the toolchain how to get the source and how to build it.
+Let's walk through contributing to the Redox subpackage `games`, which is a collection of low-def games. We are going to modify `minesweeper` to display **P** instead of **F** on flagged spots.
+
+The `games` package is built in the folder `cookbook/recipes/games`. When you `clone` the `redox` base package, it includes a file `cookbook/recipes/games/recipe.toml`. The recipe tells the build system how to get the source and how to build it.
 
 When you build the system and include the `games` package, the toolchain does a `git clone` into the directory `cookbook/recipes/games/source`. Then it builds the package in the directory `cookbook/recipes/games/target`.
 
@@ -120,7 +120,7 @@ git clone https://gitlab.redox-os.org/redox-os/games.git --origin upstream --rec
 mv games source
 ```
 
-- If you are making a permanent change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
+- If you are making a change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
 
 - If you want to Git Clone a remote repoitory (main repoitory/your fork), you can add these sections on your `recipe.toml`:
 
