@@ -2,7 +2,7 @@
 
 The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an example to port/modify a pure Rust program, here we will explain the advanced way to port Rust programs, mixed Rust programs (Rust + C/C++ libraries, for example) and C/C++ programs.
 
-(Before reading this page you **must** read the [Build System Quick Reference](./ch08-06-build-system-reference.md) and [Coding and Building](./ch09-02-coding-and-building.md) pages)
+(Before reading this page you must read the [Build System Quick Reference](./ch08-06-build-system-reference.md) page)
 
 - [Recipe](#recipe)
     - [Quick Recipe Template](#quick-recipe-template)
@@ -25,14 +25,6 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
         - [Script template](#script-template)
             - [Adapted scripts](#adapted-scripts)
             - [Non-adapted scripts](#non-adapted-scripts)
-        - [Add the Cookbook "bin" folder to the PATH](#add-the-cookbook-bin-folder-to-the-path)
-        - [Insert Cargo build artifacts in the build directory](#insert-cargo-build-artifacts-in-the-build-directory)
-        - [Add the "sysroot" includes for most C compilation](#add-the-sysroot-includes-for-most-c-compilation)
-        - [Add the "sysroot" libraries and build binaries statically for most C compilation](#add-the-sysroot-libraries-and-build-binaries-statically-for-most-c-compilation)
-        - [Ensure that pkg-config gets the right flags from the "sysroot"](#ensure-that-pkg-config-gets-the-right-flags-from-the-sysroot)
-        - [Strip binaries](#strip-binaries)
-        - [Remove libtool files](#remove-libtool-files)
-        - [Remove Cargo install files](#remove-cargo-install-files)
 - [Sources](#sources)
     - [Tarballs](#tarballs)
     - [Git Repositories](#git-repositories)
@@ -169,6 +161,7 @@ When you send your recipe to upstream (to become a public package), you must fol
 - Respect the ABI separation of the packages, for example, if `openssl1` is available and some program need `openssl3`, you will create a recipe for `openssl3` and not rename the `openssl1`, as it will break the ABI of the dependent packages.
 - If your recipe download a tarball you need to create a BLAKE3 hash for it, you can learn how to do it [here](#create-a-blake3-hash-for-your-recipe).
 - Verify if the recipe has some license violation, in case of doubt ask us on the [chat](./ch13-01-chat.md).
+- If your recipe is incomplete you will add it on the `wip` folder, you don't need to insert a BLAKE3 hash (it's quicker to test new tarball versions without checksum) but you need to insert a `#TODO` on the beginning of the `recipe.toml` and explain what's missing. Once the recipe is ready, add the BLAKE3 hash if needed and move the folder to the appropriate category.
 
 ## Cookbook
 
@@ -429,72 +422,6 @@ The `python3` is the script interpreter in this case, use `bash` or `lua` or wha
 
 There are many combinations for these script templates, you can download scripts without the `[source]` section, make customized installations, etc.
 
-#### Add the Cookbook "bin" folder to the PATH
-
-```
-export PATH="${COOKBOOK_ROOT}/bin:${PATH}"
-```
-
-#### Insert Cargo build artifacts in the build directory
-
-```
-export CARGO_TARGET_DIR="${COOKBOOK_BUILD}/target"
-```
-
-#### Add the "sysroot" includes for most C compilation
-
-```
-#TODO: check paths for spaces!
-export CFLAGS="-I${COOKBOOK_SYSROOT}/include"
-export CPPFLAGS="-I${COOKBOOK_SYSROOT}/include"
-```
-
-#### Add the "sysroot" libraries and build binaries statically for most C compilation
-
-```
-#TODO: check paths for spaces!
-export LDFLAGS="-L${COOKBOOK_SYSROOT}/lib --static"
-```
-
-#### Ensure that pkg-config gets the right flags from the "sysroot"
-
-```
-export PKG_CONFIG_ALLOW_CROSS=1
-export PKG_CONFIG_PATH=
-export PKG_CONFIG_LIBDIR="${COOKBOOK_SYSROOT}/lib/pkgconfig"
-export PKG_CONFIG_SYSROOT_DIR="${COOKBOOK_SYSROOT}"
-```
-
-#### Strip binaries
-
-```
-if [ -d "${COOKBOOK_STAGE}/bin" ]
-then
-    find "${COOKBOOK_STAGE}/bin" -type f -exec "${TARGET}-strip" -v {} ';'
-fi
-```
-
-#### Remove libtool files
-
-```
-if [ -d "${COOKBOOK_STAGE}/lib" ]
-then
-    find "${COOKBOOK_STAGE}/lib" -type f -name '*.la' -exec rm -fv {} ';'
-fi
-```
-
-#### Remove Cargo install files
-
-```
-for file in .crates.toml .crates2.json
-do
-    if [ -f "${COOKBOOK_STAGE}/${file}" ]
-    then
-        rm -v "${COOKBOOK_STAGE}/${file}"
-    fi
-done
-```
-
 ## Sources
 
 ### Tarballs
@@ -682,12 +609,10 @@ cargo update -p crate1 crate2
 cd -
 make r.recipe-name
 ```
-Or (if you still get the error)
+
+If you still get the error, run:
 
 ```sh
-cd cookbook/recipes/recipe-name/source
-cargo update -p crate1 crate2
-cd -
 make c.recipe-name r.recipe-name
 ```
 
@@ -707,12 +632,10 @@ cargo update
 cd -
 make r.recipe-name
 ```
-Or (if you still get the error)
+
+If you still get the error, run:
 
 ```sh
-cd cookbook/recipes/recipe-name/source
-cargo update
-cd -
 make c.recipe-name r.recipe-name
 ```
 
@@ -755,12 +678,10 @@ cargo update -p crate-name
 cd -
 make r.recipe-name
 ```
-Or
+
+If you still get the error, run:
 
 ```sh
-cd cookbook/recipes/recipe-name/source
-cargo update -p crate-name
-cd -
 make c.recipe-name r.recipe-name
 ```
 
@@ -822,8 +743,7 @@ You need to create a BLAKE3 hash of your recipe tarball if you want to merge it 
 After the first run of the `make r.recipe-name` command, run these commands:
 
 ```sh
-cd cookbook/recipes/your-recipe-folder/source.tar
-b3sum source.tar
+b3sum cookbook/recipes/recipe-name/source.tar
 ```
 
 It will print the generated BLAKE3 hash, copy and paste on the `blake3 =` field of your `recipe.toml`.

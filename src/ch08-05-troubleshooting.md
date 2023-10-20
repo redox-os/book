@@ -109,17 +109,7 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
     - Example:
 
     ```sh
-    rm -rf cookbook/recipes/recipe-name/source
-    rm -rf cookbook/recipes/recipe-name/target
-    make r.recipe-name
-    ```
-
-    Or
-
-    ```sh
-    rm -rf cookbook/recipes/recipe-name/source
-    make c.recipe-name
-    make r.recipe-name
+    make u.recipe-name c.recipe-name r.recipe-name
     ```
 
 ### Update your branch

@@ -17,26 +17,25 @@ Redox is a complete Rust operating system, in addition to the kernel, we are dev
 - [netstack](https://gitlab.redox-os.org/redox-os/netstack) - Redox network stack.
 - [redoxer](https://gitlab.redox-os.org/redox-os/redoxer) - A tool to run/test Rust programs inside of a Redox VM.
 - [redox-linux](https://gitlab.redox-os.org/redox-os/redox-linux) - Redox userspace on Linux.
-- [Sodium](https://gitlab.redox-os.org/redox-os/sodium) - A Vi-like editor.
+- [sodium](https://gitlab.redox-os.org/redox-os/sodium) - A Vi-like editor.
 - [games](https://gitlab.redox-os.org/redox-os/games) - A collection of mini-games for Redox (alike BSD-games).
-- [OrbTK](https://gitlab.redox-os.org/redox-os/orbtk) - Cross-platform Rust-written GUI toolkit.
+- [OrbTK](https://gitlab.redox-os.org/redox-os/orbtk) - Cross-platform Rust-written GUI toolkit (in maintenance mode).
 - and a few other exciting projects you can explore [here](https://gitlab.redox-os.org/redox-os).
 
 We also have three utility distributions, which are collections of small, useful command-line programs:
 
-- [Coreutils](https://gitlab.redox-os.org/redox-os/coreutils) - A minimal set of utilities essential for a usable system.
-- [Extrautils](https://gitlab.redox-os.org/redox-os/extrautils) -  Extra utilities such as reminders, calendars, spellcheck, and so on.
-- [Binutils](https://gitlab.redox-os.org/redox-os/binutils) - Utilities for working with binary files.
+- [coreutils](https://gitlab.redox-os.org/redox-os/coreutils) - A minimal set of utilities essential for a usable system.
+- [extrautils](https://gitlab.redox-os.org/redox-os/extrautils) -  Extra utilities such as reminders, calendars, spellcheck, and so on.
+- [binutils](https://gitlab.redox-os.org/redox-os/binutils) - Utilities for working with binary files.
 
-We also actively contribute to third party projects that are heavily used in Redox.
+We also actively contribute to third-party projects that are heavily used in Redox.
 
- - [uutils/coreutils](https://github.com/uutils/coreutils) - Cross-platform Rust rewrite of the GNU coreutils.
- - [smoltcp](https://github.com/m-labs/smoltcp) - The network stack used by Redox.
+ - [uutils/coreutils](https://github.com/uutils/coreutils) - Cross-platform Rust rewrite of the GNU Coreutils.
+ - [smoltcp](https://github.com/m-labs/smoltcp) - The TCP/IP stack used by Redox.
 
-What tools are fitting for the Redox distribution?
--------------------------------------------------
+## What tools are fitting for the Redox distribution?
 
-Some of these tools will in the future be moved out of the default distribution, into separate optional packages. Examples of these are Orbital, OrbTK, Sodium, and so on.
+The necessary tools for a usable system, we offer variants with less programs.
 
 The listed tools fall into three categories:
 
