@@ -1,6 +1,6 @@
 # Introduction
 
-![Redox OS](assets/redox_light_512.png)
+![Redox OS](assets/redox_dark_512.png)
 
 This is the **Redox OS** book, which will go through (almost) everything about Redox: design, philosophy, how it works, how you can contribute, how to deploy Redox, and much more.
 
