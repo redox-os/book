@@ -15,21 +15,34 @@ If you identify a problem with the system that has not been identified previousl
 6. If the problem involves multiple recipes, kernel interactions with other programs, or general build problems, then you should plan to log the issue against the `redox` repository.
 
 7. If the problem occurs during build, record the build log using `script` or `tee`, e.g.
+
     ```sh
     make r.recipe-name 2>&1 | tee recipe-name.log
     ```
+
     If the problem occurs while using the Redox command line, use `script` in combination with your Terminal window.
+
     ```sh
-    script qemu.log
+    tee qemu.log
+    ```
+
+    ```sh
     make qemu
-    # wait for Redox to start, then in this window,
+    ```
+
+    - Wait for Redox to start, then in this window
+    ```
     redox login: user
-    # execute the commands to demonstrate the bug
-    # terminate qemu
+    ```
+    - Execute the commands to demonstrate the bug
+    - Terminate QEMU
+    ```sh
     sudo shutdown
-    # if shutdown does not work (there are known bugs) then
-    # use the QEMU menu to quit
-    # then exit the shell created by script
+    ```
+    - If shutdown does not work (there are known bugs) then
+    - Use the QEMU menu to quit
+    - Then exit the shell created by script
+    ```sh
     exit
     ```
 

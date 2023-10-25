@@ -15,17 +15,33 @@ This is not part of the porting, it's just to make sure our problems are not com
 We follow the normal build instructions for the software we are porting.
 ```sh
 cd ~
+```
+
+```sh
 git clone https://github.com/Byron/gitoxide.git
+```
+
+```sh
 cd gitoxide
+```
+
+```sh
 cargo run --bin ein
 ```
 
 ## Set up the working tree
 
 We start with a fresh clone of the Redox repository. In a Terminal/Console/Command window:
-```
+
+```sh
 mkdir -p ~/redox-gitoxide
+```
+
+```sh
 cd ~/redox-gitoxide
+```
+
+```sh
 git clone git@gitlab.redox-os.org:redox-os/redox.git --origin upstream --recursive
 ```
 
@@ -35,28 +51,48 @@ The new recipe will be part of the `cookbook` repository, so we need to fork the
 - Create a `public` fork under your gitlab user name (it's the only option that's enabled)
 
 Then we need to set up our local `cookbook` repo and create the branch. `cookbook` was cloned when we cloned `redox`, so we will just tweak that. In the Terminal window:
-```
+
+```sh
 cd ~/redox-gitoxide/redox/cookbook
+```
+
+```sh
 git remote rename origin upstream
+```
+
+```sh
 git rebase upstream master
+```
+
+```sh
 git remote add origin git@gitlab.redox-os.org:MY_USERNAME/cookbook.git
+```
+
+```sh
 git checkout -b gitoxide-port
 ```
 
 ## Create a Recipe
 
 To create a recipe, we need to make a new directory in `cookbook/recipes` with the name the package will have, in this case `gitoxide`, and create a `recipe.toml` file with a first-draft recipe.
-```
+
+```sh
 mkdir -p ~/redox-gitoxide/redox/cookbook/recipes/gitoxide
+```
+
+```sh
 cd ~/redox-gitoxide/redox/cookbook/recipes/gitoxide
-gedit recipe.toml &
+```
+
+```sh
+nano recipe.toml
 ```
 
 Start with the following content in the `recipe.toml` file.
-```
+
+```toml
 [source]
 git = "https://github.com/Byron/gitoxide.git"
-
 [build]
 template = "cargo"
 ```
@@ -64,13 +100,21 @@ template = "cargo"
 ## First Attempt
 
 Next we attempt to build the recipe. Note that the first attempt may require the Redox toolchain to be updated, so we run `make prefix`, which may take quite a while.
-```
+
+```sh
 cd ~/redox-gitoxide/redox
+```
+
+```sh
 make prefix
+```
+
+```sh
 make r.gitoxide |& tee gitoxide.log
 ```
 
 We get our first round of errors (among other messages):
+
 ```
 error[E0425]: cannot find value `POLLRDNORM` in crate `libc`
 error[E0425]: cannot find value `POLLWRBAND` in crate `libc`
@@ -83,21 +127,40 @@ We suspect the problem is that these items have not been defined in the Redox ed
 We need to work with a local copy of `libc`, and then later ask someone with authority to upstream the required changes.
 
 First, clone `libc` into our `gitoxide` directory.
-```
+
+```sh
 cd ~/redox-gitoxide/redox/cookbook/recipes/gitoxide
+```
+
+```sh
 git clone https://github.com/rust-lang/libc.git
 ```
 
 Try to find the missing constants.
-```
+
+```sh
 cd ~/redox-gitoxide/redox/cookbook/recipes/gitoxide/libc
+```
+
+```sh
 grep -nrw "POLLRDNORM" --include "*.rs"
+```
+
+```sh
 grep -nrw "POLLWRBAND" --include "*.rs"
 ```
+
 Looks like the value is not defined for the Redox version of `libc`. Let's see if it's in `relibc`.
-```
+
+```sh
 cd ~/redox-gitoxide/redox/relibc
+```
+
+```sh
 grep -nrw "POLLRDNORM" --include "*.rs"
+```
+
+```sh
 grep -nrw "POLLWRBAND" --include "*.rs"
 ```
 
@@ -109,13 +172,18 @@ They just need to get published in `libc`. Let's do that.
 Let's add our constants to our local `libc`. We are not going to bother with `git` because these changes are just for debugging purposes.
 Copy the constant declarations from `relibc`, and paste them in the appropriate sections of `libc/src/unix/redox/mod.rs`.
 In addition to copying the constants, we have to change the type `c_short` to `::c_short` to conform to `libc` style.
-```
+
+```sh
 cd ~/redox-gitoxide/redox/cookbook/recipes/gitoxide
-gedit libc/src/unix/redox/mod.rs &
+```
+
+```sh
+nano libc/src/unix/redox/mod.rs
 ```
 
 We add the following lines to `mod.rs`:
-```
+
+```rust
 pub const POLLRDNORM: ::c_short = 0x040;
 pub const POLLRDBAND: ::c_short = 0x080;
 pub const POLLWRNORM: ::c_short = 0x100;
@@ -124,43 +192,55 @@ pub const POLLWRBAND: ::c_short = 0x200;
 
 In order to test our changes, we will have to modify our `gitoxide` clone for now.
 Once the changes to `libc` are upstreamed, we won't need a modified `gitoxide` clone.
-To avoid overwriting our work, we want to turn off future fetches of the `gitoxide` source during build, so change `recipe.toml` to comment out the source section: `gedit recipe.toml &`.
-```
-# [source]
-# git = "https://github.com/Byron/gitoxide.git"
+To avoid overwriting our work, we want to turn off future fetches of the `gitoxide` source during build, so change `recipe.toml` to comment out the source section: `nano recipe.toml`.
 
+```toml
+#[source]
+#git = "https://github.com/Byron/gitoxide.git"
 [build]
 template = "cargo"
 ```
 
 We edit `gitoxide`'s `Cargo.toml` so we use our `libc`.
+
 ```
-gedit ~/redox-gitoxide/cookbook/recipes/gitoxide/source/Cargo.toml &
+nano ~/redox-gitoxide/cookbook/recipes/gitoxide/source/Cargo.toml
 ```
 
 After the `[dependencies]` section, but before the `[profile]` sections, add the following to `Cargo.toml`:
-```
+
+```toml
 [patch.crates-io]
 libc = { path = "../libc" }
 ```
 
-Bump the version number on our `libc`, so it will take priority. 
+Bump the version number on our `libc`, so it will take priority.
+
 ```
-gedit ~/redox-gitoxide/cookbook/recipes/gitoxide/libc/Cargo.toml &
+nano ~/redox-gitoxide/cookbook/recipes/gitoxide/libc/Cargo.toml
 ```
-```
+
+```toml
 version = "0.2.143"
 ```
 
 Update `gitoxide`'s `Cargo.lock`.
-```
+
+```sh
 cd ~/redox-gitoxide/redox/cookbook/recipes/gitoxide/source
+```
+
+```sh
 cargo update
 ```
 
 Make sure we have saved all the files we just edited, and let's try building.
-```
+
+```sh
 cd ~/redox-gitoxide/redox
+```
+
+```sh
 make r.gitoxide
 ```
 
@@ -175,10 +255,9 @@ There is already a Redox fork of `openssl` to add Redox as a target, so we will 
 In order to do this, we are going to need a custom recipe. Let's start with a simple custom recipe, just to get us going.
 Edit our previously created recipe, `cookbook/recipes/gitoxide/recipe.toml`, changing it to look like this.
 
-```
-# [source]
-# git = "https://github.com/Byron/gitoxide.git"
-
+```toml
+#[source]
+#git = "https://github.com/Byron/gitoxide.git"
 [build]
 template = "custom"
 script = """
@@ -201,10 +280,10 @@ Adding a dependency on `openssl` ensures that the build of `openssl` will happen
 And we need to set the environment variables as described in the [OpenSSL bindings](https://docs.rs/openssl/latest/openssl/) crate docs.
 
 Our recipe now looks like this:
-```
-# [source]
-# git = "https://github.com/Byron/gitoxide.git"
 
+```toml
+#[source]
+#git = "https://github.com/Byron/gitoxide.git"
 [build]
 dependencies = [
     "openssl",
@@ -231,31 +310,67 @@ In our case we find we are missing `tzset`, which is a timezone function. We are
 ## Add Missing Functions to relibc
 
 Let's set up to modify `relibc`. As with `cookbook`, we need a fork of [relibc](https://gitlab.redox-os.org/redox-os/relibc). Click on the `Fork` button and add a public fork. Then update our local `relibc` repo and branch.
-```
+
+```sh
 cd ~/redox-gitoxide/redox/relibc
+```
+
+```sh
 git remote rename origin upstream
+```
+
+```sh
 git rebase upstream master
+```
+
+```sh
 git remote add origin git@gitlab.redox-os.org:MY_USERNAME/relibc.git
+```
+
+```sh
 git checkout -b gitoxide-port
 ```
 
 Now we need to make our changes to `relibc`...
 
 After a fair bit of work, which we omit here, the functions `tzset` and `cfmakeraw` are implemented in `relibc`. An important note is that in order to publish the functions, they need to be preceded with:
+
 ```
 #[no_mangle]
 extern "C" fn tzset() ...
 ```
 
 Now let's build the system. The command `touch relibc` changes the timestamp on the `relibc` directory, which will cause the library to be updated. We then clean and rebuild `gitoxide`.
-```
+
+```sh
 cd ~/redox-gitoxide/redox
+```
+
+```sh
 cd relibc
+```
+
+```sh
 cargo update
+```
+
+```sh
 cd ..
+```
+
+```sh
 touch relibc
+```
+
+```sh
 make prefix
+```
+
+```sh
 make c.gitoxide
+```
+
+```sh
 make r.gitoxide
 ```
 
@@ -263,24 +378,41 @@ make r.gitoxide
 
 Now we need to build a full Redox image and run it in QEMU. Let's make a configuration file.
 
-```
+```sh
 cd ~/redox-gitoxide/redox/config/x86_64
+```
+
+```sh
 cp desktop.toml my_desktop.toml
-gedit my_desktop.toml &
+```
+
+```sh
+nano my_desktop.toml
 ```
 
 Note that the prefix "my_" at the beginning of the config file name means that it is gitignore'd, so it is preferred that you prefix your config name with "my_".
 
 In `my_desktop.toml`, at the end of the list of packages, after `uutils = {}`, add
-```
+
+```toml
 gitoxide = {}
 ```
 
 Now let's tell `make` about our new config definition, build the system, and test our new command.
-```
+
+```sh
 cd ~/redox-gitoxide/redox
+```
+
+```sh
 echo "CONFIG_NAME?=my_desktop.toml" >> .config
+```
+
+```sh
 make rebuild
+```
+
+```sh
 make qemu
 ```
 

@@ -42,7 +42,7 @@ TODO: In Linux we have device files like `/dev/tty`, how is this concept handled
 When ion is called without "-c", it starts a main loop,
 which can be found inside `Shell.execute()`.
 
-```Rust
+```rust
         self.print_prompt();
         while let Some(command) = readln() {
             let command = command.trim();
@@ -53,6 +53,7 @@ which can be found inside `Shell.execute()`.
             self.print_prompt();
         }
 ```
+
 `self.print_prompt();` is used to print the shell prompt.
 
 The `readln()` function is the input reader. The code can be found in `crates/ion/src/input_editor`.
@@ -61,10 +62,7 @@ The documentation about `trim()` can be found [here](https://doc.rust-lang.org/s
 If the command is not empty, the `on_command` method will be called.
 Then, the shell will update variables, and reprint the prompt.
 
-
-
-
-```Rust
+```rust
 fn on_command(&mut self, command_string: &str, commands: &HashMap<&str, Command>) {
     self.history.add(command_string.to_string(), &self.variables);
 
@@ -110,13 +108,15 @@ fn on_command(&mut self, command_string: &str, commands: &HashMap<&str, Command>
     }
 }
 ```
+
 First, `on_command` adds the commands to the shell history with  `self.history.add(command_string.to_string(), &self.variables);`.
 
 Then the script will be parsed. The parser code is in `crates/ion/src/peg.rs`.
 The parse will return a set of pipelines, with each pipeline containing a set of jobs.
 Each job represents a single command with its arguments.
 You can take a look in `crates/ion/src/peg.rs`.
-```Rust
+
+```rust
 pub struct Pipeline {
     pub jobs: Vec<Job>,
     pub stdout: Option<Redirection>,
@@ -128,6 +128,7 @@ pub struct Job {
     pub background: bool,
 }
 ```
+
 What Happens Next:
 * If the current block is a collecting block (a for loop or a function declaration) and the current command is ended, we close the block:
    * If the block is a for loop we run the loop.
@@ -141,6 +142,7 @@ pub struct CodeBlock {
     pub pipelines: Vec<Pipeline>,
 }
 ```
+
 The function code can be found in `crates/ion/src/functions.rs`.
 
 The execution of pipeline content will be executed in `run_pipeline()`.
@@ -148,7 +150,8 @@ The execution of pipeline content will be executed in `run_pipeline()`.
 The Command class inside `crates/ion/src/main.rs` maps each command with a description and a method
 to be executed.
 For example:
-```Rust
+
+```rust
 commands.insert("cd",
                 Command {
                     name: "cd",
@@ -158,6 +161,7 @@ commands.insert("cd",
                     },
                 });
 ```
+
 `cd` is described by  `"Change the current directory\n    cd <path>"`, and when called the method
 `shell.directory_stack.cd(args, &shell.variables)` will be used. You can see its code in `crates/ion/src/directory_stack.rs`.
 

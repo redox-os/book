@@ -2,7 +2,8 @@
 
 Once you have [downloaded](./ch02-02-real-hardware.md) or [built](./ch02-05-building-redox.md) your ISO image, you can install it to your internal HDD or SSD. **Please back up your system** before attempting to install. Note that at this time (Release 0.8.0), you cannot install onto a USB drive, or use a USB drive for your Redox filesystem, but you can install from it. 
 
-After starting your *livedisk* system from a USB thumbdrive or from CD, log in as user `user` with an empty password. Open a Terminal window and type 
+After starting your *livedisk* system from a USB thumbdrive or from CD, log in as user `user` with an empty password. Open a Terminal window and type:
+
 ```sh
 sudo redox_installer_tui
 ```

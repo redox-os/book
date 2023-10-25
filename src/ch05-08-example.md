@@ -25,6 +25,7 @@ This example assumes that `vec` was used as the name of the crate instead of
 
 Modify the `Cargo.toml` for the `vec` crate so that it looks something like
 this:
+
 ```toml
 [package]
 name = "vec"
@@ -247,6 +248,7 @@ In this sense, the vec scheme implements a global vector.
 
 Since we've already set up the program to build and run in the redox VM,
 simply run:
+
 - `make r.scheme`
 - `make image`
 - `make qemu`

@@ -52,6 +52,9 @@ We are ready to build the entire Redox Operating System Image.
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 time make all
 ```
 
@@ -74,6 +77,9 @@ When you need to rebuild core-packages like relibc, gcc and related tools, clean
 
 ```sh
 cd ~/tryredox/redox/
+```
+
+```sh
 rm -rf prefix/aarch64-unknown-redox/relibc-install/ cookbook/recipes/gcc/{build,sysroot,stage*} build/aarch64/*/{harddrive.img,livedisk.iso}
 ```
 
@@ -83,6 +89,9 @@ If you're only rebuilding a non-core package, you can partially clean the previo
 
 ```sh
 cd ~/tryredox/redox/
+```
+
+```sh
 rm build/aarch64/*/{fetch.tag,harddrive.img}
 ```
 

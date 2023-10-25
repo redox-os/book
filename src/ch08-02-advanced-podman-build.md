@@ -64,12 +64,15 @@ To check that everything has been removed,
 
 ```sh
 podman ps -a
+```
+
+```sh
 podman images
 ```
 
 will show any remaining images or containers. If you need to do further cleanup,
 
-```
+```sh
 podman system reset
 ```
 
@@ -111,6 +114,9 @@ If you need `root` privileges, while you are **still running** the above `bash` 
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 make container_su
 ```
 
@@ -132,6 +138,9 @@ Copy `podman/redox-base-containerfile` and add to the list of packages in the in
 
 ```sh
 cp podman/redox-base-containerfile podman/my-containerfile
+```
+
+```sh
 nano podman/my-containerfile
 ```
 
@@ -170,15 +179,24 @@ If you have problems setting Podman to rootless mode, use these commands:
 - Execute `cat /etc/subuid` and `cat /etc/subgid` to see user/group IDs (UIDs/GIDs) available for Podman.
 
 If you don't want to edit the file, you can use this command:
+
 ```sh
 sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 yourusername
 ```
+
 You can use the values `100000-165535` for your user, just edit the two text files, we recommend `sudo nano /etc/subuid` and `sudo nano /etc/subgid`, when you finish, press Ctrl+X to save the changes.
 
-- After the change on the UID/GID values, execute the command `podman system migrate`.
-- If you have a network problem on the container, execute the command:
+- After the change on the UID/GID values, execute this command:
 
-`sudo sysctl net.ipv4.ip_unprivileged_port_start=443` - This command will allow port connection without root.
+```sh
+podman system migrate
+```
+
+- If you have a network problem on the container, this command will allow connections on the port 443 (without root):
+
+```sh
+sudo sysctl net.ipv4.ip_unprivileged_port_start=443
+```
 
 - Hopefully, you have a working Podman build now (if you still have problems with Podman, check the [Troubleshooting](./ch08-05-troubleshooting.md) chapter or join us on the [Redox Support](https://matrix.to/#/#redox-support:matrix.org) room)
 
@@ -186,25 +204,25 @@ Let us know if you have improvements for Podman troubleshooting on [Redox Dev](h
 
 ## Summary of Podman-related Make Targets, Variables and Podman Commands
 
-- `PODMAN_BUILD`: If set to 1 in [.config](./ch02-07-configuration-settings.md#config), or in the environment, or on the `make` command line, much of the build process takes place in **Podman**.
+- `PODMAN_BUILD` - If set to 1 in [.config](./ch02-07-configuration-settings.md#config), or in the environment, or on the `make` command line, much of the build process takes place in **Podman**.
 
-- `CONTAINERFILE`: The name of the containerfile used to build the image. This file includes the `apt-get` command that installs all the necessary packages into the image. If you need to add packages to the build, edit your own containerfile and change this variable to point to it.
+- `CONTAINERFILE`-  The name of the containerfile used to build the image. This file includes the `apt-get` command that installs all the necessary packages into the image. If you need to add packages to the build, edit your own containerfile and change this variable to point to it.
 
-- `make build/container.tag`: If no container image has been built, build one. It's not necessary to do this, it will be done when needed.
+- `make build/container.tag` - If no container image has been built, build one. It's not necessary to do this, it will be done when needed.
 
-- `make container_touch`: If a container image already exists and `poduser`'s home directory is valid, but there is no *tag* file, create the *tag* file so a new image is not built.
+- `make container_touch` - If a container image already exists and `poduser`'s home directory is valid, but there is no *tag* file, create the *tag* file so a new image is not built.
 
-- `make container_clean`: Remove the container image, `poduser`'s home directory and the *tag* file.
+- `make container_clean` - Remove the container image, `poduser`'s home directory and the *tag* file.
 
-- `make container_shell`: Start an interactive Podman `bash` shell in the same environment used by `make`; for debugging the `apt-get` commands used during image build.
+- `make container_shell` - Start an interactive Podman `bash` shell in the same environment used by `make`; for debugging the `apt-get` commands used during image build.
 
-- `make env`: Start an interactive `bash` shell with the `prefix` tools in your PATH. Automatically determines if this should be a Podman shell or a host shell, depending on the value of `PODMAN_BUILD`.
+- `make env` - Start an interactive `bash` shell with the `prefix` tools in your PATH. Automatically determines if this should be a Podman shell or a host shell, depending on the value of `PODMAN_BUILD`.
 
-- `make repo` or `./build.sh -a ARCH -c CONFIG repo`: Used while in a Podman shell to build all the Redox component packages. `make all` will not complete successfully, since part of the build process must take place on the host.
+- `make repo` or `./build.sh -a ARCH -c CONFIG repo` - Used while in a Podman shell to build all the Redox component packages. `make all` will not complete successfully, since part of the build process must take place on the host.
 
-- `podman exec --user=0 -it CONTAINER bash`: Use this command in combination with `make container_shell` or `make env` to get `root` access to the Podman build environment, so you can temporarily add packages to the environment. `CONTAINER` is the name of the active container as shown by `podman ps`. For temporary, debugging purposes only.
+- `podman exec --user=0 -it CONTAINER bash` - Use this command in combination with `make container_shell` or `make env` to get `root` access to the Podman build environment, so you can temporarily add packages to the environment. `CONTAINER` is the name of the active container as shown by `podman ps`. For temporary, debugging purposes only.
 
-- `podman system reset`: Use this command when `make container_clean` is not sufficient to solve problems caused by errors in the container image. It will remove all images, use with caution. If you are using **Podman** for any other purpose, those images will be deleted as well.
+- `podman system reset` - Use this command when `make container_clean` is not sufficient to solve problems caused by errors in the container image. It will remove all images, use with caution. If you are using **Podman** for any other purpose, those images will be deleted as well.
 
 ## Gory Details
 
@@ -215,9 +233,11 @@ We are using **Rootless Podman**'s `--userns keep-id` feature. Because Podman is
 During the creation of the **base image**, Podman invokes [Buildah](https://buildah.io/) to build the image. Buildah does not allow User IDs to be shared between the host and the container in the same way that Podman does. So the base image is created without `keep-id`, then the first container created from the image, having `keep-id` enabled, triggers a remapping. Once that remapping is done, it is reused for each subsequent container.
 
 The working directory is made available in the container by **mounting** it as a **volume**. The **Podman** option:
-```
+
+```sh
 --volume "`pwd`":$(CONTAINER_WORKDIR):Z
 ```
+
 takes the directory that `make` was started in as the host working directory, and **mounts** it at the location `$CONTAINER_WORKDIR`, normally set to `/mnt/redox`. The `:Z` at the end of the name indicates that the mounted directory should not be shared between simultaneous container instances. It is optional on some Linux distros, and not optional on others.
 
 For our invocation of Podman, we set the PATH environment variable as an option to `podman run`. This is to avoid the need for our `make` command to run `.bashrc`, which would add extra complexity. The `ARCH`, `CONFIG_NAME` and `FILESYSTEM_CONFIG` variables are passed in the environment to allow you to override the values in `mk/config.mk` or `.config`, e.g. by setting them on your `make` command line or by using `build.sh`.

@@ -122,15 +122,31 @@ To fix this, run:
 
 ```sh
 git checkout master
+```
+
+```sh
 git pull
+```
+
+```sh
 git checkout your-branch
+```
+
+```sh
 git merge master
 ```
+
 Or
 
 ```sh
 git checkout master
+```
+
+```sh
 git pull
+```
+
+```sh
 git merge your-branch master
 ```
 

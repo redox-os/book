@@ -30,15 +30,27 @@ The build process is using **Podman**'s `keep-id` feature, which allows your reg
 
 If you have already read the [Building Redox](./ch02-05-building-redox.html) instructions, but you wish to use **Podman Build**, follow these steps.
 
-- Make sure you have the `curl` command. E.g. for Pop!_OS/Ubuntu/Debian:
+- Make sure you have the `curl` command. e.g. for Pop!_OS/Ubuntu/Debian:
+
 ```sh
 which curl || sudo apt-get install curl 
 ```
+
 - Make a directory, get a copy of `podman_bootstrap.sh` and run it. This will clone the repository and install **Podman**.
+
 ```sh
 mkdir -p ~/tryredox
+```
+
+```sh
 cd ~/tryredox
+```
+
+```sh
 curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.sh -o podman_bootstrap.sh
+```
+
+```sh
 time bash -e podman_bootstrap.sh
 ```
 
@@ -60,9 +72,16 @@ time make all
 If you already have the source tree, you can use these steps.
 
 - Change to your working directory and get the updates to the build files.
+
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 git fetch upstream master
+```
+
+```sh
 git rebase upstream/master
 ```
 
@@ -76,15 +95,22 @@ git rebase upstream/master
 
 ```sh
 export PODMAN_BUILD=1
+```
+
+```sh
 make all
+```
+
+```sh
 make qemu
 ```
 
 To ensure `PODMAN_BUILD` is properly set for future builds, edit [.config](./ch02-07-configuration-settings.md#config) in your base `redox` directory and change its value.
 
 ```sh
-gedit .config &
+nano .config
 ```
+
 ```
 PODMAN_BUILD?=1
 ```

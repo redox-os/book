@@ -23,9 +23,21 @@ Create a directory and clone the repository.
 
 ```sh
 mkdir -p ~/tryredox
+```
+
+```sh
 cd ~/tryredox
+```
+
+```sh
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
+```
+
+```sh
 cd redox
+```
+
+```sh
 git submodule update --recursive --init
 ```
 
@@ -39,6 +51,9 @@ If you cloned the source tree *before* running **bootstrap.sh**, you can use:
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 ./bootstrap.sh -d
 ```
 
@@ -149,8 +164,17 @@ then
 
 ```sh
 source ~/.cargo/env
+```
+
+```sh
 rustup default nightly
+```
+
+```sh
 rustup toolchain list
+```
+
+```sh
 cargo install --force --version 0.1.1 cargo-config
 ```
 
@@ -182,6 +206,9 @@ If you want to update the Redox build system or if some of the recipes have chan
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 make pull
 ```
 

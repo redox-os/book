@@ -14,15 +14,27 @@ This build process for the current release (0.8.0) is for Pop!_OS/Ubuntu/Debian.
 
 If you're on a supported Linux distro, you can just run the bootstrap script, which does the build preparation for you. First, ensure that you have the program `curl` installed:
 
+(This command is for Pop!_OS, Ubuntu or Debian, adjust for your system)
+
 ```sh
-which curl || sudo apt-get install curl # Pop!_OS/Ubuntu/Debian - adjust for your system
+which curl || sudo apt-get install curl
 ```
 
 Then run the following commands:
+
 ```sh
 mkdir -p ~/tryredox
+```
+
+```sh
 cd ~/tryredox
+```
+
+```sh
 curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
+```
+
+```sh
 time bash -e bootstrap.sh
 ```
 
@@ -60,8 +72,12 @@ To build all the components, and the packages to be included in the filesystem.
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 time make all
 ```
+
 This will make the target `build/x86_64/desktop/hardrive.img`, which you can run with an emulator.
 
 Give it a while. Redox is big. This will do the following:
@@ -85,15 +101,18 @@ If you use `build.sh`, it's recommended that you do so consistently, as `make` w
 
 ### Run in an emulator
 
-You can immediately run your image `build/x86_64/desktop/harddrive.img` in an emulator with the following command.
+You can immediately run your image `build/x86_64/desktop/harddrive.img` in an emulator with the following command:
+
 ```sh
 make qemu
 ```
 
 Note that if you built the system using `build.sh` to change architecture or filesystem contents, you should also use it to run the emulator.
+
 ```sh
 ./build.sh -a i686 -c server qemu
 ```
+
 will build `build/i686/server/harddrive.img` (if it does not exist) and run it in the **QEMU** emulator.
 
 The emulator will display the Redox GUI. See [Using the emulation](./ch02-01-running-vm.md#using-the-emulation) for general instructions and [Trying out Redox](./ch02-04-trying-out-redox.md) for things to try.
@@ -109,8 +128,14 @@ make qemu vga=no
 If you want to capture the terminal output, use:
 
 ```sh
-script ~/my_log.txt
+tee ~/my_log.txt
+```
+
+```sh
 make qemu vga=no
+```
+
+```sh
 exit
 ```
 
@@ -130,6 +155,9 @@ For a *livedisk* or installable image, use:
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 time make live
 ```
 

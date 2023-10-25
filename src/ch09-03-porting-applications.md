@@ -31,7 +31,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
 - [Dependencies](#dependencies)
     - [Bundled Libraries](#bundled-libraries)
     - [Environment Variables](#environment-variables-1)
-- [Testing/Building](#testingbuilding)
+- [Building/Testing](#buildingtesting)
 - [Update crates](#update-crates)
     - [One or more crates](#one-or-more-crates)
     - [All crates](#all-crates)
@@ -55,7 +55,13 @@ Create a folder in `cookbook/recipes` with a file named as `recipe.toml` inside,
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 mkdir cookbook/recipes/program_example
+```
+
+```sh
 nano cookbook/recipes/program_example/recipe.toml
 ```
 
@@ -561,7 +567,7 @@ cookbook_configure
 
 On this example the `-DOPENSSL_ROOT_DIR` option will have the custom OpenSSL path.
 
-## Testing/Building
+## Building/Testing
 
 (Build on your Linux distribution before this step to see if all build system tools and development libraries are correct)
 
@@ -569,6 +575,18 @@ To build your recipe, run:
 
 ```sh
 make r.recipe-name
+```
+
+To test your recipe, run:
+
+```sh
+make qemu
+```
+
+If you want to test from terminal, run:
+
+```sh
+make qemu vga=no
 ```
 
 If the build process was successful the recipe will be packaged and don't give errors.
@@ -605,8 +623,17 @@ We recommend that you do this based on the errors you get during the compilation
 
 ```sh
 cd cookbook/recipes/recipe-name/source
+```
+
+```sh
 cargo update -p crate1 crate2
+```
+
+```sh
 cd -
+```
+
+```sh
 make r.recipe-name
 ```
 
@@ -628,8 +655,17 @@ Be aware that some crates break the ABI frequently and make the program stop to 
 
 ```sh
 cd cookbook/recipes/recipe-name/source
+```
+
+```sh
 cargo update
+```
+
+```sh
 cd -
+```
+
+```sh
 make r.recipe-name
 ```
 
@@ -674,8 +710,17 @@ Or
 
 ```sh
 cd cookbook/recipes/recipe-name/source
+```
+
+```sh
 cargo update -p crate-name
+```
+
+```sh
 cd -
+```
+
+```sh
 make r.recipe-name
 ```
 
@@ -720,6 +765,9 @@ To speed up your porting workflow you can use the `grep` tool to search the reci
 
 ```sh
 cd cookbook/recipes
+```
+
+```sh
 grep -rnw "text" --include "recipe.toml"
 ```
 
@@ -731,6 +779,9 @@ Sometimes your program is not building because relibc lack the necessary functio
 
 ```sh
 cd relibc
+```
+
+```sh
 grep -nrw "function-name" --include "*.rs"
 ```
 

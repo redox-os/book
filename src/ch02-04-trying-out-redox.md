@@ -28,10 +28,10 @@ Sodium is Redox's Vi-like editor. To try it out, open a terminal window and type
 
 A short list of the Sodium defaults:
 
-- `hjkl`: Navigation keys.
-- `ia`: Go to insert/append mode.
-- `;`: Go to command-line mode.
-- shift-space: Go to normal mode.
+- `hjkl` - Navigation keys
+- `ia` - Go to insert/append mode
+- `;` - Go to command-line mode
+- shift-space - Go to normal mode
 
 For a more extensive list, write `;help`.
 
