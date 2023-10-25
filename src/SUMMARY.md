@@ -75,6 +75,7 @@
   - [Porting Applications using Recipes](./ch09-03-porting-applications.md)
   - [Porting Case Study](./ch09-04-porting-case-study.md)
   - [Developer FAQ](./ch09-05-developer-faq.md)
+  - [Quick Workflow](./ch09-06-quick-workflow.md)
 
 - [Contributing](./ch10-00-contributing.md)
 

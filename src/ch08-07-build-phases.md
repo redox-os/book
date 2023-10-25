@@ -6,6 +6,8 @@ Every build system command/script has phases, this page will document them.
 - [podman_bootstrap.sh](#podman_boostrapsh)
 - [make all (first run)](#make-all-first-run)
 - [make all (second run)](#make-all-second-run)
+- [make all (Podman, first run)](#make-all-podman-first-run)
+- [make prefix](#make-prefix)
 - [make rebuild](#make-rebuild)
 - [make r.recipe](#make-rrecipe)
 - [make qemu](#make-qemu)
@@ -52,6 +54,13 @@ This command on Podman works in a different way, see its phases below:
 5. Build the recipes.
 6. Package the recipes.
 7. Create the QEMU image and install the packages.
+
+### `make prefix`
+
+This command is used to download the build system toolchain, see its phases below:
+
+1. Download the Rust and GCC forks from the [CI server](https://static.redox-os.org/toolchain/) (if it's not present or you if you executed `rm -rf prefix` to fix issues).
+2. Build the `relibc` submodule.
 
 ### `make rebuild`
 

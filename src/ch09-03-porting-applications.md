@@ -59,7 +59,7 @@ mkdir cookbook/recipes/program_example
 nano cookbook/recipes/program_example/recipe.toml
 ```
 
-Your `recipe.toml` file could look like this:
+The `recipe.toml` example below is the supported recipe syntax, adapt for your use case.
 
 ```toml
 [source]
