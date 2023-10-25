@@ -15,6 +15,7 @@ The build system downloads/creates several files that you may want to know about
   - [QEMU/VirtualBox](#qemuvirtualbox)
 - [Environment Variables](#environment-variables)
 - [Scripts](#scripts)
+- [Component Separation](#component-separation)
 - [Crates](#crates)
   - [Current projects with crates](#current-projects-with-crates)
   - [Manual patching](#manual-patching)
@@ -22,6 +23,7 @@ The build system downloads/creates several files that you may want to know about
   - [Current pinned submodules](#current-pinned-submodules)
   - [Manual submodule update](#manual-submodule-update)
 - [Git auto-checkout](#git-auto-checkout)
+  - [Submodules](#submodules)
 - [Update the build system](#update-the-build-system)
 - [Update relibc](#update-relibc)
   - [All recipes](#all-recipes)
@@ -107,6 +109,8 @@ You can combine `make` targets, but order is significant. For example, `make r.g
 (You need to use this command if the Redox toolchain changed, after the `make clean` command)
 
 - `make rebuild` - Rebuild all recipes with changes (it don't detect changes on the Redox toolchain), including download changes from GitLab, it should be your normal `make` target.
+- `make prefix` - Download the Rust/GCC forks and build relibc (after `touch relibc`).
+- `make fstools` - Build the image builder and RedoxFS (after `touch installer` or `touch redoxfs`).
 - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are fetched. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
 - `make clean` - Clean all recipe binaries (Note that `make clean` may require some tools to be built).
 - `make unfetch` - Clean all recipe sources.
@@ -194,12 +198,20 @@ scripts/find-recipe.sh recipe-name
 scripts/rebuild-recipe.sh recipe-name
 ```
 
+## Component Separation
+
+- `relibc` - The cross-compiled recipes will link to the relibc of this folder (submodule)
+- `redoxfs` - The FUSE driver of RedoxFS (submodule, to run on Linux)
+- `cookbook/recipes/relibc` - The relibc package to be installed inside of Redox for static or dynamic linking (recipe, for native compilation)
+- `cookbook/recipes/redoxfs` - The RedoxFS user-space daemon that run inside of Redox (recipe)
+
 ## Crates
 
 Some Redox projects have crates on `crates.io`, thus they use a version-based development, if some change is sent to their repository they need to release a new version on `crates.io`, it will have some delay.
 
 ### Current projects with crates
 
+- [libredox](https://crates.io/crates/libredox)
 - [redox_syscall](https://crates.io/crates/redox_syscall)
 - [redoxfs](https://crates.io/crates/redoxfs)
 - [redoxer](https://crates.io/crates/redoxer)
@@ -275,7 +287,7 @@ cd ..
 
 ## Git auto-checkout
 
-In the first run of the `make all` command the build system will download all recipes sources, when the `make rebuild` and `make r.recipe` commands are used they will Git checkout (change the active branch) of the recipe source to `master` (only recipes that fetch Git repositories are affected, thus all Redox components).
+The `make rebuild` and `make r.recipe` commands will Git checkout (change the active branch) of the recipe source to `master` (only recipes that fetch Git repositories are affected, thus all Redox components).
 
 If you are working in a separated branch on the recipe source you can't build your changes, to avoid this comment out the `[source]` and `git =` fields from your `recipe.toml` :
 
@@ -283,6 +295,10 @@ If you are working in a separated branch on the recipe source you can't build yo
 #[source]
 #git = "some-repository-link"
 ```
+
+### Submodules
+
+The `make pull` and `git submodule update` commands will Git checkout the [submodules](#current-pinned-submodules) active branches to `master` and pin a commit in `HEAD`, if you are working on the build system submodules don't run this command, to keep the build system using your changes.
 
 ## Update the build system
 
