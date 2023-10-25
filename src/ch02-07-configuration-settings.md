@@ -7,13 +7,15 @@ There are many configurable settings that affect what edition of Redox you build
 The build system uses several makefiles, most of which are in the directory `mk`. We have grouped together most of the settings that might be interesting into `mk/config.mk`. However, it's not recommended that you change them there, especially if you are contributing to the Redox project. See [.config](#config) below.
 
 Open `mk/config.mk` in your favorite editor and have a look through it (but don't change it), e.g.
+
 ```sh
-gedit mk/config.mk &
+nano mk/config.mk
 ```
 
 ## Environment and Command Line
 
 You can temporarily override some of the settings in `mk/config.mk` by setting them either in your environment or on the `make` command line, e.g.
+
 ```sh
 make CONFIG_NAME=demo qemu
 ```
@@ -23,6 +25,7 @@ Overriding the settings in this way is only temporary. Also, if you are using [P
 ## .config
 
 To permanently override any of the settings in [mk/config.mk](#mkconfigmk), create a file `.config` in your `redox` base directory (i.e. where you run the `make` command). Set the values in that file, e.g.
+
 ```
 ARCH?=i686
 CONFIG_NAME?=desktop-minimal
@@ -43,8 +46,9 @@ The Redox build system support cross-compilation to any CPU architecture defined
 ## Filesystem Config
 
 Which packages and programs to include in the Redox image are determined by a **filesystem config** file, which is a `.toml` file, such as `config/x86_64/demo.toml`. Open `demo.toml` and have a look through it.
+
 ```sh
-gedit config/x86_64/demo.toml &
+nano config/x86_64/demo.toml
 ```
 
 For each supported CPU architecture, there are one or more filesystem configs to choose from. For `x86_64`, there are `desktop`, `demo` and `server` configurations, as well as a few others. For `i686`, there are also some stripped down configurations for legacy systems with minimal RAM. Have a look in the directory `config/x86_64` for some examples.
@@ -58,10 +62,15 @@ Feel free to create your own **filesystem config**.
 Filesystem size is the total amount of space allocated for the filesystem that is built into the image, including all packages and programs. It is specified in Megabytes (MB). The typical size is 256MB, although the `demo` config is larger. The filesystem needs to be large enough to accommodate the packages that are included in the filesystem. For the *livedisk* system, don't exceed the size of your RAM, and leave room for the system to run.
 
 The value for filesystem size is normally set from the **filesystem config** file, e.g. `config/x86_64/demo.toml`.
+
 ```
+...
 filesystem_size = 768
+...
 ```
+
 If you wish to change it, it is recommended that you create your own filesystem config and edit it there. However, you can override it temporarily in your environment or on the `make` command line, e.g.:
+
 ```sh
 make FILESYSTEM_SIZE=512 qemu
 ```
@@ -74,10 +83,12 @@ In `mk/config.mk`, you will find the variables `ARCH`, `CONFIG_NAME` and `FILESY
 - `CONFIG_NAME`: used to determine part of the name of the Redox image, and normally used to build the `FILESYSTEM_CONFIG` name (`desktop` by default). 
 - `FILESYSTEM_CONFIG`: a file that describes the packages and files to include in the filesystem. See [Filesystem Config](#filesystem-config) above. The default is `config/$ARCH/$CONFIG_NAME.toml`, but you can change it if your config file is in a different location.
 
-If you want to change them permanently, edit [.config](#config) in your `redox` base directory and and provide new values. 
+If you want to change them permanently, edit [.config](#config) in your `redox` base directory and and provide new values.
+
 ```sh
-gedit .config &
+nano .config
 ```
+
 ```
 ARCH?=i686
 CONFIG_NAME?=desktop_minimal
@@ -112,10 +123,15 @@ The `TARGET` is any of the available `make` targets, although the recommended ta
 If `REPO_BINARY` set to 1 (`REPO_BINARY?=1`), your build system will become binary-based for recipes, this is useful for some purposes, such as making development builds, test package status and save time with heavy softwares.
 
 You can have a mixed binary/source build, when you enable `REPO_BINARY` it treat every recipe with a `{}` a binary package and recipes with `"recipe"` are treated as source, both inside of your TOML config (`config/$ARCH/$CONFIG_NAME.toml`), example:
+
 ```
+[packages]
+...
 recipe1 = {} # binary package
 recipe2 = "recipe" # source
+...
 ```
+
 ## Other Config Values
 
 You can override other variables in your [.config](#config). Some interesting values in `mk/config.mk` are:

@@ -33,6 +33,9 @@ Redox has many frequently used packages and programs that are available for incl
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 make qemu
 ```
 
@@ -49,11 +52,18 @@ Read through [Configuration Settings](./ch02-07-configuration-settings.md). Then
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 cp config/x86_64/desktop.toml config/x86_64/myfiles.toml
-gedit config/x86_64/myfiles.toml &
+```
+
+```sh
+nano config/x86_64/myfiles.toml
 ```
 
 - Look for the `[packages]` secion and add the package to the configuration. You can add the package anywhere in the `[packages]` section, but by convention, we add them to the end or to an existing related area of the section.
+
   ```toml
   ...
   [packages]
@@ -66,13 +76,16 @@ gedit config/x86_64/myfiles.toml &
   ```
 
 - Change your `CONFIG_NAME` in [.config](./ch02-07-configuration-settings.md#config) to refer to your `myfiles.toml` configuration definition.
+
   ```sh
-  gedit .config &
+  nano .config
   ```
+
   ```
   # Add this line:
   CONFIG_NAME?=myfiles
   ```
+
 - Save all your changes and exit the editor.
 
 ### Build the System
@@ -81,13 +94,23 @@ gedit config/x86_64/myfiles.toml &
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 make all
+```
+
+```sh
 make qemu
 ```
+
 Or
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 make all qemu
 ```
 
@@ -97,7 +120,9 @@ make all qemu
 
 If you had a problem, use this command to log any possible errors on your terminal output:
 
-- `make r.recipe-name 2>&1 | tee recipe-name.log`
+```sh
+make r.recipe-name 2>&1 | tee recipe-name.log
+```
 
 And that's it! Sort of. 
 
@@ -230,7 +255,13 @@ Since this is a Hello World example, we are going to have Cargo write the code f
 
 ```sh
 mkdir source
+```
+
+```sh
 cd source
+```
+
+```sh
 cargo init --name="helloworld"
 ```
 
@@ -254,6 +285,9 @@ Then, to build the Redox image, including your program, go to your `redox` base 
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 make rebuild
 ```
 
@@ -265,5 +299,5 @@ Once the rebuild is finished, run `make qemu`, and when the GUI starts, log in t
 Hello, world!
 ```
 
-Note that the `helloworld` binary can be found in `/bin` on Redox (`ls file:/bin`).
+Note that the `helloworld` binary can be found in `/bin` on Redox (`ls /bin`).
 

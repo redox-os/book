@@ -48,7 +48,13 @@ If you are new to Git, it request your username and email before the first commi
 
 ```sh
 cd your-repository-folder
+```
+
+```sh
 git config user.name 'Anonymous'
+```
+
+```sh
 git config user.email '<>'
 ```
 
@@ -58,6 +64,9 @@ This command will make you anonymous only on this repository.
 
 ```sh
 git config --global user.name 'Anonymous'
+```
+
+```sh
 git config --global user.email '<>'
 ```
 
@@ -96,12 +105,15 @@ Edit the recipe so it does not try to automatically clone the sources.
 
 ```sh
 cd ~/tryredox/redox/cookbook/recipes/games
-gedit recipe.toml &
+```
+
+```sh
+nano recipe.toml
 ```
 
 - Comment out the `[source]` section at the top of the file.
 
-```toml
+```
 # [source]
 # git = "https://gitlab.redox-os.org/redox-os/games.git"
 ```
@@ -116,7 +128,13 @@ To set up this package for contributing, do the following in your `Coding` shell
 
 ```sh
 rm -rf source target
+```
+
+```sh
 git clone https://gitlab.redox-os.org/redox-os/games.git --origin upstream --recursive
+```
+
+```sh
 mv games source
 ```
 
@@ -136,11 +154,15 @@ branch = your_branch (optional)
 
 ```sh
 cd source
-gedit src/minesweeper/main.rs &
+```
+
+```sh
+nano src/minesweeper/main.rs
 ```
 
 - Search for the line containing the definition of the `FLAGGED` constant (around line 36), and change it to `P`.
-```
+
+```rust
 const FLAGGED: &'static str = "P";
 ```
 
@@ -168,8 +190,14 @@ After making changes to your package, you should `make rebuild`, which will chec
 - Within your `Build` shell, in your `redox` directory, do:
 
 ```sh
-script build.log
+tee build.log
+```
+
+```sh
 make rebuild
+```
+
+```sh
 exit
 ```
 
@@ -205,12 +233,41 @@ In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. 
 
 #### Commands
 
-- `cargo install redoxer` - install `redoxer` tool.
-- `redoxer toolchain` - install `redoxer` toolchain.
-- `redoxer build` - build project with `redoxer`.
-- `redoxer run` - run project with `redoxer`.
-- `redoxer test` - test project with `redoxer`.
-- `redoxer exec echo hello` - run arbitrary executable with `redoxer`.
+- Install `redoxer` tool
+
+```sh
+cargo install redoxer
+```
+
+- Install `redoxer` toolchain
+
+```sh
+redoxer toolchain
+```
+
+- Build project with `redoxer`
+
+```sh
+redoxer build
+```
+
+- Run project with `redoxer`
+
+```sh
+redoxer run
+```
+
+- Test project with `redoxer`
+
+```sh
+redoxer test
+```
+
+- Run arbitrary executable (`echo hello`) with `redoxer`
+
+```sh
+redoxer exec echo hello
+```
 
 ## Update crates
 
@@ -281,12 +338,6 @@ Now that all the packages are built, you can make a Redox image without the step
 - In your `Build` shell, in the `redox` directory, do:
 
 ```sh
-make image
-make qemu
-```
-Or
-
-```sh
 make image qemu
 ```
 
@@ -295,14 +346,6 @@ make image qemu
 ### Most Quick Trick To Test Changes
 
 Run:
-
-```sh
-make c.recipe-name
-make r.recipe-name
-make image
-make qemu
-```
-Or
 
 ```sh
 make c.recipe-name r.recipe-name image qemu
@@ -315,12 +358,21 @@ This command will [build just your modified recipe](#build-your-package-for-redo
 If you need to move text files, such as shell scripts or command output, from or to your Redox instance running on QEMU, use your Terminal window that you used to start QEMU. To capture the output of a Redox command, run `script` before starting QEMU.
 
 ```sh
-script qemu.log
+tee qemu.log
+```
+
+```sh
 make qemu
+```
+
+```
 redox login: user
 # execute your commands, with output to the terminal
 # exit QEMU
 # exit the shell started by script
+```
+
+```sh
 exit
 ```
 
@@ -328,8 +380,11 @@ The command output will now be in the file qemu.log. Note that if you did not ex
 
 To transfer a text file, such as a shell script, onto Redox, use the Terminal window with copy/paste.
 
-```sh
+```
 redox login: user
+```
+
+```sh
 cat > myscript.sh << EOF
 # Copy the text to the clipboard and use the Terminal window paste
   EOF
@@ -351,6 +406,9 @@ You can use a Redox package to put your files inside of the Redox filesystem, on
 
 ```sh
 mkdir cookbook/recipes/myfiles
+```
+
+```sh
 mkdir cookbook/recipes/myfiles/source
 ```
 
@@ -413,7 +471,13 @@ The Redox image is now mounted as a directory at `build/x86_64/myfiles/filesyste
 
 ```sh
 cd ~/tryredox/redox/build/x86_64/myfiles/filesystem
+```
+
+```sh
 rm ./bin/minesweeper
+```
+
+```sh
 cp ~/tryredox/redox/cookbook/recipes/games/target/x86_64-unknown-redox/stage/bin/minesweeper ./bin
 ```
 
@@ -421,7 +485,13 @@ cp ~/tryredox/redox/cookbook/recipes/games/target/x86_64-unknown-redox/stage/bin
 
 ```sh
 cd ~/tryredox/redox
+```
+
+```sh
 make unmount
+```
+
+```sh
 make qemu
 ```
 
@@ -442,8 +512,17 @@ Drivers are a special case for rebuild. The source for drivers is fetched both f
 
 ```sh
 rm -rf cookbook/recipes/drivers-initfs/{source,target} cookbook/recipes/initfs/target
+```
+
+```sh
 cp -R cookbook/recipes/drivers/source cookbook/recipes/drivers-initfs
+```
+
+```sh
 make rebuild
+```
+
+```sh
 make qemu
 ```
 

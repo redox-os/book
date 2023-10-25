@@ -279,9 +279,21 @@ Whenever a fix or new feature is merged on the submodules, the upstream build sy
 
 ```sh
 make pull
+```
+
+```sh
 cd submodule-folder-name
+```
+
+```sh
 git checkout master
+```
+
+```sh
 git pull
+```
+
+```sh
 cd ..
 ```
 
@@ -318,7 +330,13 @@ An outdated relibc copy can contain bugs (already fixed on recent commits) or ou
 
 ```sh
 make pull
+```
+
+```sh
 touch relibc
+```
+
+```sh
 make prefix
 ```
 
@@ -346,14 +364,27 @@ Sometimes you need to update the relibc crates, run these commands between the `
 
 ```sh
 cd relibc
+```
+
+```sh
 cargo update -p crate-name
+```
+
+```sh
 cd ..
 ```
+
 Or (to update all crates, may break the ABI)
 
 ```sh
 cd relibc
+```
+
+```sh
 cargo update
+```
+
+```sh
 cd ..
 ```
 

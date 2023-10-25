@@ -132,9 +132,9 @@ Reasons to use Assembly instead of Rust:
 
 Places where Assembly is used:
 
-- kernel - interrupt and system call entry routines, context switching, special CPU instructions and registers.
-- drivers - port IO need special instructions (x86_64).
-- relibc - some parts of the C runtime.
+- `kernel` - interrupt and system call entry routines, context switching, special CPU instructions and registers.
+- `drivers` - port IO need special instructions (x86_64).
+- `relibc` - some parts of the C runtime.
 
 ## Troubleshooting Questions
 

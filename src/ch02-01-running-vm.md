@@ -5,15 +5,18 @@ The downloadable images for Redox are located [here](https://static.redox-os.org
 ```sh
 sha256sum $HOME/Downloads/redox_demo_x86_64*_harddrive.img
 ```
+
 If you have more than one `.img` file in the `Downloads` directory, you may need to adjust this command.
 
-You can then run the image in your preferred emulator. If you don't have an emulator installed, use the following command (Pop!_OS/Ubuntu/Debian) to install qemu:
+You can then run the image in your preferred emulator. If you don't have an emulator installed, use the following command (Pop!_OS/Ubuntu/Debian) to install QEMU:
+
 ```sh
 sudo apt-get install qemu-system-x86
 ```
+
 This command will run qemu with various features Redox can use enabled:
 
-```
+```sh
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
     -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
     -machine q35 -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 \
@@ -21,9 +24,7 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 4 -m 
 	-drive file=`echo $HOME/Downloads/redox_demo_x86_64*_harddrive.img`,format=raw
 ```
 
-If you get an error with the filename, change  
-`` `echo $HOME/Downloads/redox_demo_x86_64*_harddrive.img` ``  
-to the name of the file you downloaded. 
+If you get an error with the filename, change the `echo $HOME/Downloads/redox_demo_x86_64*_harddrive.img` command to the name of the file you downloaded.
 
 ## Using the emulation
 

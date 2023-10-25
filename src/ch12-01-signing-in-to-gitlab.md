@@ -14,14 +14,18 @@ Your new GitLab account will not require 2 Factor Authentication at the beginnin
 
 When using `git` commands such as `git push`, `git` may ask you to provide a password. Because this happens frequently, you might wish to use `SSH` authentication, which will bypass the password step. Please follow the instructions for using `SSH` [here](https://docs.gitlab.com/ee/user/ssh.html). [ED25519](https://docs.gitlab.com/ee/user/ssh.html#ed25519-ssh-keys) is a good choice. Once SSH is set up, always use the SSH version of the URL for your `origin` and `remote`. e.g.
 
-  - HTTPS: 
+  - HTTPS:
+
   ```sh
   git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
   ```
-  - SSH: 
+
+  - SSH:
+
   ```sh
   git clone git@gitlab.redox-os.org:redox-os/redox.git --origin upstream --recursive
   ```
+  
 ## 2FA Apps
 
 ### Requirements Before Logging Into GitLab

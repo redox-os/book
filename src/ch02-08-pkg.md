@@ -6,15 +6,59 @@ You may get better results in an emulator like QEMU than in real hardware (due t
 
 This tool can be used instead of `make rebuild` if you add a new recipe on your TOML config (`desktop.toml` for example).
 
-- `pkg clean package-name` - Clean an extracted package
-- `pkg create package-name` - Create a package
-- `pkg extract package-name` - Extract a package
-- `pkg fetch package-name` - Download a package
-- `pkg install package-name` - Install a package
-- `pkg list package-name` - List package contents
-- `pkg sign package-name` - Get a file signature
-- `pkg upgrade` - Upgrade all installed packages
-- `pkg help command` - Replace `command` by one of the above options to have detailed information about them.
+- Clean an extracted package
+
+```sh
+pkg clean package-name
+```
+
+- Create a package
+
+```sh
+pkg create package-name
+```
+
+- Extract a package
+
+```sh
+pkg extract package-name
+```
+
+- Download a package
+
+```sh
+pkgfetch package-name
+```
+
+- Install a package
+
+```sh
+pkg install package-name
+```
+
+- List package contents
+
+```sh
+pkg list package-name
+```
+
+- Get a file signature
+
+```sh
+pkg sign package-name
+```
+
+- Upgrade all installed packages
+
+```sh
+pkg upgrade
+```
+
+- Replace `command` by one of the above options to have detailed information about them
+
+```sh
+pkg help command
+```
 
 All commands needs to be run with `sudo` because `/bin` and `/pkg` belongs to root.
 
