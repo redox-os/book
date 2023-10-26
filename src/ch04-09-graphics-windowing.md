@@ -6,13 +6,13 @@
 
 It's not really a driver, it writes to a framebuffer given by firmware (via UEFI or BIOS software interrupts).
 
-Because we don't yet have a dedicated GPU driver, instead relying on what firmware gives us.
+Because we don't have GPU drivers yet, we rely on what firmware gives to us.
 
 - GPU drivers
 
-In Linux/BSDs, the GPU communication with the kernel is done by the DRM system (Direct Renderig Manager), which Mesa3D drivers use to work (Mesa3D implement OpenGL/Vulkan drivers, DRM expose the hardware interfaces).
+On Linux/BSDs, the GPU communication with the kernel is done by the DRM system (Direct Renderig Manager, `libdrm` library), that Mesa3D drivers use to work (Mesa3D implement OpenGL/Vulkan drivers, DRM expose the hardware interfaces).
 
-Said this, on Redox the GPU driver needs to be a user-space daemon which use the kernel functions to talk with hardware.
+Said this, on Redox the GPU driver needs to be an user-space daemon which use the system calls/schemes to talk with the hardware.
 
 The last step is to adapt our Mesa3D [fork](https://gitlab.redox-os.org/redox-os/mesa)/[recipe](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/mesa/recipe.toml) to use these user-space daemons.
 
@@ -24,7 +24,7 @@ The Orbital desktop environment provides a display server, window manager and co
 
 #### Libraries
 
-The programs written for these libraries can run on Orbital.
+The programs written with these libraries can run on Orbital.
 
 - SDL1.2
 - SDL2
@@ -47,4 +47,4 @@ If you hold the **Super** key (generally the key with a Windows logo) it will sh
 
 ### Accelerated Graphics
 
-We don't have GPU drivers yet but [LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html) from Mesa3D is working.
+We don't have GPU drivers yet but [LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html) (OpenGL CPU emulation) and VirtIO (2D/3D accleration from/for a virtual machine) is working.
