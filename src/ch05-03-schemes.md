@@ -29,127 +29,36 @@ Some schemes implement `fmap`, which creates a memory-mapped area that is shared
 
 > TODO Explain file-like vs. socket-like schemes.
 
+## Userspace Schemes
+
+Redox creates userspace schemes during initialization, starting various daemon-style programs, each of which can provide one or more schemes.
+
+| **Name** | **Daemon** | **Description** |
+|----------|------------|-----------------|
+| `disk:` | `ahcid`, `nvmed` | Raw access to disks |
+| `display:` | `vesad` | Screen multiplexing of the display, provides text and graphical screens, used by `orbital:` |
+| `ethernet:` | `ethernetd` | Raw ethernet frame send/receive, used by `ip:` |
+| `file:` | `redoxfs` | Root filesystem |
+| `ip:` | `ipd` | Raw IP packet send/receive |
+| `network:` | `e1000d`, `rtl8168d` | Link level network send/receive, used by `ethernet:` |
+| `null:` | `nulld` | Scheme that will discard all writes, and read no bytes |
+| `orbital:` | `orbital` | Windowing system |
+| `pty:` | `ptyd` | Pseudoterminals, used by terminal emulators |
+| `rand:` | `randd` | Pseudo-random number generator |
+| `tcp:` | `tcpd` | TCP sockets |
+| `udp:` | `udpd` | UDP sockets |
+| `zero:` | `zerod` | Scheme that will discard all writes, and always fill read buffers with zeroes |
 
 ## Kernel Schemes
 
 The kernel provides a small number of schemes in order to support userspace.
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Links</th>
-    </tr>
-    <tr>
-        <td><code>:</code></td>
-        <td>Root scheme - allows the creation of userspace schemes</td>
-        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/root.rs">Docs</a></td>
-    </tr>
-    <tr>
-        <td><code>debug:</code></td>
-        <td>Provides access to serial console</td>
-        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/debug.rs">Docs</a></td>
-    </tr>
-        <td><code>event:</code></td>
-        <td>Allows reading of `Event`s which are registered using <code>fevent</code></td>
-        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/event.rs">Docs</a></td>
-    </tr>
-    <tr>
-        <td><code>irq:</code></td>
-        <td>Allows userspace handling of IRQs</td>
-        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/irq.rs">Docs</a></td>
-    </tr>
-    <tr>
-        <td><code>pipe:</code></td>
-        <td>Used internally by the kernel to implement <code>pipe</code></td>
-        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/pipe.rs">Docs</a></td>
-    </tr>
-    <tr>
-        <td><code>sys:</code></td>
-        <td>System information, such as the context list and scheme list</td>
-        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/sys/mod.rs">Docs</a></td>
-    </tr>
-    <tr>
-        <td><code>memory:</code></td>
-        <td>Access to memory, typically physical memory addresses</td>
-        <td><a href="https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/memory.rs">Docs</a></td>
-    </tr>
-</table>
-
-## Userspace Schemes
-
-Redox creates userspace schemes during initialization, starting various daemon-style programs, each of which can provide one or more schemes.
-
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Daemon</th>
-        <th>Description</th>
-    </tr>
-    <tr>
-        <td><code>disk:</code></td>
-        <td><code>ahcid</code></td>
-        <td>Raw access to disks</td>
-    </tr>
-    <tr>
-        <td><code>display:</code></td>
-        <td><code>vesad</code></td>
-        <td>Screen multiplexing of the display, provides text and graphical screens, used by <code>orbital:</code></td>
-    </tr>
-    <tr>
-        <td><code>ethernet:</code></td>
-        <td><code>ethernetd</code></td>
-        <td>Raw ethernet frame send/receive, used by <code>ip:</code></td>
-    </tr>
-    <tr>
-        <td><code>file:</code></td>
-        <td><code>redoxfs</code></td>
-        <td>Root filesystem</td>
-    </tr>
-    <tr>
-        <td><code>ip:</code></td>
-        <td><code>ipd</code></td>
-        <td>Raw IP packet send/receive</td>
-    </tr>
-    <tr>
-        <td><code>network:</code></td>
-        <td><code>e1000d</code><br/><code>rtl8168d</code></td>
-        <td>Link level network send/receive, used by <code>ethernet:</code></td>
-    </tr>
-    <tr>
-        <td><code>null:</code></td>
-        <td><code>nulld</code></td>
-        <td>Scheme that will discard all writes, and read no bytes</td>
-    </tr>
-    <tr>
-        <td><code>orbital:</code></td>
-        <td><code>orbital</code></td>
-        <td>Windowing system</td>
-    </tr>
-    <tr>
-        <td><code>pty:</code></td>
-        <td><code>ptyd</code></td>
-        <td>Psuedoterminals, used by terminal emulators</td>
-    </tr>
-    <tr>
-        <td><code>rand:</code></td>
-        <td><code>randd</code></td>
-        <td>Psuedo-random number generator</td>
-    </tr>
-    <tr>
-        <td><code>tcp:</code></td>
-        <td><code>tcpd</code></td>
-        <td>TCP sockets</td>
-    </tr>
-    <tr>
-        <td><code>udp:</code></td>
-        <td><code>udpd</code></td>
-        <td>UDP sockets</td>
-    </tr>
-    <tr>
-        <td><code>zero:</code></td>
-        <td><code>zerod</code></td>
-        <td>Scheme that will discard all writes, and always fill read buffers with zeroes</td>
-    </tr>
-</table>
-
+| **Name** | **Documentation** | **Description** |
+|----------|-------------------|-----------------|
+| `:` | [root.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/root.rs) | Root scheme - allows the creation of userspace schemes |
+| `debug:` | [debug.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/debug.rs) | Provides access to serial console
+| `event:` | [event.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/event.rs) | Allows reading of `` `Event` ``s which are registered using `fevent` |
+| `irq:` | [irq.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/irq.rs) | Allows userspace handling of IRQs |
+| `pipe:` | [pipe.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/pipe.rs) | Used internally by the kernel to implement `pipe` |
+| `sys:` | [mod.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/sys/mod.rs) | System information, such as the context list and scheme list |
+| `memory:` | [memory.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/memory.rs) | Access to memory, typically physical memory addresses |
