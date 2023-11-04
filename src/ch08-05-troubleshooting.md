@@ -192,7 +192,7 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 - Use the following command for advanced logging:
 
 ```sh
-make qemu 2>&1 | tee file-name.log
+make some-command 2>&1 | tee file-name.log
 ```
 
 - You can write to the `debug:` scheme, which will output on the console, but you must be `root`. This is useful if you are debugging an app where you need to use Orbital but still want to capture messages.

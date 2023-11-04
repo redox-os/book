@@ -95,13 +95,26 @@ cp -rv "${COOKBOOK_SOURCE}"/* "${COOKBOOK_STAGE}"/home/user
 nano config/your-arch/your-config.toml
 ```
 
-```toml
-[packages]
-...
+```
 myfiles = {}
-...
 ```
 
 ```sh
 make myfiles image
+```
+
+- Comment out a recipe from the build configuration (mostly used if some default recipe is broken)
+
+```sh
+nano config/your-cpu-arch/your-config.toml
+```
+
+```
+#recipe-name = {}
+```
+
+- Create logs
+
+```sh
+make some-command 2>&1 | tee file-name.log
 ```
