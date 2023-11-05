@@ -17,8 +17,11 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
     - [How can I change the CPU architecture of my build system?](#how-can-i-change-the-cpu-architecture-of-my-build-system)
     - [I only made a small change to my program. What's the quickest way to test it in QEMU?](#i-only-made-a-small-change-to-my-program-whats-the-quickest-way-to-test-it-in-qemu)
     - [How can I install the packages needed by recipes without a new download of the build system?](#how-can-i-install-the-packages-needed-by-recipes-without-a-new-download-of-the-build-system)
+    - [How can I use the packages from the CI server on my build system?](#how-can-i-use-the-packages-from-the-ci-server-on-my-build-system)
     - [How can I cross-compile to ARM from a x86-64 computer?](#how-can-i-cross-compile-to-arm-from-a-x86-64-computer)
+    - [How can I build the toolchain from source?](#how-can-i-build-the-toolchain-from-source)
     - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
+    - [Why does Redox do cross-compilation?](#why-does-redox-do-cross-compilation)
 - [Troubleshooting Questions](#troubleshooting-questions)
     - [Scripts](#scripts)
         - [I can't download the bootstrap scripts, how can I fix this?](#i-cant-download-the-bootstrap-scripts-how-can-i-fix-this)
@@ -114,9 +117,54 @@ make r.recipe-name image qemu
 ./bootstrap.sh -d
 ```
 
+### How can I use the packages from the CI server on my build system?
+
+- Go to your build configuration and add the binary variant of the recipe.
+
+```sh
+nano config/your-cpu-arch/your-config.toml
+```
+
+```toml
+[packages]
+...
+recipe-name = "binary"
+...
+```
+
+- Run `make rebuild` to download/install the package.
+
 ### How can I cross-compile to ARM from a x86-64 computer?
 
 - Insert the `ARCH?=aarch64` environment variable on your `.config` file and run `make all`.
+
+### How can I build the toolchain from source?
+
+- Disable the `PREFIX_BINARY` environment variable inside of your `.config` file.
+
+```sh
+nano .config
+```
+
+```
+PREFIX_BINARY?=0
+```
+
+- Wipe the old toolchain binaries and build a new one.
+
+```sh
+rm -rf prefix
+```
+
+```sh
+make prefix
+```
+
+- Wipe the old recipe binaries and build again with the new toolchain.
+
+```sh
+make clean all
+```
 
 ### Why does Redox have Assembly code?
 
@@ -135,6 +183,12 @@ Places where Assembly is used:
 - `kernel` - interrupt and system call entry routines, context switching, special CPU instructions and registers.
 - `drivers` - port IO need special instructions (x86_64).
 - `relibc` - some parts of the C runtime.
+
+### Why does Redox do cross-compilation?
+
+As Redox is not ready for development or daily usage yet, the programs need to be built outside of Redox and installed  on the image.
+
+The cross-compilation also reduce the portability requiirements of the program, because the build tools don't need to work on Redox, only on Linux/BSD.
 
 ## Troubleshooting Questions
 
