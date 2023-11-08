@@ -402,41 +402,21 @@ Note that in some circumstances, `make qemu` may trigger a rebuild (e.g. `make` 
 
 You can use a Redox package to put your files inside of the Redox filesystem, on this example we will use the recipe `myfiles` for this:
 
-- Create the `myfiles` recipe and the `source` folder:
+- Create the `source` folder inside the `myfiles` recipe directory and move your files to it:
 
 ```sh
-mkdir cookbook/recipes/myfiles
+mkdir cookbook/recipes/other/myfiles/source
 ```
 
-```sh
-mkdir cookbook/recipes/myfiles/source
-```
-
-- Create the `recipe.toml` file with:
-
-```sh
-nano cookbook/recipes/myfiles/recipe.toml
-```
-
-- Inside your `recipe.toml` you will paste this content:
-
-```toml
-[build]
-template = "custom"
-script = """
-mkdir -pv "${COOKBOOK_STAGE}"/home/user
-cp -rv "${COOKBOOK_SOURCE}"/* "${COOKBOOK_STAGE}"/home/user
-"""
-```
-
-- Press Ctrl+X, then Y and Enter to save the file.
-- Add the recipe below the `[packages]` section on your build configuration at `config/cpu-arch/your-config.toml`
+- Add the `myfiles` recipe below the `[packages]` section on your Cookbook configuration at `config/your-cpu-arch/your-config.toml`:
 
 ```
+[packages]
 ...
 myfiles = {}
 ...
 ```
+
 - Build the recipe and create a new QEMU image:
 
 ```sh

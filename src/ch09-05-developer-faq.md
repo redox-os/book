@@ -22,20 +22,9 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
     - [How can I build the toolchain from source?](#how-can-i-build-the-toolchain-from-source)
     - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
     - [Why does Redox do cross-compilation?](#why-does-redox-do-cross-compilation)
-- [Troubleshooting Questions](#troubleshooting-questions)
-    - [Scripts](#scripts)
-        - [I can't download the bootstrap scripts, how can I fix this?](#i-cant-download-the-bootstrap-scripts-how-can-i-fix-this)
-        - [I tried to run the bootstrap.sh and podman_bootstrap.sh scripts but got an error, how to fix this?](#i-tried-to-run-the-bootstrapsh-and-podman_bootstrapsh-scripts-but-got-an-error-how-to-fix-this)
-    - [Build System](#build-system)
-        - [I called "make all" but it show a "rustup can't be found" message, how can I fix this?](#i-called-make-all-but-it-show-a-rustup-cant-be-found-message-how-can-i-fix-this)
-        - [I tried all troubleshooting methods but my build system is still broken, how can I fix that?](#i-tried-all-troubleshooting-methods-but-my-build-system-is-still-broken-how-can-i-fix-that)
-    - [Recipes](#recipes)
-        - [I had a compilation error with a recipe, how can I fix that?](#i-had-a-compilation-error-with-a-recipe-how-can-i-fix-that)
-        - [I tried all methods of the "Troubleshooting the Build" page and my recipe doesn't build, what can I do?](#i-tried-all-methods-of-the-troubleshooting-the-build-page-and-my-recipe-doesnt-build-what-can-i-do)
-        - [When I run make r.recipe I get a syntax error, how can I fix that?](#when-i-run-make-rrecipe-i-get-a-syntax-error-how-can-i-fix-that)
-    - [QEMU](#qemu)
-        - [How can I kill a frozen QEMU process after a kernel panic?](#how-can-i-kill-a-frozen-qemu-process-after-a-kernel-panic)
+    - [Does Redox support OpenGL/Vulkan?](#does-redox-support-openglvulkan)
 - [Porting Questions](#porting-questions)
+    - [What is a recipe?](#what-is-a-recipe)
     - [How to determine the dependencies of some program?](#how-to-determine-the-dependencies-of-some-program)
     - [How can I configure the build system of the recipe?](#how-can-i-configure-the-build-system-of-the-recipe)
     - [How can I search for functions on relibc?](#how-can-i-search-for-functions-on-relibc)
@@ -58,6 +47,19 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
     - [I have a merge request with many commits, should I squash them after merge?](#i-have-a-merge-request-with-many-commits-should-i-squash-them-after-merge)
     - [Should I delete my branch after merge?](#should-i-delete-my-branch-after-merge)
     - [How can I have an anonymous account?](#how-can-i-have-an-anonymous-account)
+- [Troubleshooting Questions](#troubleshooting-questions)
+    - [Scripts](#scripts)
+        - [I can't download the bootstrap scripts, how can I fix this?](#i-cant-download-the-bootstrap-scripts-how-can-i-fix-this)
+        - [I tried to run the bootstrap.sh and podman_bootstrap.sh scripts but got an error, how to fix this?](#i-tried-to-run-the-bootstrapsh-and-podman_bootstrapsh-scripts-but-got-an-error-how-to-fix-this)
+    - [Build System](#build-system)
+        - [I called "make all" but it show a "rustup can't be found" message, how can I fix this?](#i-called-make-all-but-it-show-a-rustup-cant-be-found-message-how-can-i-fix-this)
+        - [I tried all troubleshooting methods but my build system is still broken, how can I fix that?](#i-tried-all-troubleshooting-methods-but-my-build-system-is-still-broken-how-can-i-fix-that)
+    - [Recipes](#recipes)
+        - [I had a compilation error with a recipe, how can I fix that?](#i-had-a-compilation-error-with-a-recipe-how-can-i-fix-that)
+        - [I tried all methods of the "Troubleshooting the Build" page and my recipe doesn't build, what can I do?](#i-tried-all-methods-of-the-troubleshooting-the-build-page-and-my-recipe-doesnt-build-what-can-i-do)
+        - [When I run make r.recipe I get a syntax error, how can I fix that?](#when-i-run-make-rrecipe-i-get-a-syntax-error-how-can-i-fix-that)
+    - [QEMU](#qemu)
+        - [How can I kill a frozen QEMU process after a kernel panic?](#how-can-i-kill-a-frozen-qemu-process-after-a-kernel-panic)
 
 ## General Questions
 
@@ -103,7 +105,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
 
 ### I only made a small change to my program. What's the quickest way to test it in QEMU?
 
-- If you already added the program recipe to your configuration file, run:
+- If you already added the program recipe to your Cookbook configuration file, run:
 
 ```sh
 make r.recipe-name image qemu
@@ -119,7 +121,7 @@ make r.recipe-name image qemu
 
 ### How can I use the packages from the CI server on my build system?
 
-- Go to your build configuration and add the binary variant of the recipe.
+- Go to your Cookbook configuration and add the binary variant of the recipe.
 
 ```sh
 nano config/your-cpu-arch/your-config.toml
@@ -190,57 +192,15 @@ As Redox is not ready for development or daily usage yet, the programs need to b
 
 The cross-compilation also reduce the portability requiirements of the program, because the build tools don't need to work on Redox, only on Linux/BSD.
 
-## Troubleshooting Questions
+### Does Redox support OpenGL/Vulkan?
 
-### Scripts
-
-#### I can't download the bootstrap scripts, how can I fix this?
-
-- Verify if you have `curl` installed or download the script from your browser.
-
-#### I tried to run the bootstrap.sh and podman_bootstrap.sh scripts but got an error, how to fix this?
-
-- Verify if you have the GNU Bash shell installed on your system.
-
-### Build System
-
-#### I called "make all" but it show a "rustup can't be found" message, how can I fix this?
-
-- Run this command:
-
-```sh
-source ~/.cargo/env
-```
-
-(If you installed Rustup before the first `bootstrap.sh` run, this error doesn't happen)
-
-#### I tried all troubleshooting methods but my build system is still broken, how can I fix that?
-
-- If `make clean pull all` doesn't work, run the `bootstrap.sh` again to download a fresh build system or install Pop OS!, Ubuntu or Debian.
-
-### Recipes
-
-#### I had a compilation error with a recipe, how can I fix that?
-
-- Read [this](./ch08-05-troubleshooting.md#solving-compilation-problems) section.
-
-#### I tried all methods of the "Troubleshooting the Build" page and my recipe doesn't build, what can I do?
-
-- It happens because your system has an environment problem or missing packages, remove the recipe from your build configuration file to workaround this.
-
-All recipes follow this syntax `recipe = {}` below the `[packages]` section, the configuration files is placed at `config/your-arch`.
-
-#### When I run make r.recipe I get a syntax error, how can I fix that?
-
-- Verify if your `recipe.toml` has some typo.
-
-### QEMU
-
-#### How can I kill a frozen QEMU process after a kernel panic?
-
-- Read [this](./ch08-05-troubleshooting.md#kill-the-frozen-qemu-process) section.
+- Read [this](./ch04-09-graphics-windowing.md#accelerated-graphics) section.
 
 ## Porting Questions
+
+### What is a recipe?
+
+- A recipe is a software port on Redox, it does cross-compilation by default if you use Cookbook [templates](./ch09-03-porting-applications.md#templates).
 
 ### How to determine the dependencies of some program?
 
@@ -323,3 +283,53 @@ All recipes follow this syntax `recipe = {}` below the `[packages]` section, the
 ### How can I have an anonymous account?
 
 - During the account creation process you should add a fake name on the "First Name" and "Last Name" fields and change it later after your account approval (single name field is supported).
+
+## Troubleshooting Questions
+
+### Scripts
+
+#### I can't download the bootstrap scripts, how can I fix this?
+
+- Verify if you have `curl` installed or download the script from your browser.
+
+#### I tried to run the bootstrap.sh and podman_bootstrap.sh scripts but got an error, how to fix this?
+
+- Verify if you have the GNU Bash shell installed on your system.
+
+### Build System
+
+#### I called "make all" but it show a "rustup can't be found" message, how can I fix this?
+
+- Run this command:
+
+```sh
+source ~/.cargo/env
+```
+
+(If you installed Rustup before the first `bootstrap.sh` run, this error doesn't happen)
+
+#### I tried all troubleshooting methods but my build system is still broken, how can I fix that?
+
+- If `make clean pull all` doesn't work, run the `bootstrap.sh` again to download a fresh build system or install Pop OS!, Ubuntu or Debian.
+
+### Recipes
+
+#### I had a compilation error with a recipe, how can I fix that?
+
+- Read [this](./ch08-05-troubleshooting.md#solving-compilation-problems) section.
+
+#### I tried all methods of the "Troubleshooting the Build" page and my recipe doesn't build, what can I do?
+
+- It happens because your system has an environment problem or missing packages, remove the recipe from your build configuration file to workaround this.
+
+All recipes follow this syntax `recipe = {}` below the `[packages]` section, the configuration files is placed at `config/your-arch`.
+
+#### When I run make r.recipe I get a syntax error, how can I fix that?
+
+- Verify if your `recipe.toml` has some typo.
+
+### QEMU
+
+#### How can I kill a frozen QEMU process after a kernel panic?
+
+- Read [this](./ch08-05-troubleshooting.md#kill-the-frozen-qemu-process) section.
