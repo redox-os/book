@@ -76,6 +76,7 @@
   - [Porting Case Study](./ch09-04-porting-case-study.md)
   - [Developer FAQ](./ch09-05-developer-faq.md)
   - [Quick Workflow](./ch09-06-quick-workflow.md)
+  - [Libraries and APIs](./ch09-07-libraries-apis.md)
 
 - [Contributing](./ch10-00-contributing.md)
 
