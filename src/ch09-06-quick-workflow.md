@@ -68,27 +68,10 @@ make clean all
 make distclean all
 ```
 
-- Create a recipe to insert your files on the QEMU image
+- Use the `myfiles` recipe to insert your files on the QEMU image
 
 ```sh
-mkdir cookbook/recipes/myfiles
-```
-
-```sh
-mkdir cookbook/recipes/myfiles/source
-```
-
-```sh
-nano cookbook/recipes/myfiles/recipe.toml
-```
-
-```toml
-[build]
-template = "custom"
-script = """
-mkdir -pv "${COOKBOOK_STAGE}"/home/user
-cp -rv "${COOKBOOK_SOURCE}"/* "${COOKBOOK_STAGE}"/home/user
-"""
+mkdir cookbook/recipes/other/myfiles/source
 ```
 
 ```sh
