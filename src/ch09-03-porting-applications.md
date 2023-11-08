@@ -27,11 +27,16 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
             - [Non-adapted scripts](#non-adapted-scripts)
 - [Sources](#sources)
     - [Tarballs](#tarballs)
+        - [Links](#links)
     - [Git Repositories](#git-repositories)
 - [Dependencies](#dependencies)
     - [Bundled Libraries](#bundled-libraries)
     - [Environment Variables](#environment-variables-1)
-- [Building/Testing](#buildingtesting)
+    - [Configuration](#configuration)
+        - [Arch Linux/AUR](#arch-linuxaur)
+        - [Debian](#debian)
+    - [Testing](#testing)
+- [Building/Testing The Program](#buildingtesting-the-program)
 - [Update crates](#update-crates)
     - [One or more crates](#one-or-more-crates)
     - [All crates](#all-crates)
@@ -432,11 +437,11 @@ There are many combinations for these script templates, you can download scripts
 
 ### Tarballs
 
-Tarballs are the most easy way to compile a software because the build system is already configured (GNU Autotools is the most used), while being more fast to download and process (the computer don't need to process Git deltas present in Git repositories).
+Tarballs are the most easy way to compile a software because the build system is already configured (GNU Autotools is the most used), while being more fast to download and process (the computer don't need to process Git deltas when cloning Git repositories).
 
 Archives with `tar.xz` and `tar.bz2` tend to have higher compression level, thus smaller file size.
 
-(In cases where you don't find tarballs, GitHub tarballs will be available on the "Releases" and "Tags" pages with a `tar.gz` name in the download button, copy this link and paste on the `tar =` field of your `recipe.toml`).
+(In cases where you don't find official tarballs, GitHub tarballs will be available on the "Releases" and "Tags" pages with a `tar.gz` name in the download button, copy this link and paste on the `tar =` field of your `recipe.toml`).
 
 Your `recipe.toml` will have this content:
 
@@ -444,6 +449,18 @@ Your `recipe.toml` will have this content:
 [source]
 tar = "tarball-link"
 ```
+
+#### Links
+
+Sometimes it's hard to find the official tarball of some software, as each project website organization is different.
+
+To help on this process, the [Arch Linux packages](https://archlinux.org/packages/) and [AUR](https://aur.archlinux.org/) are the most easy repositories to find tarball links on the configuration of the packages/ports.
+
+- Arch Linux packages - Search for your program, open the program page, see the "Package Actions" category on the top right position and click on the "Source Files" button, a GitLab page will open, open the `.SRCINFO` and search for the tarball link on the "source" fields of the file.
+
+See [this](https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/main/.SRCINFO?ref_type=heads#L22) example.
+
+- AUR - Search for your program, open the program page, go to the "Sources" section on the end of the package details.
 
 ### Git Repositories
 
@@ -458,7 +475,9 @@ git = "repository-link.git"
 
 ## Dependencies
 
-Most C, C++ and mixed Rust softwares place build system tools (packages without the `-dev` suffix) together with development libraries (packages with `-dev` suffix) in their "Build Instructions".
+A program dependency can be a library (a program that offer functions to some program), a runtime (a program that satisfy some program when it's executed) or a build tool (a program to build/configure some program).
+
+Most C, C++ and Rust softwares place build tools/runtime together with development libraries (packages with `-dev` suffix) in their "Build Instructions".
 
 Example:
 
@@ -468,45 +487,31 @@ sudo apt-get install cmake libssl-dev
 
 The `cmake` package is the build system while the `libssl-dev` package is the linker objects (`.a` and `.so` files) of OpenSSL.
 
-The Debian package system bundle dynamic/static objects on their `-dev` packages (other Linux distributions just bundle dynamic objects), while Redox will use the source code of the libraries, both the Debian package and the library tarball offer headers, thus they can used with linker objects and source code.
+The Debian package system bundle shared/static objects on their `-dev` packages (other Linux distributions just bundle dynamic objects), while Redox will use the source code of the libraries.
 
 (Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment)
 
 You would need to create a recipe of the `libssl-dev` and add on your `recipe.toml`, while the `cmake` package would need to be installed on your system.
 
-Sometimes the command have runtime packages that will need recipes, most of them will be added below the `[build]` to keep the "static linking" policy, while some doesn't make sense to add on this section or are too large and would make the binary bigger, you can opt to not add them on your `recipe.toml` (the user will need to manually install the runtime before on Redox) or add it below the `[package]` section (it will install the runtime during the package installation).
+Library dependencies will be added below the `[build]` to keep the "static linking" policy, while some libraries/runtimes doesn't make sense to add on this section because they would make the program binary too big.
 
-(Pure Rust programs don't use C/C++ libraries but its crates can use).
+Runtimes will be added below the `[package]` section (it will install the runtime during the package installation).
 
 Mixed Rust programs have crates ending with `-sys` to use C/C++ libraries of the system, sometimes they bundle them.
 
-If you have questions about this feel free to ask us on [Chat](./ch13-01-chat.md).
+If you have questions about program dependencies, feel free to ask us on [Chat](./ch13-01-chat.md).
 
-If you want an easy way to find programs/libraries, see the Debian testing [packages list](https://packages.debian.org/testing/allpackages).
+If you want an easy way to find dependencies, see the Debian testing [packages list](https://packages.debian.org/testing/allpackages).
 
-You can search them with `Ctrl+F`, all package names are clickable and the homepage of them is available on the right-side of the package description/details.
+You can search them with `Ctrl+F`, all package names are clickable and their homepage is available on the right-side of the package description/details.
 
-The package page also covers the build dependencies, the `depends` are the necessary dependencies, the items `recommends`, `suggests` and `enhances` is to expand the software functionality, not needed to make it work.
+- Debian packages are the most easy to find dependencies because they are the most used by software developers to describe "Build Instructions".
 
-- Debian packages are the most easy to find programs/libraries because they are the most used by software developers to describe build dependencies.
+- The compiler will build the development libraries as `.a` files (objects for static linking) or `.so` files (objects for dynamic linking), the `.a` files will be mixed in the final binary while the `.so` files will be installed out of the binary (stored on the `/lib` directory of the system).
 
-- The compiler will build the development libraries as `.a` files (static linking) or `.so` files (dynamic linking), the `.a` files will be mixed in the final binary while the `.so` files will be out of the binary (stored on the `/lib` directory of the system).
-
-(Linux distributions add a number after the `.so` files to avoid conflicts on the `/lib` folder when packages use different versions of the same library, for example: `library-name.so.6`)
-
-- Install the packages for your Linux distribution on the "Build Instructions" of the software, see if it compiles on your system first (if packages for your distribution is not available, search for Debian/Ubuntu equivalents).
-
-Run `make r.recipe-name` and see if it don't give errors, if you get an error it can be a dependency that require patches or missing runtime/build system tools, try to investigate both methods until the recipe finish the build process successfully.
-
-If you run `make r.recipe-name` and it builds successfully with just `-dev` recipes, feel free to add the packages without the `-dev` suffix on the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script or [redox-base-containerfile](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman/redox-base-containerfile) for Podman builds.
-
-The `bootstrap.sh` script and `redox-base-containerfile` covers the build system packages needed by the recipes on [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
+(Linux distributions add a number after the `.so` files to avoid conflicts on the `/lib` folder when packages use different ABI versions of the same library, for example: `library-name.so.6`)
 
 (You need to do this because each software is different, the major reason is "Build Instructions" organization)
-
-All recipes needs to be [statically compiled](https://en.wikipedia.org/wiki/Static_build), thus you don't need to package development libraries or runtimes separated for binary linking, improving security and simplifying the configuration/packaging.
-
-The only exception for static linking would be the LLVM because it makes the binary size very big, thus it will be dynamic linked.
 
 ### Bundled Libraries
 
@@ -567,7 +572,50 @@ cookbook_configure
 
 On this example the `-DOPENSSL_ROOT_DIR` option will have the custom OpenSSL path.
 
-## Building/Testing
+### Configuration
+
+The determine the program dependencies you can use Arch Linux and Debian as reference, Arch Linux and AUR are the best methods because they separate the build tools from runtimes and libraries, thus you commit less mistakes.
+
+#### Arch Linux/AUR
+
+Each package page of some program has a "Dependencies" section on the package details, see the items below:
+
+- `(make)` - Build tools (required to build the program)
+- `(optional)` - Programs/libraries to enchance the program functionality
+
+The other items are runtime/library dependencies (without `()`).
+
+See the [Firefox](https://archlinux.org/packages/extra/x86_64/firefox/) package, for example.
+
+- [Arch Linux Packages](https://archlinux.org/packages/)
+- [AUR](https://aur.archlinux.org/)
+
+#### Debian
+
+Each Debian package page has dependency items, see below:
+
+- `depends` - Necessary dependencies (it don't separate build tools from runtimes)
+- `recommends` - Expand the software functionality (optional)
+- `suggests` - Expand the software functionality (optional)
+- `enhances` - Expand the software functionality (optional)
+
+(The `recommends`, `suggests` and `enhances` items aren't needed to make the program work)
+
+See the [Firefox ESR](https://packages.debian.org/testing/firefox-esr) package, for example.
+
+- [Debian Testing Packages](https://packages.debian.org/testing/allpackages)
+
+### Testing
+
+- Install the packages for your Linux distribution on the "Build Instructions" of the software, see if it builds on your system first (if packages for your distribution is not available, search for Debian/Ubuntu equivalents).
+
+- Create the dependency recipe and run `make r.dependency-name` and see if it don't give errors, if you get an error it can be a dependency that require patches, missing C library functions or build tools, try to investigate both methods until the recipe finish the build process successfully.
+
+If you run `make r.recipe-name` and it builds successfully, feel free to add the build tools on the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script (for native builds) or the [redox-base-containerfile](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman/redox-base-containerfile) configuration file (for Podman builds).
+
+The `bootstrap.sh` script and `redox-base-containerfile` covers the build tools required by recipes on [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
+
+## Building/Testing The Program
 
 (Build on your Linux distribution before this step to see if all build system tools and development libraries are correct)
 
