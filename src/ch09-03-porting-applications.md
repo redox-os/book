@@ -7,7 +7,6 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
 - [Recipe](#recipe)
     - [Quick Recipe Template](#quick-recipe-template)
     - [Environment Variables](#environment-variables)
-    - [Package Policy](#package-policy)
 - [Cookbook](#cookbook)
     - [Custom Compiler](#custom-compiler)
     - [Cross Compilation](#cross-compilation)
@@ -163,16 +162,6 @@ Or
 ```
 "${VARIABLE_NAME}/folder-name"
 ```
-
-### Package Policy
-
-When you send your recipe to upstream (to become a public package), you must follow these rules:
-
-- Keep the static linking of libraries, there's an exception if the library/runtime is bigger than 50MB, big libraries/runtimes like LLVM can be dynamic linked.
-- Respect the ABI separation of the packages, for example, if `openssl1` is available and some program need `openssl3`, you will create a recipe for `openssl3` and not rename the `openssl1`, as it will break the ABI of the dependent packages.
-- If your recipe download a tarball you need to create a BLAKE3 hash for it, you can learn how to do it [here](#create-a-blake3-hash-for-your-recipe).
-- Verify if the recipe has some license violation, in case of doubt ask us on the [chat](./ch13-01-chat.md).
-- If your recipe is incomplete you will add it on the `wip` folder, you don't need to insert a BLAKE3 hash (it's quicker to test new tarball versions without checksum) but you need to insert a `#TODO` on the beginning of the `recipe.toml` and explain what's missing. Once the recipe is ready, add the BLAKE3 hash if needed and move the folder to the appropriate category.
 
 ## Cookbook
 
