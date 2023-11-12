@@ -51,17 +51,17 @@ The build system downloads/creates several files that you may want to know about
 
 ### Build System Configuration
 
-- `config/$(ARCH)/$(CONFIG_NAME).toml` - The build configuration with system settings, paths and recipes to be included in the QEMU image that will be built, e.g. `config/x86_64/desktop.toml`.
-- `config/$(ARCH)/server.toml` - The `server` variant with system components only (try this config if you have boot problems on QEMU/real hardware).
-- `config/$(ARCH)/desktop.toml` - The default build config with system components and the Orbital desktop environment.
-- `config/$(ARCH)/demo.toml` - The `demo` variant with optional programs and games.
-- `config/$(ARCH)/ci.toml` - The continuous integration configuration, recipes added here become packages on [CI server](https://static.redox-os.org/pkg/).
-- `config/$(ARCH)/dev.toml` - The development variant with GCC and Rust included.
-- `config/$(ARCH)/desktop-minimal.toml` - The minimal `desktop` variant for low-end computers.
-- `config/$(ARCH)/server-minimal.toml` - The minimal `server` variant for low-end computers.
-- `config/$(ARCH)/resist.toml` - The build with the `resist` POSIX test suite.
-- `config/$(ARCH)/acid.toml` - The build with the `acid` stress test suite.
-- `config/$(ARCH)/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing in the moment.
+- `config/your-cpu-arch/your-config.toml` - The build configuration with system settings, paths and recipes to be included in the QEMU image that will be built, e.g. `config/x86_64/desktop.toml`.
+- `config/your-cpu-arch/server.toml` - The `server` variant with system components only (try this config if you have boot problems on QEMU/real hardware).
+- `config/your-cpu-arch/desktop.toml` - The default build config with system components and the Orbital desktop environment.
+- `config/your-cpu-arch/demo.toml` - The `demo` variant with optional programs and games.
+- `config/your-cpu-arch/ci.toml` - The continuous integration configuration, recipes added here become packages on [CI server](https://static.redox-os.org/pkg/).
+- `config/your-cpu-arch/dev.toml` - The development variant with GCC and Rust included.
+- `config/your-cpu-arch/desktop-minimal.toml` - The minimal `desktop` variant for low-end computers.
+- `config/your-cpu-arch/server-minimal.toml` - The minimal `server` variant for low-end computers.
+- `config/your-cpu-arch/resist.toml` - The build with the `resist` POSIX test suite.
+- `config/your-cpu-arch/acid.toml` - The build with the `acid` stress test suite.
+- `config/your-cpu-arch/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing in the moment.
 
 ### Cookbook
 
@@ -90,10 +90,10 @@ The build system downloads/creates several files that you may want to know about
 ### Build System Files
 
 - `build` - The directory where the build system will place the final image. Usually `build/$(ARCH)/$(CONFIG_NAME)`, e.g. `build/x86_64/desktop`.
-- `build/harddrive.img` - The Redox image file, to be used by QEMU or VirtualBox for virtual machine execution on a Linux host.
-- `build/livedisk.iso` - The Redox bootable image file, to be copied to a USB drive or CD for live boot and possible installation.
-- `build/fetch.tag` - An empty file that, if present, tells the build system that fetching of recipe sources has been done.
-- `build/repo.tag` - An empty file that, if present, tells the build system that all recipes required for the Redox image have been successfully built. **The build system will not check for changes to your code when this file is present.** Use `make rebuild` to force the build system to check for changes.
+- `build/your-cpu-arch/your-config/harddrive.img` - The Redox image file, to be used by QEMU or VirtualBox for virtual machine execution on a Linux host.
+- `build/your-cpu-arch/your-config/livedisk.iso` - The Redox bootable image file, to be copied to a USB drive or CD for live boot and possible installation.
+- `build/your-cpu-arch/your-config/fetch.tag` - An empty file that, if present, tells the build system that fetching of recipe sources has been done.
+- `build/your-cpu-arch/your-config/repo.tag` - An empty file that, if present, tells the build system that all recipes required for the Redox image have been successfully built. **The build system will not check for changes to your code when this file is present.** Use `make rebuild` to force the build system to check for changes.
 - `build/podman` - The directory where Podman Build places the container user's home directory, including the container's Rust installation. Use `make container_clean` to remove it. In some situations, you may need to remove this directory manually, possibly with root privileges.
 - `build/container.tag` - An empty file, created during the first Podman Build, so Podman Build knows a reusable Podman image is available. Use `make container_clean` to force a rebuild of the Podman image on your next `make rebuild`.
   
@@ -160,7 +160,7 @@ These variables are used by programs or commands.
 - `$(BUILD)` - Represents the `build` folder.
 - `$(ARCH)` - Represents the CPU architecture folder at `build`.
 - `${TARGET}` - Represents the CPU architecture folder at `cookbook/recipes/recipe-name/target`.
-- `$(CONFIG_NAME)` - Represents your build configuration folder at `build/$(ARCH)/$(CONFIG_NAME)`.
+- `$(CONFIG_NAME)` - Represents your Cookbook configuration folder at `build/your-cpu-arch`.
 
 We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the path.
 
