@@ -13,6 +13,11 @@
 - [The Full Rebuild Cycle](#the-full-rebuild-cycle)
 - [Test Your Changes](#test-your-changes)
   - [Test Your Changes (out of the Redox build system)](#test-your-changes-out-of-the-redox-build-system)
+  - [Testing On Real Hardware](#testing-on-real-hardware)
+    - [Full bootable image creation](#full-bootable-image-creation)
+    - [Partial bootable image creation](#partial-bootable-image-creation)
+    - [Flash the bootable image on your USB device](#flash-the-bootable-image-on-your-usb-device)
+    - [Burn your CD/DVD with the bootable image](#burn-your-cddvd-with-the-bootable-image)
 - [Update crates](#update-crates)
 - [Search Text On Files](#search-text-on-files)
 - [Checking In your Changes](#checking-in-your-changes)
@@ -268,6 +273,86 @@ redoxer test
 ```sh
 redoxer exec echo hello
 ```
+
+### Testing On Real Hardware
+
+You can use the `make live` command to create bootable images, it will be used instead of `make image`.
+
+This command will create the file `build/your-cpu-arch/your-config/livedisk.iso`, you will burn this image on your USB drive, CD or DVD disks (if you have an USB drive, [Popsicle](https://github.com/pop-os/popsicle) is a simple program to flash your device).
+
+#### Full bootable image creation
+
+- Update your recipes and create a bootable image:
+
+```sh
+make rebuild live
+```
+
+#### Partial bootable image creation
+
+- Build your source changes on some recipe and create a bootable image (no QEMU image creation):
+
+```sh
+make c.recipe-name r.recipe-name live
+```
+
+- Manually update multiple recipes and create a bootable image (more quick than `make rebuild`):
+
+```sh
+make r.recipe1 r.recipe2 live
+```
+
+#### Flash the bootable image on your USB device
+
+If you don't have a GUI/display server to run Popsicle, you can use the Unix tool `dd`, follow the steps below:
+
+- Go to the files of your Cookbook configuration:
+
+```sh
+cd build/your-cpu-arch/your-config
+```
+
+- Flash your device with `dd`
+
+First you need to find your USB device ID, use this command to show the IDs of all connected disks on your computer:
+
+```sh
+ls /dev/disk/by-id
+```
+
+Search for the items beginning with `usb` and find your USB device model, you will copy and paste this ID on the `dd` command below (don't use the IDs with `part-x` in the end).
+
+```sh
+sudo dd if=livedisk.iso of=/dev/disk/by-id/usb-your-device-model oflag=sync bs=4M status=progress
+```
+
+In the `/dev/disk/by-id/usb-your-device-model` path you will replace the `usb-your-device-model` part with your USB device ID obtained before.
+
+**Double-check the "of=/dev/disk/by-id/usb-your-device-model" part to avoid data loss**
+
+#### Burn your CD/DVD with the bootable image
+
+- Go to the files of your Cookbook configuration:
+
+```sh
+cd build/your-cpu-arch/your-config
+```
+
+- Verify if your optical disk device can write on CD/DVD
+
+```sh
+cat /proc/sys/dev/cdrom/info
+```
+
+Check if the items "Can write" has `1` (Yes) or `0` (No), it also show the optical disk devices on the computer: `/dev/srX`.
+
+- Burn the disk with [xorriso](https://www.gnu.org/software/xorriso/)
+
+```sh
+xorriso -as cdrecord -v -sao dev=/dev/srX livedisk.iso
+```
+
+In the `/dev/srX` part, the `x` letter is your optical device number.
 
 ## Update crates
 
