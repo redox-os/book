@@ -39,6 +39,7 @@
   - [RedoxFS](./ch04-08-redoxfs.md)
   - [Graphics and Windowing](./ch04-09-graphics-windowing.md)
   - [Security](./ch04-10-security.md)
+  - [Features](./ch04-11-features.md)
 
 - [URLs, schemes and resources](./ch05-00-urls-schemes-resources.md)
   - [URLs](./ch05-01-urls.md)
