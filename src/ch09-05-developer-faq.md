@@ -73,7 +73,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
 
 ### How can I test my changes on real hardware?
 
-- Make sure your build system is up-to-date and use the `make live` command to create a bootable image of your changes.
+- Read [this](./ch09-02-coding-and-building.md#testing-on-real-hardware) section.
 
 ### How can I write a driver?
 
