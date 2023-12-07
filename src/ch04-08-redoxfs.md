@@ -8,7 +8,7 @@ Redox had a read-only ZFS driver but it was abandoned because of the monolithic 
 
 Current features:
 
-- Compatible with Redox and Linux
+- Compatible with Redox and Linux (FUSE)
 - Copy-on-write
 - Data/metadata checksums
 - Transparent encryption
@@ -18,4 +18,4 @@ Current features:
 - MIT licensed
 - Disk encryption fully supported by the Redox bootloader, letting it load the kernel off an encrypted partition.
 
-Being MIT licensed, RedoxFS can be added on GPL kernels (Linux, for example).
+Being MIT licensed, RedoxFS can be bundled on GPL-licensed operating systems (Linux, for example).
