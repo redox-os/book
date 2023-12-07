@@ -31,23 +31,40 @@ Some schemes implement `fmap`, which creates a memory-mapped area that is shared
 
 ## Userspace Schemes
 
-Redox creates userspace schemes during initialization, starting various daemon-style programs, each of which can provide one or more schemes.
+Redox creates user-space schemes during initialization, starting various daemon-style programs, each of which can provide one or more schemes.
 
 | **Name** | **Daemon** | **Description** |
 |----------|------------|-----------------|
-| `disk:` | `ahcid`, `nvmed` | Raw access to disks |
-| `display:` | `vesad` | Screen multiplexing of the display, provides text and graphical screens, used by `orbital:` |
-| `ethernet:` | `ethernetd` | Raw ethernet frame send/receive, used by `ip:` |
-| `file:` | `redoxfs` | Root filesystem |
-| `ip:` | `ipd` | Raw IP packet send/receive |
-| `network:` | `e1000d`, `rtl8168d` | Link level network send/receive, used by `ethernet:` |
-| `null:` | `nulld` | Scheme that will discard all writes, and read no bytes |
-| `orbital:` | `orbital` | Windowing system |
-| `pty:` | `ptyd` | Pseudoterminals, used by terminal emulators |
-| `rand:` | `randd` | Pseudo-random number generator |
-| `tcp:` | `tcpd` | TCP sockets |
-| `udp:` | `udpd` | UDP sockets |
-| `zero:` | `zerod` | Scheme that will discard all writes, and always fill read buffers with zeroes |
+| `disk.*:` | `ided`, `ahcid`, `nvmed` | Storage drivers |
+| `disk.live:` | `lived` | RAM-disk driver that loads the bootable USB data into RAM |
+| `disk.usb-{id}+{port}-scsi:` | `usbscsid` | USB SCSI driver |
+| `logging:` | [ramfs](https://gitlab.redox-os.org/redox-os/ramfs) | Error logging scheme, using an in-memory temporary filesystem |
+| `initfs:` | [bootstrap](https://gitlab.redox-os.org/redox-os/bootstrap) | Startup filesystem |
+| `file:` | [redoxfs](https://gitlab.redox-os.org/redox-os/redoxfs) | Main filesystem |
+| `network:` | `e1000d`, `rtl8168d` | Link-level network send/receive |
+| `ip:` | [smolnetd](https://gitlab.redox-os.org/redox-os/netstack/-/blob/master/src/smolnetd/scheme/ip.rs?ref_type=heads) | Raw IP packet send/receive |
+| `tcp:` | [smolnetd](https://gitlab.redox-os.org/redox-os/netstack/-/blob/master/src/smolnetd/scheme/tcp.rs?ref_type=heads) | TCP sockets |
+| `udp:` | [smolnetd](https://gitlab.redox-os.org/redox-os/netstack/-/blob/master/src/smolnetd/scheme/udp.rs?ref_type=heads) | UDP sockets |
+| `icmp:` | [smolnetd](https://gitlab.redox-os.org/redox-os/netstack/-/blob/master/src/smolnetd/scheme/icmp.rs?ref_type=heads) | ICMP protocol |
+| `netcfg:` | [smolnetd](https://gitlab.redox-os.org/redox-os/netstack/-/tree/master/src/smolnetd/scheme/netcfg?ref_type=heads) | Network configuration |
+| `dns:` | [dnsd](https://gitlab.redox-os.org/redox-os/netstack/-/tree/master/src/dnsd?ref_type=heads) | DNS protocol |
+| `display.vesa:` | `vesad` | VESA driver |
+| `display.virtio-gpu:` | `virtio-gpud` | VirtIO GPU driver |
+| `orbital:` | [orbital](https://gitlab.redox-os.org/redox-os/orbital) | Windowing system (window manager and virtual driver) |
+| `pty:` | [ptyd](https://gitlab.redox-os.org/redox-os/ptyd) | Pseudoterminals, used by terminal emulators |
+| `audiorw:` | sb16d, ac97d, ihdad | Sound drivers |
+| `audio:` | [audiod](https://gitlab.redox-os.org/redox-os/audiod) | Audio manager and virtual device |
+| `usb.*:` | `usb*d` | USB interfaces |
+| `pcspkr:` | `pcspkrd` | PC speaker driver |
+| `acpi:` | `acpid` | ACPI driver |
+| `input:` | `inputd` | Virtual device |
+| `escalate:` | [escalated](https://gitlab.redox-os.org/redox-os/escalated) | Privilege manager |
+| `chan:` | [ipcd](https://gitlab.redox-os.org/redox-os/ipcd) | Inter-process communication |
+| `shm:` | [ipcd](https://gitlab.redox-os.org/redox-os/ipcd) | Shared memory manager |
+| `log:` | [logd](https://gitlab.redox-os.org/redox-os/logd) | Logging |
+| `rand:` | [randd](https://gitlab.redox-os.org/redox-os/randd) | Pseudo-random number generator |
+| `zero:` | [zerod](https://gitlab.redox-os.org/redox-os/zerod) | Discard all writes, and always fill read buffers with zeroes |
+| `null:` | [nulld](https://gitlab.redox-os.org/redox-os/nulld) | Discard all writes, and read no bytes |
 
 ## Kernel Schemes
 
@@ -55,10 +72,17 @@ The kernel provides a small number of schemes in order to support userspace.
 
 | **Name** | **Documentation** | **Description** |
 |----------|-------------------|-----------------|
-| `:` | [root.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/root.rs) | Root scheme - allows the creation of userspace schemes |
-| `debug:` | [debug.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/debug.rs) | Provides access to serial console
-| `event:` | [event.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/event.rs) | Allows reading of `` `Event` ``s which are registered using `fevent` |
-| `irq:` | [irq.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/irq.rs) | Allows userspace handling of IRQs |
-| `pipe:` | [pipe.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/pipe.rs) | Used internally by the kernel to implement `pipe` |
-| `sys:` | [mod.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/sys/mod.rs) | System information, such as the context list and scheme list |
-| `memory:` | [memory.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/memory.rs) | Access to memory, typically physical memory addresses |
+| `:` | [root.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/root.rs) | Namespace manager |
+| `user:` | [user.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/user.rs) | Dispatch for user-space schemes |
+| `debug:` | [debug.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/debug.rs) | Debug messages that can't use the `log:` scheme |
+| `event:` | [event.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/event.rs) | epoll-like file descriptor read/write "ready" events |
+| `irq:` | [irq.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/irq.rs) | Interrupt manager (converts interrupts to messages) |
+| `pipe:` | [pipe.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/pipe.rs) | Kernel manager for pipes |
+| `proc:` | [proc.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/proc.rs) | Process context manager |
+| `thisproc:` | [proc.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/proc.rs) | Process context manager |
+| `sys:` | [mod.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/sys/mod.rs) | System hardware resources information |
+| `kernel.acpi:` | [acpi.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/acpi.rs) | Read the CPU configuration (number of cores, etc) |
+| `memory:` | [memory.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/memory.rs) | Physical memory mapping manager |
+| `time:` | [time.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/time.rs) | Real-time clock timer |
+| `itimer:` | [time.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/itimer.rs) | Interval timer |
+| `serio:` | [serio.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/serio.rs) | Serial I/O (PS/2) driver (must stay in the kernel due to PS/2 protocol issues) |
