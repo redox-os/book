@@ -30,7 +30,7 @@ This page contains an operating system comparison table for common/important fea
 
 | **Feature** | **Redox** | **Android** | **iOS** |
 |-------------|-----------|-------------|---------|
-| Full Disk Encryption | Yes | Yes | Yes |
+| [File-based Encryption](https://source.android.com/docs/security/features/encryption/file-based) | No | Yes | Not documented |
 | [Sandboxing](https://en.wikipedia.org/wiki/Sandbox_(computer_security)) | Yes | Yes | Yes |
 | [USB Tethering](https://en.wikipedia.org/wiki/Tethering) | No (planned) | Yes | Yes |
 | [NFC](https://en.wikipedia.org/wiki/Near-field_communication) | No (planned) | Yes | Yes |
