@@ -9,6 +9,7 @@ This page will list references for OS development and Rust programming to help d
 - [Rustlings](https://github.com/rust-lang/rustlings) - Learn Rust with exercises.
 - [Awesome Rust](https://github.com/rust-unofficial/awesome-rust) - Curated list of Rust programs, libraries and resources.
 - [No Boilerplate - Rust playlist](https://www.youtube.com/playlist?list=PLZaoyhMXgBzoM9bfb5pyUOT3zjnaDdSEP) - Amazing short documentaries about special things on Rust.
+- [Developer Roadmaps - Rust](https://roadmap.sh/rust) - A guide to learn Rust.
 - [rust-learning](https://github.com/ctjhoa/rust-learning) - A list with articles and videos to learn Rust.
 - [Rust Playground](https://play.rust-lang.org/) - Test your Rust code on the web browser.
 - [This Week in Rust](https://this-week-in-rust.org/) - Weekly updates on the Rust ecosystem, it covers language improvements, organization updates, community updates and articles.
@@ -31,6 +32,7 @@ This page will list references for OS development and Rust programming to help d
 
 - [GeeksforGeeks](https://www.geeksforgeeks.org/) - A computer science portal with many articles for several areas and tasks.
 - [computer-science](https://github.com/ossu/computer-science) - A list for computer science education.
+- [Developer Roadmaps - Computer Science](https://roadmap.sh/computer-science) - A guide to learn computer science.
 - [Minix](https://minix3.org/) - On the Minix website you can find great papers and articles about the microkernel architecture and reliable systems.
 - [Plan 9](https://plan9.io/plan9/) - On the Plan 9 website you can find papers and documentation about distributed systems.
 - [seL4](https://sel4.systems/) - On the seL4 website you can find papers and documentation about a secure and fast microkernel design.
