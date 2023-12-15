@@ -134,6 +134,8 @@ You can combine `make` targets, but order is significant. For example, `make r.g
 
 - `make c.recipe-name` - Clean the binary and intermediate build artifacts of the recipe.
 - `make u.recipe-name` - Clean the recipe source.
+- `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`.
+- `make ucr.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe`.
 
 ### QEMU/VirtualBox
 

@@ -134,7 +134,7 @@ dependencies = [
 ]
 ```
 
-You can quickly copy/paste this template on each `recipe.toml`, that way you spent less time writting and has less chances for typos.
+You can quickly copy and paste this template on each `recipe.toml`, that way you spent less time writting and has less chances for typos.
 
 If the program use a Git repository, you can easily rename the `tar` to `git`.
 
@@ -301,19 +301,21 @@ If you need a script for a package with flags (customized), you can use this scr
 
 ```
 script = """
+package="package-name"
 "${COOKBOOK_CARGO}" build \
             --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
-            --package "${package-name}" \
+            --package "${package}" \
             --release
            --add-your-flag-here
         mkdir -pv "${COOKBOOK_STAGE}/bin"
         cp -v \
-            "target/${TARGET}/release/${package-name}" \
-            "${COOKBOOK_STAGE}/bin/${recipe}_${package-name}"
+            "target/${TARGET}/release/${package}" \
+            "${COOKBOOK_STAGE}/bin/${package}"
 """
 ```
 
-The `--add-your-flag-here` will be replaced by your flag name and the parts with `package-name` will be replaced by the real package.
+- The `package-name` after `package=` is where you will insert the Cargo package name of your program.
+- The `--add-your-flag-here` will be replaced by the program flags.
 
 #### Cargo flags script template
 
