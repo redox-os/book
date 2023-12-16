@@ -11,6 +11,8 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
     - [Cross Compiler](#cross-compiler)
     - [Cross Compilation](#cross-compilation)
     - [Templates](#templates)
+        - [Cargo template script](#cargo-template-script)
+        - [Configure template script](#configure-template-script)
     - [Custom Template](#custom-template)
         - [Cargo script template](#cargo-script-template)
         - [GNU Autotools script template](#gnu-autotools-script-template)
@@ -205,6 +207,159 @@ The `script =` field runs any terminal command, it's important if the build syst
 To find the supported Cookbook terminal commands, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
 
 - [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
+
+#### Cargo template script
+
+You can see the commands of the `cargo` template below:
+
+- Pre-script
+
+```sh
+# Common pre script
+# Add cookbook bins to path
+export PATH="${COOKBOOK_ROOT}/bin:${PATH}"
+
+# This puts cargo build artifacts in the build directory
+export CARGO_TARGET_DIR="${COOKBOOK_BUILD}/target"
+
+# This adds the sysroot includes for most C compilation
+#TODO: check paths for spaces!
+export CFLAGS="-I${COOKBOOK_SYSROOT}/include"
+export CPPFLAGS="-I${COOKBOOK_SYSROOT}/include"
+
+# This adds the sysroot libraries and compiles binaries statically for most C compilation
+#TODO: check paths for spaces!
+export LDFLAGS="-L${COOKBOOK_SYSROOT}/lib --static"
+
+# These ensure that pkg-config gets the right flags from the sysroot
+export PKG_CONFIG_ALLOW_CROSS=1
+export PKG_CONFIG_PATH=
+export PKG_CONFIG_LIBDIR="${COOKBOOK_SYSROOT}/lib/pkgconfig"
+export PKG_CONFIG_SYSROOT_DIR="${COOKBOOK_SYSROOT}"
+
+# cargo template
+COOKBOOK_CARGO="${COOKBOOK_REDOXER}"
+function cookbook_cargo {
+    "${COOKBOOK_CARGO}" install \
+        --path "${COOKBOOK_SOURCE}" \
+        --root "${COOKBOOK_STAGE}" \
+        --locked \
+        --no-track \
+        "$@"
+}
+
+# helper for installing binaries that are cargo examples
+function cookbook_cargo_examples {
+    recipe="$(basename "${COOKBOOK_RECIPE}")"
+    for example in "$@"
+    do
+        "${COOKBOOK_CARGO}" build \
+            --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
+            --example "${example}" \
+            --release
+        mkdir -pv "${COOKBOOK_STAGE}/bin"
+        cp -v \
+            "target/${TARGET}/release/examples/${example}" \
+            "${COOKBOOK_STAGE}/bin/${recipe}_${example}"
+    done
+}
+
+# helper for installing binaries that are cargo packages
+function cookbook_cargo_packages {
+    recipe="$(basename "${COOKBOOK_RECIPE}")"
+    for package in "$@"
+    do
+        "${COOKBOOK_CARGO}" build \
+            --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
+            --package "${package}" \
+            --release
+        mkdir -pv "${COOKBOOK_STAGE}/bin"
+        cp -v \
+            "target/${TARGET}/release/${package}" \
+            "${COOKBOOK_STAGE}/bin/${recipe}_${package}"
+    done
+}
+```
+
+- Post-script
+
+```sh
+# Common post script
+# Strip binaries
+if [ -d "${COOKBOOK_STAGE}/bin" ]
+then
+    find "${COOKBOOK_STAGE}/bin" -type f -exec "${TARGET}-strip" -v {} ';'
+fi
+
+# Remove cargo install files
+for file in .crates.toml .crates2.json
+do
+    if [ -f "${COOKBOOK_STAGE}/${file}" ]
+    then
+        rm -v "${COOKBOOK_STAGE}/${file}"
+    fi
+done
+```
+
+#### Configure template script
+
+You can see the commands of the `configure` template below:
+
+- Pre-script
+
+```sh
+# Common pre script
+# Add cookbook bins to path
+export PATH="${COOKBOOK_ROOT}/bin:${PATH}"
+
+# This adds the sysroot includes for most C compilation
+#TODO: check paths for spaces!
+export CFLAGS="-I${COOKBOOK_SYSROOT}/include"
+export CPPFLAGS="-I${COOKBOOK_SYSROOT}/include"
+
+# This adds the sysroot libraries and compiles binaries statically for most C compilation
+#TODO: check paths for spaces!
+export LDFLAGS="-L${COOKBOOK_SYSROOT}/lib --static"
+
+# These ensure that pkg-config gets the right flags from the sysroot
+export PKG_CONFIG_ALLOW_CROSS=1
+export PKG_CONFIG_PATH=
+export PKG_CONFIG_LIBDIR="${COOKBOOK_SYSROOT}/lib/pkgconfig"
+export PKG_CONFIG_SYSROOT_DIR="${COOKBOOK_SYSROOT}"
+
+# configure template
+COOKBOOK_CONFIGURE="${COOKBOOK_SOURCE}/configure"
+COOKBOOK_CONFIGURE_FLAGS=(
+    --host="${TARGET}"
+    --prefix=""
+    --disable-shared
+    --enable-static
+)
+COOKBOOK_MAKE="make"
+COOKBOOK_MAKE_JOBS="$(nproc)"
+function cookbook_configure {
+    "${COOKBOOK_CONFIGURE}" "${COOKBOOK_CONFIGURE_FLAGS[@]}"
+    "${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}"
+    "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}"
+}
+```
+
+- Post-script
+
+```sh
+# Common post script
+# Strip binaries
+if [ -d "${COOKBOOK_STAGE}/bin" ]
+then
+    find "${COOKBOOK_STAGE}/bin" -type f -exec "${TARGET}-strip" -v {} ';'
+fi
+
+# Remove libtool files
+if [ -d "${COOKBOOK_STAGE}/lib" ]
+then
+    find "${COOKBOOK_STAGE}/lib" -type f -name '*.la' -exec rm -fv {} ';'
+fi
+```
 
 ### Custom Template
 
