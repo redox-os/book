@@ -6,23 +6,33 @@ Most ARM motherboards do not use the default image for booting, which requires u
 
 ## Raspberry Pi 3 Model B+
 
-It is easy to port Raspberry Pi 3 Model B+(raspi3b+) since the bootloader of Raspberry Pi family uses the similar filesystem(FAT32) for booting.
+It is easy to port Raspberry Pi 3 Model B+ (raspi3b+) since the bootloader of Raspberry Pi family uses the similar filesystem (FAT32) for booting.
 
 
 In order to build raspi3b+ image:
 
-- add `BOARD=raspi3bp` and `CONFIG=server-minimal`to `.config`
-- For `config/aarch64/server-minimal.toml`, change `filesystem_size` from 128 to 256 and add `efi_partition_size = 128` in general section
-- run `make all`
-- `cd ~/tryredox; && git clone https://gitlab.redox-os.org/Ivan/redox_firmware.git`
-- add a script `packet.sh` at `~/tryredox/redox/`:
+- Add `BOARD?=raspi3bp` and `CONFIG?=server-minimal`to `.config`
+- For `config/aarch64/server-minimal.toml`, change `filesystem_size` from 128 to 256 and add `efi_partition_size = 128` in `[general]` section
+- Run `make all`
+- Download the firmware
 ```sh
-#example: $1 == build/aarch64/server-minimal/harddrive.img
-DISK=$1
+cd ~/tryredox
+git clone https://gitlab.redox-os.org/Ivan/redox_firmware.git
+```
+
+### Run in qemu
+
+Assume that we are using the `server-minimal` config and build image successfully, run:
+
+- Add two additional dtb files to EFI system partition
+```sh
+DISK=build/aarch64/server-minimal/harddrive.img
 MOUNT_DIR=/mnt/efi_boot
-mkdir -p $MOUNT_DIR
 DTB_DIR=$MOUNT_DIR/dtb/broadcom
-DTS=/home/redox/tryredox/redox_firmware/platform/raspberry_pi/rpi3/bcm2837-rpi-3-b-plus.dts
+WORKPLACE=/home/redox/tryredox
+DTS=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/bcm2837-rpi-3-b-plus.dts
+
+mkdir -p $MOUNT_DIR
 mount -o loop,offset=$((2048*512)) $DISK $MOUNT_DIR
 mkdir -p $DTB_DIR
 dtc -I dts -O dtb $DTS > $DTB_DIR/bcm2837-rpi-3-b.dtb
@@ -30,38 +40,49 @@ cp $DTB_DIR/bcm2837-rpi-3-b.dtb $DTB_DIR/bcm2837-rpi-3-b-plus.dtb
 sync
 umount $MOUNT_DIR
 ```
-
-### Run in qemu
-
-Assume that we are using the `server-minial` config and build image successfully, run:
-
-- `sudo sh -x packet.sh build/aarch64/server-minimal/harddrive.img`
-- `make qemu_raspi live=no`
+- Run `make qemu_raspi live=no`
 
 ### Booting from usb
 
-Assume that we are using the `server-minial` config and access serial console using GPIOs 14 and 15 (pins 8 and 10 on the 40-pin header). Do the following:
+Assume that we are using the `server-minimal` config and access serial console using GPIOs 14 and 15 (pins 8 and 10 on the 40-pin header). Do the following:
 
-- Run 'make live'
-- Run `sudo sh -x packet.sh build/aarch64/server-minimal/livedisk.iso`.
-- Mount the EFI system partition of `livedisk.iso` again and copy all required firmware from [offical website](https://github.com/raspberrypi/firmware/tree/master/boot).
-- Run `cp /home/redox/tryredox/redox_firmware/platform/raspberry_pi/rpi3/u-boot-rpi-3-b-plus.bin /mnt/efi_boot`
-- Edit `/mnt/efi_boot/config.txt`:
-```txt
-arm_64bit=1
-dtoverlay=disable-bt
-enable_uart=1
-kernel=u-boot-rpi-3-b-plus.bin
+- Run `make live`
+- Download the firmware from [official repository](https://github.com/raspberrypi/firmware/tree/master/boot)
+```sh
+cd ~/tryredox
+git clone --depth=1 https://github.com/raspberrypi/firmware.git
+```
+- Copy all required firmware to EFI system partition
+```sh
+DISK=build/aarch64/server-minimal/livedisk.iso
+MOUNT_DIR=/mnt/efi_boot
+DTB_DIR=$MOUNT_DIR/dtb/broadcom
+WORKPLACE=/home/redox/tryredox
+DTS=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/bcm2837-rpi-3-b-plus.dts
+UBOOT=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/u-boot-rpi-3-b-plus.bin
+CONFIG_TXT=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/config.txt
+FW_DIR=$WORKPLACE/firmware/boot
+
+mkdir -p $MOUNT_DIR
+mount -o loop,offset=$((2048*512)) $DISK $MOUNT_DIR
+cp -rf $FW_DIR/* $MOUNT_DIR
+mkdir -p $DTB_DIR
+dtc -I dts -O dtb $DTS > $DTB_DIR/bcm2837-rpi-3-b.dtb
+cp $DTB_DIR/bcm2837-rpi-3-b.dtb $DTB_DIR/bcm2837-rpi-3-b-plus.dtb
+cp $UBOOT $MOUNT_DIR/u-boot.bin
+cp $CONFIG_TXT $MOUNT_DIR
+sync
+umount $MOUNT_DIR
 ```
 - Run `dd if=build/aarch64/server-minimal/livedisk.iso of=/dev/sdX`, and `/dev/sdX` is your usb device.
 
 ### Booting from sd card
 
-This process is similar to that of `Booting from usb`, but has some differences:
+This process is similar to that of "Booting from usb", but has some differences:
 
 - Use `harddrive.img` instead of `livedisk.iso`
-- After `dd` command, try to make the EFI system partition of the sd card become a hybird MBR. See [this](https://www.eisfunke.com/posts/2023/uefi-boot-on-raspberry-pi-3.html) for more details
-```shell
+- After `dd` command, try to make the EFI system partition of the sd card become a hybrid MBR. See [this](https://www.eisfunke.com/posts/2023/uefi-boot-on-raspberry-pi-3.html) for more details
+```sh
 root@dev-pc:/home/ivan/code/os/redox# gdisk /dev/sdc
 GPT fdisk (gdisk) version 1.0.8
 
