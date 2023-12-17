@@ -12,7 +12,6 @@ It is easy to port Raspberry Pi 3 Model B+ (raspi3b+) since the bootloader of Ra
 In order to build raspi3b+ image:
 
 - Add `BOARD?=raspi3bp` and `CONFIG?=server-minimal`to `.config`
-- For `config/aarch64/server-minimal.toml`, change `filesystem_size` from 128 to 256 and add `efi_partition_size = 128` in `[general]` section
 - Run `make all`
 - Download the firmware
 ```sh
