@@ -129,6 +129,8 @@ This is a recipe template for a quick porting workflow.
 #TODO Not compiled or tested
 [source]
 tar = "tarball-link"
+git = "repository-link"
+rev = "commit-hash"
 [build]
 template = "build-system"
 dependencies = [
@@ -138,11 +140,12 @@ dependencies = [
 
 You can quickly copy and paste this template on each `recipe.toml`, that way you spent less time writting and has less chances for typos.
 
-If the program use a Git repository, you can easily rename the `tar` to `git`.
+- If your program use a tarball, you can quickly remove the `git` and `rev` data types.
+- If your program use a Git repository, you can quickly remove the `tar` data type.
+- If you don't need to pin a commit hash for the most recent stable release, you can quickly remove the `rev` data type.
+- If the program don't need dependencies, you can quickly remove the `dependencies = []` section.
 
-If the program don't need dependencies, you can quickly remove the `dependencies = []` section.
-
-After the `#TODO` you will write your current port status.
+After the `#TODO` you will write your current porting status.
 
 ### Environment Variables
 
