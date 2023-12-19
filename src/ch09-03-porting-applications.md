@@ -128,9 +128,9 @@ This is a recipe template for a quick porting workflow.
 ```toml
 #TODO Not compiled or tested
 [source]
-tar = "tarball-link"
 git = "repository-link"
 rev = "commit-hash"
+tar = "tarball-link"
 [build]
 template = "build-system"
 dependencies = [
