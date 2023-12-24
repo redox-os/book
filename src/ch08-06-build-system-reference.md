@@ -194,12 +194,6 @@ You can use these scripts to perform actions not implemented as commands in the 
 scripts/find-recipe.sh recipe-name
 ```
 
-- `scripts/rebuild-recipe.sh` - Alternative to `make u.recipe r.recipe c.recipe u.recipe` that clean your recipe source/binary (delete `source`, `source.tar` and `target` in the recipe folder) to make a new build.
-
-```sh
-scripts/rebuild-recipe.sh recipe-name
-```
-
 ## Component Separation
 
 - `relibc` - The cross-compiled recipes will link to the relibc of this folder (submodule)
