@@ -32,6 +32,8 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
         - [Build System](#build-system)
         - [Links](#links)
     - [Git Repositories](#git-repositories)
+        - [GitHub release commit hash](#github-release-commit-hash)
+        - [GitLab release commit hash](#gitlab-release-commit-hash)
 - [Dependencies](#dependencies)
     - [Bundled Libraries](#bundled-libraries)
     - [Submodules](#submodules)
@@ -614,9 +616,7 @@ There are many combinations for these script templates, you can download scripts
 
 ### Tarballs
 
-Tarballs are the most easy way to compile a software because the build system is already configured (GNU Autotools is the most used), while being more fast to download and process (the computer don't need to process Git deltas when cloning Git repositories).
-
-Archives with `tar.xz` and `tar.bz2` tend to have higher compression level, thus smaller file size.
+Tarballs are the most easy way to compile a software because the build system is already configured (GNU Autotools is the most used), while being more fast to download and process than Git repositories (the computer don't need to process Git deltas).
 
 Your `recipe.toml` will have this content:
 
@@ -625,14 +625,16 @@ Your `recipe.toml` will have this content:
 tar = "tarball-link"
 ```
 
-In cases where you don't find official tarballs, GitHub tarballs will be available on two pages:
+Copy the tarball link and paste on the `tarball-link` field.
 
-(If the program/library use submodules for compilation, you can't use these methods)
+**Only use official tarballs**, GitHub auto-generate tarballs for each new release or tag of the program, but they [aren't static](https://github.blog/changelog/2023-01-30-git-archive-checksums-may-change/) (break the checksum) and [don't verify the archive integrity](https://github.blog/2023-02-21-update-on-the-future-stability-of-source-code-archives-and-hashes/).
 
-- In the "Releases" page you can see the button "Source code (tar.gz)"
-- In the "Tags" page there's a button named as `tar.gz` below the release version.
+You can find the official tarballs on the release announcement assets with the program name and ending with `tar.gz` or `tar.xz` (their URLs contain "releases" instead of "archive"), while unstable tarballs can be found on the "Source code" buttons (their URLs contain "archive").
 
-Copy the tarball links and paste on the `tar =` field of your `recipe.toml`.
+- In most cases they are created using the [GNU Tar](https://www.gnu.org/software/tar/) tool.
+- Avoid files containing the names "linux" and "x86_64" on GitHub, they are pre-built binaries for some operating system and CPU architecture, not source code.
+- Some programs require Git submodules to work, you can't use tarballs if the official tarball don't bundle the Git submodules.
+- Archives with `tar.xz` and `tar.bz2` tend to have a higher compression level, thus smaller file size.
 
 #### Build System
 
@@ -648,7 +650,7 @@ To investigate, you can do these things:
 
 Sometimes it's hard to find the official tarball of some software, as each project website organization is different.
 
-To help on this process, the [Arch Linux packages](https://archlinux.org/packages/) and [AUR](https://aur.archlinux.org/) are the most easy repositories to find tarball links on the configuration of the packages/ports.
+To help on this process, the [Arch Linux packages](https://archlinux.org/packages/) and [AUR](https://aur.archlinux.org/) are the most easy repositories to find tarball links on the configuration of the packages.
 
 - Arch Linux packages - Search for your program, open the program page, see the "Package Actions" category on the top right position and click on the "Source Files" button, a GitLab page will open, open the `.SRCINFO` and search for the tarball link on the "source" fields of the file.
 
@@ -658,14 +660,37 @@ See [this](https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blo
 
 ### Git Repositories
 
-Some programs don't offer tarballs or make releases, thus you need to use the their Git repository.
+Some programs don't offer official tarballs for releases, thus you need to use their Git repository and pin the commit hash of the most recent release.
 
 Your `recipe.toml` will have this content:
 
 ```toml
 [source]
-git = "repository-link.git"
+git = "repository-link"
+rev = "commit-hash"
 ```
+
+#### GitHub release commit hash
+
+Each GitHub release has a commit hash, you will use it to pin the last version of the program to keep code stability.
+
+Open the release item and copy the second code below the version number.
+
+Example:
+
+- Open [this](https://github.com/rust-lang/rust/releases/tag/1.74.0) release announcement.
+- The commit hash is `79e9716c980570bfd1f666e3b16ac583f0168962` and was shortened as `79e9716`.
+
+#### GitLab release commit hash
+
+Each GitLab release has a commit hash, you will use it to pin the last version of the program to keep code stability.
+
+Open the "Releases" button and copy the first code on the end of the release announcement.
+
+Example:
+
+- Open [this](https://gitlab.redox-os.org/redox-os/redox/-/releases/0.8.0) release announcement.
+- The commit hash is `c8634bd9890afdac4438d1ff99631d600d469264` and was shortened as `c8634bd9`.
 
 ## Dependencies
 
@@ -699,7 +724,7 @@ You can search them with `Ctrl+F`, all package names are clickable and their hom
 
 - Debian packages are the most easy to find dependencies because they are the most used by software developers to describe "Build Instructions".
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
-- The recipe PATH only expose the build tools at `/bin`, it don't read the `/lib` and `/include` folders (this avoid [automagic dependencies](https://wiki.gentoo.org/wiki/Project:Quality_Assurance/Automagic_dependencies)).
+- The recipe `PATH` environment variable only read the build tools at `/bin`, it don't read the `/lib` and `/include` folders (this avoid [automagic dependencies](https://wiki.gentoo.org/wiki/Project:Quality_Assurance/Automagic_dependencies)).
 - Don't add build tools on recipe dependencies, check the [Debian](https://packages.debian.org/testing/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for reference.
 - The compiler will build the development libraries as `.a` files (objects for static linking) or `.so` files (objects for dynamic linking), the `.a` files will be mixed in the final binary while the `.so` files will be installed out of the binary (stored on the `/lib` directory of the system).
 - Linux distributions add a number after the `.so` files to avoid conflicts on the `/lib` folder when packages use different ABI versions of the same library, for example: `library-name.so.6`.
