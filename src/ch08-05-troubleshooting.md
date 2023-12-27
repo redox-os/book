@@ -109,7 +109,7 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
     - Example:
 
     ```sh
-    make u.recipe-name c.recipe-name r.recipe-name
+    make ucr.recipe-name
     ```
 
 ### Update your branch

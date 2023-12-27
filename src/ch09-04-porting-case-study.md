@@ -367,11 +367,7 @@ make prefix
 ```
 
 ```sh
-make c.gitoxide
-```
-
-```sh
-make r.gitoxide
+make cr.gitoxide
 ```
 
 ## Testing in QEMU

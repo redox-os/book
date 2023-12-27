@@ -351,7 +351,7 @@ make clean all
 To pass the new relibc changes to one recipe, run:
 
 ```sh
-make c.recipe-name r.recipe-name
+make cr.recipe-name
 ```
 
 ### Update relibc crates

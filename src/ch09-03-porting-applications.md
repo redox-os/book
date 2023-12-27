@@ -453,6 +453,8 @@ cookbook_cargo_packages program-name
 
 This script is used for Rust programs that use folders inside the repository for compilation, you can use the folder name or program name.
 
+Sometimes the folder name and program name doesn't work, it happens because the `Cargo.toml` of the package carry a different name, open the file and verify the true name on the `name` field below the `[package]` section.
+
 This will fix the "found virtual manifest instead of package manifest" error.
 
 ##### Cargo package with flags
@@ -932,7 +934,7 @@ make r.recipe-name
 If you still get the error, run:
 
 ```sh
-make c.recipe-name r.recipe-name
+make cr.recipe-name
 ```
 
 ### All crates
@@ -964,7 +966,7 @@ make r.recipe-name
 If you still get the error, run:
 
 ```sh
-make c.recipe-name r.recipe-name
+make cr.recipe-name
 ```
 
 ### Verify the dependency tree
@@ -995,7 +997,7 @@ make r.recipe-name
 Or (if the above doesn't work)
 
 ```sh
-make c.recipe-name r.recipe-name
+make cr.recipe-name
 ```
 
 Or
@@ -1019,7 +1021,7 @@ make r.recipe-name
 If you still get the error, run:
 
 ```sh
-make c.recipe-name r.recipe-name
+make cr.recipe-name
 ```
 
 ### Local patches

@@ -293,7 +293,7 @@ make rebuild live
 - Build your source changes on some recipe and create a bootable image (no QEMU image creation):
 
 ```sh
-make c.recipe-name r.recipe-name live
+make cr.recipe-name live
 ```
 
 - Manually update multiple recipes and create a bootable image (more quick than `make rebuild`):
@@ -413,7 +413,7 @@ Once your Redox package has been successfully built, you can use `make rebuild` 
 If you had a problem, use this command to log any possible errors on your terminal output:
 
 ```sh
-make c.recipe-name r.recipe-name 2>&1 | tee recipe-name.log
+make cr.recipe-name 2>&1 | tee recipe-name.log
 ```
 
 ### Make a New QEMU Image
@@ -433,7 +433,7 @@ make image qemu
 Run:
 
 ```sh
-make c.recipe-name r.recipe-name image qemu
+make cr.recipe-name image qemu
 ```
 
 This command will [build just your modified recipe](#build-your-package-for-redox), then [update your QEMU image with your modified recipe](#make-a-new-qemu-image) and run QEMU with a GUI.
