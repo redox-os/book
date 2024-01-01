@@ -1,6 +1,6 @@
 # Developer FAQ
 
-The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newcomers and end-users, while this FAQ will cover organization/technical questions/answers of developers/testers, feel free to suggest new questions.
+The website [FAQ](https://www.redox-os.org/faq/) have questions and answers of newcomers and end-users, while this FAQ will cover organization, technical questions and answers of developers and testers, feel free to suggest new questions.
 
 (If all else fails, join us on [Chat](./ch13-01-chat.md))
 
@@ -22,7 +22,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
     - [How can I build the toolchain from source?](#how-can-i-build-the-toolchain-from-source)
     - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
     - [Why does Redox do cross-compilation?](#why-does-redox-do-cross-compilation)
-    - [Does Redox support OpenGL/Vulkan?](#does-redox-support-openglvulkan)
+    - [Does Redox support OpenGL and Vulkan?](#does-redox-support-opengl-and-vulkan)
 - [Porting Questions](#porting-questions)
     - [What is a recipe?](#what-is-a-recipe)
     - [How to determine the dependencies of some program?](#how-to-determine-the-dependencies-of-some-program)
@@ -50,14 +50,15 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions/answers for newc
 - [Troubleshooting Questions](#troubleshooting-questions)
     - [Scripts](#scripts)
         - [I can't download the bootstrap scripts, how can I fix this?](#i-cant-download-the-bootstrap-scripts-how-can-i-fix-this)
-        - [I tried to run the bootstrap.sh and podman_bootstrap.sh scripts but got an error, how to fix this?](#i-tried-to-run-the-bootstrapsh-and-podman_bootstrapsh-scripts-but-got-an-error-how-to-fix-this)
+        - [I tried to run the "bootstrap.sh" and "podman_bootstrap.sh" scripts but got an error, how to fix this?](#i-tried-to-run-the-bootstrapsh-and-podman_bootstrapsh-scripts-but-got-an-error-how-to-fix-this)
     - [Build System](#build-system)
         - [I called "make all" but it show a "rustup can't be found" message, how can I fix this?](#i-called-make-all-but-it-show-a-rustup-cant-be-found-message-how-can-i-fix-this)
         - [I tried all troubleshooting methods but my build system is still broken, how can I fix that?](#i-tried-all-troubleshooting-methods-but-my-build-system-is-still-broken-how-can-i-fix-that)
     - [Recipes](#recipes)
         - [I had a compilation error with a recipe, how can I fix that?](#i-had-a-compilation-error-with-a-recipe-how-can-i-fix-that)
         - [I tried all methods of the "Troubleshooting the Build" page and my recipe doesn't build, what can I do?](#i-tried-all-methods-of-the-troubleshooting-the-build-page-and-my-recipe-doesnt-build-what-can-i-do)
-        - [When I run make r.recipe I get a syntax error, how can I fix that?](#when-i-run-make-rrecipe-i-get-a-syntax-error-how-can-i-fix-that)
+        - [When I run "make r.recipe" I get a syntax error, how can I fix that?](#when-i-run-make-rrecipe-i-get-a-syntax-error-how-can-i-fix-that)
+        - [When I run "cargo update" on some recipe source it call Rustup to install other Rust toolchain version, how can I fix that?](#when-i-run-cargo-update-on-some-recipe-source-it-call-rustup-to-install-other-rust-toolchain-version-how-can-i-fix-that)
     - [QEMU](#qemu)
         - [How can I kill a frozen QEMU process after a kernel panic?](#how-can-i-kill-a-frozen-qemu-process-after-a-kernel-panic)
 
@@ -192,7 +193,7 @@ As Redox is not ready for development or daily usage yet, the programs need to b
 
 The cross-compilation also reduce the portability requiirements of the program, because the build tools don't need to work on Redox, only on Linux/BSD.
 
-### Does Redox support OpenGL/Vulkan?
+### Does Redox support OpenGL and Vulkan?
 
 - Read [this](./ch04-09-graphics-windowing.md#accelerated-graphics) section.
 
@@ -292,7 +293,7 @@ The cross-compilation also reduce the portability requiirements of the program, 
 
 - Verify if you have `curl` installed or download the script from your browser.
 
-#### I tried to run the bootstrap.sh and podman_bootstrap.sh scripts but got an error, how to fix this?
+#### I tried to run the "bootstrap.sh" and "podman_bootstrap.sh" scripts but got an error, how to fix this?
 
 - Verify if you have the GNU Bash shell installed on your system.
 
@@ -324,9 +325,15 @@ source ~/.cargo/env
 
 All recipes follow this syntax `recipe = {}` below the `[packages]` section, the configuration files is placed at `config/your-arch`.
 
-#### When I run make r.recipe I get a syntax error, how can I fix that?
+#### When I run "make r.recipe" I get a syntax error, how can I fix that?
 
 - Verify if your `recipe.toml` has some typo.
+
+#### When I run "cargo update" on some recipe source it call Rustup to install other Rust toolchain version, how can I fix that?
+
+It happens because Cargo is not using the Redox fork of the Rust compiler, to fix that run `make env` from the Redox build system root.
+
+It will import the Redox Makefile environment variables to your active shell (it already does that when you run other `make` commands from the Redox build system root).
 
 ### QEMU
 
