@@ -901,9 +901,9 @@ The recipe sources will be extracted/cloned on the `source` folder inside of you
 
 ## Update crates
 
-Sometimes the `Cargo.lock` of some Rust programs can hold a crate version without Redox patches or broken Redox support (changes on code that make the target OS fail), this will give you an error during the recipe compilation.
+Sometimes the `Cargo.lock` of some Rust programs can hold a crate versions lacking Redox support or broken Redox code path (changes on code that make the target OS fail), this will give you an error during the recipe compilation.
 
-The reason of fixed crate versions is explained [here](https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries).
+- The reason of fixed crate versions is explained [here](https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries).
 
 To fix this you will need to update the crates of your recipe after the first compilation and build it again, see the ways to do it below.
 
@@ -939,9 +939,11 @@ make cr.recipe-name
 
 ### All crates
 
-Most unmaintained Rust programs have very old crate versions without up-to-date Redox support, this method will update all crates of the dependency chain to the latest version.
+Most unmaintained Rust programs carry very old crate versions lacking Redox support, this method will update all crates of the dependency chain to the latest possible version based on the `Cargo.toml` configuration.
 
 Be aware that some crates break the ABI frequently and make the program stop to work, that's why you must try the "One crate" method first.
+
+- This method can fix locked crate versions on the dependency tree, if these locked crate versions don't change you need to bump the version of the crates locking the crate version, you will edit them in the `Cargo.toml` and run `cargo update` again (API breaks are expected).
 
 (Also good to test the latest improvements of the libraries)
 
@@ -1035,22 +1037,22 @@ crate-name = { path = "patched-crate-folder" }
 
 It will make Cargo replace the crate based on this folder in the program source code - `cookbook/recipes/your-category/your-recipe/source/patched-crate-folder` (you don't need to manually create this folder if you `git clone` the crate source code on the program source directory)
 
-Inside this folder you will apply the patches on the crate source and build the recipe.
+Inside this folder you will apply the patches on the crate source and rebuild the recipe.
 
 ## Cleanup
 
 If you have some problems (outdated recipe), try to run these commands:
 
-- This command will wipe your old recipe binary/source.
+- This command will delete your old recipe binary/source.
 
 ```sh
 make c.recipe-name u.recipe-name
 ```
 
-- This script will delete your recipe binary/source and build (fresh build).
+- This command will delete your recipe binary/source and build (fresh build).
 
 ```sh
-scripts/rebuild-recipe.sh recipe-name
+make ucr.recipe-name
 ```
 
 ## Search Text on Recipes
