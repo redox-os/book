@@ -31,6 +31,7 @@
 - [Working with an unpublished version of a crate](#working-with-an-unpublished-version-of-a-crate)
 - [A Note about Drivers](#a-note-about-drivers)
 - [Development Tips](#development-tips)
+- [Visual Studio Code Configuration](#visual-studio-code-configuration)
 - [VS Code Tips and Tricks](#vs-code-tips-and-tricks)
   - [Start in the "source" folder](#start-in-the-source-folder)
   - [Add it to your "Favorites" bar](#add-it-to-your-favorites-bar)
@@ -605,6 +606,14 @@ your-command 2>&1 | tee file-name.log
 - If you have a problem that seems to not have a solution, think on simple/stupid things, sometimes you are very confident on your method and forget obvious things (it's very common).
 - If you want a more quick review of your Merge Request, make it small, Jeremy will read it more fast.
 - If your big Merge Request is taking too long to merge try to shrink it with other small MRs, make sure it don't break anything, if this method break your changes, don't shrink.
+
+## Visual Studio Code Configuration
+
+If the code you are working on includes directives like `#[cfg(target_os = "redox)]`, that code will be disabled by default. To enable live syntax and compiler warnings for that code, add the following line to your VS Code config file (`.vscode/settings.json`):
+
+```
+"rust-analyzer.cargo.target": "x86_64-unknown-redox"
+```
 
 ## VS Code Tips and Tricks
 
