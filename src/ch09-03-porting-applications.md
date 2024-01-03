@@ -463,20 +463,20 @@ If you need a script for a package with flags (customized), you can use this scr
 
 ```
 script = """
-package="package-name"
+binary=package-name
 "${COOKBOOK_CARGO}" build \
             --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
-            --package "${package}" \
+            --bin "${binary}" \
             --release
-           --add-your-flag-here
+            --add-your-flag-here
         mkdir -pv "${COOKBOOK_STAGE}/bin"
         cp -v \
-            "target/${TARGET}/release/${package}" \
-            "${COOKBOOK_STAGE}/bin/${package}"
+            "target/${TARGET}/release/${binary}" \
+            "${COOKBOOK_STAGE}/bin/${binary}"
 """
 ```
 
-- The `package-name` after `package=` is where you will insert the Cargo package name of your program.
+- The `package-name` after `binary=` is where you will insert the Cargo package name of your program.
 - The `--add-your-flag-here` will be replaced by the program flags.
 
 #### Cargo flags script template
