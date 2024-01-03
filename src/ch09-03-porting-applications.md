@@ -6,14 +6,15 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
 
 - [Recipe](#recipe)
     - [Quick Recipe Template](#quick-recipe-template)
-    - [Environment Variables](#environment-variables)
 - [Cookbook](#cookbook)
     - [Cross Compiler](#cross-compiler)
     - [Cross Compilation](#cross-compilation)
+    - [Environment Variables](#environment-variables)
     - [Templates](#templates)
         - [Cargo template script](#cargo-template-script)
         - [Configure template script](#configure-template-script)
     - [Custom Template](#custom-template)
+        - [Packaging Behavior](#packaging-behavior)
         - [Cargo script template](#cargo-script-template)
         - [GNU Autotools script template](#gnu-autotools-script-template)
         - [GNU Autotools script template (lacking a pre-configured tarball)](#gnu-autotools-script-template-lacking-a-pre-configured-tarball)
@@ -24,6 +25,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
         - [Disable the default Cargo flags](#disable-the-default-cargo-flags)
         - [Enable all Cargo flags](#enable-all-cargo-flags)
         - [Cargo examples script template](#cargo-examples-script-template)
+        - [Rename binaries](#rename-binaries)
         - [Script template](#script-template)
             - [Adapted scripts](#adapted-scripts)
             - [Non-adapted scripts](#non-adapted-scripts)
@@ -149,33 +151,6 @@ You can quickly copy and paste this template on each `recipe.toml`, that way you
 
 After the `#TODO` you will write your current porting status.
 
-### Environment Variables
-
-If you want to apply changes on the program source/binary you can use these variables on your commands:
-
-- `${COOKBOOK_RECIPE}` - Represents the recipe folder.
-- `${COOKBOOK_SOURCE}` - Represents the `source` folder at `cookbook/recipes/your-category/recipe-name/source` (program source).
-- `${COOKBOOK_SYSROOT}` - Represents the `sysroot` folder at `cookbook/recipes/your-category/recipe-name/target/your-target` (library sources).
-- `${COOKBOOK_STAGE}` - Represents the `stage` folder at `cookbook/recipes/your-category/recipe-name/target/your-target` (recipe binaries).
-
-We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the path.
-
-Example:
-
-```
-"${VARIABLE_NAME}"
-```
-
-If you have a folder inside the variable folder you can call it with:
-
-```
-"${VARIABLE_NAME}"/folder-name
-```
-Or
-```
-"${VARIABLE_NAME}/folder-name"
-```
-
 ## Cookbook
 
 The GCC and LLVM compiler frontends on Linux use `glibc` (GNU C Library) by default on the linking process, it will create Linux ELF binaries that don't work on Redox because `glibc` don't support the Redox system calls.
@@ -199,6 +174,34 @@ By default Cookbook respect the architecture of your host system but you can cha
 - Don't use a CPU architecture inside the `recipe.toml` script field, it breaks cross-compilation.
 - All recipes must use our cross-compilers, a Cookbook [template](#templates) does this automatically but it's not always possible, study the build system of your program/library to find these options or patch the configuration files.
 
+### Environment Variables
+
+If you want to apply changes on the program source/binary you can use these variables on your commands:
+
+- `${COOKBOOK_RECIPE}` - Represents the recipe folder.
+- `${COOKBOOK_SOURCE}` - Represents the `source` folder at `recipe-name/source` (program source).
+- `${COOKBOOK_SYSROOT}` - Represents the `sysroot` folder at `recipe-name/target/your-cpu-arch/sysroot` (library sources).
+- `${COOKBOOK_STAGE}` - Represents the `stage` folder at `recipe-name/target/your-cpu-arch/stage` (recipe binaries).
+
+We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the path.
+
+Example:
+
+```
+"${VARIABLE_NAME}"
+```
+
+If you have a folder inside the variable folder you can call it with:
+
+```
+"${VARIABLE_NAME}"/folder-name
+```
+Or
+```
+"${VARIABLE_NAME}/folder-name"
+```
+
+
 ### Templates
 
 The template is the build system of the program or library, programs using an GNU Autotools build system will have a `configure` file on the root of the source tarball, programs using CMake build system will have a `CMakeLists.txt` file with all available CMake flags and a `cmake` folder, programs using Meson build system will have a `meson.build` file, Rust programs will have a `Cargo.toml` file, etc.
@@ -212,6 +215,28 @@ The `script =` field runs any terminal command, it's important if the build syst
 To find the supported Cookbook terminal commands, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
 
 - [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
+
+### Custom Template
+
+The `custom` template enable the `script =` field to be used, this field will run any command supported by the Bash shell.
+
+#### Packaging Behavior
+
+The Cookbook download the recipe sources on the `source` folder (`recipe-name/source`), copy the contents of this folder to the `build` folder (`recipe-name/target/your-cpu-arch/build`), build the sources and move the binaries to the `stage` folder (`recipe-name/target/your-cpu-arch/stage`).
+
+If your recipe has library dependencies, it will copy the library sources to the `sysroot` folder to be used by the `build` folder.
+
+- Moving the program files to the Redox filesystem
+
+The `"${COOKBOOK_STAGE}"/` path is used to specify where the recipe files will go inside of Redox, in most cases `/bin` and `/lib`.
+
+You can see path examples for most customized recipes below:
+
+```sh
+"${COOKBOOK_STAGE}"/ # The root of the Redox build system
+"${COOKBOOK_STAGE}"/bin # The "bin" folder where all global Unix executables go
+"${COOKBOOK_STAGE}"/lib # The "lib" folder where all static and shared library objects go
+```
 
 #### Cargo template script
 
@@ -366,10 +391,6 @@ then
 fi
 ```
 
-### Custom Template
-
-The "custom" template enable the `script =` field to be used, this field will run any command supported by your shell.
-
 #### Cargo script template
 
 ```
@@ -522,6 +543,18 @@ cookbook_cargo_examples example-name
 (you can use `cookbook_cargo_examples example1 example2` if it's more than one example)
 
 This script is used for examples on Rust programs.
+
+#### Rename binaries
+
+Some programs or examples could use generic names for their binaries, thus they could bring file conflicts on the packaging process, to avoid it use this command after the compilation or installation commands:
+
+```sh
+mv "${COOKBOOK_STAGE}/bin/binary-name" "${COOKBOOK_STAGE}/bin/new-binary-name"
+```
+
+- Duplicated names
+
+Some recipes for Rust programs can duplicate the program name on the binary (`name_name`), you can also use this command to fix these cases.
 
 #### Script template
 
