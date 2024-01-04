@@ -228,14 +228,14 @@ If your recipe has library dependencies, it will copy the library sources to the
 
 - Moving the program files to the Redox filesystem
 
-The `"${COOKBOOK_STAGE}"/` path is used to specify where the recipe files will go inside of Redox, in most cases `/bin` and `/lib`.
+The `"${COOKBOOK_STAGE}"/` path is used to specify where the recipe files will go inside of Redox, in most cases `/usr/bin` and `/usr/lib`.
 
 You can see path examples for most customized recipes below:
 
 ```sh
 "${COOKBOOK_STAGE}"/ # The root of the Redox build system
-"${COOKBOOK_STAGE}"/bin # The "bin" folder where all global Unix executables go
-"${COOKBOOK_STAGE}"/lib # The "lib" folder where all static and shared library objects go
+"${COOKBOOK_STAGE}"/usr/bin # The folder where all global Unix executables go
+"${COOKBOOK_STAGE}"/usr/lib # The folder where all static and shared library objects go
 ```
 
 #### Cargo template script
@@ -287,10 +287,10 @@ function cookbook_cargo_examples {
             --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
             --example "${example}" \
             --release
-        mkdir -pv "${COOKBOOK_STAGE}/bin"
+        mkdir -pv "${COOKBOOK_STAGE}/usr/bin"
         cp -v \
             "target/${TARGET}/release/examples/${example}" \
-            "${COOKBOOK_STAGE}/bin/${recipe}_${example}"
+            "${COOKBOOK_STAGE}/usr/bin/${recipe}_${example}"
     done
 }
 
@@ -303,10 +303,10 @@ function cookbook_cargo_packages {
             --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
             --package "${package}" \
             --release
-        mkdir -pv "${COOKBOOK_STAGE}/bin"
+        mkdir -pv "${COOKBOOK_STAGE}/usr/bin"
         cp -v \
             "target/${TARGET}/release/${package}" \
-            "${COOKBOOK_STAGE}/bin/${recipe}_${package}"
+            "${COOKBOOK_STAGE}/usr/bin/${recipe}_${package}"
     done
 }
 ```
@@ -316,9 +316,9 @@ function cookbook_cargo_packages {
 ```sh
 # Common post script
 # Strip binaries
-if [ -d "${COOKBOOK_STAGE}/bin" ]
+if [ -d "${COOKBOOK_STAGE}/usr/bin" ]
 then
-    find "${COOKBOOK_STAGE}/bin" -type f -exec "${TARGET}-strip" -v {} ';'
+    find "${COOKBOOK_STAGE}/usr/bin" -type f -exec "${TARGET}-strip" -v {} ';'
 fi
 
 # Remove cargo install files
@@ -379,15 +379,15 @@ function cookbook_configure {
 ```sh
 # Common post script
 # Strip binaries
-if [ -d "${COOKBOOK_STAGE}/bin" ]
+if [ -d "${COOKBOOK_STAGE}/usr/bin" ]
 then
-    find "${COOKBOOK_STAGE}/bin" -type f -exec "${TARGET}-strip" -v {} ';'
+    find "${COOKBOOK_STAGE}/usr/bin" -type f -exec "${TARGET}-strip" -v {} ';'
 fi
 
 # Remove libtool files
-if [ -d "${COOKBOOK_STAGE}/lib" ]
+if [ -d "${COOKBOOK_STAGE}/usr/lib" ]
 then
-    find "${COOKBOOK_STAGE}/lib" -type f -name '*.la' -exec rm -fv {} ';'
+    find "${COOKBOOK_STAGE}/usr/lib" -type f -name '*.la' -exec rm -fv {} ';'
 fi
 ```
 
@@ -490,10 +490,10 @@ binary=package-name
             --bin "${binary}" \
             --release
             --add-your-flag-here
-        mkdir -pv "${COOKBOOK_STAGE}/bin"
+        mkdir -pv "${COOKBOOK_STAGE}/usr/bin"
         cp -v \
             "target/${TARGET}/release/${binary}" \
-            "${COOKBOOK_STAGE}/bin/${binary}"
+            "${COOKBOOK_STAGE}/usr/bin/${binary}"
 """
 ```
 
@@ -549,7 +549,7 @@ This script is used for examples on Rust programs.
 Some programs or examples could use generic names for their binaries, thus they could bring file conflicts on the packaging process, to avoid it use this command after the compilation or installation commands:
 
 ```sh
-mv "${COOKBOOK_STAGE}/bin/binary-name" "${COOKBOOK_STAGE}/bin/new-binary-name"
+mv "${COOKBOOK_STAGE}/usr/bin/binary-name" "${COOKBOOK_STAGE}/usr/bin/new-binary-name"
 ```
 
 - Duplicated names
@@ -568,9 +568,9 @@ This script is for scripts adapted to be packaged, they have shebangs and rename
 
 ```
 script = """
-mkdir -pv "${COOKBOOK_STAGE}"/bin
-cp "${COOKBOOK_SOURCE}"/script-name "${COOKBOOK_STAGE}"/bin/script-name
-chmod a+x "${COOKBOOK_STAGE}"/bin/script-name
+mkdir -pv "${COOKBOOK_STAGE}"/usr/bin
+cp "${COOKBOOK_SOURCE}"/script-name "${COOKBOOK_STAGE}"/usr/bin/script-name
+chmod a+x "${COOKBOOK_STAGE}"/usr/bin/script-name
 """
 ```
 
@@ -582,9 +582,9 @@ This script will move the script from the `source` folder to the `stage` folder 
 
 ```
 script = """
-mkdir -pv "${COOKBOOK_STAGE}"/bin
-cp "${COOKBOOK_SOURCE}"/* "${COOKBOOK_STAGE}"/bin
-chmod a+x "${COOKBOOK_STAGE}"/bin/*
+mkdir -pv "${COOKBOOK_STAGE}"/usr/bin
+cp "${COOKBOOK_SOURCE}"/* "${COOKBOOK_STAGE}"/usr/bin
+chmod a+x "${COOKBOOK_STAGE}"/usr/bin/*
 """
 ```
 
@@ -600,9 +600,9 @@ You need to use these scripts for scripts not adapted for packaging, you need to
 
 ```
 script = """
-mkdir -pv "${COOKBOOK_STAGE}"/bin
-cp "${COOKBOOK_SOURCE}"/script-name.py "${COOKBOOK_STAGE}"/bin/script-name
-chmod a+x "${COOKBOOK_STAGE}"/bin/script-name
+mkdir -pv "${COOKBOOK_STAGE}"/usr/bin
+cp "${COOKBOOK_SOURCE}"/script-name.py "${COOKBOOK_STAGE}"/usr/bin/script-name
+chmod a+x "${COOKBOOK_STAGE}"/usr/bin/script-name
 """
 ```
 
@@ -614,12 +614,12 @@ This script will rename your script name (remove the `.py` extension, for exampl
 
 ```
 script = """
-mkdir -pv "${COOKBOOK_STAGE}"/bin
+mkdir -pv "${COOKBOOK_STAGE}"/usr/bin
 for script in "${COOKBOOK_SOURCE}"/*
 do
   shortname=`basename "$script" ".py"`
-  cp -v "$script" "${COOKBOOK_STAGE}"/bin/"$shortname"
-  chmod a+x "${COOKBOOK_STAGE}"/bin/"$shortname"
+  cp -v "$script" "${COOKBOOK_STAGE}"/usr/bin/"$shortname"
+  chmod a+x "${COOKBOOK_STAGE}"/usr/bin/"$shortname"
 done
 """
 ```
@@ -634,14 +634,14 @@ To fix this, use this script:
 
 ```
 script = """
-mkdir -pv "${COOKBOOK_STAGE}"/bin
-cp "${COOKBOOK_SOURCE}"/script-name.py "${COOKBOOK_STAGE}"/bin/script-name
-sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/bin/script-name
-chmod a+x "${COOKBOOK_STAGE}"/bin/script-name
+mkdir -pv "${COOKBOOK_STAGE}"/usr/bin
+cp "${COOKBOOK_SOURCE}"/script-name.py "${COOKBOOK_STAGE}"/usr/bin/script-name
+sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/usr/bin/script-name
+chmod a+x "${COOKBOOK_STAGE}"/usr/bin/script-name
 """
 ```
 
-The `sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/bin/script-name` command will add the shebang on the beginning of your script.
+The `sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/usr/bin/script-name` command will add the shebang on the beginning of your script.
 
 The `python3` is the script interpreter in this case, use `bash` or `lua` or whatever interpreter is appropriate for your case..
 
@@ -759,10 +759,10 @@ You can search them with `Ctrl+F`, all package names are clickable and their hom
 
 - Debian packages are the most easy to find dependencies because they are the most used by software developers to describe "Build Instructions".
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
-- The recipe `PATH` environment variable only read the build tools at `/bin`, it don't read the `/lib` and `/include` folders (this avoid [automagic dependencies](https://wiki.gentoo.org/wiki/Project:Quality_Assurance/Automagic_dependencies)).
+- The recipe `PATH` environment variable only read the build tools at `/usr/bin`, it don't read the `/usr/lib` and `/include` folders (this avoid [automagic dependencies](https://wiki.gentoo.org/wiki/Project:Quality_Assurance/Automagic_dependencies)).
 - Don't add build tools on recipe dependencies, check the [Debian](https://packages.debian.org/testing/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for reference.
 - The compiler will build the development libraries as `.a` files (objects for static linking) or `.so` files (objects for dynamic linking), the `.a` files will be mixed in the final binary while the `.so` files will be installed out of the binary (stored on the `/lib` directory of the system).
-- Linux distributions add a number after the `.so` files to avoid conflicts on the `/lib` folder when packages use different ABI versions of the same library, for example: `library-name.so.6`.
+- Linux distributions add a number after the `.so` files to avoid conflicts on the `/usr/lib` folder when packages use different ABI versions of the same library, for example: `library-name.so.6`.
 - You need to do this because each software is different, the major reason is "Build Instructions" organization.
 
 ### Bundled Libraries

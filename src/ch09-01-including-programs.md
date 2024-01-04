@@ -40,9 +40,9 @@ make qemu
 ```
 
 
-  Assuming you built the default configuration `desktop` for `x86_64`, none of the Redox games (e.g. `/bin/minesweeper`) have been included yet.
+  Assuming you built the default configuration `desktop` for `x86_64`, none of the Redox games (e.g. `/usr/bin/minesweeper`) have been included yet.
 - On your Redox emulation, log into the system as user `user` with an empty password.
-- Open a `Terminal` window by clicking on the icon in the toolbar at the bottom of the Redox screen, and type `ls /bin`. You will see that `minesweeper` **is not** listed.
+- Open a `Terminal` window by clicking on the icon in the toolbar at the bottom of the Redox screen, and type `ls /usr/bin`. You will see that `minesweeper` **is not** listed.
 - Type `Ctrl-Alt-G` to regain control of your cursor, and click the upper right corner of the Redox window to exit QEMU.
 
 ### Set up your Configuration
@@ -199,15 +199,15 @@ function cookbook_configure {
 
 ```
 # Strip binaries
-if [ -d "${COOKBOOK_STAGE}/bin" ]
+if [ -d "${COOKBOOK_STAGE}/usr/bin" ]
 then
-    find "${COOKBOOK_STAGE}/bin" -type f -exec "${TARGET}-strip" -v {} ';'
+    find "${COOKBOOK_STAGE}/usr/bin" -type f -exec "${TARGET}-strip" -v {} ';'
 fi
 
 # Remove libtool files
-if [ -d "${COOKBOOK_STAGE}/lib" ]
+if [ -d "${COOKBOOK_STAGE}/usr/lib" ]
 then
-    find "${COOKBOOK_STAGE}/lib" -type f -name '*.la' -exec rm -fv {} ';'
+    find "${COOKBOOK_STAGE}/usr/lib" -type f -name '*.la' -exec rm -fv {} ';'
 fi
 
 # Remove cargo install files
@@ -299,5 +299,5 @@ Once the rebuild is finished, run `make qemu`, and when the GUI starts, log in t
 Hello, world!
 ```
 
-Note that the `helloworld` binary can be found in `/bin` on Redox (`ls /bin`).
+Note that the `helloworld` binary can be found in `/usr/bin` on Redox.
 

@@ -150,8 +150,8 @@ mv games source
 
 ```toml
 [source]
-git = your_git_link
-branch = your_branch (optional)
+git = your-git-link
+branch = your-branch # optional
 ```
 
 ## Edit your Code
@@ -531,21 +531,7 @@ If you feel the need to skip creating a new image, and you want to directly add 
 make mount
 ```
 
-The Redox image is now mounted as a directory at `build/x86_64/myfiles/filesystem`.
-
-- Remove the old `minesweeper` and replace it with your new version. In the `Build` shell.
-
-```sh
-cd ~/tryredox/redox/build/x86_64/myfiles/filesystem
-```
-
-```sh
-rm ./bin/minesweeper
-```
-
-```sh
-cp ~/tryredox/redox/cookbook/recipes/games/target/x86_64-unknown-redox/stage/bin/minesweeper ./bin
-```
+The Redox image is now mounted as a directory at `build/x86_64/your-config/filesystem`.
 
 - Unmount the filesystem and test your image. **NOTE:** You must unmount before you start QEMU.
 
@@ -560,8 +546,6 @@ make unmount
 ```sh
 make qemu
 ```
-
-The new version of `minesweeper` is now in your Redox filesystem.
 
 ## Working with an unpublished version of a crate
 
