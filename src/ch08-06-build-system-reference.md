@@ -74,7 +74,7 @@ The build system downloads/creates several files that you may want to know about
 - `cookbook/recipes/recipe-name/source.tar` - The tarball of the recipe (renamed).
 - `cookbook/recipes/recipe-name/source` - The directory where the recipe source is extracted/downloaded.
 - `cookbook/recipes/recipe-name/target` - The directory where the recipe binaries are stored.
-- `cookbook/recipes/recipe-name/target/${TARGET}` - The directory for the recipes binaries of the CPU architecture (`${TARGET}` is the environment variable of the CPU).
+- `cookbook/recipes/recipe-name/target/${TARGET}` - The directory for the recipes binaries of the CPU architecture (`${TARGET}` is the environment variable of your CPU architecture).
 - `cookbook/recipes/recipe-name/target/${TARGET}/build` - The directory where the recipe build system run its commands.
 - `cookbook/recipes/recipe-name/target/${TARGET}/stage` - The directory where recipe binaries go before the packaging, after `make all` or `make rebuild` the [installer](https://gitlab.redox-os.org/redox-os/installer) will extract the recipe package on the QEMU image, generally at `/bin` or `/lib` on Redox filesystem hierarchy.
 - `cookbook/recipes/recipe-name/target/${TARGET}/sysroot` - The folder where recipe build dependencies (libraries) goes, for example: `library-name/src/example.c`
@@ -194,6 +194,28 @@ You can use these scripts to perform actions not implemented as commands in the 
 scripts/find-recipe.sh recipe-name
 ```
 
+- `scripts/category.sh` - Run `make` options on some recipe category.
+
+```sh
+scripts/category.sh -x category-name
+```
+
+Where `x` is your `make` option, it can be `f`, `r`, `c`, `u`, `cr`, `ucr`, `uc` or `ucf`.
+
+- `scripts/include-recipes.sh` - Create a list with `recipe-name = {} #TODO` for quick testing of WIP recipes.
+
+```sh
+scripts/include-recipes.sh "TODO.text"
+```
+
+You will insert the text after the `#TODO` in the `text` part, it can be found on the `recipe.toml` file of the recipe.
+
+- `scripts/show-package.sh` - Show the folders and files on the `stage` and `sysroot` folders of some recipe (to identify packaging issues or violations).
+
+```sh
+scripts/show-package.sh recipe-name
+```
+
 ## Component Separation
 
 - `relibc` - The cross-compiled recipes will link to the relibc of this folder (submodule)
@@ -257,7 +279,7 @@ If you don't want to wait a new release on `crates.io`, you can patch the crate 
 
 ## Pinned commits
 
-The build system pin the last working commit of the submodules, if some submodule is broken because of some commit, the pinned commit avoid the fetch of this broken commit, thus pinned commits increase the development stability (broken changes aren't passed for developers/testers).
+The build system pin the last working commit of the submodules, if some submodule is broken because of some commit, the pinned commit avoid the fetch of this broken commit, thus pinned commits increase the development stability (broken changes aren't passed for developers and testers).
 
 (When you run `make pull` the build system update the submodule folders based on the last pinned commit)
 
