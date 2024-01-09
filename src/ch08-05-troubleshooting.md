@@ -19,6 +19,8 @@ In case you need to do some troubleshooting of the build process, this is a brie
     - [Update crates](#update-crates)
     - [Verify the dependency tree](#verify-the-dependency-tree)
 - [Debug Methods](#debug-methods)
+    - [Recipes](#recipes)
+        - [Rust](#rust)
 - [Kernel Panics in QEMU](#kernel-panics-in-qemu)
     - [Kill the Frozen QEMU Process](#kill-the-frozen-qemu-process)
 
@@ -198,6 +200,69 @@ make some-command 2>&1 | tee file-name.log
 - You can write to the `debug:` scheme, which will output on the console, but you must be `root`. This is useful if you are debugging an app where you need to use Orbital but still want to capture messages.
 
 - Currently, the build system strips function names and other symbols from programs, as support for symbols is not implemented on Redox.
+
+### Recipes
+
+You will see the available debug methods for recipes on this section.
+
+#### Rust
+
+Rust programs can carry assertions, checking and symbols, but they are disabled by default.
+
+- `COOKBOOK_DEBUG` - This environment variable will build the Rust program with assertions, checking and symbols.
+- `COOKBOOK_NOSTRIP` - This environment variable will package the recipe with symbols.
+
+(Debugging with symbols inside of Redox is not supported yet)
+
+To enable them you can use these commands or scripts:
+
+- Enable the `COOKBOOK_DEBUG` environment variable for one command and build a recipe:
+
+```sh
+COOKBOOK_DEBUG=true make r.recipe-name
+```
+
+- Enable the `COOKBOOK_DEBUG` environment variable for multiple commands and build a recipe:
+
+```sh
+export COOKBOOK_DEBUG=true
+make r.recipe-name
+```
+
+- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` environment variables for one command and build a recipe:
+
+```sh
+COOKBOOK_DEBUG=true COOKBOOK_NOSTRIP=true make r.recipe-name
+```
+
+- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` environment variables for multiple commands and build a recipe:
+
+```sh
+export COOKBOOK_DEBUG=true
+export COOKBOOK_NOSTRIP=true
+make r.recipe-name
+```
+
+- Enable the `COOKBOOK_DEBUG` environment variable inside the `recipe.toml`:
+
+```toml
+template = "custom"
+script = """
+COOKBOOK_DEBUG=true
+cookbook_cargo
+"""
+```
+
+- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` environment variables inside the `recipe.toml`:
+
+```toml
+template = "custom"
+script = """
+COOKBOOK_DEBUG=true
+COOKBOOK_NOSTRIP=true
+cookbook_cargo
+"""
+```
 
 ## Kernel Panics in QEMU
 
