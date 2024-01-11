@@ -66,6 +66,7 @@
   - [Advanced Podman Build](./ch08-02-advanced-podman-build.md)
   - [Working with i686](./ch08-03-i686.md)
   - [Working with AArch64/ARM64](./ch08-04-aarch.md)
+    - [Raspberry Pi](./ch08-04-01-raspi.md)
   - [Troubleshooting the Build](./ch08-05-troubleshooting.md)
   - [Build System Quick Reference](./ch08-06-build-system-reference.md)
   - [Build Phases](./ch08-07-build-phases.md)
