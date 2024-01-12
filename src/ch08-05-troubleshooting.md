@@ -205,6 +205,8 @@ make some-command 2>&1 | tee file-name.log
 
 You will see the available debug methods for recipes on this section.
 
+- If you change the recipe build mode (`release` to `debug` or the opposite) while debugging, don't forget to rebuild with `make cr.recipe-name` because the build system may not detect the changes.
+
 #### Rust
 
 Rust programs can carry assertions, checking and symbols, but they are disabled by default.
@@ -263,6 +265,38 @@ COOKBOOK_NOSTRIP=true
 cookbook_cargo
 """
 ```
+
+- Backtrace
+
+A backtrace helps you to detect bugs that happen with not expected input parameters, you can trace back through the callers to see where the bad data is coming from.
+
+You can see how to use it below:
+
+- Start QEMU with logging:
+
+```sh
+make qemu 2>&1 | tee file-name.log
+```
+
+- Enable this environment variable globally (on Redox):
+
+```sh
+export RUST_BACKTRACE=full
+```
+
+- Run the program and repeat the bug (capturing a backtrace in the log file)
+- Close QEMU
+- Open the log file, copy the backtrace and paste in an empty text file
+
+- Run the `backtrace.sh` script in the `redox` directory (on Linux):
+
+```sh
+scripts/backtrace.sh -r recipe-name -b your-backtrace.txt
+```
+
+It will print the file and line number for each entry in the backtrace.
+
+(This is the most simple example command, use the `-h` option of the `backtrace.sh` script to see more combinations)
 
 ## Kernel Panics in QEMU
 

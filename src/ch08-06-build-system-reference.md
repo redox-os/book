@@ -30,6 +30,8 @@ The build system downloads/creates several files that you may want to know about
   - [One recipe](#one-recipe)
   - [Update relibc crates](#update-relibc-crates)
 - [Configuration](#configuration)
+  - [Format](#format)
+  - [Filesystem Customization](#filesystem-customization)
 - [Cross-Compilation](#cross-compilation)
 - [Build Phases](#build-phases)
 
@@ -51,11 +53,13 @@ The build system downloads/creates several files that you may want to know about
 
 ### Build System Configuration
 
-- `config/your-cpu-arch/your-config.toml` - The build configuration with system settings, paths and recipes to be included in the QEMU image that will be built, e.g. `config/x86_64/desktop.toml`.
+- `config` - This folder contains all filesystem configurations.
+- `config/*.toml` - Filesystem templates used by the CPU targets (a template can use other template to reduce duplication)
+- `config/your-cpu-arch/your-config.toml` - The filesystem configuration of the QEMU image that will be built, e.g. `config/x86_64/desktop.toml`.
 - `config/your-cpu-arch/server.toml` - The `server` variant with system components only (try this config if you have boot problems on QEMU/real hardware).
-- `config/your-cpu-arch/desktop.toml` - The default build config with system components and the Orbital desktop environment.
+- `config/your-cpu-arch/desktop.toml` - The `desktop` variant with system components and the Orbital desktop environment (this is the default configuration of the build system).
 - `config/your-cpu-arch/demo.toml` - The `demo` variant with optional programs and games.
-- `config/your-cpu-arch/ci.toml` - The continuous integration configuration, recipes added here become packages on [CI server](https://static.redox-os.org/pkg/).
+- `config/your-cpu-arch/ci.toml` - The continuous integration configuration, recipes added here become packages on the [CI server](https://static.redox-os.org/pkg/).
 - `config/your-cpu-arch/dev.toml` - The development variant with GCC and Rust included.
 - `config/your-cpu-arch/desktop-minimal.toml` - The minimal `desktop` variant for low-end computers.
 - `config/your-cpu-arch/server-minimal.toml` - The minimal `server` variant for low-end computers.
@@ -182,7 +186,6 @@ Or
 "${VARIABLE_NAME}/folder-name"
 ```
 
-
 ## Scripts
 
 You can use these scripts to perform actions not implemented as commands in the Cookbook build system.
@@ -215,6 +218,8 @@ You will insert the text after the `#TODO` in the `text` part, it can be found o
 ```sh
 scripts/show-package.sh recipe-name
 ```
+
+- `scripts/backtrace.sh` - Allow the user to copy a Rust backtrace from Redox and retrieve the symbols (use the `-h` option to show the "Usage" message).
 
 ## Component Separation
 
@@ -408,7 +413,59 @@ cd ..
 
 ## Configuration
 
-- [Configuration Settings](./ch02-07-configuration-settings.md)
+You can find the global settings on [this](./ch02-07-configuration-settings.md) page.
+
+### Format
+
+The Redox configuration files use the [TOML](https://toml.io/en/) format, it has a very easy syntax and is very flexbile.
+
+You can see what TOML supports on [this](https://toml.io/en/v1.0.0) website.
+
+### Filesystem Customization
+
+The Redox image can be customized from the configuration files at `config/your-cpu/*.toml`, select some variant and create a copy for it (for example `desktop-test.toml`, it's a copy of `desktop.toml`).
+
+(The configuration files at `config/your-cpu` can override the data type values from the filesystem templates at `config`)
+
+You can learn how to configure the `desktop-test.toml` below:
+
+- Crate the `desktop-test.toml` file:
+
+```sh
+cd config/your-cpu
+cp desktop.toml desktop-test.toml
+```
+
+- Add this to your `.config` file:
+
+```
+CONFIG_NAME?=desktop-test
+```
+
+You can customize many things of your filesystem configuration, verify the templates on the `config` folder for reference.
+
+In the example below we will add the `acid` recipe on the `desktop-test.toml` configuration.
+
+- Open the `desktop-test.toml` file:
+
+```sh
+nano config/your-cpu/desktop-test.toml
+```
+
+- Add the `[packages]` section and the `acid` recipe:
+
+```toml
+[packages]
+acid = {}
+```
+
+- Build the `acid` recipe and create a new Redox image:
+
+```sh
+make r.acid image
+```
+
+Done, the `acid` recipe is inside your Redox image.
 
 ## Cross-Compilation
 
