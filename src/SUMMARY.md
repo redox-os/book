@@ -77,9 +77,10 @@
   - [Porting Applications using Recipes](./ch09-03-porting-applications.md)
   - [Porting Case Study](./ch09-04-porting-case-study.md)
   - [Quick Workflow](./ch09-05-quick-workflow.md)
-  - [Libraries and APIs](./ch09-06-libraries-apis.md)
-  - [Developer FAQ](./ch09-07-developer-faq.md)
-  - [References](./ch09-08-references.md)
+  - [Development Quickstart](./ch09-06-development-quickstart.md)
+  - [Libraries and APIs](./ch09-07-libraries-apis.md)
+  - [Developer FAQ](./ch09-08-developer-faq.md)
+  - [References](./ch09-09-references.md)
 
 - [Contributing](./ch10-00-contributing.md)
 
