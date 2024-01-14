@@ -64,7 +64,8 @@ If you are developing in a submodule you should fork the `redox` repository, if 
     ```sh
     git commit -m "COMMIT MESSAGE"
     ```
-
+    
+    - If you have any log files or other files that should not get merged, remove them, or `git add` each file explicitly.
     - Commit messages should describe their changes in present-tense, e.g. "`Add stuff to file.ext`" instead of "`added stuff to file.ext`".
     - Try to remove duplicate/merge commits from PRs as these clutter up history, and may make it hard to read.
 
