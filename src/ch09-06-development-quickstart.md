@@ -2,7 +2,7 @@
 
 This page contains advanced information for development on the build system submodules and recipes, while the [Coding and Building] page is guided by examples.
 
-Build system components use submodules while system components use recipes, thus you have two development workflows:
+The components of the build system are submodules while the system components are built using recipes, and the workflows are different.
 
 ```sh
 cd submodule-name
