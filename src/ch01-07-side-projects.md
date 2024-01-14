@@ -8,7 +8,6 @@ Redox is a complete Rust operating system, in addition to the kernel, we are dev
 - [orbclient](https://gitlab.redox-os.org/redox-os/orbclient) - Orbital client library.
 - [pkgutils](https://gitlab.redox-os.org/redox-os/pkgutils) - Redox package manager, with a command-line frontend and library.
 - [relibc](https://gitlab.redox-os.org/redox-os/relibc) - Redox C library.
-- [ralloc](https://gitlab.redox-os.org/redox-os/ralloc) - A memory allocator.
 - [libextra](https://gitlab.redox-os.org/redox-os/libextra) - Supplement for libstd, used throughout the Redox code base.
 - [audiod](https://gitlab.redox-os.org/redox-os/audiod) - Redox audio server.
 - [bootloader](https://gitlab.redox-os.org/redox-os/bootloader) - Redox boot loader.

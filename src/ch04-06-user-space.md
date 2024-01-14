@@ -15,3 +15,5 @@ Schemes are implemented as a regular Rust trait in the kernel. Some builtin kern
 So all file-based syscalls on files owned by userspace, will send a message to that scheme daemon, and when the result is sent back, the kernel will return that result back to the process doing the syscall.
 
 Communication between userspace and the kernel, is generally fast, even though the current syscall handler implementation is somewhat unoptimized. Systems with Meltdown mitigations would be an exception, although such mitigations are not yet implemented.
+
+- [Kernel and User-Space Separation Policy](https://gitlab.redox-os.org/redox-os/redox/-/issues/1412)
