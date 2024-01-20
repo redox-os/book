@@ -14,6 +14,7 @@ In case you need to do some troubleshooting of the build process, this is a brie
     - [Cookbook](#cookbook)
     - [Create the Image with  FUSE](#create-the-image-with-fuse)
 - [Solving Compilation Problems](#solving-compilation-problems)
+    - [Update your build system](#update-your-build-system)
     - [Update your branch](#update-your-branch)
     - [Update relibc](#update-relibc)
     - [Update crates](#update-crates)
@@ -54,7 +55,7 @@ When you run `make all`, the following steps occur.
 
 ### .config and mk/config.mk
 
-`make` scans [.config](./ch02-07-configuration-settings.md#config) and [mk/config.mk](./ch02-07-configuration-settings.md#mkconfigmk) for settings, such as the CPU architecture, config name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-07-configuration-settings.md) to make sure you have the settings that are best for you.
+- `make` scans [.config](./ch02-07-configuration-settings.md#config) and [mk/config.mk](./ch02-07-configuration-settings.md#mkconfigmk) for settings, such as the CPU architecture, config name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-07-configuration-settings.md) to make sure you have the settings that are best for you.
 
 ### Prefix
 
@@ -64,7 +65,7 @@ If you have a problem with the toolchain, try `rm -rf prefix`, and everything wi
 
 ### Podman
 
-If enabled, the Podman environment is set up. [Podman](./ch02-06-podman-build.md) is recommended for distros other than Pop!_OS/Ubuntu/Debian.
+If enabled, the Podman environment is set up. [Podman](./ch02-06-podman-build.md) is recommended for distros other than Pop!_OS, Ubuntu and Debian.
 
 If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./ch02-06-podman-build.md#debugging-your-build-process).
 If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
@@ -103,16 +104,57 @@ On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.s
 
     - [rustup.rs](https://www.rustup.rs) is recommended for managing Rust versions. If you already have it, run `rustup`.
 
-- Check if your `make` and `nasm` are up-to-date.
+- Verify if your `make` and `nasm` are up-to-date.
+- Verify if the build system is using the latest commit by running the `git branch -v` command.
+- Verify if the submodules are using the latest pinned commit, to do this run:
+
+```sh
+cd submodule-name
+```
+
+```sh
+git branch -v
+```
+
+- Verify if the recipe source is using the latest commit of the default branch, to do this run:
+
+```sh
+cd cookbook/recipes/some-category/recipe-name/source
+```
+
+```sh
+git branch -v
+```
+
 - Run `make clean pull` to remove all your compiled binaries and update the sources.
-- Sometimes there are merge requests that briefly break the build, so check on chat if anyone else is experiencing your problems.
-- Sometimes both the source and the binary of some recipe is wrong, thus remove the `source` and `target` folders of the recipe and trigger a new build to know if it works.
+- Sometimes there are merge requests that briefly break the build, so check the [Chat](./ch13-01-chat.md) if anyone else is experiencing your problems.
+- Sometimes both the source and the binary of some recipe is wrong, run `make ucr.recipe-name` and verify if it fix the problem.
 
     - Example:
 
     ```sh
     make ucr.recipe-name
     ```
+
+### Update your build system
+
+Sometimes your build system can be outdated because you forgot to run `make pull` before other commands, read [this](./ch08-06-build-system-reference.md#update-the-build-system) section to learn the complete way to update the build system.
+
+In case of API changes on the source code or configuration changes on the build system you can use `make clean all` to wipe your binaries and build them again, if it doesn't work you need to download a new copy of the build system by running the `bootstrap.sh` script or using this command:
+
+```sh
+git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
+```
+
+After that, run:
+
+```sh
+cd redox
+```
+
+```sh
+make all
+```
 
 ### Update your branch
 
@@ -156,15 +198,11 @@ If you want an anonymous merge, read [this](./ch09-02-coding-and-building.md#ano
 
 ### Update relibc
 
-An outdated relibc copy can contain bugs (already fixed on recent versions) or outdated crates.
-
-- [Update relibc](./ch08-06-build-system-reference.md#update-relibc)
+An outdated relibc copy can contain bugs (already fixed on recent versions) or outdated crates, read [this](./ch08-06-build-system-reference.md#update-relibc) section to learn how to update it.
 
 ### Update crates
 
-Sometimes a Rust program use an old crate version without Redox support.
-
-- [Porting Applications using Recipes](./ch09-03-porting-applications.md#update-crates)
+Sometimes a Rust program use an old crate version lacking Redox support, read [this](./ch09-03-porting-applications.md#update-crates) section to learn how to update them.
 
 ### Verify the dependency tree
 

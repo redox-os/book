@@ -49,12 +49,13 @@ If you identify a problem with the system that has not been identified previousl
 8. Join us in the chat.
 
 9. Record build information like:
+
      - The rust toolchain you used to build Redox
        - `rustc -V` and/or `rustup show` from your Redox project folder
      - The commit hash of the code you used
        - `git rev-parse HEAD`
      - The environment you are running Redox in (the "target")
-       - `qemu-system-x86_64 -version` or your actual hardware specs, if applicable
+       - `qemu-system-x86_64 -version` or your current hardware configuration, if applicable
      - The operating system you used to build Redox
        - `uname -a` or an alternative format
 
