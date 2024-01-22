@@ -219,6 +219,12 @@ You will insert the text after the `#TODO` in the `text` part, it can be found o
 scripts/show-package.sh recipe-name
 ```
 
+- `scripts/commit-hash.sh` - Show the current Git branch and commit of the recipe source.
+
+```sh
+scripts/commit-hash.sh recipe-name
+```
+
 - `scripts/backtrace.sh` - Allow the user to copy a Rust backtrace from Redox and retrieve the symbols (use the `-h` option to show the "Usage" message).
 
 ## Component Separation
