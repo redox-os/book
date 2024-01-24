@@ -13,8 +13,13 @@ This page will list references for OS development and Rust programming to help d
 - [rust-learning](https://github.com/ctjhoa/rust-learning) - A list with articles and videos to learn Rust.
 - [Rust Playground](https://play.rust-lang.org/) - Test your Rust code on the web browser.
 - [This Week in Rust](https://this-week-in-rust.org/) - Weekly updates on the Rust ecosystem, it covers language improvements, organization updates, community updates and articles.
-- [The Coded Message - Rust articles](https://www.thecodedmessage.com/tags/rust/) - Excellent Rust articles.
+- [The Coded Message - Rust articles](https://www.thecodedmessage.com/tags/rust/)
 - [fasterthanlime - Rust articles](https://fasterthanli.me/tags/rust)
+- [Learn Rust With Entirely Too Many Linked Lists](https://rust-unofficial.github.io/too-many-lists/) - How to implement a linked list in Rust.
+- [Rust Design Patterns](https://rust-unofficial.github.io/patterns/intro.html) - About idioms, design patterns, and anti-pattern in Rust.
+- [Rust Reference Book](https://doc.rust-lang.org/reference/index.html) - References for people with background familiarity with Rust.
+- [Rustonomicon](https://doc.rust-lang.org/nomicon/) - To learn about unsafe Rust.
+- [Rust 101 - Exercises](https://101-rs.tweede.golf/) - A Rust university course (but lacking answers for exercises).
 
 ### OS development
 
