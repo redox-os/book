@@ -20,6 +20,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions and answers of n
     - [How can I use the packages from the CI server on my build system?](#how-can-i-use-the-packages-from-the-ci-server-on-my-build-system)
     - [How can I cross-compile to ARM from a x86-64 computer?](#how-can-i-cross-compile-to-arm-from-a-x86-64-computer)
     - [How can I build the toolchain from source?](#how-can-i-build-the-toolchain-from-source)
+    - [Why does Redox have unsafe Rust code?](#why-does-redox-have-unsafe-rust-code)
     - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
     - [Why does Redox do cross-compilation?](#why-does-redox-do-cross-compilation)
     - [Does Redox support OpenGL and Vulkan?](#does-redox-support-opengl-and-vulkan)
@@ -168,6 +169,22 @@ make prefix
 ```sh
 make clean all
 ```
+
+### Why does Redox have unsafe Rust code?
+
+It is an important goal for Redox to minimize the amount of `unsafe` Rust code.
+
+In some cases we must use `unsafe`, for example at certain points in the kernel and drivers, these unsafe parts are generally wrapped with a safe interface.
+
+These are the cases where unsafe Rust is mandatory:
+
+- Implementing a foreign function interface (FFI) (for example the relibc API)
+- Working with system calls directly (You should use Rust `std::` library or relibc instead)
+- Creating or managing processes and threads
+- Working with memory mapping and stack allocation
+- Working with hardware devices
+
+If you want to use unsafe Rust code on Redox anywhere other than interfacing with system calls, ask for Jeremy Soller's approval before.
 
 ### Why does Redox have Assembly code?
 
