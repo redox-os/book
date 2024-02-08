@@ -69,6 +69,12 @@ The build system downloads/creates several files that you may want to know about
 
 ### Cookbook
 
+- `prefix/*` - Tools used by the Cookbook system. They are normally downloaded during the first system build.
+
+  If you are having a problem with the build system, you can remove the `prefix` directory and it will be recreated during the next build.
+
+- `cookbook/*` - Part of the Cookbook system, these scripts and utilities help build the recipes.
+- `cookbook/repo` - Contains all packaged recipes.
 - `cookbook/recipes/recipe-name` - A recipe (software port) directory (represented as `recipe-name`), this directory holds the `recipe.toml` file.
 - `cookbook/recipes/recipe-name/recipe.toml` - The recipe configuration file, a recipe contains instructions for obtaining sources via tarball or git, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
 
@@ -86,10 +92,6 @@ The build system downloads/creates several files that you may want to know about
 - `cookbook/recipes/recipe-name/target/${TARGET}/stage.sig` - Signature for the `tar` package format.
 - `cookbook/recipes/recipe-name/target/${TARGET}/stage.tar.gz` - Legacy `tar` package format, produced for compatibility reasons as we are working to make the package manager use the `pkgar` format.
 - `cookbook/recipes/recipe-name/target/${TARGET}/stage.toml` - Contains the runtime dependencies of the package and is part of both package formats.
-- `cookbook/*` - Part of the Cookbook system, these scripts and utilities help build the recipes.
-- `prefix/*` - Tools used by the cookbook system. They are normally downloaded during the first system build.
-
-  If you are having a problem with the build system, you can remove the `prefix` directory and it will be recreated during the next build.
 
 ### Build System Files
 

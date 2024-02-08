@@ -593,6 +593,12 @@ your-command 2>&1 | tee file-name.log
 
 ## Visual Studio Code Configuration
 
+Before you start the VS Code IDE to do Redox development, you need to run this command on your terminal:
+
+```sh
+rustup target add x86_64-unknown-redox
+```
+
 If the code that you are working on includes directives like `#[cfg(target_os = "redox)]`, that code will be disabled by default. To enable live syntax and compiler warnings for that code, add the following line to your VS Code config file (`.vscode/settings.json`):
 
 ```

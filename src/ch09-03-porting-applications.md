@@ -206,7 +206,7 @@ Or
 
 The template is the build system of the program or library, programs using an GNU Autotools build system will have a `configure` file on the root of the source tarball, programs using CMake build system will have a `CMakeLists.txt` file with all available CMake flags and a `cmake` folder, programs using Meson build system will have a `meson.build` file, Rust programs will have a `Cargo.toml` file, etc.
 
-- `template = "cargo"` - Build with `cargo` (Rust programs, you can't use the `script =` field).
+- `template = "cargo"` - Build with `cargo` (Rust programs with one package in the Cargo workspace, you can't use the `script =` field).
 - `template = "configure"` - Build with `configure` and `make` (you can't use the `script =` field).
 - `template = "custom"` - Run your commands on the `script =` field and build (Any build system/installation process).
 
