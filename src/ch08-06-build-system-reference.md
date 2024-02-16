@@ -116,7 +116,8 @@ You can combine `make` targets, but order is significant. For example, `make r.g
 
 - `make rebuild` - Rebuild all recipes with changes (it don't detect changes on the Redox toolchain), including download changes from GitLab, it should be your normal `make` target.
 - `make prefix` - Download the Rust/GCC forks and build relibc (after `touch relibc`).
-- `make fstools` - Build the image builder and RedoxFS (after `touch installer` or `touch redoxfs`).
+- `make fstools` - Build the image builder (installer), Cookbook and RedoxFS (after `touch installer` or `touch redoxfs`).
+- `make fstools_clean` - Clean the image builder, Cookbook and RedoxFS binaries.
 - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are fetched. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
 - `make clean` - Clean all recipe binaries (Note that `make clean` may require some tools to be built).
 - `make unfetch` - Clean all recipe sources.
@@ -155,6 +156,7 @@ You can combine `make` targets, but order is significant. For example, `make r.g
 - `make qemu efi=yes` - Enable the UEFI boot loader (it supports more screen resolutions).
 - `make qemu live=yes` - Start a live disk (loads the entire image into RAM).
 - `make qemu vga=no kvm=no` - Cumulative QEMU options is supported.
+- `make qemu_nvme` - Boot Redox from a NVMe interface (SSD emulation).
 - `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. Not recommended, but it can save you some time if you are just updating one recipe with `make r.recipe-name`.
 - `make gdb` - Connects `gdb` to the Redox image in QEMU. Join us on [chat](./ch13-01-chat.md) if you want to use this.
 - `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
