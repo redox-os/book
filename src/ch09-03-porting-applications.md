@@ -1,6 +1,6 @@
 # Porting Applications using Recipes
 
-The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an example to port/modify a pure Rust program, here we will explain the advanced way to port Rust programs, mixed Rust programs (Rust + C/C++ libraries, for example) and C/C++ programs.
+The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an example to port/modify a pure Rust program, here we will explain the advanced way to port Rust programs, mixed Rust programs (Rust and C/C++ libraries, for example) and C/C++ programs.
 
 (Before reading this page you must read the [Build System Quick Reference](./ch08-06-build-system-reference.md) page)
 
@@ -11,22 +11,23 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
     - [Cross Compilation](#cross-compilation)
     - [Environment Variables](#environment-variables)
     - [Templates](#templates)
-        - [Cargo template script](#cargo-template-script)
-        - [Configure template script](#configure-template-script)
+        - [Functions](#functions)
+        - [cookbook_cargo function script](#cookbook_cargo-function-script)
+        - [cookbook_configure function script](#cookbook_configure-function-script)
     - [Custom Template](#custom-template)
         - [Packaging Behavior](#packaging-behavior)
-        - [Cargo script template](#cargo-script-template)
-        - [GNU Autotools script template](#gnu-autotools-script-template)
-        - [GNU Autotools script template (lacking a pre-configured tarball)](#gnu-autotools-script-template-lacking-a-pre-configured-tarball)
-        - [CMake script template](#cmake-script-template)
-        - [Cargo packages script template](#cargo-packages-script-template)
+        - [Cargo script example](#cargo-script-example)
+        - [GNU Autotools script example](#gnu-autotools-script-example)
+        - [GNU Autotools script example (lacking a pre-configured tarball)](#gnu-autotools-script-example-lacking-a-pre-configured-tarball)
+        - [CMake script example](#cmake-script-example)
+        - [Cargo packages command example](#cargo-packages-command-example)
             - [Cargo package with flags](#cargo-package-with-flags)
-        - [Cargo flags script template](#cargo-flags-script-template)
+        - [Cargo flags command example](#cargo-flags-command-example)
         - [Disable the default Cargo flags](#disable-the-default-cargo-flags)
         - [Enable all Cargo flags](#enable-all-cargo-flags)
-        - [Cargo examples script template](#cargo-examples-script-template)
+        - [Cargo examples command example](#cargo-examples-command-example)
         - [Rename binaries](#rename-binaries)
-        - [Script template](#script-template)
+        - [Script-based programs](#script-based-programs)
             - [Adapted scripts](#adapted-scripts)
             - [Non-adapted scripts](#non-adapted-scripts)
 - [Sources](#sources)
@@ -206,9 +207,9 @@ Or
 
 The template is the build system of the program or library, programs using an GNU Autotools build system will have a `configure` file on the root of the source tarball, programs using CMake build system will have a `CMakeLists.txt` file with all available CMake flags and a `cmake` folder, programs using Meson build system will have a `meson.build` file, Rust programs will have a `Cargo.toml` file, etc.
 
-- `template = "cargo"` - Build with `cargo` (Rust programs with one package in the Cargo workspace, you can't use the `script =` field).
-- `template = "configure"` - Build with `configure` and `make` (you can't use the `script =` field).
-- `template = "custom"` - Run your commands on the `script =` field and build (Any build system/installation process).
+- `template = "cargo"` - Build with Cargo and cross-compilation variables (Rust programs with one package in the Cargo workspace, you can't use the `script =` field).
+- `template = "configure"` - Build with GNU Autotools and cross-compilation variables (you can't use the `script =` field).
+- `template = "custom"` - Run your commands on the `script =` field and build (Any build system or installation process).
 
 The `script =` field runs any terminal command, it's important if the build system of the program don't support cross-compilation or need custom options that Cookbook don't support.
 
@@ -216,31 +217,16 @@ To find the supported Cookbook terminal commands, look the recipes using a `scri
 
 - [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
 
-### Custom Template
+#### Functions
 
-The `custom` template enable the `script =` field to be used, this field will run any command supported by the Bash shell.
+Each template has a function in the Cookbook source code, these functions contain commands to trigger the build system with cross-compilation variables for the Redox triple.
 
-#### Packaging Behavior
+- `cargo` (cookbook_cargo) - This function run `cargo build`
+- `configure` (cookbook_configure) - This function run `./configure`, `make` and `make install`
 
-The Cookbook download the recipe sources on the `source` folder (`recipe-name/source`), copy the contents of this folder to the `build` folder (`recipe-name/target/your-cpu-arch/build`), build the sources and move the binaries to the `stage` folder (`recipe-name/target/your-cpu-arch/stage`).
+#### cookbook_cargo function script
 
-If your recipe has library dependencies, it will copy the library sources to the `sysroot` folder to be used by the `build` folder.
-
-- Moving the program files to the Redox filesystem
-
-The `"${COOKBOOK_STAGE}"/` path is used to specify where the recipe files will go inside of Redox, in most cases `/usr/bin` and `/usr/lib`.
-
-You can see path examples for most customized recipes below:
-
-```sh
-"${COOKBOOK_STAGE}"/ # The root of the Redox build system
-"${COOKBOOK_STAGE}"/usr/bin # The folder where all global Unix executables go
-"${COOKBOOK_STAGE}"/usr/lib # The folder where all static and shared library objects go
-```
-
-#### Cargo template script
-
-You can see the commands of the `cargo` template below:
+You can see the commands of the `cookbook_cargo` function below:
 
 - Pre-script
 
@@ -331,9 +317,9 @@ do
 done
 ```
 
-#### Configure template script
+#### cookbook_configure function script
 
-You can see the commands of the `configure` template below:
+You can see the commands of the `cookbook_configure` function below:
 
 - Pre-script
 
@@ -391,9 +377,41 @@ then
 fi
 ```
 
-#### Cargo script template
+### Custom Template
 
+The `custom` template enable the `script =` field to be used, this field will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell.
+
+- Script example
+
+```toml
+script = """
+first-command
+second-command
+"""
+
+#### Packaging Behavior
+
+The Cookbook download the recipe sources on the `source` folder (`recipe-name/source`), copy the contents of this folder to the `build` folder (`recipe-name/target/your-cpu-arch/build`), build the sources and move the binaries to the `stage` folder (`recipe-name/target/your-cpu-arch/stage`).
+
+If your recipe has library dependencies, it will copy the library sources to the `sysroot` folder to be used by the `build` folder.
+
+- Moving the program files to the Redox filesystem
+
+The `"${COOKBOOK_STAGE}"/` path is used to specify where the recipe files will go inside of Redox, in most cases `/usr/bin` and `/usr/lib`.
+
+You can see path examples for most customized recipes below:
+
+```sh
+"${COOKBOOK_STAGE}"/ # The root of the Redox build system
+"${COOKBOOK_STAGE}"/usr/bin # The folder where all global Unix executables go
+"${COOKBOOK_STAGE}"/usr/lib # The folder where all static and shared library objects go
 ```
+
+#### Cargo script example
+
+Use this script if you need to customize the `cookbook_cargo` function.
+
+```toml
 script = """
 COOKBOOK_CARGO="${COOKBOOK_REDOXER}"
 COOKBOOK_CARGO_FLAGS=(
@@ -408,9 +426,13 @@ function cookbook_cargo {
 """
 ```
 
-#### GNU Autotools script template
+#### GNU Autotools script example
 
-```
+Use this script if the program or library need flags, change or copy and paste the "--program-flag" according to your needs.
+
+(Some programs and libraries need more configuration to work)
+
+```toml
 script = """
 COOKBOOK_CONFIGURE_FLAGS+=(
     --program-flag
@@ -419,28 +441,26 @@ cookbook_configure
 """
 ```
 
-This script template is used for a GNU Autotools build system with flags, some programs need these flags for customization.
-
-Change or copy/paste the "--program-flag" according to your needs.
-
-(Some programs and libraries need more configuration to work)
-
-#### GNU Autotools script template (lacking a pre-configured tarball)
+#### GNU Autotools script example (lacking a pre-configured tarball)
 
 If you are using the repository of the program you will need to create a configuration file for GNU Autotools.
 
-```
+(Some programs and libraries need more configuration to work)
+
+```toml
 script = """
 ./autogen.sh
 cookbook_configure
 """
 ```
 
+#### CMake script example
+
+Use this script for programs using the CMake build system, more CMake options can be added with a `-D` before them, the customization of CMake compilation is very easy.
+
 (Some programs and libraries need more configuration to work)
 
-#### CMake script template
-
-```
+```toml
 script = """
 COOKBOOK_CONFIGURE="cmake"
 COOKBOOK_CONFIGURE_FLAGS=(
@@ -458,31 +478,27 @@ cookbook_configure
 """
 ```
 
-More CMake options can be added with a `-D` before them, the customization of CMake compilation is very easy.
+#### Cargo packages command example
 
-(Some programs and libraries need more configuration to work)
+This command is used for Rust programs that use folders inside the repository for compilation, you can use the folder name or program name.
 
-#### Cargo packages script template
+Sometimes the folder name and program name doesn't work, it happens because the `Cargo.toml` of the package carry a different name, open the file and verify the true name on the `name` field below the `[package]` section.
 
-```
+(This will fix the "found virtual manifest instead of package manifest" error)
+
+```toml
 script = """
 cookbook_cargo_packages program-name
 """
 ```
 
-(you can use `cookbook_cargo_packages program1 program2` if it's more than one package)
-
-This script is used for Rust programs that use folders inside the repository for compilation, you can use the folder name or program name.
-
-Sometimes the folder name and program name doesn't work, it happens because the `Cargo.toml` of the package carry a different name, open the file and verify the true name on the `name` field below the `[package]` section.
-
-This will fix the "found virtual manifest instead of package manifest" error.
+(You can use `cookbook_cargo_packages program1 program2` if it's more than one package)
 
 ##### Cargo package with flags
 
-If you need a script for a package with flags (customized), you can use this script:
+If you need a script for a package with flags (customization), you can use this script:
 
-```
+```toml
 script = """
 binary=package-name
 "${COOKBOOK_CARGO}" build \
@@ -500,23 +516,23 @@ binary=package-name
 - The `package-name` after `binary=` is where you will insert the Cargo package name of your program.
 - The `--add-your-flag-here` will be replaced by the program flags.
 
-#### Cargo flags script template
+#### Cargo flags command example
 
-```
+Some Rust softwares have Cargo flags for customization, search them to match your needs or make some program build.
+
+```toml
 script = """
 cookbook_cargo --features flag-name
 """
 ```
 
-(you can use `cookbook_cargo --features flag1 flag2` if it's more than one flag)
-
-Some Rust softwares have Cargo flags for customization, search them to match your needs or make some program compile.
+(You can use `cookbook_cargo --features flag1 flag2` if it's more than one flag)
 
 #### Disable the default Cargo flags
 
 It's common that some flag of the program doesn't work on Redox, if you don't want to spend much time testing flags that work and don't work, you can disable all of them to see if the most basic setting of the program works with this script:
 
-```
+```toml
 script = """
 cookbook_cargo --no-default-features
 """
@@ -526,23 +542,23 @@ cookbook_cargo --no-default-features
 
 If you want to enable all flags of the program, use:
 
-```
+```toml
 script = """
 cookbook_cargo --all-features
 """
 ```
 
-#### Cargo examples script template
+#### Cargo examples command example
 
-```
+This script is used for examples on Rust programs.
+
+```toml
 script = """
 cookbook_cargo_examples example-name
 """
 ```
 
-(you can use `cookbook_cargo_examples example1 example2` if it's more than one example)
-
-This script is used for examples on Rust programs.
+(You can use `cookbook_cargo_examples example1 example2` if it's more than one example)
 
 #### Rename binaries
 
@@ -556,7 +572,9 @@ mv "${COOKBOOK_STAGE}/usr/bin/binary-name" "${COOKBOOK_STAGE}/usr/bin/new-binary
 
 Some recipes for Rust programs can duplicate the program name on the binary (`name_name`), you can also use this command to fix these cases.
 
-#### Script template
+#### Script-based programs
+
+Use the following scripts to package interpreted programs.
 
 ##### Adapted scripts
 
@@ -566,7 +584,7 @@ This script is for scripts adapted to be packaged, they have shebangs and rename
 
 - One script
 
-```
+```toml
 script = """
 mkdir -pv "${COOKBOOK_STAGE}"/usr/bin
 cp "${COOKBOOK_SOURCE}"/script-name "${COOKBOOK_STAGE}"/usr/bin/script-name
@@ -580,7 +598,7 @@ This script will move the script from the `source` folder to the `stage` folder 
 
 - Multiple scripts
 
-```
+```toml
 script = """
 mkdir -pv "${COOKBOOK_STAGE}"/usr/bin
 cp "${COOKBOOK_SOURCE}"/* "${COOKBOOK_STAGE}"/usr/bin
@@ -598,7 +616,7 @@ You need to use these scripts for scripts not adapted for packaging, you need to
 
 - One script
 
-```
+```toml
 script = """
 mkdir -pv "${COOKBOOK_STAGE}"/usr/bin
 cp "${COOKBOOK_SOURCE}"/script-name.py "${COOKBOOK_STAGE}"/usr/bin/script-name
@@ -612,7 +630,7 @@ This script will rename your script name (remove the `.py` extension, for exampl
 
 - Multiple scripts
 
-```
+```toml
 script = """
 mkdir -pv "${COOKBOOK_STAGE}"/usr/bin
 for script in "${COOKBOOK_SOURCE}"/*
@@ -632,7 +650,7 @@ It's the magic behind executable scripts as it make the system interpret the scr
 
 To fix this, use this script:
 
-```
+```toml
 script = """
 mkdir -pv "${COOKBOOK_STAGE}"/usr/bin
 cp "${COOKBOOK_SOURCE}"/script-name.py "${COOKBOOK_STAGE}"/usr/bin/script-name
