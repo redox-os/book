@@ -27,6 +27,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
         - [Enable all Cargo flags](#enable-all-cargo-flags)
         - [Cargo examples command example](#cargo-examples-command-example)
         - [Rename binaries](#rename-binaries)
+        - [Configuration files](#configuration-files)
         - [Script-based programs](#script-based-programs)
             - [Adapted scripts](#adapted-scripts)
             - [Non-adapted scripts](#non-adapted-scripts)
@@ -571,6 +572,22 @@ mv "${COOKBOOK_STAGE}/usr/bin/binary-name" "${COOKBOOK_STAGE}/usr/bin/new-binary
 - Duplicated names
 
 Some recipes for Rust programs can duplicate the program name on the binary (`name_name`), you can also use this command to fix these cases.
+
+#### Configuration Files
+
+Some programs require to setup configuration files from the source code or tarball, to setup them use this recipe template:
+
+```toml
+[build]
+template = "custom"
+script = """
+cookbook function or custom build system commands # It's recommended to insert the build system commands before the configuration files command
+mkdir -pv "${COOKBOOK_STAGE}"/usr/share # create the /usr/share folder inside the package
+cp -rv "${COOKBOOK_SOURCE}"/configuration-file "${COOKBOOK_STAGE}"/usr/share # copy the configuration file from the program source code to the package
+"""
+```
+
+Edit the script above to your needs.
 
 #### Script-based programs
 

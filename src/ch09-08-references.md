@@ -1,6 +1,6 @@
 # References
 
-This page will list references for OS development and Rust programming to help developers.
+This page contain a list of references for Rust programming, OS development, ideas, porting and computer science to help developers.
 
 ### Rust
 
@@ -21,17 +21,54 @@ This page will list references for OS development and Rust programming to help d
 - [Rustonomicon](https://doc.rust-lang.org/nomicon/) - To learn about unsafe Rust.
 - [Rust 101 - Exercises](https://101-rs.tweede.golf/) - A Rust university course (but lacking answers for exercises).
 
+### Porting
+
+If you don't know how to port some program or library, you can see the build system documentation or software ports of other operating systems.
+
+- [Cargo](https://doc.rust-lang.org/cargo/) - The project and dependency manager of the Rust programming language.
+- [GNU Autotools](https://www.gnu.org/software/automake/) - The GNU build system, used by most old POSIX programs.
+- [Meson](https://mesonbuild.com/) - A build system used by many Linux/POSIX programs.
+- [GNU Make](https://www.gnu.org/software/make/) - The GNU's command runner, used to build projects with many source code files.
+- [FreeBSD - Software Ports (cgit)](https://cgit.freebsd.org/ports/) - The official web interface for the software ports of FreeBSD.
+- [FreeBSD - Software Ports (GitHub mirror)](https://github.com/freebsd/freebsd-ports) - GitHub mirror for the software ports of FreeBSD.
+- [NetBSD - Software Ports (GitHub mirror)](https://github.com/NetBSD/pkgsrc) - GitHub mirror for the software ports of NetBSD.
+- [Gentoo Packages](https://packages.gentoo.org/) - It contain advanced information about the port configuration.
+- [Nix Packages](https://github.com/NixOS/nixpkgs)
+- [Guix Packages](https://git.savannah.gnu.org/cgit/guix.git)
+
 ### OS development
 
 - [OSDev wiki](https://wiki.osdev.org/Expanded_Main_Page) - The best wiki about OS development of the world.
 - [Writing an OS in Rust](https://os.phil-opp.com/) - Blog series to write an operating system in Rust.
 - [Rust OSDev](https://rust-osdev.com/) - Monthly reports with updates on the Rust low-level ecosystem libraries and operating systems.
 
+### Ideas
+
+- [Linux](https://www.kernel.org/) - The Linux kernel contain lots of ideas that improved the Unix design (POSIX) and system engineering.
+- [Android](https://developer.android.com/) - Android created many ideas to improve the system security and power efficiency.
+- [FreeBSD - Ideas](https://wiki.freebsd.org/IdeasPage) - The future ideas of FreeBSD.
+- [FreeBSD - Documentation](https://docs.freebsd.org/en/)
+- [Fedora - Change Proposals](https://fedoraproject.org/wiki/Changes) - For years the Fedora Linux distribution tested and implemented new technologies for the Linux ecosystem.
+
 ### Manual Pages
 
 - [FreeBSD Manual Pages](https://man.freebsd.org/cgi/man.cgi) - Powerful source for Unix/BSD documentation.
 - [Linux Manual Pages (man7)](https://www.man7.org/linux/man-pages/) - Very popular source for Linux documentation.
 - [Linux Manual Pages (die.net)](https://linux.die.net/man/) - Another popular source for Linux documentation.
+
+### Source Code
+
+If you want to implement something (drivers, hardware interfaces, fix bugs, etc) but the documentation is not good or not available, you can verify the implementation of other operating systems.
+
+- [Linux - cgit](https://git.kernel.org/) - Official web interface for the Linux kernel source code.
+- [Linux - GitHub mirror](https://github.com/torvalds/linux) - GitHub mirror for the Linux kernel source code, it contain more features to read the files.
+- [FreeBSD - cgit](https://cgit.freebsd.org/) - Official web interface for the FreeBSD source code.
+- [FreeBSD - GitHub mirror](https://github.com/freebsd/freebsd-src) - GitHub mirror for the FreeBSD source code.
+- [NetBSD - CVSWeb](http://cvsweb.netbsd.org/) - Official web interface for the NetBSD source code.
+- [NetBSD - GitHub mirror](https://github.com/NetBSD/src) - GitHub mirror for the NetBSD source code.
+- [OpenBSD - CVSWeb](https://cvsweb.openbsd.org/) - Official web interface for the OpenBSD source code.
+- [OpenBSD - GitHub mirror](https://github.com/openbsd/src) - GitHub mirror for the OpenBSD source code.
+- [Minix](https://git.minix3.org/index.cgi?p=minix.git) - Official web interface for the Minix source code.
 
 ### Computer Science
 

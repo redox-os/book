@@ -12,7 +12,7 @@ Be forewarned, for distros other than Pop!_OS/Ubuntu/Debian, neither `bootstrap.
 
 The steps to perform are 
 - [Clone the repository](#clone-the-repository)
-- [Install the Pre-requisite packages](#install-pre-requisite-packages-and-emulators)
+- [Install The Necessary packages](#install-the-necessary-packages-and-emulators)
 - [Install Rust](#install-rust-stable-and-nightly)
 - Adjust your [Configuration Settings](./ch02-07-configuration-settings.md)
 - Build the system
@@ -45,7 +45,9 @@ Please be patient, this can take minutes to hours depending on the hardware and 
 
 In addition to installing the various packages needed for building Redox, **bootstrap.sh** and **podman_bootstrap.sh** both clone the repository, so if you used either script, you have completed Step 1. 
 
-## Install Pre-Requisite Packages and Emulators
+## Install The Necessary Packages and Emulators
+
+If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the necessary packages yourself.
 
 If you cloned the source tree *before* running **bootstrap.sh**, you can use:
 
@@ -57,14 +59,20 @@ cd ~/tryredox/redox
 ./bootstrap.sh -d
 ```
 
-to install the package dependencies without re-fetching any source. If you wish to install the dependencies yourself, some examples are given below.
+to install the build system dependencies without re-fetching any source. If you wish to install the dependencies yourself, some examples are given below.
 
 ### Pop!_OS/Ubuntu/Debian Users
 
-Install the package dependencies:
+Install the build system dependencies:
 
 ```sh
-sudo apt-get install git autoconf autopoint bison build-essential cmake curl file flex genisoimage git gperf libc6-dev-i386 libexpat-dev libfuse-dev libgmp-dev libhtml-parser-perl libpng-dev libtool libjpeg-dev libvorbis-dev libsdl2-ttf-dev libosmesa6-dev m4 nasm pkg-config po4a syslinux-utils texinfo libsdl1.2-dev ninja-build meson python3-mako
+sudo apt-get install ant autoconf automake autopoint bison \
+build-essential clang cmake curl dos2unix doxygen file flex \
+fuse3 g++ genisoimage git gperf intltool libexpat-dev libfuse-dev \
+libgmp-dev libhtml-parser-perl libjpeg-dev libmpfr-dev libpng-dev \
+libsdl1.2-dev libsdl2-ttf-dev libtool llvm lua5.4 m4 make meson nasm \
+ninja-build patch perl pkg-config po4a protobuf-compiler python3 \
+python3-mako rsync scons texinfo unzip wget xdg-utils xxd zip zstd
 ```
 
 - If you want to use QEMU, run:
@@ -81,10 +89,17 @@ sudo apt-get install virtualbox
 
 ### Fedora Users
 
-If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the prerequisite packages yourself. Some of them are listed here.
+Install the build system dependencies:
 
 ```sh
-sudo dnf install git file autoconf vim bison flex genisoimage gperf glibc-devel.i686 expat expat-devel fuse-devel fuse3-devel gmp-devel perl-HTML-Parser libpng-devel libtool libjpeg-turbo-devel libvorbis-devel SDL2_ttf-devel mesa-libOSMesa-devel m4 nasm po4a syslinux texinfo sdl12-compat-devel ninja-build meson python3-mako make gcc gcc-c++ openssl patch automake perl-Pod-Html perl-FindBin gperf curl gettext-devel perl-Pod-Xhtml pkgconf-pkg-config cmake
+sudo dnf install autoconf vim bison flex genisoimage gperf \
+glibc-devel.i686 expat expat-devel fuse-devel fuse3-devel gmp-devel \
+libpng-devel perl perl-HTML-Parser libtool libjpeg-turbo-devel
+SDL2_ttf-devel sdl12-compat-devel m4 nasm po4a syslinux \
+texinfo ninja-build meson waf python3-mako make gcc gcc-c++ \
+openssl patch automake perl-Pod-Html perl-FindBin gperf curl \
+gettext-devel perl-Pod-Xhtml pkgconf-pkg-config cmake llvm zip \
+unzip lua luajit make clang doxygen ant protobuf-compiler zstd
 ```
 
 - If you want to use QEMU, run:
@@ -95,12 +110,99 @@ sudo dnf install qemu-system-x86 qemu-kvm
 
 - If you want to use VirtualBox, install from VirtualBox [Linux Downloads](https://www.virtualbox.org/wiki/Linux_Downloads) page.
 
-### MacOS Users using MacPorts:
+### Arch Linux Users
 
-If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the prerequisite packages yourself. Some of them are listed here.
+Install the build system dependencies:
 
 ```sh
-sudo port install git coreutils findutils gcc49 gcc-4.9 nasm pkgconfig osxfuse x86_64-elf-gcc cmake ninja po4a texinfo
+pacman -S --needed cmake fuse git gperf perl-html-parser nasm \
+wget texinfo bison flex po4a autoconf curl file patch automake \
+scons waf expat gmp libtool libpng libjpeg-turbo sdl12-compat \
+m4 pkgconf po4a syslinux meson python python-mako make xdg-utils \
+zip unzip llvm clang perl doxygen lua ant protobuf
+```
+
+- If you want to use QEMU, run:
+
+```sh
+sudo pacman -S qemu
+```
+
+- If you want to use VirtualBox, run:
+
+```sh
+sudo pacman -S virtualbox
+```
+
+### OpenSUSE Users
+
+Install the build system dependencies:
+
+```sh
+sudo zypper install gcc gcc-c++ glibc-devel-32bit nasm make fuse-devel \
+cmake openssl automake gettext-tools libtool po4a patch flex gperf autoconf \
+bison curl wget file libexpat-devel gmp-devel libpng16-devel libjpeg8-devel \
+perl perl-HTML-Parser m4 patch scons pkgconf syslinux-utils ninja meson python-Mako \
+xdg-utils zip unzip llvm clang doxygen lua54 ant protobuf
+```
+
+- If you want to use QEMU, run:
+
+```sh
+sudo zypper install qemu-x86 qemu-kvm
+```
+
+### Gentoo Users
+
+Install the build system dependencies:
+
+```sh
+sudo emerge dev-lang/nasm dev-vcs/git sys-fs/fuse
+```
+
+- If you want to use QEMU, run:
+
+```sh
+sudo emerge app-emulation/qemu
+```
+
+- If you want to use VirtualBox, install from VirtualBox [Linux Downloads](https://www.virtualbox.org/wiki/Linux_Downloads) page.
+
+### FreeBSD Users
+
+Install the build system dependencies:
+
+```sh
+sudo pkg install coreutils findutils gcc nasm pkgconf fusefs-libs3 \
+cmake gmake wget openssl texinfo python automake gettext bison gperf \
+autoconf curl file flex expat2 gmp png libjpeg-turbo sdl12 sdl2_ttf \
+perl5.36 p5-HTML-Parser libtool m4 po4a syslinux ninja meson xdg-utils \
+zip unzip llvm doxygen patch automake scons lua54 py-protobuf-compiler
+```
+
+- If you want to use QEMU, run:
+
+```sh
+sudo pkg install qemu qemu-system-x86_64
+```
+
+- If you want to use VirtualBox, run:
+
+```sh
+sudo pkg install virtualbox
+```
+
+### MacOS Users using MacPorts:
+
+Install the build system dependencies:
+
+```sh
+sudo port install coreutils findutils gcc49 gcc-4.9 nasm pkgconfig \
+osxfuse x86_64-elf-gcc cmake ninja po4a findutils texinfo autoconf \
+openssl3 openssl11 bison curl wget file flex gperf expat gmp libpng \
+jpeg libsdl12 libsdl2_ttf libtool m4 ninja meson python311 py37-mako \
+xdg-utils zip unzip llvm-16 clang-16 perl5.24 p5-html-parser doxygen \
+gpatch automake scons gmake lua protobuf-c
 ```
 
 - If you want to use QEMU, run:
@@ -123,15 +225,15 @@ cpan install HTML::Entities
 
 ### MacOS Users using Homebrew:
 
-If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the prerequisite packages yourself. Some of them are listed here.
+Install the build system dependencies:
 
 ```sh
-brew install git automake bison gettext libtool make nasm gcc@7 gcc-7 pkg-config cmake ninja po4a macfuse findutils textinfo
-```
-and
-
-```sh
-brew install redox-os/gcc_cross_compilers/x86_64-elf-gcc
+brew install automake bison gettext libtool make nasm gcc@7 \
+gcc-7 pkg-config cmake ninja po4a macfuse findutils texinfo \
+openssl@1.1 openssl@3.0 autoconf curl wget flex gperf expat \
+gmp libpng jpeg sdl12-compat sdl2_ttf perl libtool m4 ninja \
+meson python@3.11 zip unzip llvm doxygen gpatch automake scons \
+lua ant protobuf redox-os/gcc_cross_compilers/x86_64-elf-gcc x86_64-elf-gcc
 ```
 
 - If you want to use QEMU, run:
