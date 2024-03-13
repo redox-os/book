@@ -229,6 +229,12 @@ scripts/show-package.sh recipe-name
 scripts/commit-hash.sh recipe-name
 ```
 
+- `scripts/pkg-size.sh` - Show the package size of the recipes (`stage.pkgar` and `stage.tar.gz`), it must be used by package maintainers to enforce the [library linking size policy](https://gitlab.redox-os.org/redox-os/cookbook#library-linking).
+
+```sh
+scripts/pkg-size.sh recipe-name
+```
+
 - `scripts/dual-boot.sh` - Install Redox in the free space of your storage device and add a boot entry (if you are using the [systemd-boot](https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/) boot loader).
 - `scripts/ventoy.sh` - [Ventoy](https://www.ventoy.net/en/index.html) will build and copy the Redox image to an USB device.
 - `scripts/backtrace.sh` - Allow the user to copy a Rust backtrace from Redox and retrieve the symbols (use the `-h` option to show the "Usage" message).
