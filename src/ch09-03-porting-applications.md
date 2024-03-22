@@ -969,11 +969,13 @@ The recipe sources will be extracted/cloned on the `source` folder inside of you
 
 ## Update crates
 
-Sometimes the `Cargo.lock` of some Rust programs can hold a crate versions lacking Redox support or broken Redox code path (changes on code that make the target OS fail), this will give you an error during the recipe compilation.
+Sometimes the `Cargo.toml` and `Cargo.lock` of some Rust programs can hold a crate versions lacking Redox support or broken Redox code path (changes on code that make the target OS fail), this will give you an error during the recipe compilation.
 
 - The reason of fixed crate versions is explained [here](https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries).
 
 To fix this you will need to update the crates of your recipe after the first compilation and build it again, see the ways to do it below.
+
+(Bump a crate version on `Cargo.toml` can break some part of the source code, on this case the program needs a source code patch to use the updated API of the crate)
 
 ### One or more crates
 
@@ -981,7 +983,11 @@ In maintained Rust programs you just need to update some crates to have Redox su
 
 We recommend that you do this based on the errors you get during the compilation, this method is recommended for maintained programs.
 
-- Go to the `source` folder of your recipe and run `cargo update -p crate-name`, example:
+- Expose the Redox build system environment variables to the current shell, go to the `source` folder of your recipe and update the crates, example:
+
+```sh
+make env
+```
 
 ```sh
 cd cookbook/recipes/your-category/recipe-name/source
@@ -1015,7 +1021,11 @@ Be aware that some crates break the ABI frequently and make the program stop to 
 
 (Also good to test the latest improvements of the libraries)
 
-- Go to the `source` folder of your recipe and run `cargo update`, example:
+- Expose the Redox build system environment variables to the current shell, go to the `source` folder of your recipe and update the crates, example:
+
+```sh
+make env
+```
 
 ```sh
 cd cookbook/recipes/your-category/recipe-name/source
@@ -1071,6 +1081,10 @@ make cr.recipe-name
 ```
 
 Or
+
+```sh
+make env
+```
 
 ```sh
 cd cookbook/recipes/your-category/recipe-name/source

@@ -28,7 +28,6 @@ The build system downloads/creates several files that you may want to know about
 - [Update relibc](#update-relibc)
   - [All recipes](#all-recipes)
   - [One recipe](#one-recipe)
-  - [Update relibc crates](#update-relibc-crates)
 - [Configuration](#configuration)
   - [Format](#format)
   - [Filesystem Customization](#filesystem-customization)
@@ -397,36 +396,6 @@ To pass the new relibc changes to one recipe, run:
 
 ```sh
 make cr.recipe-name
-```
-
-### Update relibc crates
-
-Sometimes you need to update the relibc crates, run these commands between the `make pull` and `touch relibc` commands:
-
-```sh
-cd relibc
-```
-
-```sh
-cargo update -p crate-name
-```
-
-```sh
-cd ..
-```
-
-Or (to update all crates, may break the ABI)
-
-```sh
-cd relibc
-```
-
-```sh
-cargo update
-```
-
-```sh
-cd ..
 ```
 
 ## Configuration
