@@ -183,6 +183,7 @@ If you want to apply changes on the program source/binary you can use these vari
 - `${COOKBOOK_RECIPE}` - Represents the recipe folder.
 - `${COOKBOOK_SOURCE}` - Represents the `source` folder at `recipe-name/source` (program source).
 - `${COOKBOOK_SYSROOT}` - Represents the `sysroot` folder at `recipe-name/target/your-cpu-arch/sysroot` (library sources).
+- `${COOKBOOK_BUILD}` - Represents the `build` folder at `recipe-name/target/your-cpu-arch/build` (recipe build system).
 - `${COOKBOOK_STAGE}` - Represents the `stage` folder at `recipe-name/target/your-cpu-arch/stage` (recipe binaries).
 
 We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the path.
@@ -526,8 +527,6 @@ script = """
 cookbook_cargo --features flag-name
 """
 ```
-
-(You can use `cookbook_cargo --features flag1 flag2` if it's more than one flag)
 
 #### Disable the default Cargo flags
 
