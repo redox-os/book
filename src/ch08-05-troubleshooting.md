@@ -22,8 +22,9 @@ In case you need to do some troubleshooting of the build process, this is a brie
 - [Debug Methods](#debug-methods)
     - [Recipes](#recipes)
         - [Rust](#rust)
+- [Kill A Frozen Redox VM](#kill-a-frozen-redox-vm)
 - [Kernel Panics in QEMU](#kernel-panics-in-qemu)
-    - [Kill the Frozen QEMU Process](#kill-the-frozen-qemu-process)
+- [Kernel Panics in Real Hardware](#kernel-panics-in-real-hardware)
 
 ## Setting Up
 
@@ -228,6 +229,9 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 
 ## Debug Methods
 
+- Use the `dmesg` command to read the kernel and user-space daemons log.
+
+- You can start the QEMU with the `make qemu vga=no` command to easily copy the terminal text.
 
 - Use the following command for advanced logging:
 
@@ -336,14 +340,18 @@ It will print the file and line number for each entry in the backtrace.
 
 (This is the most simple example command, use the `-h` option of the `backtrace.sh` script to see more combinations)
 
-## Kernel Panics in QEMU
+## Kill A Frozen Redox VM
 
-If you receive a kernel panic in QEMU, capture a screenshot and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).
-
-### Kill the Frozen QEMU Process
-
-Run:
+Sometimes Redox can freeze or rarely get a kernel panic, to kill the QEMU process run this command:
 
 ```sh
 pkill qemu-system
 ```
+
+## Kernel Panics in QEMU
+
+If you get a kernel panic in QEMU, copy the terminal text or capture a screenshot and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).
+
+## Kernel Panics in Real Hardware
+
+If you get a kernel panic in real hardware, capture a photo and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).

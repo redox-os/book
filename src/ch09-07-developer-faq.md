@@ -61,7 +61,10 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions and answers of n
         - [When I run "make r.recipe" I get a syntax error, how can I fix that?](#when-i-run-make-rrecipe-i-get-a-syntax-error-how-can-i-fix-that)
         - [When I run "cargo update" on some recipe source it call Rustup to install other Rust toolchain version, how can I fix that?](#when-i-run-cargo-update-on-some-recipe-source-it-call-rustup-to-install-other-rust-toolchain-version-how-can-i-fix-that)
     - [QEMU](#qemu)
-        - [How can I kill a frozen QEMU process after a kernel panic?](#how-can-i-kill-a-frozen-qemu-process-after-a-kernel-panic)
+        - [How can I kill the QEMU process if Redox freezes or get a kernel panic?](#how-can-i-kill-the-qemu-process-if-redox-freezes-or-get-a-kernel-panic)
+    - [Real Hardware](#real-hardware)
+        - [I got a kernel panic, what can I do?](#i-got-a-kernel-panic-what-can-i-do)
+        - [Some driver is not working with my hardware, what can I do?](#some-driver-is-not-working-with-my-hardware-what-can-i-do)
 
 ## General Questions
 
@@ -354,6 +357,16 @@ It will import the Redox Makefile environment variables to your active shell (it
 
 ### QEMU
 
-#### How can I kill a frozen QEMU process after a kernel panic?
+#### How can I kill the QEMU process if Redox freezes or get a kernel panic?
 
-- Read [this](./ch08-05-troubleshooting.md#kill-the-frozen-qemu-process) section.
+- Read [this](./ch08-05-troubleshooting.md#kill-a-frozen-redox-vm) section.
+
+### Real Hardware
+
+#### I got a kernel panic, what can I do?
+
+Read [this](./ch08-05-troubleshooting.md#kernel-panics-in-real-hardware) section.
+
+#### Some driver is not working with my hardware, what can I do?
+
+Read [this](./ch08-05-troubleshooting.md#debug-methods) section and ask us for instructions in the [Matrix chat](./ch13-01-chat.md).
