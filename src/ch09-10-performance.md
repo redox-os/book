@@ -20,6 +20,8 @@ The steps below are for profiling on `x86_64`, running in `QEMU`. It is possible
 
 ```sh
 cargo install redox-kprofiling
+```
+```sh
 cargo install inferno
 ```
 
@@ -35,9 +37,10 @@ cargo install inferno
 ```
 
 6. You need to enable the `profiling` feature for the kernel. This can be done two ways, either in `recipe.toml` or in `source/Cargo.toml`. For `recipe.toml`, add the line `--features profiling \` to the `cargo` command. (The backslash is needed to continue the command.)
+
 ```sh
 cargo rustc \
-	--bin kernel \
+    --bin kernel \
     --features profiling \ <- Add this line
     ...
 ```
@@ -54,6 +57,7 @@ default = ["profiling", ...]
 8. The profiling code is written primarily for QEMU, but for real hardware, consider commenting out the `serio_command` code in `profiling.rs`, which is to enable or disable profiling.
 
 9. In your first terminal window, from the `redox` directory, create the filesystem config `config/x86_64/my_profiler.toml` with the following content.
+
 ```toml
 # General settings
 [general]
@@ -111,10 +115,16 @@ QEMU_MEM=8192
 ```sh
 # Create a directory for your data
 mkdir my_profile_data
+```
+```sh
 # Make the Redox filesystem accessible at the path based on CONFIG_NAME
 make mount
+```
+```sh
 # Copy the profiling data from the Redox image to your directory
 cp build/x86_64/my_profiler/filesystem/root/profiling.txt my_profiler_data
+```
+```sh
 # Important - unmount the Redox filesystem
 make unmount
 ```
@@ -123,6 +133,8 @@ make unmount
 
 ```sh
 cd my_profiler_data
+```
+```sh
 nm -CS ../cookbook/recipes/core/kernel/target/x86_64-unknown-redox/build/kernel > kernel_syms.txt
 ```
 
