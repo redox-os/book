@@ -81,6 +81,7 @@
   - [Developer FAQ](./ch09-07-developer-faq.md)
   - [References](./ch09-08-references.md)
   - [Continuous Integration](./ch09-09-ci.md)
+  - [Performance](./ch09-10-performance.md)
 
 - [Contributing](./ch10-00-contributing.md)
 
