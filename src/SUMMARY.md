@@ -80,6 +80,7 @@
   - [Libraries and APIs](./ch09-06-libraries-apis.md)
   - [Developer FAQ](./ch09-07-developer-faq.md)
   - [References](./ch09-08-references.md)
+  - [Continuous Integration](./ch09-09-ci.md)
 
 - [Contributing](./ch10-00-contributing.md)
 
