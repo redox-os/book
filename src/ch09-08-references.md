@@ -72,6 +72,7 @@ If you want to implement something (drivers, hardware interfaces, fix bugs, etc)
 
 ### Computer Science
 
+- [Putting the "You" in CPU](https://cpu.land/) - This website explains how a program works, from the system call to the CPU.
 - [GeeksforGeeks](https://www.geeksforgeeks.org/) - A computer science portal with many articles for several areas and tasks.
 - [computer-science](https://github.com/ossu/computer-science) - A list for computer science education.
 - [Developer Roadmaps - Computer Science](https://roadmap.sh/computer-science) - A guide to learn computer science.
