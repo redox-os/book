@@ -235,41 +235,41 @@ In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. 
 
 ### Test Your Changes (out of the Redox build system)
 
-[Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) is the tool used to build/run Rust programs (and C/C++ programs with zero dependencies) for Redox, it download the Redox toolchain and make Cargo use it.
+[Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) is the tool used to build and run Rust programs (and C/C++ programs with zero dependencies) for Redox, it download the Redox toolchain and use Cargo.
 
 #### Commands
 
-- Install `redoxer` tool
+- Install the tool
 
 ```sh
 cargo install redoxer
 ```
 
-- Install `redoxer` toolchain
+- Install the Redox toolchain
 
 ```sh
 redoxer toolchain
 ```
 
-- Build project with `redoxer`
+- Build the Rust program or library with Redoxer
 
 ```sh
 redoxer build
 ```
 
-- Run project with `redoxer`
+- Run the Rust program on Redox
 
 ```sh
 redoxer run
 ```
 
-- Test project with `redoxer`
+- Test the Rust program or library with Redoxer
 
 ```sh
 redoxer test
 ```
 
-- Run arbitrary executable (`echo hello`) with `redoxer`
+- Run arbitrary executable (`echo hello`) with Redoxer
 
 ```sh
 redoxer exec echo hello
