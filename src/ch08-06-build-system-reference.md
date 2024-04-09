@@ -235,14 +235,14 @@ scripts/pkg-size.sh recipe-name
 ```
 
 - `scripts/dual-boot.sh` - Install Redox in the free space of your storage device and add a boot entry (if you are using the [systemd-boot](https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/) boot loader).
-- `scripts/ventoy.sh` - [Ventoy](https://www.ventoy.net/en/index.html) will build and copy the Redox image to an USB device.
+- `scripts/ventoy.sh` - Create and copy the Redox bootable image to an [Ventoy](https://www.ventoy.net/en/index.html)-formatted device.
 - `scripts/backtrace.sh` - Allow the user to copy a Rust backtrace from Redox and retrieve the symbols (use the `-h` option to show the "Usage" message).
 
 ## Component Separation
 
-- `relibc` - The cross-compiled recipes will link to the relibc of this folder (submodule)
-- `redoxfs` - The FUSE driver of RedoxFS (submodule, to run on Linux)
-- `cookbook/recipes/relibc` - The relibc package to be installed inside of Redox for static or dynamic linking (recipe, for native compilation)
+- `relibc` - The cross-compiled recipes will link to the relibc of this folder (build system submodule)
+- `redoxfs` - The FUSE driver of RedoxFS (build system submodule, to run on Linux)
+- `cookbook/recipes/relibc` - The relibc recipe to be installed inside of Redox for static or dynamic linking of binaries (for native compilation)
 - `cookbook/recipes/redoxfs` - The RedoxFS user-space daemon that run inside of Redox (recipe)
 
 ## Crates
@@ -253,9 +253,12 @@ Some Redox projects have crates on `crates.io`, thus they use a version-based de
 
 - [libredox](https://crates.io/crates/libredox)
 - [redox_syscall](https://crates.io/crates/redox_syscall)
+- [redox-path](https://crates.io/crates/redox-path)
+- [redox-scheme](https://crates.io/crates/redox-scheme)
 - [redoxfs](https://crates.io/crates/redoxfs)
 - [redoxer](https://crates.io/crates/redoxer)
 - [redox_installer](https://crates.io/crates/redox_installer)
+- [redox-kprofiling](https://crates.io/crates/redox-kprofiling)
 - [redox-users](https://crates.io/crates/redox_users)
 - [redox-buffer-pool](https://crates.io/crates/redox-buffer-pool)
 - [redox_log](https://crates.io/crates/redox-log)
