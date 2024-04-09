@@ -21,6 +21,9 @@ You can obtain a *livedisk* ISO image either by downloading the [latest release]
 sha256sum $HOME/Downloads/redox_demo_x86_64*_livedisk.iso
 ```
 
+If the latest release doesn't work you can also try the [weekly images](https://static.redox-os.org/img/).
+
+
 ### Linux Instructions
 
 We recommend that you use the [Popsicle](https://github.com/pop-os/popsicle) tool on Linux to flash your USB device, follow the steps below:
