@@ -18,13 +18,17 @@ The last step is to adapt our Mesa3D [fork](https://gitlab.redox-os.org/redox-os
 
 ### Accelerated Graphics
 
-We don't have GPU drivers yet but [LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html) (OpenGL CPU emulation) and VirtIO (2D/3D accleration from/for a virtual machine) is working.
+We don't have GPU drivers yet but [LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html) (OpenGL CPU emulation) and VirtIO (2D accleration for a virtual machine) is working.
 
 ## Orbital
 
 The Orbital desktop environment provides a display server, window manager and compositor.
 
-- The display server is more simple than X11 and Wayland, making the porting task more quick and easy.
+### Comparison with X11/Wayland
+
+This display server is more simple than X11 and Wayland making the porting task more quick and easy, it's not advanced like X11 and Wayland yet but enough to port most Linux/BSD programs.
+
+Compared to Wayland, Orbital has one server implementation, while Wayland provide protocols for compositors.
 
 ### Features
 
@@ -45,9 +49,20 @@ The programs written with these libraries can run on Orbital.
 - SDL2
 - winit
 - softbuffer
-- Slint (use winit/softbuffer)
-- Iced (use winit/softbuffer)
+- Slint (through winit and softbuffer)
+- Iced (through winit and softbuffer)
 - egui (can use winit or SDL2)
+
+### Clients
+
+Apps (or 'clients') create a window and draw to it by using the [orbclient](https://gitlab.redox-os.org/redox-os/orbclient)
+client.
+
+#### Client Examples
+
+If you wish to see examples of client apps that use [orbclient](https://gitlab.redox-os.org/redox-os/orbclient)
+to "talk" to Orbital and create windows and draw to them, then you can find some in [orbclient/examples](https://gitlab.redox-os.org/redox-os/orbclient/-/tree/master/examples)
+folder.
 
 ### Porting
 

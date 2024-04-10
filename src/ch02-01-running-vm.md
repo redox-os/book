@@ -1,14 +1,10 @@
 # Running Redox in a virtual machine
 
-- [Download the bootable images](#download-the-bootable-images)
-    - [Normal Releases](#normal-releases)
-    - [Weekly Images](#weekly-images)
-- [Linux Instructions](#linux-instructions)
-- [Windows Instructions](#windows-instructions)
-
 ## Download the bootable images
 
-### Normal Releases
+This section will guide you to download the Redox images.
+
+### Stable Releases
 
 The bootable images for Redox 0.8.0 are located [here](https://static.redox-os.org/releases/0.8.0/x86_64/). To try Redox using a virtual machine such as QEMU or VirtualBox, download the [demo](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_harddrive.img) variant, check the [SHA256 sum](https://static.redox-os.org/releases/0.8.0/x86_64/SHA256SUM) to ensure it has downloaded correctly.
 
@@ -20,11 +16,11 @@ If you have more than one `.img` file in the `Downloads` directory, you may need
 
 You can also try the `server`, `desktop` and `desktop-minimal` variants.
 
-(If they doesn't work, try the weekly images)
+(If this version doesn't boot on your virtual machine program, use the weekly images below)
 
 ### Weekly Images
 
-If you want to test the latest Redox changes you can use our bootable images created each week by opening [this](https://static.redox-os.org/img/x86_64/) link and downloading your preferred variant.
+If you want to test the latest Redox changes you can use our bootable images created each week by opening [this](https://static.redox-os.org/img) link and downloading your preferred variant.
 
 ## Linux Instructions
 
