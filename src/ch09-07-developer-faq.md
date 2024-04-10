@@ -365,7 +365,7 @@ It will import the Redox Makefile environment variables to your active shell (it
 
 #### I got a kernel panic, what can I do?
 
-Read [this](./ch08-05-troubleshooting.md#kernel-panics-in-real-hardware) section.
+Read [this](./ch08-05-troubleshooting.md#kernel-panic) section.
 
 #### Some driver is not working with my hardware, what can I do?
 

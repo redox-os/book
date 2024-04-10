@@ -34,4 +34,4 @@ The main idea is to have system components and drivers that would be inside a mo
 - Doesn't have Admin/Super-User privileges
   - Bugs are moved to user-space which reduces their power
 
-All of this increases the reliability of the system significantly. This is useful for mission-critical applications and for users that want minimal issues with their computers.
+All of this increases the reliability of the system significantly. This is important for users that want minimal issues with their computers or mission-critical applications.

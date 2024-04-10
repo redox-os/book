@@ -23,8 +23,9 @@ In case you need to do some troubleshooting of the build process, this is a brie
     - [Recipes](#recipes)
         - [Rust](#rust)
 - [Kill A Frozen Redox VM](#kill-a-frozen-redox-vm)
-- [Kernel Panics in QEMU](#kernel-panics-in-qemu)
-- [Kernel Panics in Real Hardware](#kernel-panics-in-real-hardware)
+- [Kernel Panic](#kernel-panic)
+    - [QEMU](#qemu)
+    - [Real Hardware](#real-hardware)
 
 ## Setting Up
 
@@ -348,10 +349,23 @@ Sometimes Redox can freeze or rarely get a kernel panic, to kill the QEMU proces
 pkill qemu-system
 ```
 
-## Kernel Panics in QEMU
+## Kernel Panic
+
+A kernel panic is when some bug avoid the safe execution of the kernel code, thus the system needs to be restarted to avoid data corruption.
+
+We use the following kernel panic message format:
+
+```
+KERNEL PANIC: panicked at some-path/file-name.rs:line-number:line-number:
+the panic description goes here
+```
+
+You can use the `grep` tool to search it in a big log.
+
+### QEMU
 
 If you get a kernel panic in QEMU, copy the terminal text or capture a screenshot and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).
 
-## Kernel Panics in Real Hardware
+### Real Hardware
 
 If you get a kernel panic in real hardware, capture a photo and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).

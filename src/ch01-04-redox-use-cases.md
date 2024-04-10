@@ -6,15 +6,15 @@ Redox is a general-purpose operating system that can be used in many situations.
 
 Redox has the potential to be a secure server platform for cloud services and web hosting. The improved safety and reliability that Redox can provide, as it matures, makes it an excellent fit for the server world. Work remains to be done on support for important server technologies such as databases and web servers, as well as compatibility with high-end server hardware.
 
-Redox has plans underway for [virtualization](https://en.wikipedia.org/wiki/OS-level_virtualization) support. Although running an instance of Linux in a container on Redox will lose some of the benefits of Redox, it can limit the scope of vulnerabilities. Redox-on-Redox and Linux-on-Redox virtualization have the potential to be much more secure than Linux-on-Linux. These capabilities are still a ways off, but are among the objectives for the Redox team.
+Redox has plans underway for [virtualization](https://en.wikipedia.org/wiki/OS-level_virtualization) support. Although running an instance of Linux in a container on Redox will lose some of the benefits of Redox, it can limit the scope of vulnerabilities. Redox-on-Redox and Linux-on-Redox virtualization have the potential to be much more secure than Linux-on-Linux. These capabilities are still a ways off, but are among the goals of the Redox team.
 
 ## Desktop
 
-The development of Redox for the desktop is well underway. Although support for accelerated graphics is limited at this time, Redox does include a graphical user interface, and integration with Rust-written GUI libraries like [winit](https://github.com/rust-windowing/winit), [Iced](https://iced.rs/) and [Slint](https://slint-ui.com/) are ongoing efforts.
+The development of Redox for the desktop is well underway. Although support for accelerated graphics is limited at this time, Redox does include a graphical user interface, and support on Rust-written GUI libraries like [winit](https://github.com/rust-windowing/winit), [Iced](https://iced.rs/) and [Slint](https://slint-ui.com/).
 
-A Demo version of Redox is available with several games and programs to try. However, the most important objective for desktop is to host the development of Redox. We are working through issues with some of our build tools, and other developer tools such as editors have not been tested under daily use, but we continue to make this a priority.
+A demo version of Redox is available with several games and programs to try. However, the most important objective for desktop is to host the development of Redox. We are working through issues with some of our build tools, and other developer tools such as editors have not been tested under daily use, but we continue to make this a priority.
 
-Due to a fairly limited list of currently supported hardware, once self-hosted development is available, developers may need to obtain a Redox-specific development machine. We are adding more hardware compatibility as quickly as we can, and we hope to be able to support Redox development on a wide array of desktops and notebooks in the near future.
+Due to a fairly limited list of currently supported hardware, once self-hosted development is available the development can be done inside of Redox with more quick testing. We are adding more hardware compatibility as quickly as we can, and we hope to be able to support the development on a wide array of desktops and notebooks in the near future.
 
 ## Infrastructure
 
