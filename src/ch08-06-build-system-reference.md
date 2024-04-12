@@ -413,49 +413,7 @@ You can see what TOML supports on [this](https://toml.io/en/v1.0.0) website.
 
 ### Filesystem Customization
 
-The Redox image can be customized from the configuration files at `config/your-cpu/*.toml`, select some variant and create a copy for it (for example `desktop-test.toml`, it's a copy of `desktop.toml`).
-
-(The configuration files at `config/your-cpu` can override the data type values from the filesystem templates at `config`)
-
-You can learn how to configure the `desktop-test.toml` below:
-
-- Crate the `desktop-test.toml` file:
-
-```sh
-cd config/your-cpu
-cp desktop.toml desktop-test.toml
-```
-
-- Add this to your `.config` file:
-
-```
-CONFIG_NAME?=desktop-test
-```
-
-You can customize many things of your filesystem configuration, verify the templates on the `config` folder for reference.
-
-In the example below we will add the `acid` recipe on the `desktop-test.toml` configuration.
-
-- Open the `desktop-test.toml` file:
-
-```sh
-nano config/your-cpu/desktop-test.toml
-```
-
-- Add the `[packages]` section and the `acid` recipe:
-
-```toml
-[packages]
-acid = {}
-```
-
-- Build the `acid` recipe and create a new Redox image:
-
-```sh
-make r.acid image
-```
-
-Done, the `acid` recipe is inside your Redox image.
+Read [this](./ch02-07-configuration-settings.md#filesystem-customization) section.
 
 ## Cross-Compilation
 
@@ -471,7 +429,7 @@ The recipes produce Redox-specific executables. At the end of the build process,
 
 The `relibc` (Redox C Library) provides the Redox [system calls](https://docs.rs/redox_syscall/latest/syscall/) to any software.
 
-- [OSDev article on cross-compiling](https://wiki.osdev.org/Why_do_I_need_a_Cross_Compiler%3F)
+- [OSDev article about cross-compilation](https://wiki.osdev.org/Why_do_I_need_a_Cross_Compiler%3F)
 
 ## Build Phases
 
