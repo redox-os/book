@@ -6,7 +6,7 @@ Some programs are interpreted by a runtime for the program's language, such as a
 
 - In Redox, the binaries use the standard [ELF](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format) ("Executable and Linkable Format") format.
 
-Programs could directly invoke Redox syscalls, but most call library functions that are higher-level and more comfortable to use. You link your program with the libraries it needs.
+Programs could directly invoke Redox system calls, but most call library functions that are higher-level and more comfortable to use. You link your program with the libraries it needs.
 
 - Most C/C++ programs call functions in a [C Standard Library](https://en.wikipedia.org/wiki/C_standard_library) (libc) such as `fopen`.
 - Redox includes a Rust implementation of the standard C library called [relibc](https://gitlab.redox-os.org/redox-os/relibc/). This is how programs such as Git and Python can run on Redox. relibc has some [POSIX compatibility](https://en.wikipedia.org/wiki/C_POSIX_library).

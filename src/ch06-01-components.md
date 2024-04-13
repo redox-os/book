@@ -2,35 +2,45 @@
 
 Redox is made up of several discrete components. 
 
-### Core
+## Core
 
-- ion - shell
-- redoxfS - filesystem
-- kernel
-- drivers
-- orbital - desktop environment
+- bootloader - Kernel bootstrap
+- kernel - System manager
+- bootstrap - User-space bootstrap
+- init
+- initfs
+- drivers - Device drivers
+- redoxfS - Filesystem
+- audiod - Audio daemon
+- netstack - TCP/UDP stack
+- ps2d - PS/2 driver
+- relibc - Redox C library
+- randd
+- zerod
+- ion - Shell
+- orbital - Desktop environment
 
-### Orbital subcomponents
+## Orbital
 
-- orbterm - terminal
-- orbdata - images, fonts, etc.
-- orbaudio - audio
-- orbutils - bunch of applications
-- orblogin - login prompt
-- orbtk - cross-platform Rust GUI toolkit, similar to GTK
-- orbfont - font rendering library
-- orbclient - display client
-- orbimage - image rendering library 
+- orbterm - Terminal
+- orbdata - Images, fonts, etc.
+- orbaudio - Audio
+- orbutils - Bunch of applications
+- orblogin - Login prompt
+- orbfont - Font rendering library
+- orbclient - Display client
+- orbimage - Image rendering library 
+- orbtk - Cross-platform Rust GUI toolkit, similar to GTK
 
-### Default Programs
+## Default Programs
 
-- sodium - text editor
+- sodium - Text editor
 - orbutils
-  - background
+  - background - Wallpaper program
   - browser
-  - calculator
-  - character map
-  - editor
+  - calculator - Math program
+  - character map - Characters list
+  - editor - Text Editor
   - file manager
-  - launcher
-  - viewer
+  - launcher - Program menu
+  - viewer - Image viewer

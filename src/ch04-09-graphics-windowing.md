@@ -2,23 +2,23 @@
 
 ## Drivers
 
-### vesad (VESA)
+### VESA (vesad)
 
-It's not really a driver, it writes to a framebuffer given by firmware (via UEFI or BIOS software interrupts).
+vesad is not really a driver, it writes to a framebuffer given by firmware (via UEFI or BIOS software interrupts).
 
 Because we don't have GPU drivers yet, we rely on what firmware gives to us.
 
-### GPU drivers
+### GPUs
 
 On Linux/BSDs, the GPU communication with the kernel is done by the DRM system (Direct Renderig Manager, `libdrm` library), that Mesa3D drivers use to work (Mesa3D implement OpenGL/Vulkan drivers, DRM expose the hardware interfaces).
 
 Said this, on Redox the GPU driver needs to be an user-space daemon which use the system calls/schemes to talk with the hardware.
 
-The last step is to adapt our Mesa3D [fork](https://gitlab.redox-os.org/redox-os/mesa)/[recipe](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/mesa/recipe.toml) to use these user-space daemons.
+The last step is to implement the Redox backend in our Mesa3D [fork](https://gitlab.redox-os.org/redox-os/mesa)/[recipe](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/mesa/recipe.toml) to use these user-space daemons.
 
-### Accelerated Graphics
+## Software Rendering
 
-We don't have GPU drivers yet but [LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html) (OpenGL CPU emulation) and VirtIO (2D accleration for a virtual machine) is working.
+We don't have GPU drivers yet but [LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html) (OpenGL CPU emulation) and [VirtIO](https://docs.kernel.org/driver-api/virtio/virtio.html) (2D accleration for a virtual machine) is working.
 
 ## Orbital
 

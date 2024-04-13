@@ -2,7 +2,7 @@
 
 The desktop environment of Redox (Orbital) is provided by a set of programs that run in user-space.
 
-- Orbital - The Orbital display and window manager sets up the `orbital:` scheme, manages the display, and handles requests for window creation, redraws, and event polling.
+- Orbital - The display server and window manager sets up the `orbital:` scheme, manages the display, and handles requests for window creation, redraws, and event polling.
 - Launcher - The launcher multi-purpose program that scans the applications in the `/apps/` directory and provides the following services:
 
     - Called Without Arguments - A taskbar that displays icons for each application
@@ -19,4 +19,4 @@ The following are GUI utilities that can be found in the `/apps/` directory.
 - File Browser - A file browser that displays icons, names, sizes, and details for files. It uses the `launcher` command to open files when they are clicked.
 - Image Viewer - A simple image viewer.
 - Sodium - A vi-like editor that provides syntax highlighting.
-- Terminal Emulator - An ANSI terminal emulator that launches `sh` by default.
+- Terminal Emulator - An ANSI terminal emulator that launches the Ion shell by default.

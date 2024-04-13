@@ -7,7 +7,7 @@ This page covers the current Redox security mechanisms.
 - Each process has a namespace.
 - [Capabilities](https://en.wikipedia.org/wiki/File_descriptor#File_descriptors_as_capabilities) are customized file descriptors that carry specific actions.
 
-### Sandbox
+## Sandbox
 
 Redox allows limiting a program's capabilities and thus allows sandboxing, by:
 

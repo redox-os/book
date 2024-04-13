@@ -4,7 +4,7 @@
 
 Coreutils is a collection of basic command line utilities included with Redox (or with Linux, BSD, etc.). This includes programs like `ls`, `cp`, `cat` and various other tools necessary for basic command line interaction.
 
-Redox's coreutils aim to be more minimal than, for instance, the GNU coreutils included with most Linux systems.
+Redox use the Rust implementation of the GNU Coreutils, [uutils](https://github.com/uutils/coreutils).
 
 Available programs:
 
@@ -39,7 +39,7 @@ Available programs:
 
 Userutils contains the utilities for dealing with users and groups in Redox OS.
 
-They are heavily influenced by UNIX and are, when needed, tailored to specific Redox use cases.
+They are heavily influenced by Unix and are, when needed, tailored to specific Redox use cases.
 
 These implementations strive to be as simple as possible drawing particular
 inspiration by BSD systems. They are indeed small, by choice.
@@ -102,12 +102,12 @@ This program provides containers (namespaces) on Redox.
 
 ### acid
 
-The stress test suite of Redox to detect crashes/bugs.
+The general-purpose test suite of Redox to detect crashes, regressions and race conditions.
 
 - [Repository](https://gitlab.redox-os.org/redox-os/acid)
 
 ### resist
 
-The POSIX test suite of Redox to see how much % the system is compliant to the [POSIX](https://en.wikipedia.org/wiki/POSIX) specification (more means better software portability).
+The POSIX test suite of Redox to see how much % the system is compliant to the [POSIX](https://en.wikipedia.org/wiki/POSIX) specification (more means better compatibility).
 
 - [Repository](https://gitlab.redox-os.org/redox-os/resist)
