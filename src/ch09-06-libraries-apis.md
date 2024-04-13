@@ -5,7 +5,7 @@ This page will cover the context of the libraries and APIs on Redox.
 - [Versions](#versions)
     - [Redox](#redox)
     - [Providing a Stable ABI](#providing-a-stable-abi)
-- [Interfaces]
+- [Interfaces](#interfaces)
     - [relibc](#relibc)
     - [libredox](#libredox)
     - [redox_syscall](#redox_syscall)
@@ -103,7 +103,7 @@ To ensure portability of programs, Redox supports the Rust `std` crate, for Redo
 
 Redox-specific code can be found on [this](https://github.com/rust-lang/rust/tree/master/library/std/src/os/redox) repository.
 
-For most functionality, Redox uses `#[cfg(unix)]` and [sys/unix](https://github.com/rust-lang/rust/tree/master/library/std/src/sys/unix).
+For most functionality, Redox uses `#[cfg(unix)]` and [sys/unix](https://github.com/rust-lang/rust/tree/master/library/std/src/sys/pal/unix).
 
 Some Redox-specific functionality is enabled by `#[cfg(target_os = "redox")]`.
 
