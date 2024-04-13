@@ -2,32 +2,33 @@
 
 (Before reading this page you must read the [Build System Quick Reference](./ch08-06-build-system-reference.md) page)
 
-- [Existing package](#existing-package)
-  - [Set up the Redox Build Environment](#set-up-the-redox-build-environment)
-  - [Set up your Configuration](#set-up-your-configuration)
+This page will teach you how to add programs on the Redox image, it's a simplified version of the [Porting Applications using Recipes](./ch09-03-porting-applications.md) page.
+
+- [Existing Recipe](#existing-recipe)
+  - [Setup the Redox Build Environment](#setup-the-redox-build-environment)
+  - [Setup Your Configuration](#setup-your-configuration)
   - [Build the System](#build-the-system)
   - [Dependencies](#dependencies)
   - [Update crates](#update-crates)
 - [Using a Script](#using-a-script)
   - [Pre-script](#pre-script)
   - [Post-script](#post-script)
-- [Modifying an Existing Package](#modifying-an-existing-package)
-- [Create your own - Hello World](#create-your-own---hello-world)
+- [Modifying an Existing Recipe](#modifying-an-existing-recipe)
+- [Create Your Own Hello World](#create-your-own-hello-world)
   - [Setting up the recipe](#setting-up-the-recipe)
   - [Writing the program](#writing-the-program)
-  - [Adding the program to the Redox build](#adding-the-program-to-the-redox-build)
+  - [Adding the program to the Redox image](#adding-the-program-to-the-redox-image)
 - [Running your program](#running-your-program)
 
 The Cookbook system makes the packaging process very simple. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./ch09-02-coding-and-building.md), we discuss the development cycle in more detail.
 
 ## Existing Package
 
-Redox has many frequently used packages and programs that are available for inclusion. Each package has a recipe in the directory `cookbook/recipes/packagename`. Adding an existing package to your build is as simple as adding it to `config/$ARCH/myfiles.toml`, or whatever name you choose for your `.toml` configuration definition. Here we will add the `games` package, which contains several low-def games.
+Redox has many programs that are available for inclusion. Each program has a recipe in the directory `cookbook/recipes/recipe-name`. Adding an existing program to your build is as simple as adding it to `config/$ARCH/myfiles.toml`, or whatever name you choose for your `.toml` configuration definition. Here we will add the `games` package, which contains several terminal games.
 
-### Set up the Redox Build Environment
+### Setup the Redox Build Environment
 
-- Follow the steps in [Building Redox](./ch02-05-building-redox.md) or [Podman Build](./ch02-06-podman-build.md) to create the Redox Build Environment on your host computer.
-- Check that `CONFIG_NAME` in `mk/config.mk` is `desktop`.
+- Follow the steps in [Building Redox](./ch02-05-building-redox.md) or [Podman Build](./ch02-06-podman-build.md) to create the Redox Build Environment on your system.
 - Build the system as described. This will take quite a while the first time.
 - Run the system in **QEMU**.
 
@@ -39,16 +40,17 @@ cd ~/tryredox/redox
 make qemu
 ```
 
+Assuming you built the default configuration `desktop` for `x86_64`, none of the Redox games (e.g. `/usr/bin/minesweeper`) have been included yet.
 
-  Assuming you built the default configuration `desktop` for `x86_64`, none of the Redox games (e.g. `/usr/bin/minesweeper`) have been included yet.
 - On your Redox emulation, log into the system as user `user` with an empty password.
 - Open a `Terminal` window by clicking on the icon in the toolbar at the bottom of the Redox screen, and type `ls /usr/bin`. You will see that `minesweeper` **is not** listed.
 - Type `Ctrl-Alt-G` to regain control of your cursor, and click the upper right corner of the Redox window to exit QEMU.
 
-### Set up your Configuration
+### Setup your Configuration
 
-Read through [Configuration Settings](./ch02-07-configuration-settings.md). Then do the following.
-- From your `redox` base directory, copy an existing configuration, then edit it.
+Read the [Configuration Settings](./ch02-07-configuration-settings.md) page and follow the commands below.
+
+- From your `redox` base directory, copy an existing configuration and edit it.
 
 ```sh
 cd ~/tryredox/redox
@@ -64,29 +66,26 @@ nano config/x86_64/myfiles.toml
 
 - Look for the `[packages]` secion and add the package to the configuration. You can add the package anywhere in the `[packages]` section, but by convention, we add them to the end or to an existing related area of the section.
 
-  ```toml
-  ...
-  [packages]
-  ...
-  uutils = {}
+```toml
+...
+[packages]
+# Add the item below under the "[packages]" section
+games = {}
+...
+```
 
-  # Add this line:
-  games = {}
-  ...
-  ```
+- Add the `CONFIG_NAME` environment variable on your [.config](./ch02-07-configuration-settings.md#config) to use the `myfiles.toml` configuration.
 
-- Change your `CONFIG_NAME` in [.config](./ch02-07-configuration-settings.md#config) to refer to your `myfiles.toml` configuration definition.
+```sh
+nano .config
+```
 
-  ```sh
-  nano .config
-  ```
+```
+# Add the item below
+CONFIG_NAME?=myfiles
+```
 
-  ```
-  # Add this line:
-  CONFIG_NAME?=myfiles
-  ```
-
-- Save all your changes and exit the editor.
+- Save your changes with Ctrl+X and confirm with `y`
 
 ### Build the System
 
@@ -115,7 +114,7 @@ make all qemu
 ```
 
 - On your Redox emulation, log into the system as user `user` with an empty password.
-- Open a `Terminal` window by clicking it on the icon in the toolbar at the bottom of the Redox screen, and type `ls /bin`. You will see that `minesweeper` **is** listed.
+- Open a `Terminal` window by clicking it on the icon in the toolbar at the bottom of the Redox screen, and type `ls /usr/bin`. You will see that `minesweeper` **is** listed.
 - In the terminal window, type `minesweeper`. Play the game using the arrow keys or `WSAD`,`space` to reveal a spot, `f` to flag a spot when you suspect a mine is present. When you type `f`, an `F` character will appear.
 
 If you had a problem, use this command to log any possible errors on your terminal output:
@@ -128,130 +127,42 @@ And that's it! Sort of.
 
 ### Dependencies
 
-The majority of Rust programs use crates without C/C++ dependencies (Build Instructions without Linux distribution packages), on these cases you just need to port the necessary crates (if they give errors) or implement missing stuff on `relibc` (you will need to update the Rust `libc` crate).
-
-If the "Build Instructions" of the Rust program have Linux distribution packages to install, it's a mixed Rust/C/C++ program, read [Dependencies](./ch09-03-porting-applications.md#dependencies) to port these programs.
+Read [this](./ch09-03-porting-applications.md#dependencies) section to learn how to handle recipe dependencies.
 
 ### Update crates
 
-In some cases the `Cargo.lock` of some Rust program can have a version of some crate that don't have Redox patches (old) or broken Redox support (changes on code that make the target OS fail), this will give you an error during the recipe compilation.
+Read [this](./ch09-03-porting-applications.md#update-crates) to learn how to update crates on Rust programs.
 
-- [Update crates](./ch09-03-porting-applications.md#update-crates)
+## Modifying an Existing Recipe
 
-## Using a Script
+If you want to make changes to an existing recipe for your own purposes, you can do your work in the directory `cookbook/recipes/recipe-name/source`. The Cookbook process will not download sources if they are already present in that folder. However, if you intend to do significant work or to contribute changes to Redox, please read the [Coding and Building](./ch09-02-coding-and-building.md) page.
 
-The "script" template type executes shell commands. However, in order to keep scripts small, a lot of the script definition is done for you. [Pre-script](#pre-script) goes before your `script` content, and [Post-script](#post-script) goes after.
+## Create Your Own Hello World
 
-### Pre-script
+To create your own program to be included, you will need to create the recipe. This example walks through adding the "Hello World" program that the `cargo new` command automatically generates to the folder of a Rust project.
 
-```
-# Add cookbook bins to path
-export PATH="${COOKBOOK_ROOT}/bin:${PATH}"
+This process is largely the same for other Rust programs.
 
-# This puts cargo build artifacts in the build directory
-export CARGO_TARGET_DIR="${COOKBOOK_BUILD}/target"
+### Setting Up The Recipe
 
-# This adds the sysroot includes for most C compilation
-#TODO: check paths for spaces!
-export CFLAGS="-I${COOKBOOK_SYSROOT}/include"
-export CPPFLAGS="-I${COOKBOOK_SYSROOT}/include"
-
-# This adds the sysroot libraries and compiles binaries statically for most C compilation
-#TODO: check paths for spaces!
-export LDFLAGS="-L${COOKBOOK_SYSROOT}/lib --static"
-
-# These ensure that pkg-config gets the right flags from the sysroot
-export PKG_CONFIG_ALLOW_CROSS=1
-export PKG_CONFIG_PATH=
-export PKG_CONFIG_LIBDIR="${COOKBOOK_SYSROOT}/lib/pkgconfig"
-export PKG_CONFIG_SYSROOT_DIR="${COOKBOOK_SYSROOT}"
-
-# cargo template
-COOKBOOK_CARGO="${COOKBOOK_REDOXER}"
-COOKBOOK_CARGO_FLAGS=(
-    --path "${COOKBOOK_SOURCE}"
-    --root "${COOKBOOK_STAGE}"
-    --locked
-    --no-track
-)
-function cookbook_cargo {
-    "${COOKBOOK_CARGO}" install "${COOKBOOK_CARGO_FLAGS[@]}"
-}
-
-# configure template
-COOKBOOK_CONFIGURE="${COOKBOOK_SOURCE}/configure"
-COOKBOOK_CONFIGURE_FLAGS=(
-    --host="${TARGET}"
-    --prefix=""
-    --disable-shared
-    --enable-static
-)
-COOKBOOK_MAKE="make"
-COOKBOOK_MAKE_JOBS="$(nproc)"
-function cookbook_configure {
-    "${COOKBOOK_CONFIGURE}" "${COOKBOOK_CONFIGURE_FLAGS[@]}"
-    "${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}"
-    "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}"
-}
-```
-
-### Post-script
-
-```
-# Strip binaries
-if [ -d "${COOKBOOK_STAGE}/usr/bin" ]
-then
-    find "${COOKBOOK_STAGE}/usr/bin" -type f -exec "${TARGET}-strip" -v {} ';'
-fi
-
-# Remove libtool files
-if [ -d "${COOKBOOK_STAGE}/usr/lib" ]
-then
-    find "${COOKBOOK_STAGE}/usr/lib" -type f -name '*.la' -exec rm -fv {} ';'
-fi
-
-# Remove cargo install files
-for file in .crates.toml .crates2.json
-do
-    if [ -f "${COOKBOOK_STAGE}/${file}" ]
-    then
-        rm -v "${COOKBOOK_STAGE}/${file}"
-    fi
-done
-```
-
-## Modifying an Existing Package
-
-If you want to make changes to an existing Redox package for your own purposes, you can do your work in the directory `cookbook/recipes/PACKAGE/source`. The cookbook process will not fetch sources if they are already present in that folder. However, if you intend to do significant work or to contribute changes to Redox, please follow [Coding and Building](./ch09-02-coding-and-building.md).
-
-## Create your own - Hello World
-
-To create your own program to be included, you will need to create the recipe. This example walks through adding the "hello world"
-program that `cargo new` automatically generates to a local build of the operating system.
-
-This process is largely the same for other Rust crates and even non-Rust programs.
-
-### Setting up the recipe
-
-The cookbook will only build programs that have a recipe defined in
-`cookbook/recipes`. To create a recipe for Hello World, first create a
-directory `cookbook/recipes/helloworld`. Inside this directory create a file
-`recipe.toml` and add these lines to it:
+The Cookbook will only build programs that have a recipe defined in
+`cookbook/recipes`. To create a recipe for the Hello World program, first create the directory `cookbook/recipes/hello-world`. Inside this directory create the "recipe.toml" file and add these lines to it:
 
 ```toml
 [build]
 template = "cargo"
 ```
 
-The `[build]` section defines how cookbook should build our project. There are
+The `[build]` section defines how Cookbook should build our project. There are
 several templates but `"cargo"` should be used for Rust projects.
 
-The `[source]` section of the recipe tells Cookbook how fetch the sources for a program from a git or tarball URL.
-This is done if `cookbook/recipes/PACKAGE/source` does not exist, during `make fetch` or during the fetch step of `make all`. For this example, we will simply develop in the `source` directory, so no `[source]` section is necessary.
+The `[source]` section of the recipe tells Cookbook how to download the Git repository/tarball of the program.
+
+This is done if `cookbook/recipes/recipe-name/source` does not exist, during `make fetch` or during the fetch step of `make all`. For this example, we will simply develop in the `source` directory, so no `[source]` section is necessary.
 
 ### Writing the program
 
-Since this is a Hello World example, we are going to have Cargo write the code for us. In `cookbook/recipes/helloworld`, do the following:
+Since this is a Hello World example, we are going to have Cargo write the code for us. In `cookbook/recipes/hello-world`, do the following:
 
 ```sh
 mkdir source
@@ -262,33 +173,31 @@ cd source
 ```
 
 ```sh
-cargo init --name="helloworld"
+cargo init --name="hello-world"
 ```
 
 This creates a `Cargo.toml` file and a `src` directory with the Hello World program.
 
-### Adding the program to the Redox build
+### Adding the program to the Redox image
 
-To be able to access a program from within Redox, it must be added to the
-filesystem. As [above](#existing-package), create a filesystem config `config/x86_64/myfiles.toml` or similar by copying an existing configuration, and modify `CONFIG_NAME` in [.config](./ch02-07-configuration-settings.md#config) to be `myfiles`. Open `config/x86_64/myfiles.toml` and add `helloworld = {}` to the `[packages]` section.
+To be able to run a program inside of Redox, it must be added to the filesystem. As [above](#existing-package), create a filesystem config `config/x86_64/myfiles.toml` or similar by copying an existing configuration, and modify `CONFIG_NAME` in [.config](./ch02-07-configuration-settings.md#config) to be `myfiles`. Open `config/x86_64/myfiles.toml` and add `hello-world = {}` below the `[packages]` section.
+
 During the creation of the Redox image, the build system installs those packages on the image filesystem.
 
 ```toml
 [packages]
-userutils = {}
-...
-# Add this line:
-helloworld = {}
+# Add the item below
+hello-world = {}
 ```
 
-Then, to build the Redox image, including your program, go to your `redox` base directory and run `make rebuild`.
+To build the Redox image, including your program, run the following commands:
 
 ```sh
 cd ~/tryredox/redox
 ```
 
 ```sh
-make rebuild
+make r.hello-world image
 ```
 
 ## Running your program
@@ -299,5 +208,4 @@ Once the rebuild is finished, run `make qemu`, and when the GUI starts, log in t
 Hello, world!
 ```
 
-Note that the `helloworld` binary can be found in `/usr/bin` on Redox.
-
+Note that the `hello-world` binary can be found in `/usr/bin` on Redox.
