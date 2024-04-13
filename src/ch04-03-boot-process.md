@@ -1,14 +1,16 @@
 # Boot Process
 
-## Bootloader
+## Boot Loader
 
-The bootloader source can be found in `cookbook/recipes/bootloader/source` after a successful build, or at https://gitlab.redox-os.org/redox-os/bootloader.
+The boot loader source can be found in `cookbook/recipes/bootloader/source` after a successful build or [here](https://gitlab.redox-os.org/redox-os/bootloader).
 
-### BIOS boot
+### BIOS Boot
 
-The first code to be executed on x86 systems using BIOS is the boot sector, called stage 1, which is written in Assembly, and can be found in `asm/x86-unknown-none/stage1.asm`. This loads the stage 2 bootloader from disk, which is also written in Assembly. This stage switches to 32-bit mode and finally loads the Rust bootloader, called stage 3. These three bootloader stages are combined in one executable written to the first megabyte of the storage device. At this point, the bootloader follows the same common boot process on all boot methods, which can be seen in a later section.
+The first code to be executed on x86 systems using BIOS is the boot sector, called stage 1, which is written in Assembly, and can be found in `asm/x86-unknown-none/stage1.asm`. This loads the stage 2 bootloader from disk, which is also written in Assembly. This stage switches to 32-bit mode and finally loads the Rust-written boot loader, called stage 3. These three boot loader stages are combined in one executable written to the first megabyte of the storage device. At this point, the bootloader follows the same common boot process on all boot methods, which can be seen in a later section.
 
-### EFI boot
+### UEFI Boot
+
+TODO
 
 ### Common boot process
 
@@ -20,15 +22,17 @@ The Redox kernel performs (fairly significant) architecture-specific initializat
 
 ## Init
 
-Redox has a multi-staged init process, designed to allow for the loading of disk drivers in a modular and configurable fashion. This is commonly referred to as an init ramdisk.
+Redox has a multi-staged init process, designed to allow for the loading of disk drivers in a modular and configurable fashion. This is commonly referred to as an init RAMdisk.
 
-### Ramdisk Init
+### RAMdisk Init
 
-The ramdisk init has the job of loading the drivers required to access the root filesystem and then transfer control to the filesystem init. This contains drivers for ACPI, for the framebuffer, and for AHCI, IDE, and NVMe disks. After loading all disk drivers, the RedoxFS driver is executed with the UUID of the partition where the kernel and other boot files were located. It then searches every driver for this partition, and if it is found, mounts it and then allows init to continue.
+The ramdisk init has the job of loading the drivers required to access the root filesystem and then transfer control to the filesystem init. This contains drivers for ACPI, for the framebuffer, and for IDE, SATA, and NVMe disks. After loading all disk drivers, the RedoxFS driver is executed with the UUID of the partition where the kernel and other boot files were located. It then searches every driver for this partition, and if it is found, mounts it and then allows init to continue.
 
 ### Filesystem Init
 
-The filesystem init continues the loading of drivers for all other functionality. This includes audio, networking, and anything not required for disk access. After this, the login prompt is shown and, on desktop configurations, the Orbital display server is launched.
+The filesystem init continues the loading of drivers for all other functionality. This includes audio, networking, and anything not required for disk access. After this, the login prompt is shown.
+
+If Orbital is enabled, the display server is launched.
 
 ## Login
 

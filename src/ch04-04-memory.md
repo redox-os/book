@@ -1,5 +1,5 @@
 # Memory Management
 
-We still need to document our memory system.
+TODO.
 
 - [Memory management documentation](https://wiki.osdev.org/Memory_management)

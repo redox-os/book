@@ -1,3 +1,3 @@
-# The system design of Redox
+# System Design
 
-This chapter will discuss the design of the Redox.
+This chapter will discuss the design of Redox.

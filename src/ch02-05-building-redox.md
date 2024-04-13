@@ -1,18 +1,32 @@
 # Building Redox
 
-Congrats on making it this far! Now we gotta build Redox. This process is for **x86_64** machines. There are also similar processes for [i686](./ch08-03-i686.md) and [AArch64/Arm64](./ch08-04-aarch.md).
+Congrats on making it this far! Now you will build Redox. This process is for **x86-64** machines (Intel/AMD). There are also similar processes for [i686](./ch08-03-i686.md) and [AArch64/Arm64](./ch08-04-aarch.md).
 
 The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox GitLab login, try again later, and if it continues to happen, you can let us know through [chat](./ch13-01-chat.md).
 
-## Supported Distros and Podman Build
+## Supported Unix-like Distributions and Podman Build
 
-This build process for the current release (0.8.0) is for Pop!_OS/Ubuntu/Debian. The recommended build environment for other distros is our [Podman Build](./ch02-06-podman-build.md). Please follow those instructions instead. There is partial support for non-Debian distros in `bootstrap.sh`, but it is not maintained.
+The following Unix-like systems are supported:
+
+- Pop_OS!
+- Ubuntu
+- Debian
+- Fedora
+- Arch Linux
+- OpenSUSE
+- Gentoo (basic support)
+- FreeBSD
+- MacOSX (almost complete)
+- Nix (under develoopment)
+- Solus (basic support, not maintained)
+
+If you have a weird/hard to fix problem, read the [Podman Build](./ch02-06-podman-build.md) page.
 
 ## Preparing the Build
 
 ### Bootstrap Prerequisites And Fetch Sources
 
-If you're on a supported Linux distro, you can just run the bootstrap script, which does the build preparation for you. First, ensure that you have the program `curl` installed:
+If you're on a supported Linux distribution, you can just run the build system bootstrap script, which does the build preparation for you. First, ensure that you have the program `curl` installed:
 
 (This command is for Pop!_OS, Ubuntu or Debian, adjust for your system)
 
@@ -38,35 +52,33 @@ curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o b
 time bash -e bootstrap.sh
 ```
 
-You will be asked to confirm various installations. Answer in the affirmative (*y* or *1* as appropriate).
-The above does the following:
- - installs the program `curl` if it is not already installed
- - creates a parent folder called `tryredox`. Within that folder, it will create another folder called `redox` where all the sources will reside.
- - installs the pre-requisite packages using your operating system's package manager(Pop!_OS/Ubuntu/Debian `apt`, Redhat/Centos/Fedora `dnf`, Arch Linux `pacman`).
- - clones the Redox code from GitLab and checks out a redox-team tagged version of the different subprojects intended for the community to test and submit success/bug reports for.
+You will be asked to confirm some steps. Answer with *y* or *1*.
 
-Note that `curl -sf` operates silently, so if there are errors, you may get an empty or incorrect version of bootstrap.sh. Check for typos in the command and try again. If you continue to have problems, join the [chat](./ch13-01-chat.md) and let us know.
+To know what the `bootstrap.sh` script does, read [this](./ch08-07-build-phases.md#bootstrapsh) section.
 
-Please be patient, this can take 5 minutes to an hour depending on the hardware and network you're running it on. Once it completes, update your path in the current shell with:
+Note that `curl -sf` operates silently, so if there are errors, you may get an empty or incorrect version of `bootstrap.sh`. Check for typos in the command and try again. If you continue to have problems, join the [chat](./ch13-01-chat.md) and let us know.
+
+Please be patient, this can take 5 minutes to an hour depending on the hardware and network you're running it on. Once it's done, update your `PATH` environment variable in the current shell with:
 
 ```sh
 source ~/.cargo/env
 ```
 
-### Setting Config Values
+### Setting Configuration Values
 
-The build system uses several configuration files, which contain settings that you may wish to change. These are detailed in [Configuration Files](./ch02-07-configuration-settings.md). By default, the system builds for an `x86_64` architecture, using the `desktop` configuration (`config/x86_64/desktop.toml`). Set the desired `ARCH` and `CONFIG_FILE` in [.config](./ch02-07-configuration-settings.md#config). There is also a shell script [build.sh](#buildsh) that will allow you to choose the architecture and filesystem contents easily, although it is only a temporary change.
+The build system uses several configuration files, which contain settings that you may wish to change. These are detailed in the [Configuration Settings](./ch02-07-configuration-settings.md) page. By default, the build system cross-compile to the `x86_64` CPU architecture, using the `desktop` configuration (at `config/x86_64/desktop.toml`). Set the desired `ARCH` and `CONFIG_FILE` in [.config](./ch02-07-configuration-settings.md#config). There is also a shell script [build.sh](#buildsh) that will allow you to choose the architecture and filesystem contents easily, although it is only a temporary change.
 
-## Compiling The Entire Redox Project
+## Compiling Redox
 
 Now we have:
- - fetched the sources
- - tweaked the settings to our liking
- - possibly added our very own source/binary package to the filesystem
 
-We are ready to build the entire Redox Operating System Image. Skip ahead to [build.sh](#buildsh) if you want to build for a different architecture or with different filesystem contents.
+ - Downloaded the sources
+ - Tweaked the settings to our liking
+ - Pobrably added our recipe to the filesystem
 
-### Build all the components and packages
+We are ready to build the Redox operating system image. Skip ahead to [Configuration Settings](./ch02-07-configuration-settings.md) if you want to build for a different CPU architecture or with different filesystem contents.
+
+### Build all system components and programs
 
 To build all the components, and the packages to be included in the filesystem.
 
@@ -78,36 +90,31 @@ cd ~/tryredox/redox
 time make all
 ```
 
-This will make the target `build/x86_64/desktop/hardrive.img`, which you can run with an emulator.
+This will make the target `build/x86_64/desktop/hardrive.img`, which you can run with a virtual machine.
 
-Give it a while. Redox is big. This will do the following:
-- fetch some sources for the core tools from the Redox source servers, then build them. As it progressively cooks each package, it fetches the package's sources and builds it.
-- create a few empty files holding different parts of the final image filesystem.
-- using the newly built core tools, build the non-core packages into one of those filesystem parts.
-- fill the remaining filesystem parts appropriately with stuff built by the core tools to help boot Redox.
-- merge the different filesystem parts into a final Redox Operating System image ready-to-run in an emulator.
+Give it a while. Redox is big. Read [this](./ch08-07-build-phases.md#make-all-first-run) section to know what the `make all` command does.
 
-Note that the filesystem parts are merged using the [FUSE](https://github.com/libfuse/libfuse). Bootstrap.sh installs `libfuse`. If you have problems with the final assembly of Redox, check that `libfuse` is installed and you are able to use it.
+Note that the filesystem parts are merged using the [FUSE](https://github.com/libfuse/libfuse). `bootstrap.sh` install `libfuse`. If you have problems with the final image of Redox, verify if `libfuse` is installed and you are able to use it.
 
 ### build.sh
 
-`build.sh` is a shell script that allows you to easily specify the architecture you are building for, and the filesystem contents. When you are doing Redox development, you should set them in `.config` (see [Configuration Settings](./ch02-07-configuration-settings.md)). But if you are just trying things out, use `build.sh` to run `make` for you. e.g.:
+`build.sh` is a shell script that allows you to easily specify the CPU architecture you are building for, and the filesystem contents. When you are doing Redox development, you should set them in `.config` (see [Configuration Settings](./ch02-07-configuration-settings.md)). But if you are just trying things out, use `build.sh` to run `make` for you. e.g.:
 
-- `./build.sh -a i686 -c server live` - Run `make` for an `i686` architecture, using the `server` configuration, `config/i686/server.toml`. The resulting image is `build/i686/server/livedisk.iso`, which can be used for installation from a USB.
+- `./build.sh -a i686 -c server live` - Run `make` for an i686 (32-bits Intel/AMD) CPU architecture, using the `server` configuration, `config/i686/server.toml`. The resulting image is `build/i686/server/livedisk.iso`, which can be used for installation from a USB.
 
-- `./build.sh -f config/aarch64/desktop.toml qemu` - Run `make` for an `arm64/AArch64` architecture, using the `desktop` configuration, `config/aarch64/desktop.toml`. The resulting image is `build/aarch64/desktop/harddrive.img`, which is then run in the emulator **QEMU**.
+- `./build.sh -f config/aarch64/desktop.toml qemu` - Run `make` for an ARM64 (AArch64) CPU architecture, using the `desktop` configuration, `config/aarch64/desktop.toml`. The resulting image is `build/aarch64/desktop/harddrive.img`, which is then run in the emulator **QEMU**.
 
 If you use `build.sh`, it's recommended that you do so consistently, as `make` will not be aware of which version of the system you previously built with `build.sh`. Details of `build.sh` and other settings are described in [Configuration Settings](./ch02-07-configuration-settings.md).
 
-### Run in an emulator
+### Run in a virtual machine
 
-You can immediately run your image `build/x86_64/desktop/harddrive.img` in an emulator with the following command:
+You can immediately run your image `build/x86_64/desktop/harddrive.img` in a virtual machine with the following command:
 
 ```sh
 make qemu
 ```
 
-Note that if you built the system using `build.sh` to change architecture or filesystem contents, you should also use it to run the emulator.
+Note that if you built the system using `build.sh` to change the CPU architecture or filesystem contents, you should also use it to run the virtual machine.
 
 ```sh
 ./build.sh -a i686 -c server qemu
@@ -115,57 +122,32 @@ Note that if you built the system using `build.sh` to change architecture or fil
 
 will build `build/i686/server/harddrive.img` (if it does not exist) and run it in the **QEMU** emulator.
 
-The emulator will display the Redox GUI. See [Using the emulation](./ch02-01-running-vm.md#using-the-emulation) for general instructions and [Trying out Redox](./ch02-04-trying-out-redox.md) for things to try.
+The emulator will display the Redox GUI (Orbital). See [Using the emulation](./ch02-01-running-vm.md#using-the-emulation) for general instructions and [Trying out Redox](./ch02-04-trying-out-redox.md) for things to try.
 
-#### Run with no GUI
+#### Run without a GUI
 
-To run the emulation with no GUI, use:
-
-```sh
-make qemu vga=no
-```
-
-If you want to capture the terminal output, use:
-
-```sh
-tee ~/my_log.txt
-```
+To run the virtual machine without a GUI, use:
 
 ```sh
 make qemu vga=no
 ```
 
-```sh
-exit
-```
+If you want to capture the terminal output, read [this](./ch08-05-troubleshooting.md#debug-methods) section.
 
-Running with no GUI is the recommended method of capturing console and debug output from the system or from your text-only program. The `script` command creates a new shell, capturing all input and output from the text console to the log file with the given name. Remember to type `exit` after the emulation terminates, in order to properly flush the output to the log file and terminate `script`'s shell.
+If you have problems running the virtual machine, you can try `make qemu kvm=no` or `make qemu iommu=no` to turn off various virtualization features. These can also be used as arguments to `build.sh`.
 
-If you have problems running the emulation, you can try `make qemu kvm=no` or `make qemu iommu=no` to turn off various virtualization features. These can also be used as arguments to `build.sh`.
+#### QEMU Tap For Network Testing
 
-#### Running The Redox Console With A Qemu Tap For Network Testing
-
-Expose Redox to other computers within a LAN. Configure Qemu with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
+Expose Redox to other computers within a LAN. Configure QEMU with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
 
 Join the [Redox chat](./ch13-01-chat.html) if this is something you are interested in pursuing.
 
-### Building Redox Live CD/USB Image
+### Building A Redox Bootable Image
 
-For a *livedisk* or installable image, use:
-
-```sh
-cd ~/tryredox/redox
-```
-
-```sh
-time make live
-```
-
-This will make the target `build/x86_64/desktop/livedisk.iso`, which can be copied to a USB drive or CD for booting or installation. See [Creating a bootable USB drive or CD](./ch02-02-real-hardware.md#creating-a-bootable-usb-drive-or-cd) for instructions on creating a USB drive and booting from it.
-
+Read [this](./ch09-02-coding-and-building.md#testing-on-real-hardware) section.
 
 ## Note
 
-If you intend on contributing to Redox or its subprojects, please read [Creating a Proper Pull Request](./ch12-04-creating-proper-pull-requests.md) so you understand our use of forks and set up your repository appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
+If you intend on contributing to Redox or its subprojects, please read the [CONTRIBUTING.md](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/CONTRIBUTING.md) document, so you understand how our build system works and setup your repository fork appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
 
-If you encounter any bugs, errors, obstructions, or other annoying things, please join the [Redox chat](./ch13-01-chat.md) or [report the issue](./ch12-03-creating-proper-bug-reports.md) to the [Redox repository](https://gitlab.redox-os.org/redox-os/redox). Thanks!
+If you encounter any bugs, errors, obstructions, or other annoying things, please join the [chat](./ch13-01-chat.md) or [report the issue](./ch12-03-creating-proper-bug-reports.md) to the [Redox repository](https://gitlab.redox-os.org/redox-os/redox) or a proper repository for the component. Thanks!

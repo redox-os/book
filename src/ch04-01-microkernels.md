@@ -1,12 +1,12 @@
 # Microkernels
 
-Redox's kernel is a microkernel. Microkernels stand out in their design by providing minimal abstractions in kernel-space. Microkernels focus on user-space, unlike Monolithic kernels which focus on kernel-space.
+The Redox kernel is a microkernel. Microkernels stand out in their design by providing minimal abstractions in kernel-space. Microkernels focus on user-space, unlike Monolithic kernels which focus on kernel-space.
 
-The basic philosophy of microkernels is that any component which *can* run in user-space *should* run in user-space. Kernel-space should only be utilized for the most essential components (e.g., system calls, process separation, resource management, IPC, thread management, etc).
+The basic philosophy of microkernels is that any component which *can* run in user-space *could* run in user-space. Kernel-space should only be utilized for the most essential components (e.g., system calls, process separation, resource management, IPC, thread management, etc).
 
 The kernel's main task is to act as a medium for communication and segregation of processes. The kernel should provide minimal abstraction over the hardware (that is, drivers, which can and should run in user-space).
 
-Microkernels are more secure and less prone to crashes than monolithic kernels. This is because most kernel components are moved to user-space, and thus cannot do damage to the system. Furthermore, microkernels are extremely maintainable, due to their small code size, this can potentially reduce the number of bugs in the kernel.
+Microkernels are more secure and less prone to crashes than monolithic kernels. This is because most kernel components are moved to user-space, and thus cannot do damage to the system. Furthermore, microkernels are extremely maintainable, due to their small code size the number of bugs in the kernel is reduced a lot.
 
 As anything else, microkernels do also have disadvantages.
 
@@ -14,9 +14,9 @@ As anything else, microkernels do also have disadvantages.
 
 There are quite a lot of advantages (and disadvantages) with microkernels, a few of which will be covered here.
 
-### Modularity and customizability
+### Modularity and Customization
 
-Monolithic kernels are, well, monolithic. They do not allow as fine-grained control as microkernels. This is due to many essential components being "hard-coded" into the kernel, and thus requiring modifications to the kernel itself (e.g., device drivers).
+Monolithic kernels are, well, monolithic. They do not allow fine-grained control as microkernels. This is due to many essential components being "hard-coded" into the kernel, and thus requiring modifications to the kernel itself (e.g., device drivers).
 
 Microkernels are very modular by nature. You can replace, reload, modify, change, and remove modules, on runtime, without even touching the kernel.
 
@@ -26,11 +26,11 @@ Modern monolithic kernels try to solve this issue using kernel modules but still
 
 Microkernels are undoubtedly more secure than monolithic kernels. The minimality principle of microkernels is a direct consequence of the principle of least privilege, according to which all components should have only the privileges absolutely needed to provide the needed functionality.
 
-Many security-critical bugs in monolithic kernels stem from services and drivers running unrestricted in kernel mode, without any form of protection.
+Many security-critical bugs in monolithic kernels comes from services and drivers running unrestricted in kernel mode, without any form of protection.
 
-In other words: **in monolithic kernels, drivers can do whatever they want, without restrictions, when running in ring 0**.
+In other words: **in monolithic kernels, drivers can do whatever they want, without restrictions, when running in kernel mode**.
 
-### Fewer crashes
+### Fewer Crashes
 
 When compared to microkernels, Monolithic kernels tend to be crash-prone. A buggy driver in a Monolithic kernel can crash the whole system whereas with a microkernel there is a separation of concerns which allows the system to handle any crash safely.
 
@@ -38,11 +38,11 @@ In Linux we often see errors with drivers dereferencing bad pointers which ultim
 
 There is very good documentation in [MINIX](http://wiki.minix3.org/doku.php?id=www:documentation:reliability) about how this can be addressed by a microkernel.
 
-### Sane debugging
+### Sane Debugging
 
 In microkernels the kernel components (drivers, filesystems, etc) are moved to user-space, thus bugs on them don't crash the kernel.
 
-This is very important to debug in real hardware, because if a kernel panic happens, the log can't be saved to find the cause of the bug.
+This is very important to debug in real hardware, because if a kernel panic happens, the log can't be saved to find the root of the bug.
 
 In monolithic kernels, a bug in kernel component will cause a kernel panic and lock the system (if it happens in real hardware, you can't debug without serial output support)
 
@@ -66,7 +66,7 @@ The performance difference between monolithic and microkernels has been marginal
 - [Context switch documentation](https://wiki.osdev.org/Context_Switching)
 - [Microkernels performance paper](https://os.inf.tu-dresden.de/pubs/sosp97/)
 
-Unfortunately, Redox isn't quite there yet. We still have a relatively slow kernel since not much time has been spent on optimizing it.
+We are working on exciting performance optimizations to minimize the overhead of extra context switches.
 
 ## Versus monolithic kernels
 
@@ -98,6 +98,6 @@ The above illustration from [Wikimedia](https://commons.wikimedia.org/wiki/File:
 
 ## A note on the current state
 
-Redox has less than 30,000 lines of kernel code. For comparison Minix has ~6,000 lines of kernel code.
+Redox has less than 30,000 Rust lines of kernel code. For comparison Minix has ~6,000 C lines of kernel code.
 
 We would like to move more parts of Redox to user-space to get an even smaller kernel.
