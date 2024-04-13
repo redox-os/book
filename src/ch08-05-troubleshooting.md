@@ -398,7 +398,7 @@ A kernel panic is when some bug avoid the safe execution of the kernel code, thu
 We use the following kernel panic message format:
 
 ```
-KERNEL PANIC: panicked at some-path/file-name.rs:line-number:line-number:
+KERNEL PANIC: panicked at some-path/file-name.rs:line-number:character-position:
 the panic description goes here
 ```
 
