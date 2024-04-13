@@ -1,6 +1,6 @@
 # Including Programs in Redox
 
-(Before reading this page you must read the [Build System Quick Reference](./ch08-06-build-system-reference.md) page)
+(Before reading this page you must read the [Build System](./ch08-06-build-system-reference.md) page)
 
 This page will teach you how to add programs on the Redox image, it's a simplified version of the [Porting Applications using Recipes](./ch09-03-porting-applications.md) page.
 
@@ -70,7 +70,7 @@ nano config/x86_64/myfiles.toml
 ...
 [packages]
 # Add the item below under the "[packages]" section
-games = {}
+redox-games = {}
 ...
 ```
 

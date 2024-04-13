@@ -1,16 +1,18 @@
 # Coding and Building
 
-(Before reading this page you must read the [Build System Quick Reference](./ch08-06-build-system-reference.md) page)
+(Before reading this page you must read the [Build System](./ch08-06-build-system-reference.md) page)
+
+This page covers common development tasks on the Redox build system.
 
 - [Working with Git](#working-with-git)
   - [Anonymous commits](#anonymous-commits)
 - [Using Multiple Windows](#using-multiple-windows)
-- [Set up your Configuration](#set-up-your-configuration)
+- [Setup your Configuration](#setup-your-configuration)
 - [The Recipe](#the-recipe)
 - [Git Clone](#git-clone)
 - [Edit your Code](#edit-your-code)
-- [Check your Code on Linux](#check-your-code-on-linux)
-- [The Full Rebuild Cycle](#the-full-rebuild-cycle)
+- [Verify Your Code on Linux](#verify-your-code-on-linux)
+- [The Full Rebuild](#the-full-rebuild)
 - [Test Your Changes](#test-your-changes)
   - [Test Your Changes (out of the Redox build system)](#test-your-changes-out-of-the-redox-build-system)
   - [Testing On Real Hardware](#testing-on-real-hardware)
@@ -21,8 +23,8 @@
 - [Update crates](#update-crates)
 - [Search Text On Files](#search-text-on-files)
 - [Checking In your Changes](#checking-in-your-changes)
-- [Shortening the Rebuild Cycle](#shortening-the-rebuild-cycle)
-  - [Build your Package for Redox](#build-your-package-for-redox)
+- [Shortening the Rebuild Time](#shortening-the-rebuild-time)
+  - [Build your recipe for Redox](#build-your-recipe-for-redox)
   - [Make a New QEMU Image](#make-a-new-qemu-image)
   - [Most Quick Trick To Test Changes](#most-quick-trick-to-test-changes)
   - [Insert Text Files On QEMU (quickest method)](#insert-text-files-on-qemu-quickest-method)
@@ -42,9 +44,9 @@
 
 ## Working with Git
 
-Before starting the development, read through [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), which describes how the Redox team uses Git.
+Before starting the development, read the [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md) page, which describes how the Redox team uses Git.
 
-In this example, we will discuss creating a **fork** of the `games` package, pretending you are going to create a `Merge Request` for your changes. **Don't actually do this**. Only create a fork when you have changes that you want to send to Redox upstream.
+In this example, we will discuss how to create a **fork** of the `games` recipe, pretending you are going to create a `Merge Request` for your changes. **Don't actually do this**. Only create a fork when you have changes that you want to send to Redox upstream.
 
 ### Anonymous commits
 
@@ -80,13 +82,14 @@ This command will make you anonymous in all repositories of your user.
 
 ## Using Multiple Windows
 
-For clarity and ease of use, we will be using a couple of `Terminal` windows on your host system, each running a different bash shell instance.
-1. The `Build` shell, normally at `~/tryredox/redox` or whatever your base `redox` directory is.
-2. The `Coding` shell, normally at `~/tryredox/redox/cookbook/recipes/games/source`.
+For clarity and easy of use, we will be using two terminal tabs on your system, each running a different GNU Bash shell instance.
 
-## Set up your Configuration
+1. The `Build` shell, normally at `~/tryredox/redox` or where your base `redox` directory is.
+2. The `Coding` shell, at `cookbook/recipes/games/redox-games/source`.
 
-To get started, follow the steps in [Including a Program in a Redox Build](./ch09-01-including-programs.md) to include the `games` package in your `myfiles` configuration file. In your `Terminal` window, go to your `redox` base directory and run:
+## Setup your Configuration
+
+To get started, follow the steps in the [Including Programs](./ch09-01-including-programs.md) page to include the `games` package on your `myfiles` configuration file. In your terminal window, go to your `redox` base directory and run:
 
 ```sh
 make qemu
@@ -94,23 +97,24 @@ make qemu
 
 On Redox, run `minesweeper` as described in the link above. Type the letter `f` and you will see `F` appear on your screen. Use `Ctrl-Alt-G` to regain control of your cursor, and click the upper right corner to exit QEMU.
 
-Keep the `Terminal` window open. That will be your `Build` shell.
+Keep the terminal window open. That will be your `Build` shell.
 
 ## The Recipe
 
-Let's walk through contributing to the Redox subpackage `games`, which is a collection of low-def games. We are going to modify `minesweeper` to display **P** instead of **F** on flagged spots.
+Let's walk through contributing to the recipe `redox-games`, which is a collection of terminal games. We are going to modify `minesweeper` to display **P** instead of **F** on flagged spots.
 
-The `games` package is built in the folder `cookbook/recipes/games`. When you `clone` the `redox` base package, it includes a file `cookbook/recipes/games/recipe.toml`. The recipe tells the build system how to get the source and how to build it.
+The `redox-games` recipe is built in the folder `cookbook/recipes/games/redox-games`. When you download the `redox` base package, it includes a file `cookbook/recipes/games/redox-games/recipe.toml`. The recipe tells the build system how to get the source and how to build it.
 
-When you build the system and include the `games` package, the toolchain does a `git clone` into the directory `cookbook/recipes/games/source`. Then it builds the package in the directory `cookbook/recipes/games/target`.
+When you build the system and include the `redox-games` recipe, the toolchain does a `git clone` into the directory `cookbook/recipes/games/redox-games/source`. Then it builds the recipe in the directory `cookbook/recipes/games/redox-games/target`.
 
-Edit the recipe so it does not try to automatically clone the sources. 
-- Create a `Terminal` window running `bash` on your host system, which we will call your `Coding` shell.
-- Change to the `games` directory.
-- Open `recipe.toml` in an editor.
+Edit the recipe so it does not try to automatically download the sources.
+
+- Create a `Terminal` window running `bash` on your system, which we will call your `Coding` shell.
+- Change to the `redox-games` directory.
+- Open `recipe.toml` in a text editor.
 
 ```sh
-cd ~/tryredox/redox/cookbook/recipes/games
+cd ~/tryredox/redox/cookbook/recipes/games/redox-games
 ```
 
 ```sh
@@ -128,8 +132,9 @@ nano recipe.toml
 
 ## Git Clone
 
-To set up this package for contributing, do the following in your `Coding` shell.
-- Delete the source and target directories in `cookbook/recipes/games`.
+To setup this recipe for contributing, do the following in your `Coding` shell.
+
+- Delete the `source` and `target` directories in `cookbook/recipes/games/redox-games`.
 - Clone the package into the `source` directory, either specifying it in the `git clone` or by moving it after `clone`.
 
 ```sh
@@ -156,7 +161,7 @@ branch = your-branch # optional
 
 ## Edit your Code
 
-- Using your favorite code editor, make your changes. We use `gedit` in this example, from your `Coding` shell. You can also use [VS Code](#vs-code-tips-and-tricks).
+- Using your favorite code editor, make your changes. We use `nano` in this example, from your `Coding` shell. You can also use [VS Code](#vs-code-tips-and-tricks).
 
 ```sh
 cd source
@@ -172,44 +177,34 @@ nano src/minesweeper/main.rs
 const FLAGGED: &'static str = "P";
 ```
 
-## Check your Code on Linux
+## Verify Your Code on Linux
 
-Most Redox applications are source-compatible with Linux without being modified. You can (and should) build and test your program on Linux.
+Most Redox programs are source-compatible with Linux without being modified. You can (and should) build and test your program on Linux.
+
 - From within the `Coding` shell, go to the `source` directory and use the Linux version of `cargo` to check for errors.
 
 ```sh
 cargo check
 ```
 
-(Since much of the code in `games` is older (pre-2018 Rust), you will get several warnings. They can be ignored)
+(Since much of the code in `redox-games` is older (pre-2018 Rust), you will get several warnings. They can be ignored)
 
   You could also use `cargo clippy`, but `minesweeper` is not clean enough to pass.
-- The `games` package creates more than one executable, so to test `minesweeper` on Linux, you need to specify it to `cargo`. In the `source` directory, do:
+- The `redox-games` recipe creates more than one executable, so to test `minesweeper` on Linux, you need to specify it to `cargo`. In the `source` directory, do:
 
 ```sh
 cargo run --bin minesweeper
 ```
 
-## The Full Rebuild Cycle
+## The Full Rebuild
 
-After making changes to your package, you should `make rebuild`, which will check for any changes to packages and make a new Redox image. `make all` and `make qemu` do not check for packages that need to be rebuilt, so if you use them, your changes may not be included in the system. Once you are comfortable with this process, you can try [some tricks to save time](#shortening-the-rebuild-cycle).
+After making changes to your recipe, you can use the `make rebuild` command, which will check for any changes to recipe and make a new Redox image. `make all` and `make qemu` do not check for recipes that need to be rebuilt, so if you use them, your changes may not be included in the system. Once you are comfortable with this process, you can try [some tricks to save time](#shortening-the-rebuild-cycle).
+
 - Within your `Build` shell, in your `redox` directory, do:
 
 ```sh
-tee build.log
+make rebuild 2>&1 | tee build.log
 ```
-
-```sh
-make rebuild
-```
-
-```sh
-exit
-```
-
-The [script](https://manpages.ubuntu.com/manpages/jammy/man1/script.1.html) command starts a new shell and logs all the output from the `make` command.
-  
-The `exit` command is to exit from `script`. Remember to exit the `script` shell to ensure all log messages are written to `build.log`. There's also a [trick](https://manpages.ubuntu.com/manpages/jammy/man1/script.1.html#signals) to flush the log.
 
 - You can now scan through `build.log` to check for errors. The file is large and contains many ANSI Escape Sequences, so it can be hard to read. However, if you encountered a fatal build error, it will be at the end of the log, so skip to the bottom and scan upwards.
 
@@ -223,7 +218,8 @@ In the Redox instance started by `make qemu`, test your changes to `minesweeper`
 - Use your arrow keys or `WSAD` to move to a square and type `f` to set a flag. The character `P` will appear.
 
 
-Congratulations! You have modified a program and built the system! Next, create a bootable Redox with your change. 
+Congratulations! You have modified a program and built the system! Next, create a bootable image with your change.
+
 - If you are still running QEMU, type `Ctrl-Alt-G` and click the upper right corner of the Redox window to exit.
 - In your `Build` shell, in the `redox` directory, do:
 
@@ -231,7 +227,7 @@ Congratulations! You have modified a program and built the system! Next, create 
 make live
 ```
 
-In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. Follow the instructions for [Running on Real Hardware](./ch02-02-real-hardware.md) and test out your change.
+In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. Follow the instructions on [this](#testing-on-real-hardware) section and test out your change.
 
 ### Test Your Changes (out of the Redox build system)
 
@@ -279,7 +275,7 @@ redoxer exec echo hello
 
 You can use the `make live` command to create bootable images, it will be used instead of `make image`.
 
-This command will create the file `build/your-cpu-arch/your-config/livedisk.iso`, you will burn this image on your USB drive, CD or DVD disks (if you have an USB drive, [Popsicle](https://github.com/pop-os/popsicle) is a simple program to flash your device).
+This command will create the file `build/your-cpu-arch/your-config/livedisk.iso`, you will burn this image on your USB device, CD or DVD disks (if you have an USB device, [Popsicle](https://github.com/pop-os/popsicle) is the recommended method to flash your device).
 
 #### Full bootable image creation
 
@@ -305,7 +301,7 @@ make r.recipe1 r.recipe2 live
 
 #### Flash the bootable image on your USB device
 
-If you don't have a GUI/display server to run Popsicle, you can use the Unix tool `dd`, follow the steps below:
+If you can't use Popsicle, you can use the Unix tool `dd`, follow the steps below:
 
 - Go to the files of your Cookbook configuration:
 
@@ -386,30 +382,31 @@ Options context:
 - `-w` - Match only whole words.
 - `-i` - Ignore case distinctions in patterns and data.
 
-- [grep explanation](https://www.geeksforgeeks.org/grep-command-in-unixlinux/) - GeeksforGeeks article explaining the `grep` program.
+- [grep explanation](https://www.geeksforgeeks.org/grep-command-in-unixlinux/) - GeeksforGeeks article explaining how to use the `grep` tool.
 
-## Checking In your Changes
+## Checking In Your Changes
 
-Don't do this now, but if you were to have permanent changes to contribute to a package, at this point, you would `git push` and create a Merge Request, as described in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md).
+Don't do this now, but if you were to have permanent changes to contribute to a recipe, at this point, you would `git push` and create a Merge Request, as described in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md).
 
-If you were contributing a new package, such as porting a Rust application to Redox, you would need to check in the `recipe.toml` file. It goes in the `cookbook` subproject. You may also need to modify a filesystem config file, such as `config/demo.toml`. It goes in the `redox` project. You must fork and do a proper Pull Request for each of these projects. Please coordinate with the Redox team via [Chat](./ch13-01-chat.md) before doing this.
+If you were contributing a new package, such as porting a Rust application to Redox, you would need to check in the `recipe.toml` file. It goes in the `cookbook` subproject. You may also need to modify a filesystem config file, such as `config/your-cpu-arch/demo.toml`. It goes in the `redox` project. You must fork and do a proper Pull Request for each of these projects. Please coordinate with the Redox team on the [chat](./ch13-01-chat.md) before doing this.
 
-## Shortening the Rebuild Cycle
+## Shortening the Rebuild Time
 
 To skip some of the steps in a full `rebuild`, here are some tricks.
 
-### Build your Package for Redox
+### Build your recipe for Redox
 
-You can build just the `games` package, rather than having `make rebuild` check every package for changes. This can help shorten the build cycle if you are trying to resolve issues such as compilation errors or linking to libraries.
+You can build just the `redox-games` recipe, rather than having `make rebuild` verifying each recipe for changes. This can help shorten the build time if you are trying to resolve issues such as compilation errors or linking to libraries.
+
 - In your `Build` shell, in the `redox` directory, type:
 
 ```sh
-make r.games
+make r.redox-games
 ```
 
-Redox's makefiles have a rule for `r.PACKAGE`, where `PACKAGE` is the name of a Redox package. It will make that package, ready to load into the Redox filesystem.
+Build system Makefiles have a rule for `r.recipe-name`, where `recipe-name` is the name of a Redox recipe. It will make that recipe, ready to load into the Redox filesystem.
 
-Once your Redox package has been successfully built, you can use `make rebuild` to create the image, or, if you are confident you have made all packages successfully, you can skip a complete rebuild and just [make a new image](#make-a-new-qemu-image).
+Once your Redox recipe has been successfully built, you can use `make rebuild` to create the image, or, if you are confident you have made all packages successfully, you can skip a complete rebuild and just [make a new image](#make-a-new-qemu-image).
 
 If you had a problem, use this command to log any possible errors on your terminal output:
 
@@ -424,10 +421,10 @@ Now that all the packages are built, you can make a Redox image without the step
 - In your `Build` shell, in the `redox` directory, do:
 
 ```sh
-make image qemu
+make image
 ```
 
-- `make image` skips building any packages (assuming the last full make succeeded), but it ensures a new image is created, which should include the package you built in the previous step.
+- `make image` skips building any packages (assuming the last full make succeeded), but it ensures a new image is created, which should include the recipe you built in the previous step.
 
 ### Most Quick Trick To Test Changes
 
@@ -437,7 +434,7 @@ Run:
 make cr.recipe-name image qemu
 ```
 
-This command will [build just your modified recipe](#build-your-package-for-redox), then [update your QEMU image with your modified recipe](#make-a-new-qemu-image) and run QEMU with a GUI.
+This command will [build just your modified recipe](#build-your-package-for-redox), then [update your QEMU image with your modified recipe](#make-a-new-qemu-image) and run QEMU with Orbital.
 
 ### Insert Text Files On QEMU (quickest method)
 
@@ -448,7 +445,7 @@ tee qemu.log
 ```
 
 ```sh
-make qemu
+make qemu vga=no
 ```
 
 ```
@@ -476,7 +473,7 @@ cat > myscript.sh << EOF
   EOF
 ```
 
-If your file is large, or non-ascii, or you have many files to copy, you can use the process described in [Patch an Image](#insert-files-on-qemu-image). However, you do so at your own risk.
+If your file is large, or non-ASCII, or you have many files to copy, you can use the process described in [Patch an Image](#insert-files-on-qemu-image). However, you do so at your own risk.
 
 Files you create while running QEMU remain in the Redox image, so long as you do not rebuild the image. Similarly, files you add to the image will be present when you run QEMU, so long as you do not rebuild the image.
 
@@ -517,7 +514,7 @@ make qemu
 
 This recipe will make the Cookbook package all the files on the `source` folder to be installed on the `/home/user` directory on your Redox filesystem.
 
-This is the only way keep your files after the `make image` command.
+(This is the only way keep your files after the `make image` command)
 
 ### Insert Files On The QEMU Image
 
@@ -579,8 +576,8 @@ make qemu
 ## Development Tips
 
 - Make sure your build system is up-to-date, read [this](./ch08-06-build-system-reference.md#update-the-build-system) section in case of doubt.
-- If some program can't build or work properly, remember that something could be missing/hiding on [relibc](https://gitlab.redox-os.org/redox-os/relibc), some function or bug.
-- If you have some error on QEMU, remember to test different settings or check your operating system (Debian, Ubuntu and Pop OS! are the recommend Linux distributions to do testing/development for Redox).
+- If some program can't build or work properly, remember that something could be missing/hiding on [relibc](https://gitlab.redox-os.org/redox-os/relibc), some missing function or bug.
+- If you have some error on QEMU, remember to test different settings or verify your operating system (Pop_OS!, Ubuntu, Debian and Fedora are the recommend Linux distributions to do testing/development for Redox).
 - Remember to log all errors, you can use this command as example:
 
 ```sh
