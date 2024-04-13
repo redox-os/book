@@ -1,4 +1,4 @@
-# Working With Raspberry Pi
+# Raspberry Pi
 
 ## Build and run device-specific images
 
@@ -9,50 +9,82 @@ Most ARM motherboards do not use the default image for booting, which requires u
 It is easy to port Raspberry Pi 3 Model B+ (raspi3b+) since the bootloader of Raspberry Pi family uses the similar filesystem (FAT32) for booting.
 
 
-In order to build raspi3b+ image:
+In order to build a RasPi3B+ image:
 
 - Add `BOARD?=raspi3bp` and `CONFIG?=server-minimal`to `.config`
 - Run `make all`
 - Download the firmware
+
 ```sh
 cd ~/tryredox
+```
+
+```sh
 git clone https://gitlab.redox-os.org/Ivan/redox_firmware.git
 ```
 
-### Run in qemu
+### Run in QEMU
 
-Assume that we are using the `server-minimal` config and build image successfully, run:
+Assume that we are using the `server-minimal` configuration and built the image successfully, run:
 
-- Add two additional dtb files to EFI system partition
-```sh
+- Add two additional dtb files to EFI system partition:
+
+```
 DISK=build/aarch64/server-minimal/harddrive.img
 MOUNT_DIR=/mnt/efi_boot
 DTB_DIR=$MOUNT_DIR/dtb/broadcom
 WORKPLACE=/home/redox/tryredox
 DTS=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/bcm2837-rpi-3-b-plus.dts
+```
 
+```sh
 mkdir -p $MOUNT_DIR
+```
+
+```sh
 mount -o loop,offset=$((2048*512)) $DISK $MOUNT_DIR
+```
+
+```sh
 mkdir -p $DTB_DIR
+```
+
+```sh
 dtc -I dts -O dtb $DTS > $DTB_DIR/bcm2837-rpi-3-b.dtb
+```
+
+```sh
 cp $DTB_DIR/bcm2837-rpi-3-b.dtb $DTB_DIR/bcm2837-rpi-3-b-plus.dtb
+```
+
+```sh
 sync
+```
+
+```sh
 umount $MOUNT_DIR
 ```
+
 - Run `make qemu_raspi live=no`
 
-### Booting from usb
+### Booting from USB
 
-Assume that we are using the `server-minimal` config and access serial console using GPIOs 14 and 15 (pins 8 and 10 on the 40-pin header). Do the following:
+Assume that we are using the `server-minimal` configuration and access serial console using GPIOs 14 and 15 (pins 8 and 10 on the 40-pin header). Do the following:
 
 - Run `make live`
 - Download the firmware from [official repository](https://github.com/raspberrypi/firmware/tree/master/boot)
+
 ```sh
 cd ~/tryredox
+```
+
+```sh
 git clone --depth=1 https://github.com/raspberrypi/firmware.git
 ```
+
 - Copy all required firmware to EFI system partition
-```sh
+
+```
 DISK=build/aarch64/server-minimal/livedisk.iso
 MOUNT_DIR=/mnt/efi_boot
 DTB_DIR=$MOUNT_DIR/dtb/broadcom
@@ -61,27 +93,64 @@ DTS=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/bcm2837-rpi-3-b-plus.dt
 UBOOT=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/u-boot-rpi-3-b-plus.bin
 CONFIG_TXT=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/config.txt
 FW_DIR=$WORKPLACE/firmware/boot
+```
 
+```sh
 mkdir -p $MOUNT_DIR
+```
+
+```sh
 mount -o loop,offset=$((2048*512)) $DISK $MOUNT_DIR
+```
+
+```sh
 cp -rf $FW_DIR/* $MOUNT_DIR
+```
+
+```sh
 mkdir -p $DTB_DIR
+```
+
+```sh
 dtc -I dts -O dtb $DTS > $DTB_DIR/bcm2837-rpi-3-b.dtb
+```
+
+```sh
 cp $DTB_DIR/bcm2837-rpi-3-b.dtb $DTB_DIR/bcm2837-rpi-3-b-plus.dtb
+```
+
+```sh
 cp $UBOOT $MOUNT_DIR/u-boot.bin
+```
+
+```sh
 cp $CONFIG_TXT $MOUNT_DIR
+```
+
+```sh
 sync
+```
+
+```sh
 umount $MOUNT_DIR
 ```
-- Run `dd if=build/aarch64/server-minimal/livedisk.iso of=/dev/sdX`, and `/dev/sdX` is your usb device.
 
-### Booting from sd card
+- Run:
 
-This process is similar to that of "Booting from usb", but has some differences:
+```sh
+dd if=build/aarch64/server-minimal/livedisk.iso of=/dev/sdX
+```
+
+(`/dev/sdX` is your USB device.)
+
+### Booting from SD Card
+
+This process is similar to that of "Booting from USB", but has some differences:
 
 - Use `harddrive.img` instead of `livedisk.iso`
-- After `dd` command, try to make the EFI system partition of the sd card become a hybrid MBR. See [this](https://www.eisfunke.com/posts/2023/uefi-boot-on-raspberry-pi-3.html) for more details
-```sh
+- After `dd` command, try to make the EFI system partition of the SD card become a hybrid MBR. See [this](https://www.eisfunke.com/posts/2023/uefi-boot-on-raspberry-pi-3.html) for more details
+
+```
 root@dev-pc:/home/ivan/code/os/redox# gdisk /dev/sdc
 GPT fdisk (gdisk) version 1.0.8
 

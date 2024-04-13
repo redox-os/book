@@ -4,6 +4,8 @@ Congrats on making it this far! Now you will build Redox. This process is for **
 
 The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox GitLab login, try again later, and if it continues to happen, you can let us know through [chat](./ch13-01-chat.md).
 
+(Don't forget to read [this](./ch08-06-build-system-reference.md) page to know our build system organization and how it works)
+
 ## Supported Unix-like Distributions and Podman Build
 
 The following Unix-like systems are supported:

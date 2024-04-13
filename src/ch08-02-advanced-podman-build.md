@@ -2,17 +2,19 @@
 
 To make the Redox build process more consistent across platforms, we are using **Rootless Podman** for major parts of the build. The basics of using Podman are described [here](./ch02-06-podman-build.md). This chapter provides a detailed discussion, including tips, tricks and troubleshooting, as well as some extra detail for those who might want to leverage or improve Redox's use of Podman.
 
+(Don't forget to read [this](./ch08-06-build-system-reference.md) page to know our build system organization and how it works)
+
 ## Build Environment
 
-- Environment and Command Line Variables, other than ARCH, CONFIG_NAME and FILESYSTEM_CONFIG, are not passed to the part of `make` that is done in **Podman**. You must set any other config variables, e.g. `REPO_BINARY`, in [.config](./ch02-07-configuration-settings.md#config) and not on the command line or in your environment.
+- Environment and command line Variables, other than `ARCH`, `CONFIG_NAME` and `FILESYSTEM_CONFIG`, are not passed to the part of `make` that is done in **Podman**. You must set any other configuration variables, e.g. `REPO_BINARY`, in [.config](./ch02-07-configuration-settings.md#config) and not on the command line or on your environment.
 
-- If you are building your own software to include in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Ubuntu Packages to the Build](#adding-ubuntu-packages-to-the-build).
+- If you are building your own software to add in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Ubuntu Packages to the Build](#adding-ubuntu-packages-to-the-build).
 
 ## Minimum Installation
 
-Most of the packages required for the build are installed in the container as part of the build process. However, some packages need to be installed on the host computer. You may also need to install an emulator such as **QEMU**. For most Linux distros, this is done for you in `podman_bootstrap.sh`, but you can do a minimum install by following the instructions below.
+Most of the packages required for the build are installed in the container as part of the build process. However, some packages need to be installed on the host computer. You may also need to install an emulator such as **QEMU**. For most Linux distributions, this is done for you in the `podman_bootstrap.sh` script, but you can do a minimum install by following the instructions below.
 
-Note that the Redox filesystem parts are merged using [FUSE](https://github.com/libfuse/libfuse). `podman_bootstrap.sh` installs `libfuse` for most platforms, if it is not already included. If you have problems with the final assembly of Redox, check that `libfuse` is installed and you are able to use it.
+Note that the Redox filesystem parts are merged using [FUSE](https://github.com/libfuse/libfuse). `podman_bootstrap.sh` installs `libfuse` for most platforms, if it is not already included. If you have problems with the final image of Redox, verify if `libfuse` is installed and you are able to use it.
 
 ### Pop!_OS
 
@@ -54,63 +56,66 @@ This will create the file `build/container.tag` without rebuilding the image. Ho
 
 ## Cleaning Up
 
-To remove the **base image**, any lingering containers, `poduser`'s home directory, including the **Rust** install, and `build/container.tag`, use:
+To remove the **base image**, any lingering containers, `poduser`'s home directory, including the **Rust** installation, and `build/container.tag`, run:
 
 ```sh
 make container_clean
 ```
 
-To check that everything has been removed,
+- To verify that everything has been removed
 
 ```sh
 podman ps -a
 ```
 
+- Show any remaining images or containers
+
 ```sh
 podman images
 ```
 
-will show any remaining images or containers. If you need to do further cleanup,
+- Remove **all** images and containers. You still may need to remove `build/container.tag` if you did not do `make container_clean`.
 
 ```sh
 podman system reset
 ```
 
-will remove **all** images and containers. You still may need to remove `build/container.tag` if you did not do `make container_clean`. 
-
-In some rare instances, `poduser`'s home directory can have bad file permissions, and you may need to do 
+In some rare instances, `poduser`'s home directory can have bad file permissions, and you may need to run:
 
 ```sh
 sudo chown -R `id -un`:`id -gn` build/podman
 ```
 
-where `` `id -un` `` is your User ID and `` `id -gn` `` is your effective Group ID. Be sure to `make container_clean` after that.
+Where `` `id -un` `` is your User ID and `` `id -gn` `` is your effective Group ID. Be sure to `make container_clean` after that.
 
 **Note:**
+
 - `make clean` does **not** run `make container_clean` and will **not** remove the container image.
 - If you already did `make container_clean`, doing `make clean` could trigger an image build and a Rust install in the container. It invokes `cargo clean` on various components, which it must run in a container, since the build is designed to not require **Cargo** on your host machine. If you have Cargo installed on the host and in your PATH, you can use `make PODMAN_BUILD=0 clean` to clean without building a container. 
 
 ## Debugging your Build Process
 
-If you are developing your own components and wish to do one-time debugging to determine what library you are missing in the **Podman Build** environment, the following instructions can help. Note that your changes will not be persistent. After debugging, **you must** [Add your Libraries to the Build](#adding-libraries-to-the-build). With `PODMAN_BUILD=1`, run the command:
+If you are developing your own components and wish to do one-time debugging to determine what library you are missing in the **Podman Build** environment, the following instructions can help. Note that your changes will not be persistent. After debugging, **you must** [Add your Libraries to the Build](#adding-libraries-to-the-build). With `PODMAN_BUILD=1`, run the following command:
+
+- This will start a `bash` shell in the **Podman** container environment, as a normal user without `sudo` privilege.
 
 ```sh
 make container_shell
 ```
 
-This will start a `bash` shell in the **Podman** container environment, as a normal user without `sudo` privilege. Within that environment, you can build the Redox components with:
+- Within that environment, you can build the Redox components with:
 
 ```sh
 make repo
 ```
 
-or, if you need to change `ARCH` or `CONFIG_NAME`,
+- If you need to change `ARCH` or `CONFIG_NAME`, run:
 
 ```sh
 ./build.sh -a ARCH -c CONFIG_NAME repo
 ```
 
-If you need `root` privileges, while you are **still running** the above `bash` shell, go to a separate **Terminal** or **Console** window on the host, and type:
+- If you need `root` privileges, while you are **still running** the above `bash` shell, go to a separate **Terminal** or **Console** window on the host, and type:
 
 ```sh
 cd ~/tryredox/redox
@@ -120,7 +125,7 @@ cd ~/tryredox/redox
 make container_su
 ```
 
-You will then be running bash with `root` privilege in the container, and you can use `apt-get` or whatever tools you need, and it will affect the environment of the user-level `container_shell` above. Do not precede the commands with `sudo` as you are already `root`. And remember that you are in an **Ubuntu** instance.
+You will then be running Bash with `root` privilege in the container, and you can use `apt-get` or whatever tools you need, and it will affect the environment of the user-level `container_shell` above. Do not precede the commands with `sudo` as you are already `root`. And remember that you are in an **Ubuntu** instance.
 
 **Note**: Your changes will not persist once both shells have been exited.
 
@@ -166,41 +171,6 @@ If your Containerfile is newer than `build/container.tag`, a new **image** will 
 If you feel the need to have more than one image, you can change the variable `IMAGE_TAG` in `mk/podman.mk` to give the image a different name.
 
 If you just want to install the packages temporarily, run `make env`, open a new terminal tab/windows, run `make container_su` and use `apt install` on this tab/window.
-
-## Troubleshooting Podman
-
-If you have problems setting Podman to rootless mode, use these commands:
-
-(These commands were taken from the official [Podman rootless wiki](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md) and [Shortcomings of Rootless Podman](https://github.com/containers/podman/blob/main/rootless.md), then it could be broken/wrong in the future, read the wiki to see if the commands match, we will try to update the method to work with everyone)
-
-- Install `podman`, `crun`, `slirp4netns` and `fuse-overlayfs` packages on your system.
-- `podman ps -a` - this command will show all your Podman containers, if you want to remove all of them, run `podman system reset`.
-- Take this [step](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md#cgroup-v2-support) if necessary (if the Podman of your distribution use cgroup V2), you will need to edit the `containers.conf` file on `/etc/containers` or your user folder at `~/.config/containers`, change the line `runtime = "runc"` to `runtime = "crun"`.
-- Execute `cat /etc/subuid` and `cat /etc/subgid` to see user/group IDs (UIDs/GIDs) available for Podman.
-
-If you don't want to edit the file, you can use this command:
-
-```sh
-sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 yourusername
-```
-
-You can use the values `100000-165535` for your user, just edit the two text files, we recommend `sudo nano /etc/subuid` and `sudo nano /etc/subgid`, when you finish, press Ctrl+X to save the changes.
-
-- After the change on the UID/GID values, execute this command:
-
-```sh
-podman system migrate
-```
-
-- If you have a network problem on the container, this command will allow connections on the port 443 (without root):
-
-```sh
-sudo sysctl net.ipv4.ip_unprivileged_port_start=443
-```
-
-- Hopefully, you have a working Podman build now (if you still have problems with Podman, check the [Troubleshooting](./ch08-05-troubleshooting.md) chapter or join us on the [Redox Support](https://matrix.to/#/#redox-support:matrix.org) room)
-
-Let us know if you have improvements for Podman troubleshooting on [Redox Dev](https://matrix.to/#/#redox-dev:matrix.org) room.
 
 ## Summary of Podman-related Make Targets, Variables and Podman Commands
 
@@ -248,10 +218,8 @@ In the **Containerfile**, we use as few `RUN` commands as possible, as **Podman*
 
 Containers in our build process are run with `--rm` to ensure the container is discarded after each use. This prevents a proliferation of used containers. However, when you use `make container_clean`, you may notice multiple items being deleted. These are the partial images created as each `RUN` command is executed while building.
 
-Container images and container data is normally stored in the directory `$HOME/.local/share/containers/storage`. The command:
+Container images and container data is normally stored in the directory `$HOME/.local/share/containers/storage`. The following command removes that directory in its entirety. However, the contents of any **volume** are left alone:
 
 ```sh
 podman system reset
 ```
-
-removes that directory in its entirety. However, the contents of any **volume** are left alone.

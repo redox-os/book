@@ -2,24 +2,23 @@
 
 In this section, we provide the gory details that may be handy to know if you are contributing to or developing for **Redox**.
 
-## Setting up your Environment
+(Don't forget to read [this](./ch08-06-build-system-reference.md) page to know our build system organization and how it works)
 
-If you intend on contributing to Redox or its subprojects, please read [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md) so you understand our use of forks, and set up your repository appropriately. 
+## Setup Your Environment
 
-Although it is strongly recommended you use the [Building Redox](./ch02-05-building-redox.md) process or [Podman Build](./ch02-06-podman-build.md) instead of the process described here, advanced users may accomplish the same as the **bootstrap.sh** script with the following steps, which are provided by way of example for Pop!_OS/Ubuntu/Debian. For other platforms, have a look at the file [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) to help determine what packages to install for your distro.
+Although it's recommended to read the [Building Redox](./ch02-05-building-redox.md) or [Podman Build](./ch02-06-podman-build.md) pages instead of the process described here, advanced users may accomplish the same as the **bootstrap.sh** script with the following steps, which are provided by way of example for Pop!_OS/Ubuntu/Debian. For other platforms, have a look at the file [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) to help determine what packages to install for your Unix-like system.
 
-Be forewarned, for distros other than Pop!_OS/Ubuntu/Debian, neither `bootstrap.sh` nor this document are fully maintained, as the recommended environment is **Podman**. The core redox-os developers use Pop!_OS to build Redox.
+The steps to perform are:
 
-The steps to perform are 
-- [Clone the repository](#clone-the-repository)
-- [Install The Necessary packages](#install-the-necessary-packages-and-emulators)
+- [Clone The Repository](#clone-the-repository)
+- [Install The Necessary Packages](#install-the-necessary-packages-and-emulators)
 - [Install Rust](#install-rust-stable-and-nightly)
-- Adjust your [Configuration Settings](./ch02-07-configuration-settings.md)
+- [Adjust Your Configuration Settings](./ch02-07-configuration-settings.md)
 - Build the system
 
-## Clone the repository
+## Clone The Repository
 
-Create a directory and clone the repository.
+- Create a directory and clone the repository
 
 ```sh
 mkdir -p ~/tryredox
@@ -38,18 +37,16 @@ cd redox
 ```
 
 ```sh
-git submodule update --recursive --init
+make pull
 ```
 
-Please be patient, this can take minutes to hours depending on the hardware and network you're running it on.
+Please be patient, this can take minutes to hours depending on the hardware and network you're using.
 
 In addition to installing the various packages needed for building Redox, **bootstrap.sh** and **podman_bootstrap.sh** both clone the repository, so if you used either script, you have completed Step 1. 
 
-## Install The Necessary Packages and Emulators
+## Install The Necessary Packages and Emulator
 
-If you are unable to use [Podman Build](./ch02-06-podman-build.md), you can attempt to install the necessary packages yourself.
-
-If you cloned the source tree *before* running **bootstrap.sh**, you can use:
+If you cloned the sources *before* running **bootstrap.sh**, you can use:
 
 ```sh
 cd ~/tryredox/redox
@@ -59,7 +56,7 @@ cd ~/tryredox/redox
 ./bootstrap.sh -d
 ```
 
-to install the build system dependencies without re-fetching any source. If you wish to install the dependencies yourself, some examples are given below.
+If you can't use `bootstrap.sh` script, you can attempt to install the necessary packages below.
 
 ### Pop!_OS/Ubuntu/Debian Users
 
@@ -280,9 +277,9 @@ rustup toolchain list
 cargo install --force --version 0.1.1 cargo-config
 ```
 
-NOTE: `~/.cargo/bin` has been added to your PATH for the running session.
+NOTE: `~/.cargo/bin` has been added to your `PATH` environment variable for the running session.
 
-The line `. "$HOME/.cargo/env` (equivalent to `source ~/.cargo/env`) will have been added to your shell start-up file, `~/.bashrc`, but you may wish to add it elsewhere or modify it according to your own environment.
+The `. "$HOME/.cargo/env` command (equivalent to `source ~/.cargo/env`) have been added to your shell start-up file, `~/.bashrc`, but you may wish to add it elsewhere or modify it according to your own environment.
 
 ## Prefix
 
@@ -294,17 +291,17 @@ The **Cookbook** system is an essential part of the Redox build system. Each Red
 
 ## Creating a Build Environment Shell
 
-If you are working on specific components of the system, and will be using some of the tools in the `cookbook` directory and bypassing `make`, you may wish to create a build environment shell. This shell includes the `prefix` tools in your path. You can do this with:
+If you are working on specific components of the system, and will be using some of the tools in the `cookbook` directory and bypassing `make`, you may wish to create a build environment shell. This shell includes the `prefix` tools in your `PATH`. You can do this with:
 
 ```sh
 make env
 ```
 
-This command also works with **Podman Build**, creating a shell in Podman and setting PATH to include the necessary build tools.
+This command also works with a Podman Build, creating a shell in Podman and setting `PATH` to include the necessary build tools.
 
 ## Updating The Sources
 
-If you want to update the Redox build system or if some of the recipes have changed, you can update those parts of the system with `make pull`. However, this will not update source for the recipes.
+If you want to update the build system or if some of the recipes have changed, you can update those parts of the system with `make pull`. However, this will not update the sources of the recipes.
 
 ```sh
 cd ~/tryredox/redox
@@ -314,12 +311,12 @@ cd ~/tryredox/redox
 make pull
 ```
 
-If you want to update the source for the recipes, use `make rebuild`, or remove the file `$(BUILD)/fetch.tag` then use `make fetch`.
+If you want to update the source for the recipes, use `make rebuild`, or remove the file `$(BUILD)/fetch.tag` and run `make fetch`.
 
-## Changing the filesystem size and contents
+## Changing the Filesystem Size and Contents
 
 You can modify the size and contents of the filesystem for emulation and *livedisk* as described in [Configuration Settings](./ch02-07-configuration-settings.md).
 
-## Next steps
+## Next Steps
 
-Once this is all set up, we can finally Compile! See [Compiling The Entire Redox Project](./ch02-05-building-redox.md#compiling-the-entire-redox-project).
+Once this is all set up, we can finally build! See [Compiling Redox](./ch02-05-building-redox.md#compiling-redox).

@@ -6,6 +6,8 @@ The TL;DR version is [here](#tldr---new-or-existing-working-directory). More det
 
 You can find out more about Podman [here](https://docs.podman.io/en/latest/Introduction.html).
 
+(Don't forget to read [this](./ch08-06-build-system-reference.md) page to know our build system organization and how it works)
+
 ## Disabling Podman Build
 
 By default, Podman Build is disabled. The variable `PODMAN_BUILD` in `mk/config.mk` defaults to zero, so that **Podman** will not be invoked. If you find that it is enabled but you want it disabled, set `PODMAN_BUILD?=0` in [.config](./ch02-07-configuration-settings.md#config), and ensure it is not set in your environment, `unset PODMAN_BUILD`.

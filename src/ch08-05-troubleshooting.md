@@ -1,10 +1,12 @@
 # Troubleshooting the Build
 
-In case you need to do some troubleshooting of the build process, this is a brief overview of the Redox toolchain, with some troubleshooting tips. This chapter is a work in progress.
+This page covers all troubleshooting methods and tips for our build system.
 
-- [Setting Up](#setting-up)
+(You must read [this](./ch08-06-build-system-reference.md) page before)
+
+- [Setup](#setup)
     - [bootstrap.sh](#bootstrapsh)
-    - [git clone](#git-clone)
+    - [Git](#git)
 - [Building the System](#building-the-system)
     - [.config and mk/config.mk](#config-and-mkconfigmk)
     - [Prefix](#prefix)
@@ -27,23 +29,23 @@ In case you need to do some troubleshooting of the build process, this is a brie
     - [QEMU](#qemu)
     - [Real Hardware](#real-hardware)
 
-## Setting Up
+## Setup
 
 ### bootstrap.sh
 
-When you run `bootstrap.sh` or `podman_bootstrap.sh`, the Linux tools and libraries required to support the toolchain and build process are installed. Then the `redox` project is cloned from the Redox GitLab. The `redox` project does not contain the Redox sources, it mainly contains the build system. The `cookbook` subproject, which contains recipes for all the packages to be included in Redox, is also copied as part of the clone.
+When you run `bootstrap.sh` or `podman_bootstrap.sh`, the Linux tools and libraries required to support the toolchain and build all recipes are installed. Then the `redox` project is downloaded from the Redox GitLab server. The `redox` project does not contain the system component sources, it only contains the build system. The `cookbook` subproject, which contains recipes for all the packages to be included in Redox, is also copied as part of the download.
 
-Not all Linux distributions are supported by `bootstrap.sh`, so if you are on an unsupported distribution, try `podman_bootstrap.sh` for [Podman](https://podman.io/) builds, or have a look at [podman_bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman_bootstrap.sh) and try to complete the setup up manually.
+Not all Linux distributions are supported by `bootstrap.sh`, so if you are on an unsupported distribution, try the `podman_bootstrap.sh` script for [Podman](https://podman.io/) builds, or have a look at the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script and try to complete the setup manually.
 
-If you want to support your distribution/OS without Podman, you can try to install the Debian/Ubuntu package equivalents for your distribution/OS from your package manager/software store, you can see them on [this](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh#L228) section of `bootstrap.sh`.
+If you want to support your Unix-like system without Podman, you can try to install the Debian/Ubuntu package equivalents for your system from your package manager/software store, you can see them on [this](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh#L375) function of the `bootstrap.sh` script.
 
-The `bootstrap.sh` script and `redox-base-containerfile` covers the build system packages needed by the recipes on [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
+The `bootstrap.sh` script and `redox-base-containerfile` covers the build system packages needed by the recipes at [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
 
-(Note that some distributions/OSes may have environment problems hard to fix, on these systems Podman will avoid some headaches)
+(Note that some systems may have environment problems hard to fix, on these systems Podman will avoid some headaches)
 
-### git clone
+### Git
 
-If you did not use `bootstrap.sh` or `podman_bootstrap.sh` to set up your environment, you can get the sources with:
+If you did not use `bootstrap.sh` or `podman_bootstrap.sh` to setup your environment, you can download the sources with:
 
 ```sh
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
@@ -51,58 +53,95 @@ git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --rec
 
 If you are missing the `cookbook` project or other components, ensure that you used the `--recursive` flag when doing `git clone`. Ensure that all the libraries and packages required by Redox are installed by running `bootstrap.sh -d` or, if you will be using the Podman build, `podman_bootstrap.sh -d`.
 
-## Building the System
+## Building The System
 
 When you run `make all`, the following steps occur.
 
 ### .config and mk/config.mk
 
-- `make` scans [.config](./ch02-07-configuration-settings.md#config) and [mk/config.mk](./ch02-07-configuration-settings.md#mkconfigmk) for settings, such as the CPU architecture, config name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-07-configuration-settings.md) to make sure you have the settings that are best for you.
+- `make` scans [.config](./ch02-07-configuration-settings.md#config) and [mk/config.mk](./ch02-07-configuration-settings.md#mkconfigmk) for settings, such as the CPU architecture, configuration name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-07-configuration-settings.md) to make sure you have the settings that are best for you.
 
 ### Prefix
 
-The Redox toolchain, referred to as **Prefix** because it is prefixed with the architecture name, is downloaded and/or built. Custom versions of `cargo`, `rustc`, `gcc` and many other tools are created. They are placed in the `prefix` directory. 
+The Redox toolchain, referred to as **prefix** because it is prefixed with the CPU architecture name, is downloaded and/or built. Modified versions of `cargo`, `rustc`, `gcc` and many other tools are created. They are placed in the `prefix` directory. 
 
-If you have a problem with the toolchain, try `rm -rf prefix`, and everything will be reinstalled the next time you run `make all`.
+If you have a problem with the toolchain, try `rm -rf prefix`, and everything will be reinstalled the next time you run `make all` or `make rebuild`.
 
 ### Podman
 
-If enabled, the Podman environment is set up. [Podman](./ch02-06-podman-build.md) is recommended for distros other than Pop!_OS, Ubuntu and Debian.
+If enabled, the Podman environment is set up. [Podman](./ch02-06-podman-build.md) is recommended for unsupported systems.
 
 If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./ch02-06-podman-build.md#debugging-your-build-process).
 If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
 
-If you have others problems with Podman, read the [Troubleshooting Podman](./ch08-02-advanced-podman-build.md#troubleshooting-podman) chapter.
+#### Manual Configuration
 
-### Filesystem Config
+If you have problems setting Podman to rootless mode, use these commands:
 
-The list of Redox packages to be built is read from the [filesystem config](./ch02-07-configuration-settings.md#filesystem-config) file, which is specified in [.config](./ch02-07-configuration-settings.md#config) or `mk/config.mk`. If your package is not being included in the build, check that you have set `CONFIG_NAME` or `FILESYSTEM_CONFIG`, then check the config file.
+(These commands were taken from the official [Podman rootless wiki](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md) and [Shortcomings of Rootless Podman](https://github.com/containers/podman/blob/main/rootless.md), thus it could be broken/wrong in the future, read the wiki to see if the commands match, we will try to update the method to work with everyone)
+
+- Install the `podman`, `crun`, `slirp4netns` and `fuse-overlayfs` packages on your system.
+- `podman ps -a` - this command will show all your Podman containers, if you want to remove all of them, run `podman system reset`.
+- Take this [step](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md#cgroup-v2-support) if necessary (if the Podman of your distribution use cgroup V2), you will need to edit the `containers.conf` file on `/etc/containers` or your user folder at `~/.config/containers`, change the line `runtime = "runc"` to `runtime = "crun"`.
+- Execute `cat /etc/subuid` and `cat /etc/subgid` to see user/group IDs (UIDs/GIDs) available for Podman.
+
+If you don't want to edit the file, you can use this command:
+
+```sh
+sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 yourusername
+```
+
+You can use the values `100000-165535` for your user, just edit the two text files, we recommend `sudo nano /etc/subuid` and `sudo nano /etc/subgid`, when you finish, press Ctrl+X to save the changes.
+
+- After the change on the UID/GID values, execute this command:
+
+```sh
+podman system migrate
+```
+
+- If you have a network problem on the container, this command will allow connections on the port 443 (without root):
+
+```sh
+sudo sysctl net.ipv4.ip_unprivileged_port_start=443
+```
+
+- Hopefully, you have a working Podman build now.
+
+(If you still have problems with Podman, read the [Troubleshooting](./ch08-05-troubleshooting.md) chapter or join us on the [chat](./ch13-01-chat.md))
+
+Let us know if you have improvements for Podman troubleshooting on the [chat](./ch13-01-chat.md).
+
+### Filesystem Configuration
+
+The list of Redox recipes to be built is read from the [filesystem configuration](./ch02-07-configuration-settings.md#filesystem-configuration) file, which is specified in [.config](./ch02-07-configuration-settings.md#config) or `mk/config.mk`. If your recipe is not being included in the build, verify if you have set the `CONFIG_NAME` or `FILESYSTEM_CONFIG` in the `.config` file.
 
 ### Fetch
 
-Each recipe source is downloaded using `git` or `tar`, according to the `[source]` section of `cookbook/recipes/recipe-name/recipe.toml`. Source is placed in `cookbook/recipes/recipe-name/source`. Some recipes use the older `recipe.sh` format instead. 
+Each recipe source is downloaded using `git` or `curl`, according to the `[source]` section of the `recipe.toml` file. Source is placed at `cookbook/recipes/recipe-name/source`.
 
-If you are doing work on a recipe, you may want to comment out the `[source]` section of the recipe. To discard your changes to the source for a recipe, or to update to the latest version, uncomment the `[source]` section of the recipe, and use `rm -rf source target` in the recipe directory to remove both the source and any compiled code.
+(Some recipes still use the old `recipe.sh` format, they need to be converted to TOML)
+
+If you are doing work on a recipe, you may want to comment out the `[source]` section of the recipe. To discard your changes to the source for a recipe, or to update to the latest version, uncomment the `[source]` section of the recipe, and use `make uc.recipe-name` in the recipe directory to remove both the source and any compiled code.
 
 After all recipes are fetched, a tag file is created as `build/$ARCH/$CONFIG_NAME/fetch.tag`, e.g. `build/x86_64/desktop/fetch.tag`. If this file is present, fetching is skipped. You can remove it manually, or use `make rebuild`, if you want to force refetching.
 
 ### Cookbook
 
-Each recipe is built according to the `recipe.toml` file. The compiled recipe is placed in the `target` directory, in a subdirectory named based on the CPU architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Cargo`. These commands make assumptions about `$PATH` and `$PWD`, so they might not work if you are using them outside the build process.
+Each recipe is built according to the `recipe.toml` file. The recipe binaries or library objects are placed in the `target` directory, in a subdirectory named based on the CPU architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Cargo`. These commands make assumptions about `$PATH` and `$PWD`, so they might not work if you are using them outside the build process.
 
-If you have a problem with a package you are building, try `rm -rf target` in the recipe directory. A common problem when building on non-Debian systems is that certain packages will fail to build due to missing libraries. Try using [Podman Build](./ch02-06-podman-build.md).
+If you have a problem with a recipe you are building, try the `make c.recipe-name` command. A common problem when building on unsupported systems is that certain recipes will fail to build due to missing dependencies. Try using the [Podman Build](./ch02-06-podman-build.md) or manually installing the recipe dependencies.
 
-After all packages are cooked, a tag file is created as `build/$ARCH/$CONFIG_NAME/repo.tag`. If this file is present, cooking is skipped. You can remove it manually, or use `make rebuild`, which will force refetching and rebuilding.
+After all recipes are cooked, a tag file is created as `build/$ARCH/$CONFIG_NAME/repo.tag`. If this file is present, cooking is skipped. You can remove it manually, or use `make rebuild`, which will force refetching and rebuilding.
 
 ### Create the Image with FUSE
 
-To build the final Redox image, `redox_installer` uses [FUSE](https://github.com/libfuse/libfuse), creating a virtual filesystem and copying the packages into it. This is done outside of Podman, even if you are using Podman Build.
+To build the final Redox image, `redox_installer` uses [FUSE](https://github.com/libfuse/libfuse), creating a virtual filesystem and copying the recipe packages into it. This is done outside of Podman, even if you are using Podman Build.
 
-On some Linux systems, FUSE may not be permitted for some users, or `bootstrap.sh` might not install it correctly. Investigate whether you can address your FUSE issues, or join the [chat](./ch13-01-chat.md) if you need advice.
+On some Linux distributions, FUSE may not be permitted for some users, or `bootstrap.sh` might not install it correctly. Investigate whether you can address your FUSE issues, or join the [chat](./ch13-01-chat.md) if you need advice.
 
 ## Solving Compilation Problems
 
-- Check your Rust version (run `make env` and `cargo --version`, then `exit`), make sure you have **the latest version of Rust nightly!**.
+- Verify your Rust version (run `make env` and `cargo --version`, then `exit`), make sure you have **the latest version of Rust nightly!**.
 
     - [rustup.rs](https://www.rustup.rs) is recommended for managing Rust versions. If you already have it, run `rustup`.
 
@@ -128,21 +167,15 @@ cd cookbook/recipes/some-category/recipe-name/source
 git branch -v
 ```
 
-- Run `make clean pull` to remove all your compiled binaries and update the sources.
+- Run `make clean pull fetch` to remove all your compiled binaries and update all sources.
 - Sometimes there are merge requests that briefly break the build, so check the [Chat](./ch13-01-chat.md) if anyone else is experiencing your problems.
 - Sometimes both the source and the binary of some recipe is wrong, run `make ucr.recipe-name` and verify if it fix the problem.
 
-    - Example:
-
-    ```sh
-    make ucr.recipe-name
-    ```
-
-### Update your build system
+### Update Your Build System
 
 Sometimes your build system can be outdated because you forgot to run `make pull` before other commands, read [this](./ch08-06-build-system-reference.md#update-the-build-system) section to learn the complete way to update the build system.
 
-In case of API changes on the source code or configuration changes on the build system you can use `make clean all` to wipe your binaries and build them again, if it doesn't work you need to download a new copy of the build system by running the `bootstrap.sh` script or using this command:
+In case of backwards-incompatible or relibc changes, you need to use the `make clean all` command to wipe your binaries and build them again, if it doesn't work you need to download a new copy of the build system by running the `bootstrap.sh` script or using this command:
 
 ```sh
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
@@ -158,7 +191,7 @@ cd redox
 make all
 ```
 
-### Update your branch
+### Update Your Branch
 
 If you are doing local changes on the build system, probably you left your branch active on the folder (instead of `master` branch).
 
@@ -200,7 +233,7 @@ If you want an anonymous merge, read [this](./ch09-02-coding-and-building.md#ano
 
 ### Update relibc
 
-An outdated relibc copy can contain bugs (already fixed on recent versions) or outdated crates, read [this](./ch08-06-build-system-reference.md#update-relibc) section to learn how to update it.
+An outdated relibc copy can contain bugs (already fixed on recent versions) or missing APIs, read [this](./ch08-06-build-system-reference.md#update-relibc) section to learn how to update it.
 
 ### Update crates
 
@@ -218,9 +251,9 @@ To identify which crates are using old versions of Redox crates you will need to
 cargo tree --target=x86_64-unknown-redox
 ```
 
-This command will draw the dependency tree and you will need to find the crate name on the hierarchy.
+This command will draw the dependency tree and you will need to find the crate name on the tree.
 
-If you don't want to find it, you can use a `grep` pipe to see all crate versions used in the tree, sadly `grep` don't preserve the tree hierarchy, thus it's only useful to see versions and if some patched crate works (if the patched crate works all crate matches will report the most recent version).
+If you don't want to find it, you can use the `grep` tool with a pipe to see all crate versions used in the tree, sadly `grep` don't preserve the tree hierarchy, thus it's only useful to see versions and if some patched crate works (if the patched crate works all crate matches will report the most recent version).
 
 To do this, run:
 
@@ -271,6 +304,9 @@ COOKBOOK_DEBUG=true make r.recipe-name
 
 ```sh
 export COOKBOOK_DEBUG=true
+```
+
+```sh
 make r.recipe-name
 ```
 
@@ -284,7 +320,13 @@ COOKBOOK_DEBUG=true COOKBOOK_NOSTRIP=true make r.recipe-name
 
 ```sh
 export COOKBOOK_DEBUG=true
+```
+
+```sh
 export COOKBOOK_NOSTRIP=true
+```
+
+```sh
 make r.recipe-name
 ```
 
@@ -360,7 +402,11 @@ KERNEL PANIC: panicked at some-path/file-name.rs:line-number:line-number:
 the panic description goes here
 ```
 
-You can use the `grep` tool to search it in a big log.
+- You can use the following command to search it in a big log:
+
+```sh
+grep -nw "KERNEL PANIC" --include "file-name.log"
+```
 
 ### QEMU
 
