@@ -1,6 +1,7 @@
 # Writing Documentation Correctly (TM)
 
 Documentation for Redox appears in two places:
+
 - In the source code
 - On the website (the Redox Book and online API documentation)
 

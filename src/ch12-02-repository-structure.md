@@ -6,25 +6,25 @@ Redox GitLab consists of a large number of **Projects** and **Subprojects**. The
 
 The `redox` project is actually just the root of the build system. It does not contain any of the code that the final Redox image will include. It includes the Makefiles, configuration files, and a few scripts to simplify setup and building. The `redox` project can be found [here](https://gitlab.redox-os.org/redox-os/redox).
 
-Doing a `git clone` of `redox.git` with `--recursive` fetches the full build system, as described in the `.gitmodules` file. The submodules are referred to using an SHA to identify what commit to use, so it's possible that your fetched subprojects do not have the latest from their `master` branch. Once the latest SHA reference is merged into `redox`, you can update to get the latest version of the subproject.
+Doing a `git clone` of `redox.git` with `--recursive` fetches the full build system, as described in the `.gitmodules` file. The submodules are referred to using a SHA hash to identify what commit to use, so it's possible that your fetched subprojects do not have the latest from their `master` branch. Once the latest SHA reference is merged into `redox`, you can update to get the latest version of the subproject.
 
-## Packages and Recipes
+## Recipes
 
-The many **packages** that are assembled into the Redox image are built from the corresponding subprojects. The name of a Redox package almost always matches the name of its subproject, although this is not enforced.
+The many **recipes** that are added into the Redox image are built from the corresponding subprojects. The name of a Redox package almost always matches the name of its subproject, although this is not enforced.
 
-The **recipe** for a Redox package contains the instructions to fetch and build the package, for its inclusion in the Redox image. The recipe is stored with the Cookbook, not with with package.
+The **recipe** contains the instructions to download and build a program, for its inclusion in the Redox image. The recipe is stored with the Cookbook.
 
 ## Cookbook
 
-The `cookbook` subproject contains the mechanism for building the Redox packages. **It also contains the recipes**. If a recipe is modified, it is updated in the `cookbook` subproject. In order for the updated recipe to get included in your fetched cookbook, the `redox` project needs to be updated with the new `cookbook` SHA. Connect with us on [Chat](./ch13-01-chat.md) if a recipe is not getting updated.
+The `cookbook` subproject contains the mechanism for building the Redox recipes. If a recipe is modified, it is updated in the `cookbook` subproject. In order for the updated recipe to get included in your downloaded cookbook, the `redox` project needs to be updated with the new `cookbook` SHA commit hash. Connect with us on the [chat](./ch13-01-chat.md) if a recipe is not getting updated.
 
 ## Crates
 
-Some subprojects are built as Crates, and included in Redox packages using Cargo's package management system. Updates to a crate subproject must be pushed to the crate repository in order for it to be included in your build.
+Some subprojects are built as Rust crates, and included in Redox recipes using Cargo's dependency management system. Updates to a crate subproject must be pushed to the crate repository in order for it to be included in your build.
 
 ## Forks, Tarballs and Other Sources
 
-Some recipes obtain source code from places other than Redox GitLab. The cookbook mechanism can pull in source from any git URL. It can also obtain source tarballs, as is frequently the case for non-Rust applications.
+Some recipes obtain their source code from places other than Redox GitLab. The Cookbook mechanism can pull in source from any Git repository URL. It can also obtain tarballs which is most used by C/C++ programs.
 
 In some cases, the Redox GitLab has a fork of another repository, in order to add Redox-specific patches. Where possible, we try to push these changes upstream, but there are many reasons why this might not be feasible.
 
