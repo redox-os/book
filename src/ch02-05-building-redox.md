@@ -142,7 +142,7 @@ If you have problems running the virtual machine, you can try `make qemu kvm=no`
 
 Expose Redox to other computers within a LAN. Configure QEMU with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
 
-Join the [Redox chat](./ch13-01-chat.html) if this is something you are interested in pursuing.
+Join the [chat](./ch13-01-chat.md) if this is something you are interested in pursuing.
 
 ### Building A Redox Bootable Image
 

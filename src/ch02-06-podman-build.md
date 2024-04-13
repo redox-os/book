@@ -30,7 +30,7 @@ The build process is using **Podman**'s `keep-id` feature, which allows your reg
 
 ### New Working Directory 
 
-If you have already read the [Building Redox](./ch02-05-building-redox.html) instructions, but you wish to use **Podman Build**, follow these steps.
+If you have already read the [Building Redox](./ch02-05-building-redox.md) instructions, but you wish to use **Podman Build**, follow these steps.
 
 - Make sure you have the `curl` command. e.g. for Pop!_OS/Ubuntu/Debian:
 

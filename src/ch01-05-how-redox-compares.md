@@ -10,7 +10,7 @@ Compared to Linux, our system call interface is much more minimal. This is not b
 
 ## "Everything is a URL"
 
-This is an generalization of "Everything is a file", largely inspired by Plan 9. In Redox, [resources](./ch05-05-resources.html) can be both socket-like and file-like, making them fast enough to use for virtually everything.
+This is an generalization of "Everything is a file", largely inspired by Plan 9. In Redox, [resources](./ch05-05-resources.md) can be both socket-like and file-like, making them fast enough to use for virtually everything.
 
 This way, we get a more unified system API. We will explain this later, in [URLs, schemes, and resources](./ch05-00-urls-schemes-resources.md).
 
