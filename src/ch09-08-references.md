@@ -55,6 +55,7 @@ If you don't know how to port some program or library, you can see the build sys
 - [FreeBSD Manual Pages](https://man.freebsd.org/cgi/man.cgi) - Powerful source for Unix/BSD documentation.
 - [Linux Manual Pages (man7)](https://www.man7.org/linux/man-pages/) - Very popular source for Linux documentation.
 - [Linux Manual Pages (die.net)](https://linux.die.net/man/) - Another popular source for Linux documentation.
+- [OpenGroup Specification (POSIX and C Library)](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/contents.html) - This is important to improve the support with Linux/BSD programs written in C/C++.
 
 ### Source Code
 
