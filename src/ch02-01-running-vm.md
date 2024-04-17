@@ -4,6 +4,8 @@
 
 This section will guide you to download the Redox images.
 
+(You need to use the `*harddrive.img` image variant for QEMU or VirtualBox)
+
 ### Stable Releases
 
 The bootable images for Redox 0.8.0 are located [here](https://static.redox-os.org/releases/0.8.0/x86_64/). To try Redox using a virtual machine such as QEMU or VirtualBox, download the [demo](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_harddrive.img) variant, check the [SHA256 sum](https://static.redox-os.org/releases/0.8.0/x86_64/SHA256SUM) to ensure it has downloaded correctly.

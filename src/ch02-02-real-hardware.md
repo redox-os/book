@@ -1,5 +1,7 @@
 # Running Redox on real hardware
 
+(You need to use the `*livedisk.iso` image variant for real hardware)
+
 Since version 0.8.0, Redox can now be installed on certain hard drives and internal SSDs, including some vintage systems. USB devices are not yet supported during run-time, although they can be used for installation and *livedisk* boot. Check the release notes for additional details on supported hardware. Systems with unsupported devices can still use the *livedisk* method described below. Ensure you backup your data before trying Redox on your hardware.
 
 Hardware support is limited at the moment, so your milage may vary. USB HID drivers are a work in progress but are not currently included, so a USB keyboard or mouse will not work. There is a PS/2 driver, which works with the keyboards and touchpads in many (but not all) laptops. For networking, the Realtek and Intel ethernet controllers are currently supported.
