@@ -52,7 +52,7 @@ need to implement for our scheme. The client uses only the standard library.
 
 Create `src/scheme.rs` in the crate. Start by `use`ing a couple of symbols.
 
-```rust
+```
 use std::cmp::min;
 use std::fs::File;
 use std::io::{Read, Write};
@@ -65,7 +65,7 @@ use syscall::error::Result;
 We start by defining our mutable scheme struct, which will implement the
 `SchemeMut` trait and hold the state of the scheme.
 
-```rust
+```
 struct VecScheme {
     vec: Vec<u8>,
 }
@@ -85,7 +85,7 @@ create the `vec` scheme by opening the corresponding scheme handler in the root
 scheme (`:vec`).  Let's implement a `main()` that intializes our scheme struct
 and registers the new scheme:
 
-```rust
+```
 fn main() {
     let mut scheme = VecScheme::new();
 
@@ -100,7 +100,7 @@ scheme handler. Our scheme will read that data, handle the requests, and send
 responses back to the kernel by writing to the scheme handler. The kernel will
 then pass the results of operations back to the caller.
 
-```rust
+```
 fn main() {
     // ...
 
@@ -138,7 +138,7 @@ when they want to start a conversation with our scheme.
 
 For our vec scheme, let's push whatever path we're given to the vec:
 
-```rust
+```
 impl SchemeMut for VecScheme {
     fn open(&mut self, path: &str, _flags: usize, _uid: u32, _gid: u32) -> Result<usize> {
         self.vec.extend_from_slice(path.as_bytes());
@@ -160,7 +160,7 @@ Similarly, when a process opens a file, the kernel returns a number (the file
 descriptor) that the process can use to read and write to that file. Now let's
 implement the read and write operations for `VecScheme`.
 
-```rust
+```
 impl SchemeMut for VecScheme {
     // ...
 
@@ -196,7 +196,7 @@ implementation. These will all return errors since they are essentially
 unimplemented. There's one more method we need to implement in order to prevent
 errors for users of our scheme:
 
-```rust
+```
 impl SchemeMut for VecScheme {
     // ...
 
@@ -220,7 +220,7 @@ As mentioned earlier, we need to create a very simple client in order to use our
 scheme, since some command line tools (like `cat`) use operations other than
 open, read, write, and close. Put this code into `src/client.rs`:
 
-```rust
+```
 use std::fs::File;
 use std::io::{Read, Write};
 
@@ -246,12 +246,12 @@ In this sense, the vec scheme implements a global vector.
 
 ## Running the Scheme
 
-Since we've already set up the program to build and run in the redox VM,
+Since we've already set up the program to build and run in QEMU,
 simply run:
 
-- `make r.scheme`
-- `make image`
-- `make qemu`
+```sh
+make r.scheme-name image qemu
+```
 
 We'll need multiple terminal windows open in the QEMU window for this step.
 Notice that both binaries we defined in our `Cargo.toml` can now be found in

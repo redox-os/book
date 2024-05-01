@@ -173,7 +173,7 @@ nano src/minesweeper/main.rs
 
 - Search for the line containing the definition of the `FLAGGED` constant (around line 36), and change it to `P`.
 
-```rust
+```
 const FLAGGED: &'static str = "P";
 ```
 

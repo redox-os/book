@@ -51,7 +51,7 @@ A URL can be opened, yielding a file descriptor that is associated with a specif
 
 We use a file API similar to the Rust standard library's for opening URLs:
 
-```rust
+```
 use std::fs::OpenOptions;
 use std::io::prelude::*;
 

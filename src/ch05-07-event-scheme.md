@@ -20,7 +20,7 @@ The purpose of the `event:` scheme is to allow the daemon or client program to r
 
 Before setting up the event scheme, you should `open` all the other resources you will be working with, but set them to be non-blocking. E.g. if you are a scheme provider, open your scheme in non-blocking mode,
 
-```rust
+```
 let mut scheme_file = OpenOptions::new()
             .create(true)
             .read(true)
@@ -32,14 +32,14 @@ let mut scheme_file = OpenOptions::new()
 
 The first step in using the event scheme is to open a connection to it. Each program will have a connection to the event scheme that is unique, so no path name is required, only the name of the scheme itself.
 
-```rust
+```
 let event_file = File::open("event:");
 // you actually need to open it read/write
 ```
 
 Next, write messages to the event scheme, one message per file descriptor that the `event:` scheme should monitor. A message is in the form of a `syscall::data::Event` struct.
 
-```rust
+```
 use syscall::data::Event;
 let _ = event_file.write(&Event{ id: scheme_file.as_raw_fd(), ... });
 // write one message per file descriptor
