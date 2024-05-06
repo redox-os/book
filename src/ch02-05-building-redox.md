@@ -76,7 +76,7 @@ Now we have:
 
  - Downloaded the sources
  - Tweaked the settings to our liking
- - Pobrably added our recipe to the filesystem
+ - Probably added our recipe to the filesystem
 
 We are ready to build the Redox operating system image. Skip ahead to [Configuration Settings](./ch02-07-configuration-settings.md) if you want to build for a different CPU architecture or with different filesystem contents.
 
