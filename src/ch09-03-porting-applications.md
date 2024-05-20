@@ -20,6 +20,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
         - [GNU Autotools script example](#gnu-autotools-script-example)
         - [GNU Autotools script example (lacking a pre-configured tarball)](#gnu-autotools-script-example-lacking-a-pre-configured-tarball)
         - [CMake script example](#cmake-script-example)
+        - [Analyze the source code of a Rust program](#analyze-the-source-code-of-a-rust-program)
         - [Cargo packages command example](#cargo-packages-command-example)
             - [Cargo package with flags](#cargo-package-with-flags)
         - [Cargo flags command example](#cargo-flags-command-example)
@@ -27,6 +28,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
         - [Enable all Cargo flags](#enable-all-cargo-flags)
         - [Cargo examples command example](#cargo-examples-command-example)
         - [Rename binaries](#rename-binaries)
+        - [Change the active source code folder](#change-the-active-source-code-folder)
         - [Configuration files](#configuration-files)
         - [Script-based programs](#script-based-programs)
             - [Adapted scripts](#adapted-scripts)
@@ -480,6 +482,37 @@ cookbook_configure
 """
 ```
 
+#### Analyze the source code of a Rust program
+
+Rust programs and libraries use the `Cargo.toml` configuration file to configure the build system and source code.
+
+While packaging Rust programs you need to know where the main executable is located in the Cargo project, to do this you need to verify the `Cargo.toml` files of the project.
+
+A Rust program can have one or more Cargo packages to build, see some common assumptions below:
+
+- Most Rust programs with a `src` folder use one Cargo package, thus you can use the `cargo` template.
+- Most Rust programs with multiple Cargo packages name the main package with the name of the program.
+
+Beyond these common source code organization, there are special cases.
+
+- In some Rust programs the `Cargo.toml` file contains one of these data types:
+
+```toml
+[[bin]]
+name = "executable-name"
+[[lib]]
+name = "library-object-name"
+```
+
+The `[[bin]]` is what you need, the program executable is built by this Cargo package.
+
+(Ignore packages with the `[[lib]]` data type, Rust libraries don't need to be packaged because Rust does static compilation, except for backup purposes)
+
+But some programs don't have the `[[bin]]` and `[[lib]]` data types, for these cases you need to see the source code files, in most cases at the `src` folder.
+
+- The file named `main.rs` contains the program executable code.
+- The file named `lib.rs` contains the library object code (ignore it).
+
 #### Cargo packages command example
 
 This command is used for Rust programs that use folders inside the repository for compilation, you can use the folder name or program name.
@@ -571,6 +604,25 @@ mv "${COOKBOOK_STAGE}/usr/bin/binary-name" "${COOKBOOK_STAGE}/usr/bin/new-binary
 - Duplicated names
 
 Some recipes for Rust programs can duplicate the program name on the binary (`name_name`), you can also use this command to fix these cases.
+
+#### Change the active source code folder
+
+Sometimes a program don't store the source code on the root of the Git repository, but in a subfolder.
+
+For these cases you need to change the directory of the `${COOKBOOK_SOURCE}` environment variable on the beginning of the `script` data type, to do this add the following command on your recipe script:
+
+```sh
+COOKBOOK_SOURCE="${COOKBOOK_SOURCE}/subfolder-name"
+```
+
+- An example for a Rust program:
+
+```toml
+script = """
+COOKBOOK_SOURCE="${COOKBOOK_SOURCE}/subfolder-name"
+cookbook_cargo
+"""
+```
 
 #### Configuration Files
 
