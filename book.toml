@@ -8,6 +8,12 @@ src = "src"
 [output.html]
 theme = "./theme"
 
+# Optional PDF output
+[output.compress]
+highlight = "no-node"
+optional = true
+theme = "./theme"
+
 # Disabled until issues can be fixed
 # [output.linkcheck]
 # # web links can spuriously fail on CI
