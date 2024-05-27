@@ -270,7 +270,6 @@ Some Redox projects have crates on `crates.io`, thus they use a version-based de
 - [redox_hwio](https://crates.io/crates/redox_hwio)
 - [redox_intelflash](https://crates.io/crates/redox_intelflash)
 - [redox_liner](https://crates.io/crates/redox_liner)
-- [redox_simple_endian](https://crates.io/crates/redox_simple_endian)
 - [redox_uefi_std](https://crates.io/crates/redox_uefi_std)
 - [ralloc](https://crates.io/crates/ralloc)
 - [orbclient](https://crates.io/crates/orbclient)
