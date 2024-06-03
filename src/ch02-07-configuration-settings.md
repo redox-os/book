@@ -63,20 +63,6 @@ If you want to change them temporarily, read the [Command Line](#command-line) s
 
 The Redox image that is built is named `build/$ARCH/$CONFIG_NAME/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`.
 
-### REPO_BINARY
-
-If `REPO_BINARY` set to 1 (`REPO_BINARY?=1`), your build system will become binary-based for recipes, this is useful for some purposes, such as making development builds, test package status and save time with heavy softwares.
-
-You can have a mixed binary/source build, when you enable `REPO_BINARY` it treat every recipe with a `{}` a binary package and recipes with `"recipe"` are treated as source, both inside of your TOML config (`config/$ARCH/$CONFIG_NAME.toml`), example:
-
-```
-[packages]
-...
-recipe1 = {} # binary package
-recipe2 = "recipe" # source
-...
-```
-
 ## Filesystem Configuration
 
 The recipes to be included in the Redox image are determined by a **filesystem configuration** file, which is a `.toml` file, such as `config/x86_64/desktop.toml`. Open `desktop.toml` and have a look through it.
@@ -154,6 +140,55 @@ make r.acid image
 ```
 
 Done, the `acid` recipe is inside your Redox image.
+
+### Binary Packages
+
+By default the Redox build system will build all recipes from source, if you want to use the [pre-built packages](https://static.redox-os.org/pkg/) from our build server there's a TOML option for it.
+
+This is useful for some purposes, such as making development builds, test package status and save time with heavy softwares.
+
+- Open the `desktop-test.toml` file:
+
+```sh
+nano config/your-cpu/desktop-test.toml
+```
+
+- Add the binary package below the `[packages]` section:
+
+```toml
+[packages]
+...
+your-recipe = "binary"
+...
+```
+
+- Download and add the binary package on your Redox image:
+
+```sh
+make image
+```
+
+- Open QEMU to verify your binary package:
+
+```sh
+make qemu
+```
+
+#### REPO_BINARY
+
+If the `REPO_BINARY` environment variable set to 1 (`REPO_BINARY?=1`), your build system will download pre-built packages by default.
+
+When you enable the `REPO_BINARY` environment variable it treat every recipe with the `{}` option as binary package and recipes with the `"recipe"` option as recipe (source-based), both inside of your TOML config (`config/$ARCH/$CONFIG_NAME.toml`).
+
+For example:
+
+```toml
+[packages]
+...
+recipe1 = {} # binary package
+recipe2 = "recipe" # recipe (source-based)
+...
+```
 
 ## Change the QEMU CPU Core and Memory Quantity
 
