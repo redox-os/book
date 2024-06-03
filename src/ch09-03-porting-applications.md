@@ -134,7 +134,7 @@ Note that there are two `dependencies =`, one below the `[build]` section and ot
 This is a recipe template for a quick porting workflow.
 
 ```toml
-#TODO Not compiled or tested
+#TODO not compiled or tested
 [source]
 git = "repository-link"
 rev = "commit-hash"
@@ -1197,7 +1197,7 @@ cd cookbook/recipes
 ```
 
 ```sh
-grep -rnw "text" --include "recipe.toml"
+grep -rnwi "text" --include "recipe.toml"
 ```
 
 This command will search all match texts in the `recipe.toml` files of each recipe folder.
