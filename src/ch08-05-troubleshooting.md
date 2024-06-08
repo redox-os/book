@@ -14,6 +14,7 @@ This page covers all troubleshooting methods and tips for our build system.
     - [Filesystem Config](#filesystem-config)
     - [Fetch](#fetch)
     - [Cookbook](#cookbook)
+        - [Environment Leakage](#environment-leakage)
     - [Create the Image with  FUSE](#create-the-image-with-fuse)
 - [Solving Compilation Problems](#solving-compilation-problems)
     - [Update your build system](#update-your-build-system)
@@ -170,6 +171,24 @@ git branch -v
 - Run `make clean pull fetch` to remove all your compiled binaries and update all sources.
 - Sometimes there are merge requests that briefly break the build, so check the [Chat](./ch13-01-chat.md) if anyone else is experiencing your problems.
 - Sometimes both the source and the binary of some recipe is wrong, run `make ucr.recipe-name` and verify if it fix the problem.
+
+#### Environment Leakage
+
+Environment leakage is when some program or library is not fully cross-compiled to Redox, thus its dependency chain has Linux references that don't work on Redox.
+
+It usually happens when the program or library get objects from outside the Redox build system PATH.
+
+- The Redox build system PATH only read at `/usr/bin` and `/bin` to use the host system build tools
+- The program build system must use the host system build tools and the Cookbook recipe dependencies, not the host system libraries.
+- The most common way to detect this is to install the `*-dev` dependency package equivalent to the program recipe dependency, for example:
+
+The program named "my-program" needs to use the OpenSSL library, thus you add the `openssl` recipe on the `recipe.toml` of the program, but the program don't detect the OpenSSL source code.
+
+Then you install the `libssl-dev` package on your Ubuntu system and rebuild the program with the `make cr.my-program` command, then it finish the build process successfully.
+
+But when you try to open the executable of the program inside of Redox, it doesn't work. Because it contain Linux references.
+
+To fix this problem you need to find where the program build system get the OpenSSL source code and patch it with `${COOKBOOK_SYSROOT}` environment variable (where the `openssl` recipe contents were copied)
 
 ### Update Your Build System
 

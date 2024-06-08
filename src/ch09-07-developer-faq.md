@@ -60,6 +60,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions and answers of n
         - [I tried all methods of the "Troubleshooting the Build" page and my recipe doesn't build, what can I do?](#i-tried-all-methods-of-the-troubleshooting-the-build-page-and-my-recipe-doesnt-build-what-can-i-do)
         - [When I run "make r.recipe" I get a syntax error, how can I fix that?](#when-i-run-make-rrecipe-i-get-a-syntax-error-how-can-i-fix-that)
         - [When I run "cargo update" on some recipe source it call Rustup to install other Rust toolchain version, how can I fix that?](#when-i-run-cargo-update-on-some-recipe-source-it-call-rustup-to-install-other-rust-toolchain-version-how-can-i-fix-that)
+        - [I added the dependency of my program on the "recipe.toml" but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?](#i-added-the-dependency-of-my-program-on-the-recipetoml-but-the-program-build-system-doesnt-detect-it-then-i-installed-the-program-dependency-on-my-linux-distribution-and-it-detected-why)
     - [QEMU](#qemu)
         - [How can I kill the QEMU process if Redox freezes or get a kernel panic?](#how-can-i-kill-the-qemu-process-if-redox-freezes-or-get-a-kernel-panic)
     - [Real Hardware](#real-hardware)
@@ -354,6 +355,10 @@ All recipes follow this syntax `recipe = {}` below the `[packages]` section, the
 It happens because Cargo is not using the Redox fork of the Rust compiler, to fix that run `make env` from the Redox build system root.
 
 It will import the Redox Makefile environment variables to your active shell (it already does that when you run other `make` commands from the Redox build system root).
+
+#### I added the dependency of my program on the "recipe.toml" but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?
+
+Read [this](./ch08-05-troubleshooting.md#environment-leakage) section.
 
 ### QEMU
 
