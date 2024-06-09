@@ -14,7 +14,7 @@ As anything else, microkernels do also have disadvantages.
 
 There are quite a lot of advantages (and disadvantages) with microkernels, a few of which will be covered here.
 
-### Modularity and Customization
+### Better Modularity and Configuration
 
 Monolithic kernels are, well, monolithic. They do not allow fine-grained control as microkernels. This is due to many essential components being "hard-coded" into the kernel, and thus requiring modifications to the kernel itself (e.g., device drivers).
 
@@ -22,7 +22,7 @@ Microkernels are very modular by nature. You can replace, reload, modify, change
 
 Modern monolithic kernels try to solve this issue using kernel modules but still often require the system to reboot.
 
-### Security
+### Better Security
 
 Microkernels are undoubtedly more secure than monolithic kernels. The minimality principle of microkernels is a direct consequence of the principle of least privilege, according to which all components should have only the privileges absolutely needed to provide the needed functionality.
 
@@ -30,7 +30,7 @@ Many security-critical bugs in monolithic kernels comes from services and driver
 
 In other words: **in monolithic kernels, drivers can do whatever they want, without restrictions, when running in kernel mode**.
 
-### More Stable
+### Better Stability
 
 When compared to microkernels, Monolithic kernels tend to be crash-prone. A buggy driver in a Monolithic kernel can crash the whole system because the driver code is running on the same address space of the kernel, thus the kernel process can't continue to run (to avoid memory corruption) and crash (kernel panic).
 
@@ -52,7 +52,7 @@ In monolithic kernels, a bug in kernel component will cause a kernel panic and l
 
 ## Disadvantages of microkernels
 
-### Performance
+### Small Performance Overhead
 
 Any modern operating system needs basic security mechanisms such as virtualization and segmentation of memory. Furthermore any process (including the kernel) has its own stack and variables stored in registers. On [context switch](https://en.wikipedia.org/wiki/Context_switch), that is each time a system call is invoked or any other inter-process communication (IPC) is done, some tasks have to be done, including:
 
@@ -98,8 +98,10 @@ The above illustration from [Wikimedia](https://commons.wikimedia.org/wiki/File:
 - [Microkernels performance paper](https://os.inf.tu-dresden.de/pubs/sosp97/)
 - [Tanenbaum-Torvalds debate](https://en.wikipedia.org/wiki/Tanenbaum%E2%80%93Torvalds_debate)
 
-## A note on the current state
+## A Note On The Current State
 
-Redox has less than 30,000 Rust lines of kernel code. For comparison Minix has ~6,000 C lines of kernel code.
+Redox has less than 40,000 Rust lines of kernel code. For comparison Minix has ~6,000 C lines of kernel code.
+
+(The above comparison can't be used to argument that Minix is more stable or safe than Redox because of the number of source code lines, because Redox is more advanced than Minix in features, thus more lines of code are expected)
 
 We would like to move more parts of Redox to user-space to get an even smaller kernel.
