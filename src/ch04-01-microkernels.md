@@ -6,7 +6,7 @@ The basic philosophy of microkernels is that any component which *can* run in us
 
 The kernel's main task is to act as a medium for communication and segregation of processes. The kernel should provide minimal abstraction over the hardware (that is, drivers, which can and should run in user-space).
 
-Microkernels are more secure and less prone to crashes than monolithic kernels. This is because most kernel components are moved to user-space, and thus cannot do damage to the system. Furthermore, microkernels are extremely maintainable, due to their small code size the number of bugs in the kernel is reduced a lot.
+Microkernels are more secure and less prone to crashes than monolithic kernels. This is because most kernel components are moved to user-space and use different address spaces, and thus can't do damage to the system. Furthermore, microkernels are extremely maintainable, due to their small code size the number of bugs in the kernel is reduced a lot.
 
 As anything else, microkernels do also have disadvantages.
 
@@ -30,9 +30,11 @@ Many security-critical bugs in monolithic kernels comes from services and driver
 
 In other words: **in monolithic kernels, drivers can do whatever they want, without restrictions, when running in kernel mode**.
 
-### Fewer Crashes
+### More Stable
 
-When compared to microkernels, Monolithic kernels tend to be crash-prone. A buggy driver in a Monolithic kernel can crash the whole system whereas with a microkernel there is a separation of concerns which allows the system to handle any crash safely.
+When compared to microkernels, Monolithic kernels tend to be crash-prone. A buggy driver in a Monolithic kernel can crash the whole system because the driver code is running on the same address space of the kernel, thus the kernel process can't continue to run (to avoid memory corruption) and crash (kernel panic).
+
+While in a microkernel the drivers run in different address spaces (separation of concerns) which allows the system to handle any crash safely.
 
 In Linux we often see errors with drivers dereferencing bad pointers which ultimately results in kernel panics.
 

@@ -1,10 +1,10 @@
 # Our Goals
 
-Redox is an attempt to make a complete, fully-functioning, general-purpose operating system with a focus on safety, freedom, reliability, correctness, and pragmatism.
+Redox is an attempt to make a complete, fully-functioning, general-purpose operating system with a focus on safety, freedom, stabillity, correctness, and pragmatism.
 
-We want to be able to use it, without obstructions, as an alternative to Linux/BSD in our computers. It should be able to run most Linux/BSD programs with minimal modifications. 
+We want to be able to use it, without obstructions, as a complete alternative to Linux/BSD in our computers. It should be able to run most Linux/BSD programs with minimal modifications. 
 
-We're aiming towards a complete, safe Rust ecosystem. This is a design choice, which hopefully improves correctness and security (see [Why Rust](./ch01-06-why-rust.md)).
+We're aiming towards a complete, stable, and safe Rust ecosystem. This is a design choice, which hopefully improves correctness and security (see [Why Rust](./ch01-06-why-rust.md)).
 
 We want to improve the security design when compared to other Unix-like operating systems by using safe defaults and limiting insecure configurations where possible.
 
