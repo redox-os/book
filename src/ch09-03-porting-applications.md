@@ -10,6 +10,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
     - [Cross Compiler](#cross-compiler)
     - [Cross Compilation](#cross-compilation)
     - [Environment Variables](#environment-variables)
+        - [Quick Template](#quick-template)
     - [Templates](#templates)
         - [Functions](#functions)
         - [cookbook_cargo function script](#cookbook_cargo-function-script)
@@ -206,6 +207,21 @@ Or
 "${VARIABLE_NAME}/folder-name"
 ```
 
+#### Quick Template
+
+You can quickly copy these environment variables from this section.
+
+```
+"${COOKBOOK_SOURCE}/"
+```
+
+```
+"${COOKBOOK_BUILD}/"
+```
+
+```
+"${COOKBOOK_SYSROOT}/"
+```
 
 ### Templates
 
@@ -384,6 +400,8 @@ fi
 ### Custom Template
 
 The `custom` template enable the `script =` field to be used, this field will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell.
+
+The script section start at the location of the `${COOKBOOK_BUILD}` environment variable (`recipe-name/target/your-cpu/build`)
 
 - Script example
 
