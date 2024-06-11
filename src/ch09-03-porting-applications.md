@@ -24,6 +24,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
         - [Analyze the source code of a Rust program](#analyze-the-source-code-of-a-rust-program)
         - [Cargo packages command example](#cargo-packages-command-example)
             - [Cargo package with flags](#cargo-package-with-flags)
+        - [Cargo bins script example](#cargo-bins-script-example)
         - [Cargo flags command example](#cargo-flags-command-example)
         - [Disable the default Cargo flags](#disable-the-default-cargo-flags)
         - [Enable all Cargo flags](#enable-all-cargo-flags)
@@ -221,6 +222,10 @@ You can quickly copy these environment variables from this section.
 
 ```
 "${COOKBOOK_SYSROOT}/"
+```
+
+```
+"${COOKBOOK_STAGE}/"
 ```
 
 ### Templates
@@ -553,7 +558,29 @@ If you need a script for a package with flags (customization), you can use this 
 
 ```toml
 script = """
-binary=package-name
+package=package-name
+"${COOKBOOK_CARGO}" build \
+            --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
+            --package "${package}" \
+            --release
+            --add-your-flag-here
+        mkdir -pv "${COOKBOOK_STAGE}/usr/bin"
+        cp -v \
+            "target/${TARGET}/release/${package}" \
+            "${COOKBOOK_STAGE}/usr/bin/${package}"
+"""
+```
+
+- The `package-name` after `package=` is where you will insert the Cargo package name of your program.
+- The `--add-your-flag-here` will be replaced by the program flag.
+
+#### Cargo bins script example
+
+Some Rust programs use bins instead of packages to build, to build them you can use this script:
+
+```toml
+script = """
+binary=bin-name
 "${COOKBOOK_CARGO}" build \
             --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
             --bin "${binary}" \
@@ -566,7 +593,7 @@ binary=package-name
 """
 ```
 
-- The `package-name` after `binary=` is where you will insert the Cargo package name of your program.
+- The `bin-name` after `binary=` is where you will insert the Cargo package name of your program.
 - The `--add-your-flag-here` will be replaced by the program flags.
 
 #### Cargo flags command example
