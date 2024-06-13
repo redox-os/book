@@ -55,16 +55,20 @@ The build system downloads and creates several files that you may want to know a
 - `config` - This folder contains all filesystem configurations.
 - `config/*.toml` - Filesystem templates used by the CPU target configurations (a template can use other template to reduce duplication)
 - `config/your-cpu-arch/your-config.toml` - The filesystem configuration of the QEMU image to be built, e.g. `config/x86_64/desktop.toml`.
-- `config/your-cpu-arch/server.toml` - The `server` variant with system components only (try this config if you have boot problems on QEMU or real hardware).
-- `config/your-cpu-arch/desktop.toml` - The `desktop` variant with system components and the Orbital desktop environment (this is the default configuration of the build system).
-- `config/your-cpu-arch/demo.toml` - The `demo` variant with optional programs and games.
-- `config/your-cpu-arch/ci.toml` - The continuous integration configuration, recipes added here become packages on the [build server](https://static.redox-os.org/pkg/).
-- `config/your-cpu-arch/dev.toml` - The development variant with development tools included.
-- `config/your-cpu-arch/desktop-minimal.toml` - The minimal `desktop` variant for low-end computers.
-- `config/your-cpu-arch/server-minimal.toml` - The minimal `server` variant for low-end computers (without Orbital).
-- `config/your-cpu-arch/resist.toml` - The build with the `resist` POSIX test suite.
-- `config/your-cpu-arch/acid.toml` - The build with the `acid` general-purpose test suite.
-- `config/your-cpu-arch/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing in the moment.
+- `config/your-cpu-arch/server.toml` - The variant with system components (without Orbital) and some important tools. Aimed for servers, low-end computers, testers and developers.
+
+(Try this config if you have boot problems on QEMU or real hardware).
+
+- `config/your-cpu-arch/desktop.toml` - The variant with system components, the Orbital desktop environment and some important programs (this is the default configuration of the build system). Aimed for end-users, gamers, testers and developers.
+- `config/your-cpu-arch/dev.toml` - The variant with development tools included. Aimed for developers.
+- `config/your-cpu-arch/demo.toml` - The variant with a complete system and optional programs and games. Aimed for end-users, gamers, testers and developers.
+- `config/your-cpu-arch/desktop-minimal.toml` - The minimal `desktop` variant for low-end computers and embedded hardware. Aimed for servers, low-end computers, embedded hardware and developers.
+- `config/your-cpu-arch/minimal.toml` - The variant without network support and Orbital. Aimed for low-end computers, embedded hardware, testers and developers.
+- `config/your-cpu-arch/minimal-net.toml` - The variant without Orbital and tools. Aimed for low-end computers, embedded hardware, testers and developers.
+- `config/your-cpu-arch/resist.toml` - The variant with the `resist` POSIX test suite. Aimed for developers.
+- `config/your-cpu-arch/acid.toml` - The variant with the `acid` general-purpose test suite. Aimed for developers.
+- `config/your-cpu-arch/ci.toml` - The continuous integration variant, recipes added here become packages on the [build server](https://static.redox-os.org/pkg/). Aimed for packagers and developers.
+- `config/your-cpu-arch/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing at the moment.
 
 ### Cookbook
 
