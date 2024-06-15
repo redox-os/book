@@ -154,9 +154,11 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make qemu audio=no` - Disable all sound drivers.
 - `make qemu usb=no` - Disable all USB drivers.
 - `make qemu efi=yes` - Enable the UEFI boot loader (it supports more screen resolutions).
-- `make qemu live=yes` - Start a live disk (loads the entire image into RAM).
+- `make qemu live=yes` - Fully load the Redox image to RAM.
 - `make qemu vga=no kvm=no` - Cumulative QEMU options is supported.
-- `make qemu_nvme` - Boot Redox from a NVMe interface (SSD emulation).
+- `make qemu disk=nvme` - Boot Redox from a NVMe interface (SSD emulation).
+- `make qemu disk=usb` - Boot Redox from a virtual USB device.
+- `make qemu disk=cdrom` - Boot Redox from a virtual CD-ROM disk.
 - `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`.
 - `make gdb` - Connects `gdb` to the Redox image in QEMU. Join us on [chat](./ch13-01-chat.md) if you want to use this.
 - `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
