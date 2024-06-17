@@ -163,7 +163,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make gdb` - Connects `gdb` to the Redox image in QEMU. Join us on [chat](./ch13-01-chat.md) if you want to use this.
 - `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
 - `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
-- `make virtualbox` - The same as `make qemu`, but for VirtualBox.
+- `make virtualbox` - The same as `make qemu`, but for VirtualBox (it requires the VirtualBox service to be running, run `systemctl status vbox.service` to verify or `akmods; systemctl restart vboxdrv.service` to enable on systems using systemd).
 
 ## Environment Variables
 
