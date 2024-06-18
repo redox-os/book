@@ -20,6 +20,7 @@ This page contain a list of references for Rust programming, OS development, ide
 - [Rust Reference Book](https://doc.rust-lang.org/reference/index.html) - References for people with background familiarity with Rust.
 - [Rustonomicon](https://doc.rust-lang.org/nomicon/) - To learn about unsafe Rust.
 - [Rust 101 - Exercises](https://101-rs.tweede.golf/) - A Rust university course (but lacking answers for exercises).
+- [teach-rs](https://teach-rs.tweede.golf/) - An university course to learn Rust.
 
 ### Porting
 
