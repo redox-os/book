@@ -4,7 +4,7 @@ The best way to communicate with the Redox team is on Matrix Chat. You can open 
 
 Matrix has several different [clients](https://matrix.org/ecosystem/clients/). [Element](https://element.io/) is a commonly used choice, it works on web browsers, Linux, MacOSX, Windows, Android and iOS.
 
-If you have problems with Element, try [nheko](https://nheko-reborn.github.io/).
+If you have problems with Element, try [Fractal](https://gitlab.gnome.org/World/fractal).
 
 - We follow the [Rust Code Of Conduct](https://www.rust-lang.org/policies/code-of-conduct) as rules of the chat rooms.
 
