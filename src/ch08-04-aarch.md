@@ -55,7 +55,7 @@ We are ready to build the a Redox image.
 cd ~/tryredox/redox
 ```
 
-This command will create the image, e.g. `build/aarch64/desktop/hardrive.img`, which you can run with an emulator. See [Running Redox](#running-redox).
+This command will create the image, e.g. `build/aarch64/desktop/harddrive.img`, which you can run with an emulator. See [Running Redox](#running-redox).
 
 ```sh
 time make all

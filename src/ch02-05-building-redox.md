@@ -92,7 +92,7 @@ cd ~/tryredox/redox
 time make all
 ```
 
-This will make the target `build/x86_64/desktop/hardrive.img`, which you can run with a virtual machine.
+This will make the target `build/x86_64/desktop/harddrive.img`, which you can run with a virtual machine.
 
 Give it a while. Redox is big. Read [this](./ch08-07-build-phases.md#make-all-first-run) section to know what the `make all` command does.
 
