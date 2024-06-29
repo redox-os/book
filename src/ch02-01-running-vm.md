@@ -44,15 +44,15 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 4 -m 
 
 If you get an error with the filename, change the `echo $HOME/Downloads/redox_demo_x86_64*_harddrive.img` command to the name of the file you downloaded.
 
-## Mac (Intel) Instructions
+## MacOSX Instructions (Intel)
 
-To install **QEMU** on macOS, use the following command:
+To install **QEMU** on MacOSX, use the following command:
 
 ```sh
 brew install qemu
 ```
 
-This command will run qemu with various features Redox can use enabled:
+This command will run QEMU with various features Redox can use enabled:
 
 ```sh
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
