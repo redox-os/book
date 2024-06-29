@@ -228,8 +228,8 @@ The cross-compilation also reduce the portability requiirements of the program, 
 ### How to determine if some program is portable to Redox?
 
 - The source code of the program must be available
-- The program should use cross-platform libraries (if not, more porting effort will be required)
-- The program build system should support cross-compilation (if not, more porting effort will be required)
+- The program should use cross-platform libraries (if not, more porting effort is required)
+- The program build system should support cross-compilation (if not, more porting effort is required)
 - The program shouldn't directly use the APIs from the Linux kernel (if not, more porting effort is required)
 - The program shoudn't use X11 or Wayland directly (if not, more porting effort is required)
 
