@@ -229,11 +229,11 @@ The cross-compilation also reduce the portability requiirements of the program, 
 
 - The source code of the program must be available
 - The program should use cross-platform libraries (if not, more porting effort is required)
-- The program build system should support cross-compilation (if not, more porting effort is required)
-- The program shouldn't directly use the APIs from the Linux kernel (if not, more porting effort is required)
-- The program shoudn't use X11 or Wayland directly (if not, more porting effort is required)
+- The program's build system should support cross-compilation (if not, more porting effort is required)
+- The program shouldn't directly use the APIs from the Linux kernel on its code (if not, more porting effort is required)
+- The program shoudn't use X11 or Wayland directly on its code (if not, more porting effort is required)
 
-Some APIs of the Linux kernel can be ported, while others not because they require a complete Linux kernel (drivers and filesystems).
+Some APIs of the Linux kernel can be ported, while others not because they require a complete Linux kernel (because of this the drivers and filesystems code require reverse-engineering to be ported to Redox).
 
 ### How to determine the dependencies of some program?
 
