@@ -26,6 +26,7 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions and answers of n
     - [Does Redox support OpenGL and Vulkan?](#does-redox-support-opengl-and-vulkan)
 - [Porting Questions](#porting-questions)
     - [What is a recipe?](#what-is-a-recipe)
+    - [How to determine if some program is portable to Redox?](#how-to-determine-if-some-program-is-portable-to-redox)
     - [How to determine the dependencies of some program?](#how-to-determine-the-dependencies-of-some-program)
     - [How can I configure the build system of the recipe?](#how-can-i-configure-the-build-system-of-the-recipe)
     - [How can I search for functions on relibc?](#how-can-i-search-for-functions-on-relibc)
@@ -223,6 +224,16 @@ The cross-compilation also reduce the portability requiirements of the program, 
 ### What is a recipe?
 
 - A recipe is a software port on Redox, it does cross-compilation by default if you use Cookbook [templates](./ch09-03-porting-applications.md#templates).
+
+### How to determine if some program is portable to Redox?
+
+- The source code of the program must be available
+- The program should use cross-platform libraries (if not, more porting effort will be required)
+- The program build system should support cross-compilation (if not, more porting effort will be required)
+- The program shouldn't directly use the APIs from the Linux kernel (if not, more porting effort is required)
+- The program shoudn't use X11 or Wayland directly (if not, more porting effort is required)
+
+Some APIs of the Linux kernel can be ported, while others not because they require a complete Linux kernel (drivers and filesystems).
 
 ### How to determine the dependencies of some program?
 
