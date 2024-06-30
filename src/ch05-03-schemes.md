@@ -19,7 +19,7 @@ Typical scheme operations include:
 - `open` - Create a **handle** (file descriptor) to a resource provided by the scheme. e.g. `File::create("tcp:127.0.0.1:3000")` in a regular program would be converted by the kernel into `open("127.0.0.1:3000")` and sent to the "tcp:" scheme provider. The "tcp:" scheme provider would parse the name, establish a connection to Internet address "127.0.0.1", port "3000", and return a handle that represents that connection.
 - `read` - get some data from the thing represented by the handle, normally consuming that data so the next `read` will return new data.
 - `write` - send some data to the thing represented by the handle to be saved, sent or written.
-- `seek` - change the logical location that the next `read` or `write` will occur. This may or may not cause some action by the scheme provider.
+- `seek` - change the logical location where the next `read` or `write` will occur. This may or may not cause some action by the scheme provider.
 
 Schemes may choose to provide other standard operations, such as `mkdir`, but the meaning of the operation is up to the scheme. `mkdir` might create a directory entry, or it might create some type of substructure or container relevant to that particular scheme.
 
