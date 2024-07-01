@@ -20,6 +20,16 @@ You can edit the art by using the XML file on [draw.io](https://www.draw.io/).
 
 Use the [lychee](https://lychee.cli.rs/) tool to verify broken links, it's very advanced and fast.
 
+Read [this](https://lychee.cli.rs/installation/) page to install the tool.
+
+### Usage
+
+Run the following command inside the repository folder:
+
+```sh
+lychee src
+```
+
 ## TODOs
 
 There are some parts of this book that need more explanation. Your help would be greatly appreciated.
