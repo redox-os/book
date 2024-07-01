@@ -1,8 +1,10 @@
 # The Redox Book
 
+This is the **Redox OS** book, which explain (almost) everything about Redox: design, philosophy, how it works, how you can contribute, how to deploy Redox, and much more.
+
 ## Development
 
-We use [mdBook](https://github.com/azerupi/mdBook), a Rust tool to create web books from Markdown.
+We use [mdBook](https://github.com/rust-lang/mdBook), a Rust tool to create web books from Markdown.
 
 You can start a development server on http://localhost:3000 with the following command
 
@@ -13,6 +15,10 @@ mdbook serve
 Some graphics are in SVG and are associated with their corresponding `.xml` source file.
 
 You can edit the art by using the XML file on [draw.io](https://www.draw.io/).
+
+## Verify Broken Links
+
+Use the [lychee](https://lychee.cli.rs/) tool to verify broken links, it's very advanced and fast.
 
 ## TODOs
 
