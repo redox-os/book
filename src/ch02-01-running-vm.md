@@ -20,9 +20,11 @@ You can also try the `server`, `desktop` and `desktop-minimal` variants.
 
 (If this version doesn't boot on your virtual machine program, use the weekly images below)
 
-### Weekly Images
+### Daily Images
 
-If you want to test the latest Redox changes you can use our bootable images created each week by opening [this](https://static.redox-os.org/img) link and downloading your preferred variant.
+If you want to test the latest Redox changes you can use our bootable images created each day by opening [this](https://static.redox-os.org/img) link and downloading your preferred variant.
+
+(Sometimes our daily images can be one week old or more because of breaking changes)
 
 ## Linux Instructions
 

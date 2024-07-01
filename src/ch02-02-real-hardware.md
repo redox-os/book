@@ -20,9 +20,11 @@ sha256sum $HOME/Downloads/redox_demo_x86_64*_livedisk.iso
 
 (If this version doesn't boot on your computer, use the weekly images below)
 
-### Weekly Images
+### Daily Images
 
-If you want to test the latest Redox changes you can use our bootable images created each week by opening [this](https://static.redox-os.org/img) link and downloading your preferred variant.
+If you want to test the latest Redox changes you can use our bootable images created each day by opening [this](https://static.redox-os.org/img) link and downloading your preferred variant.
+
+(Sometimes our daily images can be one week old or more because of breaking changes)
 
 ### Linux Instructions
 
