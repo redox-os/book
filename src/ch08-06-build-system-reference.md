@@ -196,14 +196,29 @@ Or
 
 You can use these scripts to perform actions not implemented as `make` commands in the build system.
 
+- To run a script use the following command:
+
+```sh
+scripts/script-name.sh input-text
+```
+
+The "input-text" is the word used by the script.
+
+### Changelog
+
 - `scripts/changelog.sh` - Show the changelog of all Redox components.
-- `scripts/find-recipe.sh` - Show all files installed by a recipe.
+
+### Recipe Files
+
+Show all files installed by a recipe.
 
 ```sh
 scripts/find-recipe.sh recipe-name
 ```
 
-- `scripts/category.sh` - Run `make` options on some recipe category.
+### Recipe Categories
+
+Run `make` options on some recipe category.
 
 ```sh
 scripts/category.sh -x category-name
@@ -211,7 +226,9 @@ scripts/category.sh -x category-name
 
 Where `x` is your `make` option, it can be `f`, `r`, `c`, `u`, `cr`, `ucr`, `uc` or `ucf`.
 
-- `scripts/include-recipes.sh` - Create a list with `recipe-name = {} #TODO` for quick testing of WIP recipes.
+### Include Recipes
+
+Create a list with `recipe-name = {} #TODO` for quick testing of WIP recipes.
 
 ```sh
 scripts/include-recipes.sh "TODO.text"
@@ -219,26 +236,46 @@ scripts/include-recipes.sh "TODO.text"
 
 You will insert the text after the `#TODO` in the `text` part, it can be found on the `recipe.toml` file of the recipe.
 
-- `scripts/show-package.sh` - Show the folders and files on the `stage` and `sysroot` folders of some recipe (to identify packaging issues or violations).
+If you want to add recipes to the `ci.toml` filesystem configuration to be available on the package build server, the recipe names must be sorted in alphabetical order, to do this from the output of this script use the following command:
+
+```sh
+scripts/include-recipes.sh "TODO.text" | sort
+```
+
+### Recipe Analysis
+
+Show the folders and files on the `stage` and `sysroot` folders of some recipe (to identify packaging issues or violations).
 
 ```sh
 scripts/show-package.sh recipe-name
 ```
 
-- `scripts/commit-hash.sh` - Show the current Git branch and commit of the recipe source.
+### Recipe Commit Hash
+
+Show the current Git branch and commit of the recipe source.
 
 ```sh
 scripts/commit-hash.sh recipe-name
 ```
 
-- `scripts/pkg-size.sh` - Show the package size of the recipes (`stage.pkgar` and `stage.tar.gz`), it must be used by package maintainers to enforce the [library linking size policy](https://gitlab.redox-os.org/redox-os/cookbook#library-linking).
+### Package Size
+
+Show the package size of the recipes (`stage.pkgar` and `stage.tar.gz`), it must be used by package maintainers to enforce the [library linking size policy](https://gitlab.redox-os.org/redox-os/cookbook#library-linking).
 
 ```sh
 scripts/pkg-size.sh recipe-name
 ```
 
+### Dual Boot
+
 - `scripts/dual-boot.sh` - Install Redox in the free space of your storage device and add a boot entry (if you are using the [systemd-boot](https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/) boot loader).
+
+### Ventoy
+
 - `scripts/ventoy.sh` - Create and copy the Redox bootable image to an [Ventoy](https://www.ventoy.net/en/index.html)-formatted device.
+
+### Recipe Debugging (Rust)
+
 - `scripts/backtrace.sh` - Allow the user to copy a Rust backtrace from Redox and retrieve the symbols (use the `-h` option to show the "Usage" message).
 
 ## Component Separation
