@@ -4,9 +4,16 @@ For small changes, it is sufficient to just submit a pull request. For larger ch
 
 The steps given below are for the main Redox project repository - submodules and other projects may vary, though most of the approach is the same.
 
-**If you marked your MR as ready don't add new commits, because it will trouble the Jeremy's review, making him lost time by reading the text again**
 
-**If you need to add new commits mark the MR as draft again**
+### Please note:
+
+  - **Once you have marked your MR as ready, don't add new commits.**
+
+    A branch being submitted for review/merge must not be modified. Otherwise, it presents a moving target which can be frustrating and confusing to reviewers.
+
+  - **If you need to add new commits mark the MR as draft again.**
+
+    If additional changes are required, return the MR to draft status before modifying anything. This indicates that the branch may be changing, and prevents reviewers from expending time and effort reviewing changes that are still in progress.
 
 ## Using Git in terminal
 
