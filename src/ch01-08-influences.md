@@ -7,7 +7,7 @@ This page explain how Redox was influenced by other operating systems.
 This Bell Labs OS brings the concept of "Everything is a File" to the highest level, doing all the system communication from the filesystem.
 
 - [Drew DeVault explains the Plan 9](https://drewdevault.com/2022/11/12/In-praise-of-Plan-9.html)
-- [Plan 9's influence on Redox](https://doc.redox-os.org/book/ch05-00-urls-schemes-resources.html)
+- [Plan 9's influence on Redox](./ch05-00-urls-schemes-resources.md)
 
 ## [Minix](https://minix3.org/)
 
@@ -15,7 +15,7 @@ The most influential Unix-like system with a microkernel. It has advanced featur
 
 Redox is largely influenced by Minix - it has a similar architecture but with a feature set written in Rust.
 
-- [How Minix influenced the Redox design](https://doc.redox-os.org/book/ch04-01-microkernels.html)
+- [How Minix influenced the Redox design](./ch04-01-microkernels.md)
 
 ## [seL4](https://sel4.systems/)
 
