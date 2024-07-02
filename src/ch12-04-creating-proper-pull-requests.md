@@ -1,9 +1,8 @@
 # Creating Proper Pull Requests
 
-For small changes, it is sufficient to just submit a pull request. For larger changes, which may require planning or more extensive review, it is better to start by creating an issue. This provides a shared reference for proposed changes, and a place to collect discussion and feedback related to it.
+For small changes, it is sufficient to just submit a pull request. For larger changes, which may require planning or more extensive review, it is better to start by creating an [issue](./ch12-05-filing-issues.md). This provides a shared reference for proposed changes, and a place to collect discussion and feedback related to it.
 
 The steps given below are for the main Redox project repository - submodules and other projects may vary, though most of the approach is the same.
-
 
 ### Please note:
 
