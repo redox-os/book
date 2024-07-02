@@ -12,6 +12,9 @@
   - [Comparing Redox to Other OSes](./ch01-05-how-redox-compares.md)
   - [Why Rust?](./ch01-06-why-rust.md)
   - [Side Projects](./ch01-07-side-projects.md)
+  - [Influences](./ch01-08-influences.md)
+  - [Hardware Support](./ch01-09-hardware-support.md)
+  - [Important Programs](./ch01-10-important-programs.md)
 
 - [Getting started](./ch02-00-getting-started.md)
   - [Running Redox in a virtual machine](./ch02-01-running-vm.md)
