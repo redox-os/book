@@ -1016,7 +1016,7 @@ To start you need to read [this](https://devmanual.gentoo.org/general-concepts/d
 
 The "Dependencies" section of a Gentoo package will show a table with the following categories:
 
-- `BDEPEND` - Build dependencies or build tools (don't package it)
+- `BDEPEND` - Host build tools (don't add them on the `dependencies = []` section of your `recipe.toml`)
 - `DEPEND` - These dependencies are necessary to build the program
 - `RDEPEND` - These dependencies are necessary to execute the program, can be mandatory or optional
 - `PDEPEND` - Optional dependencies (customization)
