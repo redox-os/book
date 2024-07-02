@@ -47,8 +47,8 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
     - [Submodules](#submodules)
     - [Environment Variables](#environment-variables-1)
     - [Configuration](#configuration)
-        - [Arch Linux/AUR](#arch-linuxaur)
-        - [Debian](#debian)
+        - [Arch Linux and AUR](#arch-linux-and-aur)
+        - [Gentoo](#gentoo)
     - [Testing](#testing)
 - [Building/Testing The Program](#buildingtesting-the-program)
 - [Update crates](#update-crates)
@@ -977,43 +977,53 @@ If the last stable release is years behind, we recommend that you ignore it and 
 
 ### Configuration
 
-The determine the program dependencies you can use Arch Linux and Debian as reference, Arch Linux and AUR are the best methods because they separate the build tools from runtimes and libraries, thus you commit less mistakes.
-
-They also have less customized packages, while on Debian is common to have highly customized programs and libraries, sometimes causing confusion.
-
-Arch Linux is more clear on this aspect.
+The determine the program dependencies you can use Arch Linux and Gentoo as reference.
 
 - The build instructions of C/C++ programs tend to mix necessary and optional dependencies together.
 - Most Rust programs have build instructions focused on Linux and force some dependencies, some crates could not need them to work, investigate which crates the program is using.
+- Some programs and libraries have bad documentation, lack build instructions or explain the dependencies, for these cases you will need to read third-party sources or examine the build system.
 
-#### Arch Linux/AUR
+Arch Linux and AUR are the most simple references because they separate the build tools from runtimes and build dependencies, thus you make less mistakes.
+
+They also have less expanded packages, while on Debian is common to have highly expanded programs and libraries, sometimes causing confusion.
+
+(An expanded package is when most or all optional dependencies are enabled)
+
+But Arch Linux is not clear about the optional feature flags and minimum dependencies to build and execute a program, Gentoo is the winner on this aspect.
+
+With Gentoo you can make the most minimum Redox port and increase your chances to make it work on Redox.
+
+#### Arch Linux and AUR
 
 Each package page of some program has a "Dependencies" section on the package details, see the items below:
 
-- `(make)` - Build tools (required to build the program)
-- `(optional)` - Programs/libraries to enchance the program functionality
-
-The other items are runtime or library dependencies (without `()`).
+- `dependency-name` - Build or runtime dependencies, they lack the `()` symbol (required to make the program build and execute)
+- `dependency-name (make)` - Build tools (required to build the program)
+- `dependency-name (optional)` - Programs or libraries to expand the program functionality
 
 See the [Firefox](https://archlinux.org/packages/extra/x86_64/firefox/) package, for example.
 
 - [Arch Linux Packages](https://archlinux.org/packages/)
 - [AUR](https://aur.archlinux.org/)
 
-#### Debian
+#### Gentoo
 
-Each Debian package page has dependency items, see below:
+The [Gentoo](https://gentoo.org) distribution does a wonderful job to document many programs and libraries, like source code location, dependencies, feature flags, cross-compilation and context.
 
-- `depends` - Necessary dependencies (it don't separate build tools from runtimes)
-- `recommends` - Expand the software functionality (optional)
-- `suggests` - Expand the software functionality (optional)
-- `enhances` - Expand the software functionality (optional)
+It's the best reference for advanced packaging of programs in the world, you can search the Gentoo packages on [this](https://packages.gentoo.org/) link.
 
-(The `recommends`, `suggests` and `enhances` items aren't needed to make the program work)
+To start you need to read [this](https://devmanual.gentoo.org/general-concepts/dependencies/) page to learn advanced packaging and some problems.
 
-See the [Firefox ESR](https://packages.debian.org/testing/firefox-esr) package, for example.
+The "Dependencies" section of a Gentoo package will show a table with the following categories:
 
-- [Debian Testing Packages](https://packages.debian.org/testing/allpackages)
+- `BDEPEND` - Build dependencies or build tools (don't package it)
+- `DEPEND` - These dependencies are necessary to build the program
+- `RDEPEND` - These dependencies are necessary to execute the program, can be mandatory or optional
+- `PDEPEND` - Optional dependencies (customization)
+
+The complex classification of Gentoo allow the packager to easily make a minimum build of a program on Redox, it's important because some optional dependencies can use APIs from the Linux kernel not present on Redox.
+
+Thus the best approach is to know the minimum necessary to make the program work on Redox and expand from that.
 
 ### Testing
 
