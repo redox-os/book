@@ -1,14 +1,18 @@
 # Creating Proper Pull Requests
 
-It's completely fine to just submit a small pull request without first making an issue, but if it's a big change that will require a lot of planning and reviewing, it's best you start with writing an issue first.
+In order for changes you have made to be added to redox, or other related projects, it is necessary to have someone review your changes, and merge them into the official repository.
+
+This is done by preparing a feature branch, and submitting a merge request.
+
+For small changes, it is sufficient to just submit a pull request. For larger changes, which may require planning or more extensive review, it is better to start by creating an [issue](./ch12-05-filing-issues.md). This provides a shared reference for proposed changes, and a place to collect discussion and feedback related to it.
 
 The steps given below are for the main Redox project repository - submodules and other projects may vary, though most of the approach is the same.
 
-**If you marked your MR as ready don't add new commits, because it will trouble the Jeremy's review, making him lost time by reading the text again**
+### Please note:
+  - **Once you have marked your MR as ready, don't add new commits.**
+  - **If you need to add new commits mark the MR as draft again.**
 
-**If you need to add new commits mark the MR as draft again**
-
-## Using Git in terminal
+## Preparing your branch
 
 1. In an appropriate directory, e.g. `~/tryredox`, clone the Redox repository to your computer using one of the following commands:
   - HTTPS:
@@ -102,10 +106,26 @@ The steps given below are for the main Redox project repository - submodules and
     ```sh
     git push origin MY_BRANCH
     ```
-    
-14. On [Redox GitLab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Describe your changes. **Submit!**
 
-15. If your merge requests is ready, send the link on [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room.
+## Submitting a merge request
+
+1. On [Redox GitLab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Describe your changes. **Submit!**
+2. Once your merge request is ready, notify reviewers by sending the link to the [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room.
+
+## Incorporating feedback
+
+Sometimes a reviewer will request modifications. If changes are required:
+
+1. Reply or add a thread to the original merge request notification in the [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room indicating that you intend to make additional changes.
+
+   **Note**: It's best to avoid making large changes or additions to a merge request branch, but if necessary, please indicate in chat that you will be making significant changes.
+2. Mark the merge request as "Draft" before pushing any changes to the branch being reviewed.
+3. Make any necessary changes.
+4. Reply on the same thread in the [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room that your merge request is now ready.
+5. Mark the merge request as "Ready"
+
+This process communicates that the branch may be changing, and prevents reviewers from expending time and effort reviewing changes that are still in progress.
+
 
 ## Using GitLab web interface
 
