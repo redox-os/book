@@ -1,5 +1,9 @@
 # Creating Proper Pull Requests
 
+In order for changes you have made to be added to redox, or other related projects, it is necessary to have someone review your changes, and merge them into the official repository.
+
+This is done by preparing a feature branch, and submitting a merge request.
+
 For small changes, it is sufficient to just submit a pull request. For larger changes, which may require planning or more extensive review, it is better to start by creating an [issue](./ch12-05-filing-issues.md). This provides a shared reference for proposed changes, and a place to collect discussion and feedback related to it.
 
 The steps given below are for the main Redox project repository - submodules and other projects may vary, though most of the approach is the same.
