@@ -5,16 +5,10 @@ For small changes, it is sufficient to just submit a pull request. For larger ch
 The steps given below are for the main Redox project repository - submodules and other projects may vary, though most of the approach is the same.
 
 ### Please note:
-
   - **Once you have marked your MR as ready, don't add new commits.**
-
-    A branch being submitted for review/merge must not be modified. Otherwise, it presents a moving target which can be frustrating and confusing to reviewers.
-
   - **If you need to add new commits mark the MR as draft again.**
 
-    If additional changes are required, return the MR to draft status before modifying anything. This indicates that the branch may be changing, and prevents reviewers from expending time and effort reviewing changes that are still in progress.
-
-## Using Git in terminal
+## Preparing your branch
 
 1. In an appropriate directory, e.g. `~/tryredox`, clone the Redox repository to your computer using one of the following commands:
   - HTTPS:
@@ -108,10 +102,26 @@ The steps given below are for the main Redox project repository - submodules and
     ```sh
     git push origin MY_BRANCH
     ```
-    
-14. On [Redox GitLab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Describe your changes. **Submit!**
 
-15. If your merge requests is ready, send the link on [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room.
+## Submitting a merge request
+
+1. On [Redox GitLab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Describe your changes. **Submit!**
+2. Once your merge request is ready, notify reviewers by sending the link to the [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room.
+
+## Incorporating feedback
+
+Sometimes a reviewer will request modifications. If changes are required:
+
+1. Reply or add a thread to the original merge request notification in the [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room indicating that you intend to make additional changes.
+
+   **Note**: It's best to avoid making large changes or additions to a merge request branch, but if necessary, please indicate in chat that you will be making significant changes.
+2. Mark the merge request as "Draft" before pushing any changes to the branch being reviewed.
+3. Make any necessary changes.
+4. Reply on the same thread in the [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room that your merge request is now ready.
+5. Mark the merge request as "Ready"
+
+This process communicates that the branch may be changing, and prevents reviewers from expending time and effort reviewing changes that are still in progress.
+
 
 ## Using GitLab web interface
 
