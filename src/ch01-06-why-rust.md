@@ -30,6 +30,8 @@ You can find out more about how `unsafe` works in the [relevant section](https:/
 
 ## Benefits
 
+The following sections explain the Rust benefits.
+
 ### Less likely to have bugs
 
 The restrictive syntax and compiler requirements to build the code reduce the probability of bugs a lot.

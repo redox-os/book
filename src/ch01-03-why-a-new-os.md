@@ -18,6 +18,8 @@ Thus Redox is an unique opportunity to show the microkernel potential for the ma
 
 ## Benefits
 
+The following sections summarizes the microkernel benefits.
+
 ### True modularity
 
 You can modify/change many system components without a system restart, similar to but safer than some kernel modules and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
