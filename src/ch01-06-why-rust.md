@@ -18,7 +18,7 @@ The design of Linux and BSD is secure. The implementation is not. Many bugs in L
 
 We hope that using Rust we will produce a more secure and stable operating system in the end.
 
-### Unsafes
+## Unsafes
 
 `unsafe` is a way to tell Rust that "I know what I'm doing!", which is often necessary when writing low-level code, providing safe abstractions. You cannot write a kernel without `unsafe`.
 
@@ -28,3 +28,36 @@ This contrasts with kernels written in C, which cannot make guarantees about sec
 
 You can find out more about how `unsafe` works in the [relevant section](https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html) of the Rust book.
 
+## Benefits
+
+### Less likely to have bugs
+
+The restrictive syntax and compiler requirements to build the code reduce the probability of bugs a lot.
+
+### Less vulnerable to data corruption
+
+The Rust compiler helps the programmer to avoid memory errors and race conditions, which reduces the probability of data corruption bugs.
+
+### No need for C/C++ exploit mitigations
+
+The microkernel design written in Rust protects against memory defects that one might see in software written in C/C++.
+
+By isolating the system components from the kernel, the [attack surface](https://en.wikipedia.org/wiki/Attack_surface) is very limited.
+
+### Improved security and reliability without significant performance impact
+
+As the kernel is small, it uses less memory to do its work. The limited kernel code size helps us work towards a bug-free status ([KISS](https://en.wikipedia.org/wiki/KISS_principle)).
+
+Rust's safe and fast language design, combined with the small kernel code size, helps ensure a reliable, performant and easy to maintain core.
+
+### Thread-safety
+
+The C/C++ support for thread-safety is quite fragile. As such, it is very easy to write a program that looks safe to run across multiple threads, but which introduces subtle bugs or security holes. If one thread accesses a piece of state at the same time that another thread is changing it, the whole program can exhibit some truly confusing and bizarre bugs.
+
+You can see [this](https://en.wikipedia.org/wiki/Time_of_check_to_time_of_use) example of a serious class of security bugs that thread-safety fixes.
+
+In Rust, this kind of bug is easy to avoid: the same type system that keeps us from writing memory unsafety prevents us from writing dangerous concurrent access patterns
+
+### Rust-written Drivers
+
+Drivers written in Rust are likely to have fewer bugs and are therefore more stable and secure.

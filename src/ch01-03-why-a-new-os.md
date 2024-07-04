@@ -16,6 +16,28 @@ In Redox, drivers and many system services can run in user-mode, similar to user
 
 Thus Redox is an unique opportunity to show the microkernel potential for the mainstream operating systems universe.
 
+## Benefits
+
+### True modularity
+
+You can modify/change many system components without a system restart, similar to but safer than some kernel modules and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
+
+### Bug isolation
+
+Most system components run in user-space on a microkernel system. Because of this, bugs in most system components won't [crash the system/kernel](https://en.wikipedia.org/wiki/Kernel_panic).
+
+### Restartless design
+
+A mature microkernel changes very little (except for bug fixes), so you won't need to restart your system very often to update it.
+
+Since most of the system components are in userspace, they can be replaced on-the-fly, reducing downtime of servers a lot.
+
+### Easy to develop and debug
+
+Most of the system components run in userspace, simplifying the testing and debugging.
+
+You can read more about the above benefits on [this](https://doc.redox-os.org/book/ch04-01-microkernels.html) page.
+
 ## Advanced Filesystem
 
 Redox provides an advanced filesystem, [RedoxFS](https://gitlab.redox-os.org/redox-os/redoxfs). It includes many of the features in [ZFS](https://en.wikipedia.org/wiki/OpenZFS), but in a more modular design. 
