@@ -1010,7 +1010,7 @@ See the [Firefox](https://archlinux.org/packages/extra/x86_64/firefox/) package,
 
 The [Gentoo](https://gentoo.org) distribution does a wonderful job to document many programs and libraries, like source code location, dependencies, feature flags, cross-compilation and context.
 
-It's the best reference for advanced packaging of programs in the world, you can search the Gentoo packages on [this](https://packages.gentoo.org/) link.
+It's the most complete reference for advanced packaging of programs, you can search the Gentoo packages on [this](https://packages.gentoo.org/) link.
 
 To start you need to read [this](https://devmanual.gentoo.org/general-concepts/dependencies/) page to learn advanced packaging and some problems.
 
