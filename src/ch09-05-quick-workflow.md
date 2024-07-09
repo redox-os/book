@@ -22,6 +22,9 @@ This page will describe the most quick testing/development workflow for people t
 - [Enable a source-based toolchain](#enable-a-source-based-toolchain)
 - [Build the toolchain from source](#build-the-toolchain-from-source)
 - [Download and build some Cookbook configuration for some CPU architecture](#download-and-build-some-cookbook-configuration-for-some-cpu-architecture)
+- [Boot Redox on QEMU from a NVMe device](#boot-redox-on-qemu-from-a-nvme-device)
+- [Boot Redox on QEMU from a NVMe device with more CPU cores](#boot-redox-on-qemu-from-a-nvme-device-with-more-cpu-cores)
+- [Boot Redox on QEMU from a NVMe device, more CPU cores and memory](#boot-redox-on-qemu-from-a-nvme-device-more-cpu-cores-and-memory)
 
 #### Install Rust Nightly
 
@@ -238,3 +241,21 @@ make all CONFIG_NAME=your-config ARCH=your-cpu-arch
 ```
 
 Use Case: Quickly build Redox variants without manual intervention on configuration files.
+
+#### Boot Redox on QEMU from a NVMe device
+
+```sh
+make qemu disk=nvme
+```
+
+#### Boot Redox on QEMU from a NVMe device with more CPU cores
+
+```sh
+make qemu disk=nvme QEMU_SMP=number
+```
+
+#### Boot Redox on QEMU from a NVMe device, more CPU cores and memory
+
+```sh
+make qemu disk=nvme QEMU_SMP=number QEMU_MEM=number-in-mb
+```
