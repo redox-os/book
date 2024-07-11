@@ -99,6 +99,7 @@ patches = [
     "patch1.patch",
     "patch2.patch",
 ]
+same_as = "../recipe-name"
 [build]
 template = "build-system"
 dependencies = [
@@ -116,15 +117,16 @@ dependencies = [
 ```
 
 - Don't remove or forget the `[build]` section (`[source]` section can be removed if you don't use `git` and `tar` or have the `source` folder present on your recipe folder).
-- Insert `git` data type to clone your software repository, if it's not available the build system will build the contents inside the `source` folder on recipe directory.
+- Insert the `git` data type to clone your software repository, if it's not available the build system will build the contents inside the `source` folder on recipe directory.
 - Insert the `upstream` data type if you want to add a Git remote on the source folder of your recipe.
-- Insert `branch` data type if your want to use other branch.
-- Insert `rev` data type if you want to use a commit revision (SHA1).
-- Insert `tar` data type to download and extract tarballs, this can be used instead of `git`.
-- Insert `blake3` data type to add [BLAKE3](https://en.wikipedia.org/wiki/BLAKE_(hash_function)) checksum verification for the tarball of your recipe.
-- Insert `patches` data type to use patch files, they need to be in the same directory of `recipe.toml` (not needed if your program build and run without patches).
+- Insert the `branch` data type if your want to use other branch.
+- Insert the `rev` data type if you want to use a commit revision (SHA1).
+- Insert the `tar` data type to download and extract tarballs, this can be used instead of `git`.
+- Insert the `blake3` data type to add [BLAKE3](https://en.wikipedia.org/wiki/BLAKE_(hash_function)) checksum verification for the tarball of your recipe.
+- Insert the `patches` data type to use patch files, they need to be in the same directory of `recipe.toml` (not needed if your program build and run without patches).
+- Insert the `same_as` data type to symlink the recipe to the `source` folder of other recipe, useful if you want modularity with synchronization.
 - Insert `dependencies` data type if your software have dependencies, to make it work your dependencies need their own recipes (if your software doesn't need this, remove it from your `recipe.toml`).
-- Insert `script` data type to run your custom script (`script =` is enabled when you define your `template` as `custom`).
+- Insert the `script` data type to run your custom script (`script =` is enabled when you define your `template` as `custom`).
 
 Note that there are two `dependencies =`, one below the `[build]` section and other below `[package]` section.
 

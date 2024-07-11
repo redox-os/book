@@ -555,23 +555,9 @@ To test your changes quickly, follow these tutorials on Cargo documentation:
 
 ## A Note about Drivers
 
-Drivers are a special case for rebuild. The source for drivers is fetched both for the `drivers` recipe and the `drivers-initfs` recipe. The `initfs` recipe also copies some drivers from `drivers-initfs` during the build process. If your driver is included in `initfs`, you need to keep all three in sync. The easiest solution is to write a build shell script something like the following, which should be run in your `redox` base directory. (**Note**: This assumes your driver code edits are in the directory `cookbook/recipes/drivers`. Don't accidentally remove your edited code.)
+The `drivers` and `drivers-initfs` recipes share the `source` folder, thus your changes on the `drivers` recipe source code will added on the `drivers-initfs` recipe automatically.
 
-```sh
-rm -rf cookbook/recipes/drivers-initfs/{source,target} cookbook/recipes/initfs/target
-```
-
-```sh
-cp -R cookbook/recipes/drivers/source cookbook/recipes/drivers-initfs
-```
-
-```sh
-make rebuild
-```
-
-```sh
-make qemu
-```
+(The `recipe.toml` of the `drivers-initfs` recipe use the `same_as` data type to symlink the source, you can read on [this](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/core/drivers-initfs/recipe.toml?ref_type=heads#L2) link)
 
 ## Development Tips
 
