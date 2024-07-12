@@ -11,7 +11,7 @@ This Bell Labs OS brings the concept of "Everything is a File" to the highest le
 
 ## [Minix](https://minix3.org/)
 
-The most influential Unix-like system with a microkernel. It has advanced features such as system modularity, [kernel panic](https://en.wikipedia.org/wiki/Kernel_panic) resistence, driver reincarnation, protection against bad drivers and secure interfaces for [process comunication](https://en.wikipedia.org/wiki/Inter-process_communication).
+The most influential Unix-like system with a microkernel. It has advanced features such as system modularity, [kernel panic](https://en.wikipedia.org/wiki/Kernel_panic) resistence, driver reincarnation, protection against bad drivers and secure interfaces for [process communication](https://en.wikipedia.org/wiki/Inter-process_communication).
 
 Redox is largely influenced by Minix - it has a similar architecture but with a feature set written in Rust.
 

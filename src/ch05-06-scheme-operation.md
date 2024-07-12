@@ -26,7 +26,7 @@ At the time a regular program is started, it becomes a **process**, and it exist
 
 Currently, Redox starts all processes in the "root" namespace. This will be corrected in the future, sandboxing all user programs so most schemes and system resources are hidden.
 
-Redox also provides a `null` namespace. A process that exists in the `null` namespace cannot open files or schemes by name, and can only use file descriptors that are already open. This is a security mechanism, mostly used to by daemons running with `root` permission to prevent themselves from being hijacked into opening things they should not be accessing. A daemon will typically open its scheme and any resources it needs during its initialization, then it will ask the kernel to place it in the `null` namespace so no further resources can be opened.
+Redox also provides a `null` namespace. A process that exists in the `null` namespace cannot open files or schemes by name, and can only use file descriptors that are already open. This is a security mechanism, mostly used by daemons running with `root` permission to prevent themselves from being hijacked into opening things they should not be accessing. A daemon will typically open its scheme and any resources it needs during its initialization, then it will ask the kernel to place it in the `null` namespace so no further resources can be opened.
 
 ## Providing a Scheme
 

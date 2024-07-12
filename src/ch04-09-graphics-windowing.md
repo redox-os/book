@@ -10,7 +10,7 @@ Because we don't have GPU drivers yet, we rely on what firmware gives to us.
 
 ### GPUs
 
-On Linux/BSDs, the GPU communication with the kernel is done by the DRM system (Direct Renderig Manager, `libdrm` library), that Mesa3D drivers use to work (Mesa3D implement OpenGL/Vulkan drivers, DRM expose the hardware interfaces).
+On Linux/BSDs, the GPU communication with the kernel is done by the DRM system (Direct Rendering Manager, `libdrm` library), that Mesa3D drivers use to work (Mesa3D implement OpenGL/Vulkan drivers, DRM expose the hardware interfaces).
 
 Said this, on Redox the GPU driver needs to be an user-space daemon which use the system calls/schemes to talk with the hardware.
 

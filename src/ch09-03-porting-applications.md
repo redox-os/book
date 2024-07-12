@@ -67,7 +67,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
 
 ## Recipe
 
-A recipe is how we call a software port on Redox, on this section we will explain the recipe structure and things to consider.
+A recipe is what we call a software port on Redox. In this section we will explain the recipe structure and things to consider.
 
 Create a folder in `cookbook/recipes/your-category` with a file named as `recipe.toml` inside, we will edit this file to fit the program needs.
 
@@ -864,7 +864,7 @@ Example:
 
 A program dependency can be a library (a program that offer functions to some program), a runtime (a program that satisfy some program when it's executed) or a build tool (a program to build/configure some program).
 
-Most C, C++ and Rust softwares place build tools/runtime together with development libraries (packages with `-dev` suffix) in their "Build Instructions".
+Most C, C++ and Rust software place build tools/runtime together with development libraries (packages with `-dev` suffix) in their "Build Instructions".
 
 Example:
 
@@ -878,7 +878,7 @@ The Debian package system bundle shared/static objects on their `-dev` packages 
 
 You would need to create a recipe of the `libssl-dev` and add on your `recipe.toml`, while the `cmake` package would need to be installed on your system.
 
-Library dependencies will be added below the `[build]` to keep the "static linking" policy, while some libraries/runtimes doesn't make sense to add on this section because they would make the program binary too big.
+Library dependencies will be added below the `[build]` to keep the "static linking" policy, while some libraries/runtimes don't make sense to add on this section because they would make the program binary too big.
 
 Runtimes will be added below the `[package]` section (it will install the runtime during the package installation).
 
@@ -890,7 +890,7 @@ If you want an easy way to find dependencies, see the Debian testing [packages l
 
 You can search them with `Ctrl+F`, all package names are clickable and their homepage is available on the right-side of the package description/details.
 
-- Debian packages are the most easy to find dependencies because they are the most used by software developers to describe "Build Instructions".
+- Debian packages are the easiest to find dependencies because they are the most used by software developers to describe "Build Instructions".
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
 - The recipe `PATH` environment variable only read the build tools at `/usr/bin`, it don't read the `/usr/lib` and `/include` folders (this avoid [automagic dependencies](https://wiki.gentoo.org/wiki/Project:Quality_Assurance/Automagic_dependencies)).
 - Don't add build tools on recipe dependencies, check the [Debian](https://packages.debian.org/testing/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for reference.
