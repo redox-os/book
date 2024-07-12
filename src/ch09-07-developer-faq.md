@@ -1,12 +1,13 @@
 # Developer FAQ
 
-The website [FAQ](https://www.redox-os.org/faq/) have questions and answers of newcomers and end-users, while this FAQ will cover organization, technical questions and answers of developers and testers, feel free to suggest new questions.
+The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of newcomers and end-users, while this FAQ will cover organization, technical questions and answers of developers and testers, feel free to suggest new questions.
 
 (If all else fails, join us on [Chat](./ch13-01-chat.md))
 
 - [General Questions](#general-questions)
     - [What is the correct way to update the build system?](#what-is-the-correct-way-to-update-the-build-system)
     - [How can I verify if my build system is up-to-date?](#how-can-i-verify-if-my-build-system-is-up-to-date)
+    - [When I should rebuild the build system or recipes from scratch?](#when-i-should-rebuild-the-build-system-or-recipes-from-scratch)
     - [How can I test my changes on real hardware?](#how-can-i-test-my-changes-on-real-hardware)
     - [How can I write a driver?](#how-can-i-write-a-driver)
     - [How can I port a program?](#how-can-i-port-a-program)
@@ -77,6 +78,16 @@ The website [FAQ](https://www.redox-os.org/faq/) have questions and answers of n
 ### How can I verify if my build system is up-to-date?
 
 - After the `make pull` command, run the `git rev-parse HEAD` command on the build system folders to see if they match the latest commit hash on GitLab.
+
+### When I should rebuild the build system or recipes from scratch?
+
+Sometimes run `make pull rebuild` is not enough to update the build system and recipes because of breaking changes, learn what to do on the following changes:
+
+- New relibc functions and fixes (run `make prefix clean all` after `touch relibc`)
+- Dependency changes on recipes (run `make cr.recipe-name`)
+- Configuration changes on recipes (run `make cr.recipe-name`)
+- Source code changes on recipes (run `make ucr.recipe-name`)
+- Changes on the location of the build system artifacts (if the previous location of the build artifacts had contents, you need to download the build system again to avoid confusion or conflicts)
 
 ### How can I test my changes on real hardware?
 
