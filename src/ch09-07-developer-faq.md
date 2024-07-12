@@ -81,12 +81,12 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
 
 ### When I should rebuild the build system or recipes from scratch?
 
-Sometimes run `make pull rebuild` is not enough to update the build system and recipes because of breaking changes, learn what to do on the following changes:
+Sometimes run the `make pull rebuild` command is not enough to update the build system and recipes because of breaking changes, learn what to do on the following changes:
 
-- New relibc functions and fixes (run `make prefix clean all` after `touch relibc`)
-- Dependency changes on recipes (run `make cr.recipe-name`)
-- Configuration changes on recipes (run `make cr.recipe-name`)
-- Source code changes on recipes (run `make ucr.recipe-name`)
+- New relibc functions and fixes (run the `make prefix clean all` command after the `touch relibc` command)
+- Dependency changes on recipes (run the `make cr.recipe-name` command)
+- Configuration changes on recipes (run the `make cr.recipe-name` command)
+- Source code changes on recipes (run the `make ucr.recipe-name` command)
 - Changes on the location of the build system artifacts (if the previous location of the build artifacts had contents, you need to download the build system again to avoid confusion or conflicts)
 
 ### How can I test my changes on real hardware?
