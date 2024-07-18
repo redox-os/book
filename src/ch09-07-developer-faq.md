@@ -222,9 +222,11 @@ Places where Assembly is used:
 
 ### Why does Redox do cross-compilation?
 
-As Redox is not ready for development or daily usage yet, the programs need to be built outside of Redox and installed  on the image.
+Read some of the reasons below:
 
-The cross-compilation also reduce the portability requiirements of the program, because the build tools don't need to work on Redox, only on Linux/BSD.
+- When developing a new operating system you can't build programs inside of it because the system interfaces are premature. Thus you build on your host system and transfer the binaries to the filesystem of the new OS
+- Cross-compilation reduces the porting requirements because you don't need to support the compiler of the program programming language. You just need to port the programming language standard library or the program libraries
+- Some developers prefer to develop from other operating systems like Linux or MacOSX, the same applies for Linux where some developers write code on MacOSX and test their kernel builds in a virtual machine (mostly QEMU) or real hardware
 
 ### Does Redox support OpenGL and Vulkan?
 
