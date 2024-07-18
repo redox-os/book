@@ -49,6 +49,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
     - [Configuration](#configuration)
         - [Arch Linux and AUR](#arch-linux-and-aur)
         - [Gentoo](#gentoo)
+        - [FreeBSD](#freebsd)
     - [Testing](#testing)
 - [Building/Testing The Program](#buildingtesting-the-program)
 - [Update crates](#update-crates)
@@ -991,9 +992,11 @@ They also have less expanded packages, while on Debian is common to have highly 
 
 (An expanded package is when most or all optional dependencies are enabled)
 
-But Arch Linux is not clear about the optional feature flags and minimum dependencies to build and execute a program, Gentoo is the winner on this aspect.
+But Arch Linux is not clear about the optional feature flags and minimum dependencies to build and execute a program.
 
-With Gentoo you can make the most minimum Redox port and increase your chances to make it work on Redox.
+Using Gentoo as reference you can learn how to make the most minimum Redox port and increase your chances to make it work on Redox.
+
+But Gentoo modify the feature flags of their packages to be used by their package system, thus you should use the FreeBSD Ports.
 
 #### Arch Linux and AUR
 
@@ -1026,6 +1029,14 @@ The "Dependencies" section of a Gentoo package will show a table with the follow
 The complex classification of Gentoo allow the packager to easily make a minimum build of a program on Redox, it's important because some optional dependencies can use APIs from the Linux kernel not present on Redox.
 
 Thus the best approach is to know the minimum necessary to make the program work on Redox and expand from that.
+
+#### FreeBSD
+
+FreeBSD Ports is an important reference to find feature flags for C/C++ programs and libraries, you can see all feature flags of the software by reading the Makefile of the port.
+
+- [FreeBSD Ports GitHub Mirror](https://github.com/freebsd/freebsd-ports)
+
+Use the "Go to file" button to search for the software name.
 
 ### Testing
 
