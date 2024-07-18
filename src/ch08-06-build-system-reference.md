@@ -149,17 +149,17 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
 - `make qemu` - If a `build/harddrive.img` file exists, QEMU will run using that image. If you want to force a rebuild first, use `make rebuild qemu`. Sometimes `make qemu` will detect changes and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`.
 - `make qemu vga=no` - Start QEMU without a GUI (Orbital is disabled).
-- `make qemu vga=virtio` - Start QEMU with the VirtIO GPU driver (2D acceleration).
+- `make qemu vga=virtio` - Start QEMU with the VirtIO GPU driver.
 - `make qemu kvm=no` - Start QEMU without the Linux KVM acceleration.
 - `make qemu iommu=no` - Start QEMU without IOMMU.
 - `make qemu audio=no` - Disable all sound drivers.
 - `make qemu usb=no` - Disable all USB drivers.
 - `make qemu efi=yes` - Enable the UEFI boot loader (it supports more screen resolutions).
 - `make qemu live=yes` - Fully load the Redox image to RAM.
-- `make qemu vga=no kvm=no` - Cumulative QEMU options is supported.
 - `make qemu disk=nvme` - Boot Redox from a NVMe interface (SSD emulation).
 - `make qemu disk=usb` - Boot Redox from a virtual USB device.
 - `make qemu disk=cdrom` - Boot Redox from a virtual CD-ROM disk.
+- `make qemu option1=string option2=string` - Cumulative QEMU options is supported.
 - `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`.
 - `make gdb` - Connects `gdb` to the Redox image in QEMU. Join us on [chat](./ch13-01-chat.md) if you want to use this.
 - `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.

@@ -18,11 +18,11 @@ The following Unix-like systems are supported:
 - OpenSUSE
 - Gentoo (basic support)
 - FreeBSD
-- MacOSX (almost complete)
+- MacOSX (require [workarounds](./ch08-01-advanced-build.md#macos-users))
 - Nix (under develoopment)
 - Solus (basic support, not maintained)
 
-If you have a weird/hard to fix problem, read the [Podman Build](./ch02-06-podman-build.md) page.
+If you have a weird or hard problem to fix, read the [Podman Build](./ch02-06-podman-build.md) page.
 
 ## Preparing the Build
 

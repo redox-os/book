@@ -189,7 +189,19 @@ sudo pkg install qemu qemu-system-x86_64
 sudo pkg install virtualbox
 ```
 
-### MacOS Users using MacPorts:
+### MacOS Users
+
+The MacOSX require workarounds because the Redox toolchain don't support ARM64 as host and MacOSX don't allow FUSE to work while [SIP](https://en.wikipedia.org/wiki/System_Integrity_Protection) is enabled.
+
+This is what you can do:
+
+- Install QEMU and create a x86-64 VM for a Linux distribution
+- Install VirtualBox and create a VM for a Linux distribution (only works with Apple computers using Intel CPUs)
+- Install [UTM](https://mac.getutm.app/) and create a x86-64 VM for a Linux distribution
+- [Disable SIP](https://developer.apple.com/documentation/security/disabling_and_enabling_system_integrity_protection) (Not recommended, only if you know what you are doing)
+- Install a Linux distribution
+
+#### MacPorts
 
 Install the build system dependencies:
 
@@ -220,7 +232,7 @@ If you have some problem, try to install this Perl module:
 cpan install HTML::Entities
 ```
 
-### MacOS Users using Homebrew:
+#### Homebrew
 
 Install the build system dependencies:
 
