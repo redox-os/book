@@ -224,8 +224,8 @@ Places where Assembly is used:
 
 Read some of the reasons below:
 
-- When developing a new operating system you can't build programs inside of it because the system interfaces are premature. Thus you build on your host system and transfer the binaries to the filesystem of the new OS
-- Cross-compilation reduces the porting requirements because you don't need to support the compiler of the program programming language. You just need to port the programming language standard library or the program libraries
+- When developing a new operating system you can't build programs inside of it because the system interfaces are premature. Thus you build the programs on your host system and transfer the binaries to the filesystem of the new OS
+- Cross-compilation reduces the porting requirements because you don't need to support the compiler of the program programming language, the program build system and build tools. You just need to port the programming language standard library or the program libraries
 - Some developers prefer to develop from other operating systems like Linux or MacOSX, the same applies for Linux where some developers write code on MacOSX and test their kernel builds in a virtual machine (mostly QEMU) or real hardware
 
 ### Does Redox support OpenGL and Vulkan?
