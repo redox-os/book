@@ -445,7 +445,7 @@ tee qemu.log
 ```
 
 ```sh
-make qemu vga=no
+make qemu gpu=no
 ```
 
 ```

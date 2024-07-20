@@ -1067,7 +1067,7 @@ make qemu
 If you want to test from terminal, run:
 
 ```sh
-make qemu vga=no
+make qemu gpu=no
 ```
 
 If the build process was successful the recipe will be packaged and don't give errors.

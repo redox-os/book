@@ -148,13 +148,13 @@ You can combine `make` commands, but order is significant. For example, `make r.
 ### QEMU/VirtualBox
 
 - `make qemu` - If a `build/harddrive.img` file exists, QEMU will run using that image. If you want to force a rebuild first, use `make rebuild qemu`. Sometimes `make qemu` will detect changes and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`.
-- `make qemu vga=no` - Start QEMU without a GUI (Orbital is disabled).
-- `make qemu vga=virtio` - Start QEMU with the VirtIO GPU driver.
+- `make qemu gpu=no` - Start QEMU without a GUI (Orbital is disabled).
+- `make qemu gpu=virtio` - Start QEMU with the VirtIO GPU driver.
 - `make qemu kvm=no` - Start QEMU without the Linux KVM acceleration.
 - `make qemu iommu=no` - Start QEMU without IOMMU.
 - `make qemu audio=no` - Disable all sound drivers.
 - `make qemu usb=no` - Disable all USB drivers.
-- `make qemu efi=yes` - Enable the UEFI boot loader (it supports more screen resolutions).
+- `make qemu uefi=yes` - Enable the UEFI boot loader (it supports more screen resolutions).
 - `make qemu live=yes` - Fully load the Redox image to RAM.
 - `make qemu disk=nvme` - Boot Redox from a NVMe interface (SSD emulation).
 - `make qemu disk=usb` - Boot Redox from a virtual USB device.
