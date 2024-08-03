@@ -25,7 +25,8 @@
   - [Podman Build](./ch02-06-podman-build.md)
   - [Configuration Settings](./ch02-07-configuration-settings.md)
   - [Downloading packages with pkg](./ch02-08-pkg.md)
-  - [Questions and feedback](./ch02-09-asking-questions.md)
+  - [Tasks](./ch02-09-tasks.md)
+  - [Questions and feedback](./ch02-10-asking-questions.md)
 
 # Architecture and Design
 
