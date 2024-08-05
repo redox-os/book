@@ -270,7 +270,7 @@ Some APIs of the Linux kernel can be ported, while others not because they requi
 
 ### What is a scheme?
 
-- Read [this](./ch05-00-urls-schemes-resources.md) page.
+- Read [this](./ch05-00-schemes-resources.md) page.
 
 ### When does a regular program need to use a scheme?
 

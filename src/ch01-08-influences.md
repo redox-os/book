@@ -7,7 +7,7 @@ This page explain how Redox was influenced by other operating systems.
 This Bell Labs OS brings the concept of "Everything is a File" to the highest level, doing all the system communication from the filesystem.
 
 - [Drew DeVault explains the Plan 9](https://drewdevault.com/2022/11/12/In-praise-of-Plan-9.html)
-- [Plan 9's influence on Redox](./ch05-00-urls-schemes-resources.md)
+- [Plan 9's influence on Redox](./ch05-00-schemes-resources.md)
 
 ## [Minix](https://minix3.org/)
 
