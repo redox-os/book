@@ -397,7 +397,7 @@ curl -O https://website-name.com/file-name -O https://website2-name.com/file-nam
 - The Home page should be named as `index.html`
 
 ```sh
-simple-http-server -i -p 80 /folder-name
+simple-http-server -i -p 80 folder-name
 ```
 
 This command will use the port 80 (the certified port for HTTP servers), you can change as you wish.
