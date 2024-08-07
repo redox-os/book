@@ -50,7 +50,7 @@ In this example, we will discuss how to create a **fork** of the `games` recipe,
 
 ### Anonymous commits
 
-If you are new to Git, it request your username and email before the first commit on some offline repository, if you don't want to insert your personal information, run:
+If you are new to Git, it requests your username and email before the first commit on some offline repository, if you don't want to insert your personal information, run:
 
 - Repository
 
@@ -151,7 +151,7 @@ mv games source
 
 - If you are making a change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
 
-- If you want to Git Clone a remote repoitory (main repoitory/your fork), you can add these sections on your `recipe.toml`:
+- If you want to Git Clone a remote repository (main repository/your fork), you can add these sections on your `recipe.toml`:
 
 ```toml
 [source]
@@ -231,7 +231,7 @@ In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. 
 
 ### Test Your Changes (out of the Redox build system)
 
-[Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) is the tool used to build and run Rust programs (and C/C++ programs with zero dependencies) for Redox, it download the Redox toolchain and use Cargo.
+[Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) is the tool used to build and run Rust programs (and C/C++ programs with zero dependencies) for Redox, it downloads the Redox toolchain and use Cargo.
 
 #### Commands
 
@@ -582,7 +582,7 @@ Before you start the VS Code IDE to do Redox development, you need to run this c
 rustup target add x86_64-unknown-redox
 ```
 
-If the code that you are working on includes directives like `#[cfg(target_os = "redox)]`, that code will be disabled by default. To enable live syntax and compiler warnings for that code, add the following line to your VS Code config file (`.vscode/settings.json`):
+If the code that you are working on includes directives like `#[cfg(target_os = "redox")]`, that code will be disabled by default. To enable live syntax and compiler warnings for that code, add the following line to your VS Code config file (`.vscode/settings.json`):
 
 ```
 "rust-analyzer.cargo.target": "x86_64-unknown-redox"
