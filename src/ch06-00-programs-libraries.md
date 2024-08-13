@@ -1,6 +1,6 @@
 # Programs and Libraries
 
-Redox is a general-purpose operating system, thus can run any program.
+Redox is a general-purpose operating system, thus it can run any program.
 
 Some programs are interpreted by a runtime for the program's language, such as a script running in the Ion shell or a Python program. Others are compiled into CPU instructions that run on a particular operating system (Redox) and specific hardware (e.g. x86 compatible CPU in 64-bit mode).
 
@@ -15,7 +15,7 @@ Programs could directly invoke Redox system calls, but most call library functio
 
 The Redox [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook) package system includes recipes (software ports) for compiling C, C++ and Rust programs into Redox binaries.
 
-The porting of programs on Redox is done case-by-case, if a program just need small patches, the programmer can modify the Rust crate source code or add `.patch` files on the recipe folder, but if big or dirty patches are needed, Redox create a fork of it on GitLab and rebase for a while in the `redox` branch of the fork (some Redox forks use branches for different versions).
+The porting of programs on Redox is done case-by-case. If a program just needs small patches, the programmer can modify the Rust crate source code or add `.patch` files on the recipe folder, but if big or dirty patches are needed, Redox create a fork of it on GitLab and rebase for a while in the `redox` branch of the fork (some Redox forks use branches for different versions).
 
 - [OS internals documentation](https://wiki.osdev.org/How_kernel,_compiler,_and_C_library_work_together)
 - [ELF documentation](https://wiki.osdev.org/ELF)

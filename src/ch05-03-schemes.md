@@ -8,7 +8,7 @@ Within Redox, a scheme may be thought of in a few ways. It is all of these thing
 
 ## Kernel vs. Userspace Schemes
 
-Schemes are implemented by **scheme providers**. A [userspace scheme](#userspace-schemes) is implemented by a program running in user space, currently requiring `root` permission. A [kernel scheme](#kernel-schemes) is implemented by the kernel directly. When possible, schemes should be implemented in userspace. Only critical schemes are implemented in kernel space.
+Schemes are implemented by **scheme providers**. An [userspace scheme](#userspace-schemes) is implemented by a program running in user space, currently requiring `root` permission. A [kernel scheme](#kernel-schemes) is implemented by the kernel directly. When possible, schemes should be implemented in userspace. Only critical schemes are implemented in kernel space.
 
 ## Accessing Resources
 
