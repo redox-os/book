@@ -65,4 +65,8 @@ If you identify a problem with the system that has not been identified previousl
 
 12. Create a GitLab issue following the template. Non-bug report issues may ignore this template.
 
-13. Watch the issue and be available for questions.
+13. Once you create the issue don't forget to post the link on the Dev or Support rooms of the chat, because the GitLab email notifications have distractions (service messages or spam) and most developers don't left their GitLab pages open to receive desktop notifications from the web browser (which require a custom setting to receive issue notifications).
+
+By doing this you help us to pay attention to your issues and avoid them to be accidentally forgotten.
+
+14. Watch the issue and be available for questions.
