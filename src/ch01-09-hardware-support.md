@@ -10,6 +10,12 @@ Have a look at [HARDWARE.md](https://gitlab.redox-os.org/redox-os/redox/-/blob/m
 - AMD - 64-bit (AMD64) and 32-bit.
 - ARM - 64-bit (Aarch64) with limitations.
 
+### Why CPUs older than i686 aren't supported?
+
+- i686 (essentially Pentium II) introduced a wide range of features that are critical for the Redox kernel.
+- It would be possible to go all the way back to i486, but that would make us lose nice functions like `fxsave`/`fxrstor` and we would need to build userspace without any SSE code.
+- i386 has no atomics (at all) which makes it not likely as a target.
+
 ## Hardware Interfaces
 
 - ACPI
