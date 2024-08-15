@@ -10,7 +10,7 @@ For a regular program doing a regular read of a regular file, the program calls 
 
 ## Non-blocking Read
 
-To allow reading from multiple sources without getting stuck waiting for any particular one, a program can open a URL using the `O_NONBLOCK` flag. If data is ready to be read, the system immediately copies the data to the input buffer and returns normally. However, if data is not ready to be read, the `read` operation returns an error of type `EAGAIN`, which indicates that the program should try again later.
+To allow reading from multiple sources without getting stuck waiting for any particular one, a program can open a path using the `O_NONBLOCK` flag. If data is ready to be read, the system immediately copies the data to the input buffer and returns normally. However, if data is not ready to be read, the `read` operation returns an error of type `EAGAIN`, which indicates that the program should try again later.
 
 Now your program can scan many file descriptors, checking if any of them have data available to read. However, if none have any data, you want your program to block until there is something to do. This is where the `event:` scheme comes in.
 

@@ -4,19 +4,26 @@ Within Redox, a scheme may be thought of in a few ways. It is all of these thing
 
 - It is the **type** of a resource, such as "file", "M.2 drive", "tcp connection", etc. (Note that these are not valid scheme names, they are just given by way of example.)
 - It is the starting point for locating the resource, i.e. it is the root of the path to the resource, which the system can then use in establishing a connection to the resource.
-- It is a **uniquely named service** that is provided by some driver or daemon program, with the full URL identifying a specific resource accessed via that service.
+- It is a **uniquely named service** that is provided by some driver or daemon program, with the full path identifying a specific resource accessed via that service.
 
 ## Kernel vs. Userspace Schemes
 
-Schemes are implemented by **scheme providers**. A [userspace scheme](#userspace-schemes) is implemented by a program running in user space, currently requiring `root` permission. A [kernel scheme](#kernel-schemes) is implemented by the kernel directly. When possible, schemes should be implemented in userspace. Only critical schemes are implemented in kernel space.
+Schemes are implemented by **scheme providers**. A [userspace scheme](#userspace-schemes) is implemented by a program, also called a daemon,
+running in user space, currently requiring `root` permission.
+A [kernel scheme](#kernel-schemes) is implemented by the kernel directly.
+When possible, schemes should be implemented in userspace.
+Only critical schemes are implemented in kernel space.
 
 ## Accessing Resources
 
-In order to provide "virtual file" behavior, schemes generally implement file-like operations. However, it is up to the scheme provider to determine what each file-like operation means. For example, `seek` to an SSD driver scheme might simply add to a file offset, but to a floppy disk controller scheme, it might cause the physical movement of disk read-write heads.
+In order to provide "virtual file" behavior, schemes generally implement file-like operations.
+However, it is up to the scheme provider to determine what each file-like operation means.
+For example, `seek` to an SSD driver scheme might simply add to a file offset, but to a floppy disk controller scheme,
+it might cause the physical movement of disk read-write heads.
 
 Typical scheme operations include:
 
-- `open` - Create a **handle** (file descriptor) to a resource provided by the scheme. e.g. `File::create("tcp:127.0.0.1:3000")` in a regular program would be converted by the kernel into `open("127.0.0.1:3000")` and sent to the "tcp:" scheme provider. The "tcp:" scheme provider would parse the name, establish a connection to Internet address "127.0.0.1", port "3000", and return a handle that represents that connection.
+- `open` - Create a **handle** (file descriptor) to a resource provided by the scheme. e.g. `File::create("/scheme/tcp/127.0.0.1/3000")` in a regular program would be converted by the kernel into `open("127.0.0.1/3000")` and sent to the "tcp" scheme provider. The "tcp" scheme provider would parse the name, establish a connection to Internet address "127.0.0.1", port "3000", and return a handle that represents that connection.
 - `read` - get some data from the thing represented by the handle, normally consuming that data so the next `read` will return new data.
 - `write` - send some data to the thing represented by the handle to be saved, sent or written.
 - `seek` - change the logical location where the next `read` or `write` will occur. This may or may not cause some action by the scheme provider.

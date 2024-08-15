@@ -1,6 +1,7 @@
 # Stiching it All Together
 
-The "URL, scheme, resource" model is simply a unified interface for efficient inter-process communication. URLs are simply resource descriptors. Schemes are simply resource types, provided by scheme managers.
+The "path, scheme, resource" model is simply a unified interface for efficient inter-process communication.
+Paths are simply resource descriptors. Schemes are simply resource types, provided by scheme managers.
 
 A quick, ugly diagram would look like this:
 
@@ -11,7 +12,7 @@ A quick, ugly diagram would look like this:
              |                                                          +=========+
              |               +--------------------------------------+      ^   | write
              |               |                                      |      |   |
-  User space <  +----- URL -----+                                   | read |   v
+  User space <  +---- Path -----+                                   | read |   v
              |  | +-----------+ |       open    +---------+  open   |   +----------+
              |  | |  Scheme   |-|---+  +------->| Scheme  |------------>| Resource |
              |  | +-----------+ |   |  |        +---------+             +----------+
