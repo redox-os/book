@@ -1,11 +1,12 @@
 # Schemes and Resources
 
 An essential design choice made for Redox is to refer to resources using scheme-rooted paths.
-This gives Redox the ability to
-- treat resources (files, devices, etc.) in a consistent manner
-- provide resource-specific behaviors with a common interface
-- allow management of names and namespaces to provide sandboxing and other security features
-- enable device drivers and other system resource management to communicate with each other using the same mechanisms available to user programs
+This gives Redox the ability to:
+
+- Treat resources (files, devices, etc.) in a consistent manner
+- Provide resource-specific behaviors with a common interface
+- Allow management of names and namespaces to provide sandboxing and other security features
+- Enable device drivers and other system resource management to communicate with each other using the same mechanisms available to user programs
 
 ## What is a Resource
 
@@ -28,5 +29,6 @@ A scheme-rooted path takes the following form, with text in **bold** being liter
 _scheme-name_ is the name of the kind of resource, and it also identifies the name of the manager daemon for that kind.
 
 _resource-name_ is the specific resource of that kind.
+
 Typically in Redox, the _resource-name_ is a path with elements separated by slashes,
 but the resource manager is free to interpret the _resource-name_ how it chooses.
