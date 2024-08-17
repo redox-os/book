@@ -4,7 +4,7 @@ Enough theory! Time for an example.
 
 We will implement a scheme which holds a vector. The scheme will push elements
 to the vector when it receives writes, and pop them when it is read. Let's call
-it `vec:`.
+it `vec`.
 
 The complete source for this example can be found at
 [redox-os/vec_scheme_example](https://gitlab.redox-os.org/redox-os/vec_scheme_example).
@@ -225,15 +225,15 @@ use std::fs::File;
 use std::io::{Read, Write};
 
 fn main() {
-    let mut vec_file = File::open("vec:/hi")
+    let mut vec_file = File::open("/scheme/vec/hi")
         .expect("Failed to open vec file");
 
     vec_file.write(b" Hello")
-        .expect("Failed to write to vec:");
+        .expect("Failed to write to vec");
 
     let mut read_into = String::new();
     vec_file.read_to_string(&mut read_into)
-        .expect("Failed to read from vec:");
+        .expect("Failed to read from vec");
 
     println!("{}", read_into); // olleH ih/
 }
@@ -255,7 +255,7 @@ make r.scheme-name image qemu
 
 We'll need multiple terminal windows open in the QEMU window for this step.
 Notice that both binaries we defined in our `Cargo.toml` can now be found in
-`file:/bin` (`vec_scheme` and `vec`). In one terminal window, run
+`/usr/bin` (`vec_scheme` and `vec`). In one terminal window, run
 `sudo vec_scheme`. A program needs to run as root in order to register a new
 scheme. In another terminal, run `vec` and observe the output.
 

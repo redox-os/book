@@ -56,6 +56,14 @@ curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.
 time bash -e podman_bootstrap.sh
 ```
 
+- You may be asked which QEMU installation you want. Please select `full`.
+- You may be asked which Podman container runtime you want to use, `crun` or `runc`. Choose `crun`, but `runc` will also work.
+- Update your path to include `cargo` and the Rust compiler.
+
+```sh
+source ~/.cargo/env
+```
+
 - Change to the `redox` directory.
 
 ```sh
