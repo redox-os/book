@@ -267,6 +267,52 @@ Show the package size of the recipes (`stage.pkgar` and `stage.tar.gz`), it must
 scripts/pkg-size.sh recipe-name
 ```
 
+### Recipe Location
+
+Show the location of the written recipe.
+
+```sh
+scripts/recipe-path.sh recipe-name
+```
+
+### Recipe Match
+
+Search some text inside the `recipe.toml` of some recipe.
+
+```sh
+scripts/recipe-match.sh recipe-name
+```
+
+### Print Recipe
+
+Show the content of the recipe configuration.
+
+(Require `bat` and `ripgrep` installed, run `cargo install bat ripgrep` to install)
+
+```sh
+scripts/print-recipe.sh recipe-name
+```
+
+### Recipe Executables
+
+List the recipe executables to find duplicates and conflicts.
+
+- By default the script will only verify duplicates, if the `-a` option is used it will print the executable names of all compiled recipes
+- The `-arm64` option will show the ARM64 recipe executables
+- The `-i686` option will show the i686 recipe executables
+
+```sh
+scripts/executables.sh
+```
+
+### Cargo Update
+
+Download the recipe source and run `cargo update`
+
+```sh
+scripts/cargo-update.sh recipe-name
+```
+
 ### Dual Boot
 
 - `scripts/dual-boot.sh` - Install Redox in the free space of your storage device and add a boot entry (if you are using the [systemd-boot](https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/) boot loader).
