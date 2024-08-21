@@ -26,70 +26,6 @@ If you want to test the latest Redox changes you can use our bootable images cre
 
 (Sometimes our daily images can be one week old or more because of breaking changes)
 
-## Linux Instructions
-
-You can then run the image in your preferred emulator. If you don't have an emulator installed, use the following command (Pop!\_OS/Ubuntu/Debian) to install QEMU:
-
-```sh
-sudo apt-get install qemu-system-x86
-```
-
-This command will run qemu with various features Redox can use enabled:
-
-```sh
-SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
-    -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
-    -machine q35 -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 \
-    -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -enable-kvm -cpu host \
-	-drive file=`echo $HOME/Downloads/redox_demo_x86_64_*_harddrive.img`,format=raw
-```
-
-If you get an error with the filename, change the `echo $HOME/Downloads/redox_demo_x86_64*_harddrive.img` command to the name of the file you downloaded.
-
-## MacOSX Instructions (Intel)
-
-To install **QEMU** on MacOSX, use the following command:
-
-```sh
-brew install qemu
-```
-
-This command will run QEMU with various features Redox can use enabled:
-
-```sh
-SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
-    -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
-    -machine q35 -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 \
-    -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -cpu max \
-	-drive file=`echo $HOME/Downloads/redox_demo_x86_64_*_harddrive.img`,format=raw
-```
-
-If you get an error with the filename, change the `echo $HOME/Downloads/redox_demo_x86_64*_harddrive.img` command to the name of the file you downloaded.
-
-**Note:** The `brew` command is part of the [Homebrew](https://brew.sh/) package manager for macOS.
-
-## Windows Instructions
-
-To install **QEMU** on Windows, follow the instructions [here](https://www.qemu.org/download/#windows). The installation of **QEMU** will probably not update your command path, so the necessary QEMU command needs to be specified using its full path. Or, you can add the installation folder to your `PATH` environment variable if you will be using it regularly.
-
-Following the instructions for Linux above, download the same [redox_demo](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_harddrive.img) image. Then, in a Command window, `cd` to the location of the downloaded Redox image and run the following very long command:
-
-```
-"C:\Program Files\qemu\qemu-system-x86_64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048 -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug -machine q35 -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -drive file=redox_demo_x86_64_2022-11-23_638_harddrive.img,format=raw
-```
-
-**Note:** If you get a filename error, change `redox_demo_x86_64_*_harddrive.img` to the name of the file you downloaded.
-
-**Note:** If necessary, change `"C:\Program Files\qemu\qemu-system-x86_64.exe"` to reflect where **QEMU** was installed. The quotes are needed if the path contains spaces.
-
-## Using the QEMU emulation
-
-As the system boots, it will ask you for a screen resolution to use, for example `1024x768`. After selecting a screen size, the system will complete the boot, start the **Orbital** GUI, and display a Redox login screen. Login as user `user` with no password. The password for `root` is `password`. Use **Ctrl+Alt+G** to toggle the mouse behavior if you need to zoom out or exit the emulation. If your emulated cursor is out of alignment with your mouse position, type **Ctrl+Alt+G** to regain full cursor control, then click on your emulated cursor. **Ctrl+Alt+F** toggles between full screen and window views.
-
-See [Trying Out Redox](./ch02-04-trying-out-redox.md) for things to try.
-
-If you want to try Redox in **server** mode, add `-nographic -vga none` to the command line above. You may wish to switch to the `redox_server` edition. There are also i686 editions available, although these are not part of the release.
-
 ## VirtualBox Instructions
 
 To run Redox in a VirtualBox virtual machine you need to do the following steps:
@@ -160,3 +96,69 @@ VBoxManage storageattach Redox --storagectl SATA --port 0 --device 0 --type dvdd
 ```sh
 VBoxManage startvm Redox
 ```
+
+## QEMU Instructions
+
+### Linux
+
+You can then run the image in your preferred emulator. If you don't have an emulator installed, use the following command (Pop!\_OS/Ubuntu/Debian) to install QEMU:
+
+```sh
+sudo apt-get install qemu-system-x86
+```
+
+This command will run qemu with various features Redox can use enabled:
+
+```sh
+SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
+    -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
+    -machine q35 -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 \
+    -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -enable-kvm -cpu host \
+	-drive file=`echo $HOME/Downloads/redox_demo_x86_64_*_harddrive.img`,format=raw
+```
+
+If you get an error with the filename, change the `echo $HOME/Downloads/redox_demo_x86_64*_harddrive.img` command to the name of the file you downloaded.
+
+## MacOSX Instructions (Intel)
+
+To install **QEMU** on MacOSX, use the following command:
+
+```sh
+brew install qemu
+```
+
+This command will run QEMU with various features Redox can use enabled:
+
+```sh
+SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
+    -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
+    -machine q35 -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 \
+    -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -cpu max \
+	-drive file=`echo $HOME/Downloads/redox_demo_x86_64_*_harddrive.img`,format=raw
+```
+
+If you get an error with the filename, change the `echo $HOME/Downloads/redox_demo_x86_64*_harddrive.img` command to the name of the file you downloaded.
+
+**Note:** The `brew` command is part of the [Homebrew](https://brew.sh/) package manager for macOS.
+
+### Windows
+
+To install **QEMU** on Windows, follow the instructions [here](https://www.qemu.org/download/#windows). The installation of **QEMU** will probably not update your command path, so the necessary QEMU command needs to be specified using its full path. Or, you can add the installation folder to your `PATH` environment variable if you will be using it regularly.
+
+Following the instructions for Linux above, download the same [redox_demo](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_harddrive.img) image. Then, in a Command window, `cd` to the location of the downloaded Redox image and run the following very long command:
+
+```
+"C:\Program Files\qemu\qemu-system-x86_64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048 -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug -machine q35 -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -drive file=redox_demo_x86_64_2022-11-23_638_harddrive.img,format=raw
+```
+
+**Note:** If you get a filename error, change `redox_demo_x86_64_*_harddrive.img` to the name of the file you downloaded.
+
+**Note:** If necessary, change `"C:\Program Files\qemu\qemu-system-x86_64.exe"` to reflect where **QEMU** was installed. The quotes are needed if the path contains spaces.
+
+### Using the QEMU emulation
+
+As the system boots, it will ask you for a screen resolution to use, for example `1024x768`. After selecting a screen size, the system will complete the boot, start the **Orbital** GUI, and display a Redox login screen. Login as user `user` with no password. The password for `root` is `password`. Use **Ctrl+Alt+G** to toggle the mouse behavior if you need to zoom out or exit the emulation. If your emulated cursor is out of alignment with your mouse position, type **Ctrl+Alt+G** to regain full cursor control, then click on your emulated cursor. **Ctrl+Alt+F** toggles between full screen and window views.
+
+See [Trying Out Redox](./ch02-04-trying-out-redox.md) for things to try.
+
+If you want to try Redox in **server** mode, add `-nographic -vga none` to the command line above. You may wish to switch to the `redox_server` edition. There are also i686 editions available, although these are not part of the release.
