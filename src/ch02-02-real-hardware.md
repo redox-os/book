@@ -26,6 +26,34 @@ If you want to test the latest Redox changes you can use our bootable images cre
 
 (Sometimes our daily images can be one week old or more because of breaking changes)
 
+### Decompession
+
+The Redox images are compressed using the [Zstd](https://github.com/facebook/zstd) algorithm, to decompress follow the steps below:
+
+#### Linux
+
+#### GUI
+
+- Install [GNOME File Roller](https://gitlab.gnome.org/GNOME/file-roller) or [KDE Ark](https://apps.kde.org/ark/) (both can be installed from [Flathub](https://flathub.org/))
+- Open the Redox image and click on the "Extract" button
+
+If you are using the GNOME Nautilus or KDE Dolphin file managers, right-click the file and select the option to extract the file.
+
+#### Terminal
+
+Install the Zstd tool and run:
+
+```sh
+zstd -d $HOME/Downloads/redox_*_x86_64_*_*.img.zst
+```
+
+#### Windows
+
+#### GUI
+
+- Install [PeaZip](https://peazip.github.io/)
+- Right-click the Redox image, hover the PeaZip section and click on the option to extract the file or open the file on PeaZip and extract
+
 ### Linux Instructions
 
 We recommend that you use the [Popsicle](https://github.com/pop-os/popsicle) tool on Linux to flash your USB device, follow the steps below:
