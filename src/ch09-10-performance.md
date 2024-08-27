@@ -59,6 +59,8 @@ default = ["profiling", ...]
 9. In your first terminal window, from the `redox` directory, create the filesystem config `config/x86_64/my_profiler.toml` with the following content.
 
 ```toml
+include = [ "minimal.toml" ]
+
 # General settings
 [general]
 # Filesystem size in MiB
@@ -78,6 +80,12 @@ data = """
 profiled
 """
 
+[[files]]
+path = "/usr/bin/perf_tests.sh"
+data = """
+dd bs=4k count=100000 < /scheme/zero > /scheme/null
+"""
+
 # Script to perform performance tests - add your tests here
 # If you will be testing manually, you don't need this section
 [[files]]
@@ -87,7 +95,7 @@ echo Waiting for startup to complete...
 sleep 5
 echo
 echo Running tests...
-dd bs=4k count=100000 < /scheme/zero > /scheme/null
+ion -x /usr/bin/perf_tests.sh
 echo Shutting down...
 shutdown
 """
@@ -96,25 +104,27 @@ shutdown
 10. In the `redox` directory, create the file `.config` with the following content.
 
 ```make
-# This needs to match the name of the config file
+# This needs to match the name of your filesystem config file
 CONFIG_NAME=my_profiler
 # Core count; this needs to be HARDCODED_CPU_COUNT+1
 QEMU_SMP=5
 # Memory size in MiB; 8GiB is the minimum, larger is better
 QEMU_MEM=8192
+# Don't use the display
+gpu=no
 ```
 
 11. In the `redox` terminal window, `make r.kernel image` (or `make rebuild` if needed).
 
 ### Profiling
 
-12. In your `redox` terminal window, run `make qemu_nvme` or your preferred QEMU command, and perform your testing. You will see console messages indicating that profile data is being logged. **Exit QEMU** before proceeding.
+12. In your `redox` terminal window, run `make qemu` or your preferred VM command, and perform your testing. You will see console messages indicating that profile data is being logged. **Exit QEMU or your VM** before proceeding, if it did not exit automatically.
 
 14. In the `redox` directory, run the following commands.
 
 ```sh
 # Create a directory for your data
-mkdir my_profile_data
+mkdir my_profiler_data
 ```
 ```sh
 # Make the Redox filesystem accessible at the path based on CONFIG_NAME
