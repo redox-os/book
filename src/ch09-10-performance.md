@@ -163,7 +163,7 @@ Replace the `x` with your preferred formatting options. Replace the `2.2` with y
 Then view your flamegraph in a browser.
 
 ```sh
-firefox flamegraph.svg
+firefox kernel_flamegraph.svg
 ```
 
 ### Real hardware (untested)
