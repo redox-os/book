@@ -3,11 +3,11 @@
 The **scheme**, which takes its name from [URI schemes](https://en.wikipedia.org/wiki/List_of_URI_schemes), identifies the type of resource,
 and identifies the manager daemon responsible for that resource.
 
-Within Redox, a scheme may be thought of in a few ways. It is all of these things.
+Within Redox, a scheme may be thought of in a few ways. It is all of these things:
 
-- It is the **type** of a resource, such as "file", "NVMe drive", "TCP connection", etc. (Note that these are not valid scheme names, they are just given by way of example.)
-- It is the starting point for locating the resource, i.e. it is the root of the path to the resource, which the system can then use in establishing a connection to the resource.
-- It is a **uniquely named service** that is provided by some driver or daemon program, with the full path identifying a specific resource accessed via that service.
+- The **type** of a resource, such as "file", "NVMe drive", "TCP connection", etc. (Note that these are not valid scheme names, they are just given by way of example.)
+- The starting point for locating the resource, i.e. it is the root of the path to the resource, which the system can then use in establishing a connection to the resource.
+- A **uniquely named service** that is provided by some driver or daemon program, with the full path identifying a specific resource accessed via that service.
 
 ## Scheme Daemons
 
@@ -103,3 +103,57 @@ The kernel provides a small number of schemes in order to support userspace.
 | `time`      | [time.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/time.rs) | Real-time clock timer |
 | `itimer`    | [time.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/itimer.rs) | Interval timer |
 | `serio`     | [serio.rs](https://gitlab.redox-os.org/redox-os/kernel/-/blob/master/src/scheme/serio.rs) | Serial I/O (PS/2) driver (must stay in the kernel due to PS/2 protocol issues) |
+
+## Scheme List
+
+This section has all Redox schemes in a list format to improve organization, coordination and focus.
+
+### Userspace
+
+- `disk.*`
+- `disk.live`
+- `disk.usb-{id}+{port}-scsi`
+- `logging`
+- `initfs`
+- `file`
+- `network`
+- `ip`
+- `tcp`
+- `udp`
+- `icmp`
+- `netcfg`
+- `dns`
+- `display.vesa`
+- `display.virtio-gpu`
+- `orbital`
+- `pty`
+- `audiorw`
+- `audio`
+- `usb.*`
+- `pcspkr`
+- `acpi`
+- `input`
+- `escalate`
+- `chan`
+- `shm`
+- `log`
+- `rand`
+- `zero`
+- `null`
+
+### Kernel
+
+- `namespace`
+- `user`
+- `debug`
+- `event`
+- `irq`
+- `pipe`
+- `proc`
+- `thisproc`
+- `sys`
+- `kernel.acpi`
+- `memory`
+- `time`
+- `itimer`
+- `serio`
