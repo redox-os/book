@@ -401,7 +401,7 @@ cd ~/redox-gitoxide/redox
 ```
 
 ```sh
-echo "CONFIG_NAME?=my_desktop.toml" >> .config
+echo "CONFIG_NAME?=my_desktop" >> .config
 ```
 
 ```sh
