@@ -26,7 +26,7 @@ If you want to test the latest Redox changes you can use our bootable images cre
 
 (Sometimes our daily images can be one week old or more because of breaking changes)
 
-### Decompession
+### Decompression
 
 The Redox images are compressed using the [Zstd](https://github.com/facebook/zstd) algorithm, to decompress follow the steps below:
 
