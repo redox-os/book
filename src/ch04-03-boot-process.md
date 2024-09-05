@@ -10,7 +10,7 @@ The first code to be executed on x86 systems using BIOS is the boot sector, call
 
 ### UEFI Boot
 
-TODO
+Redox only supports UEFI for 64bit machines. On startup the UEFI firmware loads and executes PE32+ UEFI programs typically located at `/EFI/BOOT/BOOTX64.efi` ([OSDev Wiki](https://wiki.osdev.org/UEFI#Bootable_UEFI_applications)). In case this is our bootloader, the first code that is executed is `pub extern "C" fn main()` in `src/os/uefi/mod.rs`. At this point, the bootloader follows the same common boot process on all boot methods, which can be seen in a later section.
 
 ### Common boot process
 
