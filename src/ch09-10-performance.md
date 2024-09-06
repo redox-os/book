@@ -1,5 +1,8 @@
 # Performance
 
+- [Kernel Profiling](#kernel-profiling)
+- [Benchmarks](#benchmarks)
+
 ## Kernel Profiling
 
 You can create a flamegraph showing the kernel's most frequent operations, using time-based sampling.
@@ -166,8 +169,42 @@ Then view your flamegraph in a browser.
 firefox kernel_flamegraph.svg
 ```
 
-### Real hardware (untested)
+### Real Hardware (untested)
 
 - You need to set `HARDCODED_CPU_COUNT` to the number of actual CPU cores - 1, and there must be at least 512 MiB reserved per core.
 
 - Boot the system, and when you're done profiling, kill `profiled` and extract `/root/profiling.txt` (Details TBD)
+
+## Benchmarks
+
+This section give some commands to benchmark Redox.
+
+<!--
+- CPU benchmark
+TODO: port the sha256sum tool to redox
+```sh
+dd bs=1M count=1024 if=/scheme/zero | sha256sum
+```
+-->
+
+- RAM benchmark
+
+```sh
+dd bs=1M count=1024 if=/scheme/zero of=/scheme/null
+```
+
+- Filesystem read speed benchmark
+
+(Add the `neverball` recipe on your filesystem image, you can also install it with the `sudo pkg install neverball` command)
+
+```sh
+dd bs=1M count=256 if=/usr/games/neverball/neverball of=/scheme/null conv=fdatasync
+```
+
+- Filesystem write speed benchmark
+
+(Add the `neverball` recipe on your filesystem image, you can also install it with the `sudo pkg install neverball` command)
+
+```sh
+dd bs=1M count=256 if=/usr/games/neverball/neverball of=fs_write_speed_bench conv=fdatasync
+```
