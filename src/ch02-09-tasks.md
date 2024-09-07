@@ -20,6 +20,12 @@ cat /scheme/sys/cpu
 
 ## System
 
+### Show system information
+
+```sh
+uname -a
+```
+
 ### Show memory (RAM) usage
 
 ```sh
@@ -48,6 +54,24 @@ ps
 
 ```sh
 ls /bin
+```
+
+### Show all schemes
+
+```sh
+ls /scheme
+```
+
+### Show the system log
+
+```sh
+cat /scheme/sys/log
+```
+
+Or
+
+```sh
+dmesg
 ```
 
 ## Networking
