@@ -6,19 +6,23 @@ Since version 0.8.0, Redox can now be installed on certain hard drives and inter
 
 Hardware support is limited at the moment, so your milage may vary. Only USB input devices (HID) work. There is a PS/2 driver, which works with the keyboards and touchpads in many (but not all) laptops. For networking, the Realtek and Intel ethernet controllers are currently supported.
 
-On some computers, hardware incompatibilities, e.g. disk driver issues, can slow Redox performance. This is not reflective of Redox in general, so if you find that Redox is slow on your computer, please try it on a different model for a better experience.
+On some computers, hardware incompatibilities, e.g. disk driver issues, can slowdown the Redox performance. This is not reflective of Redox in general, so if you find that Redox is slow on your computer, please try it on a different model for a better experience.
 
 The current ISO image uses a bootloader to load the filesystem into memory (*livedisk*) and emulates a hard drive. You can use the system in this mode without installing. Although its use of memory is inefficient, it is fully functional and does not require changes to your device. The ISO image is a great way to try out Redox on real hardware. 
 
 ## Creating a bootable USB device
 
-You can obtain a *livedisk* ISO image either by downloading the [latest release](https://static.redox-os.org/releases/0.8.0/x86_64/), or by [building one](./ch02-05-building-redox.md). The [demo ISO](https://static.redox-os.org/releases/0.8.0/x86_64/redox_demo_x86_64_2022-11-23_638_livedisk.iso) is recommended for most laptops. After downloading completes, check the [SHA256 sum](https://static.redox-os.org/releases/0.8.0/x86_64/SHA256SUM):
+You can obtain a *livedisk* ISO image either by downloading the [latest release](https://static.redox-os.org/releases/0.9.0/x86_64/), or by [building one](./ch02-05-building-redox.md). The [demo ISO](https://static.redox-os.org/releases/0.9.0/x86_64/redox_demo_x86_64_2024-09-07_1225_livedisk.iso.zst) is recommended for most laptops. After downloading completes, check the [SHA256 sum](https://static.redox-os.org/releases/0.9.0/x86_64/SHA256SUM):
 
 ```sh
-sha256sum $HOME/Downloads/redox_demo_x86_64*_livedisk.iso
+sha256sum $HOME/Downloads/redox_demo_x86_64_*_livedisk.iso.zst
 ```
 
-(If this version doesn't boot on your computer, use the weekly images below)
+If you have more than one demo image in the `Downloads` directory, you may need to replace the `*` symbol with the date of your file.
+
+If the demo variant doesn't boot on your computer, try the [desktop](https://static.redox-os.org/releases/0.9.0/x86_64/redox_desktop_x86_64_2024-09-07_1225_livedisk.iso.zst) and [server](https://static.redox-os.org/releases/0.9.0/x86_64/redox_server_x86_64_2024-09-07_1225_livedisk.iso.zst) variants.
+
+Even if the `desktop` and `server` variants doesn't work, use the daily images below.
 
 ### Daily Images
 
@@ -44,7 +48,7 @@ If you are using the GNOME Nautilus or KDE Dolphin file managers, right-click th
 Install the Zstd tool and run:
 
 ```sh
-zstd -d $HOME/Downloads/redox_*_x86_64_*_*.img.zst
+zstd -d $HOME/Downloads/redox_*_x86_64_*_livedisk.iso.zst
 ```
 
 #### Windows
