@@ -10,15 +10,15 @@ Because we don't have GPU drivers yet, we rely on what firmware gives to us.
 
 ### GPUs
 
-On Linux/BSDs, the GPU communication with the kernel is done by the DRM system (Direct Renderig Manager, `libdrm` library), that Mesa3D drivers use to work (Mesa3D implement OpenGL/Vulkan drivers, DRM expose the hardware interfaces).
+On Linux/BSDs, the GPU communication with the kernel is done by the DRM system (Direct Rendering Manager, `libdrm` library), that Mesa3D drivers use to work (Mesa3D implement OpenGL/Vulkan drivers, DRM expose the hardware interfaces).
 
-Said this, on Redox the GPU driver needs to be an user-space daemon which use the system calls/schemes to talk with the hardware.
+Said this, in Redox a "DRM driver" needs to be an user-space driver which use the system calls/schemes to communicate with the hardware.
 
-The last step is to implement the Redox backend in our Mesa3D [fork](https://gitlab.redox-os.org/redox-os/mesa)/[recipe](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/mesa/recipe.toml) to use these user-space daemons.
+The last step is to implement the Redox backend in our Mesa3D [fork](https://gitlab.redox-os.org/redox-os/mesa)/[recipe](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/mesa/recipe.toml) to use these user-space drivers.
 
 ## Software Rendering
 
-We don't have GPU drivers yet but [LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html) (OpenGL CPU emulation) and [VirtIO](https://docs.kernel.org/driver-api/virtio/virtio.html) (2D accleration for a virtual machine) is working.
+We don't have GPU drivers yet but [LLVMpipe](https://docs.mesa3d.org/drivers/llvmpipe.html) (OpenGL CPU emulation) is working.
 
 ## Orbital
 
@@ -43,15 +43,16 @@ If you hold the **Super** key (generally the key with a Windows logo) it will sh
 
 ### Libraries
 
-The programs written with these libraries can run on Orbital.
+The programs using these libraries can work on Orbital.
 
-- SDL1.2
-- SDL2
 - winit
 - softbuffer
 - Slint (through winit and softbuffer)
 - Iced (through winit and softbuffer)
-- egui (can use winit or SDL2)
+- egui (winit or SDL2 can be used)
+- SDL1.2
+- SDL2
+- Mesa3D's OSMesa
 
 ### Clients
 
