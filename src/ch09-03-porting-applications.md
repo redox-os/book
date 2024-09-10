@@ -92,33 +92,52 @@ nano cookbook/recipes/program-category/program-name/recipe.toml
 The recipe configuration (`recipe.toml`) example below contain all supported recipe options. Adapt for your script, program, library or data files.
 
 ```toml
-[source] # Section for data types that manage the program source (only remove it if you have a "source" folder)
-git = "repository-link" # Insert the Git repository of the program (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a "git pull" or change the active branch to "master"
-upstream = "repository-link" # If you are using a fork of the program source with patches add the program upstream source here (can be removed if the upstream source is being used on the "git" data type)
-branch = "branch-name" # Insert the program version or patched branch (can be removed if the "master" or "main" branch is being used)
-rev = "commit-hash" # Insert the commit hash of the latest stable version of the program (can be removed if a stable version is not used)
-tar = "tarball-link.tar.gz" # Insert the program source tarball (can be removed if a tarball is not used)
-blake3 = "source-hash" # Insert the program source tarball BLAKE3 hash, can be generated using the "b3sum" tool, install with the "cargo install b3sum" command (can be removed if using a Git repository or under porting)
-patches = [ # Data type to load "patch" files (can be removed if patch files aren't used)
-    "patch1.patch", # The patch file name (can be removed if the `patches` data type above is not present)
+[source]
+git = "repository-link"
+upstream = "repository-link"
+branch = "branch-name"
+rev = "commit-hash"
+tar = "tarball-link.tar.gz"
+blake3 = "source-hash"
+patches = [
+    "patch1.patch",
     "patch2.patch",
 ]
-same_as = "../program-name" # Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
-[build] # Section for data types that manage the program build process (don't remove it)
-template = "build-system" # Insert the program build system ("cargo" for Rust programs, "configure" for programs using GNU Autotools and "custom" for advanced porting with custom commands)
-dependencies = [ # Data type to load the library dependencies for static linking, don't static link if the library is too big
-    "static-library1", # The statically-linked library name (can be removed if the `dependencies` data type above is not present)
+same_as = "../program-name"
+[build]
+template = "build-system"
+dependencies = [
+    "static-library1",
     "static-library2",
 ]
-script = """ # Data type to load the custom commands for packaging
+script = """
 insert your script here
 """
-[package] # Section for data types that manage the program package
-dependencies = [ # Data type to load the dynamically-linked libraries or "data files" recipes to be installed by the package manager
-    "runtime-dependency1", # The name of the dynamically-linked library or data recipe (can be removed if the `dependencies` data type above is not present)
+[package]
+dependencies = [
+    "runtime-dependency1",
     "runtime-dependency2",
 ]
 ```
+
+- `[source]` - Section for data types that manage the program source (only remove it if you have a `source` folder)
+- `git = "repository-link"` - Insert the Git repository of the program (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a `git pull` or change the active branch to `master` or `main`
+- `upstream = "repository-link"` - If you are using a fork of the program source with patches add the program upstream source here (can be removed if the upstream source is being used on the `git` data type)
+- `branch = "branch-name"` - Insert the program version or patched branch (can be removed if the `master` or `main` branch is being used)
+- `rev = "commit-hash"` - Insert the commit hash of the latest stable version of the program (can be removed if a stable version is not used)
+- `tar = "tarball-link.tar.gz"` - Insert the program source tarball (can be removed if a tarball is not used)
+- `blake3 = "source-hash"` - Insert the program source tarball BLAKE3 hash, can be generated using the `b3sum` tool, install with the `cargo install b3sum` command (can be removed if using a Git repository or under porting)
+- `patches = []` - Data type to load `patch` files (can be removed if patch files aren't used)
+- `"patch1.patch",` (Under the `patches` data type) - The patch file name (can be removed if the `patches` data type above is not present)
+- `same_as = "../program-name"` - Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
+- `[build]` - Section for data types that manage the program build process (don't remove it)
+- `template = "build-system"` - Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with custom commands)
+- `dependencies = []` (Under the `[build]` section) - Data type to load the library dependencies for static linking, don't static link if the library is too big
+- `"static-library1",` - The statically-linked library name (can be removed if the `dependencies` data type above is not present)
+- `script =` - Data type to load the custom commands for packaging
+- `[package]` - Section for data types that manage the program package
+- `dependencies = []` (Under the `[package]` section) - Data type to load the dynamically-linked libraries or "data files" recipes to be installed by the package manager
+- `"runtime-dependency1",` - The name of the dynamically-linked library or data recipe (can be removed if the `dependencies` data type above is not present)
 
 ### Quick Recipe Template
 
