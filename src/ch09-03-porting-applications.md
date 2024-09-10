@@ -134,7 +134,7 @@ dependencies = [
 - `template = "build-system"` - Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with custom commands)
 - `dependencies = []` (Under the `[build]` section) - Data type to load the library dependencies for static linking, don't static link if the library is too big
 - `"static-library1",` - The statically-linked library name (can be removed if the `dependencies` data type above is not present)
-- `script =` - Data type to load the custom commands for packaging
+- `script` - Data type to load the custom commands for packaging
 - `[package]` - Section for data types that manage the program package
 - `dependencies = []` (Under the `[package]` section) - Data type to load the dynamically-linked libraries or "data files" recipes to be installed by the package manager
 - `"runtime-dependency1",` - The name of the dynamically-linked library or data recipe (can be removed if the `dependencies` data type above is not present)
