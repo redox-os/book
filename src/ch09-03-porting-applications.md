@@ -5,6 +5,7 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
 (Before reading this page you must read the [Build System Quick Reference](./ch08-06-build-system-reference.md) page)
 
 - [Recipe](#recipe)
+    - [Recipe Configuration Example](#recipe-configuration-example)
     - [Quick Recipe Template](#quick-recipe-template)
 - [Cookbook](#cookbook)
     - [Cross Compiler](#cross-compiler)
@@ -68,9 +69,9 @@ The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an
 
 ## Recipe
 
-A recipe is how we call a software port on Redox, on this section we will explain the recipe structure and things to consider.
+A recipe is how we call a software port on Redox, this section will explain the recipe configuration and things to consider.
 
-Create a folder in `cookbook/recipes/your-category` with a file named as `recipe.toml` inside, we will edit this file to fit the program needs.
+Create a folder at `cookbook/recipes/program-category` with a file named as `recipe.toml` inside, we will edit this file to fit the program needs.
 
 - Commands example:
 
@@ -79,60 +80,45 @@ cd ~/tryredox/redox
 ```
 
 ```sh
-mkdir cookbook/recipes/your-category/recipe-name
+mkdir cookbook/recipes/program-category/program-name
 ```
 
 ```sh
-nano cookbook/recipes/your-category/recipe-name/recipe.toml
+nano cookbook/recipes/program-category/program-name/recipe.toml
 ```
 
-The `recipe.toml` example below is the supported recipe syntax, adapt for your use case.
+### Recipe Configuration Example
+
+The recipe configuration (`recipe.toml`) example below contain all supported recipe options. Adapt for your script, program, library or data files.
 
 ```toml
-[source]
-git = "software-repository-link"
-upstream = "software-repository-link"
-branch = "branch-name"
-rev = "commit-revision"
-tar = "software-tarball-link.tar.gz"
-blake3 = "your-hash"
-patches = [
-    "patch1.patch",
+[source] # Section for data types that manage the program source (only remove it if you have a "source" folder)
+git = "repository-link" # Insert the Git repository of the program (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a "git pull" or change the active branch to "master"
+upstream = "repository-link" # If you are using a fork of the program source with patches add the program upstream source here (can be removed if the upstream source is being used on the "git" data type)
+branch = "branch-name" # Insert the program version or patched branch (can be removed if the "master" or "main" branch is being used)
+rev = "commit-hash" # Insert the commit hash of the latest stable version of the program (can be removed if a stable version is not used)
+tar = "tarball-link.tar.gz" # Insert the program source tarball (can be removed if a tarball is not used)
+blake3 = "source-hash" # Insert the program source tarball BLAKE3 hash, can be generated using the "b3sum" tool, install with the "cargo install b3sum" command (can be removed if using a Git repository or under porting)
+patches = [ # Data type to load "patch" files (can be removed if patch files aren't used)
+    "patch1.patch", # The patch file name (can be removed if the `patches` data type above is not present)
     "patch2.patch",
 ]
-same_as = "../recipe-name"
-[build]
-template = "build-system"
-dependencies = [
-    "library1",
-    "library2",
+same_as = "../program-name" # Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
+[build] # Section for data types that manage the program build process (don't remove it)
+template = "build-system" # Insert the program build system ("cargo" for Rust programs, "configure" for programs using GNU Autotools and "custom" for advanced porting with custom commands)
+dependencies = [ # Data type to load the library dependencies for static linking, don't static link if the library is too big
+    "static-library1", # The statically-linked library name (can be removed if the `dependencies` data type above is not present)
+    "static-library2",
 ]
-script = """
+script = """ # Data type to load the custom commands for packaging
 insert your script here
 """
-[package]
-dependencies = [
-    "runtime1",
-    "runtime2",
+[package] # Section for data types that manage the program package
+dependencies = [ # Data type to load the dynamically-linked libraries or "data files" recipes to be installed by the package manager
+    "runtime-dependency1", # The name of the dynamically-linked library or data recipe (can be removed if the `dependencies` data type above is not present)
+    "runtime-dependency2",
 ]
 ```
-
-- Don't remove or forget the `[build]` section (`[source]` section can be removed if you don't use `git` and `tar` or have the `source` folder present on your recipe folder).
-- Insert the `git` data type to clone your software repository, if it's not available the build system will build the contents inside the `source` folder on recipe directory.
-- Insert the `upstream` data type if you want to add a Git remote on the source folder of your recipe.
-- Insert the `branch` data type if your want to use other branch.
-- Insert the `rev` data type if you want to use a commit revision (SHA1).
-- Insert the `tar` data type to download and extract tarballs, this can be used instead of `git`.
-- Insert the `blake3` data type to add [BLAKE3](https://en.wikipedia.org/wiki/BLAKE_(hash_function)) checksum verification for the tarball of your recipe.
-- Insert the `patches` data type to use patch files, they need to be in the same directory of `recipe.toml` (not needed if your program build and run without patches).
-- Insert the `same_as` data type to symlink the recipe to the `source` folder of other recipe, useful if you want modularity with synchronization.
-- Insert `dependencies` data type if your software have dependencies, to make it work your dependencies need their own recipes (if your software doesn't need this, remove it from your `recipe.toml`).
-- Insert the `script` data type to run your custom script (`script =` is enabled when you define your `template` as `custom`).
-
-Note that there are two `dependencies =`, one below the `[build]` section and other below `[package]` section.
-
-- Below `[build]` - development libraries.
-- Below `[package]` - runtime dependencies or data files.
 
 ### Quick Recipe Template
 
@@ -162,25 +148,25 @@ After the `#TODO` you will write your current porting status.
 
 ## Cookbook
 
-The GCC and LLVM compiler frontends on Linux use `glibc` (GNU C Library) by default on the linking process, it will create Linux ELF binaries that don't work on Redox because `glibc` don't support the Redox system calls.
+The GCC and LLVM compiler frontends on Linux use `glibc` (GNU C Library) by default on the library object linking process, it will create ELF binaries that don't work on Redox because `glibc` doesn't support the Redox system calls.
 
 To make the compiler use `relibc` (Redox C Library), the Cookbook needs to tell the build system of the program or library to use it, it's done with environment variables.
 
-The Cookbook have templates to avoid custom commands for cross-compilation, but it's not always possible because some build systems are customized or not adapted for cross-compilation.
+The Cookbook have templates to avoid custom commands for cross-compilation, but it's not always possible because some build systems aren't adapted for cross-compilation.
 
-(Some build systems have different methods to enable cross-compilation and pass a custom C library for the compiler, you will need to figure this out)
+(Some build systems have different methods to enable cross-compilation and pass a different C standard library to the compiler, you will need to figure this out)
 
 ### Cross Compiler
 
-Cookbook use a patched Rust/GCC to do cross-compilation of recipes with `relibc` to any supported CPU architecture, you can check cross-compilers [here](https://static.redox-os.org/toolchain/).
+Cookbook use Rust/GCC forks to do cross-compilation of recipes (programs) with `relibc` to any supported CPU architecture, you can check our cross-compilers [here](https://static.redox-os.org/toolchain/).
 
 ### Cross Compilation
 
-Cookbook default behavior is cross-compilation because it brings more flexiblity to the build system, as it makes the recipes use `relibc` or build to a different CPU architecture.
+The Cookbook default behavior is cross-compilation because it brings more flexiblity to the Redox build system, as it allow recipes to use `relibc` or build to a different CPU architecture.
 
 By default Cookbook respect the architecture of your host system but you can change it easily on your `.config` file (`ARCH?=` field).
 
-- Don't use a CPU architecture inside the `recipe.toml` script field, it breaks cross-compilation.
+- Don't use a CPU architecture on the `script` data type of your `recipe.toml`, it breaks cross-compilation.
 - All recipes must use our cross-compilers, a Cookbook [template](#templates) does this automatically but it's not always possible, study the build system of your program/library to find these options or patch the configuration files.
 
 ### Environment Variables
