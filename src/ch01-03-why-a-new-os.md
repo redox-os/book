@@ -6,6 +6,22 @@ The essential goal of the Redox project is to build a robust, reliable and safe 
 
 Wherever possible, Redox code is written in [Rust](https://www.rust-lang.org/). Rust enforces a set of rules and checks on the use, sharing and deallocation of memory references. This almost entirely eliminates the potential for memory leaks, buffer overruns, use after free, and other [memory errors](https://en.wikipedia.org/wiki/Memory_safety#Types_of_memory_errors) that arise during development. The vast majority of security vulnerabilities in operating systems originate from memory errors. The Rust compiler prevents this type of error before the developer attempts to add it to the code base.
 
+### Benefits
+
+The following items summarizes the Rust benefits.
+
+- Memory-Safety
+
+All memory allocations are verified by the compiler to prevent bugs.
+
+- Thread-Safety
+
+Concurrent code is immune to data races.
+
+- NULL-Safety
+
+NULLs can't make undefined behavior.
+
 ## Microkernel Architecture
 
 The [Microkernel Architecture](https://en.wikipedia.org/wiki/Microkernel) moves as much components as possible out of the operating system kernel. Drivers, subsystems and other operating system functionality run as independent processes on user-space (daemons). The kernel's main responsibility is the coordination of these processes, and the management of system resources to the processes.
@@ -16,25 +32,25 @@ In Redox, drivers and many system services can run in user-mode, similar to user
 
 Thus Redox is an unique opportunity to show the microkernel potential for the mainstream operating systems universe.
 
-## Benefits
+### Benefits
 
-The following sections summarizes the microkernel benefits.
+The following items summarizes the microkernel benefits.
 
-### True modularity
+- True modularity
 
 You can modify/change many system components without a system restart, similar to but safer than some kernel modules and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
 
-### Bug isolation
+- Bug isolation
 
 Most system components run in user-space on a microkernel system. Because of this, bugs in most system components won't [crash the system/kernel](https://en.wikipedia.org/wiki/Kernel_panic).
 
-### Restartless design
+- Restartless design
 
 A mature microkernel changes very little (except for bug fixes), so you won't need to restart your system very often to update it.
 
 Since most of the system components are in userspace, they can be replaced on-the-fly, reducing downtime of servers a lot.
 
-### Easy to develop and debug
+- Easy to develop and debug
 
 Most of the system components run in userspace, simplifying the testing and debugging.
 
