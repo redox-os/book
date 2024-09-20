@@ -11,7 +11,7 @@ It is easy to port Raspberry Pi 3 Model B+ (raspi3b+) since the bootloader of Ra
 
 In order to build a RasPi3B+ image:
 
-- Add `BOARD?=raspi3bp` and `CONFIG?=server-minimal`to `.config`
+- Add `BOARD?=raspi3bp` and `CONFIG?=minimal`to `.config`
 - Run `make all`
 - Download the firmware
 

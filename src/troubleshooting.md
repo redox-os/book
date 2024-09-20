@@ -2,7 +2,7 @@
 
 This page covers all troubleshooting methods and tips for our build system.
 
-(You must read [this](./ch08-06-build-system-reference.md) page before)
+(You must read [this](./build-system-reference.md) page before)
 
 - [Setup](#setup)
     - [bootstrap.sh](#bootstrapsh)
@@ -60,7 +60,7 @@ When you run `make all`, the following steps occur.
 
 ### .config and mk/config.mk
 
-- `make` scans [.config](./ch02-07-configuration-settings.md#config) and [mk/config.mk](./ch02-07-configuration-settings.md#mkconfigmk) for settings, such as the CPU architecture, configuration name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./ch02-07-configuration-settings.md) to make sure you have the settings that are best for you.
+- `make` scans [.config](./configuration-settings.md#config) and [mk/config.mk](./configuration-settings.md#mkconfigmk) for settings, such as the CPU architecture, configuration name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./configuration-settings.md) to make sure you have the settings that are best for you.
 
 ### Prefix
 
@@ -70,9 +70,9 @@ If you have a problem with the toolchain, try `rm -rf prefix`, and everything wi
 
 ### Podman
 
-If enabled, the Podman environment is set up. [Podman](./ch02-06-podman-build.md) is recommended for unsupported systems.
+If enabled, the Podman environment is set up. [Podman](./podman-build.md) is recommended for unsupported systems.
 
-If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./ch02-06-podman-build.md#debugging-your-build-process).
+If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./podman-build.md#debugging-your-build-process).
 If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
 
 #### Manual Configuration
@@ -108,13 +108,13 @@ sudo sysctl net.ipv4.ip_unprivileged_port_start=443
 
 - Hopefully, you have a working Podman build now.
 
-(If you still have problems with Podman, read the [Troubleshooting](./ch08-05-troubleshooting.md) chapter or join us on the [chat](./ch13-01-chat.md))
+(If you still have problems with Podman, read the [Troubleshooting](./troubleshooting.md) chapter or join us on the [chat](./chat.md))
 
-Let us know if you have improvements for Podman troubleshooting on the [chat](./ch13-01-chat.md).
+Let us know if you have improvements for Podman troubleshooting on the [chat](./chat.md).
 
 ### Filesystem Configuration
 
-The list of Redox recipes to be built is read from the [filesystem configuration](./ch02-07-configuration-settings.md#filesystem-configuration) file, which is specified in [.config](./ch02-07-configuration-settings.md#config) or `mk/config.mk`. If your recipe is not being included in the build, verify if you have set the `CONFIG_NAME` or `FILESYSTEM_CONFIG` in the `.config` file.
+The list of Redox recipes to be built is read from the [filesystem configuration](./configuration-settings.md#filesystem-configuration) file, which is specified in [.config](./configuration-settings.md#config) or `mk/config.mk`. If your recipe is not being included in the build, verify if you have set the `CONFIG_NAME` or `FILESYSTEM_CONFIG` in the `.config` file.
 
 ### Fetch
 
@@ -130,7 +130,7 @@ After all recipes are fetched, a tag file is created as `build/$ARCH/$CONFIG_NAM
 
 Each recipe is built according to the `recipe.toml` file. The recipe binaries or library objects are placed in the `target` directory, in a subdirectory named based on the CPU architecture. These tasks are done by various Redox-specific shell scripts and commands, including `repo.sh`, `cook.sh` and `Cargo`. These commands make assumptions about `$PATH` and `$PWD`, so they might not work if you are using them outside the build process.
 
-If you have a problem with a recipe you are building, try the `make c.recipe-name` command. A common problem when building on unsupported systems is that certain recipes will fail to build due to missing dependencies. Try using the [Podman Build](./ch02-06-podman-build.md) or manually installing the recipe dependencies.
+If you have a problem with a recipe you are building, try the `make c.recipe-name` command. A common problem when building on unsupported systems is that certain recipes will fail to build due to missing dependencies. Try using the [Podman Build](./podman-build.md) or manually installing the recipe dependencies.
 
 After all recipes are cooked, a tag file is created as `build/$ARCH/$CONFIG_NAME/repo.tag`. If this file is present, cooking is skipped. You can remove it manually, or use `make rebuild`, which will force refetching and rebuilding.
 
@@ -248,15 +248,15 @@ git pull
 git merge your-branch master
 ```
 
-If you want an anonymous merge, read [this](./ch09-02-coding-and-building.md#anonymous-commits).
+If you want an anonymous merge, read [this](./coding-and-building.md#anonymous-commits).
 
 ### Update relibc
 
-An outdated relibc copy can contain bugs (already fixed on recent versions) or missing APIs, read [this](./ch08-06-build-system-reference.md#update-relibc) section to learn how to update it.
+An outdated relibc copy can contain bugs (already fixed on recent versions) or missing APIs, read [this](./build-system-reference.md#update-relibc) section to learn how to update it.
 
 ### Update crates
 
-Sometimes a Rust program use an old crate version lacking Redox support, read [this](./ch09-03-porting-applications.md#update-crates) section to learn how to update them.
+Sometimes a Rust program use an old crate version lacking Redox support, read [this](./porting-applications.md#update-crates) section to learn how to update them.
 
 ### Verify the dependency tree
 
@@ -429,8 +429,8 @@ grep -nw "KERNEL PANIC" --include "file-name.log"
 
 ### QEMU
 
-If you get a kernel panic in QEMU, copy the terminal text or capture a screenshot and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).
+If you get a kernel panic in QEMU, copy the terminal text or capture a screenshot and send to us on [Matrix](./chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).
 
 ### Real Hardware
 
-If you get a kernel panic in real hardware, capture a photo and send to us on [Matrix](./ch13-01-chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).
+If you get a kernel panic in real hardware, capture a photo and send to us on [Matrix](./chat.md) or create an issue on [GitLab](https://gitlab.redox-os.org/redox-os/kernel/-/issues).

@@ -16,7 +16,7 @@ The **recipe** contains the instructions to download and build a program, for it
 
 ## Cookbook
 
-The `cookbook` subproject contains the mechanism for building the Redox recipes. If a recipe is modified, it is updated in the `cookbook` subproject. In order for the updated recipe to get included in your downloaded cookbook, the `redox` project needs to be updated with the new `cookbook` SHA commit hash. Connect with us on the [chat](./ch13-01-chat.md) if a recipe is not getting updated.
+The `cookbook` subproject contains the mechanism for building the Redox recipes. If a recipe is modified, it is updated in the `cookbook` subproject. In order for the updated recipe to get included in your downloaded cookbook, the `redox` project needs to be updated with the new `cookbook` SHA commit hash. Connect with us on the [chat](./chat.md) if a recipe is not getting updated.
 
 ## Crates
 
@@ -32,4 +32,4 @@ In some cases, the Redox GitLab has a fork of another repository, in order to ad
 
 When you are contributing to Redox, you are expected to make your changes in a Personal Fork of the relevant project, then create a Merge Request (PR) to have your changes pulled from your fork into the master. Note that your personal fork is required to have public visibility.
 
-In some rare situations, e.g. for experimental features or projects with licensing that is not compatible with Redox, a recipe may pull in sources located in a personal repository. Before using one of these recipes, please check with us on [Chat](./ch13-01-chat.md) to understand why the project is set up this way, and do not commit a Redox config file containing such a recipe without permission.
+In some rare situations, e.g. for experimental features or projects with licensing that is not compatible with Redox, a recipe may pull in sources located in a personal repository. Before using one of these recipes, please check with us on [Chat](./chat.md) to understand why the project is set up this way, and do not commit a Redox config file containing such a recipe without permission.

@@ -4,7 +4,7 @@
 
 You don't need to join our GitLab to build Redox, but you will if you want to contribute. Obtaining a Redox account requires approval from a GitLab administrator, because of the high number of spam accounts (bots) that are created on this type of project. To join, first, go to [Redox GitLab](https://gitlab.redox-os.org/) and click the Sign In/Register button. Create your User ID and Password. Then, send an message to the [GitLab Approvals](https://matrix.to/#/#redox-gitlab:matrix.org) room indicating your GitLab User ID and requesting that your account be approved. Please give a brief statement about what you intend to use the account for. This is mainly to ensure that you are a genuine user.
 
-The approval of your GitLab account may take some minutes or hours, in the meantime, join us on [Chat](./ch13-01-chat.md) and let us know what you are working on.
+The approval of your GitLab account may take some minutes or hours, in the meantime, join us on [Chat](./chat.md) and let us know what you are working on.
 
 ## Setting up 2FA
 

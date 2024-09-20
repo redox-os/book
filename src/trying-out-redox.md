@@ -1,6 +1,6 @@
 # Trying Out Redox
 
-There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the **demo** system. Available for download [here](https://static.redox-os.org/releases/0.8.0/x86_64). Currently, Redox does not have Wi-Fi support, so if you need Wi-Fi for some of the things you want to do, you are best to [run Redox in a virtual machine](./ch02-01-running-vm.md). Most of the suggestions below do not require network access, except where multiplayer mode is available.
+There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the **demo** system. Available for download [here](https://static.redox-os.org/releases/0.8.0/x86_64). Currently, Redox does not have Wi-Fi support, so if you need Wi-Fi for some of the things you want to do, you are best to [run Redox in a virtual machine](./running-vm.md). Most of the suggestions below do not require network access, except where multiplayer mode is available.
 
 On the demo system, click on the Redox symbol in the bottom left corner of the screen. This brings up a menu, which, for the demo system, has some games listed. Feel free to give them a try!
 

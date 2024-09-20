@@ -4,11 +4,11 @@ Scheme-rooted paths are the way that resources are identified on Redox.
 
 ## What is a Resource
 
-A [resource](./ch05-02-resources.md) is anything that a program might wish to access, usually referenced by some name.
+A [resource](./resources.md) is anything that a program might wish to access, usually referenced by some name.
 
 ## What is a Scheme
 
-A [scheme](./ch05-03-schemes.md) identifies the starting point for finding a resource.
+A [scheme](./schemes.md) identifies the starting point for finding a resource.
 
 ## What is a Scheme-rooted Path
 
