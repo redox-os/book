@@ -10,34 +10,66 @@ To make the Redox build process more consistent across platforms, we are using *
 
 - If you are building your own software to add in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Ubuntu Packages to the Build](#adding-ubuntu-packages-to-the-build).
 
-## Minimum Installation
+## Installation
 
-Most of the packages required for the build are installed in the container as part of the build process. However, some packages need to be installed on the host computer. You may also need to install an emulator such as **QEMU**. For most Linux distributions, this is done for you in the `podman_bootstrap.sh` script, but you can do a minimum install by following the instructions below.
+Most of the packages required for the build are installed in the container as part of the build process. However, some packages need to be installed on the host computer. You may also need to install an emulator such as **QEMU**. For most Linux distributions, this is done for you in the `podman_bootstrap.sh` script.
 
 Note that the Redox filesystem parts are merged using [FUSE](https://github.com/libfuse/libfuse). `podman_bootstrap.sh` installs `libfuse` for most platforms, if it is not already included. If you have problems with the final image of Redox, verify if `libfuse` is installed and you are able to use it.
-
-### Pop!_OS
-
-```sh
-sudo apt-get install podman
-```
 
 ### Ubuntu
 
 ```sh
-sudo apt-get install podman curl git make libfuse-dev
+sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns
+```
+
+### Debian
+
+```sh
+sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns
 ```
 
 ### Arch Linux
 
 ```sh
-sudo pacman -S --needed git podman fuse
+sudo pacman -S --needed git make curl podman fuse3 fuse-overlayfs slirp4netns
 ```
 
 ### Fedora
 
 ```sh
-sudo dnf install podman
+sudo dnf install git-all make curl podman fuse3 fuse-overlayfs slirp4netns
+```
+
+### OpenSUSE
+
+```sh
+sudo zypper install git make curl podman fuse fuse-overlayfs slipr4netns
+```
+
+### Pop!_OS
+
+```sh
+sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns
+```
+
+### FreeBSD
+
+```sh
+sudo pkg install git gmake curl fusefs-libs3 podman
+```
+
+### MacOSX
+
+- Homebrew
+
+```sh
+sudo brew git make curl osxfuse podman fuse-overlayfs slirp4netns
+```
+
+- MacPorts
+
+```sh
+sudo ports git gmake curl osxfuse podman
 ```
 
 ## build/container.tag

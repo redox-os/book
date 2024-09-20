@@ -1,8 +1,6 @@
-# Building Redox
+# Native Build
 
-Congrats on making it this far! Now you will build Redox. This process is for **x86-64** machines (Intel/AMD). There are also similar processes for [i686](./i686.md) and [AArch64/Arm64](./aarch64.md).
-
-The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox GitLab login, try again later, and if it continues to happen, you can let us know through [chat](./chat.md).
+This page explains how to build Redox in the native environment of your operating system. Keep in mind that you can have problems that doesn't happen on the Podman build, thus only use this method if you can't use Podman.
 
 (Don't forget to read [this](./build-system-reference.md) page to know our build system organization and how it works)
 
@@ -22,7 +20,7 @@ The following Unix-like systems are supported:
 - Nix (under develoopment)
 - Solus (basic support, not maintained)
 
-If you have a weird or hard problem to fix, read the [Podman Build](./podman-build.md) page.
+If you have a weird or hard problem to fix, test the [Podman Build](./podman-build.md) and verify if the problem happens there.
 
 ## Preparing the Build
 
@@ -97,59 +95,3 @@ This will make the target `build/x86_64/desktop/harddrive.img`, which you can ru
 Give it a while. Redox is big. Read [this](./build-phases.md#make-all-first-run) section to know what the `make all` command does.
 
 Note that the filesystem parts are merged using the [FUSE](https://github.com/libfuse/libfuse). `bootstrap.sh` install `libfuse`. If you have problems with the final image of Redox, verify if `libfuse` is installed and you are able to use it.
-
-### build.sh
-
-`build.sh` is a shell script that allows you to easily specify the CPU architecture you are building for, and the filesystem contents. When you are doing Redox development, you should set them in `.config` (see [Configuration Settings](./configuration-settings.md)). But if you are just trying things out, use `build.sh` to run `make` for you. e.g.:
-
-- `./build.sh -a i686 -c server live` - Run `make` for an i686 (32-bits Intel/AMD) CPU architecture, using the `server` configuration, `config/i686/server.toml`. The resulting image is `build/i686/server/livedisk.iso`, which can be used for installation from a USB.
-
-- `./build.sh -f config/aarch64/desktop.toml qemu` - Run `make` for an ARM64 (AArch64) CPU architecture, using the `desktop` configuration, `config/aarch64/desktop.toml`. The resulting image is `build/aarch64/desktop/harddrive.img`, which is then run in the emulator **QEMU**.
-
-If you use `build.sh`, it's recommended that you do so consistently, as `make` will not be aware of which version of the system you previously built with `build.sh`. Details of `build.sh` and other settings are described in [Configuration Settings](./configuration-settings.md).
-
-### Run in a virtual machine
-
-You can immediately run your image `build/x86_64/desktop/harddrive.img` in a virtual machine with the following command:
-
-```sh
-make qemu
-```
-
-Note that if you built the system using `build.sh` to change the CPU architecture or filesystem contents, you should also use it to run the virtual machine.
-
-```sh
-./build.sh -a i686 -c server qemu
-```
-
-will build `build/i686/server/harddrive.img` (if it does not exist) and run it in the **QEMU** emulator.
-
-The emulator will display the Redox GUI (Orbital). See [Using the emulation](./running-vm.md#using-the-emulation) for general instructions and [Trying out Redox](./trying-out-redox.md) for things to try.
-
-#### Run without a GUI
-
-To run the virtual machine without a GUI, use:
-
-```sh
-make qemu vga=no
-```
-
-If you want to capture the terminal output, read [this](./troubleshooting.md#debug-methods) section.
-
-If you have problems running the virtual machine, you can try `make qemu kvm=no` or `make qemu iommu=no` to turn off various virtualization features. These can also be used as arguments to `build.sh`.
-
-#### QEMU Tap For Network Testing
-
-Expose Redox to other computers within a LAN. Configure QEMU with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
-
-Join the [chat](./chat.md) if this is something you are interested in pursuing.
-
-### Building A Redox Bootable Image
-
-Read [this](./coding-and-building.md#testing-on-real-hardware) section.
-
-## Note
-
-If you intend on contributing to Redox or its subprojects, please read the [CONTRIBUTING.md](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/CONTRIBUTING.md) document, so you understand how our build system works and setup your repository fork appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
-
-If you encounter any bugs, errors, obstructions, or other annoying things, please join the [chat](./chat.md) or [report the issue](./creating-proper-bug-reports.md) to the [Redox repository](https://gitlab.redox-os.org/redox-os/redox) or a proper repository for the component. Thanks!
