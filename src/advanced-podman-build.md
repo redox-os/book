@@ -1,12 +1,12 @@
 # Advanced Podman Build
 
-To make the Redox build process more consistent across platforms, we are using **Rootless Podman** for major parts of the build. The basics of using Podman are described [here](./ch02-06-podman-build.md). This chapter provides a detailed discussion, including tips, tricks and troubleshooting, as well as some extra detail for those who might want to leverage or improve Redox's use of Podman.
+To make the Redox build process more consistent across platforms, we are using **Rootless Podman** for major parts of the build. The basics of using Podman are described [here](./podman-build.md). This chapter provides a detailed discussion, including tips, tricks and troubleshooting, as well as some extra detail for those who might want to leverage or improve Redox's use of Podman.
 
-(Don't forget to read [this](./ch08-06-build-system-reference.md) page to know our build system organization and how it works)
+(Don't forget to read [this](./build-system-reference.md) page to know our build system organization and how it works)
 
 ## Build Environment
 
-- Environment and command line Variables, other than `ARCH`, `CONFIG_NAME` and `FILESYSTEM_CONFIG`, are not passed to the part of `make` that is done in **Podman**. You must set any other configuration variables, e.g. `REPO_BINARY`, in [.config](./ch02-07-configuration-settings.md#config) and not on the command line or on your environment.
+- Environment and command line Variables, other than `ARCH`, `CONFIG_NAME` and `FILESYSTEM_CONFIG`, are not passed to the part of `make` that is done in **Podman**. You must set any other configuration variables, e.g. `REPO_BINARY`, in [.config](./configuration-settings.md#config) and not on the command line or on your environment.
 
 - If you are building your own software to add in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Ubuntu Packages to the Build](#adding-ubuntu-packages-to-the-build).
 
@@ -160,7 +160,7 @@ nano podman/my-containerfile
 Make sure you include the continuation character `\` at the end of each line except after the last package.
 
 
-Then, edit [.config](./ch02-07-configuration-settings.md#config), and change the variable `CONTAINERFILE` to point to your Containerfile, e.g.
+Then, edit [.config](./configuration-settings.md#config), and change the variable `CONTAINERFILE` to point to your Containerfile, e.g.
 
 ```
 CONTAINERFILE?=podman/my-containerfile
@@ -174,7 +174,7 @@ If you just want to install the packages temporarily, run `make env`, open a new
 
 ## Summary of Podman-related Make Targets, Variables and Podman Commands
 
-- `PODMAN_BUILD` - If set to 1 in [.config](./ch02-07-configuration-settings.md#config), or in the environment, or on the `make` command line, much of the build process takes place in **Podman**.
+- `PODMAN_BUILD` - If set to 1 in [.config](./configuration-settings.md#config), or in the environment, or on the `make` command line, much of the build process takes place in **Podman**.
 
 - `CONTAINERFILE`-  The name of the containerfile used to build the image. This file includes the `apt-get` command that installs all the necessary packages into the image. If you need to add packages to the build, edit your own containerfile and change this variable to point to it.
 

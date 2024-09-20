@@ -1,6 +1,6 @@
 # Downloading packages with pkg
 
-[pkg](https://gitlab.redox-os.org/redox-os/pkgutils) is the Redox package manager which allows you to install binary packages to a running system. If you want to build packages, or include binary packages during the build, please see [Including Programs in Redox](./ch09-01-including-programs.md).
+[pkg](https://gitlab.redox-os.org/redox-os/pkgutils) is the Redox package manager which allows you to install binary packages to a running system. If you want to build packages, or include binary packages during the build, please see [Including Programs in Redox](./including-programs.md).
 
 You may get better results in an virtual machine than in real hardware (due to the small device support).
 

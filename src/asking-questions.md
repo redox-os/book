@@ -1,9 +1,9 @@
 # Questions, Feedback, Reporting Issues 
 
 - Most questions are answered by the [Website FAQ](https://www.redox-os.org/faq/).
-- Technical questions are answered by the [Developer FAQ](./ch09-07-developer-faq.md).
+- Technical questions are answered by the [Developer FAQ](./developer-faq.md).
 
-Join the [Redox Chat](./ch13-01-chat.md). It is the best method to **chat with the Redox Team**.
+Join the [Redox Chat](./chat.md). It is the best method to **chat with the Redox Team**.
 
 You can find historical questions in our [Discourse Forum](https://discourse.redox-os.org/).
 

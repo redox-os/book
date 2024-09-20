@@ -36,7 +36,7 @@ If Orbital is enabled, the display server is launched.
 
 ## Login
 
-After the init processes have set up drivers and daemons, it is possible for the user to log in to the system. The login program accepts an username, with a default user called `user`, prints the `/etc/motd` file, and then executes the user's login shell, usually `ion`. At this point, the user will now be able to access the [Shell](./ch06-03-shell.md)
+After the init processes have set up drivers and daemons, it is possible for the user to log in to the system. The login program accepts an username, with a default user called `user`, prints the `/etc/motd` file, and then executes the user's login shell, usually `ion`. At this point, the user will now be able to access the [shell](./shell.md)
 
 ## Graphical overview
 

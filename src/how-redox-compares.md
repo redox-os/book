@@ -10,10 +10,10 @@ However, Redox does not necessarily implement them as system calls directly. Muc
 
 ## "Everything is a File"
 
-In a model largely inspired by Plan 9, in Redox, [resources](./ch05-02-resources.md) can be socket-like or file-like, providing a more unified system API.
+In a model largely inspired by Plan 9, in Redox, [resources](./resources.md) can be socket-like or file-like, providing a more unified system API.
 Resources are named using paths, similar to what you would find in Linux or another Unix system.
 But when referring to a resource that is being managed by a particular resource manager, you can address it using a scheme-rooted path.
-We will explain this later, in [Schemes, and Resources](./ch05-00-schemes-resources.md).
+We will explain this later, in [Schemes, and Resources](./schemes-resources.md).
 
 ## The kernel
 

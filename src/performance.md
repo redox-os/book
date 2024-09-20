@@ -24,6 +24,7 @@ The steps below are for profiling on `x86_64`, running in `QEMU`. It is possible
 ```sh
 cargo install redox-kprofiling
 ```
+
 ```sh
 cargo install inferno
 ```
@@ -129,14 +130,17 @@ gpu=no
 # Create a directory for your data
 mkdir my_profiler_data
 ```
+
 ```sh
 # Make the Redox filesystem accessible at the path based on CONFIG_NAME
 make mount
 ```
+
 ```sh
 # Copy the profiling data from the Redox image to your directory
 cp build/x86_64/my_profiler/filesystem/root/profiling.txt my_profiler_data
 ```
+
 ```sh
 # Important - unmount the Redox filesystem
 make unmount
@@ -147,6 +151,7 @@ make unmount
 ```sh
 cd my_profiler_data
 ```
+
 ```sh
 nm -CS ../cookbook/recipes/core/kernel/target/x86_64-unknown-redox/build/kernel > kernel_syms.txt
 ```

@@ -4,7 +4,7 @@ In order for changes you have made to be added to redox, or other related projec
 
 This is done by preparing a feature branch, and submitting a merge request.
 
-For small changes, it is sufficient to just submit a pull request. For larger changes, which may require planning or more extensive review, it is better to start by creating an [issue](./ch12-05-filing-issues.md). This provides a shared reference for proposed changes, and a place to collect discussion and feedback related to it.
+For small changes, it is sufficient to just submit a pull request. For larger changes, which may require planning or more extensive review, it is better to start by creating an [issue](./filing-issues.md). This provides a shared reference for proposed changes, and a place to collect discussion and feedback related to it.
 
 The steps given below are for the main Redox project repository - submodules and other projects may vary, though most of the approach is the same.
 
@@ -27,8 +27,8 @@ The steps given below are for the main Redox project repository - submodules and
     git clone git@gitlab.redox-os.org:redox-os/redox.git --origin upstream --recursive
     ```
 
-  - Use HTTPS if you don't know which one to use. (Recommended: learn about [SSH](./ch12-01-signing-in-to-gitlab.md#using-ssh-for-your-repo) if you don't want to have to login every time you push/pull!)
-  - If you used `bootstrap.sh` (see [Building Redox](./ch02-05-building-redox.md)), the `git clone` was done for you and you can skip this step.
+  - Use HTTPS if you don't know which one to use. (Recommended: learn about [SSH](./signing-in-to-gitlab.md#using-ssh-for-your-repo) if you don't want to have to login every time you push/pull!)
+  - If you used `bootstrap.sh` (see [Building Redox](./building-redox.md)), the `git clone` was done for you and you can skip this step.
 2. Change to the newly created redox directory and rebase to ensure you're using the latest changes:
 
     ```sh

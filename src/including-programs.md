@@ -1,8 +1,8 @@
 # Including Programs in Redox
 
-(Before reading this page you must read the [Build System](./ch08-06-build-system-reference.md) page)
+(Before reading this page you must read the [Build System](./build-system-reference.md) page)
 
-This page will teach you how to add programs on the Redox image, it's a simplified version of the [Porting Applications using Recipes](./ch09-03-porting-applications.md) page.
+This page will teach you how to add programs on the Redox image, it's a simplified version of the [Porting Applications using Recipes](./porting-applications.md) page.
 
 - [Existing Recipe](#existing-recipe)
   - [Setup the Redox Build Environment](#setup-the-redox-build-environment)
@@ -20,7 +20,7 @@ This page will teach you how to add programs on the Redox image, it's a simplifi
   - [Adding the program to the Redox image](#adding-the-program-to-the-redox-image)
 - [Running your program](#running-your-program)
 
-The Cookbook system makes the packaging process very simple. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./ch09-02-coding-and-building.md), we discuss the development cycle in more detail.
+The Cookbook system makes the packaging process very simple. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./coding-and-building.md), we discuss the development cycle in more detail.
 
 ## Existing Package
 
@@ -28,7 +28,7 @@ Redox has many programs that are available for inclusion. Each program has a rec
 
 ### Setup the Redox Build Environment
 
-- Follow the steps in [Building Redox](./ch02-05-building-redox.md) or [Podman Build](./ch02-06-podman-build.md) to create the Redox Build Environment on your system.
+- Follow the steps in [Building Redox](./building-redox.md) or [Podman Build](./podman-build.md) to create the Redox Build Environment on your system.
 - Build the system as described. This will take quite a while the first time.
 - Run the system in **QEMU**.
 
@@ -48,7 +48,7 @@ Assuming you built the default configuration `desktop` for `x86_64`, none of the
 
 ### Setup your Configuration
 
-Read the [Configuration Settings](./ch02-07-configuration-settings.md) page and follow the commands below.
+Read the [Configuration Settings](./configuration-settings.md) page and follow the commands below.
 
 - From your `redox` base directory, copy an existing configuration and edit it.
 
@@ -74,7 +74,7 @@ redox-games = {}
 ...
 ```
 
-- Add the `CONFIG_NAME` environment variable on your [.config](./ch02-07-configuration-settings.md#config) to use the `myfiles.toml` configuration.
+- Add the `CONFIG_NAME` environment variable on your [.config](./configuration-settings.md#config) to use the `myfiles.toml` configuration.
 
 ```sh
 nano .config
@@ -127,15 +127,15 @@ And that's it! Sort of.
 
 ### Dependencies
 
-Read [this](./ch09-03-porting-applications.md#dependencies) section to learn how to handle recipe dependencies.
+Read [this](./porting-applications.md#dependencies) section to learn how to handle recipe dependencies.
 
 ### Update crates
 
-Read [this](./ch09-03-porting-applications.md#update-crates) to learn how to update crates on Rust programs.
+Read [this](./porting-applications.md#update-crates) to learn how to update crates on Rust programs.
 
 ## Modifying an Existing Recipe
 
-If you want to make changes to an existing recipe for your own purposes, you can do your work in the directory `cookbook/recipes/recipe-name/source`. The Cookbook process will not download sources if they are already present in that folder. However, if you intend to do significant work or to contribute changes to Redox, please read the [Coding and Building](./ch09-02-coding-and-building.md) page.
+If you want to make changes to an existing recipe for your own purposes, you can do your work in the directory `cookbook/recipes/recipe-name/source`. The Cookbook process will not download sources if they are already present in that folder. However, if you intend to do significant work or to contribute changes to Redox, please read the [Coding and Building](./coding-and-building.md) page.
 
 ## Create Your Own Hello World
 
@@ -180,7 +180,7 @@ This creates a `Cargo.toml` file and a `src` directory with the Hello World prog
 
 ### Adding the program to the Redox image
 
-To be able to run a program inside of Redox, it must be added to the filesystem. As [above](#existing-package), create a filesystem config `config/x86_64/myfiles.toml` or similar by copying an existing configuration, and modify `CONFIG_NAME` in [.config](./ch02-07-configuration-settings.md#config) to be `myfiles`. Open `config/x86_64/myfiles.toml` and add `hello-world = {}` below the `[packages]` section.
+To be able to run a program inside of Redox, it must be added to the filesystem. As [above](#existing-package), create a filesystem config `config/x86_64/myfiles.toml` or similar by copying an existing configuration, and modify `CONFIG_NAME` in [.config](./configuration-settings.md#config) to be `myfiles`. Open `config/x86_64/myfiles.toml` and add `hello-world = {}` below the `[packages]` section.
 
 During the creation of the Redox image, the build system installs those packages on the image filesystem.
 

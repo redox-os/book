@@ -2,7 +2,7 @@
 
 The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of newcomers and end-users, while this FAQ will cover organization, technical questions and answers of developers and testers, feel free to suggest new questions.
 
-(If all else fails, join us on [Chat](./ch13-01-chat.md))
+(If all else fails, join us on [Chat](./chat.md))
 
 - [General Questions](#general-questions)
     - [What is the correct way to update the build system?](#what-is-the-correct-way-to-update-the-build-system)
@@ -73,7 +73,7 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
 
 ### What is the correct way to update the build system?
 
-- Read [this](./ch08-06-build-system-reference.md#update-the-build-system) page.
+- Read [this](./build-system-reference.md#update-the-build-system) page.
 
 ### How can I verify if my build system is up-to-date?
 
@@ -91,7 +91,7 @@ Sometimes run the `make pull rebuild` command is not enough to update the build 
 
 ### How can I test my changes on real hardware?
 
-- Read [this](./ch09-02-coding-and-building.md#testing-on-real-hardware) section.
+- Read [this](./coding-and-building.md#testing-on-real-hardware) section.
 
 ### How can I write a driver?
 
@@ -99,27 +99,27 @@ Sometimes run the `make pull rebuild` command is not enough to update the build 
 
 ### How can I port a program?
 
-- Read [this](./ch09-03-porting-applications.md) page.
+- Read [this](./porting-applications.md) page.
 
 ### How can I debug?
 
-- Read [this](./ch08-05-troubleshooting.md#debug-methods) section.
+- Read [this](./troubleshooting.md#debug-methods) section.
 
 ### How can I insert files to the QEMU image?
 
-- If you use a [recipe](./ch09-02-coding-and-building.md#insert-files-on-the-qemu-image-using-a-recipe) your changes will persist after a `make image` but you can also [mount](./ch09-02-coding-and-building.md#insert-files-on-the-qemu-image) the Redox filesystem.
+- If you use a [recipe](./-coding-and-building.md#insert-files-on-the-qemu-image-using-a-recipe) your changes will persist after a `make image` but you can also [mount](./coding-and-building.md#insert-files-on-the-qemu-image) the Redox filesystem.
 
 ### How can I change my build variant?
 
-- Insert the `CONFIG_NAME?=your-config-name` environment variable to your `.config` file, read [this](./ch02-07-configuration-settings.md#config) section for more details.
+- Insert the `CONFIG_NAME?=your-config-name` environment variable to your `.config` file, read [this](./configuration-settings.md#config) section for more details.
 
 ### How can I increase the filesystem size of my QEMU image?
 
-- Change the `filesystem_size` field of your build configuration (`config/ARCH/your-config.toml`) and run `make image`, read [this](./ch02-07-configuration-settings.md#filesystem-size) section for more details.
+- Change the `filesystem_size` field of your build configuration (`config/ARCH/your-config.toml`) and run `make image`, read [this](./configuration-settings.md#filesystem-size) section for more details.
 
 ### How can I change the CPU architecture of my build system?
 
-- Insert the `ARCH?=your-arch-code` environment variable on your `.config` file and run `make all`, read [this](./ch02-07-configuration-settings.md#config) section for more details.
+- Insert the `ARCH?=your-arch-code` environment variable on your `.config` file and run `make all`, read [this](./configuration-settings.md#config) section for more details.
 
 ### I only made a small change to my program. What's the quickest way to test it in QEMU?
 
@@ -232,13 +232,13 @@ Read some of the reasons below:
 
 ### Does Redox support OpenGL and Vulkan?
 
-- Read [this](./ch04-09-graphics-windowing.md#accelerated-graphics) section.
+- Read [this](./graphics-windowing.md#accelerated-graphics) section.
 
 ## Porting Questions
 
 ### What is a recipe?
 
-- A recipe is a software port on Redox, it does cross-compilation by default if you use Cookbook [templates](./ch09-03-porting-applications.md#templates).
+- A recipe is a software port on Redox, it does cross-compilation by default if you use Cookbook [templates](./porting-applications.md#templates).
 
 ### How to determine if some program is portable to Redox?
 
@@ -252,25 +252,25 @@ Some APIs of the Linux kernel can be ported, while others not because they requi
 
 ### How to determine the dependencies of some program?
 
-- Read [this](./ch09-03-porting-applications.md#dependencies) section.
+- Read [this](./porting-applications.md#dependencies) section.
 
 ### How can I configure the build system of the recipe?
 
-- Read [this](./ch09-03-porting-applications.md#templates) category.
+- Read [this](./porting-applications.md#templates) category.
 
 ### How can I search for functions on relibc?
 
-- Read [this](./ch09-03-porting-applications.md#search-for-functions-on-relibc) section.
+- Read [this](./porting-applications.md#search-for-functions-on-relibc) section.
 
 ### Which are the upstream requirements to accept my recipe?
 
-- Read [this](./ch09-03-porting-applications.md#package-policy).
+- Read [this](./porting-applications.md#package-policy).
 
 ## Scheme Questions
 
 ### What is a scheme?
 
-- Read [this](./ch05-00-schemes-resources.md) page.
+- Read [this](./schemes-resources.md) page.
 
 ### When does a regular program need to use a scheme?
 
@@ -286,21 +286,21 @@ Some APIs of the Linux kernel can be ported, while others not because they requi
 
 ### How can I see all user-space schemes?
 
-- Read [this](./ch05-03-schemes.md#userspace-schemes) section.
+- Read [this](./schemes.md#userspace-schemes) section.
 
 ### How can I see all kernel schemes?
 
-- Read [this](./ch05-03-schemes.md#kernel-schemes) section.
+- Read [this](./schemes.md#kernel-schemes) section.
 
 ### What is the difference between kernel and user-space schemes?
 
-- Read [this](./ch05-03-schemes.md#kernel-vs-userspace-schemes) section.
+- Read [this](./schemes.md#kernel-vs-userspace-schemes) section.
 
 ## User-Space Questions
 
 ### How does a user-space daemon provide file-like services?
 
-- When a regular program calls `open`, `read`, `write`, etc. on a file-like resource, the kernel translates that to a message of type `syscall::data::Packet`, describing the file operation, and makes it available for reading on the appropriate daemon's scheme file descriptor. See [this](./ch05-06-scheme-operation.md#providing-a-scheme) section for more information.
+- When a regular program calls `open`, `read`, `write`, etc. on a file-like resource, the kernel translates that to a message of type `syscall::data::Packet`, describing the file operation, and makes it available for reading on the appropriate daemon's scheme file descriptor. See [this](./scheme-operation.md#providing-a-scheme) section for more information.
 
 ## Kernel Questions
 
@@ -364,7 +364,7 @@ source ~/.cargo/env
 
 #### I had a compilation error with a recipe, how can I fix that?
 
-- Read [this](./ch08-05-troubleshooting.md#solving-compilation-problems) section.
+- Read [this](./troubleshooting.md#solving-compilation-problems) section.
 
 #### I tried all methods of the "Troubleshooting the Build" page and my recipe doesn't build, what can I do?
 
@@ -384,20 +384,20 @@ It will import the Redox Makefile environment variables to your active shell (it
 
 #### I added the dependency of my program on the "recipe.toml" but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?
 
-Read [this](./ch08-05-troubleshooting.md#environment-leakage) section.
+Read [this](./troubleshooting.md#environment-leakage) section.
 
 ### QEMU
 
 #### How can I kill the QEMU process if Redox freezes or get a kernel panic?
 
-- Read [this](./ch08-05-troubleshooting.md#kill-a-frozen-redox-vm) section.
+- Read [this](./troubleshooting.md#kill-a-frozen-redox-vm) section.
 
 ### Real Hardware
 
 #### I got a kernel panic, what can I do?
 
-Read [this](./ch08-05-troubleshooting.md#kernel-panic) section.
+Read [this](./troubleshooting.md#kernel-panic) section.
 
 #### Some driver is not working with my hardware, what can I do?
 
-Read [this](./ch08-05-troubleshooting.md#debug-methods) section and ask us for instructions in the [Matrix chat](./ch13-01-chat.md).
+Read [this](./troubleshooting.md#debug-methods) section and ask us for instructions in the [Matrix chat](./chat.md).

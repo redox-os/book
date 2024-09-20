@@ -1,8 +1,8 @@
 # Porting Applications using Recipes
 
-The [Including Programs in Redox](./ch09-01-including-programs.md) page gives an example to port/modify a pure Rust program, here we will explain the advanced way to port Rust programs, mixed Rust programs (Rust and C/C++ libraries, for example) and C/C++ programs.
+The [Including Programs in Redox](./including-programs.md) page gives an example to port/modify a pure Rust program, here we will explain the advanced way to port Rust programs, mixed Rust programs (Rust and C/C++ libraries, for example) and C/C++ programs.
 
-(Before reading this page you must read the [Build System Quick Reference](./ch08-06-build-system-reference.md) page)
+(Before reading this page you must read the [Build System Quick Reference](./build-system-reference.md) page)
 
 - [Recipe](#recipe)
     - [Recipe Configuration Example](#recipe-configuration-example)
@@ -890,7 +890,7 @@ Runtimes will be added below the `[package]` section (it will install the runtim
 
 Mixed Rust programs have crates ending with `-sys` to use C/C++ libraries of the system, sometimes they bundle them.
 
-If you have questions about program dependencies, feel free to ask us on [Chat](./ch13-01-chat.md).
+If you have questions about program dependencies, feel free to ask us on [Chat](./chat.md).
 
 If you want an easy way to find dependencies, see the Debian testing [packages list](https://packages.debian.org/testing/allpackages).
 
@@ -1177,7 +1177,7 @@ make cr.recipe-name
 
 If you use the above methods but the program is still using old crate versions, see this section:
 
-- [Verify the dependency tree](./ch08-05-troubleshooting.md#verify-the-dependency-tree)
+- [Verify the dependency tree](./troubleshooting.md#verify-the-dependency-tree)
 
 ## Patch crates
 

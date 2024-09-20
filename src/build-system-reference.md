@@ -48,7 +48,7 @@ The build system downloads and creates several files that you may want to know a
 
 ### Podman Configuration
 
-- `podman/redox-base-containerfile` - The file used to create the image used by the Podman build. The installation of Ubuntu packages needed for the build is done here. See [Adding Ubuntu Packages to the Build](./ch08-02-advanced-podman-build.md#adding-ubuntu-packages-to-the-build) if you need to add additional Ubuntu packages.
+- `podman/redox-base-containerfile` - The file used to create the image used by the Podman build. The installation of Ubuntu packages needed for the build is done here. See [Adding Ubuntu Packages to the Build](./advanced-podman-build.md#adding-ubuntu-packages-to-the-build) if you need to add additional Ubuntu packages.
 
 ### Filesystem Configuration
 
@@ -81,7 +81,7 @@ The build system downloads and creates several files that you may want to know a
 - `cookbook/recipes/recipe-name` - A recipe (software port) directory (represented as `recipe-name`), this directory holds the `recipe.toml` file.
 - `cookbook/recipes/recipe-name/recipe.toml` - The recipe configuration file, this configuration contains instructions for downloading Git repositories or tarballs, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
 
-(To learn more about the recipe system read [this](./ch09-03-porting-applications.md) page)
+(To learn more about the recipe system read [this](./porting-applications.md) page)
 
 - `cookbook/recipes/recipe-name/recipe.sh` - The old recipe configuration format (can't be used as dependency of a recipe with a TOML syntax).
 - `cookbook/recipes/recipe-name/source.tar` - The tarball of the recipe (renamed).
@@ -126,7 +126,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make live` - Creates a bootable image, `build/livedisk.iso`. Recipes are not usually rebuilt.
 - `make popsicle` - Flash the Redox bootable image on your USB device using the [Popsicle](https://github.com/pop-os/popsicle) tool (the program executable must be present on your shell `$PATH` environment variable, you can get the executable by extracting the AppImage, installing from the package manager or building from source)
 - `make env` - Creates a shell with the build environment initialized. If you are using Podman Build, the shell will be inside the container, and you can use it to debug build issues such as missing packages.
-- `make container_su` - After creating a Podman container shell using `make env`, and while that shell is still running, use `make container_su` to enter the same container as `root`. See [Debugging your Build Process](./ch08-02-advanced-podman-build.md#debugging-your-build-process).
+- `make container_su` - After creating a Podman container shell using `make env`, and while that shell is still running, use `make container_su` to enter the same container as `root`. See [Debugging your Build Process](./advanced-podman-build.md#debugging-your-build-process).
 - `make container_clean` - If you are using Podman Build, this will discard images and other files created by it.
 - `make container_touch` - If you have removed the file `build/container.tag`, but the container image is still usable, this will recreate the `container.tag` file and avoid rebuilding the container image.
 - `make container_kill` - If you have started a build using Podman Build, and you want to stop it, `Ctrl-C` may not be sufficient. Use this command to terminate the most recently created container.
@@ -161,7 +161,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make qemu disk=cdrom` - Boot Redox from a virtual CD-ROM disk.
 - `make qemu option1=string option2=string` - Cumulative QEMU options is supported.
 - `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`.
-- `make gdb` - Connects `gdb` to the Redox image in QEMU. Join us on [chat](./ch13-01-chat.md) if you want to use this.
+- `make gdb` - Connects `gdb` to the Redox image in QEMU. Join us on [chat](./chat.md) if you want to use this.
 - `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
 - `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
 - `make virtualbox` - The same as `make qemu`, but for VirtualBox (it requires the VirtualBox service to be running, run `systemctl status vboxdrv.service` to verify or `akmods; systemctl restart vboxdrv.service` to enable on systems using systemd).
@@ -477,7 +477,7 @@ make pull rebuild
 
 (If the `make pull` command download new commits of the `relibc` submodule, you will need to run the commands of the [Update relibc](#update-relibc) section)
 
-Some new changes will require a complete rebuild (you will need to read the Dev room in our [chat](./ch13-01-chat.md) to know if some big MR was merged and run the `make clean all` command) or a new build system copy (run the [bootstrap.sh](./ch02-05-building-redox.md#bootstrap-prerequisites-and-fetch-sources) script again or run the commands of [this](./ch08-01-advanced-build.md#clone-the-repository) section), but the `make pull rebuild` command is enough for most cases.
+Some new changes will require a complete rebuild (you will need to read the Dev room in our [chat](./chat.md) to know if some big MR was merged and run the `make clean all` command) or a new build system copy (run the [bootstrap.sh](./building-redox.md#bootstrap-prerequisites-and-fetch-sources) script again or run the commands of [this](./advanced-build.md#clone-the-repository) section), but the `make pull rebuild` command is enough for most cases.
 
 ## Update relibc
 
@@ -515,7 +515,7 @@ make cr.recipe-name
 
 ## Configuration
 
-You can find the global settings on [this](./ch02-07-configuration-settings.md) page.
+You can find the global settings on [this](./configuration-settings.md) page.
 
 ### Format
 
@@ -525,7 +525,7 @@ You can see what TOML supports on [this](https://toml.io/en/v1.0.0) website.
 
 ### Filesystem Customization
 
-Read [this](./ch02-07-configuration-settings.md#filesystem-customization) section.
+Read [this](./configuration-settings.md#filesystem-customization) section.
 
 ## Cross-Compilation
 
@@ -545,4 +545,4 @@ The `relibc` (Redox C Library) provides the Redox [system calls](https://docs.rs
 
 Every build system command/script has phases, read this page to know them.
 
-- [Build Phases](./ch08-07-build-phases.md)
+- [Build Phases](./build-phases.md)

@@ -1,14 +1,14 @@
 # ARM64
 
-The build system supports building for multiple CPU architectures in the same directory tree. Building for `i686` or `aarch64` only requires that you set the `ARCH` environment variable to the correct value. Normally, you would do this in [.config](./ch02-07-configuration-settings.md#config), but you can also do this temporarily with the `make ARCH=aarch64` command, in the shell environment (`export ARCH=aarch64`) or with the [build.sh](./ch02-07-configuration-settings.md#buildsh) script.
+The build system supports building for multiple CPU architectures in the same directory tree. Building for `i686` or `aarch64` only requires that you set the `ARCH` environment variable to the correct value. Normally, you would do this in [.config](./configuration-settings.md#config), but you can also do this temporarily with the `make ARCH=aarch64` command, in the shell environment (`export ARCH=aarch64`) or with the [build.sh](./configuration-settings.md#buildsh) script.
 
-ARM64 has limited support on this release (0.8.0).
+(ARM64 has limited support)
 
 ## First Time Build
 
 ### Bootstrap Pre-Requisites and Download Sources
 
-Follow the instructions for running **bootstrap.sh** to setup your environment, read the [Building Redox](./ch02-05-building-redox.md) page or the [Podman Build](./ch02-06-podman-build.md) page.
+Follow the instructions for running **bootstrap.sh** to setup your environment, read the [Building Redox](./building-redox.md) page or the [Podman Build](./podman-build.md) page.
 
 ### Install QEMU
 
@@ -27,15 +27,15 @@ sudo apt-get install u-boot-tools qemu-system-arm qemu-efi
 
 ### Configuration Values
 
-Before your first build, be sure to set the `ARCH` variable in [.config](./ch02-07-configuration-settings.md#config) to your CPU architecture type, in this case `aarch64`. You can change several other configurable settings, such as the filesystem contents, etc. See [Configuration Settings](./ch02-07-configuration-settings.md).
+Before your first build, be sure to set the `ARCH` variable in [.config](./configuration-settings.md#config) to your CPU architecture type, in this case `aarch64`. You can change several other configurable settings, such as the filesystem contents, etc. See [Configuration Settings](./configuration-settings.md).
 
 ### Add packages to the filesystem.
 
-You can add programs to the filesystem by following the instructions [here](./ch09-01-including-programs.md).
+You can add programs to the filesystem by following the instructions [here](./including-programs.md).
 
 ### Advanced Users
 
-For more details on the build process, please read the [Advanced Build](./ch08-01-advanced-build.md) page.
+For more details on the build process, please read the [Advanced Build](./advanced-build.md) page.
 
 ## Compiling Redox
 
@@ -63,7 +63,7 @@ time make all
 
 Give it a while. Redox is big.
 
-Read [this](./ch08-07-build-phases.md#make-all-first-run) section to know what the command above does.
+Read [this](./build-phases.md#make-all-first-run) section to know what the command above does.
 
 ### Cleaning Previous Build Cycles
 
@@ -105,8 +105,8 @@ This should boot to Redox. The desktop GUI will be disabled, but you will be pro
 
 Expose Redox to other computers within a LAN. Configure QEMU with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
 
-Join the [chat](./ch13-01-chat.md) if this is something you are interested in pursuing.
+Join the [chat](./chat.md) if this is something you are interested in pursuing.
 
 ### Note
 
-If you encounter any bugs, errors, obstructions, or other annoying things, please send a message in the [chat](./ch13-01-chat.md) or [report the issue on GitLab](./ch12-03-creating-proper-bug-reports.md). Thanks!
+If you encounter any bugs, errors, obstructions, or other annoying things, please send a message in the [chat](./chat.md) or [report the issue on GitLab](./creating-proper-bug-reports.md). Thanks!

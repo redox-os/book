@@ -1,6 +1,6 @@
 # Coding and Building
 
-(Before reading this page you must read the [Build System](./ch08-06-build-system-reference.md) page)
+(Before reading this page you must read the [Build System](./build-system-reference.md) page)
 
 This page covers common development tasks on the Redox build system.
 
@@ -44,7 +44,7 @@ This page covers common development tasks on the Redox build system.
 
 ## Working with Git
 
-Before starting the development, read the [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md) page, which describes how the Redox team uses Git.
+Before starting the development, read the [Creating Proper Pull Requests](./creating-proper-pull-requests.md) page, which describes how the Redox team uses Git.
 
 In this example, we will discuss how to create a **fork** of the `games` recipe, pretending you are going to create a `Merge Request` for your changes. **Don't actually do this**. Only create a fork when you have changes that you want to send to Redox upstream.
 
@@ -89,7 +89,7 @@ For clarity and easy of use, we will be using two terminal tabs on your system, 
 
 ## Setup your Configuration
 
-To get started, follow the steps in the [Including Programs](./ch09-01-including-programs.md) page to include the `games` package on your `myfiles` configuration file. In your terminal window, go to your `redox` base directory and run:
+To get started, follow the steps in the [Including Programs](./including-programs.md) page to include the `games` package on your `myfiles` configuration file. In your terminal window, go to your `redox` base directory and run:
 
 ```sh
 make qemu
@@ -149,7 +149,7 @@ git clone https://gitlab.redox-os.org/redox-os/games.git --origin upstream --rec
 mv games source
 ```
 
-- If you are making a change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md), replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
+- If you are making a change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests](./creating-proper-pull-requests.md), replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
 
 - If you want to Git Clone a remote repoitory (main repoitory/your fork), you can add these sections on your `recipe.toml`:
 
@@ -353,7 +353,7 @@ In the `/dev/srX` part, the `x` letter is your optical device number.
 
 ## Update crates
 
-- [Porting Applications using Recipes](./ch09-03-porting-applications.md#update-crates)
+- [Porting Applications using Recipes](./porting-applications.md#update-crates)
 
 ## Search Text On Files
 
@@ -386,9 +386,9 @@ Options context:
 
 ## Checking In Your Changes
 
-Don't do this now, but if you were to have permanent changes to contribute to a recipe, at this point, you would `git push` and create a Merge Request, as described in [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md).
+Don't do this now, but if you were to have permanent changes to contribute to a recipe, at this point, you would `git push` and create a Merge Request, as described in [Creating Proper Pull Requests](./creating-proper-pull-requests.md).
 
-If you were contributing a new package, such as porting a Rust application to Redox, you would need to check in the `recipe.toml` file. It goes in the `cookbook` subproject. You may also need to modify a filesystem config file, such as `config/your-cpu-arch/demo.toml`. It goes in the `redox` project. You must fork and do a proper Pull Request for each of these projects. Please coordinate with the Redox team on the [chat](./ch13-01-chat.md) before doing this.
+If you were contributing a new package, such as porting a Rust application to Redox, you would need to check in the `recipe.toml` file. It goes in the `cookbook` subproject. You may also need to modify a filesystem config file, such as `config/your-cpu-arch/demo.toml`. It goes in the `redox` project. You must fork and do a proper Pull Request for each of these projects. Please coordinate with the Redox team on the [chat](./chat.md) before doing this.
 
 ## Shortening the Rebuild Time
 
@@ -561,7 +561,7 @@ The `drivers` and `drivers-initfs` recipes share the `source` folder, thus your 
 
 ## Development Tips
 
-- Make sure your build system is up-to-date, read [this](./ch08-06-build-system-reference.md#update-the-build-system) section in case of doubt.
+- Make sure your build system is up-to-date, read [this](./build-system-reference.md#update-the-build-system) section in case of doubt.
 - If some program can't build or work properly, remember that something could be missing/hiding on [relibc](https://gitlab.redox-os.org/redox-os/relibc), some missing function or bug.
 - If you have some error on QEMU, remember to test different settings or verify your operating system (Pop_OS!, Ubuntu, Debian and Fedora are the recommend Linux distributions to do testing/development for Redox).
 - Remember to log all errors, you can use this command as example:

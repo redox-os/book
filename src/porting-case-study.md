@@ -419,7 +419,7 @@ We get some errors, but we are making progress.
 ## Submitting the MRs
 
 - Before committing our new recipe, we need to uncomment the `[source]` section. Edit `~/redox-gitoxide/redox/cookbook/recipes/gitoxide/recipe.toml` to remove the `#` from the start of the first two lines.
-- We commit our changes to `cookbook` to include the new `gitoxide` recipe and submit an MR, following the instructions [Creating Proper Pull Requests](./ch12-04-creating-proper-pull-requests.md).
+- We commit our changes to `cookbook` to include the new `gitoxide` recipe and submit an MR, following the instructions [Creating Proper Pull Requests](./creating-proper-pull-requests.md).
 - We commit our changes to `relibc`. We need to rebuild the system and test it thoroughly in QEMU, checking anything that might be affected by our changes. Once we are confident in our changes, we can submit the MR.
 - We post links to both MRs on [Redox OS/MRs](https://matrix.to/#/#redox-mrs:matrix.org) to ensure they get reviewed. 
 - After making our changes to `libc` and testing them, we need to request to have those changes upstreamed by posting a message on [Redox OS/MRs](https://matrix.to/#/#redox-mrs:matrix.org). If the changes are complex, please create an issue [here](https://gitlab.redox-os.org/redox-os/redox) and include a link to it in your post.

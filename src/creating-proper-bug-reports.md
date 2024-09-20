@@ -6,7 +6,7 @@ If you identify a problem with the system that has not been identified previousl
 - Search Redox Issues to see if a similar problem has been reported before. Then search outstanding merge requests to see if a fix is pending.
 - Make sure the issue is reproducible (trigger it several times). Try to identify the minimum number of steps to reproduce it. If the issue happens inconsistently, it may still be worth filing a bug report for it, but indicate approximately how often the bug occurs.
 - Explain if your problem happens in a virtual machine, real hardware or both. Also say your configuration (default options or customized), if you had the problem on real hardware say your computer model.
-- If it is a significant problem, join us on [Chat](./ch13-01-chat.md) and ask if it is a known problem, or if someone plans to address it in the short term.
+- If it is a significant problem, join us on [Chat](./chat.md) and ask if it is a known problem, or if someone plans to address it in the short term.
 - Identify the recipe that is causing the issue. If a particular command is the source of the problem, look for a repository on Redox GitLab with the same name. Or, for certain programs such as `games` or command line utilities, you can search for the package containing the command with `grep -rnw COMMAND --include Cargo.toml`, where `COMMAND` is the name of the command causing the problem. The location of the `Cargo.toml` file can help indicate which recipe contains the command. This is where you should expect to report the issue.
 - If the problem involves multiple recipes, kernel interactions with other programs, or general build problems, then you should plan to log the issue against the `redox` repository.
 - If the problem occurs during build, record the build log using `script` or `tee`, e.g.
@@ -61,7 +61,7 @@ exit
 
 - Format your log on the message in Markdown syntax to avoid a flood on the chat, you can see how to do it [here](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#quoting-code).
 
-- Make sure that your bug doesn't already have an issue on GitLab. Feel free to ask in the Redox [Chat](./ch13-01-chat.md) if you're uncertain as to whether your issue is new.
+- Make sure that your bug doesn't already have an issue on GitLab. Feel free to ask in the Redox [Chat](./chat.md) if you're uncertain as to whether your issue is new.
 
 - Create a GitLab issue following the template. Non-bug report issues may ignore this template.
 

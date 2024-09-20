@@ -19,7 +19,7 @@ CONFIG_NAME?=desktop-minimal
 
 (When adding environment variables at `.config`, don't forget the `?` symbol in the end of their names)
 
-If you used [podman_bootstrap.sh](./ch02-06-podman-build.md#new-working-directory), this file may have been created for you already.
+If you used [podman_bootstrap.sh](./podman-build.md#new-working-directory), this file may have been created for you already.
 
 ### Command Line
 
@@ -31,7 +31,7 @@ For example, this command will build the `demo` image variant and open QEMU.
 make CONFIG_NAME=demo qemu
 ```
 
-Overriding the settings in this way is only temporary. Also, if you are using [Podman Build](./ch02-06-podman-build.md), some settings may be ignored, so you are best to use [.config](#config).
+Overriding the settings in this way is only temporary. Also, if you are using [Podman Build](./podman-build.md), some settings may be ignored, so you are best to use [.config](#config).
 
 ### Architecture Names
 
@@ -54,8 +54,8 @@ In `mk/config.mk`, you will find the variables `ARCH`, `CONFIG_NAME` and `FILESY
 - `REPO_BINARY` - If set to 1 (`REPO_BINARY?=1`), the build system don't compile from recipe sources but download/install packages from Redox package server.
 - `FILESYSTEM_SIZE`: The size in MB of the filesystem contained in the Redox image. See [Filesystem Size](#filesystem-size) before changing it.
 - `REDOXFS_MKFS_FLAGS`: Flags to the program that builds the Redox filesystem. `--encrypt` enables disk encryption.
-- `PODMAN_BUILD`: If set to 1 (`PODMAN_BUILD?=1`), the build environment is constructed in **Podman**. See [Podman Build](./ch02-06-podman-build.md).
-- `CONTAINERFILE`: The Podman containerfile. See [Podman Build](./ch02-06-podman-build.md).
+- `PODMAN_BUILD`: If set to 1 (`PODMAN_BUILD?=1`), the build environment is constructed in **Podman**. See [Podman Build](./podman-build.md).
+- `CONTAINERFILE`: The Podman containerfile. See [Podman Build](./podman-build.md).
 
 If you want to change them permanently, read the [.config](#config) section.
 
