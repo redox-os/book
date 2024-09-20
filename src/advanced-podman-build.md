@@ -63,13 +63,13 @@ sudo pkg install git gmake curl fusefs-libs3 podman
 - Homebrew
 
 ```sh
-sudo brew git make curl osxfuse podman fuse-overlayfs slirp4netns
+sudo brew install git make curl osxfuse podman fuse-overlayfs slirp4netns
 ```
 
 - MacPorts
 
 ```sh
-sudo ports git gmake curl osxfuse podman
+sudo port install git gmake curl osxfuse podman
 ```
 
 ## build/container.tag
