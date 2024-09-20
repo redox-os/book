@@ -198,7 +198,7 @@ cargo run --bin minesweeper
 
 ## The Full Rebuild
 
-After making changes to your recipe, you can use the `make rebuild` command, which will check for any changes to recipe and make a new Redox image. `make all` and `make qemu` do not check for recipes that need to be rebuilt, so if you use them, your changes may not be included in the system. Once you are comfortable with this process, you can try [some tricks to save time](#shortening-the-rebuild-cycle).
+After making changes to your recipe, you can use the `make rebuild` command, which will check for any changes to recipe and make a new Redox image. `make all` and `make qemu` do not check for recipes that need to be rebuilt, so if you use them, your changes may not be included in the system. Once you are comfortable with this process, you can try [some tricks to save time](#shortening-the-rebuild-time).
 
 - Within your `Build` shell, in your `redox` directory, do:
 
