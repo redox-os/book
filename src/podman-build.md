@@ -4,7 +4,7 @@ Congrats on making it this far! Now you will build Redox. This process is for **
 
 The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox GitLab login, try again later, and if it continues to happen, you can let us know through [chat](./chat.md).
 
-To make the Redox build process more consistent across operating systems, we are using **Rootless Podman** for major parts of the build. **Podman** is invoked automatically and transparently within the Makefiles.
+To avoid bugs from different build environments (operating systems) we are using **Rootless Podman** for major parts of the build. **Podman** is invoked automatically and transparently within the Makefiles.
 
 The TL;DR version is [here](#tldr---new-or-existing-working-directory). More details are available in [Advanced Podman Build](./advanced-podman-build.md).
 
