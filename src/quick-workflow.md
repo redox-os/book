@@ -8,7 +8,7 @@ This page will describe the most quick testing/development workflow for people t
 - [Update Rust](#update-rust)
 - [Download a new build system copy](#download-a-new-build-system-copy)
 - [Install the required packages for the build system](#install-the-required-packages-for-the-build-system)
-- [Download and run the "bootstrap.sh" script](#download-and-run-the-bootstrapsh-script)
+- [Download and run the "podman_bootstrap.sh" script](#download-and-run-the-podman_bootstrapsh-script)
 - [Download and build the toolchain and recipes](#download-and-build-the-toolchain-and-recipes)
 - [Update the build system and its submodules](#update-the-build-system-and-its-submodules)
 - [Update the toolchain and relibc](#update-the-toolchain-and-relibc)
@@ -32,7 +32,7 @@ This page will describe the most quick testing/development workflow for people t
 curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly
 ```
 
-Use Case: Configure the host system without the `bootstrap.sh` script.
+Use Case: Configure the host system without the `podman_bootstrap.sh` script.
 
 #### Update Rust
 
@@ -53,23 +53,23 @@ Use Case: Commonly used when breaking changes on upstream require a new build sy
 ### Install the required packages for the build system
 
 ```sh
-curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
+curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.sh -o podman_bootstrap.sh
 ```
 
 ```sh
-bash -e bootstrap.sh -d
+bash -e podman_bootstrap.sh -d
 ```
 
 Use Case: Install new build tools for recipes or configure the host system without the `bootstrap.sh` script.
 
-#### Download and run the "bootstrap.sh" script
+#### Download and run the "podman_bootstrap.sh" script
 
 ```sh
-curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
+curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.sh -o podman_bootstrap.sh
 ```
 
 ```sh
-bash -e bootstrap.sh
+bash -e podman_bootstrap.sh
 ```
 
 Use Case: Commonly used when breaking changes on upstream require a new build system copy.
@@ -116,12 +116,10 @@ Use Case: Keep the build system up-to-date.
 
 #### Update everything
 
-```sh
-curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
-```
+Install the `topgrade` tool to update your system packages (you can install it with `cargo install topgrade`)
 
 ```sh
-bash -e bootstrap.sh -d
+topgrade
 ```
 
 ```sh
@@ -137,11 +135,7 @@ touch relibc
 ```
 
 ```sh
-make prefix
-```
-
-```sh
-make rebuild
+make prefix rebuild
 ```
 
 Use Case: Try to fix any problem caused by outdated programs, toolchain and build system sources.
@@ -181,10 +175,11 @@ mkdir cookbook/recipes/other/myfiles/source
 ```
 
 ```sh
-nano config/your-arch/your-config.toml
+nano config/your-cpu-arch/your-config.toml
 ```
 
-```
+```toml
+[packages]
 myfiles = {}
 ```
 

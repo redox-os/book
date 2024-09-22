@@ -70,7 +70,6 @@ source ~/.cargo/env
 cd ~/tryredox/redox
 ```
 
-- Verify if the file [.config](./configuration-settings.md#config) was created in the `redox` base directory, and contains the line `PODMAN_BUILD?=1`.
 - Build the system. This will take some time.
 
 ```sh
