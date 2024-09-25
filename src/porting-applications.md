@@ -423,6 +423,7 @@ script = """
 first-command
 second-command
 """
+```
 
 #### Packaging Behavior
 
