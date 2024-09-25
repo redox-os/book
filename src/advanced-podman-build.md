@@ -8,7 +8,7 @@ To make the Redox build process more consistent across platforms, we are using *
 
 - Environment and command line Variables, other than `ARCH`, `CONFIG_NAME` and `FILESYSTEM_CONFIG`, are not passed to the part of `make` that is done in **Podman**. You must set any other configuration variables, e.g. `REPO_BINARY`, in [.config](./configuration-settings.md#config) and not on the command line or on your environment.
 
-- If you are building your own software to add in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Ubuntu Packages to the Build](#adding-ubuntu-packages-to-the-build).
+- If you are building your own software to add in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Packages to the Build](#adding-packages-to-the-build).
 
 ## Installation
 
@@ -129,7 +129,7 @@ Where `` `id -un` `` is your User ID and `` `id -gn` `` is your effective Group 
 
 If you are developing your own components and wish to do one-time debugging to determine what library you are missing in the **Podman Build** environment, the following instructions can help. Note that your changes will not be persistent. After debugging, **you must** [Add your Libraries to the Build](#adding-libraries-to-the-build). With `PODMAN_BUILD=1`, run the following command:
 
-- This will start a `bash` shell in the **Podman** container environment, as a normal user without `sudo` privilege.
+- This will start a `bash` shell in the **Podman** container environment, as a normal user without `root` privileges.
 
 ```sh
 make container_shell
@@ -163,9 +163,9 @@ You will then be running Bash with `root` privilege in the container, and you ca
 
 Type `exit` on both shells once you have determined how to solve your problem.
 
-## Adding Ubuntu Packages to the Build
+## Adding Packages to the Build
 
-This method can be used if you want to make changes/testing inside the Ubuntu container with `make env`.
+This method can be used if you want to make changes/testing inside the Debian container with `make env`.
 
 The default **Containerfile**, `podman/redox-base-containerfile`, imports all required packages for a normal Redox build.
 

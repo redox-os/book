@@ -53,7 +53,7 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
 - [Troubleshooting Questions](#troubleshooting-questions)
     - [Scripts](#scripts)
         - [I can't download the bootstrap scripts, how can I fix this?](#i-cant-download-the-bootstrap-scripts-how-can-i-fix-this)
-        - [I tried to run the "bootstrap.sh" and "podman_bootstrap.sh" scripts but got an error, how to fix this?](#i-tried-to-run-the-bootstrapsh-and-podman_bootstrapsh-scripts-but-got-an-error-how-to-fix-this)
+        - [I tried to run the "podman_bootstrap.sh" and "native_bootstrap.sh" scripts but got an error, how to fix this?](#i-tried-to-run-the-podman_bootstrapsh-and-native_bootstrapsh-scripts-but-got-an-error-how-to-fix-this)
     - [Build System](#build-system)
         - [I called "make all" but it show a "rustup can't be found" message, how can I fix this?](#i-called-make-all-but-it-show-a-rustup-cant-be-found-message-how-can-i-fix-this)
         - [I tried all troubleshooting methods but my build system is still broken, how can I fix that?](#i-tried-all-troubleshooting-methods-but-my-build-system-is-still-broken-how-can-i-fix-that)
@@ -338,11 +338,13 @@ Some APIs of the Linux kernel can be ported, while others not because they requi
 
 #### I can't download the bootstrap scripts, how can I fix this?
 
-- Verify if you have `curl` installed or download the script from your browser.
+- Verify if you have `curl` installed or download the script from your web browser.
 
-#### I tried to run the "bootstrap.sh" and "podman_bootstrap.sh" scripts but got an error, how to fix this?
+#### I tried to run the "podman_bootstrap.sh" and "native_bootstrap.sh" scripts but got an error, how to fix this?
 
 - Verify if you have the GNU Bash shell installed on your system.
+- Verify if Podman is supported on your operating system.
+- Verify if your operating system is [supported](./building-redox.md#supported-unix-like-distributions-and-podman-build) on the `native_bootstrap.sh` script
 
 ### Build System
 
@@ -354,11 +356,11 @@ Some APIs of the Linux kernel can be ported, while others not because they requi
 source ~/.cargo/env
 ```
 
-(If you installed Rustup before the first `bootstrap.sh` run, this error doesn't happen)
+(If you installed Rustup before the first `podman_bootstrap.sh` run, this error doesn't happen)
 
 #### I tried all troubleshooting methods but my build system is still broken, how can I fix that?
 
-- If `make clean pull all` doesn't work, run the `bootstrap.sh` again to download a fresh build system or install Pop OS!, Ubuntu or Debian.
+- If `make clean pull all` doesn't work, run the `podman_bootstrap.sh` again to download a fresh build system.
 
 ### Recipes
 
@@ -370,7 +372,7 @@ source ~/.cargo/env
 
 - It happens because your system has an environment problem or missing packages, remove the recipe from your build configuration file to workaround this.
 
-All recipes follow this syntax `recipe = {}` below the `[packages]` section, the configuration files is placed at `config/your-arch`.
+All recipes follow this syntax `recipe = {}` below the `[packages]` section, the configuration files is placed at `config/your-cpu-arch`.
 
 #### When I run "make r.recipe" I get a syntax error, how can I fix that?
 

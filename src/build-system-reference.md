@@ -38,6 +38,8 @@ The build system downloads and creates several files that you may want to know a
 
 ### Root Folder
 
+- `podman_bootstrap.sh` - The script used to configure the Podman build
+- `native_bootstrap.sh` - The script used to configure the Native build
 - `Makefile` - The main Makefile of the build system, it loads all the other Makefiles.
 - `.config` - Where you override your build system settings. It is loaded by the Makefile (it is ignored by `git`).
 
@@ -48,7 +50,7 @@ The build system downloads and creates several files that you may want to know a
 
 ### Podman Configuration
 
-- `podman/redox-base-containerfile` - The file used to create the image used by the Podman build. The installation of Ubuntu packages needed for the build is done here. See [Adding Ubuntu Packages to the Build](./advanced-podman-build.md#adding-ubuntu-packages-to-the-build) if you need to add additional Ubuntu packages.
+- `podman/redox-base-containerfile` - The file used to create the image used by the Podman build. The installation of Ubuntu packages needed for the build is done here. See [Adding Packages to the Build](./advanced-podman-build.md#adding-packages-to-the-build) if you need to add additional Ubuntu packages.
 
 ### Filesystem Configuration
 
@@ -126,8 +128,9 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make live` - Creates a bootable image, `build/livedisk.iso`. Recipes are not usually rebuilt.
 - `make popsicle` - Flash the Redox bootable image on your USB device using the [Popsicle](https://github.com/pop-os/popsicle) tool (the program executable must be present on your shell `$PATH` environment variable, you can get the executable by extracting the AppImage, installing from the package manager or building from source)
 - `make env` - Creates a shell with the build environment initialized. If you are using Podman Build, the shell will be inside the container, and you can use it to debug build issues such as missing packages.
-- `make container_su` - After creating a Podman container shell using `make env`, and while that shell is still running, use `make container_su` to enter the same container as `root`. See [Debugging your Build Process](./advanced-podman-build.md#debugging-your-build-process).
-- `make container_clean` - If you are using Podman Build, this will discard images and other files created by it.
+- `make container_shell` - Open the GNU Bash shell of the Podman container as the active shell of your terminal, it's logged as the `podman` user without `root` privileges.
+- `make container_su` - Open the GNU Bash shell of the Podman container as the active shell of your terminal, it's logged as the `root` user.
+- `make container_clean` - This will discard images and other files created by Podman.
 - `make container_touch` - If you have removed the file `build/container.tag`, but the container image is still usable, this will recreate the `container.tag` file and avoid rebuilding the container image.
 - `make container_kill` - If you have started a build using Podman Build, and you want to stop it, `Ctrl-C` may not be sufficient. Use this command to terminate the most recently created container.
 

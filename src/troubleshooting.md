@@ -5,12 +5,12 @@ This page covers all troubleshooting methods and tips for our build system.
 (You must read [this](./build-system-reference.md) page before)
 
 - [Setup](#setup)
-    - [bootstrap.sh](#bootstrapsh)
+    - [Podman](#podman)
+    - [Native Build](#native-build)
     - [Git](#git)
 - [Building the System](#building-the-system)
     - [.config and mk/config.mk](#config-and-mkconfigmk)
     - [Prefix](#prefix)
-    - [Podman](#podman)
     - [Filesystem Config](#filesystem-config)
     - [Fetch](#fetch)
     - [Cookbook](#cookbook)
@@ -32,21 +32,26 @@ This page covers all troubleshooting methods and tips for our build system.
 
 ## Setup
 
-### bootstrap.sh
+When you run `podman_bootstrap.sh` or `native_bootstrap.sh`, the Linux tools and libraries required to support the toolchain and build all recipes are installed. Then the `redox` project is downloaded from the Redox GitLab server. The `redox` project does not contain the system component sources, it only contains the build system. The `cookbook` subproject, which contains recipes for all the packages to be included in Redox, is also copied as part of the download.
 
-When you run `bootstrap.sh` or `podman_bootstrap.sh`, the Linux tools and libraries required to support the toolchain and build all recipes are installed. Then the `redox` project is downloaded from the Redox GitLab server. The `redox` project does not contain the system component sources, it only contains the build system. The `cookbook` subproject, which contains recipes for all the packages to be included in Redox, is also copied as part of the download.
+### Podman
 
-Not all Linux distributions are supported by `bootstrap.sh`, so if you are on an unsupported distribution, try the `podman_bootstrap.sh` script for [Podman](https://podman.io/) builds, or have a look at the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script and try to complete the setup manually.
+If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./podman-build.md#debugging-your-build-process).
+If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
 
-If you want to support your Unix-like system without Podman, you can try to install the Debian/Ubuntu package equivalents for your system from your package manager/software store, you can see them on [this](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh#L375) function of the `bootstrap.sh` script.
+### Native Build
 
-The `bootstrap.sh` script and `redox-base-containerfile` covers the build system packages needed by the recipes at [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
+Not all Linux distributions are supported by `native_bootstrap.sh`, so if you have frequent compilation problems try the `podman_bootstrap.sh` script for [Podman](https://podman.io/) builds.
 
-(Note that some systems may have environment problems hard to fix, on these systems Podman will avoid some headaches)
+If you want to support your Unix-like system without Podman, you can try to install the Debian/Ubuntu package equivalents for your system from your package manager/software store, you can see them on the `ubuntu()` function of the [native_bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/native_bootstrap.sh) script.
+
+The `native_bootstrap.sh` script and `redox-base-containerfile` covers the build system packages needed by the recipes at [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
+
+(Note that some systems may have build environment problems hard and time consuming to fix, on these systems Podman will fix most headaches)
 
 ### Git
 
-If you did not use `bootstrap.sh` or `podman_bootstrap.sh` to setup your environment, you can download the sources with:
+If you did not use `podman_bootstrap.sh` or `native_bootstrap.sh` to setup your environment, you can download the sources with:
 
 ```sh
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
@@ -67,13 +72,6 @@ When you run `make all`, the following steps occur.
 The Redox toolchain, referred to as **prefix** because it is prefixed with the CPU architecture name, is downloaded and/or built. Modified versions of `cargo`, `rustc`, `gcc` and many other tools are created. They are placed in the `prefix` directory. 
 
 If you have a problem with the toolchain, try `rm -rf prefix`, and everything will be reinstalled the next time you run `make all` or `make rebuild`.
-
-### Podman
-
-If enabled, the Podman environment is set up. [Podman](./podman-build.md) is recommended for unsupported systems.
-
-If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./podman-build.md#debugging-your-build-process).
-If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
 
 #### Manual Configuration
 

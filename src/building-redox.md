@@ -45,18 +45,18 @@ cd ~/tryredox
 ```
 
 ```sh
-curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
+curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/native_bootstrap.sh -o native_bootstrap.sh
 ```
 
 ```sh
-time bash -e bootstrap.sh
+time bash -e native_bootstrap.sh
 ```
 
 You will be asked to confirm some steps. Answer with *y* or *1*.
 
-To know what the `bootstrap.sh` script does, read [this](./build-phases.md#bootstrapsh) section.
+To know what the `native_bootstrap.sh` script does, read [this](./build-phases.md#native_bootstrapsh) section.
 
-Note that `curl -sf` operates silently, so if there are errors, you may get an empty or incorrect version of `bootstrap.sh`. Check for typos in the command and try again. If you continue to have problems, join the [chat](./chat.md) and let us know.
+Note that `curl -sf` operates silently, so if there are errors, you may get an empty or incorrect version of `native_bootstrap.sh`. Check for typos in the command and try again. If you continue to have problems, join the [chat](./chat.md) and let us know.
 
 Please be patient, this can take 5 minutes to an hour depending on the hardware and network you're running it on. Once it's done, update your `PATH` environment variable in the current shell with:
 
@@ -72,9 +72,9 @@ The build system uses several configuration files, which contain settings that y
 
 Now we have:
 
- - Downloaded the sources
- - Tweaked the settings to our liking
- - Probably added our recipe to the filesystem
+- Downloaded the sources
+- Tweaked the settings to our liking
+- Probably added our recipe to the filesystem
 
 We are ready to build the Redox operating system image. Skip ahead to [Configuration Settings](./configuration-settings.md) if you want to build for a different CPU architecture or with different filesystem contents.
 

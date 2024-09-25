@@ -6,7 +6,7 @@ In this section, we provide the gory details that may be handy to know if you ar
 
 ## Setup Your Environment
 
-Although it's recommended to read the [Building Redox](./building-redox.md) or [Podman Build](./podman-build.md) pages instead of the process described here, advanced users may accomplish the same as the **bootstrap.sh** script with the following steps, which are provided by way of example for Pop!_OS/Ubuntu/Debian. For other platforms, have a look at the file [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) to help determine what packages to install for your Unix-like system.
+Although it's recommended to read the [Building Redox](./building-redox.md) or [Podman Build](./podman-build.md) pages instead of the process described here, advanced users may accomplish the same as the **native_bootstrap.sh** script with the following steps, which are provided by way of example for Pop!_OS/Ubuntu/Debian. For other platforms, have a look at the file [native_bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/native_bootstrap.sh) to help determine what packages to install for your Unix-like system.
 
 The steps to perform are:
 
@@ -42,21 +42,21 @@ make pull
 
 Please be patient, this can take minutes to hours depending on the hardware and network you're using.
 
-In addition to installing the various packages needed for building Redox, **bootstrap.sh** and **podman_bootstrap.sh** both clone the repository, so if you used either script, you have completed Step 1. 
+In addition to installing the various packages needed for building Redox, **native_bootstrap.sh** and **podman_bootstrap.sh** both clone the repository, so if you used either script, you have completed Step 1. 
 
 ## Install The Necessary Packages and Emulator
 
-If you cloned the sources *before* running **bootstrap.sh**, you can use:
+If you cloned the sources *before* running **native_bootstrap.sh**, you can use:
 
 ```sh
 cd ~/tryredox/redox
 ```
 
 ```sh
-./bootstrap.sh -d
+./native_bootstrap.sh -d
 ```
 
-If you can't use `bootstrap.sh` script, you can attempt to install the necessary packages below.
+If you can't use `native_bootstrap.sh` script, you can attempt to install the necessary packages below.
 
 ### Pop!_OS/Ubuntu/Debian Users
 
