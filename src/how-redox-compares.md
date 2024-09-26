@@ -4,9 +4,11 @@ We share quite a lot with other operating systems.
 
 ## System Calls
 
-The Redox API is Unix-like. For example, we have `open`, `pipe`, `pipe2`, `lseek`, `read`, `write`, `brk`, `execv`, and so on. Currently, we support the most common POSIX and Linux system calls.
+The Redox userspace API is Unix-like. For example, we have the `open`, `pipe`, `pipe2`, `lseek`, `read`, `write`, `brk`, `execv` POSIX functions, and so on. Currently, we implement userspace analogues of most Unix-like system calls (on monolithic kernels). The kernel syscall interface itself is unstable and may not be similar at all, but is closely related to the higher-level POSIX APIs built on top of them, at the moment.
 
 However, Redox does not necessarily implement them as system calls directly. Much of the machinery for these functions (typically the [man(2)](https://en.wikipedia.org/wiki/Man_page#Manual_sections) functions) is provided in userspace through an interface library, `relibc`.
+
+For example, the `open` POSIX function is called `SYS_OPEN` on relibc.
 
 ## "Everything is a File"
 
