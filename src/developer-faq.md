@@ -107,7 +107,7 @@ Sometimes run the `make pull rebuild` command is not enough to update the build 
 
 ### How can I insert files to the QEMU image?
 
-- If you use a [recipe](./-coding-and-building.md#insert-files-on-the-qemu-image-using-a-recipe) your changes will persist after a `make image` but you can also [mount](./coding-and-building.md#insert-files-on-the-qemu-image) the Redox filesystem.
+- If you use a [recipe](./coding-and-building.md#insert-files-on-the-qemu-image-using-a-recipe) your changes will persist after a `make image` but you can also [mount](./coding-and-building.md#insert-files-on-the-qemu-image) the Redox filesystem.
 
 ### How can I change my build variant?
 

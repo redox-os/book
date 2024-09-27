@@ -136,7 +136,7 @@ After all recipes are cooked, a tag file is created as `build/$ARCH/$CONFIG_NAME
 
 To build the final Redox image, `redox_installer` uses [FUSE](https://github.com/libfuse/libfuse), creating a virtual filesystem and copying the recipe packages into it. This is done outside of Podman, even if you are using Podman Build.
 
-On some Linux distributions, FUSE may not be permitted for some users, or `bootstrap.sh` might not install it correctly. Investigate whether you can address your FUSE issues, or join the [chat](./ch13-01-chat.md) if you need advice.
+On some Linux distributions, FUSE may not be permitted for some users, or `bootstrap.sh` might not install it correctly. Investigate whether you can address your FUSE issues, or join the [chat](./chat.md) if you need advice.
 
 ## Solving Compilation Problems
 
@@ -167,7 +167,7 @@ git branch -v
 ```
 
 - Run `make clean pull fetch` to remove all your compiled binaries and update all sources.
-- Sometimes there are merge requests that briefly break the build, so check the [Chat](./ch13-01-chat.md) if anyone else is experiencing your problems.
+- Sometimes there are merge requests that briefly break the build, so check the [Chat](./chat.md) if anyone else is experiencing your problems.
 - Sometimes both the source and the binary of some recipe is wrong, run `make ucr.recipe-name` and verify if it fix the problem.
 
 #### Environment Leakage
@@ -190,7 +190,7 @@ To fix this problem you need to find where the program build system get the Open
 
 ### Update Your Build System
 
-Sometimes your build system can be outdated because you forgot to run `make pull` before other commands, read [this](./ch08-06-build-system-reference.md#update-the-build-system) section to learn the complete way to update the build system.
+Sometimes your build system can be outdated because you forgot to run `make pull` before other commands, read [this](./build-system-reference.md#update-the-build-system) section to learn the complete way to update the build system.
 
 In case of backwards-incompatible or relibc changes, you need to use the `make clean all` command to wipe your binaries and build them again, if it doesn't work you need to download a new copy of the build system by running the `bootstrap.sh` script or using this command:
 
