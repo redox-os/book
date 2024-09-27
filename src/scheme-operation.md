@@ -1,7 +1,7 @@
 # Scheme Operation
 
-A [kernel scheme](./ch05-03-schemes.md#kernel-vs-userspace-schemes) is implemented directly in the kernel.
-A [userspace scheme](./ch05-03-schemes.md#kernel-vs-userspace-schemes) is typically implemented by a daemon.
+A [kernel scheme](./schemes.md#kernel-vs-userspace-schemes) is implemented directly in the kernel.
+A [userspace scheme](./schemes.md#kernel-vs-userspace-schemes) is typically implemented by a daemon.
 
 A scheme is created in the [root scheme](#root-scheme) and listens for requests using the [event scheme](#event-scheme).
 
