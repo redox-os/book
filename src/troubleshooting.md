@@ -6,6 +6,7 @@ This page covers all troubleshooting methods and tips for our build system.
 
 - [Setup](#setup)
     - [Podman](#podman)
+        - [Manual Configuration](#manual-configuration)
     - [Native Build](#native-build)
     - [Git](#git)
 - [Building the System](#building-the-system)
@@ -38,6 +39,43 @@ When you run `podman_bootstrap.sh` or `native_bootstrap.sh`, the Linux tools and
 
 If your build appears to be missing libraries, have a look at [Debugging Your Podman Build Process](./advanced-podman-build.md#debugging-your-build-process).
 If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
+
+#### Manual Configuration
+
+If you have problems setting Podman to rootless mode, do the following steps:
+
+(These commands were taken from the official [Podman rootless wiki](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md) and [Shortcomings of Rootless Podman](https://github.com/containers/podman/blob/main/rootless.md), thus it could be broken/wrong in the future, read the wiki to see if the commands match, we will try to update the method to work with everyone)
+
+- Install the `podman`, `crun`, `slirp4netns` and `fuse-overlayfs` packages on your system.
+- `podman ps -a` - This command will show all your Podman containers, if you want to remove all of them, run `podman system reset`
+- Take this [step](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md#cgroup-v2-support) if necessary (if the Podman of your distribution use cgroups V2), you will need to edit the `containers.conf` file at `/etc/containers` or your user folder at `~/.config/containers`, change the line `runtime = "runc"` to `runtime = "crun"`
+- Execute the `cat /etc/subuid` and `cat /etc/subgid` commands to see user/group IDs (UIDs/GIDs) available for Podman.
+
+If you don't want to edit the file, you can use this command:
+
+```sh
+sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 your-user
+```
+
+You can use the values `100000-165535` for your user, just edit the two text files, we recommend `sudo nano /etc/subuid` and `sudo nano /etc/subgid`, when you finish, press Ctrl+X to save the changes.
+
+- After the change on the UID/GID values, execute this command:
+
+```sh
+podman system migrate
+```
+
+- If you have a network problem on the container, this command will allow connections on the port 443 (without root):
+
+```sh
+sudo sysctl net.ipv4.ip_unprivileged_port_start=443
+```
+
+- Hopefully, you have a working Podman build now.
+
+(If you still have problems with Podman, read the [Troubleshooting](./troubleshooting.md) chapter or join us on the [chat](./chat.md))
+
+Let us know if you have improvements for Podman troubleshooting on the [chat](./chat.md).
 
 ### Native Build
 
@@ -72,43 +110,6 @@ When you run `make all`, the following steps occur.
 The Redox toolchain, referred to as **prefix** because it is prefixed with the CPU architecture name, is downloaded and/or built. Modified versions of `cargo`, `rustc`, `gcc` and many other tools are created. They are placed in the `prefix` directory. 
 
 If you have a problem with the toolchain, try `rm -rf prefix`, and everything will be reinstalled the next time you run `make all` or `make rebuild`.
-
-#### Manual Configuration
-
-If you have problems setting Podman to rootless mode, use these commands:
-
-(These commands were taken from the official [Podman rootless wiki](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md) and [Shortcomings of Rootless Podman](https://github.com/containers/podman/blob/main/rootless.md), thus it could be broken/wrong in the future, read the wiki to see if the commands match, we will try to update the method to work with everyone)
-
-- Install the `podman`, `crun`, `slirp4netns` and `fuse-overlayfs` packages on your system.
-- `podman ps -a` - this command will show all your Podman containers, if you want to remove all of them, run `podman system reset`.
-- Take this [step](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md#cgroup-v2-support) if necessary (if the Podman of your distribution use cgroup V2), you will need to edit the `containers.conf` file on `/etc/containers` or your user folder at `~/.config/containers`, change the line `runtime = "runc"` to `runtime = "crun"`.
-- Execute `cat /etc/subuid` and `cat /etc/subgid` to see user/group IDs (UIDs/GIDs) available for Podman.
-
-If you don't want to edit the file, you can use this command:
-
-```sh
-sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 yourusername
-```
-
-You can use the values `100000-165535` for your user, just edit the two text files, we recommend `sudo nano /etc/subuid` and `sudo nano /etc/subgid`, when you finish, press Ctrl+X to save the changes.
-
-- After the change on the UID/GID values, execute this command:
-
-```sh
-podman system migrate
-```
-
-- If you have a network problem on the container, this command will allow connections on the port 443 (without root):
-
-```sh
-sudo sysctl net.ipv4.ip_unprivileged_port_start=443
-```
-
-- Hopefully, you have a working Podman build now.
-
-(If you still have problems with Podman, read the [Troubleshooting](./troubleshooting.md) chapter or join us on the [chat](./chat.md))
-
-Let us know if you have improvements for Podman troubleshooting on the [chat](./chat.md).
 
 ### Filesystem Configuration
 
