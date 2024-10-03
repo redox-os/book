@@ -125,9 +125,9 @@ Where `` `id -un` `` is your User ID and `` `id -gn` `` is your effective Group 
 - `make clean` does **not** run `make container_clean` and will **not** remove the container image.
 - If you already did `make container_clean`, doing `make clean` could trigger an image build and a Rust install in the container. It invokes `cargo clean` on various components, which it must run in a container, since the build is designed to not require **Cargo** on your host machine. If you have Cargo installed on the host and in your PATH, you can use `make PODMAN_BUILD=0 clean` to clean without building a container. 
 
-## Debugging your Build Process
+## Debugging Your Build Process
 
-If you are developing your own components and wish to do one-time debugging to determine what library you are missing in the **Podman Build** environment, the following instructions can help. Note that your changes will not be persistent. After debugging, **you must** [Add your Libraries to the Build](#adding-libraries-to-the-build). With `PODMAN_BUILD=1`, run the following command:
+If you are developing your own components and wish to do one-time debugging to determine what library you are missing in the **Podman Build** environment, the following instructions can help. Note that your changes will not be persistent. After debugging, **you must** [Add your Libraries to the Build](#adding-packages-to-the-build). With `PODMAN_BUILD=1`, run the following command:
 
 - This will start a `bash` shell in the **Podman** container environment, as a normal user without `root` privileges.
 

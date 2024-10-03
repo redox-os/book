@@ -36,7 +36,7 @@ When you run `podman_bootstrap.sh` or `native_bootstrap.sh`, the Linux tools and
 
 ### Podman
 
-If your build appears to be missing libraries, have a look at [Debugging your Podman Build Process](./podman-build.md#debugging-your-build-process).
+If your build appears to be missing libraries, have a look at [Debugging Your Podman Build Process](./advanced-podman-build.md#debugging-your-build-process).
 If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
 
 ### Native Build
