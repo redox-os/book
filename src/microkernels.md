@@ -26,7 +26,7 @@ Modern monolithic kernels try to solve this issue using kernel modules but still
 
 Microkernels are undoubtedly more secure than monolithic kernels. The minimality principle of microkernels is a direct consequence of the principle of least privilege, according to which all components should have only the privileges absolutely needed to provide the needed functionality.
 
-Many security-critical bugs in monolithic kernels comes from services and drivers running unrestricted in kernel mode, without any form of protection.
+Many security-critical bugs in monolithic kernels come from services and drivers running unrestricted in kernel mode, without any form of protection.
 
 In other words: **in monolithic kernels, drivers can do whatever they want, without restrictions, when running in kernel mode**.
 
