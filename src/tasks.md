@@ -10,6 +10,18 @@ This page covers the commands used for common and specific tasks on Redox.
 - [Media](#media)
 - [Graphics](#graphics)
 
+<!--
+
+This is the template for new tasks
+
+### Task description
+
+```sh
+command
+```
+
+-->
+
 ## Hardware
 
 ### Show CPU information
@@ -474,13 +486,3 @@ image-viewer image-name
 ```sh
 glxinfo | grep OpenGL
 ```
-
-<!--
-
-### 
-
-```sh
-
-```
-
--->
