@@ -31,7 +31,7 @@ cd redox
 - Create the `.config` file and add the `REPO_BINARY` environment variable to enable the binary-mode
 
 ```sh
-echo "REPO_BINARY?=1" >> .config
+echo "REPO_BINARY?=1 \n CONFIG_NAME?=my_config" >> .config
 ```
 
 - Create the `hello-world` recipe folder
@@ -71,7 +71,13 @@ nano cookbook/recipes/other/hello-world/recipe.toml
 template = "cargo"
 ```
 
-- Open the default filesystem configuration file at `config/x86_64/desktop.toml` with your text editor and add the `hello-world` recipe, the following code block show where you need to edit.
+- Create the `my_config` filesystem configuration
+
+```sh
+cp config/x86_64/desktop.toml config/x86_64/my_config.toml
+```
+
+- Open the `my_config` filesystem configuration file at `config/x86_64/my_config.toml` with your text editor and add the `hello-world` recipe, the following code block show where you need to edit.
 
 ```toml
 [packages]
