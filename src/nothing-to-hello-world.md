@@ -25,7 +25,7 @@ source ~/.cargo/env
 - Change the active directory to the Redox build system directory
 
 ```sh
-cd ~/tryredox/redox
+cd redox
 ```
 
 - Create the `.config` file and add the `REPO_BINARY` environment variable to enable the binary-mode
@@ -67,8 +67,6 @@ nano cookbook/recipes/other/hello-world/recipe.toml
 - Add the recipe configuration text
 
 ```toml
-[source]
-path = "/source"
 [build]
 template = "cargo"
 ```
@@ -84,7 +82,7 @@ hello-world = {}
 - Build the Hello World program and the Redox image
 
 ```sh
-time make r.hello-world image
+time make prefix r.hello-world image
 ```
 
 - Start the Redox VM without a GUI
