@@ -26,7 +26,7 @@ In that light, a kernel cannot be 100% verified by the Rust compiler, however th
 
 This contrasts with kernels written in C, which cannot make guarantees about security without costly formal analysis.
 
-You can find out more about how `unsafe` works in the [relevant section](https://doc.rust-lang.org/book/unsafe-rust.html) of the Rust book.
+You can find out more about how `unsafe` works in the [relevant section](https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html) of the Rust book.
 
 ## Benefits
 
