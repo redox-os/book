@@ -4,6 +4,18 @@ This page explains the most quick way to test a program on Redox, this tutorial 
 
 In this example we will use a "Hello World" program written in Rust.
 
+- Create the `tryredox` folder
+
+```sh
+mkdir -p ~/tryredox
+```
+
+- Open the `tryredox` folder
+
+```sh
+cd ~/tryredox
+```
+
 - Download the script to bootstrap Podman and download the Redox build system
 
 ```sh
@@ -82,7 +94,7 @@ cp config/x86_64/desktop.toml config/x86_64/my_config.toml
 ```toml
 [packages]
 # Add the item below
-hello-world = {}
+hello-world = "recipe"
 ```
 
 - Build the Hello World program and the Redox image
