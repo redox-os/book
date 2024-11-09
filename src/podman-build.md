@@ -137,7 +137,7 @@ The emulator will display the Redox GUI (Orbital). See [Using the emulation](./r
 To run the virtual machine without a GUI, use:
 
 ```sh
-make qemu vga=no
+make qemu gpu=no
 ```
 
 If you want to capture the terminal output, read [this](./troubleshooting.md#debug-methods) section.

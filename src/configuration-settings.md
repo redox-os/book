@@ -220,7 +220,7 @@ The script `build.sh` allows you to easily set `ARCH`, `FILESYSTEM_CONFIG` and `
 
 `./build.sh [-a ARCH] [-c CONFIG_NAME] [-f FILESYSTEM_CONFIG] TARGET...`
 
-The `TARGET` is any of the available `make` targets, although the recommended target is `qemu`. You can also include certain variable settings such as `vga=no`.
+The `TARGET` is any of the available `make` targets, although the recommended target is `qemu`. You can also include certain variable settings such as `gpu=no`.
 
 - `-f FILESYSTEM_CONFIG` allows you to specify a filesystem config file, which can be in any location but is normally in the directory `config/$ARCH`.
 

@@ -283,7 +283,7 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 
 - Use the `dmesg` command to read the kernel and user-space daemons log.
 
-- You can start the QEMU with the `make qemu vga=no` command to easily copy the terminal text.
+- You can start the QEMU with the `make qemu gpu=no` command to easily copy the terminal text.
 
 - Use the following command for advanced logging:
 
