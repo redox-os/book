@@ -89,7 +89,7 @@ For clarity and easy of use, we will be using two terminal tabs on your system, 
 
 ## Setup your Configuration
 
-To get started, follow the steps in the [Including Programs](./including-programs.md) page to include the `games` package on your `myfiles` configuration file. In your terminal window, go to your `redox` base directory and run:
+To get started, follow the steps in the [Including Programs in Redox](./including-programs.md) page to include the `games` package on your `myfiles` configuration file. In your terminal window, go to your `redox` base directory and run:
 
 ```sh
 make qemu
@@ -227,7 +227,7 @@ Congratulations! You have modified a program and built the system! Next, create 
 make live
 ```
 
-In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. Follow the instructions on [this](#testing-on-real-hardware) section and test out your change.
+In the directory `build/x86_64/myfiles`, you will find the file `livedisk.iso`. Follow the instructions on the [Testing on Real Hardware](#testing-on-real-hardware) section and test out your change.
 
 ### Test Your Changes (out of the Redox build system)
 
@@ -473,7 +473,7 @@ cat > myscript.sh << EOF
   EOF
 ```
 
-If your file is large, or non-ASCII, or you have many files to copy, you can use the process described in [Patch an Image](#insert-files-on-qemu-image). However, you do so at your own risk.
+If your file is large, or non-ASCII, or you have many files to copy, you can use the process described in the [Insert Files On QEMU Image](#insert-files-on-qemu-image) section. However, you do so at your own risk.
 
 Files you create while running QEMU remain in the Redox image, so long as you do not rebuild the image. Similarly, files you add to the image will be present when you run QEMU, so long as you do not rebuild the image.
 
@@ -557,11 +557,11 @@ To test your changes quickly, follow these tutorials on Cargo documentation:
 
 The `drivers` and `drivers-initfs` recipes share the `source` folder, thus your changes on the `drivers` recipe source code will added on the `drivers-initfs` recipe automatically.
 
-(The `recipe.toml` of the `drivers-initfs` recipe use the `same_as` data type to symlink the source, you can read on [this](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/core/drivers-initfs/recipe.toml?ref_type=heads#L2) link)
+(The `recipe.toml` of the `drivers-initfs` recipe use the `same_as` data type to symlink the source, you can read the second line of the [drivers-initfs recipe](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/core/drivers-initfs/recipe.toml?ref_type=heads#L2))
 
 ## Development Tips
 
-- Make sure your build system is up-to-date, read [this](./build-system-reference.md#update-the-build-system) section in case of doubt.
+- Make sure your build system is up-to-date, read the [Update The Build System](./build-system-reference.md#update-the-build-system) section in case of doubt.
 - If some program can't build or work properly, remember that something could be missing/hiding on [relibc](https://gitlab.redox-os.org/redox-os/relibc), some missing function or bug.
 - If you have some error on QEMU, remember to test different settings or verify your operating system (Pop_OS!, Ubuntu, Debian and Fedora are the recommend Linux distributions to do testing/development for Redox).
 - Remember to log all errors, you can use this command as example:

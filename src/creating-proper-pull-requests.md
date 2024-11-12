@@ -28,7 +28,7 @@ The steps given below are for the main Redox project repository - submodules and
     ```
 
   - Use HTTPS if you don't know which one to use. (Recommended: learn about [SSH](./signing-in-to-gitlab.md#using-ssh-for-your-repo) if you don't want to have to login every time you push/pull!)
-  - If you used `bootstrap.sh` (see [Building Redox](./building-redox.md)), the `git clone` was done for you and you can skip this step.
+  - If you used `bootstrap.sh` (see the [Building Redox](./podman-build.md) page), the `git clone` was done for you and you can skip this step.
 2. Change to the newly created redox directory and rebase to ensure you're using the latest changes:
 
     ```sh

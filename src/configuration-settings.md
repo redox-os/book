@@ -8,7 +8,7 @@ There are many build system configurable settings that affect what variant of Re
 
 The purpose of `.config` is to allow you to change your configuration settings without worrying if you forgot them in some `make` command or if they will end up in a Pull Request. `.config` is in the `.gitignore` list, so you won't accidentally commit it.
 
-To permanently override any of the settings in [mk/config.mk](#mkconfigmk), create a file `.config` in your `redox` base directory (i.e. where you run the `make` command) and set the values in that file.
+To permanently override any of the settings in the [mk/config.mk](#mkconfigmk) section, create a file `.config` in your `redox` base directory (i.e. where you run the `make` command) and set the values in that file.
 
 For example, the following configuration will use the `i686` CPU target and build the `desktop-minimal` image variant in every `make` command:
 
@@ -31,7 +31,7 @@ For example, this command will build the `demo` image variant and open QEMU.
 make CONFIG_NAME=demo qemu
 ```
 
-Overriding the settings in this way is only temporary. Also, if you are using [Podman Build](./podman-build.md), some settings may be ignored, so you are best to use [.config](#config).
+Overriding the settings in this way is only temporary. Also, if you are using the [Podman Build](./podman-build.md), some settings may be ignored, so you are best to use [.config](#config).
 
 ### Architecture Names
 
@@ -47,15 +47,15 @@ In `mk/config.mk`, you will find the variables `ARCH`, `CONFIG_NAME` and `FILESY
 
 - `ARCH`: the CPU architecture that you are building the system for. Currently supported architectures are `x86_64` (the default), `i686` and `aarch64`. 
 - `CONFIG_NAME`: used to determine part of the name of the Redox image, and normally used to build the `FILESYSTEM_CONFIG` name (`desktop` by default). 
-- `FILESYSTEM_CONFIG`: a file that describes the packages and files to include in the filesystem. See [Filesystem Config](#filesystem-configuration) above. The default is `config/$ARCH/$CONFIG_NAME.toml`, but you can change it if your config file is in a different location.
+- `FILESYSTEM_CONFIG`: a file that describes the packages and files to include in the filesystem. See the [Filesystem Configuration](#filesystem-configuration) section above. The default is `config/$ARCH/$CONFIG_NAME.toml`, but you can change it if your config file is in a different location.
 - `QEMU_MEM` - It set the QEMU memory quantity, for example `QEMU_MEM=2048`
 - `QEMU_SMP` - It set the QEMU CPU core quantity, for example `QEMU_SMP=4`
 - `PREFIX_BINARY` - If set to 1 (`PREFIX_BINARY?=1`), the build system don't compile from toolchain sources but download/install them from Redox CI server. This can save lots of time during your first build. Note: If you are using **Podman**, you must set these variables in [.config](#config) in order for your change to have any effect. Setting them in the environment or on the command line may not be effective.
 - `REPO_BINARY` - If set to 1 (`REPO_BINARY?=1`), the build system don't compile from recipe sources but download/install packages from Redox package server.
-- `FILESYSTEM_SIZE`: The size in MB of the filesystem contained in the Redox image. See [Filesystem Size](#filesystem-size) before changing it.
+- `FILESYSTEM_SIZE`: The size in MB of the filesystem contained in the Redox image. See the [Filesystem Size](#filesystem-size) section before changing it.
 - `REDOXFS_MKFS_FLAGS`: Flags to the program that builds the Redox filesystem. `--encrypt` enables disk encryption.
-- `PODMAN_BUILD`: If set to 1 (`PODMAN_BUILD?=1`), the build environment is constructed in **Podman**. See [Podman Build](./podman-build.md).
-- `CONTAINERFILE`: The Podman containerfile. See [Podman Build](./podman-build.md).
+- `PODMAN_BUILD`: If set to 1 (`PODMAN_BUILD?=1`), the build environment is constructed in **Podman**. See the [Podman Build](./podman-build.md) page.
+- `CONTAINERFILE`: The Podman containerfile. See the [Podman Build](./podman-build.md) page.
 
 If you want to change them permanently, read the [.config](#config) section.
 
@@ -73,7 +73,7 @@ nano config/x86_64/desktop.toml
 
 For each supported CPU architecture, there are one or more filesystem configurations to choose from. For `x86_64`, there are `desktop`, `demo` and `server` configurations, as well as a few others. For `i686`, there are also some stripped down configurations for legacy systems with minimal RAM. Have a look in the directory `config/x86_64` for some examples.
 
-For more details on the filesystem config, and how to include extra packages in your build, please see [Including Programs in Redox](./including-programs.md).
+For more details on the filesystem config, and how to include extra packages in your build, please see the [Including Programs in Redox](./including-programs.md) page.
 
 Feel free to create your own **filesystem configuration**.
 
@@ -206,7 +206,7 @@ QEMU_MEM?=number-in-mb
 
 ## mk/config.mk
 
-The build system uses several Makefiles, most of which are in the directory `mk`. We have grouped together most of the settings that might be interesting into `mk/config.mk`. However, it's not recommended that you change them there, especially if you are contributing to the Redox project (as it could cause conflicts in the `make pull` command). See [.config](#config) below.
+The build system uses several Makefiles, most of which are in the directory `mk`. We have grouped together most of the settings that might be interesting into `mk/config.mk`. However, it's not recommended that you change them there, especially if you are contributing to the Redox project (as it could cause conflicts in the `make pull` command). See the [.config](#config) section below.
 
 Open `mk/config.mk` in your favorite editor and have a look through it (but don't change it), e.g.
 
