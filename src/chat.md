@@ -14,6 +14,7 @@ All rooms available on the Redox space:
 - [#redox-announcements:matrix.org](https://matrix.to/#/#redox-announcements:matrix.org) - A room for important announcements.
 - [#redox-general:matrix.org](https://matrix.to/#/#redox-general:matrix.org) - A room for Redox-related discussions (questions, suggestions, porting, etc).
 - [#redox-dev:matrix.org](https://matrix.to/#/#redox-dev:matrix.org) - A room for the development, here you can talk about anything development-related (code, proposals, achievements, styling, bugs, etc).
+- [#redox-rfcs:matrix.org](https://matrix.to/#/#redox-rfcs:matrix.org) - A room for system architecture design discussions and brainstorming for RFCs.
 - [#redox-support:matrix.org](https://matrix.to/#/#redox-support:matrix.org) - A room for testing and building support (problems, errors, questions).
 - [#redox-mrs:matrix.org](https://matrix.to/#/#redox-mrs:matrix.org) - A room to send all ready merge requests without conflicts  (if you have a ready MR to merge, send there).
 - [#redox-gitlab:matrix.org](https://matrix.to/#/#redox-gitlab:matrix.org) - A room to send new GitLab accounts for approval.
