@@ -18,4 +18,4 @@ Some important software that Redox supports:
 - RustPython
 - GNU Bash
 
-You can see all Redox components and ported programs [here](https://static.redox-os.org/pkg/x86_64-unknown-redox/).
+You can see all Redox components and ported programs on the [build server list](https://static.redox-os.org/pkg/x86_64-unknown-redox/).

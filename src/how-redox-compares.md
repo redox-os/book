@@ -15,7 +15,7 @@ For example, the `open` POSIX function is called `SYS_OPEN` on relibc.
 In a model largely inspired by Plan 9, in Redox, [resources](./resources.md) can be socket-like or file-like, providing a more unified system API.
 Resources are named using paths, similar to what you would find in Linux or another Unix system.
 But when referring to a resource that is being managed by a particular resource manager, you can address it using a scheme-rooted path.
-We will explain this later, in [Schemes, and Resources](./schemes-resources.md).
+We will explain this later, in the [Schemes and Resources](./schemes-resources.md) page.
 
 ## The kernel
 

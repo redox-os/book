@@ -13,15 +13,11 @@ The complete source for this example can be found at
 
 ## Setup
 
-In order to build and run this example in a Redox environment, you'll need to
-be set up to compile the OS from source. The process for getting a program
-included in a local Redox build is laid out in
-[Including Programs](./including-programs.md). Pause here and follow the `helloworld` example in that guide if
-you want to get this example running.
+In order to build and run this example in a Redox environment, you'll need to be set up to compile the OS from source. The process for getting a program included in a local Redox build is laid out in the [Including Programs in Redox](./including-programs.md) page. Pause here and follow the `helloworld` example in that guide if you want to get this example running.
 
 This example assumes that `vec` was used as the name of the crate instead of
 `helloworld`. The crate should therefore be located at
-`cookbook/recipes/vec/source`.
+`cookbook/recipes/vec/source`
 
 Modify the `Cargo.toml` for the `vec` crate so that it looks something like
 this:

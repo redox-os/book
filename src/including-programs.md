@@ -20,7 +20,7 @@ This page will teach you how to add programs on the Redox image, it's a simplifi
   - [Adding the program to the Redox image](#adding-the-program-to-the-redox-image)
 - [Running your program](#running-your-program)
 
-The Cookbook system makes the packaging process very simple. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In [Coding and Building](./coding-and-building.md), we discuss the development cycle in more detail.
+The Cookbook system makes the packaging process very simple. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In the [Coding and Building](./coding-and-building.md) page, we discuss the development cycle in more detail.
 
 ## Existing Package
 
@@ -28,7 +28,7 @@ Redox has many programs that are available for inclusion. Each program has a rec
 
 ### Setup the Redox Build Environment
 
-- Follow the steps in [Building Redox](./building-redox.md) or [Podman Build](./podman-build.md) to create the Redox Build Environment on your system.
+- Follow the steps in the [Building Redox](./podman-build.md) or [Native Build](./building-redox.md) pages to create the Redox Build Environment on your system.
 - Build the system as described. This will take quite a while the first time.
 - Run the system in **QEMU**.
 
@@ -127,11 +127,11 @@ And that's it! Sort of.
 
 ### Dependencies
 
-Read [this](./porting-applications.md#dependencies) section to learn how to handle recipe dependencies.
+Read the [Dependencies](./porting-applications.md#dependencies) section to learn how to handle recipe dependencies.
 
 ### Update crates
 
-Read [this](./porting-applications.md#update-crates) to learn how to update crates on Rust programs.
+Read the [Update crates](./porting-applications.md#update-crates) section to learn how to update crates on Rust programs.
 
 ## Modifying an Existing Recipe
 
