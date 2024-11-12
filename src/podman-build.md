@@ -1,16 +1,16 @@
 # Building Redox
 
-Congrats on making it this far! Now you will build Redox. This process is for **x86-64** machines (Intel/AMD). There are also similar processes for [i686](./i686.md) and [AArch64/Arm64](./aarch64.md).
+Congrats on making it this far! Now you will build Redox. This process is for **x86-64** machines (Intel/AMD). There are also similar processes for [i686](./i686.md) and [AArch64/ARM64](./aarch64.md).
 
-The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox GitLab login, try again later, and if it continues to happen, you can let us know through [chat](./chat.md).
+The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox GitLab login, try again later, and if it continues to happen, you can let us know through the [chat](./chat.md).
 
 To avoid bugs from different build environments (operating systems) we are using **Rootless Podman** for major parts of the build. **Podman** is invoked automatically and transparently within the Makefiles.
 
-The TL;DR version is [here](#tldr---new-or-existing-working-directory). More details are available in [Advanced Podman Build](./advanced-podman-build.md).
+The TL;DR version is [here](#tldr---new-or-existing-working-directory). More details are available in the [Advanced Podman Build](./advanced-podman-build.md) page.
 
-You can find out more about Podman [here](https://docs.podman.io/en/latest/Introduction.html).
+You can find out more about Podman on the [Podman documentation](https://docs.podman.io/en/latest/Introduction.html).
 
-(Don't forget to read [this](./build-system-reference.md) page to know our build system organization and how it works)
+(Don't forget to read the [Build System](./build-system-reference.md) page to know our build system organization and how it works)
 
 ## Podman Build Overview
 
@@ -140,7 +140,7 @@ To run the virtual machine without a GUI, use:
 make qemu vga=no
 ```
 
-If you want to capture the terminal output, read [this](./troubleshooting.md#debug-methods) section.
+If you want to capture the terminal output, read the [Debug Methods](./troubleshooting.md#debug-methods) section.
 
 If you have problems running the virtual machine, you can try `make qemu kvm=no` or `make qemu iommu=no` to turn off various virtualization features. These can also be used as arguments to `build.sh`.
 
@@ -152,20 +152,20 @@ Join the [chat](./chat.md) if this is something you are interested in pursuing.
 
 ### Building A Redox Bootable Image
 
-Read [this](./coding-and-building.md#testing-on-real-hardware) section.
+Read the [Testing on Real Hardware](./coding-and-building.md#testing-on-real-hardware) section.
 
 ## Note
 
-If you intend on contributing to Redox or its subprojects, please read the [CONTRIBUTING.md](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/CONTRIBUTING.md) document, so you understand how our build system works and setup your repository fork appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
+If you intend on contributing to Redox or its subprojects, please read the [CONTRIBUTING](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/CONTRIBUTING.md) document, so you understand how our build system works and setup your repository fork appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
 
-If you encounter any bugs, errors, obstructions, or other annoying things, please join the [chat](./chat.md) or [report the issue](./creating-proper-bug-reports.md) to the [Redox repository](https://gitlab.redox-os.org/redox-os/redox) or a proper repository for the component. Thanks!
+If you encounter any bugs, errors, obstructions, or other annoying things, please join the [chat](./chat.md) or [report the issue](./creating-proper-bug-reports.md) to the [build system repository](https://gitlab.redox-os.org/redox-os/redox) or a proper repository for the component. Thanks!
 
 ### build.sh
 
-`build.sh` is a shell script that allows you to easily specify the CPU architecture you are building for, and the filesystem contents. When you are doing Redox development, you should set them in `.config` (see [Configuration Settings](./configuration-settings.md)). But if you are just trying things out, use `build.sh` to run `make` for you. e.g.:
+`build.sh` is a shell script that allows you to easily specify the CPU architecture you are building for, and the filesystem contents. When you are doing Redox development, you should set them in `.config` (see the [Configuration Settings](./configuration-settings.md) page). But if you are just trying things out, use `build.sh` to run `make` for you. e.g.:
 
 - `./build.sh -a i686 -c server live` - Run `make` for an i686 (32-bits Intel/AMD) CPU architecture, using the `server` configuration, `config/i686/server.toml`. The resulting image is `build/i686/server/livedisk.iso`, which can be used for installation from a USB.
 
 - `./build.sh -f config/aarch64/desktop.toml qemu` - Run `make` for an ARM64 (AArch64) CPU architecture, using the `desktop` configuration, `config/aarch64/desktop.toml`. The resulting image is `build/aarch64/desktop/harddrive.img`, which is then run in the emulator **QEMU**.
 
-If you use `build.sh`, it's recommended that you do so consistently, as `make` will not be aware of which version of the system you previously built with `build.sh`. Details of `build.sh` and other settings are described in [Configuration Settings](./configuration-settings.md).
+If you use `build.sh`, it's recommended that you do so consistently, as `make` will not be aware of which version of the system you previously built with `build.sh`. Details of `build.sh` and other settings are described in the [Configuration Settings](./configuration-settings.md) page.

@@ -2,7 +2,7 @@
 
 The [Including Programs in Redox](./including-programs.md) page gives an example to port/modify a pure Rust program, here we will explain the advanced way to port Rust programs, mixed Rust programs (Rust and C/C++ libraries, for example) and C/C++ programs.
 
-(Before reading this page you must read the [Build System Quick Reference](./build-system-reference.md) page)
+(Before reading this page you must read the [Build System](./build-system-reference.md) page)
 
 - [Recipe](#recipe)
     - [Recipe Configuration Example](#recipe-configuration-example)

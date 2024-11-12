@@ -4,7 +4,7 @@ Redox is an attempt to make a complete, fully-functioning, general-purpose opera
 
 We want to be able to use it, without obstructions, as a complete alternative to Linux/BSD in our computers. It should be able to run most Linux/BSD programs with minimal modifications. 
 
-We're aiming towards a complete, stable, and safe Rust ecosystem. This is a design choice, which hopefully improves correctness and security (see [Why Rust](./why-rust.md)).
+We're aiming towards a complete, stable, and safe Rust ecosystem. This is a design choice, which hopefully improves correctness and security (see the [Why Rust](./why-rust.md) page).
 
 We want to improve the security design when compared to other Unix-like operating systems by using safe defaults and limiting insecure configurations where possible.
 

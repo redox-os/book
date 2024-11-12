@@ -38,7 +38,7 @@ While in a microkernel the drivers run in different memory address spaces (separ
 
 In Linux we often see errors with drivers dereferencing bad pointers which ultimately results in kernel panics.
 
-There is very good documentation in [MINIX](http://wiki.minix3.org/doku.php?id=www:documentation:reliability) about how this can be addressed by a microkernel.
+There is very good documentation in the [MINIX documentation](http://wiki.minix3.org/doku.php?id=www:documentation:reliability) about how this can be addressed by a microkernel.
 
 ### Sane Debugging
 

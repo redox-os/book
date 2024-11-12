@@ -83,7 +83,7 @@ It's both a crate (calling the ABI functions) and an ABI, the ABI is provided fr
 
 An ongoing migration from redox_syscall to libredox is in progress, you can follow the current status on [this](https://gitlab.redox-os.org/redox-os/libredox/-/issues/1) link.
 
-You can see Rust crates using it on [this](https://crates.io/crates/libredox/reverse_dependencies) link.
+You can see Rust crates using it on the [Reverse Dependencies](https://crates.io/crates/libredox/reverse_dependencies) category.
 
 ### redox_syscall
 
@@ -101,7 +101,7 @@ Most **Rust** programs include the [std](https://doc.rust-lang.org/std/) crate, 
 
 To ensure portability of programs, Redox supports the Rust `std` crate, for Redox, `std::sys` refers to `std::sys::unix`.
 
-Redox-specific code can be found on [this](https://github.com/rust-lang/rust/tree/master/library/std/src/os/redox) repository.
+Redox-specific code can be found on the [libstd source tree](https://github.com/rust-lang/rust/tree/master/library/std/src/os/redox).
 
 For most functionality, Redox uses `#[cfg(unix)]` and [sys/unix](https://github.com/rust-lang/rust/tree/master/library/std/src/sys/pal/unix).
 
