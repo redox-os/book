@@ -54,13 +54,13 @@ Since most of the system components are in userspace, they can be replaced on-th
 
 Most of the system components run in userspace, simplifying the testing and debugging.
 
-You can read more about the above benefits on [this](https://doc.redox-os.org/book/microkernels.html) page.
+You can read more about the above benefits on the [Microkernels](./microkernels.md) page.
 
 ## Advanced Filesystem
 
 Redox provides an advanced filesystem, [RedoxFS](https://gitlab.redox-os.org/redox-os/redoxfs). It includes many of the features in [ZFS](https://en.wikipedia.org/wiki/OpenZFS), but in a more modular design. 
 
-More details on RedoxFS can be found [here](./redoxfs.md)
+More details on RedoxFS can be found on the [RedoxFS](./redoxfs.md) page.
 
 ## Unix-like Tools and API
 

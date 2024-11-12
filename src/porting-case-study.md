@@ -45,12 +45,12 @@ cd ~/redox-gitoxide
 git clone git@gitlab.redox-os.org:redox-os/redox.git --origin upstream --recursive
 ```
 
-The new recipe will be part of the `cookbook` repository, so we need to fork then branch it. To fork the `cookbook` repo:
+The new recipe will be part of the `cookbook` repository, so we need to fork then branch it. To fork the `cookbook` repository:
 - In the browser, go to [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook)
 - Click the `Fork` button in the upper right part of the page
 - Create a `public` fork under your gitlab user name (it's the only option that's enabled)
 
-Then we need to set up our local `cookbook` repo and create the branch. `cookbook` was cloned when we cloned `redox`, so we will just tweak that. In the Terminal window:
+Then we need to set up our local `cookbook` repository and create the branch. `cookbook` was cloned when we cloned `redox`, so we will just tweak that. In the Terminal window:
 
 ```sh
 cd ~/redox-gitoxide/redox/cookbook
@@ -412,7 +412,11 @@ make rebuild
 make qemu
 ```
 
-Log in to Redox as `user` with no password, and type `gix clone https://gitlab.redox-os.org/redox-os/website.git`.
+Log in to Redox as `user` with no password, and type:
+
+```sh
+gix clone https://gitlab.redox-os.org/redox-os/website.git
+```
 
 We get some errors, but we are making progress.
 
@@ -421,5 +425,5 @@ We get some errors, but we are making progress.
 - Before committing our new recipe, we need to uncomment the `[source]` section. Edit `~/redox-gitoxide/redox/cookbook/recipes/gitoxide/recipe.toml` to remove the `#` from the start of the first two lines.
 - We commit our changes to `cookbook` to include the new `gitoxide` recipe and submit an MR, following the instructions [Creating Proper Pull Requests](./creating-proper-pull-requests.md).
 - We commit our changes to `relibc`. We need to rebuild the system and test it thoroughly in QEMU, checking anything that might be affected by our changes. Once we are confident in our changes, we can submit the MR.
-- We post links to both MRs on [Redox OS/MRs](https://matrix.to/#/#redox-mrs:matrix.org) to ensure they get reviewed. 
-- After making our changes to `libc` and testing them, we need to request to have those changes upstreamed by posting a message on [Redox OS/MRs](https://matrix.to/#/#redox-mrs:matrix.org). If the changes are complex, please create an issue [here](https://gitlab.redox-os.org/redox-os/redox) and include a link to it in your post.
+- We post links to both MRs on the [Redox OS/MRs](https://matrix.to/#/#redox-mrs:matrix.org) room to ensure they get reviewed. 
+- After making our changes to `libc` and testing them, we need to request to have those changes upstreamed by posting a message on the [Redox OS/MRs](https://matrix.to/#/#redox-mrs:matrix.org) room. If the changes are complex, please create an issue on the [build system repository](https://gitlab.redox-os.org/redox-os/redox) and include a link to it in your post.

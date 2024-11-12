@@ -11,7 +11,7 @@ This section will guide you to download the Redox images.
 
 ### Stable Releases
 
-The bootable images for the 0.9.0 release are located [here](https://static.redox-os.org/releases/0.9.0/x86_64/). To try Redox using a virtual machine such as QEMU or VirtualBox, download the [demo](https://static.redox-os.org/releases/0.9.0/x86_64/redox_demo_x86_64_2024-09-07_1225_harddrive.img.zst) variant, check the [SHA256 sum](https://static.redox-os.org/releases/0.9.0/x86_64/SHA256SUM) to ensure it has downloaded correctly.
+The bootable images for the 0.9.0 release are located on the [build server release folder](https://static.redox-os.org/releases/0.9.0/x86_64/). To try Redox using a virtual machine such as QEMU or VirtualBox, download the [demo](https://static.redox-os.org/releases/0.9.0/x86_64/redox_demo_x86_64_2024-09-07_1225_harddrive.img.zst) variant, check the [SHA256 sum](https://static.redox-os.org/releases/0.9.0/x86_64/SHA256SUM) to ensure it has downloaded correctly.
 
 ```sh
 sha256sum $HOME/Downloads/redox_demo_x86_64_*_harddrive.img.zst
@@ -25,7 +25,7 @@ Even if the `desktop` and `server` variants doesn't work, use the daily images b
 
 ### Daily Images
 
-If you want to test the latest Redox changes you can use our bootable images created each day by opening [this](https://static.redox-os.org/img) link and downloading your preferred variant.
+If you want to test the latest Redox changes you can use our bootable images created each day by opening the [build server images](https://static.redox-os.org/img) and downloading your preferred variant.
 
 (Sometimes our daily images can be one week old or more because of breaking changes)
 

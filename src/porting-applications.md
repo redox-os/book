@@ -177,7 +177,7 @@ The Cookbook have templates to avoid custom commands for cross-compilation, but 
 
 ### Cross Compiler
 
-Cookbook use Rust/GCC forks to do cross-compilation of recipes (programs) with `relibc` to any supported CPU architecture, you can check our cross-compilers [here](https://static.redox-os.org/toolchain/).
+Cookbook use Rust/GCC forks to do cross-compilation of recipes (programs) with `relibc` to any supported CPU architecture, you can check our cross-compilers on the [build server](https://static.redox-os.org/toolchain/).
 
 ### Cross Compilation
 
@@ -829,7 +829,7 @@ To help on this process, the [Arch Linux packages](https://archlinux.org/package
 
 - Arch Linux packages - Search for your program, open the program page, see the "Package Actions" category on the top right position and click on the "Source Files" button, a GitLab page will open, open the `.SRCINFO` and search for the tarball link on the "source" fields of the file.
 
-See [this](https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/main/.SRCINFO?ref_type=heads#L22) example.
+See the [linux package](https://gitlab.archlinux.org/archlinux/packaging/packages/linux/-/blob/main/.SRCINFO?ref_type=heads#L22) example.
 
 - AUR - Search for your program, open the program page, go to the "Sources" section on the end of the package details.
 
@@ -853,7 +853,7 @@ Open the release item and copy the second code below the version number.
 
 Example:
 
-- Open [this](https://github.com/rust-lang/rust/releases/tag/1.74.0) release announcement.
+- Open the [Rust 1.74 release announcement](https://github.com/rust-lang/rust/releases/tag/1.74.0).
 - The commit hash is `79e9716c980570bfd1f666e3b16ac583f0168962` and was shortened as `79e9716`.
 
 #### GitLab release commit hash
@@ -864,7 +864,7 @@ Open the "Releases" button and copy the first code on the end of the release ann
 
 Example:
 
-- Open [this](https://gitlab.redox-os.org/redox-os/redox/-/releases/0.8.0) release announcement.
+- Open the [Redox 0.8.0 release announcement](https://gitlab.redox-os.org/redox-os/redox/-/releases/0.8.0).
 - The commit hash is `c8634bd9890afdac4438d1ff99631d600d469264` and was shortened as `c8634bd9`.
 
 ## Dependencies
@@ -891,7 +891,7 @@ Runtimes will be added below the `[package]` section (it will install the runtim
 
 Mixed Rust programs have crates ending with `-sys` to use C/C++ libraries of the system, sometimes they bundle them.
 
-If you have questions about program dependencies, feel free to ask us on [Chat](./chat.md).
+If you have questions about program dependencies, feel free to ask us on the [Chat](./chat.md).
 
 If you want an easy way to find dependencies, see the Debian testing [packages list](https://packages.debian.org/testing/allpackages).
 
@@ -1012,7 +1012,7 @@ Each package page of some program has a "Dependencies" section on the package de
 - `dependency-name (make)` - Build tools (required to build the program)
 - `dependency-name (optional)` - Programs or libraries to expand the program functionality
 
-See the [Firefox](https://archlinux.org/packages/extra/x86_64/firefox/) package, for example.
+See the [firefox package](https://archlinux.org/packages/extra/x86_64/firefox/), for example.
 
 - [Arch Linux Packages](https://archlinux.org/packages/)
 - [AUR](https://aur.archlinux.org/)
@@ -1021,9 +1021,9 @@ See the [Firefox](https://archlinux.org/packages/extra/x86_64/firefox/) package,
 
 The [Gentoo](https://gentoo.org) distribution does a wonderful job to document many programs and libraries, like source code location, dependencies, feature flags, cross-compilation and context.
 
-It's the most complete reference for advanced packaging of programs, you can search the Gentoo packages on [this](https://packages.gentoo.org/) link.
+It's the most complete reference for advanced packaging of programs, you can search the Gentoo packages on the [Gentoo Packages](https://packages.gentoo.org/) website.
 
-To start you need to read [this](https://devmanual.gentoo.org/general-concepts/dependencies/) page to learn advanced packaging and some problems.
+To start you need to read the [Gentoo documentation](https://devmanual.gentoo.org/general-concepts/dependencies/) page to learn advanced packaging and some problems.
 
 The "Dependencies" section of a Gentoo package will show a table with the following categories:
 
@@ -1050,9 +1050,9 @@ Use the "Go to file" button to search for the software name.
 
 - Create the dependency recipe and run `make r.dependency-name` and see if it don't give errors, if you get an error it can be a dependency that require patches, missing C library functions or build tools, try to investigate both methods until the recipe finish the build process successfully.
 
-If you run `make r.recipe-name` and it builds successfully, feel free to add the build tools on the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script (for native builds) or the [redox-base-containerfile](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman/redox-base-containerfile) configuration file (for Podman builds).
+If you run `make r.recipe-name` and it builds successfully, feel free to add the build tools on the [redox-base-containerfile](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman/redox-base-containerfile) configuration file (for Podman builds) or the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script (for native builds).
 
-The `bootstrap.sh` script and `redox-base-containerfile` covers the build tools required by recipes on [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
+The `redox-base-containerfile` and `bootstrap.sh` script covers the build tools required by recipes on the [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml) filesystem configuration.
 
 ## Building/Testing The Program
 
@@ -1096,7 +1096,7 @@ The recipe sources will be extracted/cloned on the `source` folder inside of you
 
 Sometimes the `Cargo.toml` and `Cargo.lock` of some Rust programs can hold a crate versions lacking Redox support or broken Redox code path (changes on code that make the target OS fail), this will give you an error during the recipe compilation.
 
-- The reason of fixed crate versions is explained [here](https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries).
+- The reason of fixed crate versions is explained on the [Cargo FAQ](https://doc.rust-lang.org/cargo/faq.html#why-do-binaries-have-cargolock-in-version-control-but-not-libraries).
 
 To fix this you will need to update the crates of your recipe after the first compilation and build it again, see the ways to do it below.
 
@@ -1184,7 +1184,7 @@ If you use the above methods but the program is still using old crate versions, 
 
 ### Redox forks
 
-It's possible that some not ported crate have a Redox fork with patches, you can search the crate name [here](https://gitlab.redox-os.org/), generally the Redox patches stay in the `redox` branch or `redox-version` branch that follow the crate version.
+It's possible that some not ported crate have a Redox fork with patches, you can search the crate name on the [Redox GitLab](https://gitlab.redox-os.org/), generally the Redox patches stay in the `redox` branch or `redox-version` branch that follow the crate version.
 
 To use this Redox fork on your Rust program, add this text on the end of the `Cargo.toml` in the program source code:
 
@@ -1314,6 +1314,6 @@ See the size of the `stage.pkgar` and `stage.tar.gz` files.
 
 ## Submitting MRs
 
-If you want to add your recipe on [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook) to become a Redox package on the [CI server](https://static.redox-os.org/pkg/), read the [package policy](https://gitlab.redox-os.org/redox-os/cookbook#package-policy).
+If you want to add your recipe on [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook) to become a Redox package on the [build server](https://static.redox-os.org/pkg/), read the [package policy](https://gitlab.redox-os.org/redox-os/cookbook#package-policy).
 
 After this you can submit your merge request with proper category, dependencies and comments.

@@ -15,7 +15,7 @@ File operations performed by a regular program are translated by the kernel into
 ## Event Scheme
 
 The `event` scheme is a special scheme provided by the kernel that allows a scheme provider or other program to listen for events occurring on a file descriptor.
-A more detailed explanation of the `event` scheme is [here](./event-scheme.md).
+A more detailed explanation of the `event` scheme can be found on the [Event Scheme](./event-scheme.md) page.
 
 Note that very simple scheme providers do not use the `event` scheme.
 However, if a scheme can receive requests or events from more than one source,

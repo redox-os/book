@@ -4,7 +4,7 @@ Redox GitLab consists of a large number of **Projects** and **Subprojects**. The
 
 ## The Redox Project
 
-The `redox` project is actually just the root of the build system. It does not contain any of the code that the final Redox image will include. It includes the Makefiles, configuration files, and a few scripts to simplify setup and building. The `redox` project can be found [here](https://gitlab.redox-os.org/redox-os/redox).
+The `redox` project is actually just the root of the build system. It does not contain any of the code that the final Redox image will include. It includes the Makefiles, configuration files, and a few scripts to simplify setup and building. The `redox` project can be found on the [GitLab repository](https://gitlab.redox-os.org/redox-os/redox).
 
 Doing a `git clone` of `redox.git` with `--recursive` fetches the full build system, as described in the `.gitmodules` file. The submodules are referred to using a SHA hash to identify what commit to use, so it's possible that your fetched subprojects do not have the latest from their `master` branch. Once the latest SHA reference is merged into `redox`, you can update to get the latest version of the subproject.
 
@@ -32,4 +32,4 @@ In some cases, the Redox GitLab has a fork of another repository, in order to ad
 
 When you are contributing to Redox, you are expected to make your changes in a Personal Fork of the relevant project, then create a Merge Request (PR) to have your changes pulled from your fork into the master. Note that your personal fork is required to have public visibility.
 
-In some rare situations, e.g. for experimental features or projects with licensing that is not compatible with Redox, a recipe may pull in sources located in a personal repository. Before using one of these recipes, please check with us on [Chat](./chat.md) to understand why the project is set up this way, and do not commit a Redox config file containing such a recipe without permission.
+In some rare situations, e.g. for experimental features or projects with licensing that is not compatible with Redox, a recipe may pull in sources located in a personal repository. Before using one of these recipes, please check with us on the [chat](./chat.md) to understand why the project is set up this way, and do not commit a Redox config file containing such a recipe without permission.

@@ -2,7 +2,7 @@
 
 This page covers all troubleshooting methods and tips for our build system.
 
-(You must read [this](./build-system-reference.md) page before)
+(You must read the [Build System](./build-system-reference.md) page before)
 
 - [Setup](#setup)
     - [Podman](#podman)
@@ -37,7 +37,7 @@ When you run `podman_bootstrap.sh` or `native_bootstrap.sh`, the Linux tools and
 
 ### Podman
 
-If your build appears to be missing libraries, have a look at [Debugging Your Podman Build Process](./advanced-podman-build.md#debugging-your-build-process).
+If your build appears to be missing libraries, have a look at the [Debugging Your Podman Build Process](./advanced-podman-build.md#debugging-your-build-process) section.
 If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
 
 #### Manual Configuration
@@ -48,7 +48,7 @@ If you have problems setting Podman to rootless mode, do the following steps:
 
 - Install the `podman`, `crun`, `slirp4netns` and `fuse-overlayfs` packages on your system.
 - `podman ps -a` - This command will show all your Podman containers, if you want to remove all of them, run `podman system reset`
-- Take this [step](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md#cgroup-v2-support) if necessary (if the Podman of your distribution use cgroups V2), you will need to edit the `containers.conf` file at `/etc/containers` or your user folder at `~/.config/containers`, change the line `runtime = "runc"` to `runtime = "crun"`
+- Follow [this step](https://github.com/containers/podman/blob/main/docs/tutorials/rootless_tutorial.md#cgroup-v2-support) if necessary (if the Podman of your distribution use cgroups V2), you will need to edit the `containers.conf` file at `/etc/containers` or your user folder at `~/.config/containers`, change the line `runtime = "runc"` to `runtime = "crun"`
 - Execute the `cat /etc/subuid` and `cat /etc/subgid` commands to see user/group IDs (UIDs/GIDs) available for Podman.
 
 If you don't want to edit the file, you can use this command:
@@ -83,7 +83,7 @@ Not all Linux distributions are supported by `native_bootstrap.sh`, so if you ha
 
 If you want to support your Unix-like system without Podman, you can try to install the Debian/Ubuntu package equivalents for your system from your package manager/software store, you can see them on the `ubuntu()` function of the [native_bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/native_bootstrap.sh) script.
 
-The `native_bootstrap.sh` script and `redox-base-containerfile` covers the build system packages needed by the recipes at [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml)
+The `native_bootstrap.sh` script and `redox-base-containerfile` covers the build system packages needed by the recipes at the [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml) filesystem configuration.
 
 (Note that some systems may have build environment problems hard and time consuming to fix, on these systems Podman will fix most headaches)
 
@@ -103,7 +103,7 @@ When you run `make all`, the following steps occur.
 
 ### .config and mk/config.mk
 
-- `make` scans [.config](./configuration-settings.md#config) and [mk/config.mk](./configuration-settings.md#mkconfigmk) for settings, such as the CPU architecture, configuration name, and whether to use **Podman** during the build process. Read through [Configuration Settings](./configuration-settings.md) to make sure you have the settings that are best for you.
+- `make` scans [.config](./configuration-settings.md#config) and [mk/config.mk](./configuration-settings.md#mkconfigmk) for settings, such as the CPU architecture, configuration name, and whether to use **Podman** during the build process. Read through the [Configuration Settings](./configuration-settings.md) page to make sure you have the settings that are best for you.
 
 ### Prefix
 
@@ -247,7 +247,7 @@ git pull
 git merge your-branch master
 ```
 
-If you want an anonymous merge, read [this](./coding-and-building.md#anonymous-commits).
+If you want an anonymous merge, read the [Anonymous Commits](./coding-and-building.md#anonymous-commits) section.
 
 ### Update relibc
 

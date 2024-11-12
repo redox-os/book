@@ -56,7 +56,7 @@ Rust's safe and fast language design, combined with the small kernel code size, 
 
 The C/C++ support for thread-safety is quite fragile. As such, it is very easy to write a program that looks safe to run across multiple threads, but which introduces subtle bugs or security holes. If one thread accesses a piece of state at the same time that another thread is changing it, the whole program can exhibit some truly confusing and bizarre bugs.
 
-You can see [this](https://en.wikipedia.org/wiki/Time_of_check_to_time_of_use) example of a serious class of security bugs that thread-safety fixes.
+You can see [this example](https://en.wikipedia.org/wiki/Time_of_check_to_time_of_use) of a serious class of security bugs that thread-safety fixes.
 
 In Rust, this kind of bug is easy to avoid: the same type system that keeps us from writing memory unsafety prevents us from writing dangerous concurrent access patterns
 

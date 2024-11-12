@@ -4,7 +4,7 @@
 
 You don't need to join our GitLab to build Redox, but you will if you want to contribute. Obtaining a Redox account requires approval from a GitLab administrator, because of the high number of spam accounts (bots) that are created on this type of project. To join, first, go to [Redox GitLab](https://gitlab.redox-os.org/) and click the Sign In/Register button. Create your User ID and Password. Then, send an message to the [GitLab Approvals](https://matrix.to/#/#redox-gitlab:matrix.org) room indicating your GitLab User ID and requesting that your account be approved. Please give a brief statement about what you intend to use the account for. This is mainly to ensure that you are a genuine user.
 
-The approval of your GitLab account may take some minutes or hours, in the meantime, join us on [Chat](./chat.md) and let us know what you are working on.
+The approval of your GitLab account may take some minutes or hours, in the meantime, join us on the [chat](./chat.md) and let us know what you are working on.
 
 ## Setting up 2FA
 
@@ -12,7 +12,7 @@ Your new GitLab account will not require 2 Factor Authentication at the beginnin
 
 ## Using SSH for your Repo
 
-When using `git` commands such as `git push`, `git` may ask you to provide a password. Because this happens frequently, you might wish to use `SSH` authentication, which will bypass the password step. Please follow the instructions for using `SSH` [here](https://docs.gitlab.com/ee/user/ssh.html). [ED25519](https://docs.gitlab.com/ee/user/ssh.html#ed25519-ssh-keys) is a good choice. Once SSH is set up, always use the SSH version of the URL for your `origin` and `remote`. e.g.
+When using `git` commands such as `git push`, `git` may ask you to provide a password. Because this happens frequently, you might wish to use `SSH` authentication, which will bypass the password step. Please follow the instructions for using `SSH` on the [GitLab documentation](https://docs.gitlab.com/ee/user/ssh.html). [ED25519](https://docs.gitlab.com/ee/user/ssh.html#ed25519-ssh-keys) is a good choice. Once SSH is set up, always use the SSH version of the URL for your `origin` and `remote`. e.g.
 
   - HTTPS:
 

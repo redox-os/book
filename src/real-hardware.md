@@ -26,7 +26,7 @@ Even if the `desktop` and `server` variants doesn't work, use the daily images b
 
 ### Daily Images
 
-If you want to test the latest Redox changes you can use our bootable images created each day by opening [this](https://static.redox-os.org/img) link and downloading your preferred variant.
+If you want to test the latest Redox changes you can use our bootable images created each day by opening the [build server images](https://static.redox-os.org/img) and downloading your preferred variant.
 
 (Sometimes our daily images can be one week old or more because of breaking changes)
 
@@ -62,7 +62,7 @@ zstd -d $HOME/Downloads/redox_*_x86_64_*_livedisk.iso.zst
 
 We recommend that you use the [Popsicle](https://github.com/pop-os/popsicle) tool on Linux to flash your USB device, follow the steps below:
 
-- Click on [this](https://github.com/pop-os/popsicle/releases) link to open the Popsicle releases page and download the `.AppImage` file of the most recent version.
+- Open the [Releases](https://github.com/pop-os/popsicle/releases) section to open the Popsicle releases page and download the `.AppImage` file of the most recent version.
 - Open your file manager, click with the right-button of your mouse on the `.AppImage` file and open the "Properties", find the "Permissions" section and mark it as executable.
 - Open the Popsicle AppImage file, select the downloaded Redox image and your USB device.
 - Confirm the flash process and wait until the progress bar reach 100%
@@ -75,7 +75,7 @@ We recommend that you use the [Popsicle](https://github.com/pop-os/popsicle) too
 
 We recommend that you use the [Rufus](https://rufus.ie/) tool on Windows to flash your USB device, follow the steps below:
 
-- Click on [this](https://rufus.ie/) link to open the Rufus website, move the page until the "Download" section and download the latest version.
+- Open the [Rufus website](https://rufus.ie/) to open the Rufus website, move the page until the "Download" section and download the latest version.
 - Open Rufus, select the ISO image of Redox, wait the Rufus image scanning, select your USB device and click on "Start".
 - Confirm the permission to erase the data of your device and wait until the progress bar reach 100%
 - If it show a choice window with "ISO" and "DD" mode, select the "DD" mode.

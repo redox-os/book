@@ -148,7 +148,7 @@ dd if=build/aarch64/server-minimal/livedisk.iso of=/dev/sdX
 This process is similar to that of "Booting from USB", but has some differences:
 
 - Use `harddrive.img` instead of `livedisk.iso`
-- After `dd` command, try to make the EFI system partition of the SD card become a hybrid MBR. See [this](https://www.eisfunke.com/posts/2023/uefi-boot-on-raspberry-pi-3.html) for more details
+- After `dd` command, try to make the EFI system partition of the SD card become a hybrid MBR. See [this post](https://www.eisfunke.com/posts/2023/uefi-boot-on-raspberry-pi-3.html) for more details
 
 ```
 root@dev-pc:/home/ivan/code/os/redox# gdisk /dev/sdc

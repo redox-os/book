@@ -1,6 +1,6 @@
 # Ion
 
-Ion is a terminal shell and library for shells/command execution in Redox, it's used by default. Ion has it's own manual, which you can find [here](https://doc.redox-os.org/ion-manual/).
+Ion is a terminal shell and library for shells/command execution in Redox, it's used by default. Ion has it's own manual, which you can find on the [Ion Manual](https://doc.redox-os.org/ion-manual/).
 
 ## 1. The default shell in Redox
 
@@ -59,7 +59,7 @@ When Ion is called without "-c", it starts a main loop, which can be found insid
 
 The `readln()` function is the input reader. The code can be found in `crates/ion/src/input_editor`.
 
-The documentation about `trim()` can be found [here](https://doc.rust-lang.org/std/primitive.str.html#method.trim).
+The documentation about `trim()` can be found on the [libstd documentation](https://doc.rust-lang.org/std/primitive.str.html#method.trim).
 If the command is not empty, the `on_command` method will be called.
 Then, the shell will update variables, and reprint the prompt.
 

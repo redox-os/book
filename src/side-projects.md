@@ -16,7 +16,7 @@ Redox is a complete Rust operating system, in addition to the kernel, we are dev
 - [sodium](https://gitlab.redox-os.org/redox-os/sodium) - A Vi-like editor.
 - [games](https://gitlab.redox-os.org/redox-os/games) - A collection of mini-games for Redox (alike BSD-games).
 - [OrbTK](https://gitlab.redox-os.org/redox-os/orbtk) - Cross-platform Rust-written GUI toolkit (in maintenance mode).
-- and a few other exciting projects you can explore [here](https://gitlab.redox-os.org/redox-os).
+- and a few other exciting projects you can explore on the [redox-os group](https://gitlab.redox-os.org/redox-os).
 
 We also have some in-house tools, which are collections of small, useful command-line programs:
 

@@ -1,6 +1,6 @@
 # Trying Out Redox
 
-There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the **demo** system. Available for download [here](https://static.redox-os.org/releases/0.8.0/x86_64). Currently, Redox does not have Wi-Fi support, so if you need Wi-Fi for some of the things you want to do, you are best to [run Redox in a virtual machine](./running-vm.md). Most of the suggestions below do not require network access, except where multiplayer mode is available.
+There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the **demo** system. Available for download on the [build server x86-64 images](https://static.redox-os.org/releases/0.8.0/x86_64). Currently, Redox does not have Wi-Fi support, so if you need Wi-Fi for some of the things you want to do, you are best to [run Redox in a virtual machine](./running-vm.md). Most of the suggestions below do not require network access, except where multiplayer mode is available.
 
 On the demo system, click on the Redox symbol in the bottom left corner of the screen. This brings up a menu, which, for the demo system, has some games listed. Feel free to give them a try!
 
@@ -89,7 +89,7 @@ Then you will get prompted for various things, such as difficulty, AI setup, and
 
 ### Freedoom
 
-Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can find the Freedoom website [here](https://freedoom.github.io/). PrBoom can be found [here](https://prboom.sourceforge.net/). Click on the **Redox** logo on the bottom left, and choose `Games`, then choose `Freedoom`. Or open a Terminal window and try `/games/freedoom1` or `/games/freedoom2`.
+Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can read more about Freedoom on the [Freedoom website](https://freedoom.github.io/). PrBoom can be found on the [PrBoom website](https://prboom.sourceforge.net/). Click on the **Redox** logo on the bottom left, and choose `Games`, then choose `Freedoom`. Or open a Terminal window and try `/games/freedoom1` or `/games/freedoom2`.
 
 Hit `Esc` and use the arrow keys to select Options->Setup->Key Bindings for keyboard help.
 
