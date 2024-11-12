@@ -2,7 +2,7 @@
 
 ## Boot Loader
 
-The boot loader source can be found in `cookbook/recipes/bootloader/source` after a successful build or [here](https://gitlab.redox-os.org/redox-os/bootloader).
+The boot loader source can be found in `cookbook/recipes/bootloader/source` after a successful build or in the [Boot Loader](https://gitlab.redox-os.org/redox-os/bootloader) repository.
 
 ### BIOS Boot
 

@@ -2,11 +2,11 @@
 
 In this section, we provide the gory details that may be handy to know if you are contributing to or developing for **Redox**.
 
-(Don't forget to read [this](./build-system-reference.md) page to know our build system organization and how it works)
+(Don't forget to read the [Build System](./build-system-reference.md) page to know our build system organization and how it works)
 
 ## Setup Your Environment
 
-Although it's recommended to read the [Building Redox](./building-redox.md) or [Podman Build](./podman-build.md) pages instead of the process described here, advanced users may accomplish the same as the **native_bootstrap.sh** script with the following steps, which are provided by way of example for Pop!_OS/Ubuntu/Debian. For other platforms, have a look at the file [native_bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/native_bootstrap.sh) to help determine what packages to install for your Unix-like system.
+Although it's recommended to read the [Building Redox](./building-redox.md) or [Podman Build](./podman-build.md) pages instead of the process described here, advanced users may accomplish the same as the **native_bootstrap.sh** script with the following steps, which are provided by way of example for Pop!_OS/Ubuntu/Debian. For other platforms, have a look at the [native_bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/native_bootstrap.sh) file to help determine what packages to install for your Unix-like system.
 
 The steps to perform are:
 
@@ -105,7 +105,7 @@ unzip lua luajit make clang doxygen ant protobuf-compiler zstd
 sudo dnf install qemu-system-x86 qemu-kvm
 ```
 
-- If you want to use VirtualBox, install from VirtualBox [Linux Downloads](https://www.virtualbox.org/wiki/Linux_Downloads) page.
+- If you want to use VirtualBox, install from the VirtualBox [Linux Downloads](https://www.virtualbox.org/wiki/Linux_Downloads) page.
 
 ### Arch Linux Users
 
@@ -163,7 +163,7 @@ sudo emerge dev-lang/nasm dev-vcs/git sys-fs/fuse
 sudo emerge app-emulation/qemu
 ```
 
-- If you want to use VirtualBox, install from VirtualBox [Linux Downloads](https://www.virtualbox.org/wiki/Linux_Downloads) page.
+- If you want to use VirtualBox, install from the VirtualBox [Linux Downloads](https://www.virtualbox.org/wiki/Linux_Downloads) page.
 
 ### FreeBSD Users
 
@@ -299,7 +299,7 @@ The tools that build Redox are specific to each CPU architecture. These tools ar
 
 ## Cookbook
 
-The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls if the recipes are compiled from sources or use binary packages from Redox CI server, read the section [REPO_BINARY](./configuration-settings.md#repo_binary) for more details. See [Including Programs in Redox](./including-programs.md) for examples of using the Cookbook toolset. If you will be developing recipes to include in Redox, it is worthwhile to have a look at the tools in the `cookbook` directory.
+The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls if the recipes are compiled from sources or use binary packages from Redox CI server, read the section [REPO_BINARY](./configuration-settings.md#repo_binary) for more details. See the [Including Programs in Redox](./including-programs.md) page for examples of using the Cookbook toolset. If you will be developing recipes to include in Redox, it is worthwhile to have a look at the tools in the `cookbook` directory.
 
 ## Creating a Build Environment Shell
 
@@ -327,8 +327,8 @@ If you want to update the source for the recipes, use `make rebuild`, or remove 
 
 ## Changing the Filesystem Size and Contents
 
-You can modify the size and contents of the filesystem for emulation and *livedisk* as described in [Configuration Settings](./configuration-settings.md).
+You can modify the size and contents of the filesystem for emulation and *livedisk* as described in the [Configuration Settings](./configuration-settings.md) page.
 
 ## Next Steps
 
-Once this is all set up, we can finally build! See [Compiling Redox](./building-redox.md#compiling-redox).
+Once this is all set up, we can finally build! See the [Compiling Redox](./building-redox.md#compiling-redox) section.

@@ -13,7 +13,8 @@ Follow the instructions for running **bootstrap.sh** to setup your environment, 
 ### Install QEMU
 
 The **ARM64** emulator is not installed by `bootstrap.sh`. You can add it like this:  
-Pop!_OS/Ubuntu/Debian)
+
+(Pop!_OS/Ubuntu/Debian)
 
 ```sh
 sudo apt-get install qemu-system-aarch64
@@ -31,7 +32,7 @@ Before your first build, be sure to set the `ARCH` variable in [.config](./confi
 
 ### Add packages to the filesystem.
 
-You can add programs to the filesystem by following the instructions [here](./including-programs.md).
+You can add programs to the filesystem by following the instructions on the [Including Programs in Redox](./including-programs.md) page.
 
 ### Advanced Users
 
@@ -55,7 +56,7 @@ We are ready to build the a Redox image.
 cd ~/tryredox/redox
 ```
 
-This command will create the image, e.g. `build/aarch64/desktop/harddrive.img`, which you can run with an emulator. See [Running Redox](#running-redox).
+This command will create the image, e.g. `build/aarch64/desktop/harddrive.img`, which you can run with an emulator. See the [Running Redox](#running-redox) page.
 
 ```sh
 time make all
@@ -63,7 +64,7 @@ time make all
 
 Give it a while. Redox is big.
 
-Read [this](./build-phases.md#make-all-first-run) section to know what the command above does.
+Read the [make all (first run)](./build-phases.md#make-all-first-run) section to know what the command above does.
 
 ### Cleaning Previous Build Cycles
 
@@ -105,8 +106,8 @@ This should boot to Redox. The desktop GUI will be disabled, but you will be pro
 
 Expose Redox to other computers within a LAN. Configure QEMU with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
 
-Join the [chat](./chat.md) if this is something you are interested in pursuing.
+Join the [Chat](./chat.md) if this is something you are interested in pursuing.
 
 ### Note
 
-If you encounter any bugs, errors, obstructions, or other annoying things, please send a message in the [chat](./chat.md) or [report the issue on GitLab](./creating-proper-bug-reports.md). Thanks!
+If you encounter any bugs, errors, obstructions, or other annoying things, please send a message in the [Chat](./chat.md) or [report the issue on GitLab](./creating-proper-bug-reports.md). Thanks!

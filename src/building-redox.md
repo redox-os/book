@@ -2,7 +2,7 @@
 
 This page explains how to build Redox in the native environment of your operating system. Keep in mind that you can have problems that doesn't happen on the Podman build, thus only use this method if you can't use Podman.
 
-(Don't forget to read [this](./build-system-reference.md) page to know our build system organization and how it works)
+(Don't forget to read the [Build System](./build-system-reference.md) page to know our build system organization and how it works)
 
 ## Supported Unix-like Distributions and Podman Build
 
@@ -92,6 +92,6 @@ time make all
 
 This will make the target `build/x86_64/desktop/harddrive.img`, which you can run with a virtual machine.
 
-Give it a while. Redox is big. Read [this](./build-phases.md#make-all-first-run) section to know what the `make all` command does.
+Give it a while. Redox is big. Read the [make all (first run)](./build-phases.md#make-all-first-run) section to know what the `make all` command does.
 
 Note that the filesystem parts are merged using the [FUSE](https://github.com/libfuse/libfuse). `bootstrap.sh` install `libfuse`. If you have problems with the final image of Redox, verify if `libfuse` is installed and you are able to use it.

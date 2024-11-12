@@ -1,14 +1,14 @@
 # Advanced Podman Build
 
-To make the Redox build process more consistent across platforms, we are using **Rootless Podman** for major parts of the build. The basics of using Podman are described [here](./podman-build.md). This chapter provides a detailed discussion, including tips, tricks and troubleshooting, as well as some extra detail for those who might want to leverage or improve Redox's use of Podman.
+To make the Redox build process more consistent across platforms, we are using **Rootless Podman** for major parts of the build. The basics of using Podman are described in the [Building Redox](./podman-build.md) page. This chapter provides a detailed discussion, including tips, tricks and troubleshooting, as well as some extra detail for those who might want to leverage or improve Redox's use of Podman.
 
-(Don't forget to read [this](./build-system-reference.md) page to know our build system organization and how it works)
+(Don't forget to read the [Build System](./build-system-reference.md) page to know our build system organization and how it works)
 
 ## Build Environment
 
 - Environment and command line Variables, other than `ARCH`, `CONFIG_NAME` and `FILESYSTEM_CONFIG`, are not passed to the part of `make` that is done in **Podman**. You must set any other configuration variables, e.g. `REPO_BINARY`, in [.config](./configuration-settings.md#config) and not on the command line or on your environment.
 
-- If you are building your own software to add in Redox, and you need to install additional packages using `apt-get` for the build, follow [Adding Packages to the Build](#adding-packages-to-the-build).
+- If you are building your own software to add in Redox, and you need to install additional packages using `apt-get` for the build, follow the [Adding Packages to the Build](#adding-packages-to-the-build) section.
 
 ## Installation
 
