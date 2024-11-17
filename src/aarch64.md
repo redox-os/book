@@ -97,7 +97,7 @@ rm build/aarch64/*/{fetch.tag,harddrive.img}
 To open QEMU, run:
 
 ```sh
-make qemu kvm=no vga=no
+make qemu kvm=no gpu=no
 ```
 
 This should boot to Redox. The desktop GUI will be disabled, but you will be prompted to login to the Redox console.
