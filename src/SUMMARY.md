@@ -25,6 +25,7 @@
   - [Native Build](./building-redox.md)
   - [From Nothing To Hello World](./nothing-to-hello-world.md)
   - [Configuration Settings](./configuration-settings.md)
+  - [Package Management](./package-management.md)
   - [Downloading packages with pkg](./pkg.md)
   - [Tasks](./tasks.md)
   - [Questions and feedback](./asking-questions.md)
