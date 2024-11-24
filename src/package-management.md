@@ -4,7 +4,7 @@ The Redox package management is similar to the major Linux distributions, but st
 
 - Better Security
 
-Static linking increase the system security because each program use a different library code, even if the same version of a vulnerable library is used.
+Static linking increase the system security because each program use a different location for library code on the memory, even if the same version of a vulnerable library is used.
 
 The attacker would need to inject code on each program's memory address space to steal sensitive data and not the shared library's memory address space, it increases the cost of the attack.
 
