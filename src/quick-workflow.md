@@ -21,7 +21,8 @@ This page will describe the most quick testing/development workflow for people t
 - [Create logs](#create-logs)
 - [Enable a source-based toolchain](#enable-a-source-based-toolchain)
 - [Build the toolchain from source](#build-the-toolchain-from-source)
-- [Download and build some Cookbook configuration for some CPU architecture](#download-and-build-some-cookbook-configuration-for-some-cpu-architecture)
+- [Build some filesystem configuration for some CPU architecture](#build-some-filesystem-configuration-for-some-cpu-architecture)
+- [Build some filesystem configuration for some CPU architecture (using pre-built packages from the build server)](#build-some-filesystem-configuration-for-some-cpu-architecture-using-pre-built-packages-from-the-build-server)
 - [Boot Redox on QEMU from a NVMe device](#boot-redox-on-qemu-from-a-nvme-device)
 - [Boot Redox on QEMU from a NVMe device with more CPU cores](#boot-redox-on-qemu-from-a-nvme-device-with-more-cpu-cores)
 - [Boot Redox on QEMU from a NVMe device, more CPU cores and memory](#boot-redox-on-qemu-from-a-nvme-device-more-cpu-cores-and-memory)
@@ -229,13 +230,23 @@ make prefix PREFIX_BINARY=0
 
 Use Case: Test the toolchain sources.
 
-#### Download and build some Cookbook configuration for some CPU architecture
+#### Build some filesystem configuration for some CPU architecture
 
 ```sh
 make all CONFIG_NAME=your-config ARCH=your-cpu-arch
 ```
 
 Use Case: Quickly build Redox variants without manual intervention on configuration files.
+
+#### Build some filesystem configuration for some CPU architecture (using pre-built packages from the build server)
+
+(Much faster than the option above)
+
+```sh
+make all REPO_BINARY=1 CONFIG_NAME=your-config ARCH=your-cpu-arch
+```
+
+Use Case: Quickly build Redox variants without system compilation and manual intervention on configuration files.
 
 #### Boot Redox on QEMU from a NVMe device
 
