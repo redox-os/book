@@ -178,15 +178,16 @@ make qemu
 
 If the `REPO_BINARY` environment variable set to 1 (`REPO_BINARY?=1`), your build system will download pre-built packages by default.
 
-When you enable the `REPO_BINARY` environment variable it treat every recipe with the `{}` option as binary package and recipes with the `"recipe"` option as recipe (source-based), both inside of your TOML config (`config/$ARCH/$CONFIG_NAME.toml`).
+When you enable the `REPO_BINARY` environment variable it treat every recipe with the `{}` value as a pre-built package and recipes with the `"source"` value as source-based recipe, both inside of your TOML config (`config/$ARCH/$CONFIG_NAME.toml`).
 
 For example:
 
 ```toml
 [packages]
 ...
-recipe1 = {} # binary package
-recipe2 = "recipe" # recipe (source-based)
+recipe1 = {} # pre-built package (method 1)
+recipe1 = "binary" # pre-built package (method 2)
+recipe3 = "source" # source-based recipe
 ...
 ```
 
