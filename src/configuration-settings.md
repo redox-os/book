@@ -47,7 +47,7 @@ In `mk/config.mk`, you will find the variables `ARCH`, `CONFIG_NAME` and `FILESY
 
 - `ARCH`: the CPU architecture that you are building the system for. Currently supported architectures are `x86_64` (the default), `i686` and `aarch64`. 
 - `CONFIG_NAME`: used to determine part of the name of the Redox image, and normally used to build the `FILESYSTEM_CONFIG` name (`desktop` by default). 
-- `FILESYSTEM_CONFIG`: a file that describes the packages and files to include in the filesystem. See the [Filesystem Configuration](#filesystem-configuration) section above. The default is `config/$ARCH/$CONFIG_NAME.toml`, but you can change it if your config file is in a different location.
+- `FILESYSTEM_CONFIG`: a file that describes the packages and files to include in the filesystem. See the [Filesystem Configuration](#filesystem-configuration) section below. The default is `config/$ARCH/$CONFIG_NAME.toml`, but you can change it if your config file is in a different location.
 - `QEMU_MEM` - It set the QEMU memory quantity, for example `QEMU_MEM=2048`
 - `QEMU_SMP` - It set the QEMU CPU core quantity, for example `QEMU_SMP=4`
 - `PREFIX_BINARY` - If set to 1 (`PREFIX_BINARY?=1`), the build system don't compile from toolchain sources but download/install them from Redox CI server. This can save lots of time during your first build. Note: If you are using **Podman**, you must set these variables in [.config](#config) in order for your change to have any effect. Setting them in the environment or on the command line may not be effective.
@@ -71,7 +71,7 @@ The recipes to be included in the Redox image are determined by a **filesystem c
 nano config/x86_64/desktop.toml
 ```
 
-For each supported CPU architecture, there are one or more filesystem configurations to choose from. For `x86_64`, there are `desktop`, `demo` and `server` configurations, as well as a few others. For `i686`, there are also some stripped down configurations for legacy systems with minimal RAM. Have a look in the directory `config/x86_64` for some examples.
+For each supported CPU architecture, there are some filesystem configurations to choose from. For `x86_64`, there are `desktop`, `demo` and `server` configurations, as well as a few others. For `i686`, there are also some stripped down configurations for legacy systems with minimal RAM. Have a look in the directory `config/x86_64` for some examples.
 
 For more details on the filesystem config, and how to include extra packages in your build, please see the [Including Programs in Redox](./including-programs.md) page.
 
@@ -101,13 +101,12 @@ The Redox image can be customized from the configuration files at `config/your-c
 
 (The configuration files at `config/your-cpu` can override the data type values from the filesystem templates at `config`)
 
-You can learn how to configure the `desktop-test.toml` below:
+You can learn how to configure the `desktop-test.toml` filesystem configuration below:
 
 - Create the `desktop-test.toml` file:
 
 ```sh
-cd config/your-cpu
-cp desktop.toml desktop-test.toml
+cp config/your-cpu-arch/desktop.toml config/your-cpu-arch/desktop-test.toml
 ```
 
 - Add this to your `.config` file:
@@ -186,7 +185,7 @@ For example:
 [packages]
 ...
 recipe1 = {} # pre-built package (method 1)
-recipe1 = "binary" # pre-built package (method 2)
+recipe2 = "binary" # pre-built package (method 2)
 recipe3 = "source" # source-based recipe
 ...
 ```
