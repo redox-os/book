@@ -16,6 +16,18 @@ Some graphics are in SVG and are associated with their corresponding `.xml` sour
 
 You can edit the art by using the XML file on [draw.io](https://www.draw.io/).
 
+## Check for Unused Pages
+
+If you have added or removed pages,
+or reorganized the table of contents,
+check for pages that are missing from the table of contents
+before making your merge requests.
+In the `book` directory, run
+
+```sh
+./unsused_pages.sh
+```
+
 ## Verify Broken Links
 
 Use the [lychee](https://lychee.cli.rs/) tool to verify broken links, it's very advanced and fast.

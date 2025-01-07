@@ -32,8 +32,6 @@
 
 # Architecture and Design
 
-- [Design Overview](./design-overview.md)
-
 - [System Design](./system-design.md)
   - [Microkernels](./microkernels.md)
   - [Redox kernel](./kernel.md)
@@ -65,14 +63,12 @@
 
 # Developing with and for Redox
 
-- [Developing Overview](./developing-overview.md)
-
 - [The Redox Build Process](./build-process.md)
   - [Advanced Podman Build](./advanced-podman-build.md)
   - [Advanced Native Build](./advanced-build.md)
   - [Working with i686](./i686.md)
   - [Working with ARM64](./aarch64.md)
-    - [Raspberry Pi](./raspi.md)
+  - [Raspberry Pi](./raspi.md)
   - [Troubleshooting the Build](./troubleshooting.md)
   - [Build System](./build-system-reference.md)
   - [Build Phases](./build-phases.md)
@@ -89,7 +85,10 @@
   - [Continuous Integration](./ci.md)
   - [Performance](./performance.md)
 
+# Contributing
+
 - [Contributing](./contributing.md)
+  - [Chat](./chat.md)
 
 - [Best practices and guidelines](./best-practices.md)
   - [Literate programming](./literate-programming.md)
@@ -105,6 +104,3 @@
   - [Creating Proper Bug Reports](./creating-proper-bug-reports.md)
   - [How to do a pull request properly](./creating-proper-pull-requests.md)
   - [Filing Issues](./filing-issues.md)
-
-- [Communication](./communication.md)
-  - [Chat](./chat.md)

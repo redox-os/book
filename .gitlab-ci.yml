@@ -6,5 +6,6 @@ before_script:
 
 build:
   script:
+    - ./unused_pages.sh
     - mdbook build
 
