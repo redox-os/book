@@ -80,6 +80,7 @@
   - [Porting Case Study](./porting-case-study.md)
   - [Quick Workflow](./quick-workflow.md)
   - [Libraries and APIs](./libraries-apis.md)
+  - [Device Drivers](./device-drivers.md)
   - [Developer FAQ](./developer-faq.md)
   - [References](./references.md)
   - [Continuous Integration](./ci.md)
