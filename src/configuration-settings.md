@@ -56,6 +56,11 @@ In `mk/config.mk`, you will find the variables `ARCH`, `CONFIG_NAME` and `FILESY
 - `REDOXFS_MKFS_FLAGS`: Flags to the program that builds the Redox filesystem. `--encrypt` enables disk encryption.
 - `PODMAN_BUILD`: If set to 1 (`PODMAN_BUILD?=1`), the build environment is constructed in **Podman**. See the [Podman Build](./podman-build.md) page.
 - `CONTAINERFILE`: The Podman containerfile. See the [Podman Build](./podman-build.md) page.
+- `PREFER_STATIC`: If set to 1 (`PREFER_STATIC?=1`), all packages will be
+statically linked. By default, a package will be dynamically linked if it
+supports it.\
+**Note**: If this was previously unset, a full sysroot
+recompilation will be required.
 
 If you want to change them permanently, read the [.config](#config) section.
 

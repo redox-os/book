@@ -36,6 +36,8 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
         - [Script-based programs](#script-based-programs)
             - [Adapted scripts](#adapted-scripts)
             - [Non-adapted scripts](#non-adapted-scripts)
+    - [Dynamically Linked Programs](#dynamically-linked-programs)
+        - [Debugging](#debugging)
 - [Sources](#sources)
     - [Tarballs](#tarballs)
         - [Build System](#build-system)
@@ -111,12 +113,20 @@ dependencies = [
     "static-library2",
 ]
 script = """
+# Uncomment the following if the package can be dynamically linked.
+DYNAMIC_INIT
+# Uncomment the following if you want the package to *always* statically link.
+#export COOKBOOK_PREFER_STATIC=1
 insert your script here
 """
 [package]
 dependencies = [
     "runtime-dependency1",
     "runtime-dependency2",
+]
+shared-deps = [
+    "dynamically-linked-library1",
+    "dynamically-linked-library2",
 ]
 ```
 
@@ -786,6 +796,111 @@ The `sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/usr/bin/script-name
 The `python3` is the script interpreter in this case, use `bash` or `lua` or whatever interpreter is appropriate for your case..
 
 There are many combinations for these script templates, you can download scripts without the `[source]` section, make customized installations, etc.
+
+### Dynamically Linked Programs
+
+The `DYNAMIC_INIT` acts as a marker that indicates the package can be
+dynamically linked. It automatically sets `LDFLAGS` and `RUSTFLAGS` based on
+the preferred linkage. A package is dynamically linked by default unless
+`PREFER_STATIC` is set. See the environment variables section under
+configuration settings for more information.
+
+In most cases, if you want to use dynamic linking for a package, just prepend
+`DYNAMIC_INIT` in the recipe script. Depending on the package,
+this *should* suffice. However, sometimes you *may* need to regenerate the GNU Autotools configuration,
+which you can do by invoking the `autotools_recursive_regenerate` helper function
+after `DYNAMIC_INIT` (See the examples below). This is to make sure the build
+system uses our `libtool` fork. In other cases, more
+recipe-specific modification may be required. 
+
+#### Example
+```diff
+# <...snip...>
+
+[build]
+template = "custom"
+script = """
++DYNAMIC_INIT
+cookbook_configure
+"""
+```
+
+```diff
+# <...snip...>
+[source]
++script = """
++DYNAMIC_INIT
++autotools_recursive_regenerate
++"""
+
+[build]
+template = "custom"
+script = """
++DYNAMIC_INIT
++cookbook_configure
+"""
+```
+
+Dynamically linked programs depend on shared libraries at runtime. To
+include these libraries, you must add them to `package.shared-deps`. Note that
+if a library or program is compiled with GCC, then `libgcc` must be added as a
+runtime dependency (currently all C/C++ programs are built with GCC, although
+Clang could be used in the future).
+
+#### Example
+
+```toml
+# <...snip...>
+
+[package]
+shared-deps = [
+    "libgcc",
+    # "libmpc",
+    # "libgmp",
+    # ...
+]
+```
+
+Sometimes you may also require specific flags depending on the linkage. You can
+do this like:
+
+```bash
+if [[ -n "$COOKBOOK_PREFER_STATIC" ]]; then
+    # This part is for static linking
+    COOKBOOK_CONFIGURE_FLAGS+=(
+        --enable-abc
+        # ...
+    )
+else
+    # This part is for dynamic linking
+    COOKBOOK_CONFIGURE_FLAGS+=(
+        --enable-def
+        # ...
+    )
+fi
+```
+
+In the recipe script, you can manually set the `COOKBOOK_PREFER_STATIC`
+environment variable to ensure it always statically links, even in future when
+the need for the `DYNAMIC_INIT` marker has been phased out.
+
+#### Example
+
+```diff
+script = """
++export COOKBOOK_PREFER_STATIC=1
+```
+
+### Troubleshooting
+
+- Why the dynamic linker (`ld.so`) is not finding my library?
+
+Set `LD_DEBUG=all` and re-run the program. It will show you where objects are
+being found and loaded, as well as the library search paths. You probably
+forgot to add a library in the `shared-deps` list. You can also use
+`patchelf` on your host or on Redox to display all `DT_NEEDED` entries of an
+object (`patchelf --print-needed <path>`). It is available by default for the
+desktop configuration.
 
 ## Sources
 
