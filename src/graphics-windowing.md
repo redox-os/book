@@ -54,6 +54,10 @@ The programs using these libraries can work on Orbital.
 - SDL2
 - Mesa3D's OSMesa
 
+### Security
+
+In Orbital a GUI program cannot read input events or the content (framebuffer) from windows of other GUI programs, like Wayland.
+
 ### Clients
 
 Apps (or 'clients') create a window and draw to it by using the [orbclient](https://gitlab.redox-os.org/redox-os/orbclient)
