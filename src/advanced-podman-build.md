@@ -72,6 +72,52 @@ sudo brew install git make curl osxfuse podman fuse-overlayfs slirp4netns
 sudo port install git gmake curl osxfuse podman
 ```
 
+### NixOS
+
+Before building Redox with NixOS, you must have configured Podman on your system. Just follow the instructions of the [NixOS wiki](https://nixos.wiki/wiki/Podman):
+
+```nix
+{ pkgs, ... }:
+{
+  # Enable common container config files in /etc/containers
+  virtualisation.containers.enable = true;
+  virtualisation = {
+    podman = {
+      enable = true;
+
+      # Create a `docker` alias for podman, to use it as a drop-in replacement
+      dockerCompat = true;
+
+      # Required for containers under podman-compose to be able to talk to each other.
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
+
+  # Useful other development tools
+  environment.systemPackages = with pkgs; [
+    dive # look into docker image layers
+    podman-tui # status of containers in the terminal
+    docker-compose # start group of containers for dev
+    podman-compose # start group of containers for dev
+  ];
+}
+        
+```
+
+You will then have to configure your user to be able to use Podman:
+```nix
+users.extraUsers.${user-name} = {
+  subUidRanges = [{ startUid = 100000; count = 65536; }];
+  subGidRanges = [{ startGid = 100000; count = 65536; }];
+};
+```
+
+The last step is to activate the development shell:
+```sh
+nix develop --no-warn-dirty --command $SHELL
+```
+
+
 ## build/container.tag
 
 The building of the **image** is controlled by the *tag* file `build/container.tag`. If you run `make all` with `PODMAN_BUILD=1`, the file `build/container.tag` will be created after the image is built. This file tells `make` that it can skip updating the image after the first time.
