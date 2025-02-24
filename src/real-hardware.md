@@ -29,6 +29,7 @@ Even if the `desktop` and `server` variants doesn't work, use the daily images b
 If you want to test the latest Redox changes you can use our bootable images created each day by opening the [build server images](https://static.redox-os.org/img) and downloading your preferred variant.
 
 (Sometimes our daily images can be one week old or more because of breaking changes)
+Once the download is complete, check the [SHA256 sum](https://static.redox-os.org/img/x86_64/SHA256SUM).
 
 ### Decompression
 
@@ -55,8 +56,8 @@ zstd -d $HOME/Downloads/redox_*_x86_64_*_livedisk.iso.zst
 
 #### GUI
 
-- Install [PeaZip](https://peazip.github.io/)
-- Right-click the Redox image, hover the PeaZip section and click on the option to extract the file or open the file on PeaZip and extract
+- Install [7-Zip](https://www.7-zip.org/)
+- Right-click the Redox image, hover the 7-Zip section and click on the option to extract the file or open the file on 7-Zip and extract
 
 ### Linux Instructions
 
