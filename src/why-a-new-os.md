@@ -16,11 +16,11 @@ All memory allocations are verified by the compiler to prevent bugs.
 
 - Thread-Safety
 
-Concurrent code is immune to data races.
+Concurrent code in programs is immune to data races.
 
 - NULL-Safety
 
-NULLs can't make undefined behavior.
+NULLs can't cause undefined behavior.
 
 ## Microkernel Architecture
 
@@ -38,17 +38,17 @@ The following items summarizes the microkernel benefits.
 
 - True modularity
 
-You can modify/change many system components without a system restart, similar to but safer than some kernel modules and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
+You can enable/disable/update most system components without a system restart, similar to but safer than some modules on monolithic kernels and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
 
 - Bug isolation
 
-Most system components run in user-space on a microkernel system. Because of this, bugs in most system components won't [crash the system/kernel](https://en.wikipedia.org/wiki/Kernel_panic).
+Most system components run in user-space on a microkernel system. Because of this some types of bugs in most system components won't [crash or damage the system or kernel](https://en.wikipedia.org/wiki/Kernel_panic).
 
 - Restartless design
 
 A mature microkernel changes very little (except for bug fixes), so you won't need to restart your system very often to update it.
 
-Since most of the system components are in userspace, they can be replaced on-the-fly, reducing downtime of servers a lot.
+Since most of the system components are in userspace they can be restarted/updated on-the-fly, reducing the downtime of servers a lot.
 
 - Easy to develop and debug
 

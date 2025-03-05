@@ -20,8 +20,9 @@ Have a look at the [HARDWARE.md](https://gitlab.redox-os.org/redox-os/redox/-/bl
 
 - ACPI
 - PCI
+- USB
 
-(USB soon)
+(Support for USB devices using hubs soon)
 
 ## Video
 
