@@ -61,7 +61,7 @@ pub fn debug_start([a, b, c, d, e, f]: [usize; 6]) {
     };
 ```
 
-Obviously, the condition `false && whatever` will evaluate to false, so remove the first bit, it's to prevent accidentally turning tracing on.
+Obviously, the condition `false && whatever` will evaluate to false, so remove the first bit (it's to prevent accidentally turning tracing on)
 
 The program name is read from the context, and compared with the string you specify. The name from the context normally has the full path, so we just use the `contains({name})` test.
 
@@ -91,6 +91,10 @@ make r.kernel image
 
 The kernel will print the messages on the console, if you are running `make qemu` the messages will appear in that terminal.
 
-- Consider to use the `make qemu |& tee my_log.txt` command to capture the output
+- Consider to run the following command to capture the output:
+
+```
+make qemu |& tee my_log.txt
+```
 
 If you are doing the testing on real hardware you should probably use the `server` variant and run commands from the console.
