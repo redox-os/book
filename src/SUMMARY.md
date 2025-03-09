@@ -84,6 +84,7 @@
   - [References](./references.md)
   - [Continuous Integration](./ci.md)
   - [Performance](./performance.md)
+  - [System Call Tracing](./syscall-debug.md)
 
 # Contributing
 
