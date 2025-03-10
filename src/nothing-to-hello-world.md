@@ -70,6 +70,12 @@ cd cookbook/recipes/other/hello-world/source
 cargo init --name="hello-world"
 ```
 
+- Go back to the main folder
+
+```sh
+cd ~/tryredox/redox
+```
+
 - Create the `hello-world` recipe configuration
 
 ```sh
@@ -114,7 +120,7 @@ In the "redox login" screen write "user" as user name and press Enter.
 - Run the "Hello World" program
 
 ```sh
-helloworld
+hello-world
 ```
 
 - Power off the Redox VM
