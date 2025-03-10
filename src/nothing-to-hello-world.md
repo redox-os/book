@@ -115,7 +115,7 @@ time make prefix r.hello-world image
 make qemu gpu=no
 ```
 
-In the "redox login" screen write "user" as user name and press Enter.
+In the "redox login" screen write "root" as user name, "password" as password and press Enter.
 
 - Run the "Hello World" program
 
@@ -126,5 +126,5 @@ hello-world
 - Power off the Redox VM
 
 ```sh
-sudo shutdown
+shutdown
 ```
