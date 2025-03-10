@@ -43,7 +43,7 @@ cd redox
 - Create the `.config` file and add the `REPO_BINARY` environment variable to enable the binary-mode
 
 ```sh
-echo "REPO_BINARY?=1 \n CONFIG_NAME?=my_config" >> .config
+echo "CONFIG_NAME?=my_config" >> .config
 ```
 
 - Create the `hello-world` recipe folder
