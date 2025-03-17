@@ -38,7 +38,7 @@ When you run `podman_bootstrap.sh` or `native_bootstrap.sh`, the Linux tools and
 ### Podman
 
 If your build appears to be missing libraries, have a look at the [Debugging Your Podman Build Process](./advanced-podman-build.md#debugging-your-build-process) section.
-If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to do `sudo rm -rf build/podman`.
+If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to run the `sudo rm -rf build/podman` command.
 
 #### Manual Configuration
 
@@ -95,7 +95,8 @@ If you did not use `podman_bootstrap.sh` or `native_bootstrap.sh` to setup your 
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
 ```
 
-If you are missing the `cookbook` project or other components, ensure that you used the `--recursive` flag when doing `git clone`. Ensure that all the libraries and packages required by Redox are installed by running `bootstrap.sh -d` or, if you will be using the Podman build, `podman_bootstrap.sh -d`.
+- If the `cookbook` project or other components are missing, ensure that you used the `--recursive` flag when doing `git clone`.
+- Ensure that all the libraries and packages required by Redox are installed by running `./bootstrap.sh -d` or, if you will be using the Podman build run the `./podman_bootstrap.sh -d` command.
 
 ## Building The System
 
@@ -143,7 +144,7 @@ On some Linux distributions, FUSE may not be permitted for some users, or `boots
 
 - Verify your Rust version (run `make env` and `cargo --version`, then `exit`), make sure you have **the latest version of Rust nightly!**.
 
-    - [rustup.rs](https://www.rustup.rs) is recommended for managing Rust versions. If you already have it, run `rustup`.
+    - [rustup.rs](https://www.rustup.rs) is recommended for managing Rust versions. If you already have it, run the `rustup` command.
 
 - Verify if your `make` and `nasm` are up-to-date.
 - Verify if the build system is using the latest commit by running the `git branch -v` command.

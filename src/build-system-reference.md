@@ -45,7 +45,7 @@ The build system downloads and creates several files that you may want to know a
 
 ### GNU Make Configuration
 
-- `mk/config.mk` - The build system settings are here. You can override these settings in your `.config`, don't change them here to avoid conflicts in `make pull`.
+- `mk/config.mk` - The build system settings are here. You can override these settings in your `.config`, don't change them here to avoid conflicts in the `make pull` command.
 - `mk/*.mk` - The rest of the Makefiles. You should not need to change them.
 
 ### Podman Configuration
@@ -56,7 +56,7 @@ The build system downloads and creates several files that you may want to know a
 
 - `config` - This folder contains all filesystem configurations.
 - `config/*.toml` - Filesystem templates used by the CPU target configurations (a template can use other template to reduce duplication)
-- `config/your-cpu-arch/your-config.toml` - The filesystem configuration of the QEMU image to be built, e.g. `config/x86_64/desktop.toml`.
+- `config/your-cpu-arch/your-config.toml` - The filesystem configuration of the QEMU image to be built, e.g. `config/x86_64/desktop.toml`
 - `config/your-cpu-arch/server.toml` - The variant with system components (without Orbital) and some important tools. Aimed for servers, low-end computers, testers and developers.
 
 (Try this config if you have boot problems on QEMU or real hardware).
@@ -100,13 +100,13 @@ The build system downloads and creates several files that you may want to know a
 
 ### Build System Files
 
-- `build` - The directory where the build system will place the final image. Usually `build/$(ARCH)/$(CONFIG_NAME)`, e.g. `build/x86_64/desktop`.
+- `build` - The directory where the build system will place the final image. Usually `build/$(ARCH)/$(CONFIG_NAME)`, e.g. `build/x86_64/desktop`
 - `build/your-cpu-arch/your-config/harddrive.img` - The Redox image file, to be used by QEMU or VirtualBox for virtual machine execution on a Unix-like host.
 - `build/your-cpu-arch/your-config/livedisk.iso` - The Redox bootable image file, to be used on real hardware for testing and possible installation.
 - `build/your-cpu-arch/your-config/fetch.tag` - An empty file that, if present, tells the build system that the downloading of recipe sources is done.
 - `build/your-cpu-arch/your-config/repo.tag` - An empty file that, if present, tells the build system that all recipes required for the Redox image have been successfully built. **The build system will not check for changes to your code when this file is present.** Use `make rebuild` to force the build system to check for changes.
 - `build/podman` - The directory where Podman Build places the container user's home directory, including the container's Rust installation. Use `make container_clean` to remove it. In some situations, you may need to remove this directory manually, possibly with root privileges.
-- `build/container.tag` - An empty file, created during the first Podman build, so a Podman build knows when a reusable Podman image is available. Use `make container_clean` to force a rebuild of the Podman image on your next `make rebuild`.
+- `build/container.tag` - An empty file, created during the first Podman build, so a Podman build knows when a reusable Podman image is available. Use `make container_clean` to force a rebuild of the Podman image on your next `make rebuild` run.
   
 ## GNU Make Commands
 
@@ -123,7 +123,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are downloaded. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
 - `make clean` - Clean all recipe binaries (Note that `make clean` may require some tools to be built).
 - `make unfetch` - Clean all recipe sources.
-- `make distclean` - Clean all recipe sources and binaries.
+- `make distclean` - Clean all recipe sources and binaries (**please backup or submit your source changes before the execution of this command**).
 - `make repo` - Package the recipe binaries, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
 - `make live` - Creates a bootable image, `build/livedisk.iso`. Recipes are not usually rebuilt.
 - `make popsicle` - Flash the Redox bootable image on your USB device using the [Popsicle](https://github.com/pop-os/popsicle) tool (the program executable must be present on your shell `$PATH` environment variable, you can get the executable by extracting the AppImage, installing from the package manager or building from source)
@@ -137,16 +137,16 @@ You can combine `make` commands, but order is significant. For example, `make r.
 ### Recipes
 
 - `make f.recipe-name` - Download the recipe source.
-- `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games`.
+- `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games`
 
   The package is built even if it is not in your filesystem configuration.
 
   (This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate)
 
 - `make c.recipe-name` - Clean the recipe binaries.
-- `make u.recipe-name` - Clean the recipe source code.
-- `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`.
-- `make ucr.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe`.
+- `make u.recipe-name` - Clean the recipe source code (**please backup or submit your source changes before the execution of this command**).
+- `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
+- `make ucr.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
 
 ### QEMU/VirtualBox
 
@@ -172,9 +172,9 @@ You can combine `make` commands, but order is significant. For example, `make r.
 ## Environment Variables
 
 - `$(BUILD)` - Represents the `build` folder.
-- `$(ARCH)` - Represents the CPU architecture folder at `build`.
-- `${TARGET}` - Represents the CPU architecture folder at `cookbook/recipes/recipe-name/target`.
-- `$(CONFIG_NAME)` - Represents your filesystem configuration folder at `build/your-cpu-arch`.
+- `$(ARCH)` - Represents the CPU architecture folder at `build`
+- `${TARGET}` - Represents the CPU architecture folder at the `cookbook/recipes/recipe-name/target` folder
+- `$(CONFIG_NAME)` - Represents your filesystem configuration folder at `build/your-cpu-arch`
 
 We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the commands.
 
@@ -228,7 +228,7 @@ Run `make` options on some recipe category.
 scripts/category.sh -x category-name
 ```
 
-Where `x` is your `make` option, it can be `f`, `r`, `c`, `u`, `cr`, `ucr`, `uc` or `ucf`.
+Where `x` is your `make` option, it can be `f`, `r`, `c`, `u`, `cr`, `ucr`, `uc` or `ucf`
 
 ### Include Recipes
 
@@ -389,7 +389,7 @@ Some Redox projects have crates on `crates.io`, thus they use a version-based de
 
 ### Manual patching
 
-If you don't want to wait a new release on `crates.io`, you can patch the crate temporarily by fetching the version you need from GitLab and changing the crate version in `Cargo.toml` to `crate-name = { path = "path/to/crate" }`.
+If you don't want to wait a new release on `crates.io`, you can patch the crate temporarily by fetching the version you need from GitLab and changing the crate version in `Cargo.toml` to `crate-name = { path = "path/to/crate" }`
 
 ## Pinned commits
 
