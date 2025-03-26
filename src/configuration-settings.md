@@ -118,7 +118,7 @@ Feel free to create your own **filesystem configuration**.
 
 The Redox build system supports cross-compilation to other CPU architectures. The CPU architecture that Redox is built for (specified by the `ARCH` environment variable) usually determines the filesystem configuration file that will be used by the build system.
 
-The following are the CPU architectures currently supported by Redox:
+See the currently supported CPU architectures by Redox below:
 
 - i686 - `i686`
 - x86-64 - `x86_64`
