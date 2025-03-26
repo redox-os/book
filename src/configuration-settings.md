@@ -83,7 +83,7 @@ The `mk/config.mk` file should never be modified directly, especially if you are
 
 #### `build.sh`
 
-The `build.sh` script allows you to easily set `ARCH`, `FILESYSTEM_CONFIG` and `CONFIG_NAME` when running `make`. If you are not changing the values very often, it is recommended you set the values in [`.config`](#config) rather than use `build.sh`. But if you are testing against different architectures or  configurations, then this script can help minimize effort, errors and confusion.
+The `build.sh` script allows you to easily set `ARCH`, `FILESYSTEM_CONFIG` and `CONFIG_NAME` when running `make`. If you are not changing the values very often, it is recommended that you set the values in [`.config`](#config) rather than use `build.sh`. But if you are testing against different CPU architectures or configurations, this script can help minimize effort, errors and confusion.
 
 ```sh
 ./build.sh [-a <ARCH>] [-c <CONFIG_NAME>] [-f <FILESYSTEM_CONFIG>] <TARGET> ...
