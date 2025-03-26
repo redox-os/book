@@ -19,7 +19,7 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `FILESYSTEM
 | `REPO_BINARY` | If set to 1 (`REPO_BINARY?=1`), the build system won't compile packages from recipe sources by default, but will download/install them from the Redox package server. |
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
-| `PODMAN_BUILD` | If set to 1 (`PODMAN_BUILD?=1`), the build environment is constructed in **Podman**. See the [Podman Build](./podman-build.md) page for more info. |
+| `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
 | `CONTAINERFILE` | The Podman container configuration file. See the [Podman Build](./podman-build.md) page for more information. |
 | `PREFER_STATIC` | If set to 1 (`PREFER_STATIC?=1`), all packages will be statically linked. By default, a package will be dynamically linked if it supports it.<br><br>**Note**: If this was previously unset, a full recompilation of the `sysroot` folder will be required. |
 
