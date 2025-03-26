@@ -44,7 +44,7 @@ CONFIG_NAME?=desktop-minimal
 
 #### Changing the QEMU CPU Core and Memory Quantity
 
-For example, to change the CPU core and memory quantities used when running the Redox image in QEMU, add the following environment variables to your `.config` file:
+For example, to change the CPU core and RAM memory quantities used when running the Redox image in QEMU, add the following environment variables to your `.config` file:
 
 ```
 QEMU_SMP?=<number>
