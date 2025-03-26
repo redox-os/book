@@ -110,7 +110,7 @@ nano config/x86_64/desktop.toml
 
 For each supported CPU architecture, there are some filesystem configurations to choose from. For `x86_64`, there are `desktop`, `demo` and `server` configurations, as well as a few others. For `i686`, there are also some stripped down configurations for embedded devices or legacy systems with minimal RAM. Feel free to browse the `config/x86_64` directory for more examples.
 
-For more details on the filesystem config, and how to add additional packages to a build, please see the [Including Programs in Redox](./including-programs.md) page.
+For more details on the filesystem configuration, and how to add additional packages to the build image, please see the [Including Programs in Redox](./including-programs.md) page.
 
 Feel free to create your own **filesystem configuration**.
 
