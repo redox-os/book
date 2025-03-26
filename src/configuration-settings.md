@@ -128,7 +128,7 @@ The filesystem configurations for a given CPU architecture can be found in the [
 
 ### Filesystem Size
 
-Filesystem size is the total amount of space allocated for the filesystem that is built into the image, including all packages and programs. It is specified in Megabytes (MB). The typical size is 512MB, although some configs (e.g., `demo`) are larger. The filesystem must be large enough to accommodate the packages included in the filesystem. For a *livedisk* system, the filesystem must not exceed the size of your system's RAM, and must also leave room for the system to run.
+The filesystem size is the total amount of storage space allocated for the filesystem that is built into the image, including all programs. It is specified in Megabytes (MB). The typical size is 512MB, although some configs (e.g., `demo`) are larger. The filesystem must be large enough to accommodate the packages included in the filesystem. For a *livedisk* system, the filesystem must not exceed the size of your system's RAM, and must also leave room for the package's installation and system execution.
 
 The filesystem size is normally set from the **filesystem configuration** file, e.g. `config/x86_64/demo.toml`.
 
