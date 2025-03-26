@@ -152,7 +152,7 @@ The Redox image can be customized by tweaking the configuration files at `config
 
 #### Creating a custom filesystem configuration
 
-The following describes the process for creating a custom filesystem configuration file (`desktop-test.toml`):
+The following items describe the process for creating a custom filesystem configuration file (`desktop-test.toml`):
 
 1. Create the `desktop-test.toml` file from an existing filesystem configuration:
 
