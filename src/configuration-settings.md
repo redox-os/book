@@ -15,7 +15,7 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `FILESYSTEM
 | `FILESYSTEM_CONFIG` | Determines the filesystem configuration file location. See the [Filesystem Configuration](#filesystem-configuration) section below. The default is `config/$ARCH/$CONFIG_NAME.toml`, but this can be changed if the desired configuration file is in a different location. |
 | `QEMU_MEM` | Sets the QEMU RAM memory quantity, e.g., `QEMU_MEM=2048`. |
 | `QEMU_SMP` | Sets the QEMU CPU core quantity, e.g.,  `QEMU_SMP=4`. |
-| `PREFIX_BINARY` | If set to 1 (`PREFIX_BINARY?=1`), the build system won't compile from toolchain sources but will download/install them from Redox CI server. This can save lots of time during the first build.<br><br>**Note:** If using **Podman**, `PREFIX_BINARY` must be set in the [`.config`](#config) file; setting it in the environment or on the command line may not be effective. |
+| `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY?=0`), the build system will enable the toolchain compilation and will not download the toolchain binaries from the Redox build server. |
 | `REPO_BINARY` | If set to 1 (`REPO_BINARY?=1`), the build system won't compile packages from recipe sources by default, but will download/install them from the Redox package server. |
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
