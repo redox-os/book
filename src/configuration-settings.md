@@ -102,7 +102,7 @@ The default value of `FILESYSTEM_CONFIG` is constructed from `ARCH` and `CONFIG_
 The default values for `ARCH` and `CONFIG_NAME` are `x86_64` and `desktop`, respectively. These produce a default `FILESYSTEM_CONFIG` value of `config/x86_64/desktop.toml`.
 ## Filesystem Configuration
 
-The packages to be included in the final Redox image are determined by **filesystem configuration** file, which is a `.toml` file (e.g., `config/x86_64/desktop.toml`). Open `desktop.toml` and have a look through it:
+The packages to be included in the final Redox image are determined by the chosen **filesystem configuration** file, which is a `.toml` file (e.g., `config/x86_64/desktop.toml`). Open `desktop.toml` and have a look through it:
 
 ```sh
 nano config/x86_64/desktop.toml
