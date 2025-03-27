@@ -91,7 +91,7 @@ The `build.sh` script allows you to easily set `ARCH`, `FILESYSTEM_CONFIG` and `
 ./build.sh [-a <ARCH>] [-c <CONFIG_NAME>] [-f <FILESYSTEM_CONFIG>] <TARGET> ...
 ```
 
-The `TARGET` parameter may be any valid `make` target, although the recommended target is `qemu`. Additional variable settings may also be included, such as `gpu=no`.
+The `TARGET` parameter may be any valid `make` target, although the recommended target is `qemu`. Additional variable settings may also be included, such as `gpu=no`
 
 | Option | Description |
 |:-------|:------------|
