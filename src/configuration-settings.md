@@ -16,7 +16,7 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `FILESYSTEM
 | `QEMU_MEM` | Sets the QEMU RAM memory quantity, e.g., `QEMU_MEM=2048`. |
 | `QEMU_SMP` | Sets the QEMU CPU core quantity, e.g.,  `QEMU_SMP=4`. |
 | `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY?=0`), the build system will enable the toolchain compilation and will not download the toolchain binaries from the Redox build server. |
-| `REPO_BINARY` | If set to 1 (`REPO_BINARY?=1`), the build system won't compile packages from recipe sources by default, but will download/install them from the Redox package server. |
+| `REPO_BINARY` | If set to 1 (`REPO_BINARY?=1`), the build system will download/install pre-built packages from the Redox package server by default, rather than build them from source (i.e., recipes). |
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
 | `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
