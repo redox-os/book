@@ -96,7 +96,7 @@ The `TARGET` parameter may be any valid `make` target, although the recommended 
 | Option | Description |
 |:-------|:------------|
 | `-a <ARCH>` | The CPU architecture you are building for, `x86_64`, `i686` or `aarch64`. Uppercase options `-X`, `-6` and `-A` can be used as shorthands for `-a x86_64`, `-a i686`, and `-a aarch64`, respectively. |
-| `-c <CONFIG_NAME>` | The name of the configuration, which appears in both the name of the image being built and (usually) the filesystem config. |
+| `-c <CONFIG_NAME>` | The name of the filesystem configuration which appears in the name of the image being built. |
 | `-f <FILESYSTEM_CONFIG>` | Determines the filesystem configuration file location, which can be in any location but is normally in directory `config/$ARCH`.<br><br>**Note:** If you _do_ specify `-f <FILESYSTEM_CONFIG>`, but not `-a` or `-c`, the file path determines the other values. Normally the file would be located at e.g., `config/x86_64/desktop.toml`. `ARCH` is determined from the second-to-last element of the path. If the second last element is not a known `ARCH` value, you must specify `-a ARCH`. `CONFIG_NAME` is determined from the *basename* of the file. |
 
 The default value of `FILESYSTEM_CONFIG` is constructed from `ARCH` and `CONFIG_NAME`: `config/$ARCH/$CONFIG_NAME.toml`.
