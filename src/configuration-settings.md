@@ -197,7 +197,7 @@ Done! The `acid` package is now included in your new Redox image.
 
 By default, the Redox build system builds all packages from source (i.e., recipes). If you want to use [pre-built packages](https://static.redox-os.org/pkg/) from our build server, however, there's a TOML option for it.
 
-This is useful for some purposes, such as making development builds, testing package status and saving time with heavy softwares.
+This is useful for some purposes, such as producing development builds, confirming package status from the Redox package server, and reducing image build time with large programs.
 
 1. Open the `desktop-test.toml` file:
 
