@@ -10,7 +10,7 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `FILESYSTEM
 
 | Variable | Definition |
 |:---------|:-----------|
-|`ARCH`| Specifies the CPU architecture the system is to be built for. Currently supported architectures are `x86_64` (the default), `i686`, and `aarch64`. |
+|`ARCH`| Specifies the [CPU architecture](#architecture-names) that the system is to be built for. The default is `x86_64`. |
 | `CONFIG_NAME` | Determines the name of the filesystem configuration, and is normally used to construct the `FILESYSTEM_CONFIG` name (the `desktop` variant is used by default). |
 | `FILESYSTEM_CONFIG` | Determines the filesystem configuration file location. See the [Filesystem Configuration](#filesystem-configuration) section below. The default is `config/$ARCH/$CONFIG_NAME.toml`, but this can be changed if the desired configuration file is in a different location. |
 | `QEMU_MEM` | Sets the QEMU RAM memory quantity, e.g., `QEMU_MEM=2048`. |
