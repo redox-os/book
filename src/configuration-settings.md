@@ -79,7 +79,9 @@ Feel free to open `mk/config.mk` in your favorite editor and have a look through
 nano mk/config.mk
 ```
 
-The `mk/config.mk` file should never be modified directly, especially if you are contributing to the Redox project, as doing so could create conflicts in the `make pull` command. To apply lasting changes to environment variables, please refer to the [`.config`](#config) section; to apply changes only temporarily, see the [Command Line](#command-line) section.
+The `mk/config.mk` file should never be modified directly, especially if you are contributing to the Redox project, as doing so could create conflicts in the `make pull` command.
+
+To apply lasting changes to environment variables, please refer to the [`.config`](#config) section. To apply changes only _temporarily_, see the [Command Line](#command-line) section.
 
 #### `build.sh`
 
