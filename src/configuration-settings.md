@@ -27,7 +27,7 @@ The Redox image that is built is typically named `build/$ARCH/$CONFIG_NAME/hardd
 
 ### `.config`
 
-The purpose of the `.config` file is to allow default configuration settings to be changed without explicitly setting those changes in every `make` command. The file is also included in the `.gitignore` list to ensure it won't be commited by accident.
+The purpose of the `.config` file is to allow default configuration settings to be changed without explicitly setting those changes in every `make` command (or modifying the contents of the `mk` directory). The file is also included in the `.gitignore` list to ensure it won't be committed by accident.
 
 To permanently override the settings in the [`mk/config.mk`](#mkconfigmk) section, add a `.config` file to the `redox` base directory (i.e., where `make` commands are run) and set the overriding values in that file.
 
