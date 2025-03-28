@@ -4,7 +4,7 @@ The Redox build system applies configuration settings from various places to det
 
 ## Environment Variables
 
-The default values for the build system's environment variables are mostly defined in the `mk` directory&mdash;particularly in [`mk/config.mk`](#mkconfigmk). Deviations from the default values, however, are typically applied permanently in the [`.config`](#config) file, or temporarily on the `make` [command line](#command-line).
+The default values for the build system's environment variables are mostly defined in the `mk` directory&mdash;particularly in [`mk/config.mk`](#mkconfigmk). Local changes from the default values, however, are typically applied permanently in the [`.config`](#config) file, or temporarily on the `make` [command line](#command-line).
 
 Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `FILESYSTEM_CONFIG`, as they specify the system to be built. These, and other important environment variables, can be seen in the following table:
 
