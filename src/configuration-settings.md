@@ -160,7 +160,7 @@ The following items describe the process for creating a custom filesystem config
 1. Create the `my_desktop.toml` file from an existing filesystem configuration:
 
     ```sh
-    cp config/your-cpu-arch/desktop.toml config/your-cpu-arch/desktop-test.toml
+    cp config/your-cpu-arch/desktop.toml config/your-cpu-arch/my_desktop.toml
     ```
 
 2. Add the following to the `.config` file to set the new configuration as the build system's default:
