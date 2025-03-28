@@ -13,6 +13,7 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `FILESYSTEM
 |`ARCH`| Specifies the [CPU architecture](#architecture-names) that the system is to be built for. The default is `x86_64`. |
 | `CONFIG_NAME` | Determines the name of the filesystem configuration, and is normally used to construct the `FILESYSTEM_CONFIG` name (the `desktop` variant is used by default). |
 | `FILESYSTEM_CONFIG` | Determines the filesystem configuration file location. See the [Filesystem Configuration](#filesystem-configuration) section below. The default is `config/$ARCH/$CONFIG_NAME.toml`, but this can be changed if the desired configuration file is in a different location. |
+| `BOARD` | For single board computers such as Raspberry Pi 3B+ that require special configuration, $ARCH/$BOARD is used in place of $ARCH. Defaults to empty. |
 | `QEMU_MEM` | Sets the QEMU RAM memory quantity, e.g., `QEMU_MEM=2048`. |
 | `QEMU_SMP` | Sets the QEMU CPU core quantity, e.g.,  `QEMU_SMP=4`. |
 | `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY?=0`), the build system will enable the toolchain compilation and will not download the toolchain binaries from the Redox build server. |
