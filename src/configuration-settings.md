@@ -38,7 +38,7 @@ ARCH?=i686
 CONFIG_NAME?=desktop-minimal
 ```
 
-**Note:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names.
+**Note:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. It allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` **must** include the question mark in order to function correctly.
 
 **Note:** if [`podman_bootstrap.sh`](./podman-build.md#new-working-directory) was run previously, the `.config` file may already exist.
 
