@@ -125,6 +125,7 @@ See the currently supported CPU architectures by Redox below:
 - i686 - `i686`
 - x86-64 - `x86_64`
 - ARM64 - `aarch64`
+- RISC-V - `riscv64gc`
 
 The filesystem configurations for a given CPU architecture can be found in the [`config`](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config) folder's correspondingly named sub-directory (e.g. `config/x86_64`).
 
