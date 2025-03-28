@@ -157,7 +157,7 @@ The Redox image can be customized by tweaking the configuration files at `config
 
 The following items describe the process for creating a custom filesystem configuration file (`my_desktop.toml`):
 
-1. Create the `desktop-test.toml` file from an existing filesystem configuration:
+1. Create the `my_desktop.toml` file from an existing filesystem configuration:
 
     ```sh
     cp config/your-cpu-arch/desktop.toml config/your-cpu-arch/desktop-test.toml
