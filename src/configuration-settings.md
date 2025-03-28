@@ -145,7 +145,7 @@ filesystem_size = 768
 To change this, it is recommended that you create your own filesystem configuration and apply changes there. However, this can be temporarily overriden in the shell environment or on the `make` command line, e.g.:
 
 ```sh
-make FILESYSTEM_SIZE=512 qemu
+make FILESYSTEM_SIZE=512 image qemu
 ```
 
 ### Filesystem Customization
