@@ -166,7 +166,7 @@ The following items describe the process for creating a custom filesystem config
 2. Add the following to the `.config` file to set the new configuration as the build system's default:
 
     ```
-    CONFIG_NAME?=desktop-test
+    CONFIG_NAME?=my_desktop
     ```
 
 Many filesystem configuration settings can be adjusted. See the templates in the `config` folder for reference.
