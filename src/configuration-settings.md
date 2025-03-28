@@ -174,12 +174,12 @@ Many filesystem configuration settings can be adjusted. See the templates in the
 
 #### Adding a package to the filesystem configuration
 
-In the following example, the `acid` package is added to the `desktop-test.toml` configuration:
+In the following example, the `acid` package is added to the `my_desktop.toml` configuration:
 
-1. Open the `desktop-test.toml` file:
+1. Open the `my_desktop.toml` file:
 
     ```sh
-    nano config/your-cpu/desktop-test.toml
+    nano config/your-cpu/my_desktop.toml
     ```
 
 2. Add the `acid` package to the `[packages]` section:
@@ -203,10 +203,10 @@ By default, the Redox build system builds all packages from source (i.e., recipe
 
 This is useful for some purposes, such as producing development builds, confirming package status from the Redox package server, and reducing image build time with large programs.
 
-1. Open the `desktop-test.toml` file:
+1. Open the `my_desktop.toml` file:
 
     ```sh
-    nano config/your-cpu/desktop-test.toml
+    nano config/your-cpu/my_desktop.toml
     ```
 
 2. Add the binary package below the `[packages]` section:
