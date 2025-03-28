@@ -1,6 +1,6 @@
 # Configuration Settings
 
-The Redox build system applies configuration settings from various places to determine the final Redox image. Most of these settings ultimately come from the build system's [environment variables](#environment-variables) and the chosen [filesystem configuration](#filesystem-configuration) file.
+The Redox build system applies configuration settings from various places to determine the final Redox image. Most of these settings ultimately come from the build system's [environment variables](#environment-variables) (or similarly-named Make variables) and the contents of the chosen [filesystem configuration](#filesystem-configuration) file.
 
 ## Environment Variables
 
