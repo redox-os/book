@@ -172,6 +172,7 @@ The following items describe the process for creating a custom filesystem config
 
 Many filesystem configuration settings can be adjusted. See the templates in the `config` folder for reference.
 
+**Note:** files named with the prefix `my_` in the `redox` repo are git-ignored. Be sure to follow this convention for all custom filesystem configurations to avoid accidentally committing them to the Redox project.
 #### Adding a package to the filesystem configuration
 
 In the following example, the `acid` package is added to the `my_desktop.toml` configuration:
