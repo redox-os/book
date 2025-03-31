@@ -123,10 +123,12 @@ The Redox build system supports cross-compilation to other CPU architectures. Th
 
 See the currently supported CPU architectures by Redox below:
 
-- i686 - `i686`
-- x86-64 - `x86_64`
-- ARM64 - `aarch64`
-- RISC-V - `riscv64gc`
+| CPU Architecture | Other Aliases |
+|:---------------- |:----------- |
+| `i686` | x86 (32-bit), IA32 , `x86` |
+| `x86_64` | x86 (64-bit), `x86-64`, `amd64`, `x64` |
+| `aarch64` | ARM (64-bit), ARMv8, `ARM64` |
+| `riscv64gc` | RISC-V (64-bit) |
 
 The filesystem configurations for a given CPU architecture can be found in the [`config`](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config) folder's correspondingly named sub-directory (e.g. `config/x86_64`).
 
