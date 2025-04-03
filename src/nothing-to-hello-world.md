@@ -43,7 +43,7 @@ cd redox
 - Create the `.config` file and add the `REPO_BINARY` environment variable to enable the binary-mode
 
 ```sh
-echo "REPO_BINARY?=1 \n CONFIG_NAME?=my_config" >> .config
+echo "CONFIG_NAME?=my_config" >> .config
 ```
 
 - Create the `hello-world` recipe folder
@@ -68,6 +68,12 @@ cd cookbook/recipes/other/hello-world/source
 
 ```sh
 cargo init --name="hello-world"
+```
+
+- Go back to the main folder
+
+```sh
+cd ~/tryredox/redox
 ```
 
 - Create the `hello-world` recipe configuration
@@ -109,16 +115,16 @@ time make prefix r.hello-world image
 make qemu gpu=no
 ```
 
-In the "redox login" screen write "user" as user name and press Enter.
+In the "redox login" screen write "root" as user name, "password" as password and press Enter.
 
 - Run the "Hello World" program
 
 ```sh
-helloworld
+hello-world
 ```
 
 - Power off the Redox VM
 
 ```sh
-sudo shutdown
+shutdown
 ```
