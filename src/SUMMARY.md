@@ -17,18 +17,18 @@
   - [Important Programs](./important-programs.md)
 
 - [Getting started](./getting-started.md)
-  - [Running Redox in a virtual machine](./running-vm.md)
-  - [Running Redox on real hardware](./real-hardware.md)
-  - [Installing Redox on a drive](./installing.md)
+  - [Running Redox in a Virtual Machine](./running-vm.md)
+  - [Running Redox on Real Hardware](./real-hardware.md)
+  - [Installing Redox on a Drive](./installing.md)
   - [Trying Out Redox](./trying-out-redox.md)
   - [Building Redox](./podman-build.md)
   - [Native Build](./building-redox.md)
   - [From Nothing To Hello World](./nothing-to-hello-world.md)
   - [Configuration Settings](./configuration-settings.md)
   - [Package Management](./package-management.md)
-  - [Downloading packages with pkg](./pkg.md)
+  - [Downloading Packages with pkg](./pkg.md)
   - [Tasks](./tasks.md)
-  - [Questions and feedback](./asking-questions.md)
+  - [Questions and Feedback](./asking-questions.md)
 
 # Architecture and Design
 
@@ -104,5 +104,5 @@
   - [Signing in to GitLab](./signing-in-to-gitlab.md)
   - [Repository Structure](./repository-structure.md)
   - [Creating Proper Bug Reports](./creating-proper-bug-reports.md)
-  - [How to do a pull request properly](./creating-proper-pull-requests.md)
+  - [Creating Proper Pull Requests](./creating-proper-pull-requests.md)
   - [Filing Issues](./filing-issues.md)
