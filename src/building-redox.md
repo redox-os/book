@@ -28,7 +28,7 @@ If you encounter a weird or difficult-to-fix problem, test the [Podman Build](./
 
 On supported Linux distributions, build system preparation can be performed automatically via the build system's bootstrap script:
 
- 1. Ensure you have access to the `curl` command. e.g., for Pop!_OS/Ubuntu/Debian:
+ 1. Ensure you have the `curl` program installed. e.g., for Pop!_OS/Ubuntu/Debian:
 
     ```sh
     which curl || sudo apt-get install curl
