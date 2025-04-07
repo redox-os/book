@@ -62,8 +62,8 @@ The most commonly used `pkg` commands are show below:
 
 | Command | Description |
 |:------- |:----------- |
-| `pkg install <package-name>` | Install a package. |
-| `pkg upgrade` | Upgrade all installed packages. |
+| `sudo pkg install <package-name>` | Install a package. |
+| `sudo pkg upgrade` | Upgrade all installed packages. |
 | `pkg list <package-name>` | List package contents. |
 | `pkg sign <package-name>` | Get a file signature. |
 | `pkg fetch <package-name>` | Download a package. |
@@ -72,6 +72,6 @@ The most commonly used `pkg` commands are show below:
 | `pkg extract <package-name>` | Extract a package. |
 | `pkg help <pkg-command>` | Get info about a command listed above. |
 
-> 💡 **Tip:** Some `pkg` commands must be run with `sudo` because they manipulate the contents of protected folders: `/usr/bin` and `/pkg`.
+> 📝 **Note:** Some `pkg` commands must be run with `sudo` because they manipulate the contents of protected folders: `/usr/bin` and `/pkg`.
 
 The available packages can be found on the [build server list](https://static.redox-os.org/pkg/).
