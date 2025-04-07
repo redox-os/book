@@ -4,7 +4,7 @@ There are several games, demos and other things to try on Redox. Most of these a
 
 On the demo system, click on the Redox symbol in the bottom left corner of the screen. This brings up a menu, which, for the demo system, includes some games. Feel free to give them a try!
 
-Many of the available commands are in the folders `/usr/bin` and `/ui/bin`, which are included in your command path. Open a Terminal window and type `ls file:/usr/bin` (or just `ls /usr/bin`) to see some of the available commands.
+Many of the available commands are in the folders `/usr/bin` and `/ui/bin`, which are included in your command path. Open a Terminal window and type `ls /usr/bin` (or `ls /scheme/file/usr/bin`) to see some of the available commands.
 
 > 💡 **Note:** some of the games listed below are installed in the `/usr/games` directory, which is not included in the default command path. To run these games from the terminal, you may have to specify their full path in their execution.
 
