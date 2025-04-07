@@ -68,7 +68,7 @@ On supported Linux distributions, build system preparation can be performed auto
 
 ### Setting Configuration Values
 
-The build system uses several configuration files, which contain settings that you may wish to change. These are detailed in the [Configuration Settings](./configuration-settings.md) page. By default, the build system cross-compile to the `x86_64` CPU architecture, using the `desktop` configuration (at `config/x86_64/desktop.toml`). Set the desired `ARCH` and `CONFIG_FILE` in [.config](./configuration-settings.md#config).
+The build system uses several configuration files, which contain settings that you may wish to change. These are detailed in the [Configuration Settings](./configuration-settings.md) page. By default the build system cross-compile to the `x86_64` CPU architecture, using the `desktop` configuration (at `config/x86_64/desktop.toml`). Set the desired `ARCH` and `CONFIG_FILE` in [.config](./configuration-settings.md#config).
 
 The [build.sh](#buildsh) script also allows the user to specify the CPU architecture and filesystem contents to be used in the build, although these settings be re-specified every time the script is run.
 
