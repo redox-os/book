@@ -151,7 +151,7 @@ To change this, it is recommended that you create your own filesystem configurat
 make FILESYSTEM_SIZE=512 image qemu
 ```
 
-> ⚠️ **Warning:** setting `filesystem_size` too low will produce an error resembling the following:
+> ⚠️ **Warning:** setting the `filesystem_size` value too low will produce an error resembling the following:
 > 
 > ```
 > thread 'main' panicked at src/lib.rs:94:53:
