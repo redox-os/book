@@ -113,7 +113,7 @@ In this example we will use a "Hello World" program written in Rust.
     make qemu gpu=no
     ```
 
-18. At the Redox login screen, enter "user" for the user name and press Enter.
+18. At the Redox login screen, write "user" for the user name and press Enter.
 
 19. Run the "Hello World" program.
 
