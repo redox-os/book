@@ -32,7 +32,7 @@ The build process is using **Podman**'s `keep-id` feature, which allows your reg
 
 If you have already read the [Building Redox](./building-redox.md) instructions, but you wish to use **Podman Build**, follow these steps:
 
- 1. Ensure you have access to the `curl` command. e.g., for Pop!_OS/Ubuntu/Debian:
+ 1. Ensure you have the `curl` program installed. e.g., for Pop!_OS/Ubuntu/Debian:
 
     ```sh
     which curl || sudo apt-get install curl 
