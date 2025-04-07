@@ -13,7 +13,7 @@ Due to limited device support, you may get better results in an virtual machine 
 - Upgrade all installed packages:
 
   ```sh
-  pkg upgrade
+  sudo pkg upgrade
   ```
 
 - List package contents:
