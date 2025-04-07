@@ -63,7 +63,7 @@ zstd -d $HOME/Downloads/redox_*_x86_64_*_livedisk.iso.zst
 
 We recommend using the [Popsicle](https://github.com/pop-os/popsicle) tool to flash ISO images to USB devices on Linux. To flash an image, follow the steps below:
 
- 1. Open the [Releases](https://github.com/pop-os/popsicle/releases) section to open the Popsicle releases page and download the `.AppImage` file of the most recent version.
+ 1. Open the [Releases](https://github.com/pop-os/popsicle/releases/latest) section to open the Popsicle releases page and download the `.AppImage` file.
  2. Open your file manager, click with the right-button of your mouse on the `.AppImage` file and open the "Properties", find the "Permissions" section and mark it as executable.
  3. Open the Popsicle `.AppImage` file, select the downloaded Redox image and your USB device.
  4. Confirm the flash process and wait until the progress bar reach 100%. If the flashing process completes with no errors, the flash was successful.
