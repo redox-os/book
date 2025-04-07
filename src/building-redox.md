@@ -60,7 +60,7 @@ On supported Linux distributions, build system preparation can be performed auto
 
     Please be patient. The bootstrapping process can take anywhere from 5 minutes to an hour depending on the hardware and network it's being run on.
 
- 3. After boootstrapping is completed, update the `PATH` environment variable for the current shell:
+ 3. After bootstrapping is completed, update the `PATH` environment variable for the current shell:
 
     ```sh
     source ~/.cargo/env
