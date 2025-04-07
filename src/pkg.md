@@ -7,7 +7,7 @@ Due to limited device support, you may get better results in an virtual machine 
 - Install a package:
 
   ```sh
-  pkg install <package-name>
+  sudo pkg install <package-name>
   ```
 
 - Upgrade all installed packages:
