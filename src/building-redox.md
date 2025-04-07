@@ -34,7 +34,7 @@ On supported Linux distributions, build system preparation can be performed auto
     which curl || sudo apt-get install curl
     ```
 
- 2. Create a new directory and run `native_bootstrap.sh` in it.
+ 2. Create a new directory and run the `native_bootstrap.sh` script in it.
 
     ```sh
     mkdir -p ~/tryredox
