@@ -153,7 +153,7 @@ make FILESYSTEM_SIZE=512 image qemu
 
 > ⚠️ **Warning:** setting `filesystem_size` too low will produce an error resembling the following:
 > 
-> ```sh
+> ```
 > thread 'main' panicked at src/lib.rs:94:53:
 > called `Result::unwrap()` on an `Err` value: Error(Path("/tmp/redox_installer_759506/include/openssl/.pkgar.srtp.h"), State { next_error: Some(Os { code: 28, kind: StorageFull, message: "No space left on device" }), backtrace: InternalBacktrace { backtrace: None } })
 > ```
