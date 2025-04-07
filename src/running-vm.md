@@ -172,7 +172,7 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 4 -m 
     -drive file=`echo $HOME/Downloads/redox_demo_x86_64_*_harddrive.img`,format=raw
 ```
 
-> 💡 **Tip:** if you encounter an error with the file name, verify that the name passed into the previous command (i.e., `$HOME/Downloads/redox_demo_x86_64*_harddrive.img`) matches the file you downloaded.
+> 💡 **Tip:** if you encounter an error with the file name, verify that the name passed into the previous command (i.e., `$HOME/Downloads/redox_demo_x86_64_*_harddrive.img`) matches the file you downloaded.
 
 ### Windows
 
