@@ -2,7 +2,7 @@
 
 The `event` scheme is a special scheme that is central to the operation of device drivers, schemes and other programs that receive events from multiple sources. It's like a "clearing house" for activity on multiple file descriptors. The daemon or client program performs a `read` operation on the `event` scheme, blocking until an event happens. It then examines the event to determine what file descriptor is active, and performs a non-blocking read of the active file descriptor. In this way, a program can have many sources to read from, and rather than blocking on one of those sources while another might be active, the program blocks only on the `event` scheme, and is unblocked if any one of the other sources become active.
 
-The `event` scheme is conceptually similar to Linux's [epoll](https://manpages.ubuntu.com/manpages/focal/en/man7/epoll.7.html) mechanism.
+The `event` scheme is conceptually similar to Linux's [`epoll`](https://manpages.ubuntu.com/manpages/focal/en/man7/epoll.7.html) mechanism.
 
 ## What is a Blocking Read
 
@@ -20,7 +20,7 @@ The purpose of the `event` scheme is to allow the daemon or client program to re
 
 Before setting up the event scheme, you should `open` all the other resources you will be working with, but set them to be non-blocking. E.g. if you are a scheme provider, open your scheme in non-blocking mode,
 
-```
+```rust
 let mut scheme_file = OpenOptions::new()
             .create(true)
             .read(true)
@@ -32,14 +32,14 @@ let mut scheme_file = OpenOptions::new()
 
 The first step in using the event scheme is to open a connection to it. Each program will have a connection to the event scheme that is unique, so no path name is required, only the name of the scheme itself.
 
-```
+```rust
 let event_file = File::open("/scheme/event");
 // you actually need to open it read/write
 ```
 
 Next, write messages to the event scheme, one message per file descriptor that the `event` scheme should monitor. A message is in the form of a `syscall::data::Event` struct.
 
-```
+```rust
 use syscall::data::Event;
 let _ = event_file.write(&Event{ id: scheme_file.as_raw_fd(), ... });
 // write one message per file descriptor
@@ -47,15 +47,15 @@ let _ = event_file.write(&Event{ id: scheme_file.as_raw_fd(), ... });
 
 Note that timers in Redox are also handled via a scheme, so if you will be using a timer, you will need to open the `timer` scheme, and include that file descriptor among the ones your `event_file` should listen to.
 
-Once your setup of the `event` scheme is complete, you begin your main loop.
+Once your setup of the `event` scheme is complete, you begin your main loop:
 
-- Perform a blocking read on the `event` file descriptor. `event_file.read(&mut event_buf);`
-- When an event, such as data becoming available on a file descriptor, occurs, the `read` operation on the `event_file` will complete.
-- Look at the `event_buf` to see which file descriptor is active.
-- Perform a non-blocking read on that file descriptor.
-- Do the appropriate processing.
-- If you are using a timer, write to the timer file descriptor to tell it when you want an event.
-- Repeat.
+ 1. Perform a blocking read on the `event` file descriptor. `event_file.read(&mut event_buf);`
+ 2. When an event, such as data becoming available on a file descriptor, occurs, the `read` operation on the `event_file` will complete.
+ 3. Look at the `event_buf` to see which file descriptor is active.
+ 4. Perform a non-blocking read on that file descriptor.
+ 5. Perform the appropriate processing.
+ 6. If you are using a timer, write to the timer file descriptor to tell it when you want an event.
+ 7. Repeat.
 
 ## Non-blocking Write
 
@@ -63,16 +63,15 @@ Sometimes write operations can take time, such as sending a message synchronousl
 
 ## Implementing Non-blocking Reads in a Scheme
 
-If your scheme supports non-blocking reads by clients, you will need to include some machinery to work with the `event` scheme on your client's behalf.
+If your scheme supports non-blocking reads by clients, you will need to include some machinery to work with the `event` scheme on your client's behalf:
 
-- Wait for an event that indicates activity on your scheme. `event_file.read(&mut event_buf);`
-- Read a packet from your scheme file descriptor containing the request from the client program. `scheme_file.read(&mut packet)`
-- The packet contains the details of which file descriptor is being read, and where the data should be copied.
-- If the client is performing a `read` that would block, then queue the client request, and return the `EAGAIN` error, writing the error response to your scheme file descriptor.
-- When data is available to read, send an event by writing a special packet to your scheme, indicating the handle id that is active.
-  ```rust
-  scheme_file.write(&Packet { a: syscall::number::SYS_FEVENT, b: handle_id, ... });
-  ```
-- When routing this response back to the client, the kernel will recognize it as an event message, and post the event on the client's `event_fd`, if one exists.
-- The scheme provider does not know whether the client has actually set up an `event_fd`. The scheme provider must send the event "just in case".
-- If an event has already been sent, but the client has not yet performed a `read`, the scheme should not send additional events. In correctly coded clients, extra events should not cause problems, but an effort should be made to not send unnecessary events. Be wary, however, as race conditions can occur where you think an extra event is not required but it actually is.
+ 1. Wait for an event that indicates activity on your scheme. `event_file.read(&mut event_buf);`
+ 2. Read a packet from your scheme file descriptor containing the request from the client program. `scheme_file.read(&mut packet)` The packet contains the details of which file descriptor is being read, and where the data should be copied to.
+ 3. If the client is performing a `read` that would block, then queue the client request and return the `EAGAIN` error, writing the error response to your scheme file descriptor.
+ 4. When data is available to read, send an event by writing a special packet to your scheme, indicating the handle id that is active:
+    ```rust
+    scheme_file.write(&Packet { a: syscall::number::SYS_FEVENT, b: handle_id, ... });
+    ```
+ 5. When routing this response back to the client, the kernel will recognize it as an event message, and post the event on the client's `event_fd`, if one exists.
+ 6. The scheme provider does not know whether the client has actually set up an `event_fd`. The scheme provider must send the event "just in case".
+ 7. If an event has already been sent, but the client has not yet performed a `read`, the scheme should not send additional events. In correctly coded clients, extra events should not cause problems, but an effort should be made to not send unnecessary events. Be wary, however, as race conditions can occur where you think an extra event is not required but it actually is.
