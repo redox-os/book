@@ -8,19 +8,19 @@ Wherever possible, Redox code is written in [Rust](https://www.rust-lang.org/). 
 
 ### Benefits
 
-The following items summarizes the Rust benefits.
+The following items summarize the Rust benefits:
 
 - Memory-Safety
 
-All memory allocations are verified by the compiler to prevent bugs.
+  All memory allocations are verified by the compiler to prevent bugs.
 
 - Thread-Safety
 
-Concurrent code in programs is immune to data races.
+  Concurrent code in programs is immune to data races.
 
 - NULL-Safety
 
-NULLs can't cause undefined behavior.
+  NULLs can't cause undefined behavior.
 
 ## Microkernel Architecture
 
@@ -34,31 +34,31 @@ Thus Redox is an unique opportunity to show the microkernel potential for the ma
 
 ### Benefits
 
-The following items summarizes the microkernel benefits.
+The following items summarize the microkernel benefits:
 
 - True modularity
 
-You can enable/disable/update most system components without a system restart, similar to but safer than some modules on monolithic kernels and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
+  You can enable/disable/update most system components without a system restart, similar to but safer than some modules on monolithic kernels and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
 
 - Bug isolation
 
-Most system components run in user-space on a microkernel system. Because of this some types of bugs in most system components won't [crash or damage the system or kernel](https://en.wikipedia.org/wiki/Kernel_panic).
+  Most system components run in user-space on a microkernel system. Because of this some types of bugs in most system components won't [crash or damage the system or kernel](https://en.wikipedia.org/wiki/Kernel_panic).
 
 - Restartless design
 
-A mature microkernel changes very little (except for bug fixes), so you won't need to restart your system very often to update it.
+  A mature microkernel changes very little (except for bug fixes), so you won't need to restart your system very often to update it.
 
-Since most of the system components are in userspace they can be restarted/updated on-the-fly, reducing the downtime of servers a lot.
+  Since most of the system components are in userspace they can be restarted/updated on-the-fly, reducing the downtime of servers a lot.
 
 - Easy to develop and debug
 
-Most of the system components run in userspace, simplifying the testing and debugging.
+  Most of the system components run in userspace, simplifying the testing and debugging.
 
 You can read more about the above benefits on the [Microkernels](./microkernels.md) page.
 
 ## Advanced Filesystem
 
-Redox provides an advanced filesystem, [RedoxFS](https://gitlab.redox-os.org/redox-os/redoxfs). It includes many of the features in [ZFS](https://en.wikipedia.org/wiki/OpenZFS), but in a more modular design. 
+Redox provides an advanced filesystem, [RedoxFS](https://gitlab.redox-os.org/redox-os/redoxfs). It includes many of the features in [ZFS](https://en.wikipedia.org/wiki/OpenZFS), but in a more modular design.
 
 More details on RedoxFS can be found on the [RedoxFS](./redoxfs.md) page.
 
