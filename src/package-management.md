@@ -18,7 +18,7 @@ Static linking offers a few advantages over dynamic linking:
 
 - **Simpler Dependency Management**
 
-  When a dynamically linked program depends on multiple versions of the same library, naming conflicts can arise from the identical object or symbol names within those versions. This issue can necessitate isolating the library files, often by placing them in separate `/lib` directories, to ensure the proper version is used in each case.
+  When a dynamically linked program depends on multiple versions of the same library, naming conflicts can arise from the identical object or symbol names within those versions. This issue can necessitate isolating the library files, often by giving them unique names or placing them in separate `/lib` directories, to ensure the proper version is used in each case.
 
   With *static linking*, however, there's no need for run-time dependency management, as library dependencies are included within the executable binaries.
 

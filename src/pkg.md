@@ -4,6 +4,8 @@
 
 Due to limited device support, you may get better results in an virtual machine than on real hardware.
 
+The most commonly used `pkg` commands are show below:
+
 - Install a package:
 
   ```sh
@@ -57,20 +59,6 @@ Due to limited device support, you may get better results in an virtual machine 
   ```sh
   pkg help <pkg-command>
   ```
-
-The most commonly used `pkg` commands are show below:
-
-| Command | Description |
-|:------- |:----------- |
-| `sudo pkg install <package-name>` | Install a package. |
-| `sudo pkg upgrade` | Upgrade all installed packages. |
-| `pkg list <package-name>` | List package contents. |
-| `pkg sign <package-name>` | Get a file signature. |
-| `pkg fetch <package-name>` | Download a package. |
-| `pkg clean <package-name>` | Clean an extracted package. |
-| `pkg create <package-name>` | Create a package. |
-| `pkg extract <package-name>` | Extract a package. |
-| `pkg help <pkg-command>` | Get info about a command listed above. |
 
 > 📝 **Note:** Some `pkg` commands must be run with `sudo` because they manipulate the contents of protected folders: `/usr/bin` and `/pkg`.
 
