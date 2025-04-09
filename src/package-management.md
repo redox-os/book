@@ -1,38 +1,42 @@
 # Package Management
 
-The Redox package management is similar to the major Linux distributions, but static linking is used instead of dynamic linking.
+Redox package management is similar to that of the major Linux distributions, except that many of Redox's (Rust-written) packages use static linking by default, rather than dynamic linking.
 
-- Better Security
+Static linking provides a few advantages over dynamic linking:
 
-Static linking increase the system security because each program use a different location for library code on the memory, even if the same version of a vulnerable library is used.
+- **Better Security**
 
-The attacker would need to inject code on each program's memory address space to steal sensitive data and not the shared library's memory address space, it increases the cost of the attack.
+  Static linking can improve system security by running each program's library code in isolated memory locations. This is true even when identical versions of a vulnerable library are being used by multiple programs at once.
 
-Rust programs use static linking by default.
+  To steal sensitive data from statically linked programs, an attacker would need to inject code directly into each program's memory address space, rather than the address space of a shared library. This increases the cost of the attack.
 
-- Better Performance
+- **Better Performance**
 
-When a program is compiled with static linking the library references are resolved before execution, thus there's no need for processing on the dynamic linker.
+  When a program is built with static linking, its library references are resolved before execution. Thus, there's no need for processing on the dynamic linker.
 
-By doing this the programs open faster.
+  This means a statically linked program will open faster than its dynamically linked equivalent, provided both are loaded entirely from disk.
 
-- Simple dependency management
+- **Simpler Dependency Management**
 
-When programs need different library versions the dynamic linking will add a conflict because the different versions use the same object name, thus programs will need different `/lib` folders.
+  When a dynamically linked program depends on multiple versions of the same library, naming conflicts can arise from the identical object or symbol names within those versions. This issue can necessitate isolating the library files, often by giving them unique names or placing them in separate `/lib` directories, to ensure the proper version is used in each case.
 
-While in static linking there's no need for runtime dependency management, only source packages for different library versions.
+  With *static linking*, however, there's no need for run-time dependency management, as library dependencies are included within the executable binaries.
 
-Rust programs aren't affected by this problem because of Cargo.
+  Rust programs aren't affected by this problem because of Cargo.
+
+> 📝 **Note:** Rust programs are statically linked by default.
 
 ## Format
 
 ### What is "pkgar" ?
 
-`pkgar`, short for "package archive", is a file format, library, and command-line
+Short for "package archive", `pkgar` is a file format, library, and command-line
 executable for creating and extracting cryptographically secure collections of
-files, primarly for use in package management on Redox OS. The technical details
-are still in development, so we think it is good to instead review the goals of
-`pkgar` and some examples that demonstrate its design principles.
+files, primarily for use in package management on Redox OS.
+
+The technical details are still in development, so we think it is good to
+instead review the goals of `pkgar` and some examples that demonstrate its
+design principles.
 
 `pkgar` has the following goals:
 
@@ -132,4 +136,4 @@ Work still continues on determining the repository format.
 
 The source for `pkgar` is fairly lightweight, we highly recommend reading it and contributing to the [pkgar](https://gitlab.redox-os.org/redox-os/pkgar) repository.
 
-If you have questions feel free to ask us on the [Chat](./chat.md) page.
+If you have questions, feel free to ask us on the [Chat](./chat.md) page.
