@@ -51,7 +51,7 @@
   - [Resources](./resources.md)
   - [Schemes](./schemes.md)
   - ["Everything is a File"](./everything-is-a-file.md)
-  - [Stitching it all together](./stitching-it-all-together.md)
+  - [Stitching It All Together](./stitching-it-all-together.md)
   - [Scheme Operation](./scheme-operation.md)
   - [Event Scheme](./event-scheme.md)
   - [An Example](./example.md)
