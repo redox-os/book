@@ -1,12 +1,12 @@
 # Package Management
 
-Redox package management is similar to that of the major Linux distributions, except that static linking is used instead of dynamic linking.
+Redox package management is similar to that of the major Linux distributions, except that many of Redox's (Rust-written) packages use static linking by default, rather than dynamic linking.
 
-Static linking offers a few advantages over dynamic linking:
+Static linking provides a few advantages over dynamic linking:
 
 - **Better Security**
 
-  Static linking increases system security by running each program's library code in isolated memory locations. This is true even when identical versions of a vulnerable library are being used by multiple programs at once.
+  Static linking can improve system security by running each program's library code in isolated memory locations. This is true even when identical versions of a vulnerable library are being used by multiple programs at once.
 
   To steal sensitive data from statically linked programs, an attacker would need to inject code directly into each program's memory address space, rather than the address space of a shared library. This increases the cost of the attack.
 
@@ -14,7 +14,7 @@ Static linking offers a few advantages over dynamic linking:
 
   When a program is built with static linking, its library references are resolved before execution. Thus, there's no need for processing on the dynamic linker.
 
-  This means programs open faster.
+  This means a statically linked program will open faster than its dynamically linked equivalent, provided both are loaded entirely from disk.
 
 - **Simpler Dependency Management**
 
