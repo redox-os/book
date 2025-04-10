@@ -1,6 +1,6 @@
 # Side Projects
 
-Redox is a complete Rust operating system, in addition to the kernel, we are developing several side projects, including:
+Redox is a complete Rust operating system. In addition to the Redox kernel, our team is developing several side projects, including:
 
 - [RedoxFS](https://gitlab.redox-os.org/redox-os/redoxfs) - Redox file system inspired by ZFS.
 - [Ion](https://gitlab.redox-os.org/redox-os/ion) - The Redox shell.
@@ -30,7 +30,7 @@ We also actively contribute to third-party projects that are heavily used in Red
 
 ## What tools are fitting for the Redox distribution?
 
-The necessary tools for a usable system, we offer variants with less programs.
+The necessary tools for a usable system, we offer variants with fewer programs.
 
 The listed tools fall into three categories:
 

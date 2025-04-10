@@ -22,7 +22,7 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `FILESYSTEM
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
 | `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
 | `CONTAINERFILE` | The Podman container configuration file. See the [Podman Build](./podman-build.md) page for more information. |
-| `PREFER_STATIC` | If set to 1 (`PREFER_STATIC?=1`), all packages will be statically linked. By default, a package will be dynamically linked if it supports it.<br><br>**Note**: If this was previously unset, a full recompilation of the `sysroot` folder will be required. |
+| `PREFER_STATIC` | If set to 1 (`PREFER_STATIC?=1`), all packages will be statically linked. By default, a package will be dynamically linked if it supports it.<br><br>💡 **Tip**: if this was previously unset, a full recompilation of the `sysroot` folder will be required. |
 
 The Redox image that is built is typically named `build/$ARCH/$CONFIG_NAME/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`.
 
@@ -39,9 +39,9 @@ ARCH?=i686
 CONFIG_NAME?=desktop-minimal
 ```
 
-**Note:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. It allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` **must** include the question mark in order to function correctly.
+> 💡 **Tip:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. This allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` *must* include the question mark to function correctly.
 
-**Note:** if [`podman_bootstrap.sh`](./podman-build.md#new-working-directory) was run previously, the `.config` file may already exist.
+> 📝 **Note:** if [`podman_bootstrap.sh`](./podman-build.md#new-working-directory) was run previously, the `.config` file may already exist.
 
 #### Changing the QEMU CPU Core and Memory Quantity
 
@@ -82,7 +82,7 @@ nano mk/config.mk
 
 The `mk/config.mk` file should never be modified directly, especially if you are contributing to the Redox project, as doing so could create conflicts in the `make pull` command.
 
-To apply lasting changes to environment variables, please refer to the [`.config`](#config) section. To apply changes only _temporarily_, see the [Command Line](#command-line) section.
+To apply lasting changes to environment variables, please refer to the [`.config`](#config) section. To apply changes only *temporarily*, see the [Command Line](#command-line) section.
 
 #### `build.sh`
 
@@ -98,7 +98,7 @@ The `TARGET` parameter may be any valid `make` target, although the recommended 
 |:-------|:------------|
 | `-a <ARCH>` | The CPU architecture you are building for, `x86_64`, `i686` or `aarch64`. Uppercase options `-X`, `-6` and `-A` can be used as shorthands for `-a x86_64`, `-a i686`, and `-a aarch64`, respectively. |
 | `-c <CONFIG_NAME>` | The name of the filesystem configuration which appears in the name of the image being built. |
-| `-f <FILESYSTEM_CONFIG>` | Determines the filesystem configuration file location, which can be in any location but is normally in directory `config/$ARCH`.<br><br>**Note:** If you _do_ specify `-f <FILESYSTEM_CONFIG>`, but not `-a` or `-c`, the file path determines the other values. Normally the file would be located at e.g., `config/x86_64/desktop.toml`. `ARCH` is determined from the second-to-last element of the path. If the second last element is not a known `ARCH` value, you must specify `-a ARCH`. `CONFIG_NAME` is determined from the *basename* of the file. |
+| `-f <FILESYSTEM_CONFIG>` | Determines the filesystem configuration file location, which can be in any location but is normally in directory `config/$ARCH`.<br><br>📝 **Note:** If you *do* specify `-f <FILESYSTEM_CONFIG>`, but not `-a` or `-c`, the file path determines the other values. Normally the file would be located at e.g., `config/x86_64/desktop.toml`. `ARCH` is determined from the second-to-last element of the path. If the second last element is not a known `ARCH` value, you must specify `-a ARCH`. `CONFIG_NAME` is determined from the *basename* of the file. |
 
 The default value of `FILESYSTEM_CONFIG` is constructed from `ARCH` and `CONFIG_NAME`: `config/$ARCH/$CONFIG_NAME.toml`.
 
@@ -151,12 +151,12 @@ To change this, it is recommended that you create your own filesystem configurat
 make FILESYSTEM_SIZE=512 image qemu
 ```
 
-**Warning:** setting `filesystem_size` too low will produce an error resembling the following:
-
-```sh
-thread 'main' panicked at src/lib.rs:94:53:
-called `Result::unwrap()` on an `Err` value: Error(Path("/tmp/redox_installer_759506/include/openssl/.pkgar.srtp.h"), State { next_error: Some(Os { code: 28, kind: StorageFull, message: "No space left on device" }), backtrace: InternalBacktrace { backtrace: None } })
-```
+> ⚠️ **Warning:** setting the `filesystem_size` value too low will produce an error resembling the following:
+> 
+> ```
+> thread 'main' panicked at src/lib.rs:94:53:
+> called `Result::unwrap()` on an `Err` value: Error(Path("/tmp/redox_installer_759506/include/openssl/.pkgar.srtp.h"), State { next_error: Some(Os { code: 28, kind: StorageFull, message: "No space left on device" }), backtrace: InternalBacktrace { backtrace: None } })
+> ```
 
 ### Filesystem Customization
 
@@ -181,7 +181,8 @@ The following items describe the process for creating a custom filesystem config
 
 Many filesystem configuration settings can be adjusted. See the templates in the `config` folder for reference.
 
-**Note:** files named with the prefix `my_` in the `redox` repo are git-ignored. Be sure to follow this convention for all custom filesystem configurations to avoid accidentally committing them to the Redox project.
+> 💡 **Tip:** files named with the prefix "`my_`" in the `redox` repo are git-ignored. Be sure to follow this convention for all custom filesystem configurations to avoid accidentally committing them to the Redox project.
+
 #### Adding a package to the filesystem configuration
 
 In the following example, the `acid` package is added to the `my_desktop.toml` configuration:
@@ -242,9 +243,9 @@ This is useful for some purposes, such as producing development builds, confirmi
 
 #### `REPO_BINARY`
 
-In the previous example, the build system's default behavior was overridden by explicitly setting a package to use a pre-built binary. To configure the build system to download pre-built packages by _default_, however, we can set the `REPO_BINARY` environment variable (`REPO_BINARY?=1`).
+In the previous example, the build system's default behavior was overridden by explicitly setting a package to use a pre-built binary. To configure the build system to download pre-built packages by *default*, however, we can set the `REPO_BINARY` environment variable (`REPO_BINARY?=1`).
 
-When `REPO_BINARY` is enabled, the Redox image is made to use pre-built binaries for all packages assigned to `{}`; when `REPO_BINARY` is _disabled_, however, those same packages are compiled from source (i.e., recipes).
+When `REPO_BINARY` is enabled, the Redox image is made to use pre-built binaries for all packages assigned to `{}`; when `REPO_BINARY` is *disabled*, however, those same packages are compiled from source (i.e., recipes).
 
 For example:
 

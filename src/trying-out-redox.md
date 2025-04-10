@@ -1,10 +1,12 @@
 # Trying Out Redox
 
-There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the **demo** system. Available for download on the [build server x86-64 images](https://static.redox-os.org/releases/0.8.0/x86_64). Currently, Redox does not have Wi-Fi support, so if you need Wi-Fi for some of the things you want to do, you are best to [run Redox in a virtual machine](./running-vm.md). Most of the suggestions below do not require network access, except where multiplayer mode is available.
+There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the `demo` system from the list of available [x86-64 build server images](https://static.redox-os.org/releases/0.8.0/x86_64). Currently, Redox does not have Wi-Fi support, so if you need Wi-Fi for some of the things you want to do, you are best to [run Redox in a virtual machine](./running-vm.md). Most of the suggestions below do not require network access, except where multiplayer mode is available.
 
-On the demo system, click on the Redox symbol in the bottom left corner of the screen. This brings up a menu, which, for the demo system, has some games listed. Feel free to give them a try!
+On the demo system, click on the Redox symbol in the bottom left corner of the screen. This brings up a menu, which, for the demo system, includes some games. Feel free to give them a try!
 
-Many of the available commands are in the folders `/usr/bin` and `/ui/bin`, which will be in your command path. Open a Terminal window and type `ls file:/usr/bin` (or just `ls /usr/bin`) to see some of the available commands. Some of the games listed below are in `/usr/games`, which is not in your command path by default, so you may have to specify the full path for the command.
+Many of the available commands are in the folders `/usr/bin` and `/ui/bin`, which are included in your command path. Open a Terminal window and type `ls /usr/bin` (or `ls /scheme/file/usr/bin`) to see some of the available commands.
+
+> 💡 **Note:** some of the games listed below are installed in the `/usr/games` directory, which is not included in the default command path. To run these games from the terminal, you may have to specify their full path in their execution.
 
 ## Programs
 
@@ -12,21 +14,21 @@ Many of the available commands are in the folders `/usr/bin` and `/ui/bin`, whic
 
 The most advanced multimedia library of the world.
 
-- Run the following command to play a music:
+- Run the following command to play an audio file:
 
 ```sh
 ffplay music-name.mp3
 ```
 
-(Change the video format according to your file)
+(Change the audio format according to your file)
 
-- Run the following command to play a video:
+- Run the following command to play a video file:
 
 ```sh
 ffplay video-name.mp4
 ```
 
-(Change the music format according to your file)
+(Change the video format according to your file)
 
 ### COSMIC Files
 
@@ -66,16 +68,18 @@ The Periodic Table `/ui/bin/periodictable` is a demonstration of the **OrbTk** u
 
 ### Sodium
 
-Sodium is Redox's Vi-like editor. To try it out, open a terminal window and type `sodium`.
+Sodium is Redox's Vi-like editor. To try it out, run the `sodium` command from a terminal.
 
 A short list of the Sodium defaults:
 
-- `hjkl` - Navigation keys
-- `ia` - Go to insert/append mode
-- `;` - Go to command-line mode
-- `shift-space` - Go to normal mode
+| Keys | Function |
+|:---- |:-------- |
+| `h`, `j`, `k`, `l` | Navigation keys |
+| `i`, `a` | Enter "Insert" mode |
+| `;` | Enter "Prompt" mode |
+| `shift-space` | Enter "Normal" mode |
 
-For a more extensive list, write `;help`.
+For a more extensive list, run `:help` from within Sodium.
 
 ### Rusthello
 
@@ -89,37 +93,41 @@ Then you will get prompted for various things, such as difficulty, AI setup, and
 
 ### Freedoom
 
-Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can read more about Freedoom on the [Freedoom website](https://freedoom.github.io/). PrBoom can be found on the [PrBoom website](https://prboom.sourceforge.net/). Click on the **Redox** logo on the bottom left, and choose `Games`, then choose `Freedoom`. Or open a Terminal window and try `/games/freedoom1` or `/games/freedoom2`.
+Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can read more about Freedoom on the [Freedoom website](https://freedoom.github.io/). PrBoom can be found on the [PrBoom website](https://prboom.sourceforge.net/).
+
+Freedoom can be run by selecting its entry from the "Games" section of the Orbital system menu, or by running either `/games/freedoom1` or `/games/freedoom2` from a terminal.
 
 Hit `Esc` and use the arrow keys to select Options->Setup->Key Bindings for keyboard help.
 
 ### Neverball and Nevergolf
 
-Neverball and Nevergolf are 3D pinball and golf respectively. Click on the **Redox** logo on the bottom left, and choose `Games`, then choose from the menu.
+Neverball and Nevergolf are 3D pinball and golf games, respectively. Both can be run from the Orbital system menu, under "Games".
 
 ### Sopwith
 
-Sopwith is a game allows you to control a small plane. Originally written in 1984, it used PC graphics, but is now available using the SDL library. In a Terminal window type `sopwith`.
+Sopwith is a game which allows players to pilot a small, virtual plane. The original game was written in 1984 and used PC graphics, but it is now presented to users using the SDL library. To play it, run the `sopwith` command from a terminal.
 
-- `Comma ( , )` - Pull back
-- `Slash ( / )` - Push forward
-- `Period ( . )` - Flip aircraft
-- `Space` - Fire gun
-- `B` - Drop Bomb
+| Control Key | Description |
+|:----------- |:----------- |
+| Comma (`,`) | Pull back |
+| Slash (`/`) | Push forward |
+| Dot (`.`) | Flip aircraft |
+| Space | Fire gun |
+| `b` | Drop bomb |
 
-### Syobonaction
+### Syobon Action
 
-Syobon Action is 2D side-scrolling platformer that you won't enjoy. In a Terminal window, type `syobonaction`. It's recommended that you read the [GitHub page](https://github.com/angelXwind/OpenSyobonAction) so you don't blame us.
+Syobon Action is 2D side-scrolling platformer that you *won't* enjoy. To play it, run `syobonaction` from a terminal window. It's recommended that you read the [GitHub page](https://github.com/angelXwind/OpenSyobonAction) so you don't blame us.
 
 ### Terminal Games Written in Rust
 
 Also check out some games that have been written in Rust, and use the Terminal Window for simple graphics. In a Terminal window, enter one of the following commands:
 
-- `baduk` - Baduk/Go 
-- `dem` - Democracy 
-- `flappy` - Flappy Bird clone 
-- `ice` - Ice Sliding Puzzle 
-- `minesweeper` - Minesweeper but it wraps 
-- `reblox` - Tetris-like falling blocks 
-- `redoku` - Sudoku 
-- `snake` - Snake 
+- `baduk` - Baduk/Go
+- `dem` - Democracy
+- `flappy` - Flappy Bird clone
+- `ice` - Ice Sliding Puzzle
+- `minesweeper` - Minesweeper but it wraps
+- `reblox` - Tetris-like falling blocks
+- `redoku` - Sudoku
+- `snake` - Snake
