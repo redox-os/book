@@ -1,63 +1,65 @@
 # Downloading packages with pkg
 
-[pkg](https://gitlab.redox-os.org/redox-os/pkgutils) is the Redox package manager which allows you to install binary packages to a running system. If you want to build packages, or include binary packages during the build, please see the [Including Programs in Redox](./including-programs.md) page.
+[pkg](https://gitlab.redox-os.org/redox-os/pkgutils) is the Redox package manager installing binary packages to a running system. If you want to build packages, or include binary packages during the build, please see the [Including Programs in Redox](./including-programs.md) page.
 
-You may get better results in an virtual machine than in real hardware (due to the small device support).
+Due to limited device support, you may get better results in an virtual machine than on real hardware.
 
-- Install a package
+The most commonly used `pkg` commands are show below:
 
-```sh
-pkg install package-name
-```
+- Install a package:
 
-- Upgrade all installed packages
+  ```sh
+  sudo pkg install <package-name>
+  ```
 
-```sh
-pkg upgrade
-```
+- Upgrade all installed packages:
 
-- List package contents
+  ```sh
+  sudo pkg upgrade
+  ```
 
-```sh
-pkg list package-name
-```
+- List package contents:
 
-- Get a file signature
+  ```sh
+  pkg list <package-name>
+  ```
 
-```sh
-pkg sign package-name
-```
+- Get a file signature:
 
-- Download a package
+  ```sh
+  pkg sign <package-name>
+  ```
 
-```sh
-pkg fetch package-name
-```
+- Download a package:
 
-- Clean an extracted package
+  ```sh
+  pkg fetch <package-name>
+  ```
 
-```sh
-pkg clean package-name
-```
+- Clean an extracted package:
 
-- Create a package
+  ```sh
+  pkg clean <package-name>
+  ```
 
-```sh
-pkg create package-name
-```
+- Create a package:
 
-- Extract a package
+  ```sh
+  pkg create <package-name>
+  ```
 
-```sh
-pkg extract package-name
-```
+- Extract a package:
 
-- Replace `command` by one of the above options to get detailed information about them
+  ```sh
+  pkg extract <package-name>
+  ```
 
-```sh
-pkg help command
-```
+- Get detailed information about one of the above options:
 
-Some commands needs to be run with `sudo` because the `/usr/bin` and `/pkg` folders are protected by the system.
+  ```sh
+  pkg help <pkg-command>
+  ```
+
+> 📝 **Note:** Some `pkg` commands must be run with `sudo` because they manipulate the contents of protected folders: `/usr/bin` and `/pkg`.
 
 The available packages can be found on the [build server list](https://static.redox-os.org/pkg/).

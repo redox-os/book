@@ -16,9 +16,9 @@ You can find out more about Podman on the [Podman documentation](https://docs.po
 
 **Podman** is a **container manager** that creates **containers** to execute a Linux distribution **image**. In our case, we are creating an **Debian** image, with a **Rust** installation and all the dependencies needed to build the system and programs.
 
-The build process is performed in your normal working directory, e.g. `~/tryredox/redox`. Compilation of the Redox components is performed in the container, but the final Redox image (`build/$ARCH/$CONFIG/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`) is constructed using [FUSE](https://github.com/libfuse/libfuse) running directly on your host machine.
+The build process is performed in your normal working directory, e.g., `~/tryredox/redox`. Compilation of the Redox components is performed in the container, but the final Redox image (`build/$ARCH/$CONFIG/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`) is constructed using [FUSE](https://github.com/libfuse/libfuse) running directly on your host machine.
 
-Setting `PODMAN_BUILD` to 1 in [.config](./configuration-settings.md#config), on the `make` command line (e.g. `make PODMAN_BUILD=1 all`) or in the environment (e.g. `export PODMAN_BUILD=1; make all`) will enable Podman.
+Setting `PODMAN_BUILD` to 1 in [.config](./configuration-settings.md#config), on the `make` command line (e.g., `make PODMAN_BUILD=1 all`) or in the environment (e.g., `export PODMAN_BUILD=1; make all`) will enable Podman.
 
 First, a **base image** called `redox_base` will be constructed, with all the necessary packages for the build system. A "home" directory will also be created in `build/podman`. This is the home directory of your container alter ego, `poduser`. It will contain the `rustup` install, and the `.bashrc`. This takes some time, but is only done when necessary. The *tag* file [build/container.tag](./advanced-podman-build.md#buildcontainertag) is also created at this time to prevent unnecessary image builds.
 
@@ -28,107 +28,112 @@ The build process is using **Podman**'s `keep-id` feature, which allows your reg
 
 ## TL;DR - [New](#new-working-directory) or [Existing](#existing-working-directory) Working Directory
 
-### New Working Directory 
+### New Working Directory
 
-If you have already read the [Building Redox](./building-redox.md) instructions, but you wish to use **Podman Build**, follow these steps.
+If you have already read the [Building Redox](./building-redox.md) instructions, but you wish to use **Podman Build**, follow these steps:
 
-- Make sure you have the `curl` command. e.g. for Pop!_OS/Ubuntu/Debian:
+ 1. Ensure you have the `curl` program installed. e.g., for Pop!_OS/Ubuntu/Debian:
 
-```sh
-which curl || sudo apt-get install curl 
-```
+    ```sh
+    which curl || sudo apt-get install curl 
+    ```
 
-- Make a directory, get a copy of `podman_bootstrap.sh` and run it. This will clone the repository and install **Podman**.
+ 2. Create a new directory and run `podman_bootstrap.sh` inside of it. This will clone the repository and install **Podman**.
 
-```sh
-mkdir -p ~/tryredox
-```
+    ```sh
+    mkdir -p ~/tryredox
+    ```
 
-```sh
-cd ~/tryredox
-```
+    ```sh
+    cd ~/tryredox
+    ```
 
-```sh
-curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.sh -o podman_bootstrap.sh
-```
+    ```sh
+    curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.sh -o podman_bootstrap.sh
+    ```
 
-```sh
-time bash -e podman_bootstrap.sh
-```
+    ```sh
+    time bash -e podman_bootstrap.sh
+    ```
 
-- You may be asked which QEMU installation you want. Please select `full`.
-- You may be asked which Podman container runtime you want to use, `crun` or `runc`. Choose `crun`, but `runc` will also work.
-- Update your path to include `cargo` and the Rust compiler.
+    You may be asked which QEMU installation you want. Please select `full`.
 
-```sh
-source ~/.cargo/env
-```
+    You may be asked which Podman container runtime you want to use, `crun` or `runc`. Choose `crun`, but `runc` will also work.
 
-- Change to the `redox` directory.
+ 3. Update your path to include `cargo` and the Rust compiler.
 
-```sh
-cd ~/tryredox/redox
-```
+    ```sh
+    source ~/.cargo/env
+    ```
 
-- Build the system. This will take some time.
+ 4. Navigate to the `redox` directory.
 
-```sh
-time make all
-```
+    ```sh
+    cd ~/tryredox/redox
+    ```
+
+ 5. Build the system. This will take some time.
+
+    ```sh
+    time make all
+    ```
 
 ### Existing Working Directory
 
-If you already have the build system, you can do the following steps:
+If you already have the build system, simply perform the following steps:
 
-- Change to your working directory
+ 1. Change to your working directory
 
-```sh
-cd ~/tryredox/redox
-```
+    ```sh
+    cd ~/tryredox/redox
+    ```
 
-- Update the build system and wipe all binaries
+ 2. Update the build system and wipe all binaries
 
-```sh
-make pull clean
-```
+    ```sh
+    make pull clean
+    ```
 
-- Install Podman. If your Linux distribution is not supported please check the [installation instructions](./advanced-podman-build.md#installation) to know what dependencies are needed. Or, run the following in your `redox` base` directory:
+ 3. Install Podman. If your Linux distribution is not supported, check the [installation instructions](./advanced-podman-build.md#installation) to determine which dependencies are needed. Or, run the following in your `redox` base` directory:
 
-```sh
-./podman_bootstrap.sh -d
-```
+    ```sh
+    ./podman_bootstrap.sh -d
+    ```
 
-- Enable Podman. The first container setup can take 15 minutes or more, but it is comparable in speed to native build after that.
+ 4. Enable Podman.
 
-```sh
-nano .config
-```
+    ```sh
+    nano .config
+    ```
 
-```
-PODMAN_BUILD?=1
-```
+    ```
+    PODMAN_BUILD?=1
+    ```
 
-- Build Redox
+    > 📝 **Note:** the initial container setup for the Podman build can take 15 minutes or more, but it is comparable in speed to native build after that.
 
-```sh
-make all
-```
+ 5. Build the Redox image.
+
+    ```sh
+    make all
+    ```
 
 ### Run in a virtual machine
 
-You can immediately run your image `build/x86_64/desktop/harddrive.img` in a virtual machine with the following command:
+You can immediately run the new image (`build/x86_64/desktop/harddrive.img`) in a virtual machine with the following command:
 
 ```sh
 make qemu
 ```
 
-Note that if you built the system using `build.sh` to change the CPU architecture or filesystem contents, you should also use it to run the virtual machine.
+> 📝 **Note:** if you are building the system using `build.sh` to change the CPU architecture or filesystem contents, you can also provide the `qemu` option to run the virtual machine:
+> 
+> ```sh
+> ./build.sh -a i686 -c demo qemu
+> ```
+>
+> This will build `build/i686/demo/harddrive.img` (if it doesn't already exist) and run it in the QEMU emulator.
 
-```sh
-./build.sh -a i686 -c server qemu
-```
-
-will build `build/i686/server/harddrive.img` (if it does not exist) and run it in the **QEMU** emulator.
 
 The emulator will display the Redox GUI (Orbital). See [Using the emulation](./running-vm.md#using-the-emulation) for general instructions and [Trying out Redox](./trying-out-redox.md) for things to try.
 
@@ -142,30 +147,51 @@ make qemu gpu=no
 
 If you want to capture the terminal output, read the [Debug Methods](./troubleshooting.md#debug-methods) section.
 
-If you have problems running the virtual machine, you can try `make qemu kvm=no` or `make qemu iommu=no` to turn off various virtualization features. These can also be used as arguments to `build.sh`.
+> 💡 **Tip:** if you encounter problems running the virtual machine, try turning off various virtualization features with `make qemu kvm=no` or `make qemu iommu=no`. These same arguments can also be used with `build.sh`.
 
 #### QEMU Tap For Network Testing
 
 Expose Redox to other computers within a LAN. Configure QEMU with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
 
-Join the [chat](./chat.md) if this is something you are interested in pursuing.
+Please join the [chat](./chat.md) if this is something you are interested in pursuing.
 
 ### Building A Redox Bootable Image
 
 Read the [Testing on Real Hardware](./coding-and-building.md#testing-on-real-hardware) section.
 
-## Note
+## Contributor Note
 
-If you intend on contributing to Redox or its subprojects, please read the [CONTRIBUTING](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/CONTRIBUTING.md) document, so you understand how our build system works and setup your repository fork appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
+If you intend to contribute to Redox or its subprojects, please read the [CONTRIBUTING](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/CONTRIBUTING.md) document to understand how the Redox build system works, and how to set up your repository fork appropriately. You can use `./bootstrap.sh -d` in the `redox` folder to install the prerequisite packages if you have already done a `git clone` of the sources.
 
 If you encounter any bugs, errors, obstructions, or other annoying things, please join the [chat](./chat.md) or [report the issue](./creating-proper-bug-reports.md) to the [build system repository](https://gitlab.redox-os.org/redox-os/redox) or a proper repository for the component. Thanks!
 
 ### build.sh
 
-`build.sh` is a shell script that allows you to easily specify the CPU architecture you are building for, and the filesystem contents. When you are doing Redox development, you should set them in `.config` (see the [Configuration Settings](./configuration-settings.md) page). But if you are just trying things out, use `build.sh` to run `make` for you. e.g.:
+`build.sh` is a shell script for quickly invoking `make` for a specified variant, CPU architecture, and output file.
 
-- `./build.sh -a i686 -c server live` - Run `make` for an i686 (32-bits Intel/AMD) CPU architecture, using the `server` configuration, `config/i686/server.toml`. The resulting image is `build/i686/server/livedisk.iso`, which can be used for installation from a USB.
+> 💡 **Tip:** for doing Redox development, such settings should usually be configured in the `.config` file (see the [Configuration Settings](./configuration-settings.md) page). But for users who are just trying things out, the `build.sh` script can be used to run `make` for you.
 
-- `./build.sh -f config/aarch64/desktop.toml qemu` - Run `make` for an ARM64 (AArch64) CPU architecture, using the `desktop` configuration, `config/aarch64/desktop.toml`. The resulting image is `build/aarch64/desktop/harddrive.img`, which is then run in the emulator **QEMU**.
+#### Example 1
 
-If you use `build.sh`, it's recommended that you do so consistently, as `make` will not be aware of which version of the system you previously built with `build.sh`. Details of `build.sh` and other settings are described in the [Configuration Settings](./configuration-settings.md) page.
+The following builds the `server` variant of Redox for the `i686` (32-bit Intel/AMD) CPU architecture (defined in `config/i686/server.toml`):
+
+```
+./build.sh -a i686 -c server live
+```
+
+The resulting image is `build/i686/server/livedisk.iso`, which can be used to install Redox from a USB device.
+
+
+#### Example 2
+
+The following builds the `desktop` variant of Redox for the `aarch64` (64-bit ARM) CPU architecture (defined in `config/aarch64/desktop.toml`).
+
+```
+./build.sh -f config/aarch64/desktop.toml qemu
+```
+
+The resulting image is `build/aarch64/desktop/harddrive.img`, which is then run in the QEMU emulator upon completion of the build.
+
+> 💡 **Tip:** if you are going to use `build.sh` repeatedly, it's recommended that you do so *consistently*. The script's underlying `make` command doesn't keep any record of the build settings used between `build.sh` runs.
+
+Details of `build.sh` and other settings are described in the [Configuration Settings](./configuration-settings.md) page.
