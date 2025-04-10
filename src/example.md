@@ -1,4 +1,4 @@
-# An example.
+# An Example
 
 Enough theory! Time for an example.
 
@@ -9,7 +9,7 @@ it `vec`.
 The complete source for this example can be found at
 [redox-os/vec_scheme_example](https://gitlab.redox-os.org/redox-os/vec_scheme_example).
 
-> TODO the example has not been saved to the repo
+> TODO: the example has not been saved to the repo.
 
 ## Setup
 
@@ -48,7 +48,7 @@ need to implement for our scheme. The client uses only the standard library.
 
 Create `src/scheme.rs` in the crate. Start by `use`ing a couple of symbols.
 
-```
+```rust
 use std::cmp::min;
 use std::fs::File;
 use std::io::{Read, Write};
@@ -61,7 +61,7 @@ use syscall::error::Result;
 We start by defining our mutable scheme struct, which will implement the
 `SchemeMut` trait and hold the state of the scheme.
 
-```
+```rust
 struct VecScheme {
     vec: Vec<u8>,
 }
@@ -81,7 +81,7 @@ create the `vec` scheme by opening the corresponding scheme handler in the root
 scheme (`:vec`).  Let's implement a `main()` that intializes our scheme struct
 and registers the new scheme:
 
-```
+```rust
 fn main() {
     let mut scheme = VecScheme::new();
 
@@ -96,7 +96,7 @@ scheme handler. Our scheme will read that data, handle the requests, and send
 responses back to the kernel by writing to the scheme handler. The kernel will
 then pass the results of operations back to the caller.
 
-```
+```rust
 fn main() {
     // ...
 
@@ -134,7 +134,7 @@ when they want to start a conversation with our scheme.
 
 For our vec scheme, let's push whatever path we're given to the vec:
 
-```
+```rust
 impl SchemeMut for VecScheme {
     fn open(&mut self, path: &str, _flags: usize, _uid: u32, _gid: u32) -> Result<usize> {
         self.vec.extend_from_slice(path.as_bytes());
@@ -143,20 +143,20 @@ impl SchemeMut for VecScheme {
 }
 ```
 
-Say a program calls `open("vec:/hello")`. That call will work it's way through
+Say a program calls `open("vec:/hello")`. That call will work its way through
 the kernel and end up being dispatched to this function through our
 `Scheme::handle` call.
 
-The usize that we return here will be passed back to us as the `id` parameter of
+The `usize` we return here will be passed back to us as the `id` parameter of
 the other scheme operations. This way we can keep track of different open files.
 In this case, we won't make a distinction between two different programs talking
 to us and simply return zero.
 
 Similarly, when a process opens a file, the kernel returns a number (the file
 descriptor) that the process can use to read and write to that file. Now let's
-implement the read and write operations for `VecScheme`.
+implement the read and write operations for `VecScheme`:
 
-```
+```rust
 impl SchemeMut for VecScheme {
     // ...
 
@@ -192,7 +192,7 @@ implementation. These will all return errors since they are essentially
 unimplemented. There's one more method we need to implement in order to prevent
 errors for users of our scheme:
 
-```
+```rust
 impl SchemeMut for VecScheme {
     // ...
 
@@ -202,13 +202,13 @@ impl SchemeMut for VecScheme {
 }
 ```
 
-Most languages' standard libraries call close automatically when a file object
+Most languages' standard libraries call `close` automatically when a file object
 is destroyed, and Rust is no exception.
 
-To see all the possitble operations on schemes, check out the
+To see all the possible operations on schemes, check out the
 [API docs](https://docs.rs/redox_syscall/).
 
-> TODO There is no scheme documentation at this link
+> TODO: there is no scheme documentation at this link.
 
 ## A Simple Client
 
@@ -216,7 +216,7 @@ As mentioned earlier, we need to create a very simple client in order to use our
 scheme, since some command line tools (like `cat`) use operations other than
 open, read, write, and close. Put this code into `src/client.rs`:
 
-```
+```rust
 use std::fs::File;
 use std::io::{Read, Write};
 
@@ -255,13 +255,12 @@ Notice that both binaries we defined in our `Cargo.toml` can now be found in
 `sudo vec_scheme`. A program needs to run as root in order to register a new
 scheme. In another terminal, run `vec` and observe the output.
 
-## Exercises for the reader
+## Exercises for the Reader
 
-- Make the vec scheme print out something whenever it gets events. For example,
-  print out the user and group ids of the user who tries to open a file in the
+- Make the `vec` scheme print out something whenever it gets events. For example,
+  print out the user and group IDs of the user who tries to open a file in the
   scheme.
-- Create a unique vec for each opened file in your scheme. You might find a
+- Create a unique `vec` for each opened file in your scheme. You might find a
   hashmap useful for this.
 - Write a scheme that can run code for your favorite esoteric programming
   language.
-

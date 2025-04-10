@@ -50,31 +50,31 @@ then it will ask the kernel to place it in the `null` namespace so no further re
 
 ## Providing a Scheme
 
-To provide a scheme, a program performs the following steps.
+To provide a scheme, a program performs the following steps:
 
-- Create the scheme, obtaining a file descriptor - `File::create(":myscheme")`
-- Open a file descriptor for each resource that is required to provide the scheme's services, e.g. `File::open("/scheme/irq/{irq-name}")`
-- Open a file descriptor for a timer if needed - `File::open("/scheme/time/{timer_type}")`
-- Open a file descriptor for the event scheme (if needed) - `File::open("/scheme/event")`
-- Move to the null namespace to prevent any additional resources from being accessed - `setrens(0,0)`
-- Write to the `event` file descriptor to register each of the file descriptors the provider will listen to, including the scheme file descriptor - `event_fd.write(&Event{fd, ...})`
+ 1. Create the scheme, obtaining a file descriptor - `File::create(":myscheme")`
+ 2. Open a file descriptor for each resource that is required to provide the scheme's services, e.g. `File::open("/scheme/irq/{irq-name}")`
+ 3. Open a file descriptor for a timer if needed - `File::open("/scheme/time/{timer_type}")`
+ 4. Open a file descriptor for the event scheme (if needed) - `File::open("/scheme/event")`
+ 5. Move to the null namespace to prevent any additional resources from being accessed - `setrens(0,0)`
+ 6. Write to the `event` file descriptor to register each of the file descriptors the provider will listen to, including the scheme file descriptor - `event_fd.write(&Event{fd, ...})`
 
 Then, in a loop:
 
-- Block, waiting for an event to read. For simple schemes, the scheme provider would not use this mechanism, it would simply do a blocking read of its scheme file descriptor.
-- Read the event to determine (based on the file descriptor included in the event) if it is a timer, a resource event, or a scheme request.
-- If it's a resource event, e.g. indicating a device interrupt, perform the necessary actions such as reading from the device and queuing the data for the scheme.
-- If it's a scheme event, read a request packet from the scheme file descriptor and call the "handler".
-  - The request packet will indicate if it's an `open`, `read`, `write`, etc. on the scheme.
-  - An `open` will include the name of the item to be opened. This can be parsed by the scheme provider to determine the exact resource the requestor wants to access. The scheme will allocate a handle for the resource, with a numbered descriptor. Descriptor numbers are in the range 0 to usize::MAX - 4096, leaving the upper 4096 values as internal error codes. These descriptors are used by the scheme provider to look up the `handle` data structure it uses internally for the resource. The descriptors are typically allocated sequentially, but a scheme provider could return a pointer to the handle data structure if it so chooses.
-  - Note that the descriptor returned from an `open` request is not the same as the file descriptor returned to the client program. The kernel maps between the client's (process id, `fd` number) and the scheme provider's (process id, `handle` number).
-  - A `read` or `write`, etc., will be handled by the scheme, using the `handle` number to look up the information associated with the resource. The operation will be performed, or queued to be performed. If the request can be handled immediately, a response is sent back on the scheme file descriptor, matched to the original request.
-- After all requests have been handled, loop through all `handles` to determine if any queued requests are now complete. A response is sent back on the scheme file descriptor for each completed request, matched to that request.
-- Set a timer if appropriate, to enable handling of device timeouts, etc. This is performed as a `write` operation on the timer file descriptor.
+ 1. Block, waiting for an event to read. For simple schemes, the scheme provider would not use this mechanism, it would simply do a blocking read of its scheme file descriptor.
+ 2. Read the event to determine (based on the file descriptor included in the event) if it is a timer, a resource event, or a scheme request.
+ 3. If it's a resource event, e.g. indicating a device interrupt, perform the necessary actions such as reading from the device and queuing the data for the scheme.
+ 4. If it's a scheme event, read a request packet from the scheme file descriptor and call the "handler". The request packet will indicate if it's an `open`, `read`, `write`, etc. on the scheme:
+    - An `open` will include the name of the item to be opened. This can be parsed by the scheme provider to determine the exact resource the requestor wants to access. The scheme will allocate a handle for the resource, with a numbered descriptor. Descriptor numbers are in the range 0 to usize::MAX - 4096, leaving the upper 4096 values as internal error codes. These descriptors are used by the scheme provider to look up the `handle` data structure it uses internally for the resource. The descriptors are typically allocated sequentially, but a scheme provider could return a pointer to the handle data structure if it so chooses.
+
+      > 📝 **Note:** the descriptor returned from an `open` request is not the same as the file descriptor returned to the client program. The kernel maps between the client's (process id, `fd` number) and the scheme provider's (process id, `handle` number).
+    - A `read` or `write`, etc., will be handled by the scheme, using the `handle` number to look up the information associated with the resource. The operation will be performed, or queued to be performed. If the request can be handled immediately, a response is sent back on the scheme file descriptor, matched to the original request.
+ 5. After all requests have been handled, loop through every `handle` to determine if any queued requests are now complete. A response is sent back on the scheme file descriptor for each completed request, matched to that request.
+ 6. Set a timer if appropriate, to enable handling of device timeouts, etc. This is performed as a `write` operation on the timer file descriptor.
 
 ## Kernel Actions
 
-The kernel performs the following actions in support of the scheme.
+The kernel performs the following actions in support of the scheme:
 
 - Any special resources required by a scheme provider are accessed as file operations on some other scheme. The kernel handles access to resources as it would for any other scheme.
 - Regular file operations from user programs are converted by the kernel to request messages to the schemes. The kernel maps the user program's file descriptor to a scheme and a handle id provided by the scheme during the open operation, and places them in a packet.
