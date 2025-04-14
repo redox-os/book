@@ -17,17 +17,18 @@ The build system downloads and creates several files that you may want to know a
 - [Scripts](#scripts)
 - [Component Separation](#component-separation)
 - [Crates](#crates)
-  - [Current projects with crates](#current-projects-with-crates)
-  - [Manual patching](#manual-patching)
-- [Pinned commits](#pinned-commits)
-  - [Current pinned submodules](#current-pinned-submodules)
-  - [Manual submodule update](#manual-submodule-update)
-- [Git auto-checkout](#git-auto-checkout)
+  - [Current Projects With Crates](#current-projects-with-crates)
+  - [Manual Patching](#manual-patching)
+- [Pinned Commits](#pinned-commits)
+  - [Current Pinned Submodules](#current-pinned-submodules)
+  - [Manual Submodule Update](#manual-submodule-update)
+- [Git Auto-checkout](#git-auto-checkout)
   - [Submodules](#submodules)
 - [Update The Build System](#update-the-build-system)
-- [Update relibc](#update-relibc)
-  - [All recipes](#all-recipes)
-  - [One recipe](#one-recipe)
+- [Update Relibc](#update-relibc)
+- [Fix Breaking Changes](#fix-breaking-changes)
+  - [All Recipes](#all-recipes)
+  - [One Recipe](#one-recipe)
 - [Configuration](#configuration)
   - [Format](#format)
   - [Filesystem Customization](#filesystem-customization)
@@ -339,7 +340,7 @@ scripts/cargo-update.sh recipe-name
 
 Some Redox projects have crates on `crates.io`, thus they use a version-based development, if some change is sent to their repository they need to release a new version on `crates.io`, it will have some delay.
 
-### Current projects with crates
+### Current Projects With Crates
 
 - [libredox](https://crates.io/crates/libredox)
 - [redox_syscall](https://crates.io/crates/redox_syscall)
@@ -387,17 +388,17 @@ Some Redox projects have crates on `crates.io`, thus they use a version-based de
 - [orbtk-shell](https://crates.io/crates/orbtk-shell)
 - [orbtk-tinyskia](https://crates.io/crates/orbtk-tinyskia)
 
-### Manual patching
+### Manual Patching
 
 If you don't want to wait a new release on `crates.io`, you can patch the crate temporarily by fetching the version you need from GitLab and changing the crate version in `Cargo.toml` to `crate-name = { path = "path/to/crate" }`
 
-## Pinned commits
+## Pinned Commits
 
 The build system pin the last working commit of the submodules, if some submodule is broken because of some commit, the pinned commit avoid the fetch of this broken commit, thus pinned commits increase the development stability (broken changes aren't passed for developers and testers).
 
 (When you run `make pull` the build system update the submodule folders based on the last pinned commit)
 
-### Current pinned submodules
+### Current Pinned Submodules
 
 - `cookbook`
 - `installer`
@@ -405,7 +406,7 @@ The build system pin the last working commit of the submodules, if some submodul
 - `relibc`
 - `rust`
 
-### Manual submodule update
+### Manual Submodule Update
 
 Whenever a fix or new feature is merged on the submodules, the upstream build system must update the commit hash, to workaround this you can run `git pull` on the folder of the submodule directly, example:
 
@@ -429,7 +430,7 @@ git pull
 cd ..
 ```
 
-## Git auto-checkout
+## Git Auto-checkout
 
 The `make rebuild` and `make r.recipe` commands will Git checkout (change the active branch) of the recipe source to `master` (only recipes that fetch Git repositories are affected, thus all Redox components).
 
@@ -478,11 +479,9 @@ This is the recommended way to update your build system/recipe sources and binar
 make pull rebuild
 ```
 
-(If the `make pull` command download new commits of the `relibc` submodule, you will need to run the commands of the [Update relibc](#update-relibc) section)
+If the `make pull` command download new commits of the `relibc` submodule, you will need to run the commands of the [Update relibc](#update-relibc) section.
 
-Some new changes will require a complete rebuild (you will need to read the Dev room in our [chat](./chat.md) to know if some big MR was merged and run the `make clean all` command) or a new build system copy (run the [bootstrap.sh](./building-redox.md#bootstrap-prerequisites-and-fetch-sources) script again or run the commands of the [Clone The Repository](./advanced-build.md#clone-the-repository) section), but the `make pull rebuild` command is enough for most cases.
-
-## Update relibc
+## Update Relibc
 
 An outdated relibc copy can contain bugs (already fixed on recent commits) or missing APIs, to update the relibc sources and build it, run:
 
@@ -498,6 +497,10 @@ touch relibc
 make prefix
 ```
 
+## Fix Breaking Changes
+
+To learn how to fix breaking changes before and after build system updates read [this](./troubleshooting.md#fix-breaking-changes) section.
+
 ### All recipes
 
 To pass the new relibc changes for all recipes (programs are the most common case) you will need to rebuild all recipes, unfortunately it's not possible to use `make rebuild` because it can't detect the relibc changes to trigger a complete rebuild.
@@ -508,7 +511,7 @@ To clean all recipe binaries and trigger a complete rebuild, run:
 make clean all
 ```
 
-### One recipe
+### One Recipe
 
 To pass the new relibc changes to one recipe, run:
 

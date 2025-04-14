@@ -15,14 +15,15 @@ This page covers all troubleshooting methods and tips for our build system.
     - [Filesystem Config](#filesystem-config)
     - [Fetch](#fetch)
     - [Cookbook](#cookbook)
-        - [Environment Leakage](#environment-leakage)
-    - [Create the Image with  FUSE](#create-the-image-with-fuse)
+    - [Create the Image with FUSE](#create-the-image-with-fuse)
 - [Solving Compilation Problems](#solving-compilation-problems)
-    - [Update your build system](#update-your-build-system)
-    - [Update your branch](#update-your-branch)
-    - [Update relibc](#update-relibc)
-    - [Update crates](#update-crates)
-    - [Verify the dependency tree](#verify-the-dependency-tree)
+    - [Environment Leakage](#environment-leakage)
+    - [Update Your Build System](#update-your-build-system)
+    - [Update Relibc](#update-relibc)
+    - [Fix Breaking Changes](#fix-breaking-changes)
+    - [Update Your Branch](#update-your-branch)
+    - [Update Crates](#update-crates)
+    - [Verify The Dependency Tree](#verify-the-dependency-tree)
 - [Debug Methods](#debug-methods)
     - [Recipes](#recipes)
         - [Rust](#rust)
@@ -194,13 +195,21 @@ To fix this problem you need to find where the program build system get the Open
 
 Sometimes your build system can be outdated because you forgot to run `make pull` before other commands, read [this](./build-system-reference.md#update-the-build-system) section to learn the complete way to update the build system.
 
-In case of backwards-incompatible or relibc changes, you need to use the `make clean all` command to wipe your binaries and build them again, if it doesn't work you need to download a new copy of the build system by running the `bootstrap.sh` script or using this command:
+### Update Relibc
+
+An outdated relibc copy can contain bugs (already fixed on recent versions) or missing APIs, read [this](./build-system-reference.md#update-relibc) section to learn how to update it.
+
+### Fix Breaking Changes
+
+- Build System
+
+Sometimes build system breaking changes are merged (you need to monitor the Dev room in our [chat](./chat.md) to know if some MRs containing breaking changes were merged) and you need to cleanup most of your build system files to avoid conflicts with the new configuration, the `make distclean pull all` command should work in most cases because it wipe sources and binaries that can cause conflicts after the build system update.
+
+If the method above doesn't work you need to download a new copy of the build system by running the `podman_bootstrap.sh` or `native_bootstrap.sh` scripts or using the following commands:
 
 ```sh
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
 ```
-
-After that, run:
 
 ```sh
 cd redox
@@ -209,6 +218,66 @@ cd redox
 ```sh
 make all
 ```
+
+- Recipes
+
+Some types of recipe errors can be backwards-incompatible build system, system component or relibc changes after the `make pull rebuild` command execution. Run the following tests to verify if the recipe error is an isolated problem or a breaking change:
+
+- Rebuild the recipe binaries
+
+```sh
+make cr.recipe-name
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following test:
+
+- Wipe the recipe sources and binaries and rebuild
+
+```sh
+make ucr.recipe-name
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following test:
+
+- Update relibc and rebuild the recipe
+
+```sh
+touch relibc
+```
+
+```sh
+make prefix cr.recipe-name
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following test:
+
+- Reconfigure the Redox toolchain and rebuild the recipe
+
+```sh
+rm -rf prefix
+```
+
+```sh
+make prefix cr.recipe-name
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following test:
+
+- Wipe the build system binaries, update the build system configuration and build the system (download the Redox toolchain, build the build system tools and recipe sources)
+
+```sh
+make clean all
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues it very probably doesn't happen because of breaking changes but there's not common exception for source breaking changes in the following test:
+
+- Wipe the build system sources and binaries, update the build system configuration and build the system (download the Redox toolchain, build the build system tools, download the recipe sources and build them)
+
+```sh
+make distclean all
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues it doesn't happen because of breaking changes
 
 ### Update Your Branch
 
@@ -250,15 +319,11 @@ git merge your-branch master
 
 If you want an anonymous merge, read the [Anonymous Commits](./coding-and-building.md#anonymous-commits) section.
 
-### Update relibc
-
-An outdated relibc copy can contain bugs (already fixed on recent versions) or missing APIs, read [this](./build-system-reference.md#update-relibc) section to learn how to update it.
-
-### Update crates
+### Update Crates
 
 Sometimes a Rust program use an old crate version lacking Redox support, read [this](./porting-applications.md#update-crates) section to learn how to update them.
 
-### Verify the dependency tree
+### Verify The Dependency Tree
 
 Some crates take a long time to do a new release (years in some cases), thus these releases will hold old versions of other crates, versions where the Redox support is not available (causing errors during the program compilation).
 
