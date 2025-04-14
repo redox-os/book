@@ -12,7 +12,7 @@ This page covers all troubleshooting methods and tips for our build system.
 - [Building the System](#building-the-system)
     - [.config and mk/config.mk](#config-and-mkconfigmk)
     - [Prefix](#prefix)
-    - [Filesystem Config](#filesystem-config)
+    - [Filesystem Configuration](#filesystem-configuration)
     - [Fetch](#fetch)
     - [Cookbook](#cookbook)
     - [Create the Image with FUSE](#create-the-image-with-fuse)
