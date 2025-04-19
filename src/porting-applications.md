@@ -109,24 +109,18 @@ same_as = "../program-name"
 [build]
 template = "build-system"
 dependencies = [
-    "static-library1",
-    "static-library2",
+    "library1",
+    "library2",
 ]
 script = """
-# Uncomment the following if the package can be dynamically linked.
-DYNAMIC_INIT
-# Uncomment the following if you want the package to *always* statically link.
-#export COOKBOOK_PREFER_STATIC=1
+# Uncomment the following if the package can be dynamically linked
+#DYNAMIC_INIT
 insert your script here
 """
 [package]
 dependencies = [
     "runtime-dependency1",
     "runtime-dependency2",
-]
-shared-deps = [
-    "dynamically-linked-library1",
-    "dynamically-linked-library2",
 ]
 ```
 
@@ -142,12 +136,12 @@ shared-deps = [
 - `same_as = "../program-name"` - Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
 - `[build]` - Section for data types that manage the program build process (don't remove it)
 - `template = "build-system"` - Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with custom commands)
-- `dependencies = []` (Under the `[build]` section) - Data type to load the library dependencies for static linking, don't static link if the library is too big
-- `"static-library1",` - The statically-linked library name (can be removed if the `dependencies` data type above is not present)
+- `dependencies = []` (Under the `[build]` section) - Data type to load the library dependencies
+- `"library1",` - The library name, be it statically linked or dynamically linked (can be removed if the `dependencies` data type above is not present)
 - `script` - Data type to load the custom commands for packaging
 - `[package]` - Section for data types that manage the program package
-- `dependencies = []` (Under the `[package]` section) - Data type to load the dynamically-linked libraries or "data files" recipes to be installed by the package manager
-- `"runtime-dependency1",` - The name of the dynamically-linked library or data recipe (can be removed if the `dependencies` data type above is not present)
+- `dependencies = []` (Under the `[package]` section) - Data type to load "data files" recipes to be installed by the package manager or build system installer
+- `"runtime-dependency1",` - The name of the data recipe (can be removed if the `dependencies` data type above is not present)
 
 ### Quick Recipe Template
 
@@ -801,8 +795,7 @@ There are many combinations for these script templates, you can download scripts
 
 The `DYNAMIC_INIT` acts as a marker that indicates the package can be
 dynamically linked. It automatically sets `LDFLAGS` and `RUSTFLAGS` based on
-the preferred linkage. A package is dynamically linked by default unless
-`PREFER_STATIC` is set. See the environment variables section under
+the preferred linkage. See the environment variables section under
 configuration settings for more information.
 
 In most cases, if you want to use dynamic linking for a package, just prepend
@@ -842,7 +835,7 @@ script = """
 ```
 
 Dynamically linked programs depend on shared libraries at runtime. To
-include these libraries, you must add them to `package.shared-deps`. Note that
+include these libraries, you must add them to `build.dependencies`. Note that
 if a library or program is compiled with GCC, then `libgcc` must be added as a
 runtime dependency (currently all C/C++ programs are built with GCC, although
 Clang could be used in the future).
@@ -852,43 +845,13 @@ Clang could be used in the future).
 ```toml
 # <...snip...>
 
-[package]
-shared-deps = [
+[build]
+dependencies = [
     "libgcc",
     # "libmpc",
     # "libgmp",
     # ...
 ]
-```
-
-Sometimes you may also require specific flags depending on the linkage. You can
-do this like:
-
-```bash
-if [[ -n "$COOKBOOK_PREFER_STATIC" ]]; then
-    # This part is for static linking
-    COOKBOOK_CONFIGURE_FLAGS+=(
-        --enable-abc
-        # ...
-    )
-else
-    # This part is for dynamic linking
-    COOKBOOK_CONFIGURE_FLAGS+=(
-        --enable-def
-        # ...
-    )
-fi
-```
-
-In the recipe script, you can manually set the `COOKBOOK_PREFER_STATIC`
-environment variable to ensure it always statically links, even in future when
-the need for the `DYNAMIC_INIT` marker has been phased out.
-
-#### Example
-
-```diff
-script = """
-+export COOKBOOK_PREFER_STATIC=1
 ```
 
 ### Troubleshooting
@@ -897,7 +860,7 @@ script = """
 
 Set `LD_DEBUG=all` and re-run the program. It will show you where objects are
 being found and loaded, as well as the library search paths. You probably
-forgot to add a library in the `shared-deps` list. You can also use
+forgot to add a library in the `dependencies` list. You can also use
 `patchelf` on your host or on Redox to display all `DT_NEEDED` entries of an
 object (`patchelf --print-needed <path>`). It is available by default for the
 desktop configuration.
