@@ -136,12 +136,12 @@ dependencies = [
 - `same_as = "../program-name"` - Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
 - `[build]` - Section for data types that manage the program build process (don't remove it)
 - `template = "build-system"` - Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with custom commands)
-- `dependencies = []` (Under the `[build]` section) - Data type to load the library dependencies
+- `dependencies = []` (Under the `[build]` section) - Data type to add library dependencies
 - `"library1",` - The library name, be it statically linked or dynamically linked (can be removed if the `dependencies` data type above is not present)
 - `script` - Data type to load the custom commands for packaging
 - `[package]` - Section for data types that manage the program package
-- `dependencies = []` (Under the `[package]` section) - Data type to load "data files" recipes to be installed by the package manager or build system installer
-- `"runtime-dependency1",` - The name of the data recipe (can be removed if the `dependencies` data type above is not present)
+- `dependencies = []` (Under the `[package]` section) - Data type to add interpreters or "data files" recipes to be installed by the package manager or build system installer
+- `"runtime-dependency1",` - The name of the interpreter or data recipe (can be removed if the `dependencies` data type above is not present)
 
 ### Quick Recipe Template
 
