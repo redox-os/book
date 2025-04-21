@@ -1,6 +1,6 @@
 # Creating Proper Pull Requests
 
-In order for changes you have made to be added to redox, or other related projects, it is necessary to have someone review your changes, and merge them into the official repository.
+In order for changes you have made to be added to Redox, or other related projects, it is necessary to have someone review your changes, and merge them into the official repository.
 
 This is done by preparing a feature branch, and submitting a merge request.
 
@@ -109,7 +109,7 @@ The steps given below are for the main Redox project repository - submodules and
 
 ## Submitting a merge request
 
-1. On [Redox GitLab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Describe your changes. **Submit!**
+1. On [Redox GitLab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Explain your changes in the title in an easy way and write a short statement in the description if you did multiple changes. **Submit!**
 2. Once your merge request is ready, notify reviewers by sending the link to the [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room.
 
 ## Incorporating feedback
