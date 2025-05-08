@@ -1,6 +1,6 @@
 # Introduction
 
-<img class="redox-logo" width=511 height=180/>
+<img class="redox-logo" width="511" height="180" />
 
 This is the **Redox OS** book, which will go through (almost) everything about Redox: design, philosophy, how it works, how you can contribute, how to deploy Redox, and much more.
 
