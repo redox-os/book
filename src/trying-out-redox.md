@@ -1,12 +1,12 @@
 # Trying Out Redox
 
-There are several games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the `demo` system from the list of available [x86-64 build server images](https://static.redox-os.org/releases/0.8.0/x86_64). Currently, Redox does not have Wi-Fi support, so if you need Wi-Fi for some of the things you want to do, you are best to [run Redox in a virtual machine](./running-vm.md). Most of the suggestions below do not require network access, except where multiplayer mode is available.
+There are several programs, games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the `demo` variant from the list of available Redox images. Currently, Redox does not have Wi-Fi support, so if you need Wi-Fi for some of the things you want to do, you are best to use an Ethernet cable or [run Redox in a virtual machine](./running-vm.md). Most of the suggestions below do not require Internet access.
 
-On the demo system, click on the Redox symbol in the bottom left corner of the screen. This brings up a menu, which, for the demo system, includes some games. Feel free to give them a try!
+On the `demo` variant, click on the Redox symbol in the bottom left corner of the screen. This brings up a menu, which, for the `demo` variant, includes some games. Feel free to give them a try!
 
 Many of the available commands are in the folders `/usr/bin` and `/ui/bin`, which are included in your command path. Open a Terminal window and type `ls /usr/bin` (or `ls /scheme/file/usr/bin`) to see some of the available commands.
 
-> 💡 **Note:** some of the games listed below are installed in the `/usr/games` directory, which is not included in the default command path. To run these games from the terminal, you may have to specify their full path in their execution.
+> 💡 **Note:** some of the games listed below are installed in the `/usr/games` directory, which is not detected in the terminal shell by default. To run these games from the terminal, you may have to specify the path of their executables.
 
 ## Programs
 
@@ -32,7 +32,7 @@ ffplay video-name.mp4
 
 ### COSMIC Files
 
-An advanced file manager written in Rust, similar to GNOME Nautilus.
+An advanced file manager written in Rust, similar to GNOME Nautilus or Files.
 
 ### COSMIC Editor
 
@@ -95,7 +95,7 @@ Then you will get prompted for various things, such as difficulty, AI setup, and
 
 Freedoom is a first-person shooter in the form of content for a Doom engine. For Redox, we have included the PrBoom engine to run Freedoom. You can read more about Freedoom on the [Freedoom website](https://freedoom.github.io/). PrBoom can be found on the [PrBoom website](https://prboom.sourceforge.net/).
 
-Freedoom can be run by selecting its entry from the "Games" section of the Orbital system menu, or by running either `/games/freedoom1` or `/games/freedoom2` from a terminal.
+Freedoom can be run by selecting its entry from the "Games" section of the Orbital system menu, or by running either `/usr/games/freedoom1` or `/usr/games/freedoom2` from a terminal.
 
 Hit `Esc` and use the arrow keys to select Options->Setup->Key Bindings for keyboard help.
 

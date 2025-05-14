@@ -39,7 +39,7 @@ If you don't know how to port some program or library, you can see the build sys
 
 ### OS development
 
-- [OSDev wiki](https://wiki.osdev.org/Expanded_Main_Page) - The best wiki about OS development of the world.
+- [OSDev Wiki](https://wiki.osdev.org/Expanded_Main_Page) - The best wiki about OS development of the world.
 - [Writing an OS in Rust](https://os.phil-opp.com/) - Blog series to write an operating system in Rust.
 - [Rust OSDev](https://rust-osdev.com/) - Monthly reports with updates on the Rust low-level ecosystem libraries and operating systems.
 
@@ -56,7 +56,7 @@ If you don't know how to port some program or library, you can see the build sys
 - [FreeBSD Manual Pages](https://man.freebsd.org/cgi/man.cgi) - Powerful source for Unix/BSD documentation.
 - [Linux Manual Pages (man7)](https://www.man7.org/linux/man-pages/) - Very popular source for Linux documentation.
 - [Linux Manual Pages (die.net)](https://linux.die.net/man/) - Another popular source for Linux documentation.
-- [OpenGroup Specification (POSIX and C Library)](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/contents.html) - This is important to improve the support with Linux/BSD programs written in C/C++.
+- [OpenGroup Specification (POSIX and C Standard Library)](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/contents.html) - This is important to improve the support with Linux/BSD programs written in C/C++.
 
 ### Source Code
 

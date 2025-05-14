@@ -10,7 +10,7 @@ On some computers, hardware incompatibilities, e.g. disk driver issues, can slow
 
 The current ISO image uses a bootloader to load the filesystem into memory (*livedisk*) and emulates a hard drive. You can use the system in this mode without installing. Although its use of memory is inefficient, it is fully functional and does not require changes to your device. The ISO image is a great way to try out Redox on real hardware. 
 
-## Creating a Bootable USB Device
+## Creating a Bootable USB Drive
 
 ### Download an Compressed ISO Image
 
@@ -72,14 +72,13 @@ You can now restart your Linux machine and boot into Redox.
 
 #### Windows Instructions
 
-We recommend using the [Rufus](https://rufus.ie/) tool on Windows to flash your USB device, follow the steps below:
+We recommend using the [balenaEtcher](https://etcher.balena.io/) tool on Windows to flash your USB device, follow the steps below:
 
- 1. Open the [Rufus website](https://rufus.ie/), navigate to the "Download" section and download the latest version.
- 2. Open Rufus, select the ISO image of Redox, wait the Rufus image scanning, select your USB device and click on "Start".
+ 1. Open the [balenaEtcher website](https://etcher.balena.io/), click on the "Download Etcher" button and download the "Etcher for Windows" asset.
+ 2. Install and open balenaEtcher, select the ISO image of Redox, select the USB device and click on "Flash!"
  3. Confirm the permission to erase the data of your device and wait until the progress bar reach 100%
- 4. If it shows a choice window with "ISO" and "DD" mode, select the "DD" mode. If the flashing process completes with no errors, the flash was successful.
 
-Now you can now restart your Windows machine and boot into Redox.
+Now you can now restart your Windows system and boot into Redox.
 
 ## Booting the System
 
@@ -99,4 +98,4 @@ To switch between Orbital and the console, use the following keys:
 
 If you want to be able to boot Redox from your HDD or SSD, follow the [Installation](./installing.md) instructions.
 
-Redox isn't currently going to replace your existing operating system, but it's a fun thing to try: boot Redox on your computer, and see what works.
+Redox isn't currently going to replace your existing operating system, but testing is important to help us fix bugs and add features: boot Redox on your computer, and see what works.

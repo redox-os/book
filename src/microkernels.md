@@ -54,7 +54,7 @@ In monolithic kernels, a bug in kernel component will cause a kernel panic and l
 
 ### Small Performance Overhead
 
-Any modern operating system needs basic security mechanisms such as virtualization and segmentation of memory. Furthermore any process (including the kernel) has its own stack and variables stored in registers. On [context switch](https://en.wikipedia.org/wiki/Context_switch), that is each time a system call is invoked or any other inter-process communication (IPC) is done, some tasks have to be done, including:
+Any modern operating system needs basic security mechanisms such as memory isolation and virtualization. Furthermore any process (including the kernel) has its own stack and variables stored in registers. On [context switch](https://en.wikipedia.org/wiki/Context_switch), that is each time a system call is invoked or any other inter-process communication (IPC) is done, some tasks have to be done, including:
 
 - Saving caller registers, especially the program counter (caller: process invoking syscall or IPC)
 - Reprogramming the [MMU](https://en.wikipedia.org/wiki/Memory_management_unit)'s page table (aka [TLB](https://en.wikipedia.org/wiki/Translation_lookaside_buffer))
@@ -65,8 +65,8 @@ These are not inherently slower on microkernels, but microkernels need to perfor
 
 The performance difference between monolithic and microkernels has been marginalized over time, making their performance comparable. This is partly due to a smaller surface area which can be easier to optimize.
 
-- [Context switch documentation](https://wiki.osdev.org/Context_Switching)
-- [Microkernels performance paper](https://os.inf.tu-dresden.de/pubs/sosp97/)
+- [Context Switch Documentation](https://wiki.osdev.org/Context_Switching)
+- [Microkernels Performance Paper](https://os.inf.tu-dresden.de/pubs/sosp97/)
 
 We are working on exciting performance optimizations to minimize the overhead of extra context switches.
 
@@ -80,28 +80,27 @@ The above illustration from [Wikimedia](https://commons.wikimedia.org/wiki/File:
 
 ## Documentation about the kernel/user-space separation
 
-- [Dual Mode operations in OS](https://www.geeksforgeeks.org/dual-mode-operations-os/)
-- [User mode and Kernel mode switching](https://www.geeksforgeeks.org/user-mode-and-kernel-mode-switching/)
+- [Dual Mode Operations in OS](https://www.geeksforgeeks.org/dual-mode-operations-os/)
+- [User Mode and Kernel Mode Switching](https://www.geeksforgeeks.org/user-mode-and-kernel-mode-switching/)
 
 ## Documentation about microkernels
 
-- [OSDev technical wiki](https://wiki.osdev.org/Microkernel)
-- [Message passing documentation](https://wiki.osdev.org/Message_Passing)
-- [Minix documentation](https://wiki.minix3.org/doku.php?id=www:documentation:start)
-- [Minix features](https://wiki.minix3.org/doku.php?id=www:documentation:features)
-- [Minix reliability](https://wiki.minix3.org/doku.php?id=www:documentation:reliability)
-- [GNU Hurd documentation](https://www.gnu.org/software/hurd/hurd/documentation.html)
-- [Fuchsia documentation](https://fuchsia.dev/fuchsia-src/get-started/learn/intro)
+- [OSDev Technical Wiki](https://wiki.osdev.org/Microkernel)
+- [Message Passing Documentation](https://wiki.osdev.org/Message_Passing)
+- [Minix Documentation](https://wiki.minix3.org/doku.php?id=www:documentation:start)
+- [Minix Features](https://wiki.minix3.org/doku.php?id=www:documentation:features)
+- [Minix Reliability](https://wiki.minix3.org/doku.php?id=www:documentation:reliability)
+- [GNU Hurd Documentation](https://www.gnu.org/software/hurd/hurd/documentation.html)
+- [Fuchsia Documentation](https://fuchsia.dev/fuchsia-src/get-started/learn/intro)
 - [HelenOS FAQ](http://www.helenos.org/wiki/FAQ)
-- [Minix paper](http://www.minix3.org/docs/jorrit-herder/osr-jul06.pdf)
-- [seL4 whitepaper](https://sel4.systems/About/seL4-whitepaper.pdf)
-- [Microkernels performance paper](https://os.inf.tu-dresden.de/pubs/sosp97/)
-- [Tanenbaum-Torvalds debate](https://en.wikipedia.org/wiki/Tanenbaum%E2%80%93Torvalds_debate)
+- [Minix Paper](http://www.minix3.org/docs/jorrit-herder/osr-jul06.pdf)
+- [seL4 Whitepaper](https://sel4.systems/About/seL4-whitepaper.pdf)
+- [Tanenbaum-Torvalds Debate](https://en.wikipedia.org/wiki/Tanenbaum%E2%80%93Torvalds_debate)
 
 ## A Note On The Current State
 
-Redox has less than 40,000 Rust lines of kernel code. For comparison Minix has ~6,000 C lines of kernel code.
+Redox has less than 40,000 Rust lines of kernel code. For comparison Minix has around 6,000 C lines of kernel code.
 
-(The above comparison can't be used to argument that Minix is more stable or safe than Redox because of the number of source code lines, because Redox is more advanced than Minix in features, thus more lines of code are expected)
+(The above comparison can't be used to argue that Minix is more stable or safe than Redox due to a less amount of source code lines, because Redox is more advanced than Minix in features, thus more lines of code are expected and a 1:1 comparison can't be made)
 
-We would like to move more parts of Redox to user-space to get an even smaller kernel.
+We would like to move more parts of Redox to user-space to get an even more stable and secure kernel.

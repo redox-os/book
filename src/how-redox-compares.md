@@ -23,12 +23,12 @@ Redox's kernel is a microkernel. The architecture is largely inspired by MINIX a
 
 In contrast to Linux or BSD, Redox has around 50,000 lines of kernel code, a number that is often decreasing. Most system services are provided in userspace, either in an interface library, or as daemons.
 
-Having vastly smaller amount of code in the kernel makes it easier to find and fix bugs and security issues in an efficient way.
+Having vastly smaller amount of code in the kernel makes it easier to find and fix bugs/security issues in an efficient way.
 Andrew Tanenbaum (author of MINIX) stated that for every 1,000 lines of properly written C code, there is a bug.
 This means that for a monolithic kernel with nearly 25,000,000 lines of C code, there could be nearly 25,000 bugs.
-A microkernel with only 50,000 lines of C code would mean that around 50 bugs exist.
+A microkernel with only 50,000 lines of C code would mean that around 50 bugs exist (Tanenbaum Law).
 
-It should be noted that the extra code is not discarded, it is simply based outside of kernel-space, making it less dangerous.
+It should be noted that in a microkernel the high amount of code (present in a monolithic kernel) is not removed, it's just moved to user-space daemons to make it less dangerous.
 
 The main idea is to have system components and drivers that would be inside a monolithic kernel exist in user-space and follow the Principle of Least Authority (POLA). This is where every individual component is:
 
