@@ -18,7 +18,7 @@ The following notices are commonly used throughout the book to convey noteworthy
 
 | Notice     | Meaning |
 |:---------- |:------- |
-| 🛈 **Info**    | Provides neutral information to deliver key facts. |
+| ℹ️ **Info**    | Provides neutral information to deliver key facts. |
 | 📝 **Note**    | Provides information to enhance understanding. |
 | 💡 **Tip**     | Offers suggestions to optimize an experience. |
 | ⚠️ **Warning** | Highlights potential risks or mistakes. |
