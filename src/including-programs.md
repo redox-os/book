@@ -61,7 +61,7 @@ cp config/x86_64/desktop.toml config/x86_64/myfiles.toml
 nano config/x86_64/myfiles.toml
 ```
 
-- Look for the `[packages]` secion and add the package to the configuration. You can add the package anywhere in the `[packages]` section, but by convention, we add them to the end or to an existing related area of the section.
+- Look for the `[packages]` section and add the package to the configuration. You can add the package anywhere in the `[packages]` section, but by convention, we add them to the end or to an existing related area of the section.
 
 ```toml
 ...

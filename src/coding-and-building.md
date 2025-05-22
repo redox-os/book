@@ -151,7 +151,7 @@ mv games source
 
 - If you are making a change that you want to contribute, (you are not, **don't actually do this**) at this point you should follow the instructions in [Creating Proper Pull Requests](./creating-proper-pull-requests.md), replacing `redox.git` with `games.git`. Make sure you fork the correct repository, in this case [redox-os/games](https:/gitlab.redox-os.org/redox-os/games). Remember to create a new branch before you make any changes.
 
-- If you want to Git Clone a remote repoitory (main repoitory/your fork), you can add these sections on your `recipe.toml`:
+- If you want to Git Clone a remote repository (main repository/your fork), you can add these sections on your `recipe.toml`:
 
 ```toml
 [source]
