@@ -10,9 +10,6 @@ This page will teach you how to add programs on the Redox image, it's a simplifi
   - [Build the System](#build-the-system)
   - [Dependencies](#dependencies)
   - [Update crates](#update-crates)
-- [Using a Script](#using-a-script)
-  - [Pre-script](#pre-script)
-  - [Post-script](#post-script)
 - [Modifying an Existing Recipe](#modifying-an-existing-recipe)
 - [Create Your Own Hello World](#create-your-own-hello-world)
   - [Setting up the recipe](#setting-up-the-recipe)
@@ -22,7 +19,7 @@ This page will teach you how to add programs on the Redox image, it's a simplifi
 
 The Cookbook system makes the packaging process very simple. First, we will show how to add an existing program for inclusion. Then we will show how to create a new program to be included. In the [Coding and Building](./coding-and-building.md) page, we discuss the development cycle in more detail.
 
-## Existing Package
+## Existing Recipe
 
 Redox has many programs that are available for inclusion. Each program has a recipe in the directory `cookbook/recipes/recipe-name`. Adding an existing program to your build is as simple as adding it to `config/$ARCH/myfiles.toml`, or whatever name you choose for your `.toml` configuration definition. Here we will add the `games` package, which contains several terminal games.
 
@@ -64,7 +61,7 @@ cp config/x86_64/desktop.toml config/x86_64/myfiles.toml
 nano config/x86_64/myfiles.toml
 ```
 
-- Look for the `[packages]` secion and add the package to the configuration. You can add the package anywhere in the `[packages]` section, but by convention, we add them to the end or to an existing related area of the section.
+- Look for the `[packages]` section and add the package to the configuration. You can add the package anywhere in the `[packages]` section, but by convention, we add them to the end or to an existing related area of the section.
 
 ```toml
 ...
