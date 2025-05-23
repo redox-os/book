@@ -138,7 +138,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 ### Recipes
 
 - `make f.recipe-name` - Download the recipe source.
-- `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games`
+- `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games` (you can't use this command to replace the `make all`, `make fstools` and `make prefix` commands because it don't trigger them, make sure to run them before to avoid errors)
 
   The package is built even if it is not in your filesystem configuration.
 
