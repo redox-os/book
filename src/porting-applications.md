@@ -982,7 +982,7 @@ If you want an easy way to find dependencies, see the Debian stable [packages li
 
 You can search them with `Ctrl+F`, all package names are clickable and their homepage is available on the right-side of the package description/details.
 
-- We recommend to use the FreeBSD dependencies of the program if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy don't separate library objects/interpreters from build tools, thus you need to know or search each item to know if it's a library, interpreter or build tool)
+- We recommend to use the FreeBSD dependencies of the program if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy don't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies.
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
 - The recipe `PATH` environment variable only read the build tools at `/usr/bin`, it don't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
