@@ -671,7 +671,8 @@ cookbook_cargo_examples example-name
 
 This script is used for Cargo examples with flags.
 
-```
+```toml
+script = """
 recipe="$(basename "${COOKBOOK_RECIPE}")"
     for example in example1 example2
     do
@@ -685,6 +686,7 @@ recipe="$(basename "${COOKBOOK_RECIPE}")"
             "target/${TARGET}/${build_type}/examples/${example}" \
             "${COOKBOOK_STAGE}/usr/bin/${recipe}_${example}"
     done
+"""
 ```
 
 (Replace the `example1` item and others with the example names, if the program has only one example you can remove the `example2` item)
