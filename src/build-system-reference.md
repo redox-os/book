@@ -204,7 +204,7 @@ You can use these scripts to perform actions not implemented as `make` commands 
 - To run a script use the following command:
 
 ```sh
-scripts/script-name.sh input-text
+scripts/script-name.sh "input-text"
 ```
 
 The "input-text" is the word used by the script.
@@ -218,7 +218,7 @@ The "input-text" is the word used by the script.
 Show all files installed by a recipe.
 
 ```sh
-scripts/find-recipe.sh recipe-name
+scripts/find-recipe.sh "recipe-name"
 ```
 
 ### Recipe Categories
@@ -226,7 +226,7 @@ scripts/find-recipe.sh recipe-name
 Run `make` options on some recipe category.
 
 ```sh
-scripts/category.sh -x category-name
+scripts/category.sh -x "category-name"
 ```
 
 Where `x` is your `make` option, it can be `f`, `r`, `c`, `u`, `cr`, `ucr`, `uc` or `ucf`
@@ -252,7 +252,7 @@ scripts/include-recipes.sh "TODO.text" | sort
 Show the folders and files on the `stage` and `sysroot` folders of some recipe (to identify packaging issues or violations).
 
 ```sh
-scripts/show-package.sh recipe-name
+scripts/show-package.sh "recipe-name"
 ```
 
 ### Recipe Commit Hash
@@ -260,7 +260,7 @@ scripts/show-package.sh recipe-name
 Show the current Git branch and commit of the recipe source.
 
 ```sh
-scripts/commit-hash.sh recipe-name
+scripts/commit-hash.sh "recipe-name"
 ```
 
 ### Package Size
@@ -268,7 +268,7 @@ scripts/commit-hash.sh recipe-name
 Show the package size of the recipes (`stage.pkgar` and `stage.tar.gz`), it must be used by package maintainers to enforce the [library linking size policy](https://gitlab.redox-os.org/redox-os/cookbook#library-linking).
 
 ```sh
-scripts/pkg-size.sh recipe-name
+scripts/pkg-size.sh "recipe-name"
 ```
 
 ### Recipe Location
@@ -276,25 +276,25 @@ scripts/pkg-size.sh recipe-name
 Show the location of the written recipe.
 
 ```sh
-scripts/recipe-path.sh recipe-name
+scripts/recipe-path.sh "recipe-name"
 ```
 
 ### Recipe Match
 
-Search some text inside the `recipe.toml` of some recipe.
+Search some text inside the `recipe.toml` of all recipes and show their content.
+
+(Require `bat` and `ripgrep` installed, run `cargo install bat ripgrep` to install)
 
 ```sh
-scripts/recipe-match.sh recipe-name
+scripts/recipe-match.sh "recipe-name"
 ```
 
 ### Print Recipe
 
 Show the content of the recipe configuration.
 
-(Require `bat` and `ripgrep` installed, run `cargo install bat ripgrep` to install)
-
 ```sh
-scripts/print-recipe.sh recipe-name
+scripts/print-recipe.sh "recipe-name"
 ```
 
 ### Recipe Executables
@@ -314,7 +314,7 @@ scripts/executables.sh
 Download the recipe source and run `cargo update`
 
 ```sh
-scripts/cargo-update.sh recipe-name
+scripts/cargo-update.sh "recipe-name"
 ```
 
 ### Dual Boot
