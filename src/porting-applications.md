@@ -31,6 +31,7 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
         - [Enable all Cargo flags](#enable-all-cargo-flags)
         - [Cargo profiles command example](#cargo-profiles-command-example)
         - [Cargo examples command example](#cargo-examples-command-example)
+            - [Cargo examples with flags](#cargo-examples-with-flags)
         - [Rename binaries](#rename-binaries)
         - [Change the active source code folder](#change-the-active-source-code-folder)
         - [Configuration files](#configuration-files)
@@ -580,7 +581,7 @@ package=package-name
 "${COOKBOOK_CARGO}" build \
             --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
             --package "${package}" \
-            --release
+            --release \
             --add-your-flag-here
         mkdir -pv "${COOKBOOK_STAGE}/usr/bin"
         cp -v \
@@ -602,7 +603,7 @@ binary=bin-name
 "${COOKBOOK_CARGO}" build \
             --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
             --bin "${binary}" \
-            --release
+            --release \
             --add-your-flag-here
         mkdir -pv "${COOKBOOK_STAGE}/usr/bin"
         cp -v \
@@ -665,6 +666,28 @@ cookbook_cargo_examples example-name
 ```
 
 (You can use `cookbook_cargo_examples example1 example2` if it's more than one example)
+
+##### Cargo examples with flags
+
+This script is used for Cargo examples with flags.
+
+```
+recipe="$(basename "${COOKBOOK_RECIPE}")"
+    for example in example1 example2
+    do
+        "${COOKBOOK_CARGO}" build \
+            --manifest-path "${COOKBOOK_SOURCE}/${PACKAGE_PATH}/Cargo.toml" \
+            --example "${example}" \
+            --release \
+            --add-your-flag-here
+        mkdir -pv "${COOKBOOK_STAGE}/usr/bin"
+        cp -v \
+            "target/${TARGET}/${build_type}/examples/${example}" \
+            "${COOKBOOK_STAGE}/usr/bin/${recipe}_${example}"
+    done
+```
+
+(Replace the `example1` item and others with the example names, if the program has only one example you can remove the `example2` item)
 
 #### Rename binaries
 
