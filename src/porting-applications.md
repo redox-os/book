@@ -557,6 +557,8 @@ But some programs don't have the `[[bin]]` and `[[lib]]` data types, for these c
 - The file named `main.rs` contains the program executable code.
 - The file named `lib.rs` contains the library object code (ignore it).
 
+(Some Rust programs use Cargo packages instead of Cargo examples for examples, to discover that see if the "examples" folder has `.rs` files (Cargo examples) or folders with `Cargo.toml` files inside (Cargo packages) )
+
 #### Cargo packages command example
 
 This command is used for Rust programs that use package folders inside the repository for compilation, you need to use the name on the `name` field below the `[package]` section of the `Cargo.toml` file inside the package folder (generally using the same name of the program).
