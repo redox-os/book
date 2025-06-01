@@ -187,7 +187,7 @@ The Cookbook have templates to avoid custom commands for cross-compilation, but 
 
 ### Cross Compiler
 
-Cookbook use Rust/GCC forks to do cross-compilation of recipes (programs) with `relibc` to any supported CPU architecture, you can check our cross-compilers on GitLab ([GCC](https://gitlab.redox-os.org/redox-os/gcc), [LLVM](https://gitlab.redox-os.org/redox-os/llvm-project), [Rust](https://gitlab.redox-os.org/redox-os/rust)) and [build server](https://static.redox-os.org/toolchain/).
+Cookbook use Rust/GCC forks to do cross-compilation of recipes (programs) with `relibc` to any supported CPU architecture, you can check our cross-compilers on GitLab ([GCC](https://gitlab.redox-os.org/redox-os/gcc), [LLVM](https://gitlab.redox-os.org/redox-os/llvm-project), [Rust](https://gitlab.redox-os.org/redox-os/rust) and [build server](https://static.redox-os.org/toolchain/)).
 
 ### Cross Compilation
 
