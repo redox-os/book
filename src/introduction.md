@@ -4,7 +4,7 @@
 
 This is the **Redox OS** book, which will go through (almost) everything about Redox: design, philosophy, how it works, how you can contribute, how to deploy Redox, and much more.
 
-*Please note that this book is work-in-progress.*
+**Please keep in mind that this book is work-in-progress and sometimes can be outdated, any help to improve it is important.**
 
 If you want to skip straight to trying out Redox, see the [Getting started](./getting-started.md) page.
 
