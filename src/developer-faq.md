@@ -17,6 +17,8 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
     - [How can I increase the filesystem size of my QEMU image?](#how-can-i-increase-the-filesystem-size-of-my-qemu-image)
     - [How can I change the CPU architecture of my build system?](#how-can-i-change-the-cpu-architecture-of-my-build-system)
     - [I only made a small change to my program. What's the quickest way to test it in QEMU?](#i-only-made-a-small-change-to-my-program-whats-the-quickest-way-to-test-it-in-qemu)
+    - [How can I skip building all cookbook recipes?](#how-can-i-skip-building-all-cookbook-recipes)
+    - [How can I skip building all cookbook recipes except a specific recipe?](#how-can-i-skip-building-all-cookbook-recipes-except-a-specific-recipe)
     - [How can I install the packages needed by recipes without a new download of the build system?](#how-can-i-install-the-packages-needed-by-recipes-without-a-new-download-of-the-build-system)
     - [How can I use the packages from the CI server on my build system?](#how-can-i-use-the-packages-from-the-ci-server-on-my-build-system)
     - [How can I cross-compile to ARM from a x86-64 computer?](#how-can-i-cross-compile-to-arm-from-a-x86-64-computer)
@@ -131,10 +133,36 @@ make r.recipe-name image qemu
 
 ### How can I install the packages needed by recipes without a new download of the build system?
 
-- Download the `bootstrap.sh` script and run:
+- Download the [`native_bootstrap.sh`](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/native_bootstrap.sh) script and run:
 
 ```sh
-./bootstrap.sh -d
+./native_bootstrap.sh -d
+```
+
+### How can I skip building all cookbook recipes?
+
+- Insert the `REPO_BINARY=1` environment variable to your `.config` file, it will download precompiled cookbook binaries from [the CI server](https://static.redox-os.org/pkg/) if available.
+
+### How can I skip building all cookbook recipes except a specific recipe?
+
+- After inserting the `REPO_BINARY=1` environment variable to your `.config` file, go to your Cookbook configuration and add the local variant of the recipe.
+
+```sh
+nano config/your-cpu-arch/your-config.toml
+```
+
+```toml
+[packages]
+...
+recipe-name = "local"
+...
+```
+
+- Make sure to build the recipe before rebuilding the image.
+
+```sh
+make r.recipe-name
+make rebuild
 ```
 
 ### How can I use the packages from the CI server on my build system?
