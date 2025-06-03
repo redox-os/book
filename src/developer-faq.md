@@ -154,7 +154,7 @@ nano config/your-cpu-arch/your-config.toml
 ```toml
 [packages]
 ...
-recipe-name = "local"
+recipe-name = "source"
 ...
 ```
 
