@@ -481,6 +481,8 @@ make pull rebuild
 
 If the `make pull` command download new commits of the `relibc` submodule, you will need to run the commands of the [Update relibc](#update-relibc) section.
 
+(The Podman container is updated automatically if upstream add new packages to the Containerfile, but you can also force the container image to be updated with the `make container_clean` command)
+
 ## Update Relibc
 
 An outdated relibc copy can contain bugs (already fixed on recent commits) or missing APIs, to update the relibc sources and build it, run:
