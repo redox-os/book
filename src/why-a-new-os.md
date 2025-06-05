@@ -30,7 +30,7 @@ Most kernels, other than some real-time operating systems, use an event-handler 
 
 In Redox, drivers and many system services can run in user-mode, similar to user programs, and the system can restrict them so they can only access the resources that they require for their designated purpose. If a driver fails or panics, it can be ignored or restarted with no impact on the rest of the system. A misbehaving piece of hardware might impact system performance or cause the loss of a service, but the kernel will continue to function and to provide whatever services remain available.
 
-Thus Redox is an unique opportunity to show the microkernel potential for the mainstream operating systems universe.
+Thus Redox is a unique opportunity to show the microkernel potential for the mainstream operating systems universe.
 
 ### Benefits
 
