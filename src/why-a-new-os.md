@@ -50,6 +50,10 @@ The following items summarize the microkernel benefits:
 
   Since most of the system components are in userspace they can be restarted/updated on-the-fly, reducing the downtime of servers a lot.
 
+- More stable and secure
+
+The system is more stable and secure because the kernel is much more simple (contain a very small amount of code), reducing the severity and impact of bugs.
+
 - Easy to develop and debug
 
   Most of the system components run in userspace, simplifying the testing and debugging.
