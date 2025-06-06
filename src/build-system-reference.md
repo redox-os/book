@@ -231,6 +231,8 @@ scripts/category.sh -x category-name
 
 Where `x` is your `make` option, it can be `f`, `r`, `c`, `u`, `cr`, `ucr`, `uc` or `ucf`
 
+(If you are using Podman you need to run `make container_shell` command before this script to avoid a very slow execution, once the script finish the operation run the `exit` command)
+
 ### Include Recipes
 
 Create a list with `recipe-name = {} #TODO` for quick testing of WIP recipes.

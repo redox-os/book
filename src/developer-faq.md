@@ -5,30 +5,31 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
 (If all else fails, join us on [Chat](./chat.md))
 
 - [General Questions](#general-questions)
+    - [Why does Redox have unsafe Rust code?](#why-does-redox-have-unsafe-rust-code)
+    - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
+    - [Why does Redox do cross-compilation?](#why-does-redox-do-cross-compilation)
+    - [How can I port a program?](#how-can-i-port-a-program)
+    - [How can I write a driver?](#how-can-i-write-a-driver)
+    - [How can I debug?](#how-can-i-debug)
+    - [Does Redox support OpenGL and Vulkan?](#does-redox-support-opengl-and-vulkan)
+- [Build System Questions](#build-system-questions)
     - [What is the correct way to update the build system?](#what-is-the-correct-way-to-update-the-build-system)
     - [How can I verify if my build system is up-to-date?](#how-can-i-verify-if-my-build-system-is-up-to-date)
+    - [What is a recipe?](#what-is-a-recipe)
     - [When I should rebuild the build system or recipes from scratch?](#when-i-should-rebuild-the-build-system-or-recipes-from-scratch)
     - [How can I test my changes on real hardware?](#how-can-i-test-my-changes-on-real-hardware)
-    - [How can I write a driver?](#how-can-i-write-a-driver)
-    - [How can I port a program?](#how-can-i-port-a-program)
-    - [How can I debug?](#how-can-i-debug)
-    - [How can I insert files to the QEMU image?](#how-can-i-insert-files-to-the-qemu-image)
-    - [How can I change my build variant?](#how-can-i-change-my-build-variant)
+    - [How can I insert files to the Redox image?](#how-can-i-insert-files-to-the-redox-image)
+    - [How can I change my Redox variant?](#how-can-i-change-my-redox-variant)
     - [How can I increase the filesystem size of my QEMU image?](#how-can-i-increase-the-filesystem-size-of-my-qemu-image)
     - [How can I change the CPU architecture of my build system?](#how-can-i-change-the-cpu-architecture-of-my-build-system)
+    - [How can I cross-compile to ARM64 from a x86-64 computer?](#how-can-i-cross-compile-to-arm64-from-a-x86-64-computer)
+    - [How can I use a recipe in my build system?](#how-can-i-use-a-recipe-in-my-build-system)
     - [I only made a small change to my program. What's the quickest way to test it in QEMU?](#i-only-made-a-small-change-to-my-program-whats-the-quickest-way-to-test-it-in-qemu)
     - [How can I skip building all recipes?](#how-can-i-skip-building-all-recipes)
     - [How can I skip building all recipes except a specific recipe?](#how-can-i-skip-building-all-recipes-except-a-specific-recipe)
     - [How can I install the packages needed by recipes without a new download of the build system?](#how-can-i-install-the-packages-needed-by-recipes-without-a-new-download-of-the-build-system)
-    - [How can I use the packages from the CI server on my build system?](#how-can-i-use-the-packages-from-the-ci-server-on-my-build-system)
-    - [How can I cross-compile to ARM from a x86-64 computer?](#how-can-i-cross-compile-to-arm-from-a-x86-64-computer)
     - [How can I build the toolchain from source?](#how-can-i-build-the-toolchain-from-source)
-    - [Why does Redox have unsafe Rust code?](#why-does-redox-have-unsafe-rust-code)
-    - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
-    - [Why does Redox do cross-compilation?](#why-does-redox-do-cross-compilation)
-    - [Does Redox support OpenGL and Vulkan?](#does-redox-support-opengl-and-vulkan)
 - [Porting Questions](#porting-questions)
-    - [What is a recipe?](#what-is-a-recipe)
     - [How to determine if some program is portable to Redox?](#how-to-determine-if-some-program-is-portable-to-redox)
     - [How to determine the dependencies of some program?](#how-to-determine-the-dependencies-of-some-program)
     - [How can I configure the build system of the recipe?](#how-can-i-configure-the-build-system-of-the-recipe)
@@ -39,32 +40,28 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
     - [When does a regular program need to use a scheme?](#when-does-a-regular-program-need-to-use-a-scheme)
     - [When would I write a program to implement a scheme?](#when-would-i-write-a-program-to-implement-a-scheme)
     - [How do I use a scheme for sandboxing a program?](#how-do-i-use-a-scheme-for-sandboxing-a-program)
-    - [How can I see all user-space schemes?](#how-can-i-see-all-user-space-schemes)
+    - [How can I see all userspace schemes?](#how-can-i-see-all-userspace-schemes)
     - [How can I see all kernel schemes?](#how-can-i-see-all-kernel-schemes)
-    - [What is the difference between kernel and user-space schemes?](#what-is-the-difference-between-kernel-and-user-space-schemes)
-- [User-Space Questions](#user-space-questions)
-    - [How does a user-space daemon provide file-like services?](#how-does-a-user-space-daemon-provide-file-like-services)
-- [Kernel Questions](#kernel-questions)
-    - [Which CPU architectures the kernel support?](#which-cpu-architectures-the-kernel-support)
-    - [How the system calls are used by user-space daemons?](#how-the-system-calls-are-used-by-user-space-daemons)
+    - [What is the difference between kernel and userspace schemes?](#what-is-the-difference-between-kernel-and-userspace-schemes)
+    - [How does a userspace daemon provide file-like services?](#how-does-a-userspace-daemon-provide-file-like-services)
+    - [How the system calls are used by userspace daemons?](#how-the-system-calls-are-used-by-userspace-daemons)
 - [GitLab Questions](#gitlab-questions)
-    - [I have a project/program with breaking changes but my merge request was not accepted, can I maintain the project in a separated repository on the Redox GitLab?](#i-have-a-projectprogram-with-breaking-changes-but-my-merge-request-was-not-accepted-can-i-maintain-the-project-in-a-separated-repository-on-the-redox-gitlab)
     - [I have a merge request with many commits, should I squash them after merge?](#i-have-a-merge-request-with-many-commits-should-i-squash-them-after-merge)
     - [Should I delete my branch after merge?](#should-i-delete-my-branch-after-merge)
     - [How can I have an anonymous account?](#how-can-i-have-an-anonymous-account)
 - [Troubleshooting Questions](#troubleshooting-questions)
     - [Scripts](#scripts)
-        - [I can't download the bootstrap scripts, how can I fix this?](#i-cant-download-the-bootstrap-scripts-how-can-i-fix-this)
+        - [I can't download the build system bootstrap scripts, how can I fix this?](#i-cant-download-the-build-system-bootstrap-scripts-how-can-i-fix-this)
         - [I tried to run the "podman_bootstrap.sh" and "native_bootstrap.sh" scripts but got an error, how to fix this?](#i-tried-to-run-the-podman_bootstrapsh-and-native_bootstrapsh-scripts-but-got-an-error-how-to-fix-this)
     - [Build System](#build-system)
-        - [I called "make all" but it show a "rustup can't be found" message, how can I fix this?](#i-called-make-all-but-it-show-a-rustup-cant-be-found-message-how-can-i-fix-this)
+        - [I ran "make all" but it show a "rustup can't be found" message, how can I fix this?](#i-ran-make-all-but-it-show-a-rustup-cant-be-found-message-how-can-i-fix-this)
         - [I tried all troubleshooting methods but my build system is still broken, how can I fix that?](#i-tried-all-troubleshooting-methods-but-my-build-system-is-still-broken-how-can-i-fix-that)
     - [Recipes](#recipes)
         - [I had a compilation error with a recipe, how can I fix that?](#i-had-a-compilation-error-with-a-recipe-how-can-i-fix-that)
         - [I tried all methods of the "Troubleshooting the Build" page and my recipe doesn't build, what can I do?](#i-tried-all-methods-of-the-troubleshooting-the-build-page-and-my-recipe-doesnt-build-what-can-i-do)
         - [When I run "make r.recipe" I get a syntax error, how can I fix that?](#when-i-run-make-rrecipe-i-get-a-syntax-error-how-can-i-fix-that)
         - [When I run "cargo update" on some recipe source it call Rustup to install other Rust toolchain version, how can I fix that?](#when-i-run-cargo-update-on-some-recipe-source-it-call-rustup-to-install-other-rust-toolchain-version-how-can-i-fix-that)
-        - [I added the dependency of my program on the "recipe.toml" but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?](#i-added-the-dependency-of-my-program-on-the-recipetoml-but-the-program-build-system-doesnt-detect-it-then-i-installed-the-program-dependency-on-my-linux-distribution-and-it-detected-why)
+        - [I added the dependency of my program on the "recipe.toml" file but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?](#i-added-the-dependency-of-my-program-on-the-recipetoml-file-but-the-program-build-system-doesnt-detect-it-then-i-installed-the-program-dependency-on-my-linux-distribution-and-it-detected-why)
     - [QEMU](#qemu)
         - [How can I kill the QEMU process if Redox freezes or get a kernel panic?](#how-can-i-kill-the-qemu-process-if-redox-freezes-or-get-a-kernel-panic)
     - [Real Hardware](#real-hardware)
@@ -72,6 +69,68 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
         - [Some driver is not working with my hardware, what can I do?](#some-driver-is-not-working-with-my-hardware-what-can-i-do)
 
 ## General Questions
+
+### Why does Redox have unsafe Rust code?
+
+It is an important goal for Redox to minimize the amount of `unsafe` Rust code.
+
+In some cases we must use `unsafe`, for example at certain points in the kernel and drivers, these unsafe parts are generally wrapped with a safe interface.
+
+These are the cases where unsafe Rust is mandatory:
+
+- Implementing a foreign function interface (FFI) (for example the relibc API)
+- Working with system calls directly (You should use Rust libstd library or relibc instead)
+- Creating or managing processes and threads
+- Working with memory mapping and stack allocation
+- Working with hardware devices
+
+If you want to use unsafe Rust code on Redox anywhere other than interfacing with system calls, ask for Jeremy Soller's approval before.
+
+### Why does Redox have Assembly code?
+
+[Assembly](https://en.wikipedia.org/wiki/Assembly_language) is the core of low-level because it's a CPU-specific language and deal with things that aren't possible or feasible to do in high-level languages like Rust.
+
+Sometimes required or preferred for accessing hardware, or for carefully optimized hot spots.
+
+Reasons to use Assembly instead of Rust:
+
+- Deal with low-level things (those that can't be handled by Rust)
+- Writing constant time algorithms for cryptography
+- Optimizations
+
+Places where Assembly is used:
+
+- `kernel` - Interrupt and system call entry routines, context switching, special CPU instructions and registers.
+- `drivers` - Port IO need special instructions (x86-64).
+- `relibc` - Some parts of the C runtime.
+
+### Why does Redox do cross-compilation?
+
+Read some of the reasons below:
+
+- When developing a new operating system you can't build programs inside of it because the system interfaces are premature. Thus you build the programs from your host system to the new OS and transfer the binaries to the filesystem of the new OS.
+- Cross-compilation reduces the porting requirements because you don't need to support the compiler of the program's programming language, the program's build system and build tools. You just need to port the programming language standard library (if used), program libraries or the program source code (dependency-free).
+- Some developers prefer to develop from other operating systems like Linux, MacOSX or FreeBSD, the same applies for Linux where some developers write code on MacOSX and test their kernel builds in a virtual machine (mostly QEMU) or real hardware.
+
+(To run interpreted programs and scripts the programming language's interpreter needs to be ported to Redox)
+
+### How can I port a program?
+
+- Read the [Porting Applications using Recipes](./porting-applications.md) page.
+
+### How can I write a driver?
+
+- Read the [drivers repository README](https://gitlab.redox-os.org/redox-os/drivers/-/blob/master/README.md).
+
+### How can I debug?
+
+- Read the [Debug Methods](./troubleshooting.md#debug-methods) section.
+
+### Does Redox support OpenGL and Vulkan?
+
+- Read the [Software Rendering](./graphics-windowing.md#software-rendering) section.
+
+## Build System Questions
 
 ### What is the correct way to update the build system?
 
@@ -81,37 +140,29 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
 
 - After the `make pull` command, run the `git rev-parse HEAD` command on the build system folders to see if they match the latest commit hash on GitLab.
 
+### What is a recipe?
+
+- A recipe is a software port on Redox.
+
 ### When I should rebuild the build system or recipes from scratch?
 
 Sometimes run the `make pull rebuild` command is not enough to update the build system and recipes because of breaking changes, learn what to do on the following changes:
 
-- New relibc functions and fixes (run the `make prefix clean all` command after the `touch relibc` command)
+- New relibc functions and fixes (run the `make prefix clean all` command after the `touch relibc` command to update relibc in all recipes or the `make prefix cr.recipe-name` command to update one recipe)
 - Dependency changes on recipes (run the `make cr.recipe-name` command)
 - Configuration changes on recipes (run the `make cr.recipe-name` command)
 - Source code changes on recipes (run the `make ucr.recipe-name` command)
-- Changes on the location of the build system artifacts (if the previous location of the build artifacts had contents, you need to download the build system again to avoid confusion or conflicts)
+- Changes on the location of the build system artifacts (run the `make clean pull all` command to not cause conflicts with the previous artifacts locations, if the previous location of the build artifacts had contents you can try to fix manually or download the build system again to avoid confusion or fix hard conflicts)
 
 ### How can I test my changes on real hardware?
 
 - Read the [Testing on Real Hardware](./coding-and-building.md#testing-on-real-hardware) section.
 
-### How can I write a driver?
+### How can I insert files to the Redox image?
 
-- Read the [drivers repository README](https://gitlab.redox-os.org/redox-os/drivers/-/blob/master/README.md).
+- If you use a [recipe](./coding-and-building.md#insert-files-on-the-qemu-image-using-a-recipe) your changes will persist after the `make image` command, but you can also [mount](./coding-and-building.md#insert-files-on-the-qemu-image) the Redox filesystem to insert them directly.
 
-### How can I port a program?
-
-- Read the [Porting Applications using Recipes](./porting-applications.md) page.
-
-### How can I debug?
-
-- Read the [Debug Methods](./troubleshooting.md#debug-methods) section.
-
-### How can I insert files to the QEMU image?
-
-- If you use a [recipe](./coding-and-building.md#insert-files-on-the-qemu-image-using-a-recipe) your changes will persist after a `make image` but you can also [mount](./coding-and-building.md#insert-files-on-the-qemu-image) the Redox filesystem.
-
-### How can I change my build variant?
+### How can I change my Redox variant?
 
 - Insert the `CONFIG_NAME?=your-config-name` environment variable to your `.config` file, read the [config](./configuration-settings.md#config) section for more details.
 
@@ -121,22 +172,45 @@ Sometimes run the `make pull rebuild` command is not enough to update the build 
 
 ### How can I change the CPU architecture of my build system?
 
-- Insert the `ARCH?=your-arch-code` environment variable on your `.config` file and run `make all`, read the [config](./configuration-settings.md#config) section for more details.
+- Insert the `ARCH?=your-cpu-arch` environment variable on your `.config` file and run the `make all` command, read the [config](./configuration-settings.md#config) section for more details.
+
+### How can I cross-compile to ARM64 from a x86-64 computer?
+
+- Insert the `ARCH?=aarch64` environment variable on your `.config` file and run `make all`.
+
+### How can I use a recipe in my build system?
+
+- Go to your filesystem configuration and add the recipe:
+
+```sh
+nano config/your-cpu-arch/your-config.toml
+```
+
+```toml
+[packages]
+...
+recipe-name = {}
+...
+```
+
+- Build the recipe
+
+```sh
+make r.recipe-name
+```
+
+- Rebuild the Redox image to add the recipe
+
+```sh
+make image
+```
 
 ### I only made a small change to my program. What's the quickest way to test it in QEMU?
 
-- If you already added the program recipe to your Cookbook configuration file, run:
+- Build the recipe, image and launch QEMU:
 
 ```sh
 make r.recipe-name image qemu
-```
-
-### How can I install the packages needed by recipes without a new download of the build system?
-
-- Download the [`native_bootstrap.sh`](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/native_bootstrap.sh) script and run:
-
-```sh
-./native_bootstrap.sh -d
 ```
 
 ### How can I skip building all recipes?
@@ -145,7 +219,7 @@ make r.recipe-name image qemu
 
 ### How can I skip building all recipes except a specific recipe?
 
-- After inserting the `REPO_BINARY=1` environment variable to your `.config` file, go to your Cookbook configuration and add the local variant of the recipe.
+- After inserting the `REPO_BINARY=1` environment variable to your `.config` file, go to your Cookbook configuration and add the source-based variant of the recipe.
 
 ```sh
 nano config/your-cpu-arch/your-config.toml
@@ -164,30 +238,21 @@ recipe-name = "source"
 make r.recipe-name
 ```
 
-```sh
-make rebuild
-```
-
-### How can I use the packages from the CI server on my build system?
-
-- Go to your Cookbook configuration and add the binary variant of the recipe.
+- Rebuild the Redox image to install the recipe package
 
 ```sh
-nano config/your-cpu-arch/your-config.toml
+make image
 ```
 
-```toml
-[packages]
-...
-recipe-name = "binary"
-...
+### How can I install the packages needed by recipes without a new download of the build system?
+
+- Download the [`native_bootstrap.sh`](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/native_bootstrap.sh) script and run:
+
+```sh
+./native_bootstrap.sh -d
 ```
 
-- Run `make rebuild` to download/install the package.
-
-### How can I cross-compile to ARM from a x86-64 computer?
-
-- Insert the `ARCH?=aarch64` environment variable on your `.config` file and run `make all`.
+(If you are using Podman this process is automatic)
 
 ### How can I build the toolchain from source?
 
@@ -217,69 +282,16 @@ make prefix
 make clean all
 ```
 
-### Why does Redox have unsafe Rust code?
-
-It is an important goal for Redox to minimize the amount of `unsafe` Rust code.
-
-In some cases we must use `unsafe`, for example at certain points in the kernel and drivers, these unsafe parts are generally wrapped with a safe interface.
-
-These are the cases where unsafe Rust is mandatory:
-
-- Implementing a foreign function interface (FFI) (for example the relibc API)
-- Working with system calls directly (You should use Rust `std::` library or relibc instead)
-- Creating or managing processes and threads
-- Working with memory mapping and stack allocation
-- Working with hardware devices
-
-If you want to use unsafe Rust code on Redox anywhere other than interfacing with system calls, ask for Jeremy Soller's approval before.
-
-### Why does Redox have Assembly code?
-
-[Assembly](https://en.wikipedia.org/wiki/Assembly_language) is the core of low-level because it's a CPU-specific language and deal with things that aren't possible or feasible to do in high-level languages like Rust.
-
-Sometimes required or preferred for accessing hardware, or for carefully optimized hot spots.
-
-Reasons to use Assembly instead of Rust:
-
-- Deal with low-level things (those that can't be handled by Rust)
-- Writing constant time algorithms for cryptography
-- Optimizations
-
-Places where Assembly is used:
-
-- `kernel` - Interrupt and system call entry routines, context switching, special CPU instructions and registers.
-- `drivers` - Port IO need special instructions (x86_64).
-- `relibc` - Some parts of the C runtime.
-
-### Why does Redox do cross-compilation?
-
-Read some of the reasons below:
-
-- When developing a new operating system you can't build programs inside of it because the system interfaces are premature. Thus you build the programs on your host system and transfer the binaries to the filesystem of the new OS
-- Cross-compilation reduces the porting requirements because you don't need to support the compiler of the program's programming language, the program's build system and build tools. You just need to port the programming language standard library, program libraries or the program source code (dependency-free)
-- Some developers prefer to develop from other operating systems like Linux or MacOSX, the same applies for Linux where some developers write code on MacOSX and test their kernel builds in a virtual machine (mostly QEMU) or real hardware
-
-(Interpreted programs and scripts require the programming language interpreter to work on Redox)
-
-### Does Redox support OpenGL and Vulkan?
-
-- Read the [GPUs](./graphics-windowing.md#gpus) section.
-
 ## Porting Questions
-
-### What is a recipe?
-
-- A recipe is a software port on Redox, it does cross-compilation by default if you use Cookbook [templates](./porting-applications.md#templates).
 
 ### How to determine if some program is portable to Redox?
 
 - The source code of the program must be available
 - The program should use cross-platform libraries (if not, more porting effort is required)
 - The program's build system should support cross-compilation (if not, more porting effort is required)
-- The program shouldn't directly use the APIs from the Linux kernel on its code (if not, more porting effort is required)
-- The program shoudn't use X11 or Wayland directly on its code (if not, more porting effort is required)
+- The program shouldn't directly use the Linux kernel API on its code (if not, more porting effort is required)
 
-Some APIs of the Linux kernel can be ported, while others not because they require a complete Linux kernel (thus the drivers and filesystems code require reverse-engineering to be ported to Redox).
+Some APIs of the Linux kernel can be ported, while others not because they require a complete Linux kernel.
 
 ### How to determine the dependencies of some program?
 
@@ -295,81 +307,67 @@ Some APIs of the Linux kernel can be ported, while others not because they requi
 
 ### Which are the upstream requirements to accept my recipe?
 
-- Read the [Package Policy](./porting-applications.md#package-policy) section.
+- Read the [Package Policy](https://gitlab.redox-os.org/redox-os/cookbook#package-policy) section.
 
 ## Scheme Questions
 
 ### What is a scheme?
 
-- Read the [Schemes and Resources](./schemes-resources.md) page.
+Read the [Schemes and Resources](./schemes-resources.md) page.
 
 ### When does a regular program need to use a scheme?
 
-- Most schemes are used internally by the system or by relibc, you don't need to access them directly. One exception is the pseudoterminal for your command window, which is accessed using the value of `$TTY`, which might have a value of e.g. "pty:18". Some low-level graphics programming might require you to access your display, which might have a value of e.g. "display:3".
+Most schemes are used internally by the system or by relibc, you don't need to access them directly. One exception is the pseudoterminal for your command window, which is accessed using the value of `$TTY`, which might have a value of e.g. `pty:18`. Some low-level graphics programming might require you to access your display, which might have a value of e.g. `display:3`
 
 ### When would I write a program to implement a scheme?
 
-- If you are implementing a service daemon or a device driver, you will need to implement a scheme.
+If you are implementing a service daemon or a device driver, you will need to implement a scheme.
 
 ### How do I use a scheme for sandboxing a program?
 
-- The [contain](https://gitlab.redox-os.org/redox-os/contain) program provides a partial implementation of sandboxing using schemes and namespaces.
+The [contain](https://gitlab.redox-os.org/redox-os/contain) program provides a partial implementation of sandboxing using schemes and namespaces.
 
-### How can I see all user-space schemes?
+### How can I see all userspace schemes?
 
-- Read the [Userspace Schemes](./schemes.md#userspace-schemes) section.
+Read the [Userspace Schemes](./schemes.md#userspace-schemes) section.
 
 ### How can I see all kernel schemes?
 
-- Read the [Kernel Schemes](./schemes.md#kernel-schemes) section.
+Read the [Kernel Schemes](./schemes.md#kernel-schemes) section.
 
-### What is the difference between kernel and user-space schemes?
+### What is the difference between kernel and userspace schemes?
 
-- Read the [Kernel vs Userspace Schemes](./schemes.md#kernel-vs-userspace-schemes) section.
+Read the [Kernel vs Userspace Schemes](./schemes.md#kernel-vs-userspace-schemes) section.
 
-## User-Space Questions
+### How does a userspace daemon provide file-like services?
 
-### How does a user-space daemon provide file-like services?
+When a regular program calls `open`, `read`, `write`, etc. on a file-like resource, the kernel translates that to a message of type `syscall::data::Packet`, describing the file operation, and makes it available for reading on the appropriate daemon's scheme file descriptor. See the [Providing A Scheme](./scheme-operation.md#providing-a-scheme) section for more information.
 
-- When a regular program calls `open`, `read`, `write`, etc. on a file-like resource, the kernel translates that to a message of type `syscall::data::Packet`, describing the file operation, and makes it available for reading on the appropriate daemon's scheme file descriptor. See the [Providing A Scheme](./scheme-operation.md#providing-a-scheme) section for more information.
+### How the system calls are used by userspace daemons?
 
-## Kernel Questions
-
-### Which CPU architectures the kernel support?
-
-- i686 with limitations
-- x86_64
-- ARM64 with limitations
-
-### How the system calls are used by user-space daemons?
-
-- All user-space daemons use the system calls through [relibc](https://gitlab.redox-os.org/redox-os/relibc) like any normal program.
+All userspace daemons use the system calls through [relibc](https://gitlab.redox-os.org/redox-os/relibc) like any normal program.
 
 ## GitLab Questions
 
-### I have a project/program with breaking changes but my merge request was not accepted, can I maintain the project in a separated repository on the Redox GitLab?
-
-- Yes.
-
 ### I have a merge request with many commits, should I squash them after merge?
 
-- Yes.
+Yes.
 
 ### Should I delete my branch after merge?
 
-- Yes.
+Yes.
 
 ### How can I have an anonymous account?
 
-- During the account creation process you should add a fake name on the "First Name" and "Last Name" fields and change it later after your account approval (single name field is supported).
+During the account creation process you should add a fake name on the "First Name" and "Last Name" fields and change it later after your account approval (single name field is supported).
 
 ## Troubleshooting Questions
 
 ### Scripts
 
-#### I can't download the bootstrap scripts, how can I fix this?
+#### I can't download the build system bootstrap scripts, how can I fix this?
 
-- Verify if you have `curl` installed or download the script from your web browser.
+Verify if you have `curl` installed or download the script from your web browser.
 
 #### I tried to run the "podman_bootstrap.sh" and "native_bootstrap.sh" scripts but got an error, how to fix this?
 
@@ -379,7 +377,7 @@ Some APIs of the Linux kernel can be ported, while others not because they requi
 
 ### Build System
 
-#### I called "make all" but it show a "rustup can't be found" message, how can I fix this?
+#### I ran "make all" but it show a "rustup can't be found" message, how can I fix this?
 
 - Run this command:
 
@@ -387,27 +385,28 @@ Some APIs of the Linux kernel can be ported, while others not because they requi
 source ~/.cargo/env
 ```
 
-(If you installed Rustup before the first `podman_bootstrap.sh` run, this error doesn't happen)
+(If you installed Rustup before the first `podman_bootstrap.sh` execution, this error doesn't happen)
 
 #### I tried all troubleshooting methods but my build system is still broken, how can I fix that?
 
-- If `make clean pull all` doesn't work, run the `podman_bootstrap.sh` again to download a fresh build system.
+If the `make clean pull all` command doesn't work download a fresh build system or wait for an upstream fix.
 
 ### Recipes
 
 #### I had a compilation error with a recipe, how can I fix that?
 
-- Read the [Solving Compilation Problems](./troubleshooting.md#solving-compilation-problems) section.
+Read the [Solving Compilation Problems](./troubleshooting.md#solving-compilation-problems) section.
 
-#### I tried all methods of the "Troubleshooting the Build" page and my recipe doesn't build, what can I do?
+#### I tried all methods of the "Troubleshooting the Build" page and my recipe doesn't build, what it can be?
 
-- It happens because your system has an environment problem or missing packages, remove the recipe from your build configuration file to workaround this.
-
-All recipes follow this syntax `recipe = {}` below the `[packages]` section, the configuration files is placed at `config/your-cpu-arch`.
+- Missing dependencies
+- Environment leakage (when the recipe build system use the Linux environment instead of Redox environment)
+- Misconfigured cross-compilation
+- The recipe needs to be ported to Redox
 
 #### When I run "make r.recipe" I get a syntax error, how can I fix that?
 
-- Verify if your `recipe.toml` has some typo.
+Verify if your `recipe.toml` file has some typo.
 
 #### When I run "cargo update" on some recipe source it call Rustup to install other Rust toolchain version, how can I fix that?
 
@@ -415,7 +414,7 @@ It happens because Cargo is not using the Redox fork of the Rust compiler, to fi
 
 It will import the Redox Makefile environment variables to your active shell (it already does that when you run other `make` commands from the Redox build system root).
 
-#### I added the dependency of my program on the "recipe.toml" but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?
+#### I added the dependency of my program on the "recipe.toml" file but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?
 
 Read the [Environment Leakage](./troubleshooting.md#environment-leakage) section.
 
@@ -423,7 +422,7 @@ Read the [Environment Leakage](./troubleshooting.md#environment-leakage) section
 
 #### How can I kill the QEMU process if Redox freezes or get a kernel panic?
 
-- Read the [Kill A Frozen Redox VM](./troubleshooting.md#kill-a-frozen-redox-vm) section.
+Read the [Kill A Frozen Redox VM](./troubleshooting.md#kill-a-frozen-redox-vm) section.
 
 ### Real Hardware
 
