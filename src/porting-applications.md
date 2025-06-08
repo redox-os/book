@@ -54,8 +54,8 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
     - [Configuration](#configuration)
         - [Arch Linux and AUR](#arch-linux-and-aur)
         - [Gentoo](#gentoo)
-        - [FreeBSD](#freebsd)
     - [Testing](#testing)
+- [Feature Flags](#feature-flags)
 - [Building/Testing The Program](#buildingtesting-the-program)
 - [Update crates](#update-crates)
     - [One or more crates](#one-or-more-crates)
@@ -1150,14 +1150,6 @@ The complex classification of Gentoo allow the packager to easily make a minimum
 
 Thus the best approach is to know the minimum necessary to make the program work on Redox and expand from that.
 
-#### FreeBSD
-
-FreeBSD Ports is an important reference to find feature flags for C/C++ programs and libraries, you can see all feature flags of the software by reading the Makefile of the port.
-
-- [FreeBSD Ports GitHub Mirror](https://github.com/freebsd/freebsd-ports)
-
-Use the "Go to file" button to search for the software name.
-
 ### Testing
 
 - Install the packages for your Linux distribution on the "Build Instructions" of the software, if you don't have the knowledge to separate build tools from library dependencies see if it builds on your system first (if packages for your distribution is not available, search for Debian/Ubuntu equivalents).
@@ -1167,6 +1159,18 @@ Use the "Go to file" button to search for the software name.
 If you run `make r.recipe-name` and it builds successfully, feel free to add the build tools on the [redox-base-containerfile](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman/redox-base-containerfile) configuration file (for Podman builds) or the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script (for native builds).
 
 The `redox-base-containerfile` and `bootstrap.sh` script covers the build tools required by recipes on the [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml) filesystem configuration.
+
+## Feature Flags
+
+The program/library build systems offer flags to enable/disable features, it will increase the chance to make them work on Redox by disabling Linux-specific or unsupported features/libraries.
+
+The FreeBSD port Makefiles are the best reference for feature flags to Redox as they tend to disable Linux-specific features and are adapted to cross-compilation, increasing the program/library compatiblity with non-Linux systems.
+
+(You need to disable the program/library's build system tests to make cross-compilation work)
+
+- [FreeBSD Ports GitHub Mirror](https://github.com/freebsd/freebsd-ports)
+
+(Use the "Go to file" button to search for the software name)
 
 ## Building/Testing The Program
 
