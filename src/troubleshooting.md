@@ -347,19 +347,16 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 
 ## Debug Methods
 
-- Use the `dmesg` command to read the kernel and user-space daemons log.
-
-- You can start the QEMU with the `make qemu gpu=no` command to easily copy the terminal text.
-
+- Read [this](https://en.wikipedia.org/wiki/Debugging#Techniques) Wikipedia section to learn about debugging techniques
+- Use the `dmesg` command to read the kernel and user-space daemons log
+- You can start the QEMU with the `make qemu gpu=no` command to easily copy the terminal text
+- You can write to the `debug:` scheme, which will output on the console, but you must be `root`. This is useful if you are debugging an app where you need to use Orbital but still want to capture messages
+- Currently, the build system strips function names and other symbols from programs, as support for symbols is not implemented on Redox
 - Use the following command for advanced logging:
 
 ```sh
 make some-command 2>&1 | tee file-name.log
 ```
-
-- You can write to the `debug:` scheme, which will output on the console, but you must be `root`. This is useful if you are debugging an app where you need to use Orbital but still want to capture messages.
-
-- Currently, the build system strips function names and other symbols from programs, as support for symbols is not implemented on Redox.
 
 ### Recipes
 
