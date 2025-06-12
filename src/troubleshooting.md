@@ -357,6 +357,8 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 
 - Currently, the build system strips function names and other symbols from programs, as support for symbols is not implemented yet
 
+- To use GDB add the `gdbserver` recipe in your filesystem configuration, run the `make qemu gdb=yes` command in one shell, start the `gdbserver` program on QEMU and run the `make gdb` command in another shell
+
 - Use the following command for advanced logging:
 
 ```sh

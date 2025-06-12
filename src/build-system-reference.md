@@ -151,11 +151,12 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
 ### QEMU/VirtualBox
 
-- `make qemu` - If a `build/harddrive.img` file exists, QEMU will run using that image. If you want to force a rebuild first, use `make rebuild qemu`. Sometimes `make qemu` will detect changes and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`.
+- `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`
+- `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
+- `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
+- `make qemu` - If a `build/harddrive.img` file exists, QEMU will run using that image. If you want to force a rebuild first, use `make rebuild qemu`. Sometimes `make qemu` will detect changes and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`
 - `make qemu gpu=no` - Start QEMU without a GUI (Orbital is disabled).
 - `make qemu gpu=virtio` - Start QEMU with the VirtIO GPU driver.
-- `make qemu kvm=no` - Start QEMU without the Linux KVM acceleration.
-- `make qemu iommu=no` - Start QEMU without IOMMU.
 - `make qemu audio=no` - Disable all sound drivers.
 - `make qemu usb=no` - Disable all USB drivers.
 - `make qemu uefi=yes` - Enable the UEFI boot loader (it supports more screen resolutions).
@@ -163,11 +164,11 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make qemu disk=nvme` - Boot Redox from a NVMe interface (SSD emulation).
 - `make qemu disk=usb` - Boot Redox from a virtual USB device.
 - `make qemu disk=cdrom` - Boot Redox from a virtual CD-ROM disk.
-- `make qemu option1=string option2=string` - Cumulative QEMU options is supported.
-- `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`.
-- `make gdb` - Connects `gdb` to the Redox image in QEMU. Join us on the [chat](./chat.md) if you want to use this.
-- `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
-- `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
+- `make qemu kvm=no` - Start QEMU without the Linux KVM acceleration.
+- `make qemu iommu=no` - Start QEMU without IOMMU.
+- `make qemu gdb=yes` - Start QEMU with GDB support (you need to add the `gdbserver` recipe on your filesystem configuration before, then run the `make gdb` command in another shell)
+- `make gdb` - Connects the GDB from Linux/BSD/MacOSX to the GDB server (gdbserver) on Redox in QEMU.
+- `make qemu option1=value option2=value` - Cumulative QEMU options are supported.
 - `make virtualbox` - The same as `make qemu`, but for VirtualBox (it requires the VirtualBox service to be running, run `systemctl status vboxdrv.service` to verify or `akmods; systemctl restart vboxdrv.service` to enable on systems using systemd).
 
 ## Environment Variables
