@@ -13,7 +13,7 @@ You will be modifying the kernel, but you won't be making extensive changes, so 
 
 Once you have fetched the kernel source into its "source" directory, you should disable the `[source]` section of the kernel recipe, so the build system doesn't try to update the kernel code.
 
-- In the file `cookbook/recipes/core/kernel/source/recipe.toml`, comment out the lines in the source section:
+- In the file `cookbook/recipes/core/kernel/recipe.toml`, comment out the lines in the source section:
 
 ```
 # [source]
