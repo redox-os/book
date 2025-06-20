@@ -86,7 +86,7 @@ it must block or clear the interrupt condition.
 
 Setting up interrupt handling functions,
 keeping track of interrupts, blocking/clearing the condition,
-and signalling the device driver tasks in user space
+and signalling the device driver tasks in userspace
 is handled by the IRQ portion of the kernel.
 Details of [how the kernel handles interrupts](#interrupt-handling-in-the-kernel) are below.
 
@@ -205,7 +205,7 @@ a copy of the information from the system call.
 - other parameters for the system call
 
 Any buffers that have been allocated are mapped in to the system service's memory space
-and the `buf` pointer pointer points to the buffer's virtual address in the system service's 
+and the `buf` pointer points to the buffer's virtual address in the system service's 
 address space.
 As well, the caller's `uid`, `gid` and `pid` are added to the packet.
 
@@ -275,7 +275,7 @@ Most system services are provided as userspace tasks.
 This is the preferred approach -
 one goal of a microkernel operating system
 is to have the smallest amount of code possible in the kernel.
-However, there are some services that are difficult to implement in user space,
+However, there are some services that are hard to implement in userspace,
 because most of the functionality needs to be in the kernel context.
 There are some services that are implemented in the kernel for performance reasons, and may be moved into userspace later.
 
@@ -352,7 +352,7 @@ The "irq" scheme provides an `open/read/write` style interface
 for device drivers to request notification when an interrupt occurs.
 
 A device driver [opens a path that indicates what IRQ](https://gitlab.redox-os.org/redox-os/kernel/-/blob/495c3708f3194aaf0a98c1d38a70a7e306b3ebc4/src/scheme/irq.rs#L208) it is subscribing to.
-The driver receives a file descriptor for the irq path it opened.
+The driver receives a file descriptor for the IRQ path it opened.
 
 The driver can then read from the file descriptor,
 either blocking (if it is using a thread),
@@ -365,7 +365,7 @@ the drivers are built automatically.
 However, there are a few quirks when it comes to drivers.
 
 Redox uses "recipes" to provide instructions on how to build applications and services.
-A recipe is script that tells the build system how to fetch,
+A recipe is a script that tells the build system how to fetch,
 compile and package the drivers.
 Drivers are built in two groups, with slightly different recipes.
 First, the critical drivers are built using the
@@ -379,7 +379,7 @@ The source for the drivers recipe is fetched into the directory
 so you should do all your work in `drivers/source`.
 
 Notice that you must add your driver to the appropriate recipe for it to get built.
-As well, you must add your driver to the config file, either
+As well, you must add your driver to the configuration file, either
 [initfs.toml](https://gitlab.redox-os.org/redox-os/drivers/-/blob/e4ac216fe2ea6b211cc9118223adcfe833026903/initfs.toml) for the `initfs` drivers, or a driver-specific
 [config.toml](https://gitlab.redox-os.org/redox-os/drivers/-/blob/e4ac216fe2ea6b211cc9118223adcfe833026903/net/e1000d/config.toml) for optional drivers.
 
@@ -392,23 +392,23 @@ It may work on other platforms that support Podman.
 When you begin development for Redox,
 start by building Redox using the [Podman build](./podman-build.md).
 
-If you want to use Redox's GitLab server for your git repository,
+If you want to use Redox's GitLab server for your Git repository,
 please [follow the instructions here](./signing-in-to-gitlab.md).
 
 Then, go to the directory `cookbook/recipes/core/drivers`
-in your redox working directory,
+in your Redox working directory,
 and edit the file `recipe.toml`.
 Comment out the `[source]` section of the file,
 including the `git = ` line,
-so Redox's build system will not try to update the source.
+so the Redox's build system will not try to update the source.
 
-Setting up the working directory can be done a few way,
+Setting up the working directory can be done a few ways,
 but this is the most straightforward.
 
 Remove the `source` directory and start fresh.
 Clone the `drivers` repo, renaming the directory `source`.
-You can find Redox's [recommended way of using Git](./creating-proper-pull-requests.md) here.
-Enter the drivers `source` directory and configure the git repository.
+You can find the Redox's [recommended way of using Git](./creating-proper-pull-requests.md).
+Enter the drivers `source` directory and configure the Git repository.
 
 If you are using Redox's GitLab,
 create a fork of the `drivers` repo using the GitLab web interface.
@@ -438,7 +438,7 @@ that you can run in QEMU.
 Note that you must run `make r.drivers` and `make image` each time
 you make a change to your driver.
 Or, you can just run `make rebuild`,
-which will try to rebuild the whole system, but it will skip unneeded compilation.
+which will update the whole system with the latest upstream changes (it can break your changes).
 
 VirtualBox and QEMU have lots of options for emulating or passing through
 hardware interfaces.
