@@ -64,7 +64,7 @@ rustpython script-name.py
 
 ### Periodic Table
 
-The Periodic Table `/ui/bin/periodictable` is a demonstration of the **OrbTk** user interface toolkit.
+The Periodic Table `/usr/bin/periodictable` is a demonstration of the **OrbTk** user interface toolkit.
 
 ### Sodium
 
