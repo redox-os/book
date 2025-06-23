@@ -8,10 +8,10 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
     - [Why does Redox have unsafe Rust code?](#why-does-redox-have-unsafe-rust-code)
     - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
     - [Why does Redox do cross-compilation?](#why-does-redox-do-cross-compilation)
+    - [Does Redox support OpenGL and Vulkan?](#does-redox-support-opengl-and-vulkan)
     - [How can I port a program?](#how-can-i-port-a-program)
     - [How can I write a driver?](#how-can-i-write-a-driver)
     - [How can I debug?](#how-can-i-debug)
-    - [Does Redox support OpenGL and Vulkan?](#does-redox-support-opengl-and-vulkan)
 - [Build System Questions](#build-system-questions)
     - [What is the correct way to update the build system?](#what-is-the-correct-way-to-update-the-build-system)
     - [How can I verify if my build system is up-to-date?](#how-can-i-verify-if-my-build-system-is-up-to-date)
@@ -49,6 +49,10 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
     - [I have a merge request with many commits, should I squash them after merge?](#i-have-a-merge-request-with-many-commits-should-i-squash-them-after-merge)
     - [Should I delete my branch after merge?](#should-i-delete-my-branch-after-merge)
     - [How can I have an anonymous account?](#how-can-i-have-an-anonymous-account)
+- [Documentation Questions](#documentation-questions)
+    - [How can I write code documentation properly?](#how-can-i-write-code-documentation-properly)
+    - [How can I insert commands and code correctly?](#how-can-i-insert-commands-and-code-correctly)
+    - [How can I create diagrams?](#how-can-i-create-diagrams)
 - [Troubleshooting Questions](#troubleshooting-questions)
     - [Scripts](#scripts)
         - [I can't download the build system bootstrap scripts, how can I fix this?](#i-cant-download-the-build-system-bootstrap-scripts-how-can-i-fix-this)
@@ -114,6 +118,10 @@ Read some of the reasons below:
 
 (To run interpreted programs and scripts the programming language's interpreter needs to be ported to Redox)
 
+### Does Redox support OpenGL and Vulkan?
+
+- Read the [Software Rendering](./graphics-windowing.md#software-rendering) section.
+
 ### How can I port a program?
 
 - Read the [Porting Applications using Recipes](./porting-applications.md) page.
@@ -125,10 +133,6 @@ Read some of the reasons below:
 ### How can I debug?
 
 - Read the [Debug Methods](./troubleshooting.md#debug-methods) section.
-
-### Does Redox support OpenGL and Vulkan?
-
-- Read the [Software Rendering](./graphics-windowing.md#software-rendering) section.
 
 ## Build System Questions
 
@@ -360,6 +364,30 @@ Yes.
 ### How can I have an anonymous account?
 
 During the account creation process you should add a fake name on the "First Name" and "Last Name" fields and change it later after your account approval (single name field is supported).
+
+## Documentation Questions
+
+### How can I write code documentation properly?
+
+Read the following pages:
+
+- [Literate programming](https://doc.redox-os.org/book/literate-programming.html)
+- [Writting Documentation Correctly](https://doc.redox-os.org/book/writing-docs-correctly.html)
+
+### How can I insert commands and code correctly?
+
+Commands and code should be inserted inside code blocks (using 3 backticks above and below the line of the command), for example:
+
+```
+your command or code
+```
+
+- Multiple commands should use an unique code block for each command to allow them to be copied with one cursor click
+- If you can't use a code block due to incompatible wording in the explanation, you can use the simple code highlighting using 1 backtick before and after the command on the same line
+
+### How can I create diagrams?
+
+The GitLab Markdown has support for some diagram syntaxes, read [this](https://docs.gitlab.com/user/markdown/#diagrams-and-flowcharts) article to learn how to use them.
 
 ## Troubleshooting Questions
 
