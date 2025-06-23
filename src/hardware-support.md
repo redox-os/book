@@ -22,10 +22,10 @@ Redox itself will work normally if the processor architecture is supported by th
 
 | **Category**        | **Items**                                                                                                                                            |
 |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| CPU                 | Intel 64-bit (x86_64) <br>Intel 32-bit (i686) from Pentium II and after with limitations <br>AMD 32/64-bit <br>ARM 64-bit (Aarch64) with limitations |
-| Hardware Interfaces | ACPI, PCI, USB                                                                                                                                       |
-| Storage             | IDE (PATA), SATA (AHCI), NVMe                                                                                                                        |
-| Video               | BIOS VESA, UEFI GOP                                                                                                                                  |
-| Sound               | Intel, Realtek chipsets                                                                                                                              |
-| Input               | PS/2 keyboards, mouse and touchpad <br> - USB keyboards, mouse and touchpad                                                                          |
-| Ethernet            | Intel Gigabit and 10 Gigabit ethernet <br> - Realtek ethernet                                                                                        |
+| CPU                 | - Intel 64-bit (x86_64) <br>- Intel 32-bit (i686) from Pentium II and after with limitations <br>- AMD 32/64-bit <br>- ARM 64-bit (Aarch64) with limitations |
+| Hardware Interfaces | - ACPI, PCI, USB                                                                                                                                       |
+| Storage             | - IDE (PATA), SATA (AHCI), NVMe                                                                                                                        |
+| Video               | - BIOS VESA, UEFI GOP                                                                                                                                  |
+| Sound               | - Intel, Realtek chipsets                                                                                                                              |
+| Input               | - PS/2 keyboards, mouse and touchpad <br> - USB keyboards, mouse and touchpad                                                                          |
+| Ethernet            | - Intel Gigabit and 10 Gigabit ethernet <br>- Realtek ethernet                                                                                        |
