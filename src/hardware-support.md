@@ -18,12 +18,14 @@ Redox itself will work normally if the processor architecture is supported by th
 - It would be possible to go all the way back to i486, but that would make us lose nice functions like `fxsave`/`fxrstor` and we would need to build userspace without any SSE code.
 - i386 has no atomics (at all) which makes it not likely as a target.
 
-| **Category**        | **Items** |
-|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| CPU                 | - Intel - 64-bit (x86_64) <br> - Intel 32-bit (i686) from Pentium II and after with limitations <br> - AMD 32/64-bit <br> - ARM 64-bit (Aarch64) with limitations
-| Hardware Interfaces | - ACPI, PCI, USB                                                                                                                                      |
-| Storage             | - IDE (PATA), SATA (AHCI), NVMe                                                                                                                       |
-| Video               | - BIOS VESA, UEFI GOP                                                                                                                                 |
-| Sound               | - Intel, Realtek chipsets                                                                                                                             |
-| Input               | - PS/2 keyboards, mouse and touchpad <br> - USB keyboards, mouse and touchpad                                                                         |
-| Ethernet            | - Intel Gigabit and 10 Gigabit ethernet <br> - Realtek ethernet                                                                                       |
+## Compatibility Table
+
+| **Category**        | **Items**                                                                                                                                            |
+|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| CPU                 | Intel 64-bit (x86_64) <br>Intel 32-bit (i686) from Pentium II and after with limitations <br>AMD 32/64-bit <br>ARM 64-bit (Aarch64) with limitations |
+| Hardware Interfaces | ACPI, PCI, USB                                                                                                                                       |
+| Storage             | IDE (PATA), SATA (AHCI), NVMe                                                                                                                        |
+| Video               | BIOS VESA, UEFI GOP                                                                                                                                  |
+| Sound               | Intel, Realtek chipsets                                                                                                                              |
+| Input               | PS/2 keyboards, mouse and touchpad <br> - USB keyboards, mouse and touchpad                                                                          |
+| Ethernet            | Intel Gigabit and 10 Gigabit ethernet <br> - Realtek ethernet                                                                                        |
