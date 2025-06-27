@@ -1,11 +1,22 @@
-image : hrektts/mdbook:latest
+stages:
+  - build
+  - test
 
-before_script:
-  - apt-get update -qq
-  - apt-get install -qq libssl-dev pkg-config build-essential curl git
-
-build:
+mdbook:
+  stage: build
+  image:
+    name: hrektts/mdbook:latest
   script:
-    - ./unused_pages.sh
-    - mdbook build
+  - ./unused_pages.sh
+  - mdbook build
+  artifacts:
+    paths:
+      - book
 
+lychee:
+  stage: test
+  image:
+    name: lycheeverse/lychee:latest-alpine
+    entrypoint: [""] # force an empty entrypoint
+  script:
+  - lychee --no-progress --offline --root-dir $(pwd)/book ./book
