@@ -32,3 +32,13 @@ We have modest compatibility with [POSIX](https://en.wikipedia.org/wiki/POSIX), 
 We take inspiration from [Plan 9](http://9p.io/plan9/index.html), [Minix](http://www.minix3.org/), [seL4](https://sel4.systems/), [Linux](https://www.kernel.org/), [OpenBSD](https://openbsd.org) and [FreeBSD](https://freebsd.org). Redox aims to synthesize years of research and hard won experience into a system that feels modern and familiar.
 
 This book is written in a way that you doesn't require any prior knowledge of Rust or OS development.
+
+### Origin Story
+
+Redox OS was created in 2015 before the first stable version (1.0) of the Rust compiler and was one of the first operating systems written in Rust.
+It started as an unikernel (without a hypervisor) and gathered the contributions of many Rust developers.
+
+As the project progressed, Jeremy Soller decided that the OS should be focused on stability and security.
+To achieve that, Redox was redesigned to adopt a microkernel architecture and a unified system API for resources.
+
+Minix and Plan 9 were the main inspirations for the system design in the beginning.
