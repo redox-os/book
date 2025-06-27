@@ -35,7 +35,8 @@ This book is written in a way that you doesn't require any prior knowledge of Ru
 
 ### Origin Story
 
-Redox OS was created in 2015 before the first stable version (1.0) of the Rust compiler and was one of the first operating systems written in Rust to exist, it started as an unikernel and gathered the attention/contributions of many Rust developers.
+Redox OS was created in 2015 before the first stable version (1.0) of the Rust compiler and was one of the first operating systems written in Rust.
+It started as an unikernel (without a hypervisor) and gathered the contributions of many Rust developers.
 
 As the project progressed, Jeremy Soller decided that the OS should be focused on stability and security.
 To achieve that, Redox was redesigned to adopt a microkernel architecture and a unified system API for resources.
