@@ -21,6 +21,7 @@ This page contain a list of references for Rust programming, OS development, ide
 - [Rustonomicon](https://doc.rust-lang.org/nomicon/) - To learn about unsafe Rust.
 - [Rust 101 - Exercises](https://101-rs.tweede.golf/) - A Rust university course (but lacking answers for exercises).
 - [teach-rs](https://teach-rs.tweede.golf/) - An university course to learn Rust.
+- [Rust Security Handbook](https://yevh.github.io/rust-security-handbook/) - Helpful security related practices when coding in Rust.
 
 ### Porting
 
