@@ -46,6 +46,7 @@ The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of n
     - [How does a userspace daemon provide file-like services?](#how-does-a-userspace-daemon-provide-file-like-services)
     - [How the system calls are used by userspace daemons?](#how-the-system-calls-are-used-by-userspace-daemons)
 - [GitLab Questions](#gitlab-questions)
+    - [How to properly review MRs?](#how-to-properly-review-mrs)
     - [I have a merge request with many commits, should I squash them after merge?](#i-have-a-merge-request-with-many-commits-should-i-squash-them-after-merge)
     - [Should I delete my branch after merge?](#should-i-delete-my-branch-after-merge)
     - [How can I have an anonymous account?](#how-can-i-have-an-anonymous-account)
@@ -353,6 +354,12 @@ All userspace daemons use the system calls through [relibc](https://gitlab.redox
 
 ## GitLab Questions
 
+### How to properly review MRs?
+
+It's recommended to use code suggestions for normal text and code to help and save time for developers, that way they can quickly improve or apply the text or code.
+
+You can start a code suggestion by clicking on the file icon with the + symbol when you click to comment in some line of a file.
+
 ### I have a merge request with many commits, should I squash them after merge?
 
 Yes.
@@ -363,7 +370,7 @@ Yes.
 
 ### How can I have an anonymous account?
 
-During the account creation process you should add a fake name on the "First Name" and "Last Name" fields and change it later after your account approval (single name field is supported).
+During the account creation process you can add a fake name on the "First Name" and "Last Name" fields and change it later after your account approval (single name field is supported).
 
 ## Documentation Questions
 
