@@ -46,11 +46,11 @@ The following items summarize the microkernel benefits:
 
 - More stable long execution
 
-When an operating system is left running for a long time (days, months or even years) it will activate many bugs and it's hard to know when they were activated, at some point these bugs can cause data corruption or crash the system.
+  When an operating system is left running for a long time (days, months or even years) it will activate many bugs and it's hard to know when they were activated, at some point these bugs can cause data corruption or crash the system.
 
-In a microkernel most system components are isolated and some bug types can't spread to other system components, thus the long execution tend to enable less bugs reducing the data corruption and downtime on servers.
+  In a microkernel most system components are isolated and some bug types can't spread to other system components, thus the long execution tend to enable less bugs reducing the data corruption and downtime on servers.
 
-Also some system components can be restarted on-the-fly (without a full system restart) to disable the bugs of a long execution.
+  Also some system components can be restarted on-the-fly (without a full system restart) to disable the bugs of a long execution.
 
 - Restartless design
 
@@ -60,7 +60,7 @@ Also some system components can be restarted on-the-fly (without a full system r
 
 - More stable and secure
 
-The system is more stable and secure because the kernel is much more simple (contain a very small amount of code), reducing the severity and impact of bugs.
+  The system is more stable and secure because the kernel is much more simple (contain a very small amount of code), reducing the severity and impact of bugs.
 
 - Easy to develop and debug
 
