@@ -40,7 +40,7 @@ The ramdisk init has the job of loading the drivers and daemons required to acce
 
 <!-- TODO: This should be in an entirely a different page -->
 
-1. Standard daemons required for libc
+1. Daemons required for relibc
     - `rtcd` <!-- TODO: loads what? -->
     - `nulld` loads `/scheme/null`
     - `zero` loads `/scheme/zero`
@@ -51,26 +51,26 @@ The ramdisk init has the job of loading the drivers and daemons required to acce
     - `ramfs` loads `/scheme/memory`
     - `logging` loads `/scheme/logging`
 3. Graphics buffers
-    - `inputd` which setups first graphics buffer
+    - `inputd` setup first graphics buffer
     - The first graphics load `vesad` and `fbbootlogd`
-    - `inputd -A 1` which setups second graphics buffer
+    - `inputd -A 1` setup second graphics buffer
     - The second graphics load `fbcond` then drivers after that
 4. Live daemon
-   - `lived` <!-- TODO: loads what? -->
+    - `lived` <!-- TODO: loads what? -->
 5. ACPI storage drivers in `/etc/init_drivers.rc`
-  - `ahcid` AHCI storage driver
-  - `ided` IDE storage driver
-  - `nvmed` NVME storage driver
-  - `virtio-blkd` VirtIO BLK storage driver
-  - `virtio-gpud` VirtIO GPU storage driver
-5. Root file system
-  - `redoxfs` loads `/scheme/file`
+    - `ahcid` AHCI storage driver
+    - `ided` IDE storage driver
+    - `nvmed` NVME storage driver
+    - `virtio-blkd` VirtIO BLK storage driver
+    - `virtio-gpud` VirtIO GPU storage driver
+6. Root file system
+    - `redoxfs` loads `/scheme/file`
 
 After loading all drivers and daemons above, the `redoxfs` RedoxFS driver is executed with the UUID of the partition where the kernel and other boot files were located (chosen from the bootloader). It then searches every driver for this partition, and if it is found, mounts it and then allows init to continue.
 
 ### Filesystem Init
 
-The filesystem init continues the loading of drivers for all other functionality. This includes audio, networking, and anything not required for disk access. It's mainly found in `/usr/lib/init.d`. In the redox builder git, it's configurable in the config directory.
+The filesystem init continues the loading of drivers for all other functionality. This includes audio, networking, and anything not required for disk access. It's mainly found in `/usr/lib/init.d`. In the redox builder repository, it's configurable in the [config directory](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config).
 
 After this, the login prompt is shown both in second graphics buffer and the serial driver.
 
