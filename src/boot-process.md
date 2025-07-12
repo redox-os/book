@@ -6,15 +6,15 @@ The boot loader source can be found in `cookbook/recipes/bootloader/source` afte
 
 ### BIOS Boot
 
-BIOS Boot is a boot process predates back into [The IBM PC](https://dosdays.co.uk/topics/pc_bios.php). Because of it's lengthly history, BIOS starts up in 16 bit mode (Real Mode) and boot loader need to load in multi stages to move into higher bit environment. The firmware will execute the boot sector located in the first sector of the main disk, this is known as stage 1 bootloader ([OSDev Wiki](https://wiki.osdev.org/Boot_Sequence#Master_Boot_Record)).
+BIOS Boot is a boot process that predates back to the [IBM PC](https://dosdays.co.uk/topics/pc_bios.php). Because of it's lengthy history, BIOS starts up in 16 bit mode (Real Mode) and the boot loader need to load in multi stages to move into higher bit environments. The firmware will execute the boot sector located in the first sector of the main storage device, this is known as stage 1 bootloader ([OSDev Wiki](https://wiki.osdev.org/Boot_Sequence#Master_Boot_Record)).
 
-Redox writes stage 1 bootloader in Assembly, and can be found in `asm/x86-unknown-none/stage1.asm`. The stage 1 main task is to allow reading of the whole disk to load stage 2 in another sector of the disk. The stage 2 bootloader is also written in Assembly, which is main task is transfering BIOS functions ([OSDev Wiki](https://wiki.osdev.org/BIOS#BIOS_functions)) from real mode to protected mode (32 bit), then switches to protected mode or long mode (64 bit) and finally loads the Rust-written boot loader, called stage 3.
+The stage 1 bootloader is written in Assembly and can be found in `asm/x86-unknown-none/stage1.asm`. The stage 1 main task is to allow reading of the whole disk to load stage 2 in another sector of the storage device. The stage 2 bootloader is also written in Assembly, which the main task is transferring [BIOS functions](https://wiki.osdev.org/BIOS#BIOS_functions) from real mode to protected mode (32 bit), then switches to protected mode or long mode (64 bit) and finally loads the Rust-written boot loader, called stage 3.
 
 These three boot loader stages are combined in one executable written to the first megabyte of the storage device. The first code that is executed in Rust-written code is `pub extern "C" fn start()` in `src/os/bios/mod.rs`. At this point, the bootloader follows the same common boot process on all boot methods, which can be seen in a later section.
 
 ### UEFI Boot
 
-Redox supports UEFI boots targeting 64 bit x86, ARM and RISC-V machines. UEFI starts up in 64 bit mode so it isn't require to boot into multiple stages. The firmware will find EFI System Partition (ESP) on the main disk, then loads and executes PE32+ UEFI programs typically located at `/EFI/BOOT/BOOTX64.efi` ([OSDev Wiki](https://wiki.osdev.org/UEFI#Bootable_UEFI_applications)). 
+Redox supports UEFI booting on x86-64, ARM64 and RISC-V 64-bit machines. UEFI starts up in 64 bit mode thus the boot process don't need multiple stages. The firmware will find the EFI System Partition (ESP) on the storage device, then loads and executes PE32+ UEFI programs typically located at `/EFI/BOOT/BOOTX64.efi` ([OSDev Wiki](https://wiki.osdev.org/UEFI#Bootable_UEFI_applications)). 
 
 In the case of our bootloader, the first code that is executed is `pub extern "C" fn main()` in `src/os/uefi/mod.rs`. At this point, the bootloader follows the same common boot process on all boot methods, which can be seen in a later section.
 
@@ -32,7 +32,7 @@ The Redox kernel is a single ELF program in `/boot/kernel`. This kernel performs
 
 ## Init
 
-Redox has a multi-staged init process, designed to allow for the loading of disk drivers in a modular and configurable fashion. This is commonly referred to as an init RAMdisk. The RAMdisk is contained in `/boot/initfs` which is a special file format containing the bootstrap code in ELF format and packed files which was loaded into `/scheme/initfs` by the kernel program.
+Redox has a multi-staged init process, designed to allow for the loading of storage drivers in a modular and configurable fashion. This is commonly referred to as an init RAMdisk (initfs). The RAMdisk is contained in `/boot/initfs` which is a special file format containing the bootstrap code in ELF format and packed files which was loaded into `/scheme/initfs` by the kernel program.
 
 ### RAMdisk Init
 
@@ -70,11 +70,11 @@ After loading all drivers and daemons above, the `redoxfs` RedoxFS driver is exe
 
 ### Filesystem Init
 
-The filesystem init continues the loading of drivers for all other functionality. This includes audio, networking, and anything not required for disk access. It's mainly found in `/usr/lib/init.d`. In the redox builder repository, it's configurable in the [config directory](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config).
+The filesystem init continues the loading of drivers for all other functionality. This includes audio, networking, and anything not required for storage device access. It's mainly found in `/usr/lib/init.d`. In the redox builder repository, it's configurable in the [config directory](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config).
 
-After this, the login prompt is shown both in second graphics buffer and the serial driver.
+After this, the login prompt is shown both in the second virtual terminal and the serial driver.
 
-If Orbital is enabled, the display server is launched in third graphics buffer.
+If Orbital is enabled, the display server is launched in the third virtual terminal.
 
 ## Login
 
