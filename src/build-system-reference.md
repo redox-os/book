@@ -148,6 +148,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make u.recipe-name` - Clean the recipe source code (**please backup or submit your source changes before the execution of this command**).
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
 - `make ucr.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
+- All recipe commands (f, r, c, u, cr, ucr) can be run with multiple recipes, just separate them by `,`, e.g. `make f.recipe1,recipe2` will donwload the sources of `recipe1` and `recipe 2`
 
 ### QEMU/VirtualBox
 
@@ -231,8 +232,6 @@ scripts/category.sh -x category-name
 ```
 
 Where `x` is your `make` option, it can be `f`, `r`, `c`, `u`, `cr`, `ucr`, `uc` or `ucf`
-
-(If you are using Podman you need to run `make env` command before this script to avoid a very slow execution, once the script finish the operation run the `exit` command)
 
 ### Include Recipes
 
