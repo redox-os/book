@@ -148,7 +148,8 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make u.recipe-name` - Clean the recipe source code (**please backup or submit your source changes before the execution of this command**).
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
 - `make ucr.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
-- All recipe commands (f, r, c, u, cr, ucr) can be run with multiple recipes, just separate them by `,`, e.g. `make f.recipe1,recipe2` will donwload the sources of `recipe1` and `recipe 2`
+
+All recipe commands (f, r, c, u, cr, ucr) can be run with multiple recipes, just separate them with a comma. for example: `make f.recipe1,recipe2` will download the sources of `recipe1` and `recipe2`
 
 ### QEMU/VirtualBox
 
