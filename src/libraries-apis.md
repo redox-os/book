@@ -1,6 +1,6 @@
 # Libraries and APIs
 
-This page will cover the context of the libraries and APIs on Redox.
+This page covers the context of the libraries and APIs on Redox.
 
 - [Versions](#versions)
     - [Redox](#redox)
@@ -14,14 +14,19 @@ This page will cover the context of the libraries and APIs on Redox.
 - [Compiling for Redox](#compiling-for-redox)
     - [Porting Method](#porting-method)
 
-Terms:
+## Terms
 
-- [API](https://en.wikipedia.org/wiki/API) - The interface of the library **source code** (the programs use the API to obtain the library functions).
-- [ABI](https://en.wikipedia.org/wiki/Application_binary_interface) - The interface between the program **binary** and the system services (normally the system call interface).
+-  - .
+-  - .
+
+| **Interface**                                                     | **Explanation**                                                                                           |
+|-------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| [API](https://en.wikipedia.org/wiki/API)                          | The interface of the library **source code** (the programs use the API to obtain the library functions)   |
+| [ABI](https://en.wikipedia.org/wiki/Application_binary_interface) | The interface of the program **binary** and system services (normally the system call interface)          |
 
 ## Versions
 
-The Redox crates follow the SemVer model from Cargo ofr version numbers (except redox_syscall), you can read more about it below:
+The Redox crates follow the SemVer model from Cargo for version numbers (except `redox_syscall`), you can read more about it below:
 
 - [SemVer](https://semver.org/)
 - [Cargo SemVer](https://doc.rust-lang.org/cargo/reference/resolver.html)
@@ -31,13 +36,13 @@ The Redox crates follow the SemVer model from Cargo ofr version numbers (except 
 
 This section covers the versioning system of Redox and important components.
 
-- Redox OS - `x.y.z`
+- Redox OS: `x.y.z`
 
 `x` is ABI version, `y` is API updates with backward compatibility and `z` is fixes with backward compatiblity.
 
-- libredox - Currently it don't follow the SemVer model but will in the future.
+- libredox: Currently it don't follow the SemVer model but will in the future
 
-- redox_syscall - `x.y.z`
+- redox_syscall: `x.y.z`
 
 `x` is the ABI version (it will remain 0 for a while), `y` is the API updates and `z` is fixes (no backward compatibility).
 
@@ -49,11 +54,13 @@ A stable ABI typically **reduces** development speed for the ABI **provider** (b
 
 It also offer backward compatibility for binaries compiled with old API versions.
 
-Currently, only libredox will have a stable ABI, relibc will be unstable only as long as it's under heavy development and redox_syscall will remain unstable even after the 1.0 version of Redox.
+Currently only libredox will have a stable ABI, relibc will be unstable only as long as it's under heavy development and redox_syscall will remain unstable even after the 1.0 version of Redox.
 
 Our final goal is to keep the Redox ABI stable in all `1.x` versions, if an ABI break happens, the next versions will be `2.x`
 
 A program compiled with an old API **version** will continue to work with a new API version, in most cases statically linked library updates or program updates will require recompilation, while in others a new ABI version will add performance and security improvements that would recommend a recompilation of the program.
+
+If the dynamic linker can't resolve the references of the program binary, a recompilation is required.
 
 ## Interfaces
 
@@ -61,17 +68,11 @@ Redox uses different mechanisms, compared to Linux, to implement system capabili
 
 ### relibc
 
-[relibc](https://gitlab.redox-os.org/redox-os/relibc) is an implementation of the [C Standard Library](https://en.wikipedia.org/wiki/C_standard_library) (libc) in Rust.
+[relibc](https://gitlab.redox-os.org/redox-os/relibc) is an implementation of the [C Standard Library](https://en.wikipedia.org/wiki/C_standard_library) (libc) and POSIX in Rust.
 
-relibc knows if it's compiled for Linux or Redox ahead-of-time, if the target is Redox, relibc calls functions in libredox, the goal is to organize platform-specific functionality into clean modules.
-
-The current dynamic linking support is under development, thus relibc is statically linked, once it's working, the programs will access relibc using [dynamic linking](https://en.wikipedia.org/wiki/Dynamic_linker), thus the functions used by the program will be linked during runtime (executable launch).
-
-This will allow Redox to evolve and improve relibc without requiring programs to be recompiled after each source code change in most cases, if the dynamic linker can't resolve the references of the program binary, a recompilation is required.
+relibc knows if it's compiled for Linux or Redox ahead-of-time (if the target is Redox relibc calls functions in libredox), the goal is to organize platform-specific functionality into clean modules.
 
 Since Redox and Linux executables look so similar and can accidentally be executed on the other platform, it checks that it's running on the same platform it was compiled for, at runtime.
-
-(C/C++ programs and libraries will use this library)
 
 ### libredox
 
@@ -79,9 +80,7 @@ Since Redox and Linux executables look so similar and can accidentally be execut
 
 It's both a crate (calling the ABI functions) and an ABI, the ABI is provided from relibc while the crate (library) is a wrapper above the libredox ABI.
 
-(Redox components, Rust programs and libraries will use this library)
-
-An ongoing migration from redox_syscall to libredox is in progress, you can follow the current status on [this](https://gitlab.redox-os.org/redox-os/libredox/-/issues/1) link.
+(Redox components, Rust programs and libraries use this library)
 
 You can see Rust crates using it on the [Reverse Dependencies](https://crates.io/crates/libredox/reverse_dependencies) category.
 
@@ -95,17 +94,17 @@ You can see Rust crates using it on the [Reverse Dependencies](https://crates.io
 
 ### Rust std crate
 
-Most **Rust** programs include the [std](https://doc.rust-lang.org/std/) crate, In addition to implementing standard Rust abstractions, this crate provides a safe Rust interface to system functionality in libc, which it invokes via a [FFI](https://doc.rust-lang.org/rust-by-example/std_misc/ffi.html) to libc.
+Most **Rust** programs include the [std](https://doc.rust-lang.org/std/) (libstd) crate, In addition to implementing standard Rust abstractions, this crate provides a safe Rust interface to system functionality in libc, which it invokes via a [FFI](https://doc.rust-lang.org/rust-by-example/std_misc/ffi.html) to libc.
 
 `std` has mechanisms to enable operating system variants of certain parts of the library, the file [sys/mod.rs](https://github.com/rust-lang/rust/blob/master/library/std/src/sys/mod.rs) selects the appropriate variant to include, programs use the `std::` prefix to call this crate.
 
-To ensure portability of programs, Redox supports the Rust `std` crate, for Redox, `std::sys` refers to `std::sys::unix`.
+To ensure portability of programs, Redox supports the Rust `std` crate, for Redox, `std::sys` refers to `std::sys::unix`
 
-Redox-specific code can be found on the [libstd source tree](https://github.com/rust-lang/rust/tree/master/library/std/src/os/redox).
+Redox-specific code can be found on the [std source tree](https://github.com/rust-lang/rust/tree/master/library/std/src/os/redox).
 
 For most functionality, Redox uses `#[cfg(unix)]` and [sys/unix](https://github.com/rust-lang/rust/tree/master/library/std/src/sys/pal/unix).
 
-Some Redox-specific functionality is enabled by `#[cfg(target_os = "redox")]`.
+Some Redox-specific functionality is enabled by `#[cfg(target_os = "redox")]`
 
 ## Compiling for Redox
 
