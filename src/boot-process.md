@@ -20,15 +20,36 @@ In the case of our bootloader, the first code that is executed is `pub extern "C
 
 ### Common boot process
 
-The bootloader initializes the memory map and the display mode, both of which rely on firmware mechanisms that are not acccessible after control is switched to the kernel. The bootloader then finds the RedoxFS partition on the disk and loads `/boot/kernel` and `/boot/initfs` files into memory. In the case of live disk, it loads the whole partition into memory instead.
+The bootloader initializes the memory map and the display mode, both of which rely on firmware mechanisms that are not acccessible after control is switched to the kernel. The bootloader then finds the RedoxFS boot partition on the disk and loads `/boot/kernel` and `/boot/initfs` files into memory. 
 
-After the kernel and initfs has been loaded, it set up a virtual paging for kernel and other data to be passed into it. Then, it maps the kernel to its expected virtual address, and jumps to its entry function.
+For a live disk it does load the whole partition into memory. It then loads `/boot/kernel` and `/boot/initfs` also at a different location in memory.
+
+After the kernel and initfs has been loaded, it set up a virtual paging for kernel and environment variables including the location of the RedoxFS boot partiton to be passed into it. Then, it maps the kernel to its expected virtual address, and jumps to its entry function.
 
 ## Kernel
 
 The Redox kernel is a single ELF program in `/boot/kernel`. This kernel performs (fairly significant) architecture-specific initialization in the `kstart` function before jumping to the `kmain` function. At this point, the user-space bootstrap, a specially prepared executable that limits the required kernel parsing, sets up the `/scheme/initfs` scheme, and loads and executes the `init` program.
 
-<!-- TODO: Explain briefly about logger, interrupts, paging and userspace initializations -->
+The kernel loads three different namespaces during bootstrap process. Each namespaces has its own schemes where it can be accessed by userspace programs depending on where it loaded:
+
+1. the `null` (0) namespace, which a global namespace that drivers are running on:
+    - `/scheme/memory`
+    - `/scheme/pipe`
+
+2. the `root` (1) namespace, which can only be accessed by programs running as `root`:
+    - `/scheme/kernel.acpi`
+    - `/scheme/kernel.dtb`
+    - `/scheme/kernel.proc`
+    - `/scheme/debug`
+    - `/scheme/irq`
+    - `/scheme/serio`
+
+3. the rest of isolated namespaces that can be accessed by all programs, also accessible by `root` namespace:
+    - `/scheme/event`
+    - `/scheme/memory`
+    - `/scheme/pipe`
+    - `/scheme/sys`
+    - `/scheme/time`
 
 ## Init
 
@@ -38,25 +59,22 @@ Redox has a multi-staged init process, designed to allow for the loading of stor
 
 The ramdisk init has the job of loading the drivers and daemons required to access the root filesystem and then transfer control to the filesystem init. The load order is defined in `/etc/init.rc` in initfs, which loads:
 
-<!-- TODO: This should be in an entirely a different page -->
-
 1. Daemons required for relibc
-    - `rtcd` <!-- TODO: loads what? -->
-    - `nulld` loads `/scheme/null`
-    - `zero` loads `/scheme/zero`
-    - `randd` loads `/scheme/rand`
+    - `rtcd` loads x86 RTC into `/scheme/time`
+    - `nulld` creates `/scheme/null`
+    - `zero` creates `/scheme/zero`
+    - `randd` creates `/scheme/rand`
 2. Logging 
-    - `logd` loads `/scheme/debug`
-    - `stdio` loads `/scheme/log`
-    - `ramfs` loads `/scheme/memory`
-    - `logging` loads `/scheme/logging`
+    - `logd` creates `/scheme/log`
+    - `ramfs` loads in-memory FS handling into `/scheme/memory`
+    - `logging` creates `/scheme/logging`
 3. Graphics buffers
     - `inputd` setup first graphics buffer
     - The first graphics load `vesad` and `fbbootlogd`
     - `inputd -A 1` setup second graphics buffer
     - The second graphics load `fbcond` then drivers after that
 4. Live daemon
-    - `lived` <!-- TODO: loads what? -->
+    - `lived` loads livedisk partition into `/scheme/memory/physical`
 5. ACPI storage drivers in `/etc/init_drivers.rc`
     - `ahcid` AHCI storage driver
     - `ided` IDE storage driver
@@ -64,7 +82,7 @@ The ramdisk init has the job of loading the drivers and daemons required to acce
     - `virtio-blkd` VirtIO BLK storage driver
     - `virtio-gpud` VirtIO GPU storage driver
 6. Root file system
-    - `redoxfs` loads `/scheme/file`
+    - `redoxfs` creates `/scheme/file`
 
 After loading all drivers and daemons above, the `redoxfs` RedoxFS driver is executed with the UUID of the partition where the kernel and other boot files were located (chosen from the bootloader). It then searches every driver for this partition, and if it is found, mounts it and then allows init to continue.
 
