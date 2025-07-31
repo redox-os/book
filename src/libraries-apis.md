@@ -83,7 +83,7 @@ You can see Rust crates using it on the [Reverse Dependencies](https://crates.io
 
 ### redox_syscall
 
-[redox_syscall](https://gitlab.redox-os.org/redox-os/syscall) is a system call wrapper with a Rust API for low-level components and libraries.
+[redox_syscall](https://gitlab.redox-os.org/redox-os/syscall) contain the system call numbers and Rust API wrappers for the inline Assembly code of system calls to be used with low-level components and libraries.
 
 (redox_syscall should not be used directly by programs, use libredox instead)
 
