@@ -14,13 +14,11 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
         - [Quick Template](#quick-template)
     - [Templates](#templates)
         - [Functions](#functions)
-        - [cookbook_cargo function script](#cookbook_cargo-function-script)
-        - [cookbook_configure function script](#cookbook_configure-function-script)
     - [Custom Template](#custom-template)
         - [Packaging Behavior](#packaging-behavior)
         - [Cargo script example](#cargo-script-example)
         - [GNU Autotools script example](#gnu-autotools-script-example)
-        - [GNU Autotools script example (lacking a pre-configured tarball)](#gnu-autotools-script-example-lacking-a-pre-configured-tarball)
+        - [GNU Autotools configuration script example](#gnu-autotools-configuration-script-example)
         - [CMake script example](#cmake-script-example)
         - [Analyze the source code of a Rust program](#analyze-the-source-code-of-a-rust-program)
         - [Cargo packages command example](#cargo-packages-command-example)
@@ -252,8 +250,8 @@ The template is the build system of the program or library, programs using an GN
 
 (You can't use the `script =` data types if templates are used)
 
-- `template = "cargo"` - Build with Cargo and cross-compilation variables (Rust programs with one package in the Cargo workspace).
-- `template = "configure"` - Build with GNU Autotools and cross-compilation variables.
+- `template = "cargo"` - Build with Cargo using cross-compilation variables (Rust programs with one package in the Cargo workspace).
+- `template = "configure"` - Build with GNU Autotools/GNU Make using cross-compilation variables.
 - `template = "custom"` - Run your commands on the `script =` field and build (Any build system or installation process).
 
 The `script =` field runs any terminal command, it's important if the build system of the program don't support cross-compilation or need custom options that Cookbook don't support.
@@ -264,163 +262,12 @@ To find the supported Cookbook terminal commands, look the recipes using a `scri
 
 #### Functions
 
-Each template has a function in the Cookbook source code, these functions contain commands to trigger the build system with cross-compilation variables for the Redox target triplet.
+Each template has a Bash function to be used in the `script` data type when you need to customize the template configuration to fix the program compilation or enable/disable features.
 
-- `cargo` (cookbook_cargo) - This function run the `cargo build` command
-- `configure` (cookbook_configure) - This function run the `./configure`, `make` and `make install` commands
-
-#### cookbook_cargo function script
-
-You can see the commands of the `cookbook_cargo` function below:
-
-- Pre-script
-
-```sh
-# Common pre script
-# Add cookbook bins to path
-export PATH="${COOKBOOK_ROOT}/bin:${PATH}"
-
-# This puts cargo build artifacts in the build directory
-export CARGO_TARGET_DIR="${COOKBOOK_BUILD}/target"
-
-# This adds the sysroot includes for most C compilation
-#TODO: check paths for spaces!
-export CFLAGS="-I${COOKBOOK_SYSROOT}/include"
-export CPPFLAGS="-I${COOKBOOK_SYSROOT}/include"
-
-# This adds the sysroot libraries and compiles binaries statically for most C compilation
-#TODO: check paths for spaces!
-export LDFLAGS="-L${COOKBOOK_SYSROOT}/lib --static"
-
-# These ensure that pkg-config gets the right flags from the sysroot
-export PKG_CONFIG_ALLOW_CROSS=1
-export PKG_CONFIG_PATH=
-export PKG_CONFIG_LIBDIR="${COOKBOOK_SYSROOT}/lib/pkgconfig"
-export PKG_CONFIG_SYSROOT_DIR="${COOKBOOK_SYSROOT}"
-
-# cargo template
-COOKBOOK_CARGO="${COOKBOOK_REDOXER}"
-function cookbook_cargo {
-    "${COOKBOOK_CARGO}" install \
-        --path "${COOKBOOK_SOURCE}" \
-        --root "${COOKBOOK_STAGE}" \
-        --locked \
-        --no-track \
-        "$@"
-}
-
-# helper for installing binaries that are cargo examples
-function cookbook_cargo_examples {
-    recipe="$(basename "${COOKBOOK_RECIPE}")"
-    for example in "$@"
-    do
-        "${COOKBOOK_CARGO}" build \
-            --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
-            --example "${example}" \
-            --release
-        mkdir -pv "${COOKBOOK_STAGE}/usr/bin"
-        cp -v \
-            "target/${TARGET}/release/examples/${example}" \
-            "${COOKBOOK_STAGE}/usr/bin/${recipe}_${example}"
-    done
-}
-
-# helper for installing binaries that are cargo packages
-function cookbook_cargo_packages {
-    recipe="$(basename "${COOKBOOK_RECIPE}")"
-    for package in "$@"
-    do
-        "${COOKBOOK_CARGO}" build \
-            --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
-            --package "${package}" \
-            --release
-        mkdir -pv "${COOKBOOK_STAGE}/usr/bin"
-        cp -v \
-            "target/${TARGET}/release/${package}" \
-            "${COOKBOOK_STAGE}/usr/bin/${recipe}_${package}"
-    done
-}
-```
-
-- Post-script
-
-```sh
-# Common post script
-# Strip binaries
-if [ -d "${COOKBOOK_STAGE}/usr/bin" ]
-then
-    find "${COOKBOOK_STAGE}/usr/bin" -type f -exec "${TARGET}-strip" -v {} ';'
-fi
-
-# Remove cargo install files
-for file in .crates.toml .crates2.json
-do
-    if [ -f "${COOKBOOK_STAGE}/${file}" ]
-    then
-        rm -v "${COOKBOOK_STAGE}/${file}"
-    fi
-done
-```
-
-#### cookbook_configure function script
-
-You can see the commands of the `cookbook_configure` function below:
-
-- Pre-script
-
-```sh
-# Common pre script
-# Add cookbook bins to path
-export PATH="${COOKBOOK_ROOT}/bin:${PATH}"
-
-# This adds the sysroot includes for most C compilation
-#TODO: check paths for spaces!
-export CFLAGS="-I${COOKBOOK_SYSROOT}/include"
-export CPPFLAGS="-I${COOKBOOK_SYSROOT}/include"
-
-# This adds the sysroot libraries and compiles binaries statically for most C compilation
-#TODO: check paths for spaces!
-export LDFLAGS="-L${COOKBOOK_SYSROOT}/lib --static"
-
-# These ensure that pkg-config gets the right flags from the sysroot
-export PKG_CONFIG_ALLOW_CROSS=1
-export PKG_CONFIG_PATH=
-export PKG_CONFIG_LIBDIR="${COOKBOOK_SYSROOT}/lib/pkgconfig"
-export PKG_CONFIG_SYSROOT_DIR="${COOKBOOK_SYSROOT}"
-
-# configure template
-COOKBOOK_CONFIGURE="${COOKBOOK_SOURCE}/configure"
-COOKBOOK_CONFIGURE_FLAGS=(
-    --host="${TARGET}"
-    --prefix=""
-    --disable-shared
-    --enable-static
-)
-COOKBOOK_MAKE="make"
-COOKBOOK_MAKE_JOBS="$(nproc)"
-function cookbook_configure {
-    "${COOKBOOK_CONFIGURE}" "${COOKBOOK_CONFIGURE_FLAGS[@]}"
-    "${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}"
-    "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}"
-}
-```
-
-- Post-script
-
-```sh
-# Common post script
-# Strip binaries
-if [ -d "${COOKBOOK_STAGE}/usr/bin" ]
-then
-    find "${COOKBOOK_STAGE}/usr/bin" -type f -exec "${TARGET}-strip" -v {} ';'
-fi
-
-# Remove libtool files
-if [ -d "${COOKBOOK_STAGE}/usr/lib" ]
-then
-    find "${COOKBOOK_STAGE}/usr/lib" -type f -name '*.la' -exec rm -fv {} ';'
-fi
-```
+- `cookbook_cargo` - Bash function of the `cargo` template
+- `cookbook_configure` - Bash function of the `configure` template
+- `cookbook_cmake` - Bash function of the `cmake` template
+- `cookbook_meson` - Bash function of the `meson` template
 
 ### Custom Template
 
@@ -478,7 +325,7 @@ function cookbook_cargo {
 
 Use this script if the program or library need flags, change or copy and paste the "--program-flag" according to your needs.
 
-(Some programs and libraries need more configuration to work)
+Keep in mind that some programs and libraries need more configuration to work.
 
 ```toml
 script = """
@@ -489,24 +336,47 @@ cookbook_configure
 """
 ```
 
-#### GNU Autotools script example (lacking a pre-configured tarball)
+#### GNU Autotools configuration script example
 
-If you are using the repository of the program you will need to create a configuration file for GNU Autotools.
+If you are using a program tarball or repository lacking the `configure` script you will need to generate this script.
 
-(Some programs and libraries need more configuration to work)
+- Add the following code below the `[source]` section
 
 ```toml
-script = """
-./autogen.sh
-cookbook_configure
-"""
+script = "./autogen.sh"
 ```
 
 #### CMake script example
 
 Use this script for programs using the CMake build system, more CMake options can be added with a `-D` before them, the customization of CMake compilation is very easy.
 
-(Some programs and libraries need more configuration to work)
+Keep in mind that some programs and libraries need more configuration to work.
+
+(Replace the `cookbook_configure` function with the `cookbook_cmake` function if the program build system don't use GNU Make)
+
+- CMake and GNU Make using dynamic linking
+
+```toml
+script = """
+DYNAMIC_INIT
+COOKBOOK_CONFIGURE="cmake"
+COOKBOOK_CONFIGURE_FLAGS=(
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_CROSSCOMPILING=True
+    -DCMAKE_CXX_COMPILER="${TARGET}-g++"
+    -DCMAKE_C_COMPILER="${TARGET}-gcc"
+    -DCMAKE_INSTALL_PREFIX="/"
+    -DCMAKE_PREFIX_PATH="${COOKBOOK_SYSROOT}"
+    -DCMAKE_SYSTEM_NAME=Generic
+    -DCMAKE_SYSTEM_PROCESSOR="$(echo "${TARGET}" | cut -d - -f1)"
+    -DCMAKE_VERBOSE_MAKEFILE=On
+"${COOKBOOK_SOURCE}"
+)
+cookbook_configure
+"""
+```
+
+- CMake and GNU Make using static linking
 
 ```toml
 script = """
@@ -514,6 +384,8 @@ COOKBOOK_CONFIGURE="cmake"
 COOKBOOK_CONFIGURE_FLAGS=(
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_CROSSCOMPILING=True
+    -DCMAKE_CXX_COMPILER="${TARGET}-g++"
+    -DCMAKE_C_COMPILER="${TARGET}-gcc"
     -DCMAKE_EXE_LINKER_FLAGS="-static"
     -DCMAKE_INSTALL_PREFIX="/"
     -DCMAKE_PREFIX_PATH="${COOKBOOK_SYSROOT}"
