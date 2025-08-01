@@ -30,7 +30,7 @@ After the kernel and initfs has been loaded, it set up a virtual paging for kern
 
 The Redox kernel is a single ELF program in `/boot/kernel`. This kernel performs (fairly significant) architecture-specific initialization in the `kstart` function before jumping to the `kmain` function. At this point, the user-space bootstrap, a specially prepared executable that limits the required kernel parsing, sets up the `/scheme/initfs` scheme, and loads and executes the `init` program.
 
-The kernel loads three different namespaces during bootstrap process. Each namespaces has its own schemes where it can be accessed by userspace programs depending on where it loaded:
+The kernel creates three different namespaces during bootstrap process. Each namespaces has its own schemes where it can be accessed by userspace programs depending on where it loaded:
 
 1. the `null` (0) namespace, which a global namespace that drivers are running on:
     - `/scheme/memory`
@@ -57,48 +57,47 @@ Redox has a multi-staged init process, designed to allow for the loading of stor
 
 ### RAMdisk Init
 
-The ramdisk init has the job of loading the drivers and daemons required to access the root filesystem and then transfer control to the filesystem init. The load order is defined in `/etc/init.rc` in initfs, which loads:
+The ramdisk init has the job of loading the drivers and daemons required to access the root filesystem and then transfer control to the filesystem init. The load order is defined in `/etc/init.rc` in initfs:
 
 1. Daemons required for relibc
-    - `rtcd` loads x86 RTC into `/scheme/time`
-    - `nulld` creates `/scheme/null`
-    - `zero` creates `/scheme/zero`
-    - `randd` creates `/scheme/rand`
+    - `rtcd` loads machine-specific RTC into `/scheme/time`
+    - `nulld` null handler, creates `/scheme/null`
+    - `zero` zero handler, creates `/scheme/zero`
+    - `randd` rand handler, creates `/scheme/rand`
 2. Logging 
-    - `logd` creates `/scheme/log`
+    - `logd` system log handler, creates `/scheme/log`
     - `ramfs` loads in-memory FS handling into `/scheme/memory`
-    - `logging` creates `/scheme/logging`
 3. Graphics buffers
-    - `inputd` setup first graphics buffer
-    - The first graphics load `vesad` and `fbbootlogd`
-    - `inputd -A 1` setup second graphics buffer
-    - The second graphics load `fbcond` then drivers after that
+    - `inputd` virtual terminal (VT) handler, creates `/scheme/input`
+    - `vesad`
+    - `fbbootlogd`
+    - `fbcond`
 4. Live daemon
-    - `lived` loads livedisk partition into `/scheme/memory/physical`
-5. ACPI storage drivers in `/etc/init_drivers.rc`
-    - `ahcid` AHCI storage driver
-    - `ided` IDE storage driver
-    - `nvmed` NVME storage driver
-    - `virtio-blkd` VirtIO BLK storage driver
-    - `virtio-gpud` VirtIO GPU storage driver
-6. Root file system
-    - `redoxfs` creates `/scheme/file`
+    - `lived` loads livedisk handling into `/scheme/memory/physical`
+5. Drivers in `/etc/init_drivers.rc`
+    - `ps2d` loads PS/2 handling into `/scheme/serio`
+    - `acpid` loads ACPI handling into `/scheme/kernel.acpi`
+    - `pcid` creates `/scheme/pci`
+    - `pcid-spawner` spawn drivers depending on available hardware
+        - `ahcid` AHCI storage driver
+        - `ided` IDE storage driver
+        - `nvmed` NVME storage driver
+        - `virtio-blkd` VirtIO BLK storage driver
+        - `virtio-gpud` VirtIO GPU driver
 
-After loading all drivers and daemons above, the `redoxfs` RedoxFS driver is executed with the UUID of the partition where the kernel and other boot files were located (chosen from the bootloader). It then searches every driver for this partition, and if it is found, mounts it and then allows init to continue.
+After loading all drivers and daemons above, the `redoxfs` RedoxFS driver is executed with `--uuid $REDOXFS_UUID` where `$REDOXFS_UUID` is the partition chosen by the bootloader and creates `/scheme/file`. The command `set-default-scheme file` then is executed, so that the default path handler is set into `/scheme/file`.
+
+Aftern then it searches every driver in this partition, particularly in `/usr/lib/init.d` and `/etc/init.d`, and if it is found, mounts it and then allows init to continue.
 
 ### Filesystem Init
 
-The filesystem init continues the loading of drivers for all other functionality. This includes audio, networking, and anything not required for storage device access. It's mainly found in `/usr/lib/init.d`. In the redox builder repository, it's configurable in the [config directory](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config).
+The filesystem init continues the loading of drivers for all other functionality. This includes audio, networking, and anything not required for storage device access. It's mainly found in `/usr/lib/init.d`. In the redox builder repository, it's configurable in the [config directory](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config/base.toml). After this, the login prompt is shown.
 
-After this, the login prompt is shown both in the second virtual terminal and the serial driver.
-
-If Orbital is enabled, the display server is launched in the third virtual terminal.
+If Orbital is enabled, the display server is launched.
 
 ## Login
 
 After the init processes have set up drivers and daemons, it is possible for the user to log in to the system. The login program accepts an username, with a default user called `user`, prints the `/etc/motd` file, and then executes the user's login shell, usually `ion`. At this point, the user will now be able to access the [shell](./shell.md)
-
-<!-- TODO: Tell people how to switch between graphics buffer using Super Key -->
 
 ## Graphical overview
 
