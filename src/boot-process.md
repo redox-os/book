@@ -70,7 +70,7 @@ The ramdisk init has the job of loading the drivers and daemons required to acce
 3. Graphics buffers
     - `inputd` virtual terminal (VT) handler, creates `/scheme/input`
     - `vesad` VESA interface handler, creates `/scheme/display.vesa`
-    - `fbbootlogd` forwards log from inputd to VESA
+    - `fbbootlogd` forwards log from logd to VT
     - `fbcond` handles keyboard interaction to VT
 4. Live daemon
     - `lived` livedisk handler, creates `/scheme/disk.live`
