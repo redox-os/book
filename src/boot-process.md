@@ -69,15 +69,15 @@ The ramdisk init has the job of loading the drivers and daemons required to acce
     - `ramfs` loads in-memory FS handling into `/scheme/memory`
 3. Graphics buffers
     - `inputd` virtual terminal (VT) handler, creates `/scheme/input`
-    - `vesad`
-    - `fbbootlogd`
-    - `fbcond`
+    - `vesad` VESA interface handler, creates `/scheme/display.vesa`
+    - `fbbootlogd` forwards log from inputd to VESA
+    - `fbcond` handles keyboard interaction to VT
 4. Live daemon
-    - `lived` loads livedisk handling into `/scheme/memory/physical`
+    - `lived` livedisk handler, creates `/scheme/disk.live`
 5. Drivers in `/etc/init_drivers.rc`
     - `ps2d` loads PS/2 handling into `/scheme/serio`
     - `acpid` loads ACPI handling into `/scheme/kernel.acpi`
-    - `pcid` creates `/scheme/pci`
+    - `pcid` PCI handler, creates `/scheme/pci`
     - `pcid-spawner` spawn drivers depending on available hardware
         - `ahcid` AHCI storage driver
         - `ided` IDE storage driver
@@ -85,13 +85,11 @@ The ramdisk init has the job of loading the drivers and daemons required to acce
         - `virtio-blkd` VirtIO BLK storage driver
         - `virtio-gpud` VirtIO GPU driver
 
-After loading all drivers and daemons above, the `redoxfs` RedoxFS driver is executed with `--uuid $REDOXFS_UUID` where `$REDOXFS_UUID` is the partition chosen by the bootloader and creates `/scheme/file`. The command `set-default-scheme file` then is executed, so that the default path handler is set into `/scheme/file`.
-
-Aftern then it searches every driver in this partition, particularly in `/usr/lib/init.d` and `/etc/init.d`, and if it is found, mounts it and then allows init to continue.
+After loading all drivers and daemons above, the `redoxfs` driver is executed with `--uuid $REDOXFS_UUID` where `$REDOXFS_UUID` is the partition chosen by the bootloader and creates `/scheme/file`. The command `set-default-scheme file` then is executed, so that the default path handler is set into `/scheme/file`.
 
 ### Filesystem Init
 
-The filesystem init continues the loading of drivers for all other functionality. This includes audio, networking, and anything not required for storage device access. It's mainly found in `/usr/lib/init.d`. In the redox builder repository, it's configurable in the [config directory](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config/base.toml). After this, the login prompt is shown.
+The filesystem init continues the loading of drivers for all other functionality. This includes audio, networking, and anything not required for storage device access. The drivers init configuration mainly found in `/usr/lib/init.d` and `/etc/pcid.d`. In the redox builder repository, it's configurable in the [config directory](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/config/base.toml). After this, the login prompt is shown.
 
 If Orbital is enabled, the display server is launched.
 
