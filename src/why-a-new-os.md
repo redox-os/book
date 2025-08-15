@@ -66,6 +66,10 @@ The following items summarize the microkernel benefits:
 
   Most of the system components run in userspace, simplifying the testing and debugging.
 
+- Easy and quick to expand
+
+  New system components and drivers are easily and quickly added as userspace daemons.
+
 You can read more about the above benefits on the [Microkernels](./microkernels.md) page.
 
 ## Advanced Filesystem
