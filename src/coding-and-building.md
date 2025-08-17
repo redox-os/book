@@ -559,6 +559,14 @@ The `drivers` and `drivers-initfs` recipes share the `source` folder, thus your 
 
 (The `recipe.toml` of the `drivers-initfs` recipe use the `same_as` data type to symlink the source, you can read the second line of the [drivers-initfs recipe](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/core/drivers-initfs/recipe.toml?ref_type=heads#L2))
 
+When you're about to test `drivers` change, double check if you're applying for drivers in `drivers-initfs` by checking its recipe file in the former link. If you do, you need to trigger changes for `base-initfs` manually so it can save `initfs` drivers into `base-initfs`:
+
+```sh
+make r.drivers-initfs cr.base-initfs
+```
+
+The same rule also applies when you're about to change `redoxfs`.
+
 ## Development Tips
 
 - Make sure your build system is up-to-date, read the [Update The Build System](./build-system-reference.md#update-the-build-system) section in case of doubt.
