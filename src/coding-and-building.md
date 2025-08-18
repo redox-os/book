@@ -596,7 +596,7 @@ If the code that you are working on includes directives like `#[cfg(target_os = 
 "rust-analyzer.cargo.target": "x86_64-unknown-redox"
 ```
 
-If you are browsing a code that contains native dependencies (e.g. the kernel repository), you might get analyzer errors because of lacking GCC toolchain. To fix it, install [redoxer](https://gitlab.redox-os.org/redox-os/redoxer) and its toolchain `redoxer toolchain`, then add the GCC toolchain to your `PATH` config (e.g. in `~/.bashrc`):
+If you are browsing a codebase that contains native dependencies (e.g. the kernel repository), you might get analyzer errors because of lacking GCC toolchain. To fix it, install [redoxer](https://gitlab.redox-os.org/redox-os/redoxer) and its toolchain `redoxer toolchain`, then add the GCC toolchain to your `PATH` config (e.g. in `~/.bashrc`):
 
 ```sh
 export PATH="$PATH:$HOME/.redoxer/toolchain/bin"
