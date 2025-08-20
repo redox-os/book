@@ -559,6 +559,14 @@ The `drivers` and `drivers-initfs` recipes share the `source` folder, thus your 
 
 (The `recipe.toml` of the `drivers-initfs` recipe use the `same_as` data type to symlink the source, you can read the second line of the [drivers-initfs recipe](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/core/drivers-initfs/recipe.toml?ref_type=heads#L2))
 
+When you're about to test `drivers` change, double check if you're applying for drivers in `drivers-initfs` by checking its recipe file in the former link. If you do, you need to trigger changes for `base-initfs` manually so it can save `initfs` drivers into `base-initfs`:
+
+```sh
+make r.drivers-initfs cr.base-initfs
+```
+
+The same rule also applies when you're about to change `redoxfs`.
+
 ## Development Tips
 
 - Make sure your build system is up-to-date, read the [Update The Build System](./build-system-reference.md#update-the-build-system) section in case of doubt.
@@ -584,9 +592,17 @@ rustup target add x86_64-unknown-redox
 
 If the code that you are working on includes directives like `#[cfg(target_os = "redox)]`, that code will be disabled by default. To enable live syntax and compiler warnings for that code, add the following line to your VS Code config file (`.vscode/settings.json`):
 
-```
+```json
 "rust-analyzer.cargo.target": "x86_64-unknown-redox"
 ```
+
+If you are browsing a codebase that contains native dependencies (e.g. the kernel repository), you might get analyzer errors because of lacking GCC toolchain. To fix it, install [redoxer](https://gitlab.redox-os.org/redox-os/redoxer) and its toolchain `redoxer toolchain`, then add the GCC toolchain to your `PATH` config (e.g. in `~/.bashrc`):
+
+```sh
+export PATH="$PATH:$HOME/.redoxer/toolchain/bin"
+```
+
+The redoxer toolchain is added to the last of `PATH` list to make sure it's not replacing `cargo` that you're using.
 
 ## VS Code Tips and Tricks
 
