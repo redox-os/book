@@ -38,4 +38,6 @@ The listed tools fall into three categories:
 2. **Ecosystem-friendly**, which are there for establishing consistency within the ecosystem.
 3. **Fun**, which are "nice" to have and are inherently simple.
 
-The first category should be obvious: an OS without certain core tools is a useless OS. The second category contains the tools which are likely to be non-default in the future, but nonetheless are in the official distribution right now, for the charm. The third category is there for convenience: namely for making sure that the Redox infrastructure is consistent and integrated.
+The first category should be obvious: an OS without certain core tools is a useless OS.
+The second category is there for convenience: namely for making sure that the Redox infrastructure is consistent and integrated. 
+The third category contains the tools which are likely to be non-default in the future, but nonetheless are in the official distribution right now, for the charm. 
