@@ -6,47 +6,51 @@ The basic philosophy of microkernels is that any component which *can* run in us
 
 The kernel's main task is to act as a medium for communication and segregation of processes. The kernel should provide minimal abstraction over the hardware (that is, drivers, which can and should run in user-space).
 
-Microkernels are more secure and less prone to crashes than monolithic kernels. This is because most kernel components are moved to user-space and use different memory address spaces, and thus can't do damage to the system. Furthermore, microkernels are extremely maintainable, due to their small code size the number of bugs in the kernel is reduced a lot.
+Microkernels are more secure and less prone to crashes and driver bugs than monolithic kernels. This is because most kernel components are moved to user-space and use different memory address spaces, and thus can't do damage to the system. Furthermore, microkernels are extremely maintainable, due to their small code size the number of bugs in the kernel is reduced a lot.
 
 As anything else, microkernels do also have disadvantages.
 
 ## Advantages of microkernels
 
-There are quite a lot of advantages (and disadvantages) with microkernels, a few of which will be covered here.
-
-### Better Modularity and Configuration
-
-Monolithic kernels are, well, monolithic. They do not allow fine-grained control as microkernels. This is due to many essential components being "hard-coded" into the kernel, and thus requiring modifications to the kernel itself (e.g., device drivers).
-
-Microkernels are very modular by nature. You can replace, reload, modify, change, and remove modules, on runtime, without even touching the kernel.
-
-Modern monolithic kernels try to solve this issue using kernel modules but still often require the system to reboot.
-
-### Better Security
-
-Microkernels are undoubtedly more secure than monolithic kernels. The minimality principle of microkernels is a direct consequence of the principle of least privilege, according to which all components should have only the privileges absolutely needed to provide the needed functionality.
-
-Many security-critical bugs in monolithic kernels come from services and drivers running unrestricted in kernel mode, without any form of protection.
-
-In other words: **in monolithic kernels, drivers can do whatever they want, without restrictions, when running in kernel mode**.
+There are quite a lot of advantages (and some disadvantages) with microkernels, a few of which will be covered here.
 
 ### Better Stability
 
-When compared to microkernels, Monolithic kernels tend to be crash-prone. A buggy driver in a Monolithic kernel can crash the whole system because the driver code is running on the same memory address space of the kernel, thus the kernel process can't continue to run (to avoid memory corruption) and crash (kernel panic).
+When compared to microkernels, Monolithic kernels tend to be prone to crashes and driver bugs. A buggy driver in a Monolithic kernel can crash the whole system because the driver code is running on the same memory address space of the kernel, thus the kernel process can't continue to run (to avoid memory corruption) and crash (kernel panic). Or the bugs in a driver can spread to other drivers without causing crashes, which is hard to ensure stability and a headache to investigate the root of the problems.
 
-While in a microkernel the drivers run in different memory address spaces (separation of concerns) which allows the system to handle any crash safely.
+While in a microkernel the drivers run in different memory address spaces (separation of concerns) which allows the system to handle any crash safely and isolate driver bugs.
 
 In Linux we often see errors with drivers dereferencing bad pointers which ultimately results in kernel panics.
 
 There is very good documentation in the [MINIX documentation](http://wiki.minix3.org/doku.php?id=www:documentation:reliability) about how this can be addressed by a microkernel.
 
+### Better Security
+
+Microkernels are undoubtedly more secure than monolithic kernels. The minimality principle of microkernels is a direct consequence of the Principle Of Least Privilege, according to which all components should have only the privileges absolutely needed to provide the needed functionality.
+
+Many security-critical bugs in monolithic kernels come from services and drivers running unrestricted in kernel mode, without any form of protection.
+
+In other words: **in monolithic kernels, drivers can do whatever they want, without restrictions, when running in kernel mode**.
+
+### Better Modularity and Configuration
+
+Monolithic kernels are, well, monolithic. They do not allow fine-grained control like microkernels. This is due to many essential components being "hard-coded" into the kernel, and thus requiring modifications to the kernel itself (e.g., device drivers).
+
+Microkernels are very modular by nature. You can add, replace, reload, modify, change, and remove system components or drivers, on runtime, without even touching the kernel.
+
+Modern monolithic kernels try to solve this issue using kernel modules but still often require the system to reboot.
+
+### Better Expansion
+
+In microkernels new system components and drivers can be easily added using daemons, while in monolithic kernels the entire kernel needs to be updated to add them which can introduce bugs to other system components or drivers.
+
 ### Sane Debugging
 
-In microkernels the kernel components (drivers, filesystems, etc) are moved to user-space, thus bugs on them don't crash the kernel.
+In microkernels most kernel components (drivers, filesystems, etc) are moved to user-space, thus bugs on them don't crash the kernel.
 
-This is very important to debug in real hardware, because if a kernel panic happens, the log can't be saved to find the root of the bug.
+This is very important to debug in real hardware, because if a panic in some system component or driver happens, the log can't be saved to find the root of the bug.
 
-In monolithic kernels, a bug in kernel component will cause a kernel panic and lock the system (if it happens in real hardware, you can't debug without serial output support)
+In monolithic kernels, a bug in a system component or driver can cause a kernel panic and freeze the system (if it happens in real hardware, you can't debug without serial output support)
 
 (Buggy drivers are the main cause of kernel panics)
 

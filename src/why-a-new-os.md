@@ -36,19 +36,19 @@ Thus Redox is an unique opportunity to show the microkernel potential for the ma
 
 The following items summarize the microkernel benefits:
 
-- True modularity
+- More stable and secure
 
-  You can enable/disable/update most system components without a system restart, similar to but safer than some modules on monolithic kernels and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
+  The very small size of the kernel allow the system to be more stable and secure because most system components are isolated in user-space, reducing the chance of a [kernel panic](https://en.wikipedia.org/wiki/Kernel_panic) and the severity of security bugs.
 
 - Bug isolation
 
-  Most system components run in user-space on a microkernel system. Because of this some types of bugs in most system components won't [crash or damage the system or kernel](https://en.wikipedia.org/wiki/Kernel_panic).
+  Most system components run in user-space on a microkernel system. Because of this some types of bugs in most system components and drivers can't spread to other system components or drivers.
 
 - More stable long execution
 
-  When an operating system is left running for a long time (days, months or even years) it will activate many bugs and it's hard to know when they were activated, at some point these bugs can cause data corruption or crash the system.
+  When an operating system is left running for a long time (days, months or even years) it will activate many bugs and it's hard to know when they were activated, at some point these bugs can cause security issues, data corruption or crash the system.
 
-  In a microkernel most system components are isolated and some bug types can't spread to other system components, thus the long execution tend to enable less bugs reducing the data corruption and downtime on servers.
+  In a microkernel most system components are isolated and some bug types can't spread to other system components, thus the long execution tend to enable less bugs reducing the security issues, data corruption and downtime on servers.
 
   Also some system components can be restarted on-the-fly (without a full system restart) to disable the bugs of a long execution.
 
@@ -56,19 +56,19 @@ The following items summarize the microkernel benefits:
 
   A mature microkernel changes very little (except for bug fixes), so you won't need to restart your system very often to update it.
 
-  Since most of the system components are in userspace they can be restarted/updated on-the-fly, reducing the downtime of servers a lot.
-
-- More stable and secure
-
-  The system is more stable and secure because the kernel is much more simple (contain a very small amount of code), reducing the severity and impact of bugs.
+  Since most system components are in userspace they can be restarted/updated on-the-fly, reducing the downtime of servers a lot.
 
 - Easy to develop and debug
 
-  Most of the system components run in userspace, simplifying the testing and debugging.
+  Most system components run in userspace, simplifying the testing and debugging.
 
 - Easy and quick to expand
 
   New system components and drivers are easily and quickly added as userspace daemons.
+
+- True modularity
+
+  You can enable/disable/update most system components without a system restart, similar to but safer than some modules on monolithic kernels and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
 
 You can read more about the above benefits on the [Microkernels](./microkernels.md) page.
 

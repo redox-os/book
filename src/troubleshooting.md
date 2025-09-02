@@ -27,6 +27,7 @@ This page covers all troubleshooting methods and tips for our build system.
 - [Debug Methods](#debug-methods)
     - [Recipes](#recipes)
         - [Rust](#rust)
+        - [GDB](#gdb)
 - [Kill A Frozen Redox VM](#kill-a-frozen-redox-vm)
 - [Kernel Panic](#kernel-panic)
     - [QEMU](#qemu)
@@ -470,6 +471,20 @@ scripts/backtrace.sh -r recipe-name -b your-backtrace.txt
 It will print the file and line number for each entry in the backtrace.
 
 (This is the most simple example command, use the `-h` option of the `backtrace.sh` script to see more combinations)
+
+#### GDB
+
+You can use the following commands to debug a recipe with GDB:
+
+```sh
+make debug.recipe-name
+```
+
+If the recipe has multiple executables use the following command:
+
+```sh
+make debug.recipe-name DEBUG_BIN=executable-name
+```
 
 ## Kill A Frozen Redox VM
 
