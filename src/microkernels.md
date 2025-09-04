@@ -46,11 +46,13 @@ In microkernels new system components and drivers can be easily added using daem
 
 ### Sane Debugging
 
-In microkernels most kernel components (drivers, filesystems, etc) are moved to user-space, thus bugs on them don't crash the kernel.
+In microkernels most kernel components (drivers, filesystems, etc) are moved to user-space, thus bugs on them can't crash the kernel (kernel panic).
 
-This is very important to debug in real hardware, because if a panic in some system component or driver happens, the log can't be saved to find the root of the bug.
+The "component panics" (where "component" is the name of the system component) are more common in microkernels than kernel panics because the kernel code size is very small, the log of a component panic can be saved which ease debugging a lot.
 
-In monolithic kernels, a bug in a system component or driver can cause a kernel panic and freeze the system (if it happens in real hardware, you can't debug without serial output support)
+This is very important to debug in real hardware, because if a kernel panic happens the log can't be saved to find the cause of the bug.
+
+While in monolithic kernels, a bug in a system component or driver can cause a kernel panic and freeze the system (if it happens in real hardware, you can't debug without serial output support)
 
 (Buggy drivers are the main cause of kernel panics)
 
