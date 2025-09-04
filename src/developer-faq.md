@@ -1,6 +1,6 @@
 # Developer FAQ
 
-The [website FAQ](https://www.redox-os.org/faq/) have questions and answers of newcomers and end-users, while this FAQ will cover organization, technical questions and answers of developers and testers, feel free to suggest new questions.
+The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of newcomers and end-users, while this FAQ will cover organization, technical questions and answers of developers and testers, feel free to suggest new questions.
 
 (If all else fails, join us on [Chat](./chat.md))
 
