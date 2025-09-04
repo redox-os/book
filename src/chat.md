@@ -12,9 +12,7 @@ These rooms are English-only, we cannot offer support in other languages because
 
 [Matrix](https://en.wikipedia.org/wiki/Matrix_(protocol)) is an open chat protocol and has several different [clients](https://matrix.org/ecosystem/clients/). [Element](https://element.io/) is a commonly used choice, it works on web browsers, Linux, MacOSX, Windows, Android and iOS.
 
-If you have problems with Element, read the [Troubleshooting Element](#troubleshooting-element) section or try [Fractal](https://gitlab.gnome.org/World/fractal).
-
-## Redox Use of Matrix
+## Rules
 
 We follow the [Rust Code Of Conduct](https://www.rust-lang.org/policies/code-of-conduct) as rules of the chat rooms.
 
@@ -50,7 +48,13 @@ All rooms available on the Redox space:
 - [#redox-voip:matrix.org](https://matrix.to/#/#redox-voip:matrix.org) - A room for voice chat discussions.
 - [#redox-random:matrix.org](https://matrix.to/#/#redox-random:matrix.org) - A room for off-topic discussions.
 
-### Troubleshooting Element
+### Troubleshooting
+
+If you don't to deal with the Element problems, try [Nheko](https://nheko-reborn.github.io/) or [Fractal](https://gitlab.gnome.org/World/fractal).
+
+If you have connection problems see [this](https://status.matrix.org/) website to see if the `matrix.org` homeserver is normal.
+
+#### Element
 
 - Threads on Element have some bugs, typically marking messages as still unread, even after you have read them.
 
