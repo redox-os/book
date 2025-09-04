@@ -25,8 +25,6 @@ This page covers all troubleshooting methods and tips for our build system.
     - [Update Crates](#update-crates)
     - [Verify The Dependency Tree](#verify-the-dependency-tree)
 - [Debug Methods](#debug-methods)
-    - [Recipes](#recipes)
-        - [GDB](#gdb)
 - [Kill A Frozen Redox VM](#kill-a-frozen-redox-vm)
 - [Kernel Panic](#kernel-panic)
     - [QEMU](#qemu)
@@ -403,12 +401,13 @@ export REPO_DEBUG=1
 make cr.recipe-name image
 ```
 
-- Enable the `REPO_DEBUG` environment variable inside the `recipe.toml` :
+- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` (they are equivalent to `REPO_DEBUG` environment variable) inside the `recipe.toml` :
 
 ```toml
 template = "custom"
 script = """
-REPO_DEBUG=1
+COOKBOOK_DEBUG=true
+COOKBOOK_NOSTRIP=true
 cookbook_cargo
 """
 ```
