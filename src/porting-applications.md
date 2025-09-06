@@ -14,6 +14,7 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
         - [Quick Template](#quick-template)
     - [Templates](#templates)
         - [Functions](#functions)
+    - [Metapackages](#metapackages)
     - [Custom Template](#custom-template)
         - [Packaging Behavior](#packaging-behavior)
         - [Cargo script example](#cargo-script-example)
@@ -111,6 +112,10 @@ insert your script here
 """
 [build]
 template = "build-system"
+cargoflags = ""
+configureflags = ""
+cmakeflags = ""
+mesonflags = ""
 dependencies = [
     "library1",
     "library2",
@@ -138,8 +143,12 @@ dependencies = [
 - `"patch1.patch",` (Under the `patches` data type) - The patch file name (can be removed if the `patches` data type above is not present)
 - `same_as = "../program-name"` - Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
 - `source.script` (Under the `[source]` section) - Data type used when you need to change the build system configuration (to regenerate the GNU Autotools configuration, for example)
-- `[build]` - Section for data types that manage the program compilation and packaging (don't remove it)
-- `template = "build-system"` - Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with custom commands)
+- `[build]` - Section for data types that manage the program compilation and packaging
+- `template = "build-system"` - Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with - custom commands)
+- `cargoflags` - Data type for Cargo flags
+- `configureflags` - Data type for GNU Autotools flags
+- `cmakeflags` - Data type for CMake flags
+- `mesonflags` - Data type for Meson flags
 - `build.dependencies = []` (Under the `[build]` section) - Data type to add library dependencies, be it statically linked or dynamically linked
 - `"library1",` - The library name (can be removed if the `dependencies` data type above is not present)
 - `build.script` - Data type to load the custom commands for compilation and packaging
@@ -193,18 +202,19 @@ The Cookbook behavior is for cross-compilation because it allow us to do Redox d
 
 By default Cookbook use the architecture of your host system but you can change it easily on your `.config` file (`ARCH?=` field).
 
-- Don't use a CPU architecture on the `script` data types of your `recipe.toml`, it breaks cross-compilation.
+- Don't use a haredcoded CPU architecture on the `script` data types of your `recipe.toml`, it breaks cross-compilation.
 - All recipes must use our cross-compilers, a Cookbook [template](#templates) does this automatically but it's not always possible, study the build system of your program/library to find these options or patch the configuration files.
 
 ### Environment Variables
 
 If you want to apply changes on the program source/binary you can use these variables on your commands:
 
-- `${COOKBOOK_RECIPE}` - Represents the recipe folder.
-- `${COOKBOOK_SOURCE}` - Represents the `source` folder at `recipe-name/source` (program source).
-- `${COOKBOOK_SYSROOT}` - Represents the `sysroot` folder at `recipe-name/target/your-cpu-arch/sysroot` (library sources).
-- `${COOKBOOK_BUILD}` - Represents the `build` folder at `recipe-name/target/your-cpu-arch/build` (recipe build system).
-- `${COOKBOOK_STAGE}` - Represents the `stage` folder at `recipe-name/target/your-cpu-arch/stage` (recipe binaries).
+- `${TARGET}` - Redox compiler triple target
+- `${COOKBOOK_RECIPE}` - Recipe folder.
+- `${COOKBOOK_SOURCE}` - The `source` folder at `recipe-name/source` (program source).
+- `${COOKBOOK_SYSROOT}` - The `sysroot` folder at `recipe-name/target/your-cpu-arch/sysroot` (library sources).
+- `${COOKBOOK_BUILD}` - The `build` folder at `recipe-name/target/your-cpu-arch/build` (recipe build system).
+- `${COOKBOOK_STAGE}` - The `stage` folder at `recipe-name/target/your-cpu-arch/stage` (recipe binaries).
 
 We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the path.
 
@@ -250,8 +260,10 @@ The template is the build system of the program or library, programs using an GN
 
 (You can't use the `script =` data types if templates are used)
 
-- `template = "cargo"` - Build with Cargo using cross-compilation variables (Rust programs with one package in the Cargo workspace).
-- `template = "configure"` - Build with GNU Autotools/GNU Make using cross-compilation variables.
+- `template = "cargo"` - Build with Cargo using cross-compilation (Rust programs with one package in the Cargo workspace).
+- `template = "configure"` - Build with GNU Autotools/GNU Make using cross-compilation.
+- `template = "cmake"` - Build with CMake using cross-compilation.
+- `template = "meson"` - Build with Meson using cross-compilation.
 - `template = "custom"` - Run your commands on the `script =` field and build (Any build system or installation process).
 
 The `script =` field runs any terminal command, it's important if the build system of the program don't support cross-compilation or need custom options that Cookbook don't support.
@@ -268,6 +280,18 @@ Each template has a Bash function to be used in the `script` data type when you 
 - `cookbook_configure` - Bash function of the `configure` template
 - `cookbook_cmake` - Bash function of the `cmake` template
 - `cookbook_meson` - Bash function of the `meson` template
+
+### Metapackages
+
+Use the following recipe template to create a metapackage:
+
+```toml
+[package]
+dependencies = [
+    "package1",
+    "package2",
+]
+```
 
 ### Custom Template
 

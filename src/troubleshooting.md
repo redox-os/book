@@ -25,8 +25,6 @@ This page covers all troubleshooting methods and tips for our build system.
     - [Update Crates](#update-crates)
     - [Verify The Dependency Tree](#verify-the-dependency-tree)
 - [Debug Methods](#debug-methods)
-    - [Recipes](#recipes)
-        - [Rust](#rust)
 - [Kill A Frozen Redox VM](#kill-a-frozen-redox-vm)
 - [Kernel Panic](#kernel-panic)
     - [QEMU](#qemu)
@@ -375,60 +373,35 @@ You will see the available debug methods for recipes on this section.
 
 Rust programs can carry assertions, checking and symbols, but they are disabled by default.
 
-- `COOKBOOK_DEBUG` - This environment variable will build the Rust program with assertions, checking and symbols.
-- `COOKBOOK_NOSTRIP` - This environment variable will package the recipe with symbols.
+- `REPO_DEBUG` - This environment variable will build the Rust program with assertions, checking and symbols.
 
 (Debugging with symbols inside of Redox is not supported yet)
 
-To enable them you can use these commands or scripts:
+To enable them you can use the following commands or scripts:
 
-- Enable the `COOKBOOK_DEBUG` environment variable for one command and build a recipe:
+- Permanently enable `REPO_DEBUG` for all recipes by adding the following text to your `.config` file:
 
-```sh
-COOKBOOK_DEBUG=true make r.recipe-name
+```
+REPO_DEBUG?=1
 ```
 
-- Enable the `COOKBOOK_DEBUG` environment variable for multiple commands and build a recipe:
+- Enable the `REPO_DEBUG` environment variable for one command, rebuild/package a recipe and add to the Redox image:
 
 ```sh
-export COOKBOOK_DEBUG=true
+REPO_DEBUG=1 make cr.recipe-name image
 ```
 
-```sh
-make r.recipe-name
-```
-
-- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` environment variables for one command and build a recipe:
+- Enable the `REPO_DEBUG` environment variable for multiple commands, rebuild/package a recipe and add to the Redox image:
 
 ```sh
-COOKBOOK_DEBUG=true COOKBOOK_NOSTRIP=true make r.recipe-name
-```
-
-- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` environment variables for multiple commands and build a recipe:
-
-```sh
-export COOKBOOK_DEBUG=true
+export REPO_DEBUG=1
 ```
 
 ```sh
-export COOKBOOK_NOSTRIP=true
+make cr.recipe-name image
 ```
 
-```sh
-make r.recipe-name
-```
-
-- Enable the `COOKBOOK_DEBUG` environment variable inside the `recipe.toml`:
-
-```toml
-template = "custom"
-script = """
-COOKBOOK_DEBUG=true
-cookbook_cargo
-"""
-```
-
-- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` environment variables inside the `recipe.toml`:
+- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` (they are equivalent to `REPO_DEBUG` environment variable) inside the `recipe.toml` :
 
 ```toml
 template = "custom"
@@ -471,6 +444,40 @@ It will print the file and line number for each entry in the backtrace.
 
 (This is the most simple example command, use the `-h` option of the `backtrace.sh` script to see more combinations)
 
+#### GDB On QEMU
+
+Use the following instructions to debug a Rust recipe with GDB:
+
+- Add the following environment variable to your `.config` file:
+
+```
+REPO_DEBUG?=1
+```
+
+- Rebuild the recipe with assertions/checking/symbols and add into Redox image:
+
+```sh
+make cr.recipe-name image
+```
+
+- Start QEMU with GDB enabled:
+
+```sh
+make qemu gdb=yes
+```
+
+If the recipe has one executable, run the following command:
+
+```sh
+make debug.recipe-name
+```
+
+If the recipe has multiple executables use the following command:
+
+```sh
+make debug.recipe-name DEBUG_BIN=executable-name
+```
+
 ## Kill A Frozen Redox VM
 
 Sometimes Redox can freeze or rarely get a kernel panic, to kill the QEMU process run this command:
@@ -481,7 +488,7 @@ pkill qemu-system
 
 ## Kernel Panic
 
-A kernel panic is when some bug avoid the safe execution of the kernel code, thus the system needs to be restarted to avoid data corruption.
+A kernel panic is when some bug avoid the safe execution of the kernel code, thus the system needs to be restarted to avoid memory corruption.
 
 We use the following kernel panic message format:
 
