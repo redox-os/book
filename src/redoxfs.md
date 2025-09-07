@@ -19,3 +19,47 @@ Current features:
 - MIT licensed
 
 Being MIT licensed, RedoxFS can be bundled on GPL-licensed operating systems (Linux, for example).
+
+## RedoxFS Tooling
+
+RedoxFS tooling can be used to create, mount and edit contents of an `.img` file containing RedoxFS. It can be installed with:
+
+```sh
+cargo install redoxfs
+```
+
+If you found errors while installing it, make sure to install `fuse3`.
+
+### Create a disk
+
+You can create an empty, non bootable RedoxFS by allocating an empty file with `fallocate` then run `redoxfs-mkfs` to initialize the whole image as `RedoxFS`.
+
+```sh
+fallocate -l 1G redox.img
+```
+
+```sh
+redoxfs-mkfs redox.img
+```
+
+### Mount a disk
+
+To mount the disk, run `redoxfs [image] [directory]`:
+
+```sh
+mkdir ./redox-img
+```
+
+```sh
+redoxfs redox.img ./redox-img
+```
+
+It will mount the disk using FUSE underneath.
+
+### Unmount
+
+Unmount the disk using FUSE unmount binary:
+
+```sh
+fusermount3 ./redox-img
+```
