@@ -20,7 +20,7 @@ Current features:
 
 Being MIT licensed, RedoxFS can be bundled on GPL-licensed operating systems (Linux, for example).
 
-## RedoxFS Tooling
+## Tooling
 
 RedoxFS tooling can be used to create, mount and edit contents of an `.img` file containing RedoxFS. It can be installed with:
 
