@@ -77,8 +77,6 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of n
 
 ### Why does Redox have unsafe Rust code?
 
-It is an important goal for Redox to minimize the amount of `unsafe` Rust code.
-
 In some cases we must use `unsafe`, for example at certain points in the kernel and drivers, these unsafe parts are generally wrapped with a safe interface.
 
 These are the cases where unsafe Rust is mandatory:
@@ -89,7 +87,14 @@ These are the cases where unsafe Rust is mandatory:
 - Working with memory mapping and stack allocation
 - Working with hardware devices
 
-If you want to use unsafe Rust code on Redox anywhere other than interfacing with system calls, ask for Jeremy Soller's approval before.
+It is an important goal for Redox to minimize the amount of `unsafe` Rust code. If you want to use unsafe Rust code on Redox anywhere other than interfacing with system calls, ask for Jeremy Soller's approval before.
+
+Unsafe Rust still has most of the compiler verification (thus more safe than C and C++).
+
+Read the following pages to learn more about Unsafe Rust:
+
+- https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html
+- https://doc.rust-lang.org/nomicon/meet-safe-and-unsafe.html
 
 ### Why does Redox have Assembly code?
 
