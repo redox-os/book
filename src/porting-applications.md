@@ -232,7 +232,7 @@ To find the supported Cookbook terminal commands, look the recipes using a `scri
 
 ### Metapackages
 
-Metapackages is a package without any files, just dependencies. Use the following recipe template to create a metapackage:
+Metapackages are packages without any files, just dependencies. Use the following recipe template to create a metapackage:
 
 ```toml
 [package]
@@ -244,7 +244,7 @@ dependencies = [
 
 ## Cookbook - Custom Template
 
-The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell. The shell script will be wrapped with a lot of Bash function and variables to aid build script, the wrapper can be found on [the cookbook script](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/src/bin/cook.rs).
+The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell. The shell script will be wrapped with Bash functions and variables to aid build script. The wrapper can be found in [the cookbook script](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/src/bin/cook.rs).
 
 
 - Script example
