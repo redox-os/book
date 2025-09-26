@@ -20,7 +20,7 @@ This page covers all troubleshooting methods and tips for our build system.
     - [Environment Leakage](#environment-leakage)
     - [Update Your Build System](#update-your-build-system)
     - [Update Relibc](#update-relibc)
-    - [Fix Breaking Changes](#fix-breaking-changes)
+    - [Prevent and Fix Breaking Changes](#prevent-and-fix-breaking-changes)
     - [Update Your Branch](#update-your-branch)
     - [Update Crates](#update-crates)
     - [Verify The Dependency Tree](#verify-the-dependency-tree)
