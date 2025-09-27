@@ -20,7 +20,7 @@ This page covers all troubleshooting methods and tips for our build system.
     - [Environment Leakage](#environment-leakage)
     - [Update Your Build System](#update-your-build-system)
     - [Update Relibc](#update-relibc)
-    - [Fix Breaking Changes](#fix-breaking-changes)
+    - [Prevent and Fix Breaking Changes](#prevent-and-fix-breaking-changes)
     - [Update Your Branch](#update-your-branch)
     - [Update Crates](#update-crates)
     - [Verify The Dependency Tree](#verify-the-dependency-tree)
@@ -197,27 +197,11 @@ Sometimes your build system can be outdated because you forgot to run `make pull
 
 An outdated relibc copy can contain bugs (already fixed on recent versions) or missing APIs, read [this](./build-system-reference.md#update-relibc) section to learn how to update it.
 
-### Fix Breaking Changes
+### Prevent and Fix Breaking Changes
 
-- Build System
+Sometimes build system or recipe breaking changes are merged (you need to monitor the Dev room in our [chat](./chat.md) to know if some commit or MR containing breaking changes were merged) and you need to cleanup your recipe or build system tooling binaries before the recipe or build system source updates to avoid conflicts with the new configuration.
 
-Sometimes build system breaking changes are merged (you need to monitor the Dev room in our [chat](./chat.md) to know if some MRs containing breaking changes were merged) and you need to cleanup most of your build system files to avoid conflicts with the new configuration, the `make distclean pull all` command should work in most cases because it wipe sources and binaries that can cause conflicts after the build system update.
-
-If the method above doesn't work you need to download a new copy of the build system by running the `podman_bootstrap.sh` or `native_bootstrap.sh` scripts or using the following commands:
-
-```sh
-git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
-```
-
-```sh
-cd redox
-```
-
-```sh
-make all
-```
-
-- Recipes
+#### Recipe Fixing
 
 Some types of recipe errors can be backwards-incompatible build system, system component or relibc changes after the `make pull rebuild` command execution. Run the following tests to verify if the recipe error is an isolated problem or a breaking change:
 
@@ -259,23 +243,81 @@ rm -rf prefix
 make prefix cr.recipe-name
 ```
 
-Check if the compilation or runtime error continues after this command, if the error continues run the following test:
+Check if the compilation or runtime error continues after this command, if the error continues read the section below.
 
-- Wipe the build system binaries, update the build system configuration and build the system (download the Redox toolchain, build the build system tools and recipe sources)
+#### Build System Breakage Prevention
+
+The following methods can prevent a build system breakage after updates that change file configuration behavior.
+
+- Wipe all recipe binaries, update build system source and rebuild the system (most common prevention)
+
+```sh
+make clean pull all
+```
+
+- Wipe the build system binaries, Podman container, and filesystem tooling binaries, update build system source and rebuild the system (full build system binary cleanup and special prevention)
+
+```sh
+make clean container_clean fstools_clean pull all
+```
+
+- Wipe all recipe binaries/sources, update build system source and rebuild the system (least common prevention)
+
+```sh
+make distclean pull all
+```
+
+#### Build System Fixing
+
+If the breaking change affect multiple recipes or any recipe can't be built, read the following instructions:
+
+- Wipe the build system binaries and build the system (most common fix)
 
 ```sh
 make clean all
 ```
 
-Check if the compilation or runtime error continues after this command, if the error continues it very probably doesn't happen because of breaking changes but there's not common exception for source breaking changes in the following test:
+Check if the compilation or runtime error continues after this command, if the error continues run the command below:
 
-- Wipe the build system sources and binaries, update the build system configuration and build the system (download the Redox toolchain, build the build system tools, download the recipe sources and build them)
+- Wipe and rebuild the filesystem tooling
+
+```sh
+make fstools_clean fstools
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the command below:
+
+- Wipe the Podman container (not common fix)
+
+```sh
+make container_clean
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the command below:
+
+- Wipe the build system sources and binaries and build the system (least common fix)
 
 ```sh
 make distclean all
 ```
 
-Check if the compilation or runtime error continues after this command, if the error continues it doesn't happen because of breaking changes
+Check if the compilation or runtime error continues after this command, if the error continues it doesn't happen because of breaking changes on the build system.
+
+#### New Build System Copy
+
+If the methods above doesn't work you need to download a new copy of the build system by running the `podman_bootstrap.sh` or `native_bootstrap.sh` scripts or using the following commands:
+
+```sh
+git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
+```
+
+```sh
+cd redox
+```
+
+```sh
+make all
+```
 
 ### Update Your Branch
 
