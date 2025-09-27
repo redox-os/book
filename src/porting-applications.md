@@ -203,7 +203,7 @@ The Cookbook behavior is for cross-compilation because it allow us to do Redox d
 
 By default Cookbook use the architecture of your host system but you can change it easily on your `.config` file (`ARCH?=` field).
 
-- Don't use a haredcoded CPU architecture on the `script` data types of your `recipe.toml`, it breaks cross-compilation.
+- Don't use a hardcoded CPU architecture on the `script` data types of your `recipe.toml`, it breaks cross-compilation.
 - All recipes must use our cross-compilers, a Cookbook [template](#templates) does this automatically but it's not always possible, study the build system of your program/library to find these options or patch the configuration files.
 
 ### Templates
@@ -220,7 +220,7 @@ The template is the build system of the program or library, programs using an GN
 
 The `script =` field runs any terminal command, it's important if the build system of the program don't support cross-compilation or need custom options that Cookbook don't support.
 
-Each template (except `custom`) script supports flags, you can add flags as an array of string
+Each template (except `custom`) script supports flags, you can add flags as an array of strings
 - `cargoflags = "foo"`
 - `configureflags = [ "foo" ]`
 - `cmakeflags = [ "foo" ]`
@@ -244,7 +244,7 @@ dependencies = [
 
 ## Cookbook - Custom Template
 
-The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell. The shell script will be wrapped with Bash functions and variables to aid build script. The wrapper can be found in [the cookbook script](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/src/bin/cook.rs).
+The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell. The shell script will be wrapped with Bash functions and variables to aid build script. The wrapper can be found in [this Cookbook source file](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/src/bin/cook.rs).
 
 
 - Script example
@@ -257,7 +257,7 @@ second-command
 """
 ```
 
-The script section start at the location of the `${COOKBOOK_BUILD}` environment variable (`recipe-name/target/$TARGET/build`). This `${COOKBOOK_BUILD}` will be an empty folder, while recipes sources is in `${COOKBOOK_SOURCE}`. It is expected that the build script not modify anything in `${COOKBOOK_SOURCE}`, otherwise, please use `source.script = ` data type.
+The script section starts at the location of the `${COOKBOOK_BUILD}` environment variable (`recipe-name/target/$TARGET/build`). This `${COOKBOOK_BUILD}` will be an empty folder, while recipe sources are in `${COOKBOOK_SOURCE}`. It is expected that the build script will not modify anything in `${COOKBOOK_SOURCE}`, otherwise, please use the `source.script = ` data type.
 
 ### Functions
 
@@ -267,30 +267,29 @@ Each template has a Bash function to be used in the `script` data type when you 
 - `cookbook_configure` - Bash function of the `configure` template
 - `cookbook_cmake` - Bash function of the `cmake` template
 - `cookbook_meson` - Bash function of the `meson` template
-- `DYNAMIC_INIT` - Bash function to configure the recipe into dynamically linked
-- `DYNAMIC_STATIC_INIT` - Bash function to configure the recipe into both statically and dynamically linked (library recipe only)
+- `DYNAMIC_INIT` - Bash function to configure the recipe to be dynamically linked
+- `DYNAMIC_STATIC_INIT` - Bash function to configure the recipe to be both statically and dynamically linked (library recipe only)
 
 ### Environment Variables
 
 These variables available in the script:
 
 - `${TARGET}` - Redox compiler triple target (`$ARCH-unknown-redox`)
-- `${GNU_TARGET}` - Redox compiler triple target, GNU version
-- `${COOKBOOK_MAKE_JOBS}` - Total CPU available
+- `${GNU_TARGET}` - Redox compiler triple target (GNU variant)
+- `${COOKBOOK_MAKE_JOBS}` - Total CPU threads available
 - `${COOKBOOK_RECIPE}` - Recipe folder.
-- `${COOKBOOK_ROOT}` - The cookbook directory.
+- `${COOKBOOK_ROOT}` - The Cookbook directory.
 - `${COOKBOOK_SOURCE}` - The `source` folder at `recipe-name/source` (program source).
 - `${COOKBOOK_SYSROOT}` - The `sysroot` folder at `recipe-name/target/$TARGET/sysroot` (library sources).
 - `${COOKBOOK_BUILD}` - The `build` folder at `recipe-name/target/$TARGET/build` (recipe build system).
 - `${COOKBOOK_STAGE}` - The `stage` folder at `recipe-name/target/$TARGET/stage` (recipe binaries).
 
-For RISC-V, `${TARGET}` and `${GNU_TARGET}` is `riscv64-unknown-redox` and `riscv64gc-unknown-redox`, usually you want `${TARGET}` unless the script requires GNU triple.
+- For RISC-V, `${TARGET}` and `${GNU_TARGET}` is `riscv64-unknown-redox` and `riscv64gc-unknown-redox`, usually you want `${TARGET}` unless the script requires a GNU target triple.
+- To get `$ARCH`, you need to add `ARCH="${TARGET%%-*}"` to the beginning of the script. 
 
-To get `$ARCH`, you need to add `ARCH="${TARGET%%-*}"` to the beginning of the script. 
+There are more variables depending on the build script that you are using, read more below.
 
-There are more variables depending on the build script that you'll be using, read more below.
-
-We recommend that you use path variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the path.
+We recommend that you use path environment variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the path.
 
 Example:
 
@@ -486,7 +485,7 @@ PACKAGE_PATH="subfolder" cookbook_cargo "${COOKBOOK_CARGO_FLAGS[@]}"
 """
 ```
 
-If the project is roughly a simple cargo project then `cookbook_cargo` is all that you need.
+If the project is roughly a simple Cargo project then `cookbook_cargo` is all that you need.
 
 ```toml
 script = """
