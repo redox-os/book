@@ -202,7 +202,7 @@ The Cookbook behavior is for cross-compilation because it allow us to do Redox d
 
 By default Cookbook use the architecture of your host system but you can change it easily on your `.config` file (`ARCH?=` field).
 
-- Don't use a haredcoded CPU architecture on the `script` data types of your `recipe.toml`, it breaks cross-compilation.
+- Don't use a hardcoded CPU architecture on the `script` data types of your `recipe.toml`, it breaks cross-compilation.
 - All recipes must use our cross-compilers, a Cookbook [template](#templates) does this automatically but it's not always possible, study the build system of your program/library to find these options or patch the configuration files.
 
 ### Environment Variables
