@@ -284,7 +284,7 @@ These variables available in the script:
 - `${COOKBOOK_BUILD}` - The `build` folder at `recipe-name/target/$TARGET/build` (recipe build system).
 - `${COOKBOOK_STAGE}` - The `stage` folder at `recipe-name/target/$TARGET/stage` (recipe binaries).
 
-- For RISC-V, `${TARGET}` and `${GNU_TARGET}` is `riscv64-unknown-redox` and `riscv64gc-unknown-redox`, usually you want `${TARGET}` unless the script requires a GNU target triple.
+- For RISC-V, `${TARGET}` and `${GNU_TARGET}` is `riscv64gc-unknown-redox` and `riscv64-unknown-redox`, usually you want `${TARGET}` unless the script requires a GNU target triple.
 - To get `$ARCH`, you need to add `ARCH="${TARGET%%-*}"` to the beginning of the script. 
 
 There are more variables depending on the build script that you are using, read more below.
