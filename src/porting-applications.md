@@ -10,17 +10,18 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
 - [Cookbook](#cookbook)
     - [Cross Compiler](#cross-compiler)
     - [Cross Compilation](#cross-compilation)
+    - [Templates](#templates)
+    - [Metapackages](#metapackages)
+- [Cookbook - Custom Template](#cookbook-custom-template)
+    - [Functions](#functions)
     - [Environment Variables](#environment-variables)
         - [Quick Template](#quick-template)
-    - [Templates](#templates)
-        - [Functions](#functions)
-    - [Metapackages](#metapackages)
-    - [Custom Template](#custom-template)
-        - [Packaging Behavior](#packaging-behavior)
-        - [Cargo script example](#cargo-script-example)
-        - [GNU Autotools script example](#gnu-autotools-script-example)
-        - [GNU Autotools configuration script example](#gnu-autotools-configuration-script-example)
-        - [CMake script example](#cmake-script-example)
+    - [Packaging Behavior](#packaging-behavior)
+        - [GNU Autotools script](#gnu-autotools-script)
+        - [GNU Autotools configuration script](#gnu-autotools-configuration-script)
+        - [CMake script](#cmake-script)
+        - [Meson script](#meson-script)
+    - [Cargo script](#cargo-script)
         - [Analyze the source code of a Rust program](#analyze-the-source-code-of-a-rust-program)
         - [Cargo packages command example](#cargo-packages-command-example)
             - [Cargo package with flags](#cargo-package-with-flags)
@@ -113,9 +114,9 @@ insert your script here
 [build]
 template = "build-system"
 cargoflags = ""
-configureflags = ""
-cmakeflags = ""
-mesonflags = ""
+configureflags = [ "" ]
+cmakeflags = [ "" ]
+mesonflags = [ "" ]
 dependencies = [
     "library1",
     "library2",
@@ -145,10 +146,10 @@ dependencies = [
 - `source.script` (Under the `[source]` section) - Data type used when you need to change the build system configuration (to regenerate the GNU Autotools configuration, for example)
 - `[build]` - Section for data types that manage the program compilation and packaging
 - `template = "build-system"` - Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with - custom commands)
-- `cargoflags` - Data type for Cargo flags
-- `configureflags` - Data type for GNU Autotools flags
-- `cmakeflags` - Data type for CMake flags
-- `mesonflags` - Data type for Meson flags
+- `cargoflags` - Data type for Cargo flags (string)
+- `configureflags` - Data type for GNU Autotools flags (array)
+- `cmakeflags` - Data type for CMake flags (array)
+- `mesonflags` - Data type for Meson flags (array)
 - `build.dependencies = []` (Under the `[build]` section) - Data type to add library dependencies, be it statically linked or dynamically linked
 - `"library1",` - The library name (can be removed if the `dependencies` data type above is not present)
 - `build.script` - Data type to load the custom commands for compilation and packaging
@@ -202,57 +203,8 @@ The Cookbook behavior is for cross-compilation because it allow us to do Redox d
 
 By default Cookbook use the architecture of your host system but you can change it easily on your `.config` file (`ARCH?=` field).
 
-- Don't use a haredcoded CPU architecture on the `script` data types of your `recipe.toml`, it breaks cross-compilation.
+- Don't use a hardcoded CPU architecture on the `script` data types of your `recipe.toml`, it breaks cross-compilation.
 - All recipes must use our cross-compilers, a Cookbook [template](#templates) does this automatically but it's not always possible, study the build system of your program/library to find these options or patch the configuration files.
-
-### Environment Variables
-
-If you want to apply changes on the program source/binary you can use these variables on your commands:
-
-- `${TARGET}` - Redox compiler triple target
-- `${COOKBOOK_RECIPE}` - Recipe folder.
-- `${COOKBOOK_SOURCE}` - The `source` folder at `recipe-name/source` (program source).
-- `${COOKBOOK_SYSROOT}` - The `sysroot` folder at `recipe-name/target/your-cpu-arch/sysroot` (library sources).
-- `${COOKBOOK_BUILD}` - The `build` folder at `recipe-name/target/your-cpu-arch/build` (recipe build system).
-- `${COOKBOOK_STAGE}` - The `stage` folder at `recipe-name/target/your-cpu-arch/stage` (recipe binaries).
-
-We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the path.
-
-Example:
-
-```
-"${VARIABLE_NAME}"
-```
-
-If you have a folder inside the variable folder you can call it with:
-
-```
-"${VARIABLE_NAME}"/folder-name
-```
-Or
-```
-"${VARIABLE_NAME}/folder-name"
-```
-
-#### Quick Template
-
-You can quickly copy these environment variables from this section.
-
-```
-"${COOKBOOK_SOURCE}/"
-```
-
-```
-"${COOKBOOK_BUILD}/"
-```
-
-```
-"${COOKBOOK_SYSROOT}/"
-```
-
-```
-"${COOKBOOK_STAGE}/"
-```
 
 ### Templates
 
@@ -268,22 +220,19 @@ The template is the build system of the program or library, programs using an GN
 
 The `script =` field runs any terminal command, it's important if the build system of the program don't support cross-compilation or need custom options that Cookbook don't support.
 
+Each template (except `custom`) script supports flags, you can add flags as an array of strings
+- `cargoflags = "foo"`
+- `configureflags = [ "foo" ]`
+- `cmakeflags = [ "foo" ]`
+- `mesonflags = [ "foo" ]`
+
 To find the supported Cookbook terminal commands, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
 
 - [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
 
-#### Functions
-
-Each template has a Bash function to be used in the `script` data type when you need to customize the template configuration to fix the program compilation or enable/disable features.
-
-- `cookbook_cargo` - Bash function of the `cargo` template
-- `cookbook_configure` - Bash function of the `configure` template
-- `cookbook_cmake` - Bash function of the `cmake` template
-- `cookbook_meson` - Bash function of the `meson` template
-
 ### Metapackages
 
-Use the following recipe template to create a metapackage:
+Metapackages are packages without any files, just dependencies. Use the following recipe template to create a metapackage:
 
 ```toml
 [package]
@@ -293,24 +242,95 @@ dependencies = [
 ]
 ```
 
-### Custom Template
+## Cookbook - Custom Template
 
-The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell.
+The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell. The shell script will be wrapped with Bash functions and variables to aid build script. The wrapper can be found in [this Cookbook source file](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/src/bin/cook.rs).
 
-The script section start at the location of the `${COOKBOOK_BUILD}` environment variable (`recipe-name/target/your-cpu-arch/build`)
 
 - Script example
 
 ```toml
+[build]
 script = """
 first-command
 second-command
 """
 ```
 
-#### Packaging Behavior
+The script section starts at the location of the `${COOKBOOK_BUILD}` environment variable (`recipe-name/target/$TARGET/build`). This `${COOKBOOK_BUILD}` will be an empty folder, while recipe sources are in `${COOKBOOK_SOURCE}`. It is expected that the build script will not modify anything in `${COOKBOOK_SOURCE}`, otherwise, please use the `source.script = ` data type.
 
-The Cookbook download the recipe sources on the `source` folder (`recipe-name/source`), copy the contents of this folder to the `build` folder (`recipe-name/target/your-cpu-arch/build`), build the sources and move the binaries to the `stage` folder (`recipe-name/target/your-cpu-arch/stage`).
+### Functions
+
+Each template has a Bash function to be used in the `script` data type when you need to customize the template configuration to fix the program compilation or enable/disable features.
+
+- `cookbook_cargo` - Bash function of the `cargo` template
+- `cookbook_configure` - Bash function of the `configure` template
+- `cookbook_cmake` - Bash function of the `cmake` template
+- `cookbook_meson` - Bash function of the `meson` template
+- `DYNAMIC_INIT` - Bash function to configure the recipe to be dynamically linked
+- `DYNAMIC_STATIC_INIT` - Bash function to configure the recipe to be both statically and dynamically linked (library recipe only)
+
+### Environment Variables
+
+These variables available in the script:
+
+- `${TARGET}` - Redox compiler triple target (`$ARCH-unknown-redox`)
+- `${GNU_TARGET}` - Redox compiler triple target (GNU variant)
+- `${COOKBOOK_MAKE_JOBS}` - Total CPU threads available
+- `${COOKBOOK_RECIPE}` - Recipe folder.
+- `${COOKBOOK_ROOT}` - The Cookbook directory.
+- `${COOKBOOK_SOURCE}` - The `source` folder at `recipe-name/source` (program source).
+- `${COOKBOOK_SYSROOT}` - The `sysroot` folder at `recipe-name/target/$TARGET/sysroot` (library sources).
+- `${COOKBOOK_BUILD}` - The `build` folder at `recipe-name/target/$TARGET/build` (recipe build system).
+- `${COOKBOOK_STAGE}` - The `stage` folder at `recipe-name/target/$TARGET/stage` (recipe binaries).
+
+- For RISC-V, `${TARGET}` and `${GNU_TARGET}` is `riscv64gc-unknown-redox` and `riscv64-unknown-redox`, usually you want `${TARGET}` unless the script requires a GNU target triple.
+- To get `$ARCH`, you need to add `ARCH="${TARGET%%-*}"` to the beginning of the script. 
+
+There are more variables depending on the build script that you are using, read more below.
+
+We recommend that you use path environment variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the path.
+
+Example:
+
+```sh
+"${VARIABLE_NAME}"
+```
+
+If you have a folder inside the variable folder you can call it with:
+
+```sh
+"${VARIABLE_NAME}"/folder-name
+```
+Or
+```sh
+"${VARIABLE_NAME}/folder-name"
+```
+
+#### Quick Template
+
+You can quickly copy these environment variables from this section.
+
+```sh
+"${COOKBOOK_SOURCE}/"
+```
+
+```sh
+"${COOKBOOK_BUILD}/"
+```
+
+```sh
+"${COOKBOOK_SYSROOT}/"
+```
+
+```sh
+"${COOKBOOK_STAGE}/"
+```
+
+
+### Packaging Behavior
+
+The Cookbook download the recipe sources on the `source` folder (`recipe-name/source`), copy the contents of this folder to the `build` folder (`recipe-name/target/$TARGET/build`), build the sources and move the binaries to the `stage` folder (`recipe-name/target/$TARGET/stage`).
 
 If your recipe has library dependencies, it will copy the library source and linker objects to the `sysroot` folder to be used by the `build` folder.
 
@@ -326,33 +346,15 @@ You can see path examples for most customized recipes below:
 "${COOKBOOK_STAGE}"/usr/lib # The folder where all static and shared library objects go
 ```
 
-#### Cargo script example
+#### GNU Autotools script
 
-Use this script if you need to customize the `cookbook_cargo` function.
+Use this script if the program or library need to be compiled with `configure` and `make`
 
-```toml
-script = """
-COOKBOOK_CARGO="${COOKBOOK_REDOXER}"
-COOKBOOK_CARGO_FLAGS=(
-    --path "${COOKBOOK_SOURCE}"
-    --root "${COOKBOOK_STAGE}"
-    --locked
-    --no-track
-)
-function cookbook_cargo {
-    "${COOKBOOK_CARGO}" install "${COOKBOOK_CARGO_FLAGS[@]}"
-}
-"""
-```
-
-#### GNU Autotools script example
-
-Use this script if the program or library need flags, change or copy and paste the "--program-flag" according to your needs.
-
-Keep in mind that some programs and libraries need more configuration to work.
+- Configure with dynamic linking
 
 ```toml
 script = """
+DYNAMIC_INIT
 COOKBOOK_CONFIGURE_FLAGS+=(
     --program-flag
 )
@@ -360,67 +362,137 @@ cookbook_configure
 """
 ```
 
-#### GNU Autotools configuration script example
-
-If you are using a program tarball or repository lacking the `configure` script you will need to generate this script.
-
-- Add the following code below the `[source]` section
-
-```toml
-script = "./autogen.sh"
-```
-
-#### CMake script example
-
-Use this script for programs using the CMake build system, more CMake options can be added with a `-D` before them, the customization of CMake compilation is very easy.
-
-Keep in mind that some programs and libraries need more configuration to work.
-
-(Replace the `cookbook_configure` function with the `cookbook_cmake` function if the program build system don't use GNU Make)
-
-- CMake and GNU Make using dynamic linking
+- Run make without configure
 
 ```toml
 script = """
 DYNAMIC_INIT
-COOKBOOK_CONFIGURE="cmake"
-COOKBOOK_CONFIGURE_FLAGS=(
-    -DCMAKE_BUILD_TYPE=Release
-    -DCMAKE_CROSSCOMPILING=True
-    -DCMAKE_CXX_COMPILER="${TARGET}-g++"
-    -DCMAKE_C_COMPILER="${TARGET}-gcc"
-    -DCMAKE_INSTALL_PREFIX="/"
-    -DCMAKE_PREFIX_PATH="${COOKBOOK_SYSROOT}"
-    -DCMAKE_SYSTEM_NAME=Generic
-    -DCMAKE_SYSTEM_PROCESSOR="$(echo "${TARGET}" | cut -d - -f1)"
-    -DCMAKE_VERBOSE_MAKEFILE=On
-"${COOKBOOK_SOURCE}"
+COOKBOOK_CONFIGURE_FLAGS+=(
+    --program-flag
 )
+COOKBOOK_CONFIGURE="true"
+
+rsync -av --delete "${COOKBOOK_SOURCE}/" ./
 cookbook_configure
 """
 ```
 
-- CMake and GNU Make using static linking
+Definition of `cookbook_configure` is roughly:
+
+```sh
+function cookbook_configure {
+    "${COOKBOOK_CONFIGURE}" "${COOKBOOK_CONFIGURE_FLAGS[@]}" "$@"
+    "${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}"
+    "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}"
+}
+```
+
+#### GNU Autotools configuration script
+
+Sometimes the program tarball or repository is lacking the `configure` script, so you will need to generate this script.
+
+- Add the following code below the `[source]` section
 
 ```toml
 script = """
-COOKBOOK_CONFIGURE="cmake"
-COOKBOOK_CONFIGURE_FLAGS=(
-    -DCMAKE_BUILD_TYPE=Release
-    -DCMAKE_CROSSCOMPILING=True
-    -DCMAKE_CXX_COMPILER="${TARGET}-g++"
-    -DCMAKE_C_COMPILER="${TARGET}-gcc"
-    -DCMAKE_EXE_LINKER_FLAGS="-static"
-    -DCMAKE_INSTALL_PREFIX="/"
-    -DCMAKE_PREFIX_PATH="${COOKBOOK_SYSROOT}"
-    -DCMAKE_SYSTEM_NAME=Generic
-    -DCMAKE_SYSTEM_PROCESSOR="$(echo "${TARGET}" | cut -d - -f1)"
-    -DCMAKE_VERBOSE_MAKEFILE=On
-"${COOKBOOK_SOURCE}"
-)
-cookbook_configure
+DYNAMIC_INIT
+autotools_recursive_regenerate
 """
 ```
+
+#### CMake script
+
+Use this script for programs using the CMake build system, more CMake options can be added with a `-D` before them, the customization of CMake compilation is very easy.
+
+- CMake using dynamic linking
+
+```toml
+script = """
+DYNAMIC_INIT
+COOKBOOK_CMAKE_FLAGS+=(
+    -Dprogram-flag
+)
+cookbook_cmake
+"""
+```
+
+- CMake inside a subfolder
+
+```toml
+script = """
+DYNAMIC_INIT
+COOKBOOK_CMAKE_FLAGS+=(
+    -Dprogram-flag
+)
+cookbook_cmake "${COOKBOOK_SOURCE}"/subfolder
+"""
+```
+
+Definition of `cookbook_cmake` is roughly:
+
+```sh
+function cookbook_cmake {
+    "${COOKBOOK_CMAKE}" "${COOKBOOK_SOURCE}" \
+        "${COOKBOOK_CMAKE_FLAGS[@]}" \
+        "$@"
+
+    "${COOKBOOK_NINJA}" -j"${COOKBOOK_MAKE_JOBS}"
+    DESTDIR="${COOKBOOK_STAGE}" "${COOKBOOK_NINJA}" install -j"${COOKBOOK_MAKE_JOBS}"
+}
+```
+
+
+#### Meson script
+
+Use this script for programs using the Meson build system, more Meson options can be added with a `-D` before them, the customization of Meson compilation is very easy.
+
+Keep in mind that some programs and libraries need more configuration to work.
+
+- Meson using dynamic linking
+
+```toml
+script = """
+DYNAMIC_INIT
+COOKBOOK_MESON_FLAGS+=(
+    -Dprogram-flag
+)
+cookbook_meson
+"""
+```
+
+- Meson inside a subfolder
+
+```toml
+script = """
+DYNAMIC_INIT
+COOKBOOK_MESON_FLAGS+=(
+    -Dprogram-flag
+)
+cookbook_meson "${COOKBOOK_SOURCE}"/subfolder
+"""
+```
+
+### Cargo script
+
+Use this script if you need to customize the `cookbook_cargo` function.
+
+```toml
+script = """
+COOKBOOK_CARGO_FLAGS=(
+    --bin foo
+)
+PACKAGE_PATH="subfolder" cookbook_cargo "${COOKBOOK_CARGO_FLAGS[@]}"
+"""
+```
+
+If the project is roughly a simple Cargo project then `cookbook_cargo` is all that you need.
+
+```toml
+script = """
+cookbook_cargo
+"""
+```
+
 
 #### Analyze the source code of a Rust program
 
