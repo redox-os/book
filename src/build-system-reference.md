@@ -144,10 +144,12 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
   (This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate)
 
+- `make p.recipe-name` - Add the recipe to an existing Redox image
 - `make c.recipe-name` - Clean the recipe binaries.
 - `make u.recipe-name` - Clean the recipe source code (**please backup or submit your source changes before the execution of this command**).
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
 - `make ucr.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
+- `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
 
 All recipe commands (f, r, c, u, cr, ucr) can be run with multiple recipes, just separate them with a comma. for example: `make f.recipe1,recipe2` will download the sources of `recipe1` and `recipe2`
 

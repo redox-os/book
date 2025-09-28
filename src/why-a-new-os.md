@@ -6,6 +6,8 @@ The essential goal of the Redox project is to build a robust, reliable and safe 
 
 Wherever possible, Redox code is written in [Rust](https://www.rust-lang.org/). Rust enforces a set of rules and checks on the use, sharing and deallocation of memory references. This almost entirely eliminates the potential for memory leaks, buffer overruns, use after free, and other [memory errors](https://en.wikipedia.org/wiki/Memory_safety#Types_of_memory_errors) that arise during development. The vast majority of security vulnerabilities in operating systems originate from memory errors. The Rust compiler prevents this type of error before the developer attempts to add it to the code base.
 
+It allows us to unlock the full Rust potential by dropping legacy C and C++ code.
+
 ### Benefits
 
 The following items summarize the Rust benefits:

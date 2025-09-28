@@ -1156,7 +1156,7 @@ To test your recipe in Orbital, run:
 make qemu
 ```
 
-If you want to test only in the terminal, run:
+If you want to only test in the terminal, run:
 
 ```sh
 make qemu gpu=no
@@ -1166,9 +1166,9 @@ If the build process was successful the recipe may be packaged and don't give er
 
 If you want to insert this recipe permanently in your QEMU image, add your recipe name below the last item in `[packages]` on your TOML config (`config/x86_64/your-config.toml`, for example).
 
-- Example - `recipe-name = {}` or `recipe-name = "recipe"` (if you have `REPO_BINARY=1` in your `.config`).
+- Example: `recipe-name = {}` or `recipe-name = "recipe"` (if you have `REPO_BINARY=1` in your `.config`).
 
-To install your compiled recipe on QEMU image, run `make image`.
+To install your compiled recipe on QEMU image, run `make image`
 
 If you had a problem, use this command to log any possible errors on your terminal output:
 

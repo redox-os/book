@@ -26,10 +26,10 @@ This page covers common development tasks on the Redox build system.
 - [Shortening the Rebuild Time](#shortening-the-rebuild-time)
   - [Build your recipe for Redox](#build-your-recipe-for-redox)
   - [Make a New QEMU Image](#make-a-new-qemu-image)
-  - [Most Quick Trick To Test Changes](#most-quick-trick-to-test-changes)
+  - [Most Quick Way To Test Your Changes](#most-quick-way-to-test-your-changes)
   - [Insert Text Files On QEMU (quickest method)](#insert-text-files-on-qemu-quickest-method)
-  - [Insert files on the QEMU image using a recipe](#insert-files-on-the-qemu-image-using-a-recipe)
-  - [Insert Files On The QEMU Image](#insert-files-on-the-qemu-image)
+  - [Insert Files In The Redox image Using a Recipe](#insert-files-in-the-redox-image-using-a-recipe)
+  - [Insert Files In The QEMU Image](#insert-files-in-the-qemu-image)
 - [Working with an unpublished version of a crate](#working-with-an-unpublished-version-of-a-crate)
 - [A Note about Drivers](#a-note-about-drivers)
 - [Development Tips](#development-tips)
@@ -426,9 +426,15 @@ make image
 
 - `make image` skips building any packages (assuming the last full make succeeded), but it ensures a new image is created, which should include the recipe you built in the previous step.
 
-### Most Quick Trick To Test Changes
+### Most Quick Way To Test Your Changes
 
 Run:
+
+```sh
+make r.recipe-name image qemu
+```
+
+Or (if your change don't allow incremental compilation)
 
 ```sh
 make cr.recipe-name image qemu
@@ -481,17 +487,23 @@ Make sure you are **not running QEMU**. Run `make mount`. You can now use your f
 
 Note that in some circumstances, `make qemu` may trigger a rebuild (e.g. `make` detects an out of date file). If that happens, the files you copied into the Redox image will be lost.
 
-### Insert files on the QEMU image using a recipe
+### Insert files on the Redox image using a recipe
 
-You can use a Redox package to put your files inside of the Redox filesystem, on this example we will use the recipe `myfiles` for this:
+You can use a Redox package to put your files inside the Redox filesystem, in this example we will use the recipe `myfiles` for this:
 
-- Create the `source` folder inside the `myfiles` recipe directory and move your files to it:
+- Create the `source` folder inside the `myfiles` recipe directory and copy or move your files to it:
 
 ```sh
 mkdir cookbook/recipes/other/myfiles/source
 ```
 
-- Add the `myfiles` recipe below the `[packages]` section on your Cookbook configuration at `config/your-cpu-arch/your-config.toml`:
+- Build the recipe and add on the Redox image:
+
+```sh
+make rp.myfiles
+```
+
+- Add the `myfiles` recipe below the `[packages]` section of your filesystem configuration at `config/your-cpu-arch/your-config.toml` (if you want your files to be automatically added to new images):
 
 ```
 [packages]
@@ -500,23 +512,15 @@ myfiles = {}
 ...
 ```
 
-- Build the recipe and create a new QEMU image:
-
-```sh
-make r.myfiles image
-```
-
 - Open QEMU to verify your files:
 
 ```sh
 make qemu
 ```
 
-This recipe will make the Cookbook package all the files on the `source` folder to be installed on the `/home/user` directory on your Redox filesystem.
+This recipe will make Cookbook package all files in the `source` folder to be installed in the `/home/user` directory on your Redox filesystem.
 
-(This is the only way keep your files after the `make image` command)
-
-### Insert Files On The QEMU Image
+### Insert Files In The QEMU Image
 
 If you feel the need to skip creating a new image, and you want to directly add a file to the existing Redox image, it is possible to do so. However, this is not recommended. You should use a recipe to make the process repeatable. But here is how to access the Redox image as if it were a Linux filesystem.
 
