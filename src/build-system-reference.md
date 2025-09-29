@@ -147,6 +147,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make p.recipe-name` - Add the recipe to an existing Redox image
 - `make c.recipe-name` - Clean the recipe binaries.
 - `make u.recipe-name` - Clean the recipe source code (**please backup or submit your source changes before the execution of this command**).
+- `make uc.recipe-name` - A shortcut for `make u.recipe c.recipe`
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
 - `make ucr.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
 - `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`

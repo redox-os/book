@@ -211,7 +211,7 @@ Some types of recipe errors can be backwards-incompatible build system, system c
 make cr.recipe-name
 ```
 
-Check if the compilation or runtime error continues after this command, if the error continues run the following test:
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
 
 - Wipe the recipe sources and binaries and rebuild
 
@@ -219,7 +219,7 @@ Check if the compilation or runtime error continues after this command, if the e
 make ucr.recipe-name
 ```
 
-Check if the compilation or runtime error continues after this command, if the error continues run the following test:
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
 
 - Update relibc and rebuild the recipe
 
@@ -231,7 +231,7 @@ touch relibc
 make prefix cr.recipe-name
 ```
 
-Check if the compilation or runtime error continues after this command, if the error continues run the following test:
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
 
 - Reconfigure the Redox toolchain and rebuild the recipe
 
@@ -241,6 +241,22 @@ rm -rf prefix
 
 ```sh
 make prefix cr.recipe-name
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
+
+- Wipe the build system binaries and rebuild the system (run this command if the binaries of multiple recipes are broken)
+
+```sh
+make clean all
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
+
+- Wipe the build system sources and binaries and rebuild the system (run this command if the sources and binaries of multiple recipes are broken)
+
+```sh
+make distclean all
 ```
 
 Check if the compilation or runtime error continues after this command, if the error continues read the section below.
@@ -291,14 +307,6 @@ Check if the compilation or runtime error continues after this command, if the e
 
 ```sh
 make container_clean
-```
-
-Check if the compilation or runtime error continues after this command, if the error continues run the command below:
-
-- Wipe the build system sources and binaries and build the system (least common fix)
-
-```sh
-make distclean all
 ```
 
 Check if the compilation or runtime error continues after this command, if the error continues it doesn't happen because of breaking changes on the build system.
