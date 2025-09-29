@@ -39,6 +39,8 @@ When you run `podman_bootstrap.sh` or `native_bootstrap.sh`, the Linux tools and
 If your build appears to be missing libraries, have a look at the [Debugging Your Podman Build Process](./advanced-podman-build.md#debugging-your-build-process) section.
 If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to run the `sudo rm -rf build/podman` command.
 
+If any command ask your to choose an image repository (after the `make container_clean` command execution) select the first item, it will give an error and you need to run the `time make all` command again
+
 #### Manual Configuration
 
 If you have problems setting Podman to rootless mode, do the following steps:

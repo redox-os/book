@@ -78,6 +78,8 @@ If you have already read the [Building Redox](./building-redox.md) instructions,
     time make all
     ```
 
+   - If the command ask your to choose an image repository select the first item, it will give an error and you need to run the `time make all` command again
+
 ### Existing Working Directory
 
 If you already have the build system, simply perform the following steps:
