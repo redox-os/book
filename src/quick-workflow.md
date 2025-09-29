@@ -161,7 +161,7 @@ Use Case: Commonly used to fix breaking changes on recipes.
 #### Wipe recipe/filesystem tooling binaries and Podman container, update build system source and rebuild the system
 
 ```sh
-make clean container_clean fstools_clean pull all
+make clean fstools_clean container_clean pull all
 ```
 
 Use Case: Full build system binary cleanup and update to avoid most configuration breaking changes

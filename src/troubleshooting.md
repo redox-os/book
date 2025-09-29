@@ -274,7 +274,7 @@ make clean pull all
 - Wipe the build system binaries, Podman container, and filesystem tooling binaries, update build system source and rebuild the system (full build system binary cleanup and special prevention)
 
 ```sh
-make clean container_clean fstools_clean pull all
+make clean fstools_clean container_clean pull all
 ```
 
 - Wipe all recipe binaries/sources, update build system source and rebuild the system (least common prevention)
