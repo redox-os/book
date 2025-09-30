@@ -11,7 +11,7 @@ do
     then
         continue
     fi
-    if ! grep $file --silent SUMMARY.md
+    if ! grep $file -q SUMMARY.md
     then
         echo  "$file is not in SUMMARY.md"
         unused=1
