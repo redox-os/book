@@ -39,6 +39,7 @@ All rooms available on the Redox space:
 - [#redox-announcements:matrix.org](https://matrix.to/#/#redox-announcements:matrix.org) - A room for important announcements.
 - [#redox-general:matrix.org](https://matrix.to/#/#redox-general:matrix.org) - A room for Redox-related discussions (questions, suggestions, porting, etc).
 - [#redox-dev:matrix.org](https://matrix.to/#/#redox-dev:matrix.org) - A room for the development, here you can talk about anything development-related (code, proposals, achievements, styling, bugs, etc).
+- [#redox-gitlab-updates:matrix.org](https://matrix.to/#/#redox-gitlab-updates:matrix.org) - GitLab activity notifications room
 - [#redox-rfcs:matrix.org](https://matrix.to/#/#redox-rfcs:matrix.org) - A room for system architecture design discussions and brainstorming for RFCs.
 - [#redox-support:matrix.org](https://matrix.to/#/#redox-support:matrix.org) - A room for testing and building support (problems, errors, questions).
 - [#redox-mrs:matrix.org](https://matrix.to/#/#redox-mrs:matrix.org) - A room to send all ready merge requests without conflicts  (if you have a ready MR to merge, send there).
@@ -47,6 +48,7 @@ All rooms available on the Redox space:
 - [#redox-board:matrix.org](https://matrix.to/#/#redox-board:matrix.org) - A room for meetings of the Board of Directors.
 - [#redox-voip:matrix.org](https://matrix.to/#/#redox-voip:matrix.org) - A room for voice chat discussions.
 - [#redox-random:matrix.org](https://matrix.to/#/#redox-random:matrix.org) - A room for off-topic discussions.
+- [#redox-memes:matrix.org](https://matrix.to/#/#redox-memes:matrix.org) - A room for memes.
 
 ### Troubleshooting
 

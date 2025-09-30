@@ -16,7 +16,7 @@ This page contains the most quick testing/development workflow for people that w
 - [Update everything](#update-everything)
 - [Wipe the toolchain and download again](#wipe-the-toolchain-and-download-again)
 - [Wipe the toolchain/recipe binaries and download/build them again](#wipe-the-toolchainrecipe-binaries-and-downloadbuild-them-again)
-- [Wipe recipe/filesystem tooling binaries and Podman container, update build system source and rebuild the system](#wipe-recipefilesystem-tooling-binaries-and-podman-container-update-build-system-source-and-rebuild-the-system)
+- [Wipe toolchain/recipe binaries and Podman container, update build system source and rebuild the system](#wipe-toolchainrecipe-binaries-and-podman-container-update-build-system-source-and-rebuild-the-system)
 - [Wipe all recipe sources/binaries and download/build them again](#wipe-all-recipe-sourcesbinaries-and-downloadbuild-them-again)
 - [Use the "myfiles" recipe to insert your files on Redox image](#use-the-myfiles-recipe-to-insert-your-files-on-redox-image)
 - [Disable a recipe on the filesystem configuration](#disable-a-recipe-on-the-filesystem-configuration)
@@ -158,10 +158,10 @@ make clean all
 
 Use Case: Commonly used to fix breaking changes on recipes.
 
-#### Wipe recipe/filesystem tooling binaries and Podman container, update build system source and rebuild the system
+#### Wipe toolchain/recipe binaries and Podman container, update build system source and rebuild the system
 
 ```sh
-make clean fstools_clean container_clean pull all
+make clean container_clean pull all
 ```
 
 Use Case: Full build system binary cleanup and update to avoid most configuration breaking changes
