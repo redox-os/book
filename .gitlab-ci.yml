@@ -5,7 +5,7 @@ stages:
 mdbook:
   stage: build
   image:
-    name: hrektts/mdbook:latest
+    name: peaceiris/mdbook:latest
   script:
   - ./unused_pages.sh
   - mdbook build
