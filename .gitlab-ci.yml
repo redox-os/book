@@ -6,6 +6,7 @@ mdbook:
   stage: build
   image:
     name: peaceiris/mdbook:latest
+    entrypoint: [""] # force an empty entrypoint
   script:
   - ./unused_pages.sh
   - mdbook build
