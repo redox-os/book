@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 cd src
 files="$(echo *.md)"
@@ -7,18 +7,18 @@ unused=0
 
 for file in $files
 do
-    if [ $file == SUMMARY.md ]
+    if [ "$file" = "SUMMARY.md" ]
     then
         continue
     fi
-    if ! grep $file --silent SUMMARY.md
+    if ! grep $file -q SUMMARY.md
     then
         echo  "$file is not in SUMMARY.md"
         unused=1
     fi
 done
 
-if [ $unused == 0 ]
+if [ $unused = 0 ]
 then
     echo "Success: No unused pages."
 else

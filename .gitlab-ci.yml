@@ -5,7 +5,8 @@ stages:
 mdbook:
   stage: build
   image:
-    name: hrektts/mdbook:latest
+    name: peaceiris/mdbook:latest
+    entrypoint: [""] # force an empty entrypoint
   script:
   - ./unused_pages.sh
   - mdbook build
