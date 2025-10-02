@@ -115,8 +115,8 @@ In general, it's not recommended to do a system build from within VS Code. Use y
 ## Development Tips
 
 - Make sure your build system is up-to-date, read the [Update The Build System](./build-system-reference.md#update-the-build-system) section in case of doubt.
-- If some program can't build or work properly, remember that something could be missing/hiding on [relibc](https://gitlab.redox-os.org/redox-os/relibc), some missing function or bug.
-- If you have some error on QEMU, remember to test different settings or verify your operating system (Pop_OS!, Ubuntu, Debian and Fedora are the recommend Linux distributions to do testing/development for Redox).
+- If some program can't build or work something could be missing/hiding on [relibc](https://gitlab.redox-os.org/redox-os/relibc), like a POSIX/Linux function or bug.
+- If you have some error on QEMU remember to test different settings or verify your operating system (Pop_OS!, Ubuntu, Debian and Fedora are the recommend Linux distributions to do testing/development for Redox).
 - Remember to log all errors, you can use this command as example:
 
 ```sh
@@ -124,8 +124,8 @@ your-command 2>&1 | tee file-name.log
 ```
 
 - If you have a problem that seems to not have a solution, think on simple/stupid things, sometimes you are very confident on your method and forget obvious things (it's very common).
-- If you want a more quick review of your Merge Request, make it small, Jeremy will read it more fast.
-- If your big Merge Request is taking too long to merge try to shrink it with other small MRs, make sure it don't break anything, if this method break your changes, don't shrink.
+- If you want a more quick review of your Merge Request, make it small.
+- If your big Merge Request is taking too long to be reviewed and merged try to shrink it with small MRs. Make sure it don't break anything, if this method break your changes, don't shrink.
 
 ## Working with Git
 
