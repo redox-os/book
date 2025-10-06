@@ -17,10 +17,10 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
     - [Environment Variables](#environment-variables)
         - [Quick Template](#quick-template)
     - [Packaging Behavior](#packaging-behavior)
-        - [GNU Autotools script](#gnu-autotools-script)
-        - [GNU Autotools configuration script](#gnu-autotools-configuration-script)
-        - [CMake script](#cmake-script)
-        - [Meson script](#meson-script)
+    - [GNU Autotools script](#gnu-autotools-script)
+    - [GNU Autotools configuration script](#gnu-autotools-configuration-script)
+    - [CMake script](#cmake-script)
+    - [Meson script](#meson-script)
     - [Cargo script](#cargo-script)
         - [Analyze the source code of a Rust program](#analyze-the-source-code-of-a-rust-program)
         - [Cargo packages command example](#cargo-packages-command-example)
@@ -346,7 +346,7 @@ You can see path examples for most customized recipes below:
 "${COOKBOOK_STAGE}"/usr/lib # The folder where all static and shared library objects go
 ```
 
-#### GNU Autotools script
+### GNU Autotools script
 
 Use this script if the program or library need to be compiled with `configure` and `make`
 
@@ -387,7 +387,7 @@ function cookbook_configure {
 }
 ```
 
-#### GNU Autotools configuration script
+### GNU Autotools configuration script
 
 Sometimes the program tarball or repository is lacking the `configure` script, so you will need to generate this script.
 
@@ -400,7 +400,7 @@ autotools_recursive_regenerate
 """
 ```
 
-#### CMake script
+### CMake script
 
 Use this script for programs using the CMake build system, more CMake options can be added with a `-D` before them, the customization of CMake compilation is very easy.
 
@@ -442,7 +442,7 @@ function cookbook_cmake {
 ```
 
 
-#### Meson script
+### Meson script
 
 Use this script for programs using the Meson build system, more Meson options can be added with a `-D` before them, the customization of Meson compilation is very easy.
 
