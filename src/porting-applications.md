@@ -113,10 +113,19 @@ insert your script here
 """
 [build]
 template = "build-system"
-cargoflags = ""
-configureflags = [ "" ]
-cmakeflags = [ "" ]
-mesonflags = [ "" ]
+cargoflags = "--flag"
+configureflags = [
+    "OPTION1=text",
+    "OPTION2=text",
+]
+cmakeflags = [
+    "-DOPTION1=text",
+    "-DOPTION2=text",
+]
+mesonflags = [
+    "-Doption1=text",
+    "-Doption2=text",
+]
 dependencies = [
     "library1",
     "library2",
