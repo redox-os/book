@@ -289,7 +289,7 @@ Search some text inside the `recipe.toml` of all recipes and show their content.
 (Require `bat` and `ripgrep` installed, run `cargo install bat ripgrep` to install)
 
 ```sh
-scripts/recipe-match.sh "recipe-name"
+scripts/recipe-match.sh "text"
 ```
 
 ### Print Recipe
