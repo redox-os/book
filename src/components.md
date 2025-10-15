@@ -17,30 +17,17 @@ Redox is made up of several discrete components.
 - relibc - Redox C library
 - randd
 - zerod
-- ion - Shell
+- ion - Terminal shell
 - orbital - Desktop environment
 
 ## Orbital
 
-- orbterm - Terminal
-- orbdata - Images, fonts, etc.
-- orbaudio - Audio
-- orbutils - Bunch of applications
-- orblogin - Login prompt
-- orbfont - Font rendering library
-- orbclient - Display client
-- orbimage - Image rendering library 
-- orbtk - Cross-platform Rust GUI toolkit, similar to GTK
-
-## Default Programs
-
-- sodium - Text editor
-- orbutils
-  - background - Wallpaper program
-  - browser
-  - calculator - Math program
-  - character map - Characters list
-  - editor - Text Editor
-  - file manager
-  - launcher - Program menu
-  - viewer - Image viewer
+- orblogin - Login manager
+- launcher - App panel
+- background - Wallpaper program
+- viewer - Image viewer
+- calculator - Math program
+- COSMIC Files - File manager
+- COSMIC Editor - Text editor
+- COSMIC Terminal - Terminal emulator
+- COSMIC Reader - Document viewer

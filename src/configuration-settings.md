@@ -53,16 +53,16 @@ ARCH?=i686
 CONFIG_NAME?=desktop-minimal
 ```
 
-> 💡 **Tip:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. This allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` *must* include the question mark to function correctly.
-
+> 📝 **Note:** Any QEMU option can be inserted
 > 📝 **Note:** if [`podman_bootstrap.sh`](./podman-build.md#new-working-directory) was run previously, the `.config` file may already exist.
+> 💡 **Tip:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. This allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` *must* include the question mark to function correctly.
 
 #### Changing the QEMU CPU Core and Memory Quantity
 
 For example, to change the CPU core and RAM memory quantities used when running the Redox image in QEMU, add the following environment variables to your `.config` file:
 
 ```
-QEMU_SMP?=<number>
+QEMU_SMP?=<number-of-threads>
 QEMU_MEM?=<number-in-mb>
 ```
 
