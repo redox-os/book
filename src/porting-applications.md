@@ -163,8 +163,8 @@ dependencies = [
 - `"library1",` - The library name (can be removed if the `dependencies` data type above is not present)
 - `build.script` - Data type to load the custom commands for compilation and packaging
 - `[package]` - Section for data types that manage the program package
-- `package.dependencies = []` (Under the `[package]` section) - Data type to add interpreters or "data files" recipes to be installed by the package manager or build system installer
-- `"runtime-dependency1",` - The name of the interpreter or data recipe (can be removed if the `dependencies` data type above is not present)
+- `package.dependencies = []` (Under the `[package]` section) - Data type to add tools, interpreters or "data files" recipes to be installed by the package manager or build system installer
+- `"runtime-dependency1",` - The name of the tool, interpreter or data recipe (can be removed if the `dependencies` data type above is not present)
 
 ### Quick Recipe Template
 
@@ -188,7 +188,7 @@ You can quickly copy and paste this template on each `recipe.toml`, that way you
 - If your program use a tarball, you can quickly remove the `git` and `rev` data types.
 - If your program use a Git repository, you can quickly remove the `tar` data type.
 - If you don't need to pin a commit hash for the most recent stable release, you can quickly remove the `rev` data type.
-- If the program don't need dependencies, you can quickly remove the `dependencies = []` section.
+- If the program don't need C, C++ or patched Rust dependencies, you can quickly remove the `dependencies = []` section.
 
 After the `#TODO` you will write your current porting status.
 
@@ -357,7 +357,7 @@ You can see path examples for most customized recipes below:
 
 ### GNU Autotools script
 
-Use this script if the program or library need to be compiled with `configure` and `make`
+Use this script if the program or library needs to be compiled with custom options
 
 - Configure with dynamic linking
 
@@ -365,19 +365,21 @@ Use this script if the program or library need to be compiled with `configure` a
 script = """
 DYNAMIC_INIT
 COOKBOOK_CONFIGURE_FLAGS+=(
-    --program-flag
+    --option1
+    --option2
 )
 cookbook_configure
 """
 ```
 
-- Run make without configure
+- GNU Make without Configure
 
 ```toml
 script = """
 DYNAMIC_INIT
 COOKBOOK_CONFIGURE_FLAGS+=(
-    --program-flag
+    --option1
+    --option2
 )
 COOKBOOK_CONFIGURE="true"
 
@@ -419,7 +421,8 @@ Use this script for programs using the CMake build system, more CMake options ca
 script = """
 DYNAMIC_INIT
 COOKBOOK_CMAKE_FLAGS+=(
-    -Dprogram-flag
+    -DOPTION1=text
+    -DOPTION2=text
 )
 cookbook_cmake
 """
@@ -431,7 +434,8 @@ cookbook_cmake
 script = """
 DYNAMIC_INIT
 COOKBOOK_CMAKE_FLAGS+=(
-    -Dprogram-flag
+    -DOPTION1=text
+    -DOPTION2=text
 )
 cookbook_cmake "${COOKBOOK_SOURCE}"/subfolder
 """
@@ -463,7 +467,8 @@ Keep in mind that some programs and libraries need more configuration to work.
 script = """
 DYNAMIC_INIT
 COOKBOOK_MESON_FLAGS+=(
-    -Dprogram-flag
+    -Doption1
+    -Doption2
 )
 cookbook_meson
 """
@@ -475,7 +480,8 @@ cookbook_meson
 script = """
 DYNAMIC_INIT
 COOKBOOK_MESON_FLAGS+=(
-    -Dprogram-flag
+    -Doption1
+    -Doption2
 )
 cookbook_meson "${COOKBOOK_SOURCE}"/subfolder
 """
@@ -1141,7 +1147,27 @@ The `redox-base-containerfile` and `bootstrap.sh` script covers the build tools 
 
 The program/library build systems offer flags to enable/disable features, it will increase the chance to make them work on Redox by disabling Linux-specific or unsupported features/libraries.
 
-The FreeBSD port Makefiles are the best reference for feature flags to Redox as they tend to disable Linux-specific features and are adapted to cross-compilation, increasing the program/library compatiblity with non-Linux systems.
+Sometimes you need to read the build system configuration to find important or all flags that weren't documented by the program.
+
+### Cargo
+
+You can find the feature flags below the `[features]` section in the `Cargo.toml` file.
+
+### GNU Autotools
+
+You can find the feature flags in the `INSTALL` or `configure` files.
+
+### CMake
+
+You can find the feature flags in the `CMakeLists.txt` file.
+
+### Meson
+
+You can find the feature flags in the `meson_options` file.
+
+### FreeBSD Reference
+
+If you can't find the program build system flags the FreeBSD port Makefiles are the best reference for feature flags to Redox as they tend to disable Linux-specific features and are adapted to cross-compilation, increasing the program/library compatiblity with non-Linux systems.
 
 (You need to disable the program/library's build system tests to make cross-compilation work)
 
