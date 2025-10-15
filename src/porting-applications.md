@@ -95,76 +95,78 @@ nano cookbook/recipes/program-category/program-name/recipe.toml
 
 The recipe configuration (`recipe.toml`) example below contain all supported recipe options. Adapt for your script, program, library or data files.
 
+TOML sections and data types can also be mentioned using the `section-name.data-type-name` format for easier explanation and better explanation writing.
+
 ```toml
 [source]
-git = "repository-link"
-upstream = "repository-link"
-branch = "branch-name"
-rev = "commit-hash"
-tar = "tarball-link.tar.gz"
-blake3 = "source-hash"
-patches = [
+git = "repository-link" # source.git data type
+upstream = "repository-link" # source.upstream data type
+branch = "branch-name" # source.branch data type
+rev = "commit-hash" # source.rev data type
+tar = "tarball-link.tar.gz" # source.tar data type
+blake3 = "source-hash" # source.blake3 data type
+patches = [ # source.patches data type
     "patch1.patch",
     "patch2.patch",
 ]
-same_as = "../program-name"
-script = """
+same_as = "../program-name" # source.same_as data type
+script = """ # source.script data type
 insert your script here
 """
 [build]
-template = "build-system"
-cargoflags = "--flag"
-configureflags = [
+template = "build-system" # build.template data type
+cargoflags = "--option-name" # build.cargoflags data type
+configureflags = [ # build.configureflags data type
     "OPTION1=text",
     "OPTION2=text",
 ]
-cmakeflags = [
+cmakeflags = [ # build.cmakeflags data type
     "-DOPTION1=text",
     "-DOPTION2=text",
 ]
-mesonflags = [
+mesonflags = [ # build.mesonflags data type
     "-Doption1=text",
     "-Doption2=text",
 ]
-dependencies = [
+dependencies = [ # build.dependencies data type
     "library1",
     "library2",
 ]
-script = """
+script = """ # build.script data type
 # Uncomment the following if the package can be dynamically linked
 #DYNAMIC_INIT
 insert your script here
 """
 [package]
-dependencies = [
+dependencies = [ # package.dependencies data type
     "runtime-dependency1",
     "runtime-dependency2",
 ]
 ```
 
 - `[source]` - Section for data types that manage the program source (only remove it if you have a `source` folder)
-- `git = "repository-link"` - Insert the Git repository of the program (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a `git pull` or change the active branch to `master` or `main`
-- `upstream = "repository-link"` - If you are using a fork of the program source with patches add the program upstream source here (can be removed if the upstream source is being used on the `git` data type)
-- `branch = "branch-name"` - Insert the program version or patched branch (can be removed if the `master` or `main` branches are being used)
-- `rev = "commit-hash"` - Insert the commit hash of the latest stable version or commit of the program (can be removed if a stable version is not used or the latest commit is stable)
-- `tar = "tarball-link.tar.gz"` - Insert the program source tarball (can be removed if a tarball is not used)
-- `blake3 = "source-hash"` - Insert the program source tarball BLAKE3 hash, can be generated using the `b3sum` tool, install with the `cargo install b3sum` command (can be removed if using a Git repository or under porting)
-- `patches = []` - Data type to load `.patch` files (can be removed if patch files aren't used)
-- `"patch1.patch",` (Under the `patches` data type) - The patch file name (can be removed if the `patches` data type above is not present)
-- `same_as = "../program-name"` - Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
-- `source.script` (Under the `[source]` section) - Data type used when you need to change the build system configuration (to regenerate the GNU Autotools configuration, for example)
+- `source.git` - Git repository of the program (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a `git pull` or change the active branch to `master` or `main`
+- `source.upstream` - If you are using a fork of the program source with patches add the program upstream source here (can be removed if the upstream source is being used on the `git` data type)
+- `source.branch` - Program version Git branch or patched Git branch (can be removed if using a tarball or the `master` or `main` Git branches are being used)
+- `source.rev` - Commit hash of the latest stable version or commit of the program (can be removed if a stable version is not used or the latest commit is stable)
+- `source.tar` - Program source tarball (can be removed if a tarball is not used)
+- `source.blake3` - Program source tarball BLAKE3 hash, can be generated using the `b3sum` tool, install with the `cargo install b3sum` command (can be removed if using a Git repository or under porting)
+- `source.patches` - Data type to load `.patch` files (can be removed if patch files aren't used)
+- `"patch1.patch",` - The patch file name (can be removed if the `patches` data type above is not present)
+- `source.same_as` - Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
+- `source.script` - Data type used when you need to change the build system configuration (to regenerate the GNU Autotools configuration, for example)
 - `[build]` - Section for data types that manage the program compilation and packaging
-- `template = "build-system"` - Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with - custom commands)
-- `cargoflags` - Data type for Cargo flags (string)
-- `configureflags` - Data type for GNU Autotools flags (array)
-- `cmakeflags` - Data type for CMake flags (array)
-- `mesonflags` - Data type for Meson flags (array)
-- `build.dependencies = []` (Under the `[build]` section) - Data type to add library dependencies, be it statically linked or dynamically linked
-- `"library1",` - The library name (can be removed if the `dependencies` data type above is not present)
+- `build.template` - Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with - custom commands)
+- `build.cargoflags` - Data type for Cargo flags (string)
+- `build.configureflags` - Data type for GNU Autotools flags (array)
+- `build.cmakeflags` - Data type for CMake flags (array)
+- `build.mesonflags` - Data type for Meson flags (array)
+- `build.dependencies` - Data type to add dynamically or statically linked library dependencies
+- `"library1",` - Library recipe name (can be removed if the `dependencies` data type above is not present)
 - `build.script` - Data type to load the custom commands for compilation and packaging
 - `[package]` - Section for data types that manage the program package
-- `package.dependencies = []` (Under the `[package]` section) - Data type to add tools, interpreters or "data files" recipes to be installed by the package manager or build system installer
-- `"runtime-dependency1",` - The name of the tool, interpreter or data recipe (can be removed if the `dependencies` data type above is not present)
+- `package.dependencies` - Data type to add tools, interpreters or "data files" recipes to be installed by the package manager or build system installer
+- `"runtime-dependency1",` - Tool, interpreter or data recipe names (can be removed if the `dependencies` data type above is not present)
 
 ### Quick Recipe Template
 
@@ -208,26 +210,24 @@ Cookbook use Rust/GCC forks to do cross-compilation of recipes (programs) with `
 
 ### Cross Compilation
 
-The Cookbook behavior is for cross-compilation because it allow us to do Redox development from Linux.
+The Cookbook behavior is for cross-compilation because it reduces the requirements to run programs on Redox and allow us to do Redox development from Linux.
 
 By default Cookbook use the architecture of your host system but you can change it easily on your `.config` file (`ARCH?=` field).
 
 - Don't use a hardcoded CPU architecture on the `script` data types of your `recipe.toml`, it breaks cross-compilation.
-- All recipes must use our cross-compilers, a Cookbook [template](#templates) does this automatically but it's not always possible, study the build system of your program/library to find these options or patch the configuration files.
+- All recipes must use our cross-compilers, a Cookbook template does this automatically but it's not always possible, study the build system of your program/library to find these options or patch the configuration files.
 
 ### Templates
 
-The template is the build system of the program or library, programs using an GNU Autotools build system will have a `configure` file on the root of the source tarball, programs using CMake build system will have a `CMakeLists.txt` file with all available CMake flags and a `cmake` folder, programs using Meson build system will have a `meson.build` file, Rust programs will have a `Cargo.toml` file, etc.
+A recipe template is the build system of the program or library supported by Cookbook.
 
-(You can't use the `script =` data types if templates are used)
-
-- `template = "cargo"` - Build with Cargo using cross-compilation (Rust programs with one package in the Cargo workspace).
-- `template = "configure"` - Build with GNU Autotools/GNU Make using cross-compilation.
-- `template = "cmake"` - Build with CMake using cross-compilation.
-- `template = "meson"` - Build with Meson using cross-compilation.
+- `template = "cargo"` - Build with Cargo using cross-compilation and static linking (Rust programs with one package in the Cargo workspace).
+- `template = "configure"` - Build with GNU Autotools/GNU Make using cross-compilation and dynamic linking.
+- `template = "cmake"` - Build with CMake using cross-compilation and dynamic linking.
+- `template = "meson"` - Build with Meson using cross-compilation and dynamic linking.
 - `template = "custom"` - Run your commands on the `script =` field and build (Any build system or installation process).
 
-The `script =` field runs any terminal command, it's important if the build system of the program don't support cross-compilation or need custom options that Cookbook don't support.
+The `script =` field runs any terminal command, it's important if the build system of the program don't support cross-compilation or need custom options to work on Redox (you can't use the `build.script` data type if the `custom` template is not used).
 
 Each template (except `custom`) script supports flags, you can add flags as an array of strings
 - `cargoflags = "foo"`
@@ -238,6 +238,13 @@ Each template (except `custom`) script supports flags, you can add flags as an a
 To find the supported Cookbook terminal commands, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
 
 - [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
+
+#### Cases
+
+- Programs using the Cargo build system have a `Cargo.toml` file
+- Programs using the GNU Autotools build system have a `configure` or `autogen.sh` file in the source tarball
+- Programs using the CMake build system have a `CMakeLists.txt` file
+- Programs using the Meson build system have a `meson.build` file
 
 ### Metapackages
 
@@ -990,16 +997,17 @@ Mixed Rust programs have crates ending with `-sys` to use C/C++ libraries of the
 
 If you want an easy way to find dependencies, see the Debian stable [packages list](https://packages.debian.org/stable/allpackages).
 
-You can search them with `Ctrl+F`, all package names are clickable and their homepage is available on the right-side of the package description/details.
+You can search them with Ctrl+F, all package names are clickable and their websites is available on the right-side of the package description/details.
 
 - We recommend to use the FreeBSD dependencies of the program if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy don't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies.
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
-- The recipe `PATH` environment variable only read the build tools at `/usr/bin`, it don't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
-- Don't add build tools on recipe dependencies, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
+- The Debian naming policy use dashes as separators in packages with custom options (program or library variant) enabled (program-variant), check the source package to be sure
+- The recipe `PATH` environment variable only use build tools at `/usr/bin`, it don't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
+- Don't add build tools in the `build.dependencies` data type, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
 - The compiler will build the development libraries as `.a` files (objects for static linking) or `.so` files (objects for dynamic linking), the `.a` files will be mixed in the final binary while the `.so` files will be installed out of the binary (stored on the `/lib` directory of the system).
-- Linux distributions add a number after the `.so` files to avoid conflicts on the `/usr/lib` folder when packages use different ABI versions of the same library, for example: `library-name.so.6`.
-- You need to do this because each software is different, the major reason is the "Build Instructions" organization of each program.
+- Linux distributions add a number after the `.so` files to avoid conflicts on the `/usr/lib` folder when packages use different API versions of the same library, for example: `library-name.so.6`.
+- You need to know this information because each software is different, the major reason is the "Build Instructions" organization of each program.
 
 If you have questions about program dependencies, feel free to ask us on the [Chat](./chat.md).
 
@@ -1042,20 +1050,10 @@ Programs using CMake don't use environment variables but an option, see this exa
 
 ```toml
 script = """
-COOKBOOK_CONFIGURE="cmake"
-COOKBOOK_CONFIGURE_FLAGS=(
-    -DCMAKE_BUILD_TYPE=Release
-    -DCMAKE_CROSSCOMPILING=True
-    -DCMAKE_EXE_LINKER_FLAGS="-static"
-    -DCMAKE_INSTALL_PREFIX="/"
-    -DCMAKE_PREFIX_PATH="${COOKBOOK_SYSROOT}"
-    -DCMAKE_SYSTEM_NAME=Generic
-    -DCMAKE_SYSTEM_PROCESSOR="$(echo "${TARGET}" | cut -d - -f1)"
-    -DCMAKE_VERBOSE_MAKEFILE=On
+COOKBOOK_CMAKE_FLAGS+=(
     -DOPENSSL_ROOT_DIR="${COOKBOOK_SYSROOT}"
-"${COOKBOOK_SOURCE}"
 )
-cookbook_configure
+cookbook_cmake
 """
 ```
 

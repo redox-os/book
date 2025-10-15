@@ -35,6 +35,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of n
     - [How can I configure the build system of the recipe?](#how-can-i-configure-the-build-system-of-the-recipe)
     - [How can I search for functions on relibc?](#how-can-i-search-for-functions-on-relibc)
     - [Which are the upstream requirements to accept my recipe?](#which-are-the-upstream-requirements-to-accept-my-recipe)
+    - [Why C/C++ programs and libraries are hard and time consuming to port?](#why-cc-programs-and-libraries-are-hard-and-time-consuming-to-port)
 - [Scheme Questions](#scheme-questions)
     - [What is a scheme?](#what-is-a-scheme)
     - [When does a regular program need to use a scheme?](#when-does-a-regular-program-need-to-use-a-scheme)
@@ -318,6 +319,14 @@ Some APIs of the Linux kernel can be ported, while others not because they requi
 ### Which are the upstream requirements to accept my recipe?
 
 - Read the [Package Policy](https://gitlab.redox-os.org/redox-os/cookbook#package-policy) section.
+
+### Why C/C++ programs and libraries are hard and time consuming to port?
+
+- C/C++ don't have an official, advanced and automatic dependency manager and build system which force programs and libraries to select competing build systems with different configurations (GNU Make, GNU Autotools, CMake, Meson and others), projects like [Conan](https://conan.io/) and [vcpkg](https://vcpkg.io/) tried to solve this problem but weren't adopted by most programs/libraries and lack many libraries
+- Programs and libraries need to manually manage the library versions, to workaround this some programs use bundled libraries which can difficult patching when needed
+- Some build systems lack a good cross-compilation support which require more tweaks and sometimes hacks
+- As libraries are manually managed programs with many dependencies can take hours to port depending on available library documentation/configuration and developer experience
+- Some programs and libraries have bad or lacking documentation about build instructions and configuration
 
 ## Scheme Questions
 
