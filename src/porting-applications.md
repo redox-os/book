@@ -54,7 +54,7 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
     - [Configuration](#configuration)
         - [Arch Linux and AUR](#arch-linux-and-aur)
         - [Gentoo](#gentoo)
-    - [Testing](#testing)
+    - [Build Tools](#build-tools)
 - [Feature Flags](#feature-flags)
 - [Building/Testing The Program](#buildingtesting-the-program)
 - [Update crates](#update-crates)
@@ -1131,15 +1131,11 @@ The complex classification of Gentoo allow the packager to easily make a minimum
 
 Thus the best approach is to know the minimum necessary to make the program work on Redox and expand from that.
 
-### Testing
+### Build Tools
 
-- Install the packages for your Linux distribution on the "Build Instructions" of the software, if you don't have the knowledge to separate build tools from library dependencies see if it builds on your system first (if packages for your distribution is not available, search for Debian/Ubuntu equivalents).
+Add missing recipe build tools in the [podman/redox-base-containerfile](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman/redox-base-containerfile) file (for Podman builds) or install them on your system (for Native builds).
 
-- Create the dependency recipe and run `make r.dependency-name` and see if it don't give errors, if you get an error it can be a dependency that require patches, missing C/POSIX library functions or build tools, try to investigate both methods until the recipe finish the build process successfully.
-
-If you run `make r.recipe-name` and it builds successfully, feel free to add the build tools on the [redox-base-containerfile](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/podman/redox-base-containerfile) configuration file (for Podman builds) or the [bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/bootstrap.sh) script (for native builds).
-
-The `redox-base-containerfile` and `bootstrap.sh` script covers the build tools required by recipes on the [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml) filesystem configuration.
+The `podman/redox-base-containerfile` file and `native_bootstrap.sh` script covers the build tools required by recipes on the [demo.toml](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/config/x86_64/demo.toml) filesystem configuration.
 
 ## Feature Flags
 
@@ -1175,7 +1171,7 @@ If you can't find the program build system flags the FreeBSD port Makefiles are 
 
 ## Building/Testing The Program
 
-(if you don't have the knowledge to separate build tools from library dependencies build on your Linux distribution before this step to see if all build system tools and development libraries are correct)
+Tip: If you want to avoid problems not related to Redox install the program dependencies and build to your system first (if packages for your Unix-like distribution aren't available search for Debian/Ubuntu equivalents).
 
 To build your recipe, run:
 
@@ -1183,33 +1179,35 @@ To build your recipe, run:
 make r.recipe-name
 ```
 
-To test your recipe in Orbital, run:
+If you get an error read the log and determine if it is one of the following problems:
 
-```sh
-make qemu
-```
+- Missing build tools
+- Cross-compilation configuration problem
+- Lack of Redox patches
+- Missing C, POSIX or Linux library functions in relibc
 
-If you want to only test in the terminal, run:
-
-```sh
-make qemu gpu=no
-```
-
-If the build process was successful the recipe may be packaged and don't give errors (sometimes you need to fix packaging errors).
-
-If you want to insert this recipe permanently in your QEMU image, add your recipe name below the last item in `[packages]` on your TOML config (`config/x86_64/your-config.toml`, for example).
-
-- Example: `recipe-name = {}` or `recipe-name = "recipe"` (if you have `REPO_BINARY=1` in your `.config`).
-
-To install your compiled recipe on QEMU image, run `make image`
-
-If you had a problem, use this command to log any possible errors on your terminal output:
+Use this command to log any possible errors on your terminal output:
 
 ```sh
 make r.recipe-name 2>&1 | tee recipe-name.log
 ```
 
-The recipe sources will be extracted/downloaded on the `source` folder inside of your recipe folder, while the executables or data go to the `target` folder.
+If the compilation was successful the recipe can be installed in the QEMU image and tested inside of Redox to find possible runtime errors or crashes.
+
+- To temporarily install the recipe to your QEMU image run `make p.recipe-name`
+- To permanently install the recipe to your QEMU image add your recipe name (`recipe-name = {}`) below the last item in the `[packages]` section of your TOML config at `config/your-cpu-arch/your-config.toml` and run `make image`
+
+To test your recipe inside of Redox with Orbital, run:
+
+```sh
+make qemu
+```
+
+If you only want to test in the Redox terminal interface, run:
+
+```sh
+make qemu gpu=no
+```
 
 ## Update crates
 

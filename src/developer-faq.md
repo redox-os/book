@@ -35,6 +35,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of n
     - [How can I configure the build system of the recipe?](#how-can-i-configure-the-build-system-of-the-recipe)
     - [How can I search for functions on relibc?](#how-can-i-search-for-functions-on-relibc)
     - [Which are the upstream requirements to accept my recipe?](#which-are-the-upstream-requirements-to-accept-my-recipe)
+    - [What are the possible problems when porting programs and libraries?](#what-are-the-possible-problems-when-porting-programs-and-libraries)
     - [Why C/C++ programs and libraries are hard and time consuming to port?](#why-cc-programs-and-libraries-are-hard-and-time-consuming-to-port)
 - [Scheme Questions](#scheme-questions)
     - [What is a scheme?](#what-is-a-scheme)
@@ -319,6 +320,14 @@ Some APIs of the Linux kernel can be ported, while others not because they requi
 ### Which are the upstream requirements to accept my recipe?
 
 - Read the [Package Policy](https://gitlab.redox-os.org/redox-os/cookbook#package-policy) section.
+
+### What are the possible problems when porting programs and libraries?
+
+- Missing build tools
+- Cross-compilation configuration problem
+- Lack of Redox patches
+- Missing C, POSIX or Linux library functions in relibc
+- Runtime error or crashes
 
 ### Why C/C++ programs and libraries are hard and time consuming to port?
 
