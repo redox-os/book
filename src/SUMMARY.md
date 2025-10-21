@@ -77,7 +77,7 @@
 - [Developing for Redox](./developing-for-redox.md)
   - [Including Programs in Redox](./including-programs.md)
   - [Coding and Building](./coding-and-building.md)
-  - [Porting Applications using Recipes](./porting-applications.md)
+  - [Application Porting](./porting-applications.md)
   - [Porting Case Study](./porting-case-study.md)
   - [Quick Workflow](./quick-workflow.md)
   - [Libraries and APIs](./libraries-apis.md)

@@ -1,6 +1,6 @@
-# Porting Applications using Recipes
+# Application Porting
 
-The [Including Programs in Redox](./including-programs.md) page gives an example to port/modify a pure Rust program, here we will explain the advanced way to port pure Rust programs, mixed Rust programs (Rust and C/C++ libraries, for example), C/C++ programs and others.
+The [Including Programs in Redox](./including-programs.md) page gives an example to port/modify a pure Rust program, in this page we explain the advanced way to port pure Rust programs, mixed Rust programs (Rust and C/C++ libraries, for example), C/C++ programs and others.
 
 (Before reading this page you must read the [Build System](./build-system-reference.md) page)
 
@@ -73,11 +73,11 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
 
 ## Recipe
 
-A recipe is how we call a software port on Redox, this section will explain the recipe configuration and things to consider.
+A recipe is how we call a software port on Redox, this section explain the recipe configuration and details to consider.
 
-Create a folder at `cookbook/recipes/program-category` with a file named as `recipe.toml` inside, we will edit this file to fit the program needs.
+Create a folder at `cookbook/recipes/program-category` with a file named as `recipe.toml` inside, we will modify this file to fit the program needs.
 
-- Commands example:
+- Recipe creation from terminal with GNU Nano:
 
 ```sh
 cd ~/tryredox/redox
@@ -102,7 +102,7 @@ TOML sections and data types can also be mentioned using the `section-name.data-
 git = "repository-link" # source.git data type
 upstream = "repository-link" # source.upstream data type
 branch = "branch-name" # source.branch data type
-rev = "commit-hash" # source.rev data type
+rev = "version-tag" # source.rev data type
 tar = "tarball-link.tar.gz" # source.tar data type
 blake3 = "source-hash" # source.blake3 data type
 patches = [ # source.patches data type
@@ -148,7 +148,7 @@ dependencies = [ # package.dependencies data type
 - `source.git` - Git repository of the program (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a `git pull` or change the active branch to `master` or `main`
 - `source.upstream` - If you are using a fork of the program source with patches add the program upstream source here (can be removed if the upstream source is being used on the `git` data type)
 - `source.branch` - Program version Git branch or patched Git branch (can be removed if using a tarball or the `master` or `main` Git branches are being used)
-- `source.rev` - Commit hash of the latest stable version or commit of the program (can be removed if a stable version is not used or the latest commit is stable)
+- `source.rev` - Git tag or commit hash of the latest stable version or last working commit of the program (can be removed if you are using a tarball or waiting Rust library version updates)
 - `source.tar` - Program source tarball (can be removed if a tarball is not used)
 - `source.blake3` - Program source tarball BLAKE3 hash, can be generated using the `b3sum` tool, install with the `cargo install b3sum` command (can be removed if using a Git repository or under porting)
 - `source.patches` - Data type to load `.patch` files (can be removed if patch files aren't used)
@@ -176,7 +176,7 @@ This is a recipe template for a quick porting workflow.
 #TODO not compiled or tested
 [source]
 git = "repository-link"
-rev = "commit-hash"
+rev = "version-tag"
 tar = "tarball-link"
 [build]
 template = "build-system"
@@ -189,33 +189,33 @@ You can quickly copy and paste this template on each `recipe.toml`, that way you
 
 - If your program use a tarball, you can quickly remove the `git` and `rev` data types.
 - If your program use a Git repository, you can quickly remove the `tar` data type.
-- If you don't need to pin a commit hash for the most recent stable release, you can quickly remove the `rev` data type.
+- If you don't need to pin a Git tag or commit hash for the latest stable release or last working commit, you can quickly remove the `rev` data type.
 - If the program don't need C, C++ or patched Rust dependencies, you can quickly remove the `dependencies = []` section.
 
-After the `#TODO` you will write your current porting status.
+After the `#TODO` comment you will write your current porting status.
 
 ## Cookbook
 
 The GCC and LLVM compiler frontends on Linux use the Linux target triplet by default, it will create Linux ELF binaries that don't work on Redox because it can't undertstand them.
 
-Part of this process is to use `glibc` (GNU C Standard Library) which don't support Redox system calls, to make the compiler use `relibc` (Redox C Library) the Cookbook needs to tell the build system of the program or library to use it, it's done with environment variables.
+Part of this process is to use `glibc` (GNU C Standard Library) which don't support Redox system calls, to make the compiler use `relibc` (Redox C Standard Library) Cookbook need to tell the build system of the program or library to use it, it's done with environment variables and target/platform flags for the Redox target.
 
-The Cookbook have templates to avoid custom commands for cross-compilation, but it's not always possible because some build systems aren't standardized or adapted for cross-compilation.
+Cookbook have build system templates to avoid custom commands for cross-compilation, but it's not always possible because some build systems or programs aren't standardized or adapted for cross-compilation.
 
-(Some build systems have different methods to enable cross-compilation and pass a different C standard library to the compiler, you will need to figure this out)
+(Build systems have different methods to enable cross-compilation and pass a different C standard library to the compiler, you will need to read their documentation, program/library specific configuration or hack them)
 
 ### Cross Compiler
 
-Cookbook use Rust/GCC forks to do cross-compilation of recipes (programs) with `relibc` to any supported CPU architecture, you can check our cross-compilers on GitLab ([GCC](https://gitlab.redox-os.org/redox-os/gcc), [LLVM](https://gitlab.redox-os.org/redox-os/llvm-project), [Rust](https://gitlab.redox-os.org/redox-os/rust) and [build server](https://static.redox-os.org/toolchain/)).
+Cookbook use Rust/GCC forks to do cross-compilation of recipes (programs) with `relibc` to any supported CPU architecture, you can check our cross-compilers on GitLab ([GCC](https://gitlab.redox-os.org/redox-os/gcc), [LLVM](https://gitlab.redox-os.org/redox-os/llvm-project), [Rust](https://gitlab.redox-os.org/redox-os/rust) and their [pre-compiled binaries](https://static.redox-os.org/toolchain/)).
 
 ### Cross Compilation
 
-The Cookbook behavior is for cross-compilation because it reduces the requirements to run programs on Redox and allow us to do Redox development from Linux.
+The Cookbook default compilation type is cross-compilation because it reduces the requirements to run programs on Redox and allow us to do Redox development from Linux and other Unix-like systems.
 
-By default Cookbook use the architecture of your host system but you can change it easily on your `.config` file (`ARCH?=` field).
+By default Cookbook use the CPU architecture of your host system but you can change it easily on your `.config` file (`ARCH?` environment variable).
 
-- Don't use a hardcoded CPU architecture on the `script` data types of your `recipe.toml`, it breaks cross-compilation.
-- All recipes must use our cross-compilers, a Cookbook template does this automatically but it's not always possible, study the build system of your program/library to find these options or patch the configuration files.
+- Don't use a hardcoded CPU architecture in the `script` data types of your `recipe.toml`, it breaks cross-compilation with a different CPU architecture is used by the build system.
+- All recipes must use our cross-compilers, a Cookbook template does this automatically but it's not always possible, read the build system configuration of your program/library to find these options or patch the configuration files.
 
 ### Templates
 
@@ -225,17 +225,19 @@ A recipe template is the build system of the program or library supported by Coo
 - `template = "configure"` - Build with GNU Autotools/GNU Make using cross-compilation and dynamic linking.
 - `template = "cmake"` - Build with CMake using cross-compilation and dynamic linking.
 - `template = "meson"` - Build with Meson using cross-compilation and dynamic linking.
+- `template = "remote"` - Download the remote Redox package of the recipe if available in the [package server](https://static.redox-os.org/pkg/)
 - `template = "custom"` - Run your commands on the `script =` field and build (Any build system or installation process).
 
-The `script =` field runs any terminal command, it's important if the build system of the program don't support cross-compilation or need custom options to work on Redox (you can't use the `build.script` data type if the `custom` template is not used).
+The `script =` field runs any terminal command supported by GNU Bash, it's important if the build system of the program don't support cross-compilation or need custom options to work on Redox (you can't use the `build.script` data type if the `custom` template is not used).
 
-Each template (except `custom`) script supports flags, you can add flags as an array of strings
+Each template (except `custom`) script supports build flags, you can add flags as an array of strings:
+
 - `cargoflags = "foo"`
 - `configureflags = [ "foo" ]`
 - `cmakeflags = [ "foo" ]`
 - `mesonflags = [ "foo" ]`
 
-To find the supported Cookbook terminal commands, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
+To find the supported Cookbook Bash functions, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
 
 - [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
 
@@ -248,7 +250,7 @@ To find the supported Cookbook terminal commands, look the recipes using a `scri
 
 ### Metapackages
 
-Metapackages are packages without any files, just dependencies. Use the following recipe template to create a metapackage:
+Metapackages are packages without any files, just dependencies. Use the following recipe example to create a metapackage:
 
 ```toml
 [package]
@@ -260,7 +262,7 @@ dependencies = [
 
 ## Cookbook - Custom Template
 
-The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell. The shell script will be wrapped with Bash functions and variables to aid build script. The wrapper can be found in [this Cookbook source file](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/src/bin/cook.rs).
+The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell. The shell script will be wrapped with Bash functions and variables to aid the build script. The wrapper can be found in [this Cookbook source file](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/src/bin/cook.rs).
 
 
 - Script example
@@ -303,9 +305,9 @@ These variables available in the script:
 - For RISC-V, `${TARGET}` and `${GNU_TARGET}` is `riscv64gc-unknown-redox` and `riscv64-unknown-redox`, usually you want `${TARGET}` unless the script requires a GNU target triple.
 - To get `$ARCH`, you need to add `ARCH="${TARGET%%-*}"` to the beginning of the script. 
 
-There are more variables depending on the build script that you are using, read more below.
+There are more variables depending on the build script that you are using.
 
-We recommend that you use path environment variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the path.
+We recommend that you use path environment variables with the `"` symbol to clean any invalid characters (like spaces) on the path, spaces are interpreted as command separators and will break the path.
 
 Example:
 
@@ -346,20 +348,20 @@ You can quickly copy these environment variables from this section.
 
 ### Packaging Behavior
 
-The Cookbook download the recipe sources on the `source` folder (`recipe-name/source`), copy the contents of this folder to the `build` folder (`recipe-name/target/$TARGET/build`), build the sources and move the binaries to the `stage` folder (`recipe-name/target/$TARGET/stage`).
+Cookbook download the recipe sources on the `source` folder (`recipe-name/source`), copy the contents of this folder to the `build` folder (`recipe-name/target/$TARGET/build`), build the sources and move the binaries to the `stage` folder (`recipe-name/target/$TARGET/stage`).
 
 If your recipe has library dependencies, it will copy the library source and linker objects to the `sysroot` folder to be used by the `build` folder.
 
 - Moving the program files to the Redox filesystem
 
-The `"${COOKBOOK_STAGE}"/` path is used to specify where the recipe files will go inside of Redox, in most cases `/usr/bin` and `/usr/lib`.
+The `"${COOKBOOK_STAGE}"/` path is used to specify where the recipe files will be stored in the Redox filesystem, in most cases `/usr/bin` and `/usr/lib`.
 
 You can see path examples for most customized recipes below:
 
 ```sh
 "${COOKBOOK_STAGE}"/ # The root of the Redox build system
-"${COOKBOOK_STAGE}"/usr/bin # The folder where all global Unix executables go
-"${COOKBOOK_STAGE}"/usr/lib # The folder where all static and shared library objects go
+"${COOKBOOK_STAGE}"/usr/bin # The folder where all system-wide executables go
+"${COOKBOOK_STAGE}"/usr/lib # The folder where all system-wide static and shared library objects go
 ```
 
 ### GNU Autotools script
@@ -522,7 +524,7 @@ Rust programs and libraries use the `Cargo.toml` configuration file to configure
 
 While packaging Rust programs you need to know where the main executable is located in the Cargo project, to do this you need to verify the `Cargo.toml` files of the project.
 
-A Rust program can have one or more Cargo packages to build, see some common assumptions below:
+A Rust program can have one or more Cargo packages to build, read the common assumptions below:
 
 - Most Rust programs with a `src` folder use one Cargo package, thus you can use the `cargo` template.
 - Most Rust programs with multiple Cargo packages name the main package with the name of the program.
@@ -540,14 +542,12 @@ name = "library-object-name"
 
 The `[[bin]]` is what you need, the program executable is built by this Cargo package.
 
-(Ignore packages with the `[[lib]]` data type, Rust libraries don't need to be packaged because Rust has automatic dependency management, except for backup purposes)
-
 But some programs don't have the `[[bin]]` and `[[lib]]` data types, for these cases you need to see the source code files, in most cases at the `src` folder.
 
 - The file named `main.rs` contains the program executable code.
 - The file named `lib.rs` contains the library object code (ignore it).
 
-(Some Rust programs use Cargo packages instead of Cargo examples for examples, to discover that see if the "examples" folder has `.rs` files (Cargo examples) or folders with `Cargo.toml` files inside (Cargo packages) )
+(Some Rust programs use packages instead of example files for examples, to discover that see if the "examples" folder has `.rs` files (examples files) or folders with `Cargo.toml` files inside (packages) )
 
 #### Cargo packages command example
 
@@ -609,7 +609,7 @@ binary=bin-name
 
 #### Cargo flags command example
 
-Some Rust softwares have Cargo flags for customization, search them to match your needs or make some program build.
+Some Rust programs have flags for customization, you can find them below the `[features]` section in the `Cargo.toml` file.
 
 ```toml
 script = """
@@ -619,7 +619,7 @@ cookbook_cargo --features flag-name
 
 #### Disable the default Cargo flags
 
-It's common that some flag of the program doesn't work on Redox, if you don't want to spend much time testing flags that work and don't work, you can disable all of them to see if the most basic setting of the program works with this script:
+It's common that some flag of the program doesn't work on Redox, if you don't want to spend much time testing flags that work and don't work, you can disable all of them to see if the most basic featureset of the program works with this script:
 
 ```toml
 script = """
@@ -685,7 +685,7 @@ recipe="$(basename "${COOKBOOK_RECIPE}")"
 
 #### Rename binaries
 
-Some programs or examples could use generic names for their binaries, thus they could bring file conflicts on the packaging process, to avoid it use this command after the compilation or installation commands:
+Some programs or examples use generic names for their executable files which could cause conflicts in the package installation process, to avoid this use the following command after the compilation or installation commands:
 
 ```sh
 mv "${COOKBOOK_STAGE}/usr/bin/binary-name" "${COOKBOOK_STAGE}/usr/bin/new-binary-name"
@@ -693,13 +693,13 @@ mv "${COOKBOOK_STAGE}/usr/bin/binary-name" "${COOKBOOK_STAGE}/usr/bin/new-binary
 
 - Duplicated names
 
-Some recipes for Rust programs can duplicate the program name on the binary (`name_name`), you can also use the command above to fix these cases.
+Some recipes for Rust programs can duplicate the program name in the executable (`name_name`), you can also use the command above to fix these cases.
 
 #### Change the active source code folder
 
 Sometimes a program don't store the source code on the root of the Git repository, but in a subfolder.
 
-For these cases you need to change the directory of the `${COOKBOOK_SOURCE}` environment variable on the beginning of the `script` data type, to do this add the following command on your recipe script:
+For these cases you need to change the directory of the `${COOKBOOK_SOURCE}` environment variable in the beginning of the `build.script` data type, to do this add the following command on your recipe script:
 
 ```sh
 COOKBOOK_SOURCE="${COOKBOOK_SOURCE}/subfolder-name"
@@ -716,7 +716,7 @@ cookbook_cargo
 
 #### Configuration Files
 
-Some programs require to setup configuration files from the source code or tarball, to setup them use this recipe template:
+Some programs require to setup configuration files from the source code or tarball, to setup them use the following script example:
 
 ```toml
 [build]
@@ -728,15 +728,15 @@ cp -rv "${COOKBOOK_SOURCE}"/configuration-file "${COOKBOOK_STAGE}"/usr/share # c
 """
 ```
 
-Edit the script above to your needs.
+Modify the script above to your needs.
 
 #### Script-based programs
 
-Use the following scripts to package interpreted programs.
+Read the following scripts to package interpreted programs.
 
 ##### Adapted scripts
 
-This script is for scripts adapted to be packaged, they have shebangs and rename the file to remove the script extension.
+This script is for scripts adapted to be packaged, they contain shebangs and renamed the file to remove the script extension.
 
 (Some programs and libraries need more configuration to work)
 
@@ -768,7 +768,7 @@ This script will move the scripts from the `source` folder to the `stage` folder
 
 ##### Non-adapted scripts
 
-You need to use these scripts for scripts not adapted for packaging, you need to add shebangs, rename the file to remove the script extension (`.py`) and mark as executable (`chmod a+x`).
+You need to use the following script examples for scripts not adapted for packaging, you need to add shebangs, rename the file to remove the script extension (`.py`) and mark as executable (`chmod a+x`).
 
 (Some programs and libraries need more configuration to work)
 
@@ -804,9 +804,9 @@ This script will rename all scripts to remove the `.py` extension, mark all scri
 
 - Shebang
 
-It's the magic behind executable scripts as it make the system interpret the script as an common executable, if your script doesn't have a shebang on the beginning it can't work as an executable program.
+It's the magic behind executable scripts as it make the system interpret the script as an common executable, if your script doesn't have a shebang on the beginning it can't be launched like an conventional compiled program executable.
 
-To fix this, use this script:
+To allow this use the following script:
 
 ```toml
 script = """
@@ -819,19 +819,19 @@ chmod a+x "${COOKBOOK_STAGE}"/usr/bin/script-name
 
 The `sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/usr/bin/script-name` command will add the shebang on the beginning of your script.
 
-The `python3` is the script interpreter in this case, use `bash` or `lua` or whatever interpreter is appropriate for your case..
+The `python3` is the script interpreter in this case, use `bash` or `lua` or whatever interpreter is appropriate for your case.
 
-There are many combinations for these script templates, you can download scripts without the `[source]` section, make customized installations, etc.
+There are many combinations for these script examples: you can download scripts without the `[source]` section, make customized installations, etc.
 
 ### Dynamically Linked Programs
 
-The `DYNAMIC_INIT` acts as a marker that indicates the package can be
+The `DYNAMIC_INIT` acts as a marker that indicates the recipe can be
 dynamically linked. It automatically sets `LDFLAGS` and `RUSTFLAGS` based on
 the preferred linkage. See the environment variables section under
 configuration settings for more information.
 
-In most cases, if you want to use dynamic linking for a package, just prepend
-`DYNAMIC_INIT` in the recipe script. Depending on the package,
+In most cases if you want to use dynamic linking for a recipe just prepend
+`DYNAMIC_INIT` in the recipe script. Depending on the recipe,
 this *should* suffice. However, sometimes you *may* need to regenerate the GNU Autotools configuration,
 which you can do by invoking the `autotools_recursive_regenerate` helper function
 after `DYNAMIC_INIT` (See the examples below). This is to make sure the build
@@ -868,7 +868,7 @@ script = """
 ```
 
 Dynamically linked programs depend on shared libraries at runtime. To
-include these libraries, you must add them to `build.dependencies`.
+include these libraries, you must add them in the `build.dependencies` data type.
 
 #### Example
 
@@ -886,98 +886,94 @@ dependencies = [
 
 - Why the dynamic linker (`ld.so`) is not finding my library?
 
-Set `LD_DEBUG=all` and re-run the program. It will show you where objects are
+Set `LD_DEBUG=all` and re-run the program. It will show you where library objects are
 being found and loaded, as well as the library search paths. You probably
-forgot to add a library in the `dependencies` list. You can also use
+forgot to add a library in the `build.dependencies` list. You can also use
 `patchelf` on your host or on Redox to display all `DT_NEEDED` entries of an
-object (`patchelf --print-needed <path>`). It is available by default for the
-desktop configuration.
+object (`patchelf --print-needed <path>`). It is available by default in the
+`desktop` variant.
 
 ## Sources
 
 ### Tarballs
 
-Tarballs are the most easy way to build a C/C++ program or library because the build system is already configured (GNU Autotools is the most used), while being more fast to download and process than Git repositories (the computer don't need to process Git deltas).
+Tarballs are the most easy way to build a C/C++ program or library because the build system is already configured (GNU Autotools is the most used), while being more fast to download and process than big Git repositories if shallow clone is unused (the system don't need to process Git deltas).
 
-Your `recipe.toml` will have this content:
+Your `recipe.toml` will have the following content:
 
 ```toml
 [source]
 tar = "tarball-link"
 ```
 
-Copy the tarball link and paste on the `tarball-link` field.
+Copy the tarball link and paste in the `tarball-link` field.
 
 **Only use official tarballs**, GitHub auto-generate tarballs for each new release or tag of the program, but they [aren't static](https://github.blog/changelog/2023-01-30-git-archive-checksums-may-change/) (break the checksum) and [don't verify the archive integrity](https://github.blog/2023-02-21-update-on-the-future-stability-of-source-code-archives-and-hashes/).
 
-You can find the official tarballs on the release announcement assets with the program name and ending with `tar.gz` or `tar.xz` (their URLs contain "releases" instead of "archive"), while unstable tarballs can be found on the "Source code" buttons (their URLs contain "archive").
+You can find the official tarballs in the release announcement assets with the program name and ending with `tar.gz` or `tar.xz` (their URLs contain "releases" instead of "archive"), while unstable tarballs can be found on the "Source code" buttons (their URLs contain "archive").
 
 - In most cases they are created using the [GNU Tar](https://www.gnu.org/software/tar/) tool.
 - Avoid files containing the names "linux" and "x86_64" on GitHub, they are pre-built binaries for some operating system and CPU architecture, not source code.
-- Some programs require Git submodules to work, you can't use tarballs if the official tarball don't bundle the Git submodules.
-- Archives with `tar.xz` and `tar.bz2` tend to have a higher compression level, thus smaller file size.
+- Some programs require Git submodules to work, you can't use tarballs if the official tarball don't bundle the submodules.
+- Archives with `tar.xz` and `tar.bz2` are preferred as they tend to have a higher compression level, thus smaller file size.
 
 #### Build System
 
 In most cases the tarballs use GNU Autotools to build, it's common that the tarball method of compilation is not well documented, causing confusion on new packagers.
 
-To investigate, you can do these things:
+To investigate, you can do the following things:
 
 - Build with the `configure` template and see if it works (sometimes you need to use some flag or customize)
 - Search the Git repository of the program or library for `autogen.sh` and `configure.ac` files, it means that support for GNU Autotools is available, when some tarball is created, it comes with a `configure` file inside, this file doesn't exist on the Git repository and you need to create it by running the `autogen.sh` script.
-- Sometimes these files are available but GNU Autotools is deprecated (because it's old), we recommend that you use the supported build system (in most cases CMake or Meson).
+- Sometimes these files are available but GNU Autotools is deprecated (because it's old), we recommend that you use the supported build system (CMake or Meson in most cases).
 
 #### Links
 
 Sometimes it's hard to find the official tarball of some software, as each project website organization is different.
 
-To help on this process, the [Arch Linux packages](https://archlinux.org/packages/) and [AUR](https://aur.archlinux.org/) are the most easy repositories to find tarball links on the configuration of the packages.
+To help on this process, the [Arch Linux packages](https://archlinux.org/packages/) and [AUR](https://aur.archlinux.org/) are the most easy repositories to find tarball links in the configuration of packages.
 
-- Arch Linux packages - Search for your program, open the program page, see the "Package Actions" category on the top right position and click on the "Source Files" button, a GitLab page will open, open the `.SRCINFO` and search for the tarball link on the "source" fields of the file.
+- Arch Linux packages: Search for your program, open the program page, see the "Package Actions" category on the top right position and click on the "Source Files" button, a GitLab page will open, open the `.SRCINFO` and search for the tarball link on the "source" fields of the file.
 
 See the [nano package](https://gitlab.archlinux.org/archlinux/packaging/packages/nano/-/blob/main/.SRCINFO?ref_type=heads#L12) example.
 
-- AUR - Search for your program, open the program page, go to the "Sources" section on the end of the package details.
+- AUR: Search for your program, open the program page, go to the "Sources" section on the end of the package details.
 
 ### Git Repositories
 
-Some programs don't offer official tarballs for releases, thus you need to use their Git repository and pin the commit hash of the latest stable release.
+Some programs don't offer official tarballs for releases, thus you need to use their Git repository and pin the tag or commit hash of the latest stable version or last working commit.
 
-Your `recipe.toml` will have this content:
+Your `recipe.toml` will have the following content:
 
 ```toml
 [source]
 git = "repository-link"
-rev = "commit-hash"
+rev = "version-tag"
 ```
 
-#### GitHub release commit hash
+#### GitHub release
 
-Each GitHub release has a commit hash, you will use it to pin the last version of the program to keep code stability.
-
-Open the release item and copy the second code below the version number.
+Each GitHub release has a tag or commit hash, you will use it to pin the lastest stable version of the program to keep code stability.
 
 Example:
 
-- Open the [Rust 1.74 release announcement](https://github.com/rust-lang/rust/releases/tag/1.74.0).
-- The commit hash is `79e9716c980570bfd1f666e3b16ac583f0168962` and was shortened as `79e9716`.
+- Open the [Rust 1.74 release announcement](https://github.com/rust-lang/rust/releases/tag/1.74.0)
+- The tag is `1.74.0` and the commit hash is `79e9716c980570bfd1f666e3b16ac583f0168962` and is shortened as `79e9716`
 
 #### GitLab release commit hash
 
-Each GitLab release has a commit hash, you will use it to pin the last version of the program to keep code stability.
-
-Open the "Releases" button and copy the first code on the end of the release announcement.
+Each GitLab release has a tag or commit hash, you will use it to pin the lastest stable version of the program to keep code stability.
 
 Example:
 
-- Open the [Redox 0.8.0 release announcement](https://gitlab.redox-os.org/redox-os/redox/-/releases/0.8.0).
-- The commit hash is `c8634bd9890afdac4438d1ff99631d600d469264` and was shortened as `c8634bd9`.
+- Open the [Redox 0.8.0 release announcement](https://gitlab.redox-os.org/redox-os/redox/-/releases/0.8.0)
+- The tag is `0.8.0` and the commit hash is `c8634bd9890afdac4438d1ff99631d600d469264` and is shortened as `c8634bd9`
 
 ## Dependencies
 
 A program dependency can be a library (a program that offer functions to some program), a runtime (a program that satisfy some program dependency when it's executed) or a build tool (a program to configure/build some program).
 
-Most C, C++ and Rust programs place build tools/runtime together with development libraries (packages with `-dev` suffix) in their documentation for build instructions.
+Most C, C++ and Rust programs place build tools/runtime together with development libraries (packages with `-dev` suffix) in their build instructions documentation.
 
 Example:
 
@@ -985,15 +981,13 @@ Example:
 sudo apt-get install cmake libssl-dev
 ```
 
-The `cmake` package is the build system while the `libssl-dev` package is the library (OpenSSL) linker objects (`.a` and `.so` files).
+The `cmake` package is the build system (build tool) while the `libssl-dev` package is the library (OpenSSL) linker objects (`.a` and `.so` files), the Debian package system bundle shared/static objects on their `-dev` packages (other Linux distributions just bundle shared objects).
 
-The Debian package system bundle shared/static objects on their `-dev` packages (other Linux distributions just bundle shared objects), while Redox will use the source code of libraries.
+You would need to create a recipe of the `libssl-dev` package and add in the `build.dependencies` data type of your `recipe.toml` file, while the `cmake` package would need to be installed on your system.
 
-You would need to create a recipe of the `libssl-dev` and add on your `recipe.toml`, while the `cmake` package would need to be installed on your system.
+Dependencies added in the `build.dependencies` data type can be statically linked (if the `DYNAMIC_INIT` function is not used) or dynamically linked (if the `DYNAMIC_INIT` function is used), while dependencies added in the `package.dependencies` data type will be installed by the build system installer or package manager.
 
-Dependencies added below the `[build]` section can be statically linked (if the `DYNAMIC_INIT` function is not used) or dynamically linked (if the `DYNAMIC_INIT` function is used), while dependencies added below the `[package]` section will be installed by the build system installer or packaga manager.
-
-Mixed Rust programs have crates ending with `-sys` to use C/C++ libraries of the system, sometimes they bundle them.
+Mixed Rust programs have crates ending with `-sys` to use bundled or system C/C++ libraries.
 
 If you want an easy way to find dependencies, see the Debian stable [packages list](https://packages.debian.org/stable/allpackages).
 
