@@ -59,12 +59,11 @@ Redox creates user-space schemes during initialization, starting various daemon-
 | initfs                    | [bootstrap](https://gitlab.redox-os.org/redox-os/base/-/tree/main/bootstrap?ref_type=heads)                             | Startup filesystem |
 | file                      | [redoxfs](https://gitlab.redox-os.org/redox-os/redoxfs)                                                                 | Main filesystem |
 | network                   | e1000d, rtl8168d                                                                                                        | Link-level network send/receive |
-| ip                        | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/blob/master/netstack/src/smolnetd/scheme/ip.rs?ref_type=heads)   | Raw IP packet send/receive |
-| tcp                       | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/blob/master/netstack/src/smolnetd/scheme/tcp.rs?ref_type=heads)  | TCP sockets |
-| udp                       | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/blob/master/netstack/src/smolnetd/scheme/udp.rs?ref_type=heads)  | UDP sockets |
-| icmp                      | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/blob/master/netstack/src/smolnetd/scheme/icmp.rs?ref_type=heads) | ICMP protocol |
-| netcfg                    | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/tree/master/netstack/src/smolnetd/scheme/netcfg?ref_type=heads)  | Network configuration |
-| dns                       | [dnsd](https://gitlab.redox-os.org/redox-os/base/-/tree/master/netstack/src/dnsd?ref_type=heads)                        | DNS protocol |
+| ip                        | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/blob/main/netstack/src/scheme/ip.rs?ref_type=heads)              | Raw IP packet send/receive |
+| tcp                       | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/blob/main/netstack/src/scheme/tcp.rs?ref_type=heads)             | TCP sockets |
+| udp                       | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/blob/main/netstack/src/scheme/udp.rs?ref_type=heads)             | UDP sockets |
+| icmp                      | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/blob/main/netstack/src/scheme/icmp.rs?ref_type=heads)            | ICMP protocol |
+| netcfg                    | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/tree/main/netstack/src/scheme/netcfg?ref_type=heads)             | Network configuration |
 | display.vesa              | vesad                                                                                                                   | VESA driver |
 | display.virtio-gpu        | virtio-gpud                                                                                                             | VirtIO GPU driver |
 | orbital                   | [orbital](https://gitlab.redox-os.org/redox-os/orbital)                                                                 | Windowing system (window manager and virtual driver) |
