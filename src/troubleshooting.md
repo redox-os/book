@@ -401,6 +401,8 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 
 - Use the `dmesg` command to read the kernel and userspace daemons log
 
+- If Orbital hangs you need to verify if the system also freezed by pressing Super+F1 to see the boot log or Super+F2 to switch to other `tty`, login as `root` and run `dmesg` to read the system log ("Super" is the key with Windows logo)
+
 - You can start the QEMU with the `make qemu gpu=no` command to easily copy the terminal text
 
 - You can write to the `debug:` scheme, which will output on the console, but you must be the `root` user. This is useful if you are debugging an program where you need to use Orbital but still want to capture messages

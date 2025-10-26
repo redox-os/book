@@ -2,6 +2,26 @@
 
 This page contain a list of references for Rust programming, OS development, ideas, porting and computer science to help developers.
 
+The sections are ordered by knowledge importance.
+
+### Computer Science
+
+- [Putting the "You" in CPU](https://cpu.land/) - This website explains how a program works, from a Linux system call until the CPU.
+- [GeeksforGeeks](https://www.geeksforgeeks.org/) - A computer science portal with many articles for several areas and tasks.
+- [computer-science](https://github.com/ossu/computer-science) - A list for computer science education.
+- [freeCodeCamp: Harvard CS50](https://www.youtube.com/watch?v=8mAITcNt710)
+- [Developer Roadmaps - Computer Science](https://roadmap.sh/computer-science) - A guide to learn computer science.
+- [Minix](https://minix3.org/) - You can find great papers and articles about the microkernel architecture and reliable systems.
+- [Plan 9](https://plan9.io/plan9/) - You can find papers and documentation about distributed systems.
+- [seL4](https://sel4.systems/) - You can find papers and documentation about a secure and fast microkernel design.
+- [The Coded Message - Computing/Programming articles](https://www.thecodedmessage.com/tags/computers)
+
+### OS development
+
+- [OSDev Wiki](https://wiki.osdev.org/Expanded_Main_Page) - The best wiki about OS development of the world.
+- [Writing an OS in Rust](https://os.phil-opp.com/) - Blog series to write an operating system in Rust.
+- [Rust OSDev](https://rust-osdev.com/) - Monthly reports with updates on the Rust low-level ecosystem libraries and operating systems.
+
 ### Rust
 
 - [Rust Book](https://doc.rust-lang.org/stable/book/) - The most important source of information on the Rust programming language.
@@ -34,15 +54,9 @@ If you don't know how to port some program or library, you can see the build sys
 - [FreeBSD - Software Ports (cgit)](https://cgit.freebsd.org/ports/) - The official web interface for the software ports of FreeBSD.
 - [FreeBSD - Software Ports (GitHub mirror)](https://github.com/freebsd/freebsd-ports) - GitHub mirror for the software ports of FreeBSD.
 - [NetBSD - Software Ports (GitHub mirror)](https://github.com/NetBSD/pkgsrc) - GitHub mirror for the software ports of NetBSD.
-- [Gentoo Packages](https://packages.gentoo.org/) - It contain advanced information about the port configuration.
+- [Gentoo Packages](https://packages.gentoo.org/) - It contains advanced information about the port configuration.
 - [Nix Packages](https://github.com/NixOS/nixpkgs)
 - [Guix Packages](https://git.savannah.gnu.org/cgit/guix.git)
-
-### OS development
-
-- [OSDev Wiki](https://wiki.osdev.org/Expanded_Main_Page) - The best wiki about OS development of the world.
-- [Writing an OS in Rust](https://os.phil-opp.com/) - Blog series to write an operating system in Rust.
-- [Rust OSDev](https://rust-osdev.com/) - Monthly reports with updates on the Rust low-level ecosystem libraries and operating systems.
 
 ### Ideas
 
@@ -72,14 +86,3 @@ If you want to implement something (drivers, hardware interfaces, fix bugs, etc)
 - [OpenBSD - CVSWeb](https://cvsweb.openbsd.org/) - Official web interface for the OpenBSD source code.
 - [OpenBSD - GitHub mirror](https://github.com/openbsd/src) - GitHub mirror for the OpenBSD source code.
 - [Minix](https://git.minix3.org/index.cgi?p=minix.git) - Official web interface for the Minix source code.
-
-### Computer Science
-
-- [Putting the "You" in CPU](https://cpu.land/) - This website explains how a program works, from the system call to the CPU.
-- [GeeksforGeeks](https://www.geeksforgeeks.org/) - A computer science portal with many articles for several areas and tasks.
-- [computer-science](https://github.com/ossu/computer-science) - A list for computer science education.
-- [Developer Roadmaps - Computer Science](https://roadmap.sh/computer-science) - A guide to learn computer science.
-- [Minix](https://minix3.org/) - On the Minix website you can find great papers and articles about the microkernel architecture and reliable systems.
-- [Plan 9](https://plan9.io/plan9/) - On the Plan 9 website you can find papers and documentation about distributed systems.
-- [seL4](https://sel4.systems/) - On the seL4 website you can find papers and documentation about a secure and fast microkernel design.
-- [The Coded Message - Computing/Programming articles](https://www.thecodedmessage.com/tags/computers)
