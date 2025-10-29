@@ -64,7 +64,6 @@ Redox creates user-space schemes during initialization, starting various daemon-
 | udp                       | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/blob/master/netstack/src/smolnetd/scheme/udp.rs?ref_type=heads)  | UDP sockets |
 | icmp                      | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/blob/master/netstack/src/smolnetd/scheme/icmp.rs?ref_type=heads) | ICMP protocol |
 | netcfg                    | [smolnetd](https://gitlab.redox-os.org/redox-os/base/-/tree/master/netstack/src/smolnetd/scheme/netcfg?ref_type=heads)  | Network configuration |
-| dns                       | [dnsd](https://gitlab.redox-os.org/redox-os/base/-/tree/master/netstack/src/dnsd?ref_type=heads)                        | DNS protocol |
 | display.vesa              | vesad                                                                                                                   | VESA driver |
 | display.virtio-gpu        | virtio-gpud                                                                                                             | VirtIO GPU driver |
 | orbital                   | [orbital](https://gitlab.redox-os.org/redox-os/orbital)                                                                 | Windowing system (window manager and virtual driver) |
