@@ -2,6 +2,20 @@
 
 The Redox build system applies configuration settings from various places to determine the final Redox image. Most of these settings ultimately come from the build system's [environment variables](#environment-variables) (or similarly-named Make variables) and the contents of the chosen [filesystem configuration](#filesystem-configuration) file.
 
+- [Environment Variables](#environment-variables)
+  - [.config](#config)
+  - [Command Line](#command-line)
+  - [mk/config.mk](#mkconfigmk)
+  - [build.sh](#buildsh)
+- [Filesystem Configuration](#filesystem-configuration)
+  - [Architecture Names](#architecture-names)
+  - [Filesystem Size](#filesystem-size)
+  - [Filesystem Customization](#filesystem-customization)
+    - [Creating a custom filesystem configuration](#creating-a-custom-filesystem-configuration)
+    - [Adding a package to the filesystem configuration](#adding-a-package-to-the-filesystem-configuration)
+  - [Binary Packages](#binary-packages)
+    - [REPO_BINARY](#repo_binary)
+
 ## Environment Variables
 
 The default values for the build system's environment variables are mostly defined in the `mk` directory&mdash;particularly in [`mk/config.mk`](#mkconfigmk). Local changes from the default values, however, should be applied in the [`.config`](#config) file, or temporarily on the `make` [command line](#command-line).
@@ -26,7 +40,7 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `FILESYSTEM
 
 The Redox image that is built is typically named `build/$ARCH/$CONFIG_NAME/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`.
 
-### `.config`
+### .config
 
 The purpose of the `.config` file is to allow default configuration settings to be changed without explicitly setting those changes in every `make` command (or modifying the contents of the `mk` directory). The file is also included in the `.gitignore` list to ensure it won't be committed by accident.
 
@@ -39,16 +53,16 @@ ARCH?=i686
 CONFIG_NAME?=desktop-minimal
 ```
 
-> 💡 **Tip:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. This allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` *must* include the question mark to function correctly.
-
+> 📝 **Note:** Any QEMU option can be inserted
 > 📝 **Note:** if [`podman_bootstrap.sh`](./podman-build.md#new-working-directory) was run previously, the `.config` file may already exist.
+> 💡 **Tip:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. This allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` *must* include the question mark to function correctly.
 
 #### Changing the QEMU CPU Core and Memory Quantity
 
 For example, to change the CPU core and RAM memory quantities used when running the Redox image in QEMU, add the following environment variables to your `.config` file:
 
 ```
-QEMU_SMP?=<number>
+QEMU_SMP?=<number-of-threads>
 QEMU_MEM?=<number-in-mb>
 ```
 
@@ -84,7 +98,7 @@ The `mk/config.mk` file should never be modified directly, especially if you are
 
 To apply lasting changes to environment variables, please refer to the [`.config`](#config) section. To apply changes only *temporarily*, see the [Command Line](#command-line) section.
 
-#### `build.sh`
+#### build.sh
 
 The `build.sh` script allows you to easily set `ARCH`, `FILESYSTEM_CONFIG` and `CONFIG_NAME` when running `make`. If you are not changing the values very often, it is recommended that you set the values in [`.config`](#config) rather than use `build.sh`. But if you are testing against different CPU architectures or configurations, this script can help minimize effort, errors and confusion.
 
@@ -103,6 +117,7 @@ The `TARGET` parameter may be any valid `make` target, although the recommended 
 The default value of `FILESYSTEM_CONFIG` is constructed from `ARCH` and `CONFIG_NAME`: `config/$ARCH/$CONFIG_NAME.toml`.
 
 The default values for `ARCH` and `CONFIG_NAME` are `x86_64` and `desktop`, respectively. These produce a default `FILESYSTEM_CONFIG` value of `config/x86_64/desktop.toml`.
+
 ## Filesystem Configuration
 
 The packages to be included in the final Redox image are determined by the chosen **filesystem configuration** file, which is a `.toml` file (e.g., `config/x86_64/desktop.toml`). Open `desktop.toml` and have a look through it:
@@ -241,7 +256,7 @@ This is useful for some purposes, such as producing development builds, confirmi
     make qemu
     ```
 
-#### `REPO_BINARY`
+#### REPO_BINARY
 
 In the previous example, the build system's default behavior was overridden by explicitly setting a package to use a pre-built binary. To configure the build system to download pre-built packages by *default*, however, we can set the `REPO_BINARY` environment variable (`REPO_BINARY?=1`).
 

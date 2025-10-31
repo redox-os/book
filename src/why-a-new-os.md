@@ -6,6 +6,8 @@ The essential goal of the Redox project is to build a robust, reliable and safe 
 
 Wherever possible, Redox code is written in [Rust](https://www.rust-lang.org/). Rust enforces a set of rules and checks on the use, sharing and deallocation of memory references. This almost entirely eliminates the potential for memory leaks, buffer overruns, use after free, and other [memory errors](https://en.wikipedia.org/wiki/Memory_safety#Types_of_memory_errors) that arise during development. The vast majority of security vulnerabilities in operating systems originate from memory errors. The Rust compiler prevents this type of error before the developer attempts to add it to the code base.
 
+It allows us to unlock the full Rust potential by dropping legacy C and C++ code.
+
 ### Benefits
 
 The following items summarize the Rust benefits:
@@ -36,23 +38,39 @@ Thus Redox is a unique opportunity to show the microkernel potential for the mai
 
 The following items summarize the microkernel benefits:
 
-- True modularity
+- More stable and secure
 
-  You can enable/disable/update most system components without a system restart, similar to but safer than some modules on monolithic kernels and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
+  The very small size of the kernel allow the system to be more stable and secure because most system components are isolated in user-space, reducing the chance of a [kernel panic](https://en.wikipedia.org/wiki/Kernel_panic) and the severity of security bugs.
 
 - Bug isolation
 
-  Most system components run in user-space on a microkernel system. Because of this some types of bugs in most system components won't [crash or damage the system or kernel](https://en.wikipedia.org/wiki/Kernel_panic).
+  Most system components run in user-space on a microkernel system. Because of this some types of bugs in most system components and drivers can't spread to other system components or drivers.
+
+- More stable long execution
+
+  When an operating system is left running for a long time (days, months or even years) it will activate many bugs and it's hard to know when they were activated, at some point these bugs can cause security issues, data corruption or crash the system.
+
+  In a microkernel most system components are isolated and some bug types can't spread to other system components, thus the long execution tend to enable less bugs reducing the security issues, data corruption and downtime on servers.
+
+  Also some system components can be restarted on-the-fly (without a full system restart) to disable the bugs of a long execution.
 
 - Restartless design
 
   A mature microkernel changes very little (except for bug fixes), so you won't need to restart your system very often to update it.
 
-  Since most of the system components are in userspace they can be restarted/updated on-the-fly, reducing the downtime of servers a lot.
+  Since most system components are in userspace they can be restarted/updated on-the-fly, reducing the downtime of servers a lot.
 
 - Easy to develop and debug
 
-  Most of the system components run in userspace, simplifying the testing and debugging.
+  Most system components run in userspace, simplifying the testing and debugging.
+
+- Easy and quick to expand
+
+  New system components and drivers are easily and quickly added as userspace daemons.
+
+- True modularity
+
+  You can enable/disable/update most system components without a system restart, similar to but safer than some modules on monolithic kernels and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
 
 You can read more about the above benefits on the [Microkernels](./microkernels.md) page.
 

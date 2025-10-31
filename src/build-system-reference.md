@@ -16,9 +16,6 @@ The build system downloads and creates several files that you may want to know a
 - [Environment Variables](#environment-variables)
 - [Scripts](#scripts)
 - [Component Separation](#component-separation)
-- [Crates](#crates)
-  - [Current Projects With Crates](#current-projects-with-crates)
-  - [Manual Patching](#manual-patching)
 - [Pinned Commits](#pinned-commits)
   - [Current Pinned Submodules](#current-pinned-submodules)
   - [Manual Submodule Update](#manual-submodule-update)
@@ -128,9 +125,9 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make repo` - Package the recipe binaries, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
 - `make live` - Creates a bootable image, `build/livedisk.iso`. Recipes are not usually rebuilt.
 - `make popsicle` - Flash the Redox bootable image on your USB device using the [Popsicle](https://github.com/pop-os/popsicle) tool (the program executable must be present on your shell `$PATH` environment variable, you can get the executable by extracting the AppImage, installing from the package manager or building from source)
-- `make env` - Creates a shell with the build environment initialized. If you are using Podman Build, the shell will be inside the container, and you can use it to debug build issues such as missing packages.
-- `make container_shell` - Open the GNU Bash shell of the Podman container as the active shell of your terminal, it's logged as the `podman` user without `root` privileges.
-- `make container_su` - Open the GNU Bash shell of the Podman container as the active shell of your terminal, it's logged as the `root` user.
+- `make env` - Creates a shell with a build environment configured to use the Redox toolchain. If you are using Podman Build it will change your current terminal shell to the container shell, you can use it to update crates of Rust programs or debug build issues such as missing packages (if you are using the Podman Build you can only use this command in one terminal shell, because it will block the build system directory access from other Podman shell)
+- `make container_shell` - Open the GNU Bash shell of the Podman container as the active shell of your terminal, it's logged as the `podman` user without `root` privileges (don't use this command to replace the `make env` command because it don't setup the Redox toolchain in the Podman container shell)
+- `make container_su` - Open the GNU Bash shell of the Podman container as the active shell of your terminal, it's logged as the `root` user (don't use this command to replace the `make env` command because it don't setup the Redox toolchain in the Podman container shell)
 - `make container_clean` - This will discard images and other files created by Podman.
 - `make container_touch` - If you have removed the file `build/container.tag`, but the container image is still usable, this will recreate the `container.tag` file and avoid rebuilding the container image.
 - `make container_kill` - If you have started a build using Podman Build, and you want to stop it, `Ctrl-C` may not be sufficient. Use this command to terminate the most recently created container.
@@ -144,18 +141,24 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
   (This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate)
 
+- `make p.recipe-name` - Add the recipe to an existing Redox image
 - `make c.recipe-name` - Clean the recipe binaries.
 - `make u.recipe-name` - Clean the recipe source code (**please backup or submit your source changes before the execution of this command**).
+- `make uc.recipe-name` - A shortcut for `make u.recipe c.recipe`
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
 - `make ucr.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
+- `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
+
+All recipe commands (f, r, c, u, cr, ucr) can be run with multiple recipes, just separate them with a comma. for example: `make f.recipe1,recipe2` will download the sources of `recipe1` and `recipe2`
 
 ### QEMU/VirtualBox
 
-- `make qemu` - If a `build/harddrive.img` file exists, QEMU will run using that image. If you want to force a rebuild first, use `make rebuild qemu`. Sometimes `make qemu` will detect changes and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`.
+- `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`
+- `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
+- `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
+- `make qemu` - If a `build/harddrive.img` file exists, QEMU will run using that image. If you want to force a rebuild first, use `make rebuild qemu`. Sometimes `make qemu` will detect changes and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`
 - `make qemu gpu=no` - Start QEMU without a GUI (Orbital is disabled).
 - `make qemu gpu=virtio` - Start QEMU with the VirtIO GPU driver.
-- `make qemu kvm=no` - Start QEMU without the Linux KVM acceleration.
-- `make qemu iommu=no` - Start QEMU without IOMMU.
 - `make qemu audio=no` - Disable all sound drivers.
 - `make qemu usb=no` - Disable all USB drivers.
 - `make qemu uefi=yes` - Enable the UEFI boot loader (it supports more screen resolutions).
@@ -163,11 +166,11 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make qemu disk=nvme` - Boot Redox from a NVMe interface (SSD emulation).
 - `make qemu disk=usb` - Boot Redox from a virtual USB device.
 - `make qemu disk=cdrom` - Boot Redox from a virtual CD-ROM disk.
-- `make qemu option1=string option2=string` - Cumulative QEMU options is supported.
-- `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`.
-- `make gdb` - Connects `gdb` to the Redox image in QEMU. Join us on the [chat](./chat.md) if you want to use this.
-- `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
-- `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
+- `make qemu kvm=no` - Start QEMU without the Linux KVM acceleration.
+- `make qemu iommu=no` - Start QEMU without IOMMU.
+- `make qemu gdb=yes` - Start QEMU with GDB support (you need to add the `gdbserver` recipe on your filesystem configuration before, then run the `make gdb` command in another shell)
+- `make gdb` - Connects the GDB from Linux/BSD/MacOSX to the GDB server (gdbserver) on Redox in QEMU.
+- `make qemu option1=value option2=value` - Cumulative QEMU options are supported.
 - `make virtualbox` - The same as `make qemu`, but for VirtualBox (it requires the VirtualBox service to be running, run `systemctl status vboxdrv.service` to verify or `akmods; systemctl restart vboxdrv.service` to enable on systems using systemd).
 
 ## Environment Variables
@@ -286,7 +289,7 @@ Search some text inside the `recipe.toml` of all recipes and show their content.
 (Require `bat` and `ripgrep` installed, run `cargo install bat ripgrep` to install)
 
 ```sh
-scripts/recipe-match.sh "recipe-name"
+scripts/recipe-match.sh "text"
 ```
 
 ### Print Recipe
@@ -335,62 +338,6 @@ scripts/cargo-update.sh recipe-name
 - `redoxfs` - The FUSE driver of RedoxFS (build system submodule, to run on Linux)
 - `cookbook/recipes/relibc` - The relibc recipe to be installed inside of Redox for static or dynamic linking of binaries (for native compilation)
 - `cookbook/recipes/redoxfs` - The RedoxFS user-space daemon that run inside of Redox (recipe)
-
-## Crates
-
-Some Redox projects have crates on `crates.io`, thus they use a version-based development, if some change is sent to their repository they need to release a new version on `crates.io`, it will have some delay.
-
-### Current Projects With Crates
-
-- [libredox](https://crates.io/crates/libredox)
-- [redox_syscall](https://crates.io/crates/redox_syscall)
-- [redox-path](https://crates.io/crates/redox-path)
-- [redox-scheme](https://crates.io/crates/redox-scheme)
-- [redoxfs](https://crates.io/crates/redoxfs)
-- [redoxer](https://crates.io/crates/redoxer)
-- [redox_installer](https://crates.io/crates/redox_installer)
-- [redox-kprofiling](https://crates.io/crates/redox-kprofiling)
-- [redox-users](https://crates.io/crates/redox_users)
-- [redox-buffer-pool](https://crates.io/crates/redox-buffer-pool)
-- [redox_log](https://crates.io/crates/redox-log)
-- [redox_termios](https://crates.io/crates/redox_termios)
-- [redox-daemon](https://crates.io/crates/redox-daemon)
-- [redox_event](https://crates.io/crates/redox_event)
-- [redox_event_update](https://crates.io/crates/redox_event_update)
-- [redox_pkgutils](https://crates.io/crates/redox_pkgutils)
-- [redox_uefi](https://crates.io/crates/redox_uefi)
-- [redox_uefi_alloc](https://crates.io/crates/redox_uefi_alloc)
-- [redox_dmi](https://crates.io/crates/redox_dmi)
-- [redox_hwio](https://crates.io/crates/redox_hwio)
-- [redox_intelflash](https://crates.io/crates/redox_intelflash)
-- [redox_liner](https://crates.io/crates/redox_liner)
-- [redox_uefi_std](https://crates.io/crates/redox_uefi_std)
-- [ralloc](https://crates.io/crates/ralloc)
-- [orbclient](https://crates.io/crates/orbclient)
-- [orbclient_window_shortcuts](https://crates.io/crates/orbclient_window_shortcuts)
-- [orbfont](https://crates.io/crates/orbfont)
-- [orbimage](https://crates.io/crates/orbimage)
-- [orbterm](https://crates.io/crates/orbterm)
-- [orbutils](https://crates.io/crates/orbutils)
-- [slint_orbclient](https://crates.io/crates/slint_orbclient)
-- [ralloc_shim](https://crates.io/crates/ralloc_shim)
-- [ransid](https://crates.io/crates/ransid)
-- [gitrepoman](https://crates.io/crates/gitrepoman)
-- [pkgar](https://crates.io/crates/pkgar)
-- [pkgar-core](https://crates.io/crates/pkgar-core)
-- [pkgar-repo](https://crates.io/crates/pkgar-repo)
-- [termion](https://crates.io/crates/termion)
-- [reagent](https://crates.io/crates/reagent)
-- [gdb-protocol](https://crates.io/crates/gdb-protocol)
-- [orbtk](https://crates.io/crates/orbtk)
-- [orbtk_orbclient](https://crates.io/crates/orbtk_orbclient)
-- [orbtk-render](https://crates.io/crates/orbtk-render)
-- [orbtk-shell](https://crates.io/crates/orbtk-shell)
-- [orbtk-tinyskia](https://crates.io/crates/orbtk-tinyskia)
-
-### Manual Patching
-
-If you don't want to wait a new release on `crates.io`, you can patch the crate temporarily by fetching the version you need from GitLab and changing the crate version in `Cargo.toml` to `crate-name = { path = "path/to/crate" }`
 
 ## Pinned Commits
 

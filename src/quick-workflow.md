@@ -1,31 +1,32 @@
 # Quick Workflow
 
-This page will describe the most quick testing/development workflow for people that want an unified list to do things.
+This page contains the most quick testing/development workflow for people that want an direct list to do things.
 
-**You need to fully understand the build system to use this workflow, as it don't give detailed explanation of each command to save time and space**
+**You need to fully understand the build system to use this workflow, as it don't give a detailed explanation of each command to save time and space**
 
 - [Install Rust Nightly](#install-rust-nightly)
 - [Update Rust](#update-rust)
-- [Download a new build system copy](#download-a-new-build-system-copy)
-- [Install the required packages for the build system](#install-the-required-packages-for-the-build-system)
+- [Download a new build system copy without the bootstrap script](#download-a-new-build-system-copy-without-the-bootstrap-script)
+- [Install the required dependencies for the build system](#install-the-required-dependencies-for-the-build-system)
 - [Download and run the "podman_bootstrap.sh" script](#download-and-run-the-podman_bootstrapsh-script)
-- [Download and build the toolchain and recipes](#download-and-build-the-toolchain-and-recipes)
+- [Build the system](#build-the-system)
 - [Update the build system and its submodules](#update-the-build-system-and-its-submodules)
 - [Update the toolchain and relibc](#update-the-toolchain-and-relibc)
-- [Update recipes and the QEMU image](#update-recipes-and-the-qemu-image)
+- [Update recipes and Redox image](#update-recipes-and-redox-image)
 - [Update everything](#update-everything)
-- [Wipe the toolchain and build again](#wipe-the-toolchain-and-build-again)
-- [Wipe all sources/binaries of the build system and download/build them again](#wipe-all-sourcesbinaries-of-the-build-system-and-downloadbuild-them-again)
-- [Use the "myfiles" recipe to insert your files on the QEMU image](#use-the-myfiles-recipe-to-insert-your-files-on-the-qemu-image)
-- [Comment out a recipe from the build configuration](#comment-out-a-recipe-from-the-build-configuration)
+- [Wipe the toolchain and download again](#wipe-the-toolchain-and-download-again)
+- [Wipe the toolchain/recipe binaries and download/build them again](#wipe-the-toolchainrecipe-binaries-and-downloadbuild-them-again)
+- [Wipe toolchain/recipe binaries and Podman container, update build system source and rebuild the system](#wipe-toolchainrecipe-binaries-and-podman-container-update-build-system-source-and-rebuild-the-system)
+- [Wipe all recipe sources/binaries and download/build them again](#wipe-all-recipe-sourcesbinaries-and-downloadbuild-them-again)
+- [Use the "myfiles" recipe to insert your files on Redox image](#use-the-myfiles-recipe-to-insert-your-files-on-redox-image)
+- [Disable a recipe on the filesystem configuration](#disable-a-recipe-on-the-filesystem-configuration)
 - [Create logs](#create-logs)
-- [Enable a source-based toolchain](#enable-a-source-based-toolchain)
-- [Build the toolchain from source](#build-the-toolchain-from-source)
+- [Temporarily build the toolchain from source](#temporarily-build-the-toolchain-from-source)
 - [Build some filesystem configuration for some CPU architecture](#build-some-filesystem-configuration-for-some-cpu-architecture)
 - [Build some filesystem configuration for some CPU architecture (using pre-built packages from the build server)](#build-some-filesystem-configuration-for-some-cpu-architecture-using-pre-built-packages-from-the-build-server)
 - [Boot Redox on QEMU from a NVMe device](#boot-redox-on-qemu-from-a-nvme-device)
-- [Boot Redox on QEMU from a NVMe device with more CPU cores](#boot-redox-on-qemu-from-a-nvme-device-with-more-cpu-cores)
-- [Boot Redox on QEMU from a NVMe device, more CPU cores and memory](#boot-redox-on-qemu-from-a-nvme-device-more-cpu-cores-and-memory)
+- [Boot Redox on QEMU from a NVMe device with a custom number of CPU threads](#boot-redox-on-qemu-from-a-nvme-device-with-a-custom-number-of-cpu-threads)
+- [Boot Redox on QEMU from a NVMe device, a custom number of CPU threads and memory](#boot-redox-on-qemu-from-a-nvme-device-a-custom-number-of-cpu-threads-and-memory)
 
 #### Install Rust Nightly
 
@@ -33,7 +34,7 @@ This page will describe the most quick testing/development workflow for people t
 curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly
 ```
 
-Use Case: Configure the host system without the `podman_bootstrap.sh` script.
+Use Case: Configure the host system without the build system bootstrap scripts.
 
 #### Update Rust
 
@@ -43,15 +44,15 @@ rustup update
 
 Use Case: Try to fix Rust problems.
 
-#### Download a new build system copy
+#### Download a new build system copy without the bootstrap script
 
 ```sh
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
 ```
 
-Use Case: Commonly used when breaking changes on upstream require a new build system copy.
+Use Case: Commonly used when a big build system breakage was not prevented before an update or wipe leftovers.
 
-### Install the required packages for the build system
+### Install the required dependencies for the build system
 
 ```sh
 curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.sh -o podman_bootstrap.sh
@@ -61,7 +62,7 @@ curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.
 bash -e podman_bootstrap.sh -d
 ```
 
-Use Case: Install new build tools for recipes or configure the host system without the `bootstrap.sh` script.
+Use Case: Install new build tools or update the existing ones.
 
 #### Download and run the "podman_bootstrap.sh" script
 
@@ -73,9 +74,9 @@ curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.
 bash -e podman_bootstrap.sh
 ```
 
-Use Case: Commonly used when breaking changes on upstream require a new build system copy.
+Use Case: Commonly used when a big build system breakage was not prevented before an update and install new build tools or update the existing ones.
 
-#### Download and build the toolchain and recipes
+#### Build the system
 
 ```sh
 cd redox
@@ -85,7 +86,7 @@ cd redox
 make all
 ```
 
-Use Case: Create a new build system copy after a breaking change on upstream.
+Use Case: Build the system from a clean build system copy.
 
 #### Update the build system and its submodules
 
@@ -107,13 +108,13 @@ make prefix
 
 Use Case: Keep the toolchain up-to-date.
 
-#### Update recipes and the QEMU image
+#### Update recipes and Redox image
 
 ```sh
 make rebuild
 ```
 
-Use Case: Keep the build system up-to-date.
+Use Case: Keep the Redox image up-to-date.
 
 #### Update everything
 
@@ -121,10 +122,6 @@ Install the `topgrade` tool to update your system packages (you can install it w
 
 ```sh
 topgrade
-```
-
-```sh
-rustup update
 ```
 
 ```sh
@@ -139,9 +136,9 @@ touch relibc
 make prefix rebuild
 ```
 
-Use Case: Try to fix any problem caused by outdated programs, toolchain and build system sources.
+Use Case: Try to fix most problems caused by outdated recipes, toolchain and build system configuration.
 
-#### Wipe the toolchain and build again
+#### Wipe the toolchain and download again
 
 ```sh
 rm -rf prefix
@@ -153,23 +150,31 @@ make prefix
 
 Use Case: Commonly used to fix problems.
 
-#### Wipe the toolchain/recipe binaries and build them again
+#### Wipe the toolchain/recipe binaries and download/build them again
 
 ```sh
 make clean all
 ```
 
-Use Case: Commonly used to fix unknown problems or update the build system after breaking changes on upstream.
+Use Case: Commonly used to fix breaking changes on recipes.
 
-#### Wipe all sources/binaries of the build system and download/build them again
+#### Wipe toolchain/recipe binaries and Podman container, update build system source and rebuild the system
+
+```sh
+make clean container_clean pull all
+```
+
+Use Case: Full build system binary cleanup and update to avoid most configuration breaking changes
+
+#### Wipe all recipe sources/binaries and download/build them again
 
 ```sh
 make distclean all
 ```
 
-Use Case: Commonly used to fix unknown problems or update the build system after breaking changes.
+Use Case: Commonly used to fix source/binary breaking changes on recipes or save space.
 
-#### Use the "myfiles" recipe to insert your files on the QEMU image
+#### Use the "myfiles" recipe to insert your files on Redox image
 
 ```sh
 mkdir cookbook/recipes/other/myfiles/source
@@ -185,12 +190,12 @@ myfiles = {}
 ```
 
 ```sh
-make myfiles image
+make rp.myfiles
 ```
 
-Use Case: Quickly insert files on the QEMU image or keep files between rebuilds.
+Use Case: Quickly insert files on the Redox image or keep files between rebuilds.
 
-#### Comment out a recipe from the build configuration
+#### Disable a recipe on the filesystem configuration
 
 ```sh
 nano config/your-cpu-arch/your-config.toml
@@ -210,25 +215,13 @@ make some-command 2>&1 | tee file-name.log
 
 Use Case: Report errors.
 
-#### Enable a source-based toolchain
-
-```sh
-echo "PREFIX_BINARY?=0" >> .config
-```
-
-```sh
-make prefix
-```
-
-Use Case: Build the latest toolchain sources or fix toolchain errors.
-
-#### Build the toolchain from source
+#### Temporarily build the toolchain from source
 
 ```sh
 make prefix PREFIX_BINARY=0
 ```
 
-Use Case: Test the toolchain sources.
+Use Case: Test toolchain fixes.
 
 #### Build some filesystem configuration for some CPU architecture
 
@@ -254,13 +247,13 @@ Use Case: Quickly build Redox variants without system compilation and manual int
 make qemu disk=nvme
 ```
 
-#### Boot Redox on QEMU from a NVMe device with more CPU cores
+#### Boot Redox on QEMU from a NVMe device with a custom number of CPU threads
 
 ```sh
 make qemu disk=nvme QEMU_SMP=number
 ```
 
-#### Boot Redox on QEMU from a NVMe device, more CPU cores and memory
+#### Boot Redox on QEMU from a NVMe device, a custom number of CPU threads and memory
 
 ```sh
 make qemu disk=nvme QEMU_SMP=number QEMU_MEM=number-in-mb

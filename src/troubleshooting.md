@@ -20,13 +20,11 @@ This page covers all troubleshooting methods and tips for our build system.
     - [Environment Leakage](#environment-leakage)
     - [Update Your Build System](#update-your-build-system)
     - [Update Relibc](#update-relibc)
-    - [Fix Breaking Changes](#fix-breaking-changes)
+    - [Prevent and Fix Breaking Changes](#prevent-and-fix-breaking-changes)
     - [Update Your Branch](#update-your-branch)
     - [Update Crates](#update-crates)
     - [Verify The Dependency Tree](#verify-the-dependency-tree)
 - [Debug Methods](#debug-methods)
-    - [Recipes](#recipes)
-        - [Rust](#rust)
 - [Kill A Frozen Redox VM](#kill-a-frozen-redox-vm)
 - [Kernel Panic](#kernel-panic)
     - [QEMU](#qemu)
@@ -40,6 +38,8 @@ When you run `podman_bootstrap.sh` or `native_bootstrap.sh`, the Linux tools and
 
 If your build appears to be missing libraries, have a look at the [Debugging Your Podman Build Process](./advanced-podman-build.md#debugging-your-build-process) section.
 If your Podman environment becomes broken, you can use `podman system reset` and `rm -rf build/podman`. In some cases, you may need to run the `sudo rm -rf build/podman` command.
+
+If any command ask your to choose an image repository (after the `make container_clean` command execution) select the first item, it will give an error and you need to run the `time make all` command again
 
 #### Manual Configuration
 
@@ -199,13 +199,123 @@ Sometimes your build system can be outdated because you forgot to run `make pull
 
 An outdated relibc copy can contain bugs (already fixed on recent versions) or missing APIs, read [this](./build-system-reference.md#update-relibc) section to learn how to update it.
 
-### Fix Breaking Changes
+### Prevent and Fix Breaking Changes
 
-- Build System
+Sometimes build system or recipe breaking changes are merged (you need to monitor the Dev room in our [chat](./chat.md) to know if some commit or MR containing breaking changes were merged) and you need to cleanup your recipe or build system tooling binaries before the recipe or build system source updates to avoid conflicts with the new configuration.
 
-Sometimes build system breaking changes are merged (you need to monitor the Dev room in our [chat](./chat.md) to know if some MRs containing breaking changes were merged) and you need to cleanup most of your build system files to avoid conflicts with the new configuration, the `make distclean pull all` command should work in most cases because it wipe sources and binaries that can cause conflicts after the build system update.
+#### Build System Breakage Prevention
 
-If the method above doesn't work you need to download a new copy of the build system by running the `podman_bootstrap.sh` or `native_bootstrap.sh` scripts or using the following commands:
+The following methods can prevent a build system breakage after updates that change file configuration behavior.
+
+- Wipe all recipe binaries, update build system source and rebuild the system (most common prevention)
+
+```sh
+make clean pull all
+```
+
+- Wipe all recipe binaries and Podman container, update build system source and rebuild the system
+
+```sh
+make clean container_clean pull all
+```
+
+- Wipe all recipe binaries/sources, update build system source and rebuild the system (least common prevention)
+
+```sh
+make distclean pull all
+```
+
+#### Build System Fixing
+
+If the breaking change affect multiple recipes or any recipe can't be built, read the following instructions:
+
+- Wipe the build system binaries and build the system (most common fix)
+
+```sh
+make clean all
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the command below:
+
+- Wipe and rebuild the filesystem tooling
+
+```sh
+make fstools_clean fstools
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the command below:
+
+- Wipe the Podman container (not common fix)
+
+```sh
+make container_clean
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues it doesn't happen because of breaking changes on the build system.
+
+#### Recipe Fixing
+
+Some types of recipe errors can be backwards-incompatible build system, system component or relibc changes after the `make pull rebuild` command execution. Run the following tests to verify if the recipe error is an isolated problem or a breaking change:
+
+- Rebuild the recipe binaries
+
+```sh
+make cr.recipe-name
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
+
+- Wipe the recipe sources and binaries and rebuild
+
+```sh
+make ucr.recipe-name
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
+
+- Update relibc and rebuild the recipe
+
+```sh
+touch relibc
+```
+
+```sh
+make prefix cr.recipe-name
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
+
+- Reconfigure the Redox toolchain and rebuild the recipe
+
+```sh
+rm -rf prefix
+```
+
+```sh
+make prefix cr.recipe-name
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
+
+- Wipe the build system binaries and rebuild the system (run this command if the binaries of multiple recipes are broken)
+
+```sh
+make clean all
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
+
+- Wipe the build system sources and binaries and rebuild the system (run this command if the sources and binaries of multiple recipes are broken)
+
+```sh
+make distclean all
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues read the section below.
+
+#### New Build System Copy
+
+If the methods above doesn't work you need to download a new copy of the build system by running the `podman_bootstrap.sh` or `native_bootstrap.sh` scripts or using the following commands:
 
 ```sh
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
@@ -218,66 +328,6 @@ cd redox
 ```sh
 make all
 ```
-
-- Recipes
-
-Some types of recipe errors can be backwards-incompatible build system, system component or relibc changes after the `make pull rebuild` command execution. Run the following tests to verify if the recipe error is an isolated problem or a breaking change:
-
-- Rebuild the recipe binaries
-
-```sh
-make cr.recipe-name
-```
-
-Check if the compilation or runtime error continues after this command, if the error continues run the following test:
-
-- Wipe the recipe sources and binaries and rebuild
-
-```sh
-make ucr.recipe-name
-```
-
-Check if the compilation or runtime error continues after this command, if the error continues run the following test:
-
-- Update relibc and rebuild the recipe
-
-```sh
-touch relibc
-```
-
-```sh
-make prefix cr.recipe-name
-```
-
-Check if the compilation or runtime error continues after this command, if the error continues run the following test:
-
-- Reconfigure the Redox toolchain and rebuild the recipe
-
-```sh
-rm -rf prefix
-```
-
-```sh
-make prefix cr.recipe-name
-```
-
-Check if the compilation or runtime error continues after this command, if the error continues run the following test:
-
-- Wipe the build system binaries, update the build system configuration and build the system (download the Redox toolchain, build the build system tools and recipe sources)
-
-```sh
-make clean all
-```
-
-Check if the compilation or runtime error continues after this command, if the error continues it very probably doesn't happen because of breaking changes but there's not common exception for source breaking changes in the following test:
-
-- Wipe the build system sources and binaries, update the build system configuration and build the system (download the Redox toolchain, build the build system tools, download the recipe sources and build them)
-
-```sh
-make distclean all
-```
-
-Check if the compilation or runtime error continues after this command, if the error continues it doesn't happen because of breaking changes
 
 ### Update Your Branch
 
@@ -347,19 +397,25 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 
 ## Debug Methods
 
-- Use the `dmesg` command to read the kernel and user-space daemons log.
+- Read [this](https://en.wikipedia.org/wiki/Debugging#Techniques) Wikipedia section to learn about debugging techniques
 
-- You can start the QEMU with the `make qemu gpu=no` command to easily copy the terminal text.
+- Use the `dmesg` command to read the kernel and userspace daemons log
+
+- If Orbital hangs you need to verify if the system also freezed by pressing Super+F1 to see the boot log or Super+F2 to switch to other `tty`, login as `root` and run `dmesg` to read the system log ("Super" is the key with Windows logo)
+
+- You can start the QEMU with the `make qemu gpu=no` command to easily copy the terminal text
+
+- You can write to the `debug:` scheme, which will output on the console, but you must be the `root` user. This is useful if you are debugging an program where you need to use Orbital but still want to capture messages
+
+- Currently, the build system strips function names and other symbols from programs, as support for symbols is not implemented yet
+
+- To use GDB add the `gdbserver` recipe in your filesystem configuration, run the `make qemu gdb=yes` command in one shell, start the `gdbserver` program on QEMU and run the `make gdb` command in another shell
 
 - Use the following command for advanced logging:
 
 ```sh
 make some-command 2>&1 | tee file-name.log
 ```
-
-- You can write to the `debug:` scheme, which will output on the console, but you must be `root`. This is useful if you are debugging an app where you need to use Orbital but still want to capture messages.
-
-- Currently, the build system strips function names and other symbols from programs, as support for symbols is not implemented on Redox.
 
 ### Recipes
 
@@ -371,60 +427,35 @@ You will see the available debug methods for recipes on this section.
 
 Rust programs can carry assertions, checking and symbols, but they are disabled by default.
 
-- `COOKBOOK_DEBUG` - This environment variable will build the Rust program with assertions, checking and symbols.
-- `COOKBOOK_NOSTRIP` - This environment variable will package the recipe with symbols.
+- `REPO_DEBUG` - This environment variable will build the Rust program with assertions, checking and symbols.
 
 (Debugging with symbols inside of Redox is not supported yet)
 
-To enable them you can use these commands or scripts:
+To enable them you can use the following commands or scripts:
 
-- Enable the `COOKBOOK_DEBUG` environment variable for one command and build a recipe:
+- Permanently enable `REPO_DEBUG` for all recipes by adding the following text to your `.config` file:
 
-```sh
-COOKBOOK_DEBUG=true make r.recipe-name
+```
+REPO_DEBUG?=1
 ```
 
-- Enable the `COOKBOOK_DEBUG` environment variable for multiple commands and build a recipe:
+- Enable the `REPO_DEBUG` environment variable for one command, rebuild/package a recipe and add to the Redox image:
 
 ```sh
-export COOKBOOK_DEBUG=true
+REPO_DEBUG=1 make cr.recipe-name image
 ```
 
-```sh
-make r.recipe-name
-```
-
-- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` environment variables for one command and build a recipe:
+- Enable the `REPO_DEBUG` environment variable for multiple commands, rebuild/package a recipe and add to the Redox image:
 
 ```sh
-COOKBOOK_DEBUG=true COOKBOOK_NOSTRIP=true make r.recipe-name
-```
-
-- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` environment variables for multiple commands and build a recipe:
-
-```sh
-export COOKBOOK_DEBUG=true
+export REPO_DEBUG=1
 ```
 
 ```sh
-export COOKBOOK_NOSTRIP=true
+make cr.recipe-name image
 ```
 
-```sh
-make r.recipe-name
-```
-
-- Enable the `COOKBOOK_DEBUG` environment variable inside the `recipe.toml`:
-
-```toml
-template = "custom"
-script = """
-COOKBOOK_DEBUG=true
-cookbook_cargo
-"""
-```
-
-- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` environment variables inside the `recipe.toml`:
+- Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` (they are equivalent to `REPO_DEBUG` environment variable) inside the `recipe.toml` :
 
 ```toml
 template = "custom"
@@ -467,6 +498,40 @@ It will print the file and line number for each entry in the backtrace.
 
 (This is the most simple example command, use the `-h` option of the `backtrace.sh` script to see more combinations)
 
+#### GDB On QEMU
+
+Use the following instructions to debug a Rust recipe with GDB:
+
+- Add the following environment variable to your `.config` file:
+
+```
+REPO_DEBUG?=1
+```
+
+- Rebuild the recipe with assertions/checking/symbols and add into Redox image:
+
+```sh
+make cr.recipe-name image
+```
+
+- Start QEMU with GDB enabled:
+
+```sh
+make qemu gdb=yes
+```
+
+If the recipe has one executable, run the following command:
+
+```sh
+make debug.recipe-name
+```
+
+If the recipe has multiple executables use the following command:
+
+```sh
+make debug.recipe-name DEBUG_BIN=executable-name
+```
+
 ## Kill A Frozen Redox VM
 
 Sometimes Redox can freeze or rarely get a kernel panic, to kill the QEMU process run this command:
@@ -477,7 +542,7 @@ pkill qemu-system
 
 ## Kernel Panic
 
-A kernel panic is when some bug avoid the safe execution of the kernel code, thus the system needs to be restarted to avoid data corruption.
+A kernel panic is when some bug avoid the safe execution of the kernel code, thus the system needs to be restarted to avoid memory corruption.
 
 We use the following kernel panic message format:
 
