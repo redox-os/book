@@ -11,7 +11,7 @@ The build system downloads and creates several files that you may want to know a
   - [Build System Files](#build-system-files)
 - [GNU Make Commands](#gnu-make-commands)
   - [Build System](#build-system-1)
-  - [Recipes](#recipes)
+  - [Podman](#podman)
   - [QEMU/VirtualBox](#qemuvirtualbox)
 - [Environment Variables](#environment-variables)
 - [Scripts](#scripts)
@@ -117,22 +117,33 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make rebuild` - Update all binaries from recipes with source code changes (it don't detect changes on the Redox toolchain), it should be your normal `make` target.
 - `make prefix` - Download the Rust/GCC forks and build relibc (it update the relibc binary with source code changes after the `make pull`, `touch relibc` and `make prefix` commands).
 - `make fstools` - Build the image builder (installer), Cookbook and RedoxFS (after `touch installer` or `touch redoxfs`).
-- `make fstools_clean` - Clean the image builder, Cookbook and RedoxFS binaries.
 - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are downloaded. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
+- `make cook` - Build recipes enabled in the active filesystem configuration
+- `make repo` - Package the recipe binaries, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
+- `make find` - Show the recipe packages location
+- `make tree` - Show the filesystem configuration recipes and recipe dependencies tree
+- `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`
+- `make push` - Only install recipes with new changes in an existing Redox image
+- `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
+- `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
+- `make live` - Creates a bootable image, `build/livedisk.iso`. Recipes are not usually rebuilt.
+- `make popsicle` - Flash the Redox bootable image on your USB device using the [Popsicle](https://github.com/pop-os/popsicle) tool (the program executable must be present on your shell `$PATH` environment variable, you can get the executable by extracting the AppImage, installing from the package manager or building from source)
+- `make mount_live` - Mount the live disk ISO
+- `make env` - Creates a shell with a build environment configured to use the Redox toolchain. If you are using Podman Build it will change your current terminal shell to the container shell, you can use it to update crates of Rust programs or debug build issues such as missing packages (if you are using the Podman Build you can only use this command in one terminal shell, because it will block the build system directory access from other Podman shell)
+- `make fstools_clean` - Clean the image builder, Cookbook and RedoxFS binaries.
 - `make clean` - Clean all recipe binaries (Note that `make clean` may require some tools to be built).
 - `make unfetch` - Clean all recipe sources.
 - `make distclean` - Clean all recipe sources and binaries (**please backup or submit your source changes before the execution of this command**).
-- `make repo` - Package the recipe binaries, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
-- `make live` - Creates a bootable image, `build/livedisk.iso`. Recipes are not usually rebuilt.
-- `make popsicle` - Flash the Redox bootable image on your USB device using the [Popsicle](https://github.com/pop-os/popsicle) tool (the program executable must be present on your shell `$PATH` environment variable, you can get the executable by extracting the AppImage, installing from the package manager or building from source)
-- `make env` - Creates a shell with a build environment configured to use the Redox toolchain. If you are using Podman Build it will change your current terminal shell to the container shell, you can use it to update crates of Rust programs or debug build issues such as missing packages (if you are using the Podman Build you can only use this command in one terminal shell, because it will block the build system directory access from other Podman shell)
+
+### Podman
+
 - `make container_shell` - Open the GNU Bash shell of the Podman container as the active shell of your terminal, it's logged as the `podman` user without `root` privileges (don't use this command to replace the `make env` command because it don't setup the Redox toolchain in the Podman container shell)
 - `make container_su` - Open the GNU Bash shell of the Podman container as the active shell of your terminal, it's logged as the `root` user (don't use this command to replace the `make env` command because it don't setup the Redox toolchain in the Podman container shell)
 - `make container_clean` - This will discard images and other files created by Podman.
 - `make container_touch` - If you have removed the file `build/container.tag`, but the container image is still usable, this will recreate the `container.tag` file and avoid rebuilding the container image.
 - `make container_kill` - If you have started a build using Podman Build, and you want to stop it, `Ctrl-C` may not be sufficient. Use this command to terminate the most recently created container.
 
-### Recipes
+### Recipe
 
 - `make f.recipe-name` - Download the recipe source.
 - `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games` (you can't use this command to replace the `make all`, `make fstools` and `make prefix` commands because it don't trigger them, make sure to run them before to avoid errors)
@@ -153,9 +164,6 @@ All recipe commands (f, r, c, u, cr, ucr) can be run with multiple recipes, just
 
 ### QEMU/VirtualBox
 
-- `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`
-- `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
-- `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
 - `make qemu` - If a `build/harddrive.img` file exists, QEMU will run using that image. If you want to force a rebuild first, use `make rebuild qemu`. Sometimes `make qemu` will detect changes and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`
 - `make qemu gpu=no` - Start QEMU without a GUI (Orbital is disabled).
 - `make qemu gpu=virtio` - Start QEMU with the VirtIO GPU driver.

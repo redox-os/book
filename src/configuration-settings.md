@@ -8,7 +8,7 @@ The Redox build system applies configuration settings from various places to det
   - [mk/config.mk](#mkconfigmk)
   - [build.sh](#buildsh)
 - [Filesystem Configuration](#filesystem-configuration)
-  - [Architecture Names](#architecture-names)
+  - [CPU Architecture Codenames](#cpu-architecture-codenames)
   - [Filesystem Size](#filesystem-size)
   - [Filesystem Customization](#filesystem-customization)
     - [Creating a custom filesystem configuration](#creating-a-custom-filesystem-configuration)
@@ -32,6 +32,7 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `FILESYSTEM
 | `QEMU_SMP` | Sets the QEMU CPU core quantity, e.g.,  `QEMU_SMP=4`. |
 | `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY?=0`), the build system will enable the toolchain compilation and will not download the toolchain binaries from the Redox build server. |
 | `REPO_BINARY` | If set to 1 (`REPO_BINARY?=1`), the build system will download/install pre-built packages from the Redox package server by default, rather than build them from source (i.e., recipes). |
+| `REPO_OFFLINE` | Enable the offline mode of Cookbook where recipe sources aren't updated and if the active filesystem configuration is not using remote packages |
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
 | `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
@@ -132,7 +133,7 @@ For more details on the filesystem configuration, and how to add additional pack
 
 Feel free to create your own **filesystem configuration**.
 
-### Architecture Names
+### CPU Architecture Codenames
 
 The Redox build system supports cross-compilation to other CPU architectures. The CPU architecture that Redox is built for (specified by the `ARCH` environment variable) usually determines the filesystem configuration file that will be used by the build system.
 
