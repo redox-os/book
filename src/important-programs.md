@@ -4,13 +4,13 @@ This page covers important programs and libraries supported by Redox as of Octob
 
 Redox is designed to be source-compatible with most Unix, Linux and POSIX-compliant applications, only requiring compilation.
 
-This page lists programs are known to work well on Redox or how well it was tested. All programs are compiled through our build system called cookbook, which also includes all kind of patches and fork required to make it run on Redox.
+This page lists programs that are known to work well on Redox or how well it was tested. All programs are compiled through our build system called cookbook, which includes all kinds of patches and forks that are required to make it run on Redox.
 
-All of these list are tested from x86_64 architecture, other architecture test result may not been tested yet.
+Everything on these lists are tested on the x86_64 architecture, other architecture test results may not have been tested yet.
 
 ## Compilers
 
-These compilers have been tested to build on Redox, but runtime result varies:
+These compilers have been tested to build on Redox, but the runtime result varies:
 
 | Name | Can Cross-compile from Linux | Can compile programs on Redox | Compiled programs can run on Redox |
 |---|---|---|---|
@@ -27,7 +27,7 @@ These compilers have been tested to build on Redox, but runtime result varies:
 
 ## GUI Applications
 
-Most GUI applications are running through Orbital, official Redox GUI protocol. GUI Libraries that support orbitals are:
+Most GUI applications are running through Orbital, the official Redox GUI protocol. GUI Libraries that support orbital are:
 
 - Mesa (OpenGL 1 and 2, EGL, via liborbital)
 - SDL1 and SDL2 (via Mesa)
