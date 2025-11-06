@@ -10,27 +10,27 @@ We want to improve the security design when compared to other Unix-like operatin
 
 ### Complete Alternative to Linux/BSD
 
-Redox has its own kernel, drivers and filesystem written in Rust. The driver implementations are complete for QEMU, and [some hardware](./hardware-support.md) are known to work well. In terms of machine architectore, Redox aims to have an equal support to four major architectures: 64 bit of x86, ARM and RISC-V, and 32 bit of x86.
+Redox has its own kernel, drivers and filesystem written in Rust. The driver implementations are complete for QEMU, and [some hardware](./hardware-support.md) are known to work well. In terms of machine architectore, Redox aims to have an equal support for four major architectures: 64 bit of x86, ARM and RISC-V, and 32 bit of x86.
 
-Redox can run C programs with the aid of [relibc](https://gitlab.redox-os.org/redox-os/relibc), an almost [POSIX-compliant C Library](https://en.wikipedia.org/wiki/C_POSIX_library) written in Rust. Relibc has goal to be supporting most C/C++ based software. Many programs and libraries can be build without any patches, some maybe need patches to workaround some functions, especially if it relies on non POSIX functions.
+Redox can run C programs with the aid of [relibc](https://gitlab.redox-os.org/redox-os/relibc), an almost [POSIX-compliant C Library](https://en.wikipedia.org/wiki/C_POSIX_library) written in Rust. Relibc has the goal to support most C/C++ based software. Many programs and libraries can be build without any patches, some maybe need patches to workaround some functions, especially if it relies on non POSIX functions.
 
-Redox also can run GUI programs running on top Orbital. Both Rust and C programs can open GUI windows with the help of [`orbclient`](https://gitlab.redox-os.org/redox-os/orbclient/) and [`liborbital`](https://gitlab.redox-os.org/redox-os/liborbital/), our official orbital client library. GUI libraries that used heavily by both communities has support on them, for example winit and SDL2, both are using orbclient and liborbital as their GUI backend.
+Redox also can run GUI programs running on top Orbital. Both Rust and C programs can open GUI windows with the help of [`orbclient`](https://gitlab.redox-os.org/redox-os/orbclient/) and [`liborbital`](https://gitlab.redox-os.org/redox-os/liborbital/), our official orbital client library. GUI libraries that are used heavily by both communities has support on them, for example winit and SDL2, both are using orbclient and liborbital as their GUI backend.
 
 Both drivers and userspace programs are worked well for known system and programs, but we aim more compability to reach more user interests. The details of them are expanded in separate page.
 
 ### Rust Ecosystem
 
-Rust has officially support Redox as both Tier II and Tier III [platforms](https://doc.rust-lang.org/nightly/rustc/platform-support/redox.html). In this case, Rust community has accepted Redox-specific code for years. Some well-known Rust libraries (crates) that supports redox are [`winit`](https://github.com/rust-windowing/winit/), [`nix`](https://github.com/nix-rust/nix), [`rustix`](https://github.com/bytecodealliance/rustix), and much more. These crates are backed by either [Rust's `libc`](https://github.com/rust-lang/libc) or specific implementation of [Rust `std`](https://doc.rust-lang.org/std/), and anytime we added new features, we also trying to push changes into these libraries.
+Rust officially supports Redox as both Tier II and Tier III [platforms](https://doc.rust-lang.org/nightly/rustc/platform-support/redox.html). The Rust community has accepted Redox-specific code for years. Some well-known Rust libraries (crates) that supports redox are [`winit`](https://github.com/rust-windowing/winit/), [`nix`](https://github.com/nix-rust/nix), [`rustix`](https://github.com/bytecodealliance/rustix), and much more. These crates are backed by either [Rust's `libc`](https://github.com/rust-lang/libc) or a specific implementation of [Rust `std`](https://doc.rust-lang.org/std/). Anytime we added new features, we are also trying to push changes into these libraries.
 
 Libraries that are using Rust libc will be linked into relibc at compile time, statically linked by default. By this design choice, compiling any Rust program to Redox requires relibc available at linking time. While it seems like a inconvience, it allows us to make rapid development without having to push changes each time relibc improved. To alleviate this "inconvience", we have [`redoxer`](https://crates.io/crates/redoxer) to allow developers to compile and test Rust programs into Redox without using our build system.
 
 ### Security Design
 
-Redox kernel is inspired by many former operating systems. Redox kernel is mainly microkernel from ground up, so many services has been extracted out from kernel, into either a driver or a runtime service. Both driver and runtime services are no difference than running a software from userspace, except it's spawn into a special namespace where it allows accessing hardware interrupts managed by the kernel.
+The Redox kernel is inspired by many operating systems. The Redox kernel is mainly a microkernel from ground up, so many services have been extracted out from the kernel into either a driver or a runtime service. Both driver and runtime services are no different than running software from userspace, except it's spawned into a special namespace where it allows accessing hardware interrupts managed by the kernel.
 
-All programs including kernel, drivers and runtime services are talking to each other by using special IPC called "scheme". Schemes lives inside `/scheme` and any program can access or create it using standard file API. For more advanced usage software can use `libredox` and many other `redox-*` crates, detailed in [another page](./libraries-apis.md#crates).
+All programs including the kernel, drivers and runtime services are talking to each other by using a special IPC called "scheme". Schemes live inside `/scheme` and any program can access or create it using the standard file API. For more advanced usage software can use `libredox` and many other `redox-*` crates, detailed in [another page](./libraries-apis.md#crates).
 
-Schemes are secured mainly by namespaces. One namespace is invisible to another one. In case of programs talking to each other in the same namespace, kernel and drivers are using caller user ID or group ID, similar to Linux being having `sudo`, but we're about to change it into [Capability-based security](https://en.wikipedia.org/wiki/Capability-based_security) in near future.
+Schemes are secured mainly by namespaces. One namespace is invisible to another one. In case of programs talking to each other in the same namespace, the kernel and drivers use caller user ID or group ID, similar to Linux having `sudo`, but we're about to change it into [Capability-based security](https://en.wikipedia.org/wiki/Capability-based_security) in near future.
 
 ## The non-goals of Redox
 
@@ -50,9 +50,9 @@ Redox aims to support most software, especially those that are important. Softwa
 4. Too complicated to port or no interest to it (yet)
 5. The compiler is not supporting Redox officially yet
 
-A well known example of software being too complicated to port is Chromium, as it's heavily tuned to use OS-specific function call, even FreeBSD has [countless patches](https://github.com/gliaskos/freebsd-chromium/tree/master/www/chromium/files) to make sure it's working. It's easier for us to port smaller alternatives like Servo given that our limited resource is better spent into improving Redox itself.
+A well known example of software being too complicated to port is Chromium, as it's heavily tuned to use OS-specific function calls, even FreeBSD has [countless patches](https://github.com/gliaskos/freebsd-chromium/tree/master/www/chromium/files) to make sure it's working. It's easier for us to port smaller alternatives like Servo given that our limited resources are better spent on improving Redox itself.
 
-This doesn't stop us from porting more programs even though it's non POSIX. For example, Wayland is challenging to port as it depends on many Linux features. But given enough time, it will became available in Redox, just like how X11 is working on Redox.
+This doesn't stop us from porting more programs even if they are non-POSIX. For example, Wayland is challenging to port as it depends on many Linux features. But given enough time, it will became available in Redox, just like how X11 is working on Redox.
 
 ### System designs that are non-Goals
 

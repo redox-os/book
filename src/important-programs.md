@@ -34,7 +34,7 @@ Most GUI applications are running through Orbital, official Redox GUI protocol. 
 - Winit (Rust, via orbclient)
 - X11 (via TWM, which is via liborbital)
 
-These list are GUIs that are well known, There are categories in tables below as well:
+These list are GUIs that are well known. There are also categories in tables below:
 
 | Name | Rendering Library | Working Status |
 |---|--|---|
