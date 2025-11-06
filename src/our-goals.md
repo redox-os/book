@@ -10,13 +10,13 @@ We want to improve the security design when compared to other Unix-like operatin
 
 ### Complete Alternative to Linux/BSD
 
-Redox has its own kernel, drivers and filesystem written in Rust. The driver implementations are complete for QEMU, and [some hardware](./hardware-support.md) are known to work well. In terms of machine architectore, Redox aims to have an equal support for four major architectures: 64 bit of x86, ARM and RISC-V, and 32 bit of x86.
+Redox has its own kernel, drivers and filesystem written in Rust. The driver implementations are complete for QEMU, and [some hardware](./hardware-support.md) are known to work well. In terms of machine architectore, Redox aims to have an equal support for four major architectures: 64 bit mode of x86, ARM and RISC-V, and 32 bit mode of x86.
 
 Redox can run C programs with the aid of [relibc](https://gitlab.redox-os.org/redox-os/relibc), an almost [POSIX-compliant C Library](https://en.wikipedia.org/wiki/C_POSIX_library) written in Rust. Relibc has the goal to support most C/C++ based software. Many programs and libraries can be build without any patches, some maybe need patches to workaround some functions, especially if it relies on non POSIX functions.
 
-Redox also can run GUI programs running on top Orbital. Both Rust and C programs can open GUI windows with the help of [`orbclient`](https://gitlab.redox-os.org/redox-os/orbclient/) and [`liborbital`](https://gitlab.redox-os.org/redox-os/liborbital/), our official orbital client library. GUI libraries that are used heavily by both communities has support on them, for example winit and SDL2, both are using orbclient and liborbital as their GUI backend.
+Redox also can run GUI programs running on top [Orbital](https://gitlab.redox-os.org/redox-os/orbital). Both Rust and C programs can open GUI windows with the help of [`orbclient`](https://gitlab.redox-os.org/redox-os/orbclient/) and [`liborbital`](https://gitlab.redox-os.org/redox-os/liborbital/), our official orbital client library. GUI libraries that are used heavily by both communities has support on them, for example winit and SDL2, both are using orbclient and liborbital as their GUI backend.
 
-Both drivers and userspace programs are worked well for known system and programs, but we aim more compability to reach more user interests. The details of them are expanded in separate page.
+Both drivers and runtime services implented are working well to run [important programs](./important-programs.md). We aim to have more POSIX compability to make more programs usable and gain user interests.
 
 ### Rust Ecosystem
 
@@ -26,7 +26,7 @@ Libraries that are using Rust libc will be linked into relibc at compile time, s
 
 ### Security Design
 
-The Redox kernel is inspired by many operating systems. The Redox kernel is mainly a microkernel from ground up, so many services have been extracted out from the kernel into either a driver or a runtime service. Both driver and runtime services are no different than running software from userspace, except it's spawned into a special namespace where it allows accessing hardware interrupts managed by the kernel.
+The Redox kernel is inspired by [many operating systems](./influences.md). The Redox kernel is mainly a microkernel from ground up, so many services have been extracted out from the kernel into either a driver or a runtime service. Both driver and runtime services are no different than running software from userspace, except it's spawned into a special namespace where it allows accessing hardware interrupts managed by the kernel.
 
 All programs including the kernel, drivers and runtime services are talking to each other by using a special IPC called "scheme". Schemes live inside `/scheme` and any program can access or create it using the standard file API. For more advanced usage software can use `libredox` and many other `redox-*` crates, detailed in [another page](./libraries-apis.md#crates).
 
@@ -34,7 +34,7 @@ Schemes are secured mainly by namespaces. One namespace is invisible to another 
 
 ## The non-goals of Redox
 
-We are not a Linux/BSD clone, or POSIX-compliant, nor crazy scientists, who wish to redesign everything. Generally, we stick to well-tested and proven correct designs. If it ain't broken we aren't going to change it.
+We are not a Linux/BSD clone, or POSIX-compliant, nor crazy scientists, who wish to redesign everything. Generally, we stick to well-tested and proven correct designs. If it ain't broken don't fix it.
 
 This means that a large number of programs and libraries will be compatible with Redox. Some things that do not align with our design decisions will have to be ported.
 
