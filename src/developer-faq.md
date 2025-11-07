@@ -383,6 +383,10 @@ It's recommended to use code suggestions for normal text and code to help and sa
 
 You can start a code suggestion by clicking on the file icon with the + symbol when you click to comment in some line of a file.
 
+- The review should be done by one reviewer per time to avoid conflict with other reviewers, each reviewer should warn when it start and finish a review
+- Once you finish your review warn to avoid conflict with other reviewers
+- **Don't edit your code suggestions without a warning to prevent merge errors and review desynchronization**
+
 ### I have a merge request with many commits, should I squash them after merge?
 
 Yes.

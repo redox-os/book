@@ -72,7 +72,7 @@
   - [Raspberry Pi](./raspi.md)
   - [Troubleshooting the Build](./troubleshooting.md)
   - [Build System](./build-system-reference.md)
-  - [Build Phases](./build-phases.md)
+  - [Build Process](./build-phases.md)
 
 - [Developing for Redox](./developing-for-redox.md)
   - [Including Programs in Redox](./including-programs.md)
