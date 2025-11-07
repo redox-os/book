@@ -16,4 +16,4 @@ This license was chosen to allow Redox to be used everywhere with minimum restri
 
 Redox intends to be free forever, because we aim to be a foundational piece in creating secure and resilient systems.
 
-Programs running on top of Redox don't have to be MIT X11-style licensed, just like how other OS-es doing (e.g. proprietary drivers on top of Linux). But all of officially-ported programs so far is only OSI-compliant software since sources have to be available for cross compilation.
+Programs running on top of Redox don't have to be MIT X11-style licensed, just like how other OSes do (e.g. proprietary programs and drivers on top of Linux). But all of officially ported programs so far is only OSI and GNU licensing compliant software.

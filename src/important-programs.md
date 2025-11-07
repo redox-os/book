@@ -2,58 +2,66 @@
 
 This page covers important programs and libraries supported by Redox as of October 2025. <!-- don't forget to update this date -->
 
-Redox is designed to be source-compatible with most Unix, Linux and POSIX-compliant applications, only requiring compilation.
+Redox is designed to be source-compatible with POSIX and Linux applications, only requiring compilation or small patches.
 
-This page lists programs that are known to work well on Redox or how well it was tested. All programs are compiled through our build system called cookbook, which includes all kinds of patches and forks that are required to make it run on Redox.
+This page contain programs that are known to work well on Redox or how well it was tested. All programs are compiled through our package cross-compilation system called Cookbook, which includes the configuration of all kinds of patches and forks that are required to make them run on Redox.
 
-Everything on these lists are tested on the x86_64 architecture, other architecture test results may not have been tested yet.
+Everything on the following lists are tested on the x86_64 (Intel/AMD) CPU architecture, other CPU architectures may not have been tested yet.
 
 ## Compilers
 
-These compilers have been tested to build on Redox, but the runtime result varies:
+The following compilers have been tested to build on Redox, but the runtime status varies:
 
-| Name | Can Cross-compile from Linux | Can compile programs on Redox | Compiled programs can run on Redox |
+| Name | Can cross-compile from Linux? | Can compile programs on Redox? | Compiled programs can run on Redox? |
 |---|---|---|---|
 | GCC 13 | Yes | Yes | Working Well |
-| RustPython | - | Yes | Working Well |
-| Python 3.12 | - | Yes | Working Well |
-| PHP 8.4 | - | Yes | Mostly Well |
 | Rust 1.90 | Yes | Always Crashing | Working Well |
-| LuaJit 2.1 | Yes | Not Known | Often Crashing |
 | Go 1.25 | Yes | Always Crashing | Always Crashing |
-| Node.js 24 | - | Always Crashing | Always Crashing |
-| Lua 5.4 | Not Known | Not Known | Not Known |
 | Zig 0.15 | Not Known | Not Known | Not Known |
 
-## GUI Applications
+## Interpreters
 
-Most GUI applications are running through Orbital, the official Redox GUI protocol. GUI Libraries that support orbital are:
+The following interpreters have been tested to build on Redox, but the runtime status varies:
 
-- Mesa (OpenGL 1 and 2, EGL, via liborbital)
-- SDL1 and SDL2 (via Mesa)
-- Winit (Rust, via orbclient)
+| Name | Can be compiled? | Works on Redox? |
+| RustPython | Yes | Working Well |
+| CPython 3.12 | Yes | Working Well |
+| Lua 5.4 | Yes | Not Known |
+| LuaJit 2.1 | Yes | Often Crashing |
+| Node.js 24 | Yes | Always Crashing |
+| PHP 8.4 | Yes | Mostly Well |
+
+## GUI Libraries
+
+Most GUI applications are running through Orbital (Redox display server and window manager), it supports the following GUI libraries:
+
+- Mesa3D (OpenGL and EGL, via liborbital)
+- SDL1 and SDL2 (via Mesa3D)
+- winit (via orbclient)
 - X11 (via TWM, which is via liborbital)
 
-These list are GUIs that are well known. There are also categories in tables below:
+## Applications
 
-| Name | Rendering Library | Working Status |
+The following programs are well known to be working:
+
+| Name | GUI Backend | Working? |
 |---|--|---|
-| Cosmic Edit | Winit | Working Well |
-| Cosmic Files | Winit | Working Well |
-| Cosmic Reader | Winit | Working Well |
-| Cosmic Store | Winit | Not Tested |
-| Cosmic Term | Winit | Working Well |
+| COSMIC Editor | winit | Working Well |
+| COSMIC Files | winit | Working Well |
+| COSMIC Reader | winit | Working Well |
+| COSMIC Store | winit | Not Tested |
+| COSMIC Terminal | winit | Working Well |
 | Netsurf | SDL1 | Working Well |
 | FFplay | SDL2 | Working Well |
-| Servo | Mesa | Often Crashes |
-| Xterm | X11 | Working Well |
-| Xeyes | X11 | Working Well |
+| Servo | Mesa3D | Often Crashes |
+| xterm | X11 | Working Well |
+| xeyes | X11 | Working Well |
 
 ### Emulators
 
-| Name | Rendering Library | Working Status |
+| Name | GUI Backend | Working? |
 |---|---|---|
-| Dosbox | SDL1 | Working Well |
+| DOSBox | SDL1 | Working Well |
 | Mednafen | SDL2 | Working Well |
 | MGBA | SDL1 | Working Well |
 | RetroArch | SDL2 | Working Well |
@@ -61,7 +69,7 @@ These list are GUIs that are well known. There are also categories in tables bel
 
 ### Games
 
-| Name  | Rendering Library | Working Status |
+| Name  | GUI Backend | Working? |
 |---|---|---|
 | Freeciv | SDL2 | Working Well |
 | Gigalomania | SDL1 | Working Well |
@@ -72,11 +80,11 @@ These list are GUIs that are well known. There are also categories in tables bel
 | Quakespam | SDL2 | Working Well |
 | SpaceCadet Pinball | SDL2 | Working Well |
 
-## Server Tools and Daemon
+## Servers
 
-| Name | Working Status |
+| Name | Working? |
 |---|---|
-| SSH Daemon | Working Well |
+| OpenSSH Daemon | Working Well |
 | Nginx | Working Well |
 | Simple HTTP Server | Working Well |
 | Python Static Server | Not Tested |
@@ -84,66 +92,77 @@ These list are GUIs that are well known. There are also categories in tables bel
 
 ## CLI Tools
 
-These CLI tools are known. Programs listed here may not include [core utilites](./side-projects.md):
+The following CLI tools are known to be working. Programs listed below may not include [core utilites](./side-projects.md):
 
-### Terminals
+### Terminal Shells
 
-| Name | Working Status |
+| Name | Working? |
 |---|---|
-| Bash | Working Well |
+| GNU Bash | Working Well |
 | Ion | Working Well |
 | Nushell | Not Tested |
 | Fish | Hangs |
 | Zsh | Hangs |
 
-### Editor
+### Text Editors
 
-| Name | Working Status |
+| Name | Working? |
 |---|---|
 | Kibi | Working Well |
-| Nano | Working Well |
+| GNU Nano | Working Well |
 | Vim | Working Well |
 | Sodium | Working Well |
 | Neovim | Crashes |
 
 ### System Monitors
 
-| Name | Working Status |
+| Name | Working? |
 |---|---|
 | Bottom | Working Well |
 | Htop | Working Well |
 
-### Dev Tools
+### Development Tools
 
-| Name | Working Status |
+| Name | Working? |
 |---|---|
 | Git | Working Well |
-| GNU Autoconf | Not Tested |
+| GNU Autotools | Not Tested |
 | GNU Binutils | Working Well |
 | GNU Grep | Working Well |
 | GNU Make | Working Well |
-| Sed | Working Well |
+| GNU Sed | Working Well |
 
-### File Tools
+### Media Tools
 
-| Name | Working Status |
+| Name | Working? |
 |---|---|
 | FFMPEG | Working Well |
+
+### Archive Tools
+
+| Name | Working? |
+|---|---|
 | Bzip2 | Working Well |
-| Ncdu | Not Tested |
 | Xz | Working Well |
 | Xxhash | Working Well |
 | Zstd | Working Well |
+
+### Storage Tools
+
+| Name | Working? |
+|---|---|
+| Ncdu | Not Tested |
+
 
 ### Network Tools
 
 | Name | Working Status |
 |---|---|
-| SSH Client | Not Tested |
+| OpenSSH Client | Not Tested |
 | Curl | Working Well |
 | GoAccess | Working Well |
 | Rsync | Working Well |
-| Sqlite | Not Tested |
+| SQLite | Not Tested |
 | Wget | Working Well |
 
 ## Other Programs
