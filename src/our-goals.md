@@ -22,7 +22,7 @@ Both system services and drivers are working well to run [important programs](./
 
 Rust officially supports Redox as both Tier II and Tier III [platforms](https://doc.rust-lang.org/nightly/rustc/platform-support/redox.html). The Rust community has accepted Redox-specific code for years. Some well-known Rust libraries (crates) that supports Redox are [`winit`](https://github.com/rust-windowing/winit/), [`nix`](https://github.com/nix-rust/nix), [`rustix`](https://github.com/bytecodealliance/rustix), and much more. These crates are backed by either [Rust's C Standard Library Bindings](https://github.com/rust-lang/libc) or a specific implementation of the [Rust's Standard Library](https://doc.rust-lang.org/std/). We upstream changes into these libraries as the system get new features.
 
-Libraries using Rust libc are statically linked into relibc at compile-time. By this design choice, compiling any Rust program to Redox requires relibc available at linking time. While it seems like a inconvenience, it allows us to do quick development without having to push changes each time relibc improved. To alleviate this "inconvenience", we have [`redoxer`](https://crates.io/crates/redoxer) to allow developers to compile and test Rust programs into Redox without using our complete build system.
+Libraries using Rust libc are statically linked into relibc at compile-time. By this design choice, compiling any Rust program to Redox requires relibc available at linking time. While it seems like a inconvenience, it allows us to do quick development without having to push changes each time relibc is improved. To alleviate this "inconvenience", we have [`redoxer`](https://crates.io/crates/redoxer) to allow developers to compile and test Rust programs into Redox without using our complete build system.
 
 ### Security Design
 
@@ -44,7 +44,7 @@ The key here is the trade off between correctness and compatibility. Ideally, yo
 
 Redox aims to support most software, especially those that are important. Software that are not ported are either:
 
-1. Not open source, or known to have legal problems
+1. Not open source or libre, or known to have legal problems
 2. No longer maintained (depending on importance we can fork and maintain it) or there's better alternative
 3. Only using non-portable APIs like the Linux kernel or Windows
 4. Lack of users and maintainers
