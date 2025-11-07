@@ -64,7 +64,6 @@ The following programs are well known to be working:
 | DOSBox | SDL1 | Working Well |
 | Mednafen | SDL2 | Working Well |
 | MGBA | SDL1 | Working Well |
-| RetroArch | SDL2 | Working Well |
 | RVVM | SDL1 | Working Well |
 
 ### Games
