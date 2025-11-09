@@ -5,28 +5,31 @@ Redox is a complete Rust operating system. In addition to the Redox kernel, our 
 - [RedoxFS](https://gitlab.redox-os.org/redox-os/redoxfs) - Redox file system inspired by ZFS.
 - [Ion](https://gitlab.redox-os.org/redox-os/ion) - The Redox shell.
 - [Orbital](https://gitlab.redox-os.org/redox-os/orbital) - The desktop environment/display server of Redox.
+- [Orbclient](https://gitlab.redox-os.org/redox-os/orbclient) - Orbital client library for Rust programs.
 - [pkgutils](https://gitlab.redox-os.org/redox-os/pkgutils) - Redox package manager, with a command-line frontend and library.
 - [relibc](https://gitlab.redox-os.org/redox-os/relibc) - Redox C library.
 - [audiod](https://gitlab.redox-os.org/redox-os/audiod) - Redox audio server.
 - [bootloader](https://gitlab.redox-os.org/redox-os/bootloader) - Redox boot loader.
-- [init](https://gitlab.redox-os.org/redox-os/init) - Redox init system.
+- [base](https://gitlab.redox-os.org/redox-os/base) - Redox core system services.
 - [installer](https://gitlab.redox-os.org/redox-os/installer) - Redox buildsystem builder.
 - [netstack](https://gitlab.redox-os.org/redox-os/netstack) - Redox network stack.
 - [redoxer](https://gitlab.redox-os.org/redox-os/redoxer) - A tool to run/test Rust programs inside of a Redox VM.
-- [sodium](https://gitlab.redox-os.org/redox-os/sodium) - A Vi-like editor.
 - [games](https://gitlab.redox-os.org/redox-os/games) - A collection of mini-games for Redox (alike BSD-games).
 - [OrbTK](https://gitlab.redox-os.org/redox-os/orbtk) - Cross-platform Rust-written GUI toolkit (in maintenance mode).
 - and a few other exciting projects you can explore on the [redox-os group](https://gitlab.redox-os.org/redox-os).
 
 We also have some in-house tools, which are collections of small, useful command-line programs:
 
-- [extrautils](https://gitlab.redox-os.org/redox-os/extrautils) -  Extra utilities such as reminders, calendars, spellcheck, and so on.
+- [coreutils](https://gitlab.redox-os.org/redox-os/coreutils) -  Redox-specific core utilities such as `free`, `ps`, `shutdown`, and so on.
+- [extrautils](https://gitlab.redox-os.org/redox-os/extrautils) -  Redox-specific extra utilities such as `dmesg`, `less`, `which`, and so on.
 - [binutils](https://gitlab.redox-os.org/redox-os/binutils) - Utilities for working with binary files.
+- [sodium](https://gitlab.redox-os.org/redox-os/sodium) - A Vi-like editor.
 
 We also actively contribute to third-party projects that are heavily used in Redox.
 
  - [uutils/coreutils](https://github.com/uutils/coreutils) - Cross-platform Rust rewrite of the GNU Coreutils.
  - [smoltcp](https://github.com/m-labs/smoltcp) - The TCP/IP stack used by Redox.
+ - [winit](https://github.com/rust-windowing/winit) - The window handling library for Rust programs.
 
 ## What tools are fitting for the Redox distribution?
 

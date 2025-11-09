@@ -25,7 +25,7 @@ before making your merge requests.
 In the `book` directory, run
 
 ```sh
-./unsused_pages.sh
+./unused_pages.sh
 ```
 
 ## Verify Broken Links
