@@ -24,6 +24,7 @@ The following compilers have been tested to build on Redox, but the runtime stat
 The following interpreters have been tested to build on Redox, but the runtime status varies:
 
 | Name | Can be compiled? | Works on Redox? |
+|---|---|---|
 | RustPython | Yes | Working Well |
 | CPython 3.12 | Yes | Working Well |
 | Lua 5.4 | Yes | Not Known |
