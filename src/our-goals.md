@@ -60,6 +60,6 @@ Redox aims to have the answer to every system design challenge if possible. Howe
 
 Redox have gotten though many major system design changes since its inception. Historically Redox was not designed to be a microkernel nor POSIX-compliant, then both have changed in early times. We also recently switched our system service interface (scheme) design and about to change the security design to a capability-based system.
 
-Nowadays all recent and future major changes into Redox is happening via RFCs and reviewed by Redox OS Board Members. Any Request For Changes that reduces correctness or security are likely not going to be accepted, but this terms are flexible and not enforced until the 1.0 stable version.
+Nowadays all recent and future major changes into Redox is happening via [RFCs](https://gitlab.redox-os.org/redox-os/rfcs) and reviewed by Redox OS Board Members. Any Request For Changes that reduces correctness or security are likely not going to be accepted, but this terms are flexible and not enforced until the 1.0 stable version.
 
 One example major design that trade security over "usability" is userspace exec which has been fully implemented. A userspace exec means `exec` are fully managed in userspace, it means that the kernel have no way to know how any software has been executed (e.g.their arguments and environment variables), as the kernel also have been restricted to not read any userspace memory.
