@@ -67,7 +67,7 @@
 - [The Redox Build Process](./build-process.md)
   - [Advanced Podman Build](./advanced-podman-build.md)
   - [Advanced Native Build](./advanced-build.md)
-  - [Working with i686](./i686.md)
+  - [Working with i586](./i686.md)
   - [Working with ARM64](./aarch64.md)
   - [Raspberry Pi](./raspi.md)
   - [Troubleshooting the Build](./troubleshooting.md)

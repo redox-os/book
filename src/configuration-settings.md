@@ -47,10 +47,10 @@ The purpose of the `.config` file is to allow default configuration settings to 
 
 To permanently override the settings in the [`mk/config.mk`](#mkconfigmk) section, add a `.config` file to the `redox` base directory (i.e., where `make` commands are run) and set the overriding values in that file.
 
-For example, the following configuration specifies the `desktop-minimal` image variant will be built for the `i686` CPU architecture. These settings will be applied implictly to all subsequent `make` commands:
+For example, the following configuration specifies the `desktop-minimal` image variant will be built for the `i586` CPU architecture. These settings will be applied implictly to all subsequent `make` commands:
 
 ```
-ARCH?=i686
+ARCH?=i586
 CONFIG_NAME?=desktop-minimal
 ```
 
@@ -80,7 +80,7 @@ make CONFIG_NAME=demo qemu
 Some environment variables can also be set for the lifetime of the current shell by setting them at the command line:
 
 ```sh
-export ARCH=i686; make all
+export ARCH=i586; make all
 ```
 
 Overriding settings in this way is only temporary, however. Additionally, for those using the [Podman Build](./podman-build.md), some settings may be ignored when using this method. For best results, use [`.config`](#config).
@@ -111,7 +111,7 @@ The `TARGET` parameter may be any valid `make` target, although the recommended 
 
 | Option | Description |
 |:-------|:------------|
-| `-a <ARCH>` | The CPU architecture you are building for, `x86_64`, `i686` or `aarch64`. Uppercase options `-X`, `-6` and `-A` can be used as shorthands for `-a x86_64`, `-a i686`, and `-a aarch64`, respectively. |
+| `-a <ARCH>` | The CPU architecture you are building for, `x86_64`, `i586`, `aarch64` or `riscv64gc`. Uppercase options `-X`, `-5`, `-A`, `-R` can be used as shorthands for `-a x86_64`, `-a i586`, `-a aarch64` and `riscv64gc`, respectively. |
 | `-c <CONFIG_NAME>` | The name of the filesystem configuration which appears in the name of the image being built. |
 | `-f <FILESYSTEM_CONFIG>` | Determines the filesystem configuration file location, which can be in any location but is normally in directory `config/$ARCH`.<br><br>📝 **Note:** If you *do* specify `-f <FILESYSTEM_CONFIG>`, but not `-a` or `-c`, the file path determines the other values. Normally the file would be located at e.g., `config/x86_64/desktop.toml`. `ARCH` is determined from the second-to-last element of the path. If the second last element is not a known `ARCH` value, you must specify `-a ARCH`. `CONFIG_NAME` is determined from the *basename* of the file. |
 
@@ -127,7 +127,7 @@ The packages to be included in the final Redox image are determined by the chose
 nano config/x86_64/desktop.toml
 ```
 
-For each supported CPU architecture, there are some filesystem configurations to choose from. For `x86_64`, there are `desktop`, `demo` and `server` configurations, as well as a few others. For `i686`, there are also some stripped down configurations for embedded devices or legacy systems with minimal RAM. Feel free to browse the `config/x86_64` directory for more examples.
+For each supported CPU architecture, there are some filesystem configurations to choose from. For `x86_64`, there are `desktop`, `demo` and `server` configurations, as well as a few others. For `i586`, there are also some stripped down configurations for embedded devices or legacy systems with minimal RAM. Feel free to browse the `config/x86_64` directory for more examples.
 
 For more details on the filesystem configuration, and how to add additional packages to the build image, please see the [Including Programs in Redox](./including-programs.md) page.
 
@@ -141,7 +141,7 @@ See the currently supported CPU architectures by Redox below:
 
 | CPU Architecture | Other Aliases |
 |:---------------- |:----------- |
-| `i686` | x86 (32-bit), IA32 , `x86` |
+| `i586` | x86 (32-bit), IA32 , `x86` |
 | `x86_64` | x86 (64-bit), `x86-64`, `amd64`, `x64` |
 | `aarch64` | ARM (64-bit), ARMv8, `ARM64` |
 | `riscv64gc` | RISC-V (64-bit) |

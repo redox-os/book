@@ -1,6 +1,6 @@
 # ARM64
 
-The build system supports building for multiple CPU architectures in the same directory tree. Building for `i686` or `aarch64` only requires that you set the `ARCH` environment variable to the correct value. Normally, you would do this in [.config](./configuration-settings.md#config), but you can also do this temporarily with the `make ARCH=aarch64` command, in the shell environment (`export ARCH=aarch64`) or with the [build.sh](./configuration-settings.md#buildsh) script.
+The build system supports building for multiple CPU architectures in the same directory tree. Building for `aarch64` only requires that you set the `ARCH` environment variable to the correct value. Normally, you would do this in [.config](./configuration-settings.md#config), but you can also do this temporarily with the `make ARCH=aarch64` command, in the shell environment (`export ARCH=aarch64`) or with the [build.sh](./configuration-settings.md#buildsh) script.
 
 (ARM64 has limited support)
 

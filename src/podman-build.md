@@ -1,6 +1,6 @@
 # Building Redox
 
-Congrats on making it this far! Now you will build Redox. This process is for **x86-64** machines (Intel/AMD). There are also similar processes for [i686](./i686.md) and [AArch64/ARM64](./aarch64.md).
+Congrats on making it this far! Now you will build Redox. This process is for **x86-64** machines (Intel/AMD). There are also similar processes for [i586](./i686.md) and [AArch64/ARM64](./aarch64.md).
 
 The build process fetches files from the Redox Gitlab server. From time to time, errors may occur which may result in you being asked to provide a username and password during the build process. If this happens, first check for typos in the `git` URL. If that doesn't solve the problem and you don't have a Redox GitLab login, try again later, and if it continues to happen, you can let us know through the [chat](./chat.md).
 
@@ -131,10 +131,10 @@ make qemu
 > 📝 **Note:** if you are building the system using `build.sh` to change the CPU architecture or filesystem contents, you can also provide the `qemu` option to run the virtual machine:
 > 
 > ```sh
-> ./build.sh -a i686 -c demo qemu
+> ./build.sh -a i586 -c demo qemu
 > ```
 >
-> This will build `build/i686/demo/harddrive.img` (if it doesn't already exist) and run it in the QEMU emulator.
+> This will build `build/i586/demo/harddrive.img` (if it doesn't already exist) and run it in the QEMU emulator.
 
 
 The emulator will display the Redox GUI (Orbital). See [Using the emulation](./running-vm.md#using-the-emulation) for general instructions and [Trying out Redox](./trying-out-redox.md) for things to try.
@@ -175,13 +175,13 @@ If you encounter any bugs, errors, obstructions, or other annoying things, pleas
 
 #### Example 1
 
-The following builds the `server` variant of Redox for the `i686` (32-bit Intel/AMD) CPU architecture (defined in `config/i686/server.toml`):
+The following builds the `server` variant of Redox for the `i586` (32-bit Intel/AMD) CPU architecture (defined in `config/i586/server.toml`):
 
 ```
-./build.sh -a i686 -c server live
+./build.sh -a i586 -c server live
 ```
 
-The resulting image is `build/i686/server/livedisk.iso`, which can be used to install Redox from a USB device.
+The resulting image is `build/i586/server/livedisk.iso`, which can be used to install Redox from a USB device.
 
 
 #### Example 2
