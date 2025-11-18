@@ -14,21 +14,14 @@ The steps given below are for the main Redox project repository - submodules and
 
 ## Preparing your branch
 
-1. In an appropriate directory, e.g. `~/tryredox`, clone the Redox repository to your computer using one of the following commands:
-  - HTTPS:
+1. In an appropriate directory, e.g. `~/tryredox`, clone the Redox repository to your computer using the following command:
 
     ```sh
     git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
     ```
 
-  - SSH:
-
-    ```sh
-    git clone git@gitlab.redox-os.org:redox-os/redox.git --origin upstream --recursive
-    ```
-
-  - Use HTTPS if you don't know which one to use. (Recommended: learn about [SSH](./signing-in-to-gitlab.md#using-ssh-for-your-repo) if you don't want to have to login every time you push/pull!)
   - If you used `bootstrap.sh` (see the [Building Redox](./podman-build.md) page), the `git clone` was done for you and you can skip this step.
+  - You need to create a [Personal Access Token](./signing-in-to-gitlab.md#setting-up-pat) for pushing your code into your fork repository later.
 2. Change to the newly created redox directory and rebase to ensure you're using the latest changes:
 
     ```sh
@@ -40,16 +33,9 @@ The steps given below are for the main Redox project repository - submodules and
     ```
 3. You should have a fork of the repository on GitLab and a local copy on your computer. The local copy should have two remotes; `upstream` and `origin`, `upstream` should be set to the main repository and `origin` should be your fork. Log into Redox Gitlab and fork the [Repository](https://gitlab.redox-os.org/redox-os/redox) - look for the button in the upper right.
 4. Add your fork to your list of git remotes with
-  - HTTPS:
 
     ```sh
     git remote add origin https://gitlab.redox-os.org/MY_USERNAME/redox.git
-    ```
-
-  - SSH:
-
-    ```sh
-    git remote add origin git@gitlab.redox-os.org:MY_USERNAME/redox.git
     ```
 
   - Note: If you made an error in your `git remote` command, use `git remote remove origin` and try again.
