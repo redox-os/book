@@ -9,22 +9,6 @@ The approval of your GitLab account may take some minutes or hours, in the meant
 ## Setting up 2FA
 
 Your new GitLab account will not require 2 Factor Authentication at the beginning, but it will eventually insist. Some details and options are described in detail [below](#2fa-apps).
-
-## Using SSH for your Repo
-
-When using `git` commands such as `git push`, `git` may ask you to provide a password. Because this happens frequently, you might wish to use `SSH` authentication, which will bypass the password step. Please follow the instructions for using `SSH` on the [GitLab documentation](https://docs.gitlab.com/ee/user/ssh.html). [ED25519](https://docs.gitlab.com/ee/user/ssh.html#ed25519-ssh-keys) is a good choice. Once SSH is set up, always use the SSH version of the URL for your `origin` and `remote`. e.g.
-
-  - HTTPS:
-
-  ```sh
-  git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
-  ```
-
-  - SSH:
-
-  ```sh
-  git clone git@gitlab.redox-os.org:redox-os/redox.git --origin upstream --recursive
-  ```
   
 ## 2FA Apps
 
@@ -68,3 +52,31 @@ Here are the steps:
  - Enter your password
  - Click the Submit button
  - Finally you will be prompted for a 2FA verification code from your phone. Go to your iPhone, go to 2stable/Tofu Authenticator or to your Settings->Passwords for iOS Authenticator, find the site gitlab redox and underneath those 6 digits in looking something like **258 687** that's your 2FA code.  Enter those 6 digits into the prompt on your computer.  Click Verify.  Done.  You're logged into Gitlab.
+
+## Setting up PAT
+
+Personal Access Token (PAT) is a replacement for passwords when authenticating via Git clients. When pushing code to GitLab, you need to create one.
+
+Here are the steps needed to create a PAT after logging in to GitLab:
+- Open [Personal access tokens in User settings](https://gitlab.redox-os.org/-/user_settings/personal_access_tokens)
+- Click "Add new Token" at the top right of the page
+- Enter the token name (can be anything) and expiration date (max is 1 year from today)
+- Check `read_repository` and `write_repository` scopes
+- Click "Create Token"
+- Copy the PAT (displayed as masked password) under the section "Your Token"
+- Save the PAT somewhere safe, like your password manager
+
+When doing `git push`, you'll be asked for username and password. Enter the password from the PAT token you've created. This will happen every time you run `git push`. To remember it forever, run the command below to store it later in `~/.git-credentials`:
+
+```sh
+git config --global credential.helper store
+```
+
+If you don't like to store it as plaintext, it's also possible to save it only in RAM cache:
+
+```sh
+# <timeout> is how long it will be preserved in memory, defaults to 900 (seconds)
+git config --global credential.helper 'cache --timeout=<timeout>'
+```
+
+If you have lost your PAT, it's OK to create another one.
