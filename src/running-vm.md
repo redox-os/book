@@ -153,7 +153,7 @@ sudo apt-get install qemu-system-arm qemu-kvm
 sudo apt-get install qemu-system-riscv
 ```
 
-This command will run QEMU with various Redox-compatible features enabled:
+Use one of the following commands to run QEMU with a Redox-compatible configuration:
 
 - x86 (i586) image
 
@@ -201,7 +201,7 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-riscv64 -d cpu_reset,guest_errors -smp 4 -m
 
 To install **QEMU** on Windows, follow the instructions [here](https://www.qemu.org/download/#windows). The installation of **QEMU** will probably not update your command path, so the necessary QEMU command needs to be specified using its full path. Or, you can add the installation folder to your `PATH` environment variable if you will be using it regularly.
 
-Use one of the following command to launch QEMU:
+Use one of the following commands to run QEMU with a Redox-compatible configuration:
 
 - x86 (i586) image
 

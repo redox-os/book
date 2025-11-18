@@ -72,7 +72,7 @@ When doing `git push`, you'll be asked for username and password. Enter the pass
 git config --global credential.helper store
 ```
 
-If you don't like to store it as plaintext, it's also possible to save it only in RAM cache:
+If you don't like to store it as plain text, it's also possible to save it only in RAM cache:
 
 ```sh
 # <timeout> is how long it will be preserved in memory, defaults to 900 (seconds)
