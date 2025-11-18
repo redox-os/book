@@ -194,4 +194,4 @@ As the system boots, it will ask you for a screen resolution to use, for example
 
 See [Trying Out Redox](./trying-out-redox.md) for things to try.
 
-If you want to try Redox in **server** mode, add `-nographic -vga none` to the command line above. You may wish to switch to the `redox_server` edition. There are also i686 editions available, although these are not part of the release.
+If you want to try Redox in **server** mode, add `-nographic -vga none` to the command line above. You may wish to switch to the `redox_server` edition. There are also i586 editions available, although these are not part of the release.

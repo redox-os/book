@@ -314,7 +314,7 @@ List the recipe executables to find duplicates and conflicts.
 
 - By default the script will only verify duplicates, if the `-a` option is used it will print the executable names of all compiled recipes
 - The `-arm64` option will show the ARM64 recipe executables
-- The `-i686` option will show the i686 recipe executables
+- The `-i586` option will show the i586 recipe executables
 
 ```sh
 scripts/executables.sh
