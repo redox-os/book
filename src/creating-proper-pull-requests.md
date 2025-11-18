@@ -20,7 +20,7 @@ The steps given below are for the main Redox project repository - submodules and
     git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
     ```
 
-  - If you used `bootstrap.sh` (see the [Building Redox](./podman-build.md) page), the `git clone` was done for you and you can skip this step.
+  - If you used `podman_bootstrap.sh` or `native_bootstrap.sh` scripts (see the [Building Redox](./podman-build.md) page), the `git clone` was done for you and you can skip this step.
   - You need to create a [Personal Access Token](./signing-in-to-gitlab.md#setting-up-pat) for pushing your code into your fork repository later.
 2. Change to the newly created redox directory and rebase to ensure you're using the latest changes:
 

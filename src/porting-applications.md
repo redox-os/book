@@ -103,6 +103,7 @@ git = "repository-link" # source.git data type
 upstream = "repository-link" # source.upstream data type
 branch = "branch-name" # source.branch data type
 rev = "version-tag" # source.rev data type
+shallow_clone = true # source.shallow_clone data type
 tar = "tarball-link.tar.gz" # source.tar data type
 blake3 = "source-hash" # source.blake3 data type
 patches = [ # source.patches data type
@@ -144,29 +145,30 @@ dependencies = [ # package.dependencies data type
 ]
 ```
 
-- `[source]` - Section for data types that manage the program source (only remove it if you have a `source` folder)
-- `source.git` - Git repository of the program (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a `git pull` or change the active branch to `master` or `main`
-- `source.upstream` - If you are using a fork of the program source with patches add the program upstream source here (can be removed if the upstream source is being used on the `git` data type)
-- `source.branch` - Program version Git branch or patched Git branch (can be removed if using a tarball or the `master` or `main` Git branches are being used)
-- `source.rev` - Git tag or commit hash of the latest stable version or last working commit of the program (can be removed if you are using a tarball or waiting Rust library version updates)
-- `source.tar` - Program source tarball (can be removed if a tarball is not used)
-- `source.blake3` - Program source tarball BLAKE3 hash, can be generated using the `b3sum` tool, install with the `cargo install b3sum` command (can be removed if using a Git repository or under porting)
-- `source.patches` - Data type to load `.patch` files (can be removed if patch files aren't used)
-- `"patch1.patch",` - The patch file name (can be removed if the `patches` data type above is not present)
-- `source.same_as` - Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
-- `source.script` - Data type used when you need to change the build system configuration (to regenerate the GNU Autotools configuration, for example)
-- `[build]` - Section for data types that manage the program compilation and packaging
-- `build.template` - Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with - custom commands)
-- `build.cargoflags` - Data type for Cargo flags (string)
-- `build.configureflags` - Data type for GNU Autotools flags (array)
-- `build.cmakeflags` - Data type for CMake flags (array)
-- `build.mesonflags` - Data type for Meson flags (array)
-- `build.dependencies` - Data type to add dynamically or statically linked library dependencies
-- `"library1",` - Library recipe name (can be removed if the `dependencies` data type above is not present)
-- `build.script` - Data type to load the custom commands for compilation and packaging
-- `[package]` - Section for data types that manage the program package
-- `package.dependencies` - Data type to add tools, interpreters or "data files" recipes to be installed by the package manager or build system installer
-- `"runtime-dependency1",` - Tool, interpreter or data recipe names (can be removed if the `dependencies` data type above is not present)
+- `[source]` : Section for data types that manage the program source (only remove it if you have a `source` folder)
+- `source.git` : Git repository of the program (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a `git pull` or change the active branch to `master` or `main`
+- `source.upstream` : If you are using a fork of the program source with patches add the program upstream source here (can be removed if the upstream source is being used on the `git` data type)
+- `source.branch` : Program version Git branch or patched Git branch (can be removed if using a tarball or the `master` or `main` Git branches are being used)
+- `source.rev` : Git tag or commit hash of the latest stable version or last working commit of the program (can be removed if you are using a tarball or waiting Rust library version updates)
+- `source.shallow_clone` : Boolean data type to only download the current commit of source files (Git [shallow clone](https://github.blog/open-source/git/get-up-to-speed-with-partial-clone-and-shallow-clone/)), which can reduce the download/delta processing time a lot and save many storage space (insert `shallow_clone = true`)
+- `source.tar` : Program source tarball (can be removed if a tarball is not used)
+- `source.blake3` : Program source tarball BLAKE3 hash, can be generated using the `b3sum` tool, install with the `cargo install b3sum` command (can be removed if using a Git repository or under porting)
+- `source.patches` : Data type to load `.patch` files (can be removed if patch files aren't used)
+- `"patch1.patch",` : The patch file name (can be removed if the `patches` data type above is not present)
+- `source.same_as` : Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
+- `source.script` : Data type used when you need to change the build system configuration (to regenerate the GNU Autotools configuration, for example)
+- `[build]` : Section for data types that manage the program compilation and packaging
+- `build.template` : Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with custom commands)
+- `build.cargoflags` : Data type for Cargo flags (string)
+- `build.configureflags` : Data type for GNU Autotools flags (array)
+- `build.cmakeflags` : Data type for CMake flags (array)
+- `build.mesonflags` : Data type for Meson flags (array)
+- `build.dependencies` : Data type to add dynamically or statically linked library dependencies
+- `"library1",` : Library recipe name (can be removed if the `dependencies` data type above is not present)
+- `build.script` : Data type to load the custom commands for compilation and packaging
+- `[package]` : Section for data types that manage the program package
+- `package.dependencies` : Data type to add tools, interpreters or "data files" recipes to be installed by the package manager or build system installer
+- `"runtime-dependency1",` : Tool, interpreter or data recipe names (can be removed if the `dependencies` data type above is not present)
 
 ### Quick Recipe Template
 
@@ -897,7 +899,7 @@ object (`patchelf --print-needed <path>`). It is available by default in the
 
 ### Tarballs
 
-Tarballs are the most easy way to build a C/C++ program or library because the build system is already configured (GNU Autotools is the most used), while being more fast to download and process than big Git repositories if shallow clone is unused (the system don't need to process Git deltas).
+Tarballs are the most easy way to build a C/C++ program or library because the build system is already configured (GNU Autotools is the most used), while being more fast to download and process than big Git repositories if shallow clone is not used (the system don't need to process many Git deltas).
 
 Your `recipe.toml` will have the following content:
 

@@ -14,19 +14,19 @@ Redox itself will work normally if the CPU architecture is supported by the syst
 
 ## Why choosing i586 as the minimal supported x86 CPU?
 
-- i686 ([Pentium Pro](https://en.wikipedia.org/wiki/Pentium_Pro)) introduced MMX, SSE, and SSE2 [extensions](https://en.wikipedia.org/wiki/P6_(microarchitecture)). Fortunately, the kernel and other critical components are not using them.
-- i586 ([Original Pentium](https://en.wikipedia.org/wiki/Pentium_(original))) introduced a more efficient FPU and MMX extension, which are critical for the userspace programs, also the most minimal CPU instruction supported by [Rust platforms](https://doc.rust-lang.org/beta/rustc/platform-support.html) and perhaps most Rust packages.
-- [i486](https://en.wikipedia.org/wiki/I486) introduced FPU and atomic operations, which are used by the kernel and other critical components. It would be possible to go all the way back to i486, but Redox will run with far fewer userspace programs.
-- [i386](https://en.wikipedia.org/wiki/I386) has no atomics and floating instructions (at all), which makes it not a target for both the kernel and other critical components.
+- i686 ([Pentium Pro](https://en.wikipedia.org/wiki/Pentium_Pro)) introduced MMX, SSE, and SSE2 [extensions](https://en.wikipedia.org/wiki/P6_(microarchitecture)). Fortunately the kernel and other critical system components don't use them.
+- i586 ([Original Pentium](https://en.wikipedia.org/wiki/Pentium_(original))) introduced a more efficient FPU and MMX extension which are critical for programs, also the most minimal CPU architecture supported by [Rust](https://doc.rust-lang.org/beta/rustc/platform-support.html) and perhaps most Rust packages.
+- [i486](https://en.wikipedia.org/wiki/I486) introduced FPU and atomic operations, which are used by the kernel and other critical system components. It would be possible to go all the way back to i486, but Redox will run with much less programs.
+- [i386](https://en.wikipedia.org/wiki/I386) has no atomics and floating instructions (at all), which makes it not a target for both the kernel and other critical system components.
 
 ## Compatibility Table
 
-| **Category**        | **Items**                                                                                                                                            |
-|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| CPU                 | - Intel 64-bit (x86_64) <br>- Intel 32-bit (i586) from Pentium I and after with limitations <br>- AMD 32/64-bit <br>- ARM 64-bit (Aarch64) with limitations <br>- RISC-V 64-bit (Riscv64gc) with limitations |
-| Hardware Interfaces | - ACPI, PCI, USB                                                                                                                                       |
-| Storage             | - IDE (PATA), SATA (AHCI), NVMe                                                                                                                        |
-| Video               | - BIOS VESA, UEFI GOP                                                                                                                                  |
-| Sound               | - Intel, Realtek chipsets                                                                                                                              |
-| Input               | - PS/2 keyboards, mouse and touchpad <br> - USB keyboards, mouse and touchpad                                                                          |
-| Ethernet            | - Intel Gigabit and 10 Gigabit ethernet <br>- Realtek ethernet                                                                                        |
+| **Category** | **Items** |
+|--------------|-----------|
+| CPU | - Intel 64-bit (x86_64) <br>- Intel 32-bit (i586) from Pentium I and after with limitations <br>- AMD 32/64-bit <br>- ARM 64-bit (Aarch64) with limitations <br>- RISC-V 64-bit (riscv64gc) with limitations |
+| Hardware Interfaces | - ACPI, PCI, USB |
+| Storage | - IDE (PATA), SATA (AHCI), NVMe |
+| Video | - BIOS VESA, UEFI GOP |
+| Sound | - Intel, Realtek chipsets |
+| Input | - PS/2 keyboards, mouse, and touchpad <br> - USB keyboards, mouse and touchpad |
+| Ethernet | - Intel Gigabit and 10 Gigabit ethernet <br>- Realtek ethernet |
