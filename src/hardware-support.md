@@ -10,7 +10,7 @@ A CPU is the most complex machine of the world: even the oldest processors are p
 
 The main problem with old computers is the amount of RAM available (they were sold in a era where RAM chips were expensive) and the lack of SSE/AVX extensions (programs use them to speed up the algorithms). Because of this some modern programs may not work or require a lot of RAM to perform complex tasks.
 
-Redox itself will work normally if the processor architecture is supported by the system, but the performance and stability may vary per program.
+Redox itself will work normally if the CPU architecture is supported by the system, but the performance and stability may vary per program.
 
 ## Why choosing i586 as the minimal supported x86 CPU?
 
