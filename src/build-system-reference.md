@@ -158,7 +158,8 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
 - `make ur.recipe-name` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
 - `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
-- `make x.--category-folder-name` : Any recipe target (x) can be run in all recipes of some category folder at `cookbook/recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` folder, for example), if you need to use a sub-category use `--category-folder-name/subfolder`
+- `make x.--all` - Any recipe target (x) can be run in all recipes at `cookbook/recipes` (like `make c.--all` which clean all recipe binaries, for example)
+- `make x.--category-folder-name` - Any recipe target (x) can be run in all recipes of some category folder at `cookbook/recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` folder, for example), if you need to use a sub-category use `--category-folder-name/subfolder`
 
 All recipe commands (f, r, c, u, cr, ucr) can be run with multiple recipes, just separate them with a comma. for example: `make f.recipe1,recipe2` will download the sources of `recipe1` and `recipe2`
 

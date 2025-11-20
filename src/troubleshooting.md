@@ -297,18 +297,18 @@ make prefix cr.recipe-name
 
 Check if the compilation or runtime error continues after this command, if the error continues run the following command:
 
-- Wipe the build system binaries and rebuild the system (run this command if the binaries of multiple recipes are broken)
+- Wipe all recipe binaries and rebuild the system (run this command if the binaries of multiple recipes are broken)
 
 ```sh
-make clean all
+make c.--all
 ```
 
 Check if the compilation or runtime error continues after this command, if the error continues run the following command:
 
-- Wipe the build system sources and binaries and rebuild the system (run this command if the sources and binaries of multiple recipes are broken)
+- Wipe all recipe sources and binaries and rebuild the system (run this command if the sources and binaries of multiple recipes are broken)
 
 ```sh
-make distclean all
+make u.--all
 ```
 
 Check if the compilation or runtime error continues after this command, if the error continues read the section below.
