@@ -3,16 +3,15 @@
 As a non-trivial example of porting a Rust app, let's look at what was done to port [gitoxide](https://github.com/Byron/gitoxide).
 This port was already done, so it is now much simpler, but perhaps some of these steps will apply to you.
 
-The goal when porting is to capture all the necessary configuration in recipes and scripts, and to avoid requiring a fork of the repo or upstreaming changes.
+The goal when porting is to capture all the necessary configuration in recipes and scripts, and to avoid requiring a fork of the program repository or upstreaming changes.
 This is not always feasible, but forking/upstreaming should be avoided when it can be.
-
-We are using full pathnames for clarity, you don't need to.
 
 ## Build on Linux
 
 Before we start, we need to build the software for our Linux system and make sure it works.
 This is not part of the porting, it's just to make sure our problems are not coming from the Linux version of the software.
-We follow the normal build instructions for the software we are porting.
+We follow the normal build instructions for the software we are porting:
+
 ```sh
 cd ~
 ```
@@ -42,18 +41,18 @@ cd ~/redox-gitoxide
 ```
 
 ```sh
-git clone git@gitlab.redox-os.org:redox-os/redox.git --origin upstream --recursive
+git clone https://gitlab.redox-os.org:redox-os/redox --origin upstream
 ```
 
-The new recipe will be part of the `cookbook` repository, so we need to fork then branch it. To fork the `cookbook` repository:
-- In the browser, go to [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook)
+The new recipe will be part of the `redox` repository, so we need to fork then branch it. To fork the `redox` repository:
+- In the browser, go to the [build system](https://gitlab.redox-os.org/redox-os/redox)
 - Click the `Fork` button in the upper right part of the page
-- Create a `public` fork under your gitlab user name (it's the only option that's enabled)
+- Create a `public` fork under your GitLab user name (it's the only option that's enabled)
 
-Then we need to set up our local `cookbook` repository and create the branch. `cookbook` was cloned when we cloned `redox`, so we will just tweak that. In the Terminal window:
+Then we need to set up our local `redox` repository and create the branch:
 
 ```sh
-cd ~/redox-gitoxide/redox/cookbook
+cd ~/redox-gitoxide/redox
 ```
 
 ```sh
@@ -65,7 +64,7 @@ git rebase upstream master
 ```
 
 ```sh
-git remote add origin git@gitlab.redox-os.org:MY_USERNAME/cookbook.git
+git remote add origin https://gitlab.redox-os.org:MY_USERNAME/redox
 ```
 
 ```sh
@@ -74,25 +73,21 @@ git checkout -b gitoxide-port
 
 ## Create a Recipe
 
-To create a recipe, we need to make a new directory in `cookbook/recipes` with the name the package will have, in this case `gitoxide`, and create a `recipe.toml` file with a first-draft recipe.
+To create a recipe, we need to make a new directory in `recipes` with the name the package will have, in this case `gitoxide`, and create a `recipe.toml` file with a first-draft recipe.
 
 ```sh
-mkdir -p ~/redox-gitoxide/redox/cookbook/recipes/gitoxide
+mkdir -p ~/redox-gitoxide/redox/recipes/gitoxide
 ```
 
 ```sh
-cd ~/redox-gitoxide/redox/cookbook/recipes/gitoxide
-```
-
-```sh
-nano recipe.toml
+nano ~/redox-gitoxide/redox/recipes/gitoxide/recipe.toml
 ```
 
 Start with the following content in the `recipe.toml` file.
 
 ```toml
 [source]
-git = "https://github.com/Byron/gitoxide.git"
+git = "https://github.com/Byron/gitoxide"
 [build]
 template = "cargo"
 ```
@@ -129,7 +124,7 @@ We need to work with a local copy of `libc`, and then later ask someone with aut
 First, clone `libc` into our `gitoxide` directory.
 
 ```sh
-cd ~/redox-gitoxide/redox/cookbook/recipes/gitoxide
+cd ~/redox-gitoxide/redox/recipes/gitoxide
 ```
 
 ```sh
@@ -139,7 +134,7 @@ git clone https://github.com/rust-lang/libc.git
 Try to find the missing constants.
 
 ```sh
-cd ~/redox-gitoxide/redox/cookbook/recipes/gitoxide/libc
+cd ~/redox-gitoxide/redox/recipes/gitoxide/libc
 ```
 
 ```sh
@@ -153,7 +148,7 @@ grep -nrw "POLLWRBAND" --include "*.rs"
 Looks like the value is not defined for the Redox version of `libc`. Let's see if it's in `relibc`.
 
 ```sh
-cd ~/redox-gitoxide/redox/relibc
+cd ~/redox-gitoxide/redox/recipes/core/relibc
 ```
 
 ```sh
@@ -174,7 +169,7 @@ Copy the constant declarations from `relibc`, and paste them in the appropriate 
 In addition to copying the constants, we have to change the type `c_short` to `::c_short` to conform to `libc` style.
 
 ```sh
-cd ~/redox-gitoxide/redox/cookbook/recipes/gitoxide
+cd ~/redox-gitoxide/redox/recipes/gitoxide
 ```
 
 ```sh
@@ -196,7 +191,7 @@ To avoid overwriting our work, we want to turn off future fetches of the `gitoxi
 
 ```toml
 #[source]
-#git = "https://github.com/Byron/gitoxide.git"
+#git = "https://github.com/Byron/gitoxide"
 [build]
 template = "cargo"
 ```
@@ -204,7 +199,7 @@ template = "cargo"
 We edit `gitoxide`'s `Cargo.toml` so we use our `libc`.
 
 ```
-nano ~/redox-gitoxide/cookbook/recipes/gitoxide/source/Cargo.toml
+nano ~/redox-gitoxide/recipes/gitoxide/source/Cargo.toml
 ```
 
 After the `[dependencies]` section, but before the `[profile]` sections, add the following to `Cargo.toml`:
@@ -217,7 +212,7 @@ libc = { path = "../libc" }
 Bump the version number on our `libc`, so it will take priority.
 
 ```
-nano ~/redox-gitoxide/cookbook/recipes/gitoxide/libc/Cargo.toml
+nano ~/redox-gitoxide/recipes/gitoxide/libc/Cargo.toml
 ```
 
 ```toml
@@ -227,7 +222,7 @@ version = "0.2.143"
 Update `gitoxide`'s `Cargo.lock`.
 
 ```sh
-cd ~/redox-gitoxide/redox/cookbook/recipes/gitoxide/source
+cd ~/redox-gitoxide/redox/recipes/gitoxide/source
 ```
 
 ```sh
@@ -253,7 +248,7 @@ In looking at what is included in `gitoxide`, we see that it uses [OpenSSL](http
 There is already a Redox fork of `openssl` to add Redox as a target, so we will set up our environment to use that.
 
 In order to do this, we are going to need a custom recipe. Let's start with a simple custom recipe, just to get us going.
-Edit our previously created recipe, `cookbook/recipes/gitoxide/recipe.toml`, changing it to look like this.
+Edit our previously created recipe, `recipes/gitoxide/recipe.toml`, changing it to look like this.
 
 ```toml
 #[source]
@@ -274,7 +269,7 @@ Two key shell functions are provided by the custom script mechanism, `cookbook_c
 If you need a custom script for building a Rust program, your script should set up the environment, then call `cookbook_cargo`, which calls Redox's version of `cargo`.
 If you need a custom script for using a `Makefile`, your script should set up the environment, then call `cookbook_configure`.
 If you have a custom build process, or you have a patch-and-build script, you can just include that in the `script` section and not use either of the above functions.
-If you are interested in looking at the code that runs custom scripts, see the function `build()` in `cookbook`'s [cook.rs](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/src/bin/cook.rs).
+If you are interested in looking at the code that runs custom scripts, see the function `build()` in `cookbook`'s [cook.rs](https://gitlab.redox-os.org/redox-os/-/blob/master/src/bin/cook.rs).
 
 Adding a dependency on `openssl` ensures that the build of `openssl` will happen before attempting to build `gitoxide`, so we can trust that the library contents are in the target directory of the ssl package.
 And we need to set the environment variables as described in the [OpenSSL bindings](https://docs.rs/openssl/latest/openssl/) crate docs.
@@ -312,7 +307,7 @@ In our case we find we are missing `tzset`, which is a timezone function. We are
 Let's set up to modify `relibc`. As with `cookbook`, we need a fork of [relibc](https://gitlab.redox-os.org/redox-os/relibc). Click on the `Fork` button and add a public fork. Then update our local `relibc` repo and branch.
 
 ```sh
-cd ~/redox-gitoxide/redox/relibc
+cd ~/redox-gitoxide/redox/recipes/core/relibc/source
 ```
 
 ```sh
@@ -324,7 +319,7 @@ git rebase upstream master
 ```
 
 ```sh
-git remote add origin git@gitlab.redox-os.org:MY_USERNAME/relibc.git
+git remote add origin https://gitlab.redox-os.org:MY_USERNAME/relibc
 ```
 
 ```sh
@@ -340,14 +335,14 @@ After a fair bit of work, which we omit here, the functions `tzset` and `cfmaker
 extern "C" fn tzset() ...
 ```
 
-Now let's build the system. The command `touch relibc` changes the timestamp on the `relibc` directory, which will cause the library to be updated. We then clean and rebuild `gitoxide`.
+Now let's update the relibc/gitoxide and update the Redox image:
 
 ```sh
 cd ~/redox-gitoxide/redox
 ```
 
 ```sh
-cd relibc
+cd recipes/core/relibc/source
 ```
 
 ```sh
@@ -355,19 +350,11 @@ cargo update
 ```
 
 ```sh
-cd ..
+cd -
 ```
 
 ```sh
-touch relibc
-```
-
-```sh
-make prefix
-```
-
-```sh
-make cr.gitoxide
+make crp.relibc,gitoxide
 ```
 
 ## Testing in QEMU
@@ -405,25 +392,21 @@ echo "CONFIG_NAME?=my_desktop" >> .config
 ```
 
 ```sh
-make rebuild
-```
-
-```sh
 make qemu
 ```
 
 Log in to Redox as `user` with no password, and type:
 
 ```sh
-gix clone https://gitlab.redox-os.org/redox-os/website.git
+gix clone https://gitlab.redox-os.org/redox-os/website
 ```
 
 We get some errors, but we are making progress.
 
 ## Submitting the MRs
 
-- Before committing our new recipe, we need to uncomment the `[source]` section. Edit `~/redox-gitoxide/redox/cookbook/recipes/gitoxide/recipe.toml` to remove the `#` from the start of the first two lines.
-- We commit our changes to `cookbook` to include the new `gitoxide` recipe and submit an MR, following the instructions [Creating Proper Pull Requests](./creating-proper-pull-requests.md).
-- We commit our changes to `relibc`. We need to rebuild the system and test it thoroughly in QEMU, checking anything that might be affected by our changes. Once we are confident in our changes, we can submit the MR.
+- Before committing our new recipe, we need to uncomment the `[source]` section. Edit `~/redox-gitoxide/redox/recipes/gitoxide/recipe.toml` to remove the `#` from the start of the first two lines.
+- We commit our changes to `redox` to include the new `gitoxide` recipe and submitted an MR, following the instructions [Creating Proper Pull Requests](./creating-proper-pull-requests.md).
+- We committed our changes to `relibc`. We need to rebuild the system and test it thoroughly in QEMU, checking anything that might be affected by our changes. Once we are confident in our changes, we can submit the MR.
 - We post links to both MRs on the [Redox OS/MRs](https://matrix.to/#/#redox-mrs:matrix.org) room to ensure they get reviewed. 
 - After making our changes to `libc` and testing them, we need to request to have those changes upstreamed by posting a message on the [Redox OS/MRs](https://matrix.to/#/#redox-mrs:matrix.org) room. If the changes are complex, please create an issue on the [build system repository](https://gitlab.redox-os.org/redox-os/redox) and include a link to it in your post.

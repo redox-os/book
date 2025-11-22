@@ -70,12 +70,13 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
 - [Create a BLAKE3 hash for your recipe](#create-a-blake3-hash-for-your-recipe)
 - [Verify the size of your package](#verify-the-size-of-your-package)
 - [Submitting MRs](#submitting-mrs)
+- [Package Policy](#package-policy)
 
 ## Recipe
 
 A recipe is how we call a software port on Redox, this section explain the recipe configuration and details to consider.
 
-Create a folder at `cookbook/recipes/program-category` with a file named as `recipe.toml` inside, we will modify this file to fit the program needs.
+Create a folder at `recipes/program-category` with a file named as `recipe.toml` inside, we will modify this file to fit the program needs.
 
 - Recipe creation from terminal with GNU Nano:
 
@@ -84,11 +85,11 @@ cd ~/tryredox/redox
 ```
 
 ```sh
-mkdir cookbook/recipes/program-category/program-name
+mkdir recipes/program-category/program-name
 ```
 
 ```sh
-nano cookbook/recipes/program-category/program-name/recipe.toml
+nano recipes/program-category/program-name/recipe.toml
 ```
 
 ### Recipe Configuration Example
@@ -239,9 +240,9 @@ Each template (except `custom`) script supports build flags, you can add flags a
 - `cmakeflags = [ "foo" ]`
 - `mesonflags = [ "foo" ]`
 
-To find the supported Cookbook Bash functions, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/src).
+To find the supported Cookbook Bash functions, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/-/tree/master/src).
 
-- [Recipes](https://gitlab.redox-os.org/redox-os/cookbook/-/tree/master/recipes)
+- [Recipes](https://gitlab.redox-os.org/redox-os/-/tree/master/recipes)
 
 #### Cases
 
@@ -264,7 +265,7 @@ dependencies = [
 
 ## Cookbook - Custom Template
 
-The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell. The shell script will be wrapped with Bash functions and variables to aid the build script. The wrapper can be found in [this Cookbook source file](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/src/bin/cook.rs).
+The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell. The shell script will be wrapped with Bash functions and variables to aid the build script. The wrapper can be found in [this Cookbook source file](https://gitlab.redox-os.org/redox-os/-/blob/master/src/bin/cook.rs).
 
 
 - Script example
@@ -1027,7 +1028,7 @@ Generally programs with CMake use a `-DUSE_SYSTEM` flag to enable the "system li
 
 Sometimes specify the library recipe on the `dependencies = []` section is not enough, some build systems have environment variables to receive a custom path for external libraries.
 
-When you add a library on your `recipe.toml` the Cookbook will copy the library source code to the `sysroot` folder at `cookbook/recipes/your-category/recipe-name/target/your-target`, this folder has an environment variable that can be used inside the `script =` field on your `recipe.toml`.
+When you add a library on your `recipe.toml` the Cookbook will copy the library source code to the `sysroot` folder at `recipes/your-category/recipe-name/target/your-target`, this folder has an environment variable that can be used inside the `script =` field on your `recipe.toml`.
 
 Example:
 
@@ -1228,7 +1229,7 @@ make env
 ```
 
 ```sh
-cd cookbook/recipes/your-category/recipe-name/source
+cd recipes/your-category/recipe-name/source
 ```
 
 ```sh
@@ -1266,7 +1267,7 @@ make env
 ```
 
 ```sh
-cd cookbook/recipes/your-category/recipe-name/source
+cd recipes/your-category/recipe-name/source
 ```
 
 ```sh
@@ -1325,7 +1326,7 @@ make env
 ```
 
 ```sh
-cd cookbook/recipes/your-category/recipe-name/source
+cd recipes/your-category/recipe-name/source
 ```
 
 ```sh
@@ -1355,7 +1356,7 @@ If you want to patch some crate offline with your patches, add this text on the 
 crate-name = { path = "patched-crate-folder" }
 ```
 
-It will make Cargo replace the crate based on this folder in the program source code - `cookbook/recipes/your-category/your-recipe/source/patched-crate-folder` (you don't need to manually create this folder if you `git clone` the crate source code on the program source directory)
+It will make Cargo replace the crate based on this folder in the program source code - `recipes/your-category/your-recipe/source/patched-crate-folder` (you don't need to manually create this folder if you `git clone` the crate source code on the program source directory)
 
 Inside this folder you will apply the patches on the crate source and rebuild the recipe.
 
@@ -1363,16 +1364,16 @@ Inside this folder you will apply the patches on the crate source and rebuild th
 
 If you have some problems (outdated recipe), try to run these commands:
 
-- This command will delete your old recipe binary/source.
+- This command will delete your old recipe source/binary.
 
 ```sh
-make c.recipe-name u.recipe-name
+make u.recipe-name
 ```
 
 - This command will delete your recipe binary/source and build (fresh build).
 
 ```sh
-make ucr.recipe-name
+make ur.recipe-name
 ```
 
 ## Search Text on Recipes
@@ -1380,7 +1381,7 @@ make ucr.recipe-name
 To speed up your porting workflow you can use the `grep` tool to search the recipe configuration:
 
 ```sh
-cd cookbook/recipes
+cd recipes
 ```
 
 ```sh
@@ -1410,7 +1411,7 @@ You need to create a BLAKE3 hash of your recipe tarball if you want to merge it 
 After the first run of the `make r.recipe-name` command, run these commands:
 
 ```sh
-b3sum cookbook/recipes/your-category/recipe-name/source.tar
+b3sum recipes/your-category/recipe-name/source.tar
 ```
 
 It will print the generated BLAKE3 hash, copy and paste on the `blake3 =` field of your `recipe.toml`
@@ -1420,13 +1421,70 @@ It will print the generated BLAKE3 hash, copy and paste on the `blake3 =` field 
 To verify the size of your package use this command:
 
 ```sh
-ls -1sh cookbook/recipes/your-category/recipe-name/target/your-target
+ls -1sh recipes/your-category/recipe-name/target/your-target
 ```
 
 See the size of the `stage.pkgar` and `stage.tar.gz` files.
 
 ## Submitting MRs
 
-If you want to add your recipe on [Cookbook](https://gitlab.redox-os.org/redox-os/cookbook) to become a Redox package on the [build server](https://static.redox-os.org/pkg/), read the [package policy](https://gitlab.redox-os.org/redox-os/cookbook#package-policy).
+If you want to add your recipe on the [build system](https://gitlab.redox-os.org/redox-os/redox) to become a Redox package on the [build server](https://static.redox-os.org/pkg/), read the [package policy](#package-policy) below.
 
 After this you can submit your merge request with proper category, dependencies and comments.
+
+### Package Policy
+
+Before sending your recipe to upstream (to become a public package), you must follow these rules:
+
+#### Naming
+
+- The recipe name can't have dots, backslashes, and NULs
+
+#### Cross-Compilation
+
+- All recipes must use our cross-compilers, a Cookbook [template](#templates) does this automatically but it's not always possible, study the build system of your program or library to find these options or patch the configuration files.
+- Don't hardcode the CPU architecture on the recipe script (this would break the multi-arch support).
+
+#### Tarballs
+
+- Don't use the auto-generated tarballs from GitHub, they aren't static and don't verify the archive integrity.
+
+#### API Compatibility
+
+- Respect the API compatibility of C/C++ libraries, for example: if `openssl1` is available and some program need `openssl3`, you will create a recipe for `openssl3` and not rename the `openssl1`, as it will break the dependent packages.
+
+(Read [this](./developer-faq.md#why-cc-programs-and-libraries-are-hard-and-time-consuming-to-port) section to know why it's needed)
+
+#### Checksum
+
+- If your recipe download a tarball, you will need to create a BLAKE3 hash for it. You can learn how to do it [here](#create-a-blake3-hash-for-your-recipe).
+
+#### License
+
+- Don't package programs or libraries lacking a license.
+- Verify if the program has some license violation, in case of doubt ask us on the [chat](https://doc.redox-os.org/book/chat.html).
+- Non-free programs and assets should go to a subcategory of the `nonfree` category and be approved per license.
+
+### Testing Area
+
+Work-in-progress software ports goes to the `wip` category, be aware of these items during your packaging process:
+
+- A recipe is considered ready if it's mostly working inside of Redox.
+- All WIP recipes must have a `#TODO` on the beginning of the `recipe.toml` and explain what is missing.
+- BLAKE3 hashes for tarballs are optional (quick testing workflow)
+- Try to keep the recipe with the latest stable version of the program (the porting process can take months).
+- Once the recipe is ready, add the BLAKE3 hash if needed and move the folder to the appropriate category.
+
+#### Suggestions for TODOs
+
+These TODOs improve the packagers cooperation and understanding.
+
+- `not compiled or tested` - It means that your recipe may be fully or partially configured and with necessary dependencies.
+- `missing script for x: insert-the-link-for-build-instructions-here` - It means that your recipe is lacking the cross-compilation script for some build system, where `x` is the build system name. After `:` you will insert the link for the build instructions of the program or library, it will help other packagers to create the script for you.
+- `missing dependencies: insert-the-link-for-required-dependencies-here` - It means that the `build.dependencies` or `package.dependencies` data types are incomplete.
+- `probably wrong script: insert-the-link-for-build-instructions-here` - It means that you don't know yet if your script is working.
+- `probably wrong template: insert-the-link-for-build-instructions-here` - It means that you don't know yet if the Cookbook template is working.
+- `probably missing dependencies: insert-the-link-for-required-dependencies-here` - It means that you don't know yet if the required dependencies are satisfied.
+- `promote` - It means that the recipe is working and should be moved to the equivalent category at `recipes/*`
+
+Other TODOs are specific and won't be covered on this list.

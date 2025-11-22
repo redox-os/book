@@ -15,12 +15,7 @@ The build system downloads and creates several files that you may want to know a
   - [QEMU/VirtualBox](#qemuvirtualbox)
 - [Environment Variables](#environment-variables)
 - [Scripts](#scripts)
-- [Component Separation](#component-separation)
-- [Pinned Commits](#pinned-commits)
-  - [Current Pinned Submodules](#current-pinned-submodules)
-  - [Manual Submodule Update](#manual-submodule-update)
 - [Git Auto-checkout](#git-auto-checkout)
-  - [Submodules](#submodules)
 - [Update The Build System](#update-the-build-system)
 - [Update Relibc](#update-relibc)
 - [Fix Breaking Changes](#fix-breaking-changes)
@@ -55,10 +50,7 @@ The build system downloads and creates several files that you may want to know a
 - `config` - This folder contains all filesystem configurations.
 - `config/*.toml` - Filesystem templates used by the CPU target configurations (a template can use other template to reduce duplication)
 - `config/your-cpu-arch/your-config.toml` - The filesystem configuration of the QEMU image to be built, e.g. `config/x86_64/desktop.toml`
-- `config/your-cpu-arch/server.toml` - The variant with system components (without Orbital) and some important tools. Aimed for servers, low-end computers, testers and developers.
-
-(Try this config if you have boot problems on QEMU or real hardware).
-
+- `config/your-cpu-arch/server.toml` - The variant with system components (without Orbital) and some important tools. Aimed for servers, low-end computers, testers and developers (try this config if you have boot problems on QEMU or real hardware).
 - `config/your-cpu-arch/desktop.toml` - The variant with system components, the Orbital desktop environment and some important programs (this is the default configuration of the build system). Aimed for end-users, gamers, testers and developers.
 - `config/your-cpu-arch/dev.toml` - The variant with development tools included. Aimed for developers.
 - `config/your-cpu-arch/demo.toml` - The variant with a complete system and optional programs and games. Aimed for end-users, gamers, testers and developers.
@@ -70,32 +62,6 @@ The build system downloads and creates several files that you may want to know a
 - `config/your-cpu-arch/ci.toml` - The continuous integration variant, recipes added here become packages on the [build server](https://static.redox-os.org/pkg/). Aimed for packagers and developers.
 - `config/your-cpu-arch/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing at the moment.
 
-### Cookbook
-
-- `prefix/*` - Tools used by the Cookbook system. They are normally downloaded during the first system build.
-
-(If you are having a problem with the build system, you can remove the `prefix` directory and it will be recreated during the next build)
-
-- `cookbook/*` - Part of the Cookbook system, these scripts and tools will build your recipes.
-- `cookbook/repo` - Contains all packaged recipes.
-- `cookbook/recipes/recipe-name` - A recipe (software port) directory (represented as `recipe-name`), this directory holds the `recipe.toml` file.
-- `cookbook/recipes/recipe-name/recipe.toml` - The recipe configuration file, this configuration contains instructions for downloading Git repositories or tarballs, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
-
-(To learn more about the recipe system read the [Porting Applications using Recipes](./porting-applications.md) page)
-
-- `cookbook/recipes/recipe-name/recipe.sh` - The old recipe configuration format (can't be used as dependency of a recipe with a TOML syntax).
-- `cookbook/recipes/recipe-name/source.tar` - The tarball of the recipe (renamed).
-- `cookbook/recipes/recipe-name/source` - The directory where the recipe source is extracted or downloaded.
-- `cookbook/recipes/recipe-name/target` - The directory where the recipe binaries are stored.
-- `cookbook/recipes/recipe-name/target/${TARGET}` - The directory for the recipes binaries of the CPU architecture (`${TARGET}` is the environment variable of your CPU architecture).
-- `cookbook/recipes/recipe-name/target/${TARGET}/build` - The directory where the recipe build system run its commands.
-- `cookbook/recipes/recipe-name/target/${TARGET}/stage` - The directory where recipe binaries go before the packaging, after `make all`, `make rebuild` and `make image` the [installer](https://gitlab.redox-os.org/redox-os/installer) will extract the recipe package on the QEMU image, generally at `/usr/bin` or `/usr/lib` in a Redox filesystem hierarchy.
-- `cookbook/recipes/recipe-name/target/${TARGET}/sysroot` - The folder where recipe build dependencies (libraries) goes, for example: `library-name/src/example.c`
-- `cookbook/recipes/recipe-name/target/${TARGET}/stage.pkgar` - Redox package file.
-- `cookbook/recipes/recipe-name/target/${TARGET}/stage.sig` - Signature for the `tar` package format.
-- `cookbook/recipes/recipe-name/target/${TARGET}/stage.tar.gz` - Legacy `tar` package format, produced for compatibility reasons as we are working to make the package manager use the `pkgar` format.
-- `cookbook/recipes/recipe-name/target/${TARGET}/stage.toml` - Contains the runtime dependencies of the package and is part of both package formats.
-
 ### Build System Files
 
 - `build` - The directory where the build system will place the final image. Usually `build/$(ARCH)/$(CONFIG_NAME)`, e.g. `build/x86_64/desktop`
@@ -105,6 +71,28 @@ The build system downloads and creates several files that you may want to know a
 - `build/your-cpu-arch/your-config/repo.tag` - An empty file that, if present, tells the build system that all recipes required for the Redox image have been successfully built. **The build system will not check for changes to your code when this file is present.** Use `make rebuild` to force the build system to check for changes.
 - `build/podman` - The directory where Podman Build places the container user's home directory, including the container's Rust installation. Use `make container_clean` to remove it. In some situations, you may need to remove this directory manually, possibly with root privileges.
 - `build/container.tag` - An empty file, created during the first Podman build, so a Podman build knows when a reusable Podman image is available. Use `make container_clean` to force a rebuild of the Podman image on your next `make rebuild` run.
+
+### Cookbook
+
+- `prefix/*` - Tools used by the Cookbook system. They are normally downloaded during the first system build (if you are having a problem with the build system, you can remove the `prefix` directory and it will be recreated during the next build).
+- `repo` - Contains all packaged recipes.
+- `recipes/recipe-name` - A recipe (software port) directory (represented as `recipe-name`), this directory holds the `recipe.toml` file.
+- `recipes/recipe-name/recipe.toml` - The recipe configuration file, this configuration contains instructions for downloading Git repositories or tarballs, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
+
+(To learn more about the recipe system read the [Porting Applications using Recipes](./porting-applications.md) page)
+
+- `recipes/recipe-name/recipe.sh` - The old recipe configuration format (can't be used as dependency of a recipe with a TOML syntax).
+- `recipes/recipe-name/source.tar` - The tarball of the recipe (renamed).
+- `recipes/recipe-name/source` - The directory where the recipe source is extracted or downloaded.
+- `recipes/recipe-name/target` - The directory where the recipe binaries are stored.
+- `recipes/recipe-name/target/${TARGET}` - The directory for the recipes binaries of the CPU architecture (`${TARGET}` is the environment variable of your CPU architecture).
+- `recipes/recipe-name/target/${TARGET}/build` - The directory where the recipe build system run its commands.
+- `recipes/recipe-name/target/${TARGET}/stage` - The directory where recipe binaries go before the packaging, after `make all`, `make rebuild` and `make image` the [installer](https://gitlab.redox-os.org/redox-os/installer) will extract the recipe package on the QEMU image, generally at `/usr/bin` or `/usr/lib` in a Redox filesystem hierarchy.
+- `recipes/recipe-name/target/${TARGET}/sysroot` - The folder where recipe build dependencies (libraries) goes, for example: `library-name/src/example.c`
+- `recipes/recipe-name/target/${TARGET}/stage.pkgar` - Redox package file.
+- `recipes/recipe-name/target/${TARGET}/stage.sig` - Signature for the `tar` package format.
+- `recipes/recipe-name/target/${TARGET}/stage.tar.gz` - Legacy `tar` package format, produced for compatibility reasons as we are working to make the package manager use the `pkgar` format.
+- `recipes/recipe-name/target/${TARGET}/stage.toml` - Contains the runtime dependencies of the package and is part of both package formats.
   
 ## GNU Make Commands
 
@@ -115,8 +103,8 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make pull` - Update the source code of the build system without building.
 - `make all` - Builds the entire system, checking for changes and only building as required. Only use this for the first build. If the system was successfully built previously, this command may report `Nothing to be done for 'all'`, even if some recipes have changed. Use `make rebuild` instead.
 - `make rebuild` - Update all binaries from recipes with source code changes (it don't detect changes on the Redox toolchain), it should be your normal `make` target.
-- `make prefix` - Download the Rust/GCC forks and build relibc (it update the relibc binary with source code changes after the `make pull`, `touch relibc` and `make prefix` commands).
-- `make fstools` - Build the image builder (installer), Cookbook and RedoxFS (after `touch installer` or `touch redoxfs`).
+- `make prefix` - Download the Rust/GCC forks and build relibc.
+- `make fstools` - Build the Redox image builder (installer), Cookbook and RedoxFS.
 - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are downloaded. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
 - `make cook` - Build recipes enabled in the active filesystem configuration
 - `make repo` - Package the recipe binaries, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
@@ -158,8 +146,8 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
 - `make ur.recipe-name` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
 - `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
-- `make x.--all` - Any recipe target (x) can be run in all recipes at `cookbook/recipes` (like `make c.--all` which clean all recipe binaries, for example)
-- `make x.--category-folder-name` - Any recipe target (x) can be run in all recipes of some category folder at `cookbook/recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` folder, for example), if you need to use a sub-category use `--category-folder-name/subfolder`
+- `make x.--all` - Any recipe target (x) can be run in all recipes at `recipes` (like `make c.--all` which clean all recipe binaries, for example)
+- `make x.--category-folder-name` - Any recipe target (x) can be run in all recipes of some category folder at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` folder, for example), if you need to use a sub-category use `--category-folder-name/subfolder`
 
 All recipe commands (f, r, c, u, cr, ucr) can be run with multiple recipes, just separate them with a comma. for example: `make f.recipe1,recipe2` will download the sources of `recipe1` and `recipe2`
 
@@ -186,7 +174,7 @@ All recipe commands (f, r, c, u, cr, ucr) can be run with multiple recipes, just
 
 - `$(BUILD)` - Represents the `build` folder.
 - `$(ARCH)` - Represents the CPU architecture folder at `build`
-- `${TARGET}` - Represents the CPU architecture folder at the `cookbook/recipes/recipe-name/target` folder
+- `${TARGET}` - Represents the CPU architecture folder at the `recipes/recipe-name/target` folder
 - `$(CONFIG_NAME)` - Represents your filesystem configuration folder at `build/your-cpu-arch`
 
 We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the commands.
@@ -341,51 +329,6 @@ scripts/cargo-update.sh recipe-name
 
 - `scripts/backtrace.sh` - Allow the user to copy a Rust backtrace from Redox and retrieve the symbols (use the `-h` option to show the "Usage" message).
 
-## Component Separation
-
-- `relibc` - The cross-compiled recipes will link to the relibc of this folder (build system submodule)
-- `redoxfs` - The FUSE driver of RedoxFS (build system submodule, to run on Linux)
-- `cookbook/recipes/relibc` - The relibc recipe to be installed inside of Redox for static or dynamic linking of binaries (for native compilation)
-- `cookbook/recipes/redoxfs` - The RedoxFS user-space daemon that run inside of Redox (recipe)
-
-## Pinned Commits
-
-The build system pin the last working commit of the submodules, if some submodule is broken because of some commit, the pinned commit avoid the fetch of this broken commit, thus pinned commits increase the development stability (broken changes aren't passed for developers and testers).
-
-(When you run `make pull` the build system update the submodule folders based on the last pinned commit)
-
-### Current Pinned Submodules
-
-- `cookbook`
-- `installer`
-- `redoxfs`
-- `relibc`
-- `rust`
-
-### Manual Submodule Update
-
-Whenever a fix or new feature is merged on the submodules, the upstream build system must update the commit hash, to workaround this you can run `git pull` on the folder of the submodule directly, example:
-
-```sh
-make pull
-```
-
-```sh
-cd submodule-folder-name
-```
-
-```sh
-git checkout master
-```
-
-```sh
-git pull
-```
-
-```sh
-cd ..
-```
-
 ## Git Auto-checkout
 
 The `make rebuild` and `make r.recipe` commands will Git checkout (change the active branch) of the recipe source to `master` (only recipes that fetch Git repositories are affected, thus all Redox components).
@@ -395,36 +338,6 @@ If you are working in a separated branch on the recipe source you can't build yo
 ```
 #[source]
 #git = "some-repository-link"
-```
-
-### Submodules
-
-The `make pull` command will Git checkout the [submodules](#current-pinned-submodules) active branches to `master` and pin a commit in `HEAD`, if you are working on the build system submodules don't run this command, to keep the build system using your changes.
-
-To update the build system while you have out-of-tree changes in some submodule, run these commands:
-
-- This command will only update the root build system files
-
-```sh
-git pull
-```
-
-- Now you need to manually update each submodule folder without your changes
-
-```sh
-cd submodule-name
-```
-
-```sh
-git checkout master
-```
-
-```sh
-git pull
-```
-
-```sh
-cd ..
 ```
 
 ## Update The Build System

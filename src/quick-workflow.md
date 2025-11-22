@@ -47,7 +47,7 @@ Use Case: Try to fix Rust problems.
 #### Download a new build system copy without the bootstrap script
 
 ```sh
-git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
+git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream
 ```
 
 Use Case: Commonly used when a big build system breakage was not prevented before an update or wipe leftovers.
@@ -99,11 +99,7 @@ Use Case: Keep the build system up-to-date.
 #### Update the toolchain and relibc
 
 ```sh
-touch relibc
-```
-
-```sh
-make prefix
+make prefix r.relibc
 ```
 
 Use Case: Keep the toolchain up-to-date.
@@ -126,10 +122,6 @@ topgrade
 
 ```sh
 make pull
-```
-
-```sh
-touch relibc
 ```
 
 ```sh
@@ -172,12 +164,12 @@ Use Case: Full build system binary cleanup and update to avoid most configuratio
 make distclean all
 ```
 
-Use Case: Commonly used to fix source/binary breaking changes on recipes or save space.
+Use Case: Fix source/binary breaking changes on recipes or save space.
 
 #### Use the "myfiles" recipe to insert your files on Redox image
 
 ```sh
-mkdir cookbook/recipes/other/myfiles/source
+mkdir recipes/other/myfiles/source
 ```
 
 ```sh

@@ -29,7 +29,7 @@ cd ~/tryredox
 ```
 
 ```sh
-git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream --recursive
+git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream
 ```
 
 ```sh

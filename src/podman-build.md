@@ -93,7 +93,7 @@ If you already have the build system, simply perform the following steps:
  2. Update the build system and wipe all binaries
 
     ```sh
-    make pull clean
+    make clean pull
     ```
 
  3. Install Podman. If your Linux distribution is not supported, check the [installation instructions](./advanced-podman-build.md#installation) to determine which dependencies are needed. Or, run the following in your `redox` base` directory:
