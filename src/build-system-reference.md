@@ -146,6 +146,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
 - `make ur.recipe-name` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
 - `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
+- `make crp.recipe-name` - A shortcut for `make c.recipe r.recipe p.recipe`
 - `make x.--all` - Any recipe target (x) can be run in all recipes at `recipes` (like `make c.--all` which clean all recipe binaries, for example)
 - `make x.--category-folder-name` - Any recipe target (x) can be run in all recipes of some category folder at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` folder, for example), if you need to use a sub-category use `--category-folder-name/subfolder`
 
