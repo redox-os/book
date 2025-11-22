@@ -384,7 +384,7 @@ To identify which crates are using old versions of Redox crates you will need to
 cargo tree --target=x86_64-unknown-redox
 ```
 
-(Change `x86_64` in `x86_64-unknown-redox` to the CPU code that you are using)
+(If you aren't building Redox to x86_64 change `x86_64` in `x86_64-unknown-redox` to the CPU code that you are using)
 
 This command will draw the dependency tree and you will need to find the crate name on the tree.
 
