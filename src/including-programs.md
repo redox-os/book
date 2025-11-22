@@ -21,7 +21,7 @@ The Cookbook system makes the packaging process very simple. First, we will show
 
 ## Existing Recipe
 
-Redox has many programs that are available for inclusion. Each program has a recipe in the directory `recipes/recipe-name`. Adding an existing program to your build is as simple as adding it to `config/$ARCH/my-desktop.toml`, or whatever name you choose for your filesystem configuration. Here we will add the `games` package, which contains several terminal games.
+Redox has many programs that are available for inclusion. Each program has a recipe in the directory `recipes/recipe-name`. Adding an existing program to your build is as simple as adding it to `config/$ARCH/my-config.toml`, or whatever name you choose for your filesystem configuration. Here we will add the `games` package, which contains several terminal games.
 
 ### Setup the Redox Build Environment
 
@@ -54,11 +54,11 @@ cd ~/tryredox/redox
 ```
 
 ```sh
-cp config/x86_64/desktop.toml config/x86_64/my-desktop.toml
+cp config/x86_64/desktop.toml config/x86_64/my-config.toml
 ```
 
 ```sh
-nano config/x86_64/my-desktop.toml
+nano config/x86_64/my-config.toml
 ```
 
 - Look for the `[packages]` section and add the package to the configuration. You can add the package anywhere in the `[packages]` section, but by convention, we add them to the end or to an existing related area of the section.
@@ -79,7 +79,7 @@ nano .config
 
 ```
 # Add the item below
-CONFIG_NAME?=my-desktop
+CONFIG_NAME?=my-config
 ```
 
 - Save your changes with Ctrl+X and confirm with `y`
