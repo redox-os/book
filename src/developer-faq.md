@@ -54,6 +54,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of n
     - [How can I have an anonymous account?](#how-can-i-have-an-anonymous-account)
 - [Documentation Questions](#documentation-questions)
     - [How can I write code documentation properly?](#how-can-i-write-code-documentation-properly)
+    - [How can I write book documentation properly?](#how-can-i-write-book-documentation-properly)
     - [How can I insert commands and code correctly?](#how-can-i-insert-commands-and-code-correctly)
     - [How can I create diagrams?](#how-can-i-create-diagrams)
 - [Troubleshooting Questions](#troubleshooting-questions)
@@ -407,6 +408,12 @@ Read the following pages:
 
 - [Literate programming](https://doc.redox-os.org/book/literate-programming.html)
 - [Writting Documentation Correctly](https://doc.redox-os.org/book/writing-docs-correctly.html)
+
+### How can I write book documentation properly?
+
+- Don't use informal language, like non-formal abbreviations such as "config"
+- Don't insert work-in-progress information, it unnecessarily increases maintenance cost
+- Use [Oxford commas](https://en.wikipedia.org/wiki/Serial_comma)
 
 ### How can I insert commands and code correctly?
 

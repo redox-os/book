@@ -181,9 +181,9 @@ The Redox image can be customized by tweaking the configuration files at `config
 
 #### Creating a custom filesystem configuration
 
-The following items describe the process for creating a custom filesystem configuration file (`my_desktop.toml`):
+The following items describe the process for creating a custom filesystem configuration file (`my-desktop.toml`):
 
-1. Create the `my_desktop.toml` file from an existing filesystem configuration:
+1. Create the `my-desktop.toml` file from an existing filesystem configuration:
 
     ```sh
     cp config/your-cpu-arch/desktop.toml config/your-cpu-arch/my_desktop.toml
@@ -197,16 +197,16 @@ The following items describe the process for creating a custom filesystem config
 
 Many filesystem configuration settings can be adjusted. See the templates in the `config` folder for reference.
 
-> 💡 **Tip:** files named with the prefix "`my_`" in the `redox` repo are git-ignored. Be sure to follow this convention for all custom filesystem configurations to avoid accidentally committing them to the Redox project.
+> 💡 **Tip:** files named with the prefix "`my-`" in the `redox` repo are git-ignored. Be sure to follow this convention for all custom filesystem configurations to avoid accidentally committing them to the Redox project.
 
 #### Adding a package to the filesystem configuration
 
 In the following example, the `acid` package is added to the `my_desktop.toml` configuration:
 
-1. Open the `my_desktop.toml` file:
+1. Open the `my-desktop.toml` file:
 
     ```sh
-    nano config/your-cpu/my_desktop.toml
+    nano config/your-cpu/my-desktop.toml
     ```
 
 2. Add the `acid` package to the `[packages]` section:
@@ -216,24 +216,24 @@ In the following example, the `acid` package is added to the `my_desktop.toml` c
     acid = {}
     ```
 
-3. Build the `acid` package and create a new Redox image:
+3. Build the `acid` package and update the Redox image:
 
     ```sh
-    make r.acid image
+    make rp.acid
     ```
 
-Done! The `acid` package is now included in your new Redox image.
+Done! The `acid` package is now included in your Redox image.
 
 ### Binary Packages
 
-By default, the Redox build system builds all packages from source (i.e., recipes). If you want to use [pre-built packages](https://static.redox-os.org/pkg/) from our build server, however, there's a TOML option for it.
+By default, the Redox build system builds all packages from source (i.e., recipes). If you want to use [pre-compiled packages](https://static.redox-os.org/pkg/) from our build server, however, there's a TOML option for it.
 
 This is useful for some purposes, such as producing development builds, confirming package status from the Redox package server, and reducing image build time with large programs.
 
-1. Open the `my_desktop.toml` file:
+1. Open the `my-desktop.toml` file:
 
     ```sh
-    nano config/your-cpu/my_desktop.toml
+    nano config/your-cpu/my-desktop.toml
     ```
 
 2. Add the binary package below the `[packages]` section:

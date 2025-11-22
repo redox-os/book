@@ -31,7 +31,7 @@ cargo install inferno
 
 3. Make sure you have the kernel source by running `make f.kernel`.
 
-4. Open a second terminal window in the directory `cookbook/recipes/core/kernel`.
+4. Open a second terminal window in the directory `recipes/core/kernel`
 
 5. Edit `recipe.toml` in the `kernel` directory. First, comment out the `[source]` section so the build process does not try to fetch the source again.
 
@@ -105,7 +105,7 @@ shutdown
 """
 ```
 
-10. In the `redox` directory, create the file `.config` with the following content.
+10. In the `redox` directory, create the file `.config` with the following content:
 
 ```make
 # This needs to match the name of your filesystem config file
@@ -118,7 +118,7 @@ QEMU_MEM=8192
 gpu=no
 ```
 
-11. In the `redox` terminal window, `make r.kernel image` (or `make rebuild` if needed).
+11. In the `redox` terminal window, run the `make rp.kernel` (or `make rebuild` if needed) command.
 
 ### Profiling
 
@@ -153,20 +153,20 @@ cd my_profiler_data
 ```
 
 ```sh
-nm -CS ../cookbook/recipes/core/kernel/target/x86_64-unknown-redox/build/kernel > kernel_syms.txt
+nm -CS ../recipes/core/kernel/target/x86_64-unknown-redox/build/kernel > kernel_syms.txt
 ```
 
-16. The next step is to determine the TSC frequency. tl;dr - just use your CPU clock rate in GHz. The TSC is a counter that tracks the clock cycles since the system was powered on. The TSC frequency can vary based when power saving is enabled, but Redox does not implement this yet, so CPU GHz should work fine.
+16. The next step is to determine the TSC frequency. TL;DR - just use your CPU clock rate in GHz. The TSC is a counter that tracks the clock cycles since the system was powered on. The TSC frequency can vary based when power saving is enabled, but Redox does not implement this yet, so CPU GHz should work fine.
 
 17. Determine what formatting options you want for your flamegraph - 'i' for relaxed checking of function length, 'o' for reporting function plus offset rather than just function, 'x' for both grouping by function and with offset.
 
 18. In the directory `my_profiler_data`, generate the flamegraph.
 
 ```sh
-redox-kprofiling profiling.txt kernel_syms.txt x 2.2 | inferno-collapse-perf | inferno-flamegraph > kernel_flamegraph.svg
+redox-kprofiling profiling.txt kernel_syms.txt x y.z | inferno-collapse-perf | inferno-flamegraph > kernel_flamegraph.svg
 ```
 
-Replace the `x` with your preferred formatting options. Replace the `2.2` with your TSC/CPU Clock frequency in GHz.
+Replace the `x` with your preferred formatting options. Replace the `y.z` with your TSC/CPU Clock frequency in GHz (`2.2`, for example).
 
 Then view your flamegraph in a browser.
 

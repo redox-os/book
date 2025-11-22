@@ -8,12 +8,12 @@ You will learn how to configure the kernel to print a trace of system calls.
 
 You will be modifying the kernel, but you won't be making extensive changes, so you don't need to bother with GitLab stuff, unless you intend to do this frequently. This description assumes you will look after that yourself.
 
-- The kernel source is in the directory `cookbook/recipes/core/kernel/source`
+- The kernel source is in the directory `recipes/core/kernel/source`
 - If the directory is missing, go to your `redox` directory and run `make f.kernel`
 
 Once you have fetched the kernel source into its "source" directory, you should disable the `[source]` section of the kernel recipe, so the build system doesn't try to update the kernel code.
 
-- In the file `cookbook/recipes/core/kernel/recipe.toml`, comment out the lines in the source section:
+- In the file `recipes/core/kernel/recipe.toml`, comment out the lines in the source section:
 
 ```
 # [source]
@@ -24,7 +24,7 @@ Once you have fetched the kernel source into its "source" directory, you should 
 
 In order to configure printing out of system calls, you will need to enable the feature "syscall_debug" for the kernel.
 
-- In the file `cookbook/recipes/core/kernel/source/Cargo.toml`, scroll down to the default features list (maybe around line 50), and add the feature "syscall_debug":
+- In the file `recipes/core/kernel/source/Cargo.toml`, scroll down to the default features list (maybe around line 50), and add the feature "syscall_debug":
 
 ```
 default = [
@@ -82,6 +82,12 @@ A message will be printed at the start of the system call, and a message will be
 ## Building The Changes
 
 To include these changes in your Redox image, run the following command:
+
+```
+make rp.kernel
+```
+
+Or (if the above doesn't work)
 
 ```
 make r.kernel image
