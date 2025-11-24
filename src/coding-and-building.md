@@ -609,7 +609,7 @@ make mount
 
 The Redox image is now mounted as a directory at: `build/x86_64/your-config/filesystem`
 
-- Unmount the filesystem and test your image. **You must unmount before you start QEMU**.
+- Unmount the filesystem and test your image. **You must unmount before you start QEMU**
 
 ```sh
 cd ~/tryredox/redox

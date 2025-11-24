@@ -24,7 +24,8 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [How can I change the CPU architecture of my build system?](#how-can-i-change-the-cpu-architecture-of-my-build-system)
     - [How can I cross-compile to ARM64 from a x86-64 computer?](#how-can-i-cross-compile-to-arm64-from-a-x86-64-computer)
     - [How can I use a recipe in my Redox image?](#how-can-i-use-a-recipe-in-my-redox-image)
-    - [I only made a small change to my program. What's the quickest way to test it in QEMU?](#i-only-made-a-small-change-to-my-program-whats-the-quickest-way-to-test-it-in-qemu)
+    - [I made changes to my recipe. What is the quickest way to test it in QEMU?](#i-made-changes-to-my-recipe-what-is-the-quickest-way-to-test-it-in-qemu)
+    - [I made changes to multiple recipes. What is the quickest way to test it in QEMU?](#i-made-changes-to-multiple-recipes-what-is-the-quickest-way-to-test-it-in-qemu)
     - [How can I disable recipe compilation?](#how-can-i-disable-recipe-compilation)
     - [How can I disable recipe compilation except for a specific recipe?](#how-can-i-disable-recipe-compilation-except-for-a-specific-recipe)
     - [How can I install the packages needed by recipes (Native Build) or Podman without a new download of the build system?](#how-can-i-install-the-packages-needed-by-recipes-native-build-or-podman-without-a-new-download-of-the-build-system)
@@ -253,12 +254,38 @@ Or (for a remote package)
 make rp.recipe-name REPO_BINARY=1
 ```
 
-### I only made a small change to my program. What's the quickest way to test it in QEMU?
+### I made changes to my recipe. What is the quickest way to test it in QEMU?
 
-- Build the recipe, install to an existing image and launch QEMU:
+If you did incremental changes (which don't change the binary symbols), run the following command:
+
+- Rebuild the recipe, install to an existing image and launch QEMU
 
 ```sh
 make rp.recipe-name qemu
+```
+
+If you did breaking changes (which changed the binary symbols) run the following command:
+
+- Rebuild the recipe, install to an existing image and launch QEMU
+
+```sh
+make crp.recipe-name qemu
+```
+
+### I made changes to multiple recipes. What is the quickest way to test it in QEMU?
+
+- Rebuild the modified recipes, install to an existing image and launch QEMU:
+
+```sh
+make rp.recipe1,recipe2 qemu
+```
+
+If you don't want to specify all modified recipes run the following command:
+
+- Rebuild the modified recipes, install to an existing image and launch QEMU:
+
+```sh
+make repo push qemu
 ```
 
 ### How can I disable the recipe compilation?
