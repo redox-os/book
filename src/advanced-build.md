@@ -75,7 +75,7 @@ python3-mako rsync scons texinfo unzip wget xdg-utils xxd zip zstd
 - If you want to use QEMU, run:
 
 ```sh
-sudo apt-get install qemu-system-x86 qemu-kvm
+sudo apt-get install qemu-system-x86 qemu-kvm qemu-system-arm qemu-system-riscv
 ```
 
 - If you want to use VirtualBox, run:
@@ -102,7 +102,7 @@ unzip lua luajit make clang doxygen ant protobuf-compiler zstd
 - If you want to use QEMU, run:
 
 ```sh
-sudo dnf install qemu-system-x86 qemu-kvm
+sudo dnf install qemu-system-x86 qemu-kvm qemu-system-arm qemu-system-riscv
 ```
 
 - If you want to use VirtualBox, install from the VirtualBox [Linux Downloads](https://www.virtualbox.org/wiki/Linux_Downloads) page.
@@ -122,7 +122,7 @@ zip unzip llvm clang perl doxygen lua ant protobuf
 - If you want to use QEMU, run:
 
 ```sh
-sudo pacman -S qemu
+sudo pacman -S qemu-system-x86 qemu-system-arm qemu-system-riscv
 ```
 
 - If you want to use VirtualBox, run:
@@ -299,7 +299,7 @@ The tools that build Redox are specific to each CPU architecture. These tools ar
 
 ## Cookbook
 
-The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls if the recipes are compiled from sources or use binary packages from Redox CI server, read the section [REPO_BINARY](./configuration-settings.md#repo_binary) for more details. See the [Including Programs in Redox](./including-programs.md) page for examples of using the Cookbook toolset. If you will be developing recipes to include in Redox, it is worthwhile to have a look at the tools in the `cookbook` directory.
+The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls if the recipes are compiled from sources or use binary packages from Redox CI server, read the section [REPO_BINARY](./configuration-settings.md#repo_binary) for more details. See the [Including Programs in Redox](./including-programs.md) page for examples of using the Cookbook toolset. If you will be developing recipes to include in Redox.
 
 ## Creating a Build Environment Shell
 
@@ -323,7 +323,7 @@ cd ~/tryredox/redox
 make pull
 ```
 
-If you want to update the source for the recipes, use `make rebuild`, or remove the file `$(BUILD)/fetch.tag` and run `make fetch`.
+If you want to update the source for the recipes, use `make rebuild`, or remove the file `$(BUILD)/fetch.tag` and run `make fetch`
 
 ## Changing the Filesystem Size and Contents
 

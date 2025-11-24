@@ -19,37 +19,37 @@ Note that the Redox filesystem parts are merged using [FUSE](https://github.com/
 ### Ubuntu
 
 ```sh
-sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns
+sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns qemu-system-x86 qemu-kvm qemu-system-arm qemu-system-riscv
 ```
 
 ### Debian
 
 ```sh
-sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns
+sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns qemu-system-x86 qemu-kvm qemu-system-arm qemu-system-riscv
+```
+
+### Pop!_OS
+
+```sh
+sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns qemu-system-x86 qemu-kvm qemu-system-arm qemu-system-riscv
 ```
 
 ### Arch Linux
 
 ```sh
-sudo pacman -S --needed git make curl podman fuse3 fuse-overlayfs slirp4netns
+sudo pacman -S --needed git make curl podman fuse3 fuse-overlayfs slirp4netns qemu-system-x86 qemu-system-arm qemu-system-riscv
 ```
 
 ### Fedora
 
 ```sh
-sudo dnf install git-all make curl podman fuse3 fuse-overlayfs slirp4netns
+sudo dnf install git-all make curl podman fuse3 fuse-overlayfs slirp4netns qemu-system-x86 qemu-kvm qemu-system-arm qemu-system-riscv
 ```
 
 ### OpenSUSE
 
 ```sh
 sudo zypper install git make curl podman fuse fuse-overlayfs slipr4netns
-```
-
-### Pop!_OS
-
-```sh
-sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns
 ```
 
 ### FreeBSD
