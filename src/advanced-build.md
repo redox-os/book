@@ -180,7 +180,7 @@ guix shell --pure --container --emulate-fhs --network --share=$HOME \
   -- bash -c 'export LD_LIBRARY_PATH=$(dirname $(gcc -print-file-name=libgcc_s.so.1)):$LD_LIBRARY_PATH && source ~/.cargo/env && cargo install cbindgen'
 ```
 
-Then you'll be able to run the actual build except for the part that
+Then you will be able to run the actual build except for the part that
 uses FUSE to build the root filesystem. Modify `tryredox/redox` in the
 command below to match where your sources are:
 
@@ -199,16 +199,24 @@ make all PODMAN_BUILD=0 REPO_BINARY=1
 '
 ```
 
-The FUSE portion needs to run outside of a guix shell`--container`. To
-do that, we will patch the rust executables so they can find
-`libgcc_s.so.1` under `/gnu/store` instead of `/lib`:
+The FUSE portion needs to run outside of a Guix shell container. To
+do that, we will patch the Rust executables so they can find
+`libgcc_s.so.1` under `/gnu/store` instead of `/lib` :
 
 ```sh
 LIBGCC_DIR=$(guix shell --container --emulate-fhs gcc-toolchain bash coreutils \
   -- bash -c 'dirname $(readlink -f /lib64/libgcc_s.so.1)')
+```
 
+```sh
 guix shell patchelf -- patchelf --set-rpath "$LIBGCC_DIR" build/fstools/bin/redox_installer
+```
+
+```sh
 guix shell patchelf -- patchelf --set-rpath "$LIBGCC_DIR" build/fstools/bin/redoxfs
+```
+
+```sh
 guix shell patchelf -- patchelf --set-rpath "$LIBGCC_DIR" build/fstools/bin/redoxfs-mkfs
 ```
 
