@@ -43,8 +43,8 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as
 | `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
 | `CONTAINERFILE` | The Podman container configuration file. See the [Podman Build](./podman-build.md) page for more information. |
 | `COOKBOOK_MAKE_JOBS` | The number of maximum CPU cores used when building recipes, default is using all CPU cores from `nproc` |
-| `CI` | If sets to any value (`CI=1`), the build system will not activate TUI and parallel execution of build step is disabled |
-| `COOKBOOK_LOGS` | A boolean option (`true`/`false`) to let build system save build logs in `build/logs/$TARGET` directory. The default value is `true` if TUI is enabled, `false` otherwise. |
+| `CI` | If set to any value (`CI=1`), the build system will not activate TUI, and parallel execution of the build step is disabled |
+| `COOKBOOK_LOGS` | A boolean option (`true`/`false`) to let the build system save build logs in `build/logs/$TARGET` directory. The default value is `true` if TUI is enabled, `false` otherwise. |
 | `COOKBOOK_VERBOSE` | A boolean option (`true`/`false`) to print more information about the build process. The default value is `true`. |
 
 The Redox image that is built is typically named `build/$ARCH/$CONFIG_NAME/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`.
@@ -55,7 +55,7 @@ The purpose of the `.config` file is to allow default configuration settings to 
 
 To permanently override the settings in the [`mk/config.mk`](#mkconfigmk) section, add a `.config` file to the `redox` base directory (i.e., where `make` commands are run) and set the overriding values in that file.
 
-For example, the following configuration specifies the `desktop-minimal` image variant will be built for the `i586` CPU architecture. These settings will be applied implictly to all subsequent `make` commands:
+For example, the following configuration specifies the `desktop-minimal` image variant will be built for the `i586` CPU architecture. These settings will be applied implicitly to all subsequent `make` commands:
 
 ```
 ARCH?=i586
@@ -68,10 +68,10 @@ CONFIG_NAME?=desktop-minimal
 
 ### cookbook.toml
 
-In addition to `.config`, `cookbook.toml` is a configuration file that used by cookbook and has more customization. Any configuration in this file will override configuration from `.config` or environment variables. The `cookbook.toml` configuration below can be used as a template:
+In addition to `.config`, `cookbook.toml` is a configuration file that is used by Cookbook and has more customization. Any configuration in this file will override configuration from `.config` or environment variables. The `cookbook.toml` configuration below can be used as a template:
 
 ```toml
-# These options has defaults set below
+# These options have defaults set below
 #[cook]
 #jobs = <nproc>
 #nonstop = false
@@ -87,7 +87,7 @@ In addition to `.config`, `cookbook.toml` is a configuration file that used by c
 # "github.com/foo/bar" = "github.com/baz/bar" 
 ```
 
-The `cookbook.toml` file mainly configures cookbook options `[cook]` and mirror `[mirror]`. Mirrors are used to replace code and binary sources used across cookbook, useful for quick way to change to alternative sources when original website who host the files went down or slow. 
+The `cookbook.toml` file mainly configures cookbook options `[cook]` and mirror `[mirror]`. Mirrors are used to replace code and binary sources used across Cookbook, useful for a quick way to change to alternative sources when the original website that hosts the files goes down or is slow. 
 
 Cookbook options defaults to environment variables which are 
 
@@ -100,10 +100,10 @@ Cookbook options defaults to environment variables which are
 |`COOKBOOK_VERBOSE`  | `COOKBOOK_VERBOSE=false` (see notes) | `cook.verbose`|
 |`COOKBOOK_NONSTOP`  | `COOKBOOK_NONSTOP=true` | `cook.nonstop`|
 
-> 📝 **Note:** `REPO_OFFLINE=1` and `REPO_NONSTOP=1` is the recommended way to set options instead of `COOKBOOK_OFFLINE=true` and `COOKBOOK_NONSTOP=true`
-> 📝 **Note:** `.config` cannot be used to save `COOKBOOK_*` options as those are not Makefile variables, you need to use `cookbook.toml` to make options persist
+> 📝 **Note:** `REPO_OFFLINE=1` and `REPO_NONSTOP=1` are the recommended ways to set options instead of `COOKBOOK_OFFLINE=true` and `COOKBOOK_NONSTOP=true`
+> 📝 **Note:** `.config` cannot be used to save `COOKBOOK_*` options as those are not Makefile variables, so you need to use `cookbook.toml` to make options persist
 > 💡 **Tip:** Running cookbook with `CI=1 COOKBOOK_LOGS=true COOKBOOK_NONSTOP=true COOKBOOK_VERBOSE=false` will hide successful build logs in the terminal
-> 💡 **Tip:** Mirrors option can also be used to override [binary builds](#repo_binary) origin.
+> 💡 **Tip:** Mirrors option can also be used to override [binary builds](#repo_binary) source URL.
 
 #### Changing the QEMU CPU Core and Memory Quantity
 
@@ -323,9 +323,9 @@ package-name3 = "source" # source-based recipe
 
 ### Locally Modified Source Packages
 
-By default, every time a build is triggered cookbook will update the sources. Cookbook will check tar file hash with the provided hash in recipe description, or pulling from origin when recipe source is coming from git. This will also remove changes that are not saved in any sources.
+By default, every time a build is triggered, Cookbook will update the sources. Cookbook will check tar file hash with the provided hash in the package description (`recipe.toml`), or pull from origin when a package source is coming from git. This will also remove changes that are not saved in any sources.
 
-To retain local changes and skip updating the source for a specific package, assign it to `"local"` in filesystem configuration, for example:
+To retain local changes and skip updating the source for a specific package, assign it to `"local"` in the filesystem configuration, for example:
 
 ```toml
 [packages]
@@ -334,7 +334,7 @@ package-name = "local" # pre-built package
 ...
 ```
 
-An old way of retaining local changes by commenting out the `[source]` section at the top of the file of a `recipe.toml` is also work, but it's less recommended as it's prone to merge conflict when pulling redox repository:
+An old way of retaining local changes by commenting out the `[source]` section at the top of the file of a `recipe.toml` is also working but less recommended as it's prone to merge conflicts when pulling Redox repository:
 
 ```toml
 # [source]
@@ -344,8 +344,8 @@ An old way of retaining local changes by commenting out the `[source]` section a
 
 ### Offline Mode with `REPO_OFFLINE`
 
-Cookbook also has a mode where it will have less internet activity, by adding `REPO_OFFLINE=1` into `.config`. This mode is useful when you're in places where network connection is slow or absent, or want a faster incremental build.
+Cookbook also has a mode where it will reduce internet activity by adding `REPO_OFFLINE=1` into `.config`. This mode is useful when you're in places where the internet is slow or absent, or when you want a faster incremental build.
 
-In this mode, cookbook will not update the source of any package, or a package binary if also set with `REPO_BINARY=1`. It also adds `--offline` to some Cargo build inside recipes where it supported. When cookbook or cargo must access internet because sources is not exist locally, it will throw error instead.
+In this mode, Cookbook will not update the source of any package, or a package binary if also set with `REPO_BINARY=1`. It also adds `--offline` to some Cargo build inside recipes where it is supported. When Cookbook or Cargo must access the internet because sources do not exist locally, it will throw an error instead.
 
 To temporarily allow cookbook and cargo to have internet activity and update sources, run `make f.package-name` (single package fetch) or `make fetch` (to fetch all packages), as these commands will ignore `REPO_OFFLINE`.
