@@ -15,8 +15,8 @@ The Redox build system applies configuration settings from various places to det
     - [Adding a package to the filesystem configuration](#adding-a-package-to-the-filesystem-configuration)
   - [Binary Packages](#binary-packages)
     - [REPO_BINARY](#repo_binary)
-  - [Locally Modified Source Packages](#locally-modified-source-packages)
-  - [Offline mode with REPO_OFFLINE](#offline-mode-with-repo_offline)
+  - [Local Recipe Changes](#local-recipe-changes)
+  - [Cookbook Offline Mode](#cookbook-offline-mode)
 
 ## Environment Variables
 
