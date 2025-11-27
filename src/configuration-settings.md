@@ -4,6 +4,7 @@ The Redox build system applies configuration settings from various places to det
 
 - [Environment Variables](#environment-variables)
   - [.config](#config)
+  - [Cookbook Configuration](#cookbook-configuration)
   - [Command Line](#command-line)
   - [mk/config.mk](#mkconfigmk)
   - [build.sh](#buildsh)
@@ -15,29 +16,37 @@ The Redox build system applies configuration settings from various places to det
     - [Adding a package to the filesystem configuration](#adding-a-package-to-the-filesystem-configuration)
   - [Binary Packages](#binary-packages)
     - [REPO_BINARY](#repo_binary)
+  - [Local Recipe Changes](#local-recipe-changes)
+  - [Cookbook Offline Mode](#cookbook-offline-mode)
 
 ## Environment Variables
 
 The default values for the build system's environment variables are mostly defined in the `mk` directory&mdash;particularly in [`mk/config.mk`](#mkconfigmk). Local changes from the default values, however, should be applied in the [`.config`](#config) file, or temporarily on the `make` [command line](#command-line).
 
-Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `FILESYSTEM_CONFIG`, as they specify the system to be built. These, and other important environment variables, can be seen in the following table:
+The build system uses GNU Make and Cookbook to coordinate the build system in order. The [build system reference](./build-system-reference.md#cookbook) and [porting application guide](./porting-applications.md#cookbook) have more information about Cookbook.
+
+Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as they specify the system to be built. These, and other important environment variables, can be seen in the following table:
 
 | Variable | Definition |
 |:---------|:-----------|
-|`ARCH`| Specifies the [CPU architecture](#architecture-names) that the system is to be built for. The default is `x86_64` |
+|`ARCH`| Specifies the [CPU architecture](#architecture-names) that the system is to be built for. The default value is `x86_64`. |
 | `CONFIG_NAME` | Determines the name of the filesystem configuration, and is normally used to construct the `FILESYSTEM_CONFIG` name (the `desktop` variant is used by default). |
-| `FILESYSTEM_CONFIG` | Determines the filesystem configuration file location. See the [Filesystem Configuration](#filesystem-configuration) section below. The default is `config/$ARCH/$CONFIG_NAME.toml`, but this can be changed if the desired configuration file is in a different location. |
-| `BOARD` | For single board computers such as Raspberry Pi 3B+ that require special configuration, $ARCH/$BOARD is used in place of $ARCH. Defaults to empty. |
+| `BOARD` | For single board computers such as Raspberry Pi 3B+ (`raspi3bp`) that require special configuration. Defaults to empty. |
+| `FILESYSTEM_CONFIG` | Determines the filesystem configuration file location. See the [Filesystem Configuration](#filesystem-configuration) section below. The default value is `config/$ARCH/$BOARD/$CONFIG_NAME.toml` or `config/$ARCH/$CONFIG_NAME.toml` if `$BOARD` is empty, but this can be changed if the desired configuration file is in a different location. |
 | `QEMU_MEM` | Sets the QEMU RAM memory quantity, e.g., `QEMU_MEM=2048`. |
 | `QEMU_SMP` | Sets the QEMU CPU core quantity, e.g.,  `QEMU_SMP=4`. |
-| `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY?=0`), the build system will enable the toolchain compilation and will not download the toolchain binaries from the Redox build server. |
-| `REPO_BINARY` | If set to 1 (`REPO_BINARY?=1`), the build system will download/install pre-built packages from the Redox package server by default, rather than build them from source (i.e., recipes). |
-| `REPO_OFFLINE` | Enable the offline mode of Cookbook where recipe sources aren't updated and if the active filesystem configuration is not using remote packages |
+| `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY=0`), the build system will build the Redox toolchain from source and will not download the toolchain binaries from the Redox build server. |
+| `REPO_BINARY` | If set to 1 (`REPO_BINARY=1`), the build system will download/install pre-compiled packages from the Redox package server by default, rather than build them from source (i.e., recipes). |
+| `REPO_OFFLINE` | Enable the offline mode of Cookbook where recipe sources will not be updated and use less Internet connection as possible. |
+| `REPO_NONSTOP` | Enable the nonstop mode of Cookbook where recipe build failure will not stop the compilation of other recipes. |
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
 | `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
 | `CONTAINERFILE` | The Podman container configuration file. See the [Podman Build](./podman-build.md) page for more information. |
-| `PREFER_STATIC` | If set to 1 (`PREFER_STATIC?=1`), all packages will be statically linked. By default, a package will be dynamically linked if it supports it.<br><br>💡 **Tip**: if this was previously unset, a full recompilation of the `sysroot` folder will be required. |
+| `COOKBOOK_MAKE_JOBS` | The number of maximum CPU cores used when building recipes, default is using all CPU cores from `nproc`. |
+| `CI` | If set to any value (`CI=1`), the build system will not activate TUI, and parallel execution of the build step is disabled .|
+| `COOKBOOK_LOGS` | A boolean option (`true`/`false`) to let the build system save build logs in `build/logs/$TARGET` directory. The default value is `true` if TUI is enabled, `false` otherwise. |
+| `COOKBOOK_VERBOSE` | A boolean option (`true`/`false`) to print more information about the build process. The default value is `true`. |
 
 The Redox image that is built is typically named `build/$ARCH/$CONFIG_NAME/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`.
 
@@ -47,7 +56,7 @@ The purpose of the `.config` file is to allow default configuration settings to 
 
 To permanently override the settings in the [`mk/config.mk`](#mkconfigmk) section, add a `.config` file to the `redox` base directory (i.e., where `make` commands are run) and set the overriding values in that file.
 
-For example, the following configuration specifies the `desktop-minimal` image variant will be built for the `i586` CPU architecture. These settings will be applied implictly to all subsequent `make` commands:
+For example, the following configuration specifies the `desktop-minimal` image variant will be built for the `i586` CPU architecture. These settings will be applied implicitly to all subsequent `make` commands:
 
 ```
 ARCH?=i586
@@ -57,6 +66,45 @@ CONFIG_NAME?=desktop-minimal
 > 📝 **Note:** Any QEMU option can be inserted
 > 📝 **Note:** if [`podman_bootstrap.sh`](./podman-build.md#new-working-directory) was run previously, the `.config` file may already exist.
 > 💡 **Tip:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. This allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` *must* include the question mark to function correctly.
+
+### Cookbook Configuration
+
+In addition to `.config`, `cookbook.toml` is a configuration file that is used by Cookbook and has more customization. Any configuration in this file will override configuration from `.config` or environment variables. The `cookbook.toml` configuration below can be used as a template:
+
+```toml
+# These options have defaults set below
+#[cook]
+#jobs = <nproc>
+#nonstop = false
+#offline = false
+#tui = true
+#logs = true
+#verbose = true
+
+[mirrors]
+# The uncommented option below is the default if [mirrors] is not set
+# see the list of GNU FTP mirrors at: https://www.gnu.org/prep/ftp.en.html
+"ftp.gnu.org/gnu" = "mirrors.ocf.berkeley.edu/gnu"
+# "github.com/foo/bar" = "github.com/baz/bar" 
+```
+
+The `cookbook.toml` file mainly configures Cookbook options (`[cook]`) and mirrors (`[mirror]`). Mirrors are used to replace code and binary sources used across Cookbook, useful for a quick way to use alternative sources when the main server is offline or slow. 
+
+Each Cookbook configuration defaults to environment variables which are:
+
+| Environment Variable | How to use the variable | Definition in cookbook.toml |
+|:---------------------|:------------------------|:----------------------------|
+|`CI` | `CI=1`, `CI=` | `cook.tui` (disables TUI if variable is set) |
+|`COOKBOOK_MAKE_JOBS` |  `COOKBOOK_MAKE_JOBS=4` | `cook.jobs`|
+|`COOKBOOK_LOGS`  | `COOKBOOK_LOGS=true` | `cook.logs`|
+|`COOKBOOK_OFFLINE`  | `COOKBOOK_OFFLINE=true` (see notes) | `cook.logs`|
+|`COOKBOOK_VERBOSE`  | `COOKBOOK_VERBOSE=false` (see notes) | `cook.verbose`|
+|`COOKBOOK_NONSTOP`  | `COOKBOOK_NONSTOP=true` | `cook.nonstop`|
+
+> 📝 **Note:** `REPO_OFFLINE=1` and `REPO_NONSTOP=1` are the recommended ways to set options instead of `COOKBOOK_OFFLINE=true` and `COOKBOOK_NONSTOP=true`
+> 📝 **Note:** `.config` cannot be used to save `COOKBOOK_*` options as those are not Makefile variables, so you need to use `cookbook.toml` to make options persist
+> 💡 **Tip:** Running Cookbook with `CI=1 COOKBOOK_LOGS=true COOKBOOK_NONSTOP=true COOKBOOK_VERBOSE=false` will hide successful build logs in the terminal
+> 💡 **Tip:** Mirrors option can also be used to override [binary builds](#repo_binary) source URL.
 
 #### Changing the QEMU CPU Core and Memory Quantity
 
@@ -273,3 +321,32 @@ package-name2 = "binary" # pre-built package
 package-name3 = "source" # source-based recipe
 ...
 ```
+
+### Local Recipe Changes
+
+By default every time a recipe build is triggered Cookbook will update the recipe source. Cookbook will check the tarball BLAKE3 hash from the recipe configuration (`recipe.toml`), or pull from the `origin` remote when the recipe source is a Git repository. This will also remove local changes that are not saved in a branch.
+
+To preserve and use local changes and skip updating the source for a specific recipe, change the recipe type to `"local"` in the filesystem configuration, for example:
+
+```toml
+[packages]
+...
+package-name = "local"
+...
+```
+
+An old way for preserving and using local changes by commenting out the `[source]` section at the top of the file of a `recipe.toml` is also working but less recommended as it's prone to merge conflicts when pulling Redox repository:
+
+```toml
+# [source]
+# git = "https://gitlab.redox-os.org/redox-os/games.git"
+```
+
+
+### Cookbook Offline Mode
+
+Cookbook also has a mode where it will reduce Internet activity by adding `REPO_OFFLINE=1` into `.config`. This mode is useful when you are in places where the Internet is slow or absent, or when you want a fixed build system state or faster incremental compilation.
+
+In this mode, Cookbook will not update the source of any recipe or a package binary if also set with `REPO_BINARY=1`. It also adds the `--offline` option to some Cargo build methods inside recipes where it is supported. When Cookbook or Cargo must access the Internet because sources do not exist locally it will throw an error instead.
+
+To temporarily allow Cookbook and Cargo to have Internet activity and update sources, run `make f.package-name` (single recipe source fetch) or `make fetch` (to fetch all enabled recipe sources), as these commands will ignore the `REPO_OFFLINE` environment variable.
