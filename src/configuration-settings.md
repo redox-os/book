@@ -4,6 +4,7 @@ The Redox build system applies configuration settings from various places to det
 
 - [Environment Variables](#environment-variables)
   - [.config](#config)
+  - [Cookbook Configuration](#cookbook-configuration)
   - [Command Line](#command-line)
   - [mk/config.mk](#mkconfigmk)
   - [build.sh](#buildsh)
@@ -89,7 +90,7 @@ In addition to `.config`, `cookbook.toml` is a configuration file that is used b
 
 The `cookbook.toml` file mainly configures Cookbook options (`[cook]`) and mirrors (`[mirror]`). Mirrors are used to replace code and binary sources used across Cookbook, useful for a quick way to use alternative sources when the main server is offline or slow. 
 
-Cookbook options defaults to environment variables which are 
+Each Cookbook configuration defaults to environment variables which are:
 
 | Environment Variable | How to use the variable | Definition in cookbook.toml |
 |:---------------------|:------------------------|:----------------------------|
