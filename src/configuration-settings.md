@@ -330,7 +330,7 @@ To retain local changes and skip updating the source for a specific package, ass
 ```toml
 [packages]
 ...
-package-name = "local" # pre-built package
+package-name = "local"
 ...
 ```
 
