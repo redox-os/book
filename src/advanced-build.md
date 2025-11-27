@@ -165,6 +165,68 @@ sudo emerge app-emulation/qemu
 
 - If you want to use VirtualBox, install from the VirtualBox [Linux Downloads](https://www.virtualbox.org/wiki/Linux_Downloads) page.
 
+### GNU Guix Users
+
+Rust nightly isn't packaged in Guix currently, so you need a
+FHS-enabled container to use rustup:
+
+```sh
+guix shell --pure --container --emulate-fhs --network --share=$HOME \
+  coreutils bash curl grep gcc-toolchain@14.3.0 nss-certs \
+  -- bash -c 'curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly'
+
+guix shell --pure --container --emulate-fhs --network --share=$HOME \
+  coreutils bash gcc-toolchain@14.3.0 nss-certs zlib glibc \
+  -- bash -c 'export LD_LIBRARY_PATH=$(dirname $(gcc -print-file-name=libgcc_s.so.1)):$LD_LIBRARY_PATH && source ~/.cargo/env && cargo install cbindgen'
+```
+
+Then you will be able to run the actual build except for the part that
+uses FUSE to build the root filesystem. Modify `tryredox/redox` in the
+command below to match where your sources are:
+
+```sh
+guix shell --pure --container --emulate-fhs --network --share=$HOME \
+  coreutils bash curl wget gcc-toolchain@14.3.0 pkg-config fuse nss-certs zlib \
+  grep make which findutils sed gawk diffutils tar gzip perl git git-lfs \
+  binutils nasm just m4 patch autoconf automake help2man texinfo xz \
+  bzip2 mpfr gmp file ncurses readline flex bison python ninja cmake \
+  -- bash -c '
+export LD_LIBRARY_PATH="/lib64:/lib:$LD_LIBRARY_PATH"
+export CI=1
+source ~/.cargo/env
+cd ~/tryredox/redox
+make all PODMAN_BUILD=0 REPO_BINARY=1
+'
+```
+
+The FUSE portion needs to run outside of a Guix shell container. To
+do that, we will patch the Rust executables so they can find
+`libgcc_s.so.1` under `/gnu/store` instead of `/lib` :
+
+```sh
+LIBGCC_DIR=$(guix shell --container --emulate-fhs gcc-toolchain bash coreutils \
+  -- bash -c 'dirname $(readlink -f /lib64/libgcc_s.so.1)')
+```
+
+```sh
+guix shell patchelf -- patchelf --set-rpath "$LIBGCC_DIR" build/fstools/bin/redox_installer
+```
+
+```sh
+guix shell patchelf -- patchelf --set-rpath "$LIBGCC_DIR" build/fstools/bin/redoxfs
+```
+
+```sh
+guix shell patchelf -- patchelf --set-rpath "$LIBGCC_DIR" build/fstools/bin/redoxfs-mkfs
+```
+
+Finally, you can run the image building part outside of a container
+so that FUSE works and launch qemu:
+
+```sh
+guix shell make just nasm qemu -- make qemu PODMAN_BUILD=0
+```
+
 ### FreeBSD Users
 
 Install the build system dependencies:
