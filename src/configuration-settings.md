@@ -29,22 +29,22 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as
 
 | Variable | Definition |
 |:---------|:-----------|
-|`ARCH`| Specifies the [CPU architecture](#architecture-names) that the system is to be built for. The default is `x86_64` |
+|`ARCH`| Specifies the [CPU architecture](#architecture-names) that the system is to be built for. The default value is `x86_64`. |
 | `CONFIG_NAME` | Determines the name of the filesystem configuration, and is normally used to construct the `FILESYSTEM_CONFIG` name (the `desktop` variant is used by default). |
-| `BOARD` | For single board computers such as Raspberry Pi 3B+ (`raspi3bp`) that require special configuration, `$ARCH/$BOARD` is used in place of $ARCH. Defaults to empty. |
-| `FILESYSTEM_CONFIG` | Determines the filesystem configuration file location. See the [Filesystem Configuration](#filesystem-configuration) section below. The default value is `config/$ARCH/$BOARD/$CONFIG_NAME.toml`, but this can be changed if the desired configuration file is in a different location. |
+| `BOARD` | For single board computers such as Raspberry Pi 3B+ (`raspi3bp`) that require special configuration. Defaults to empty. |
+| `FILESYSTEM_CONFIG` | Determines the filesystem configuration file location. See the [Filesystem Configuration](#filesystem-configuration) section below. The default value is `config/$ARCH/$BOARD/$CONFIG_NAME.toml` or `config/$ARCH/$CONFIG_NAME.toml` if `$BOARD` is empty, but this can be changed if the desired configuration file is in a different location. |
 | `QEMU_MEM` | Sets the QEMU RAM memory quantity, e.g., `QEMU_MEM=2048`. |
 | `QEMU_SMP` | Sets the QEMU CPU core quantity, e.g.,  `QEMU_SMP=4`. |
 | `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY=0`), the build system will build the Redox toolchain from source and will not download the toolchain binaries from the Redox build server. |
 | `REPO_BINARY` | If set to 1 (`REPO_BINARY=1`), the build system will download/install pre-compiled packages from the Redox package server by default, rather than build them from source (i.e., recipes). |
-| `REPO_OFFLINE` | Enable the offline mode of Cookbook where recipe sources will not be updated and use less Internet connection as possible |
-| `REPO_NONSTOP` | Enable the nonstop mode of Cookbook where recipe build failure will not stop the compilation of other recipes |
+| `REPO_OFFLINE` | Enable the offline mode of Cookbook where recipe sources will not be updated and use less Internet connection as possible. |
+| `REPO_NONSTOP` | Enable the nonstop mode of Cookbook where recipe build failure will not stop the compilation of other recipes. |
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
 | `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
 | `CONTAINERFILE` | The Podman container configuration file. See the [Podman Build](./podman-build.md) page for more information. |
-| `COOKBOOK_MAKE_JOBS` | The number of maximum CPU cores used when building recipes, default is using all CPU cores from `nproc` |
-| `CI` | If set to any value (`CI=1`), the build system will not activate TUI, and parallel execution of the build step is disabled |
+| `COOKBOOK_MAKE_JOBS` | The number of maximum CPU cores used when building recipes, default is using all CPU cores from `nproc`. |
+| `CI` | If set to any value (`CI=1`), the build system will not activate TUI, and parallel execution of the build step is disabled .|
 | `COOKBOOK_LOGS` | A boolean option (`true`/`false`) to let the build system save build logs in `build/logs/$TARGET` directory. The default value is `true` if TUI is enabled, `false` otherwise. |
 | `COOKBOOK_VERBOSE` | A boolean option (`true`/`false`) to print more information about the build process. The default value is `true`. |
 
