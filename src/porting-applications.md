@@ -988,7 +988,7 @@ The `cmake` package is the build system (build tool) while the `libssl-dev` pack
 
 You would need to create a recipe of the `libssl-dev` package and add in the `build.dependencies` data type of your `recipe.toml` file, while the `cmake` package would need to be installed on your system.
 
-Dependencies added in the `build.dependencies` data type can be statically linked (if the `DYNAMIC_INIT` function is not used) or dynamically linked (if the `DYNAMIC_INIT` function is used), while dependencies added in the `package.dependencies` data type will be installed by the build system installer or package manager.
+Dependencies added in the `build.dependencies` data type can be dynamically linked (if the `DYNAMIC_INIT` function is used) or statically linked (if the `DYNAMIC_INIT` function is not used), while dependencies added in the `package.dependencies` data type will be installed by the build system installer or package manager.
 
 Mixed Rust programs have crates ending with `-sys` to use bundled or system C/C++ libraries.
 
@@ -1000,7 +1000,8 @@ You can search them with Ctrl+F, all package names are clickable and their websi
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies.
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
 - The Debian naming policy use dashes as separators in packages with custom options (program or library variant) enabled (program-variant), check the source package to be sure
-- The recipe `PATH` environment variable only use build tools at `/usr/bin`, it don't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
+- The recipe `PATH` environment variable only use build tools in recipes or the host system `/usr/bin` directory, it don't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
+- The recipe support recursive dependencies, thus you don't need to specify a dependency two times if some dependency already provide it
 - Don't add build tools in the `build.dependencies` data type, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
 - The compiler will build the development libraries as `.a` files (objects for static linking) or `.so` files (objects for dynamic linking), the `.a` files will be mixed in the final binary while the `.so` files will be installed out of the binary (stored on the `/lib` directory of the system).
 - Linux distributions add a number after the `.so` files to avoid conflicts on the `/usr/lib` folder when packages use different API versions of the same library, for example: `library-name.so.6`.

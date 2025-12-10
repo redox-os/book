@@ -6,4 +6,4 @@ In other words, a driver on Redox can't damage other system interfaces, while on
 
 You can find the driver documentation on the repository README and drivers code.
 
-- [Drivers repository](https://gitlab.redox-os.org/redox-os/drivers)
+- [Drivers repository](https://gitlab.redox-os.org/redox-os/base/-/tree/main/drivers)

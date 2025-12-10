@@ -8,7 +8,7 @@ Have a look at the [HARDWARE.md](https://gitlab.redox-os.org/redox-os/redox/-/bl
 
 A CPU is the most complex machine of the world: even the oldest processors are powerful for some tasks but not for others.
 
-The main problem with old computers is the amount of RAM available (they were sold in a era where RAM chips were expensive) and the lack of SSE/AVX extensions (programs use them to speed up the algorithms). Because of this some modern programs may not work or require a lot of RAM to perform complex tasks.
+The main problem with old computers is the amount of DRAM memory available (they were sold in a era where RAM chips were expensive) and the lack of SSE/AVX extensions (programs use them to speed up the algorithms). Because of this some modern programs may not work or require a lot of RAM to perform complex tasks.
 
 Redox itself will work normally if the CPU architecture is supported by the system, but the performance and stability may vary per program.
 

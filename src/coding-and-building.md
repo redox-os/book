@@ -33,7 +33,7 @@ This page explain common development tasks on the Redox build system.
   - [Insert Files In The Redox image Using a Recipe](#insert-files-in-the-redox-image-using-a-recipe)
   - [Insert Files In The QEMU Image](#insert-files-in-the-qemu-image)
 - [Working with an unpublished version of a crate](#working-with-an-unpublished-version-of-a-crate)
-- [A Note about Drivers](#a-note-about-drivers)
+- [A Note For initfs](#a-note-for-initfs)
 
 ## Visual Studio Code Configuration
 
@@ -632,16 +632,16 @@ To test your changes quickly, follow the following tutorials on Cargo documentat
 - [Overriding Dependencies](https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html)
 - [Working with an unpublished minor version](https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html#working-with-an-unpublished-minor-version)
 
-## A Note about Drivers
+## A Note For initfs
 
-The `drivers` and `drivers-initfs` recipes share the `source` folder, thus your changes on the `drivers` recipe source code will be added on the `drivers-initfs` recipe automatically.
+The `base` and `base-initfs` recipes share the `source` folder, thus your changes on the `base` recipe source code will be added on the `base-initfs` recipe automatically.
 
-(The `recipe.toml` of the `drivers-initfs` recipe use the `same_as` data type to symlink the source, you can read the second line of the [drivers-initfs recipe](https://gitlab.redox-os.org/redox-os/-/blob/master/recipes/core/drivers-initfs/recipe.toml?ref_type=heads#L2))
+(The `recipe.toml` of the `base-initfs` recipe use the `same_as` data type to symlink the source, you can read the second line of the [base-initfs recipe](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/recipes/core/base-initfs/recipe.toml#L2))
 
-When you are about to test a change on the `drivers` recipe, double check if you're applying for drivers in `drivers-initfs` by checking its recipe file in the former link. If you do, you need to trigger changes for `base-initfs` manually so it can save `initfs` drivers into `base-initfs`:
+When you are about to test a change on the `base` recipe, double check if you're applying for daemons in `base-initfs` by checking its recipe file in the former link. If you do, you need to trigger build changes for `base-initfs` manually so it can save `initfs` daemons into `base-initfs`:
 
 ```sh
-make r.drivers-initfs cr.base-initfs
+make r.base,base-initfs
 ```
 
-The same rule also applies when you change `redoxfs` recipe.
+The same rule also applies when you change the `redoxfs` recipe.
