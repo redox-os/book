@@ -31,7 +31,7 @@ We have modest compatibility with [POSIX](https://en.wikipedia.org/wiki/POSIX), 
 
 We take inspiration from [Plan 9](http://9p.io/plan9/index.html), [Minix](http://www.minix3.org/), [seL4](https://sel4.systems/), [Linux](https://www.kernel.org/), [OpenBSD](https://openbsd.org) and [FreeBSD](https://freebsd.org). Redox aims to synthesize years of research and hard won experience into a system that feels modern and familiar.
 
-This book is written in a way that you doesn't require any prior knowledge of Rust or OS development.
+This book is written in a way that doesn't require any prior knowledge of Rust or OS development.
 
 ### Origin Story
 
