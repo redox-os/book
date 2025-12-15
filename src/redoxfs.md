@@ -86,6 +86,8 @@ redoxfs-clone redox.img redox-bootable.img bootloader/build/bootloader.bin
 
 It's not possible to create a bootable UEFI using this option, as it involves in creating GPT-partitioned disk, which currently only implemented in [redox-installer](https://gitlab.redox-os.org/redox-os/installer/). A dual boot option in the same disk is also impossible if booting from BIOS.
 
+Note that you need to have `boot/kernel` and `boot/initfs` in the image to make it actually bootable. You can build those from [kernel](https://gitlab.redox-os.org/redox-os/kernel) and [base](https://gitlab.redox-os.org/redox-os/base) repository, or a [Redox OS build repository](./podman-build.md). 
+
 ### Mount a disk
 
 To mount the disk, run `redoxfs [image] [directory]`:
