@@ -483,10 +483,11 @@ Read the following pages:
 
 ### How can I write book documentation properly?
 
-- Don't use informal language, like non-formal abbreviations such as "config"
+- Don't use informal grammar abbreviations such as "config" (except technical terms such as "CPU")
 - Don't insert work-in-progress information, it unnecessarily increases maintenance cost
 - Use spaces instead of tabs to avoid formatting breakage with different text editor tab configurations
 - Use [Oxford commas](https://en.wikipedia.org/wiki/Serial_comma)
+- The documentation grammar is not strictly formal to allow better understanding and readability, the grammar is a mix of American, British and International English
 
 ### How can I insert commands or code correctly?
 

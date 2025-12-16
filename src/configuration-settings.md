@@ -63,6 +63,7 @@ ARCH?=i586
 CONFIG_NAME?=desktop-minimal
 ```
 
+> 📝 **Note:** Comments are supported using the `#` character
 > 📝 **Note:** Any QEMU option can be inserted
 > 📝 **Note:** if [`podman_bootstrap.sh`](./podman-build.md#new-working-directory) was run previously, the `.config` file may already exist.
 > 💡 **Tip:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. This allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` *must* include the question mark to function correctly.
