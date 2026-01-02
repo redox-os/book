@@ -24,10 +24,12 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [How can I change the CPU architecture of my build system?](#how-can-i-change-the-cpu-architecture-of-my-build-system)
     - [How can I cross-compile to ARM64 from a x86-64 computer?](#how-can-i-cross-compile-to-arm64-from-a-x86-64-computer)
     - [How can I use a recipe in my Redox image?](#how-can-i-use-a-recipe-in-my-redox-image)
+    - [How to update initfs?](#how-to-update-initfs)
     - [I made changes to my recipe. What is the quickest way to test it in QEMU?](#i-made-changes-to-my-recipe-what-is-the-quickest-way-to-test-it-in-qemu)
     - [I made changes to multiple recipes. What is the quickest way to test it in QEMU?](#i-made-changes-to-multiple-recipes-what-is-the-quickest-way-to-test-it-in-qemu)
     - [How can I disable recipe compilation?](#how-can-i-disable-recipe-compilation)
     - [How can I disable recipe compilation except for a specific recipe?](#how-can-i-disable-recipe-compilation-except-for-a-specific-recipe)
+    - [How to disable the automatic recipe source update?](#how-to-disable-the-automatic-recipe-source-update)
     - [How can I install the packages needed by recipes (Native Build) or Podman without a new download of the build system?](#how-can-i-install-the-packages-needed-by-recipes-native-build-or-podman-without-a-new-download-of-the-build-system)
     - [How can I build the toolchain from source?](#how-can-i-build-the-toolchain-from-source)
 - [Porting Questions](#porting-questions)
@@ -71,6 +73,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
         - [When I run "make r.recipe" I get a syntax error, how can I fix that?](#when-i-run-make-rrecipe-i-get-a-syntax-error-how-can-i-fix-that)
         - [When I run "cargo update" on some recipe source it call Rustup to install other Rust toolchain version, how can I fix that?](#when-i-run-cargo-update-on-some-recipe-source-it-call-rustup-to-install-other-rust-toolchain-version-how-can-i-fix-that)
         - [I added the dependency of my program in the "recipe.toml" file but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?](#i-added-the-dependency-of-my-program-in-the-recipetoml-file-but-the-program-build-system-doesnt-detect-it-then-i-installed-the-program-dependency-on-my-linux-distribution-and-it-detected-why)
+        - [I made changes to system daemons, drivers and RedoxFS but they aren't applied in the Redox image, how can I fix that?](#i-made-changes-to-system-daemons-drivers-and-redoxfs-but-they-arent-applied-in-the-redox-image-how-can-i-fix-that)
     - [QEMU](#qemu)
         - [How can I kill the QEMU process if Redox freezes or get a kernel panic?](#how-can-i-kill-the-qemu-process-if-redox-freezes-or-get-a-kernel-panic)
     - [Real Hardware](#real-hardware)
@@ -254,6 +257,12 @@ Or (for a remote package)
 make rp.recipe-name REPO_BINARY=1
 ```
 
+## How to update initfs?
+
+initfs don't automatically add your changes to system daemons, drivers or RedoxFS and need manual rebuild.
+
+Read [this](./coding-and-building.md#how-to-update-initfs) section to learn how to do it.
+
 ### I made changes to my recipe. What is the quickest way to test it in QEMU?
 
 If you did incremental changes (which don't change the binary symbols), run the following command:
@@ -318,6 +327,14 @@ Or (if the above doesn't work)
 ```sh
 make rebuild
 ```
+
+### How to disable the automatic recipe source update?
+
+The build system automatically update recipe sources if new upstream commits exist, which can break your local changes.
+
+To learn how to disable it for one or multiple recipes read [this](./configuration-settings.md#local-recipe-changes) section.
+
+To learn how to disable it for all recipes read [this](./configuration-settings.md#cookbook-offline-mode) section.
 
 ### How can I install the packages needed by recipes (Native Build) or Podman without a new download of the build system?
 
@@ -562,6 +579,10 @@ It will import the Redox Makefile environment variables to your active shell (it
 #### I added the dependency of my program in the "recipe.toml" file but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?
 
 Read the [Environment Leakage](./troubleshooting.md#environment-leakage) section.
+
+#### I made changes to system daemons, drivers and RedoxFS but they aren't applied in the Redox image, how can I fix that?
+
+You forgot to update initfs which is manual, read [this](./coding-and-building.md#how-to-update-initfs) section to learn how to do this.
 
 ### QEMU
 
