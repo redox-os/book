@@ -71,7 +71,7 @@
   - [Working with ARM64](./aarch64.md)
   - [Raspberry Pi](./raspi.md)
   - [Troubleshooting the Build](./troubleshooting.md)
-  - [Build System](./build-system-reference.md)
+  - [Build System Reference](./build-system-reference.md)
   - [Build Process](./build-phases.md)
 
 - [Developing for Redox](./developing-for-redox.md)

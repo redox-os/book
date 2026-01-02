@@ -1,4 +1,4 @@
-# Build System
+# Build System Reference
 
 The build system downloads and creates several files that you may want to know about. There are also several `make` commands mentioned below, and a few extras that you may find useful. Here's a quick summary. All file paths are relative to your `redox` base directory.
 
