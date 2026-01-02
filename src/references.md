@@ -58,20 +58,13 @@ If you don't know how to port some program or library, you can see the build sys
 - [Nix Packages](https://github.com/NixOS/nixpkgs)
 - [Guix Packages](https://git.savannah.gnu.org/cgit/guix.git)
 
-### Ideas
-
-- [Linux](https://www.kernel.org/) - The Linux kernel contain lots of ideas that improved the Unix design (POSIX) and system engineering.
-- [Android](https://developer.android.com/) - Android created many ideas to improve the system security and power efficiency.
-- [FreeBSD - Ideas](https://wiki.freebsd.org/IdeasPage) - The future ideas of FreeBSD.
-- [FreeBSD - Documentation](https://docs.freebsd.org/en/)
-- [Fedora - Change Proposals](https://fedoraproject.org/wiki/Changes) - For years the Fedora Linux distribution tested and implemented new technologies for the Linux ecosystem.
-
 ### Manual Pages
 
 - [FreeBSD Manual Pages](https://man.freebsd.org/cgi/man.cgi) - Powerful source for Unix/BSD documentation.
 - [Linux Manual Pages (man7)](https://www.man7.org/linux/man-pages/) - Very popular source for Linux documentation.
 - [Linux Manual Pages (die.net)](https://linux.die.net/man/) - Another popular source for Linux documentation.
-- [OpenGroup Specification (POSIX and C Standard Library)](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/contents.html) - This is important to improve the support with Linux/BSD programs written in C/C++.
+- [OpenGroup Specification (POSIX and C Standard Library)](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/contents.html) - This is important to improve the support for Linux/BSD programs written in C/C++.
+- [POSIX errors](https://en.wikipedia.org/wiki/Errno.h#POSIX_errors)
 
 ### Source Code
 
@@ -80,9 +73,18 @@ If you want to implement something (drivers, hardware interfaces, fix bugs, etc)
 - [Linux - cgit](https://git.kernel.org/) - Official web interface for the Linux kernel source code.
 - [Linux - GitHub mirror](https://github.com/torvalds/linux) - GitHub mirror for the Linux kernel source code, it contain more features to read the files.
 - [FreeBSD - cgit](https://cgit.freebsd.org/) - Official web interface for the FreeBSD source code.
-- [FreeBSD - GitHub mirror](https://github.com/freebsd/freebsd-src) - GitHub mirror for the FreeBSD source code.
+- [FreeBSD - GitHub mirror](https://github.com/freebsd/freebsd-src)
 - [NetBSD - CVSWeb](http://cvsweb.netbsd.org/) - Official web interface for the NetBSD source code.
-- [NetBSD - GitHub mirror](https://github.com/NetBSD/src) - GitHub mirror for the NetBSD source code.
+- [NetBSD - GitHub mirror](https://github.com/NetBSD/src)
 - [OpenBSD - CVSWeb](https://cvsweb.openbsd.org/) - Official web interface for the OpenBSD source code.
-- [OpenBSD - GitHub mirror](https://github.com/openbsd/src) - GitHub mirror for the OpenBSD source code.
+- [OpenBSD - GitHub mirror](https://github.com/openbsd/src)
 - [Minix](https://git.minix3.org/index.cgi?p=minix.git) - Official web interface for the Minix source code.
+- [seL4](https://github.com/seL4/seL4)
+
+### Ideas
+
+- [Linux](https://www.kernel.org/) - The Linux kernel contain lots of ideas that improved the Unix design (POSIX) and system engineering.
+- [Android](https://developer.android.com/) - Android created many ideas to improve the system security and power efficiency.
+- [FreeBSD - Ideas](https://wiki.freebsd.org/IdeasPage) - The future ideas of FreeBSD.
+- [FreeBSD - Documentation](https://docs.freebsd.org/en/)
+- [Fedora - Change Proposals](https://fedoraproject.org/wiki/Changes) - For years the Fedora Linux distribution tested and implemented new technologies for the Linux ecosystem.

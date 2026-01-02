@@ -126,7 +126,6 @@ You can combine `make` commands, but order is significant. For example, `make r.
 ### Podman
 
 - `make container_shell` - Open the GNU Bash shell of the Podman container as the active shell of your terminal, it's logged as the `podman` user without `root` privileges (don't use this command to replace the `make env` command because it don't setup the Redox toolchain in the Podman container shell)
-- `make container_su` - Open the GNU Bash shell of the Podman container as the active shell of your terminal, it's logged as the `root` user (don't use this command to replace the `make env` command because it don't setup the Redox toolchain in the Podman container shell)
 - `make container_clean` - This will discard images and other files created by Podman.
 - `make container_touch` - If you have removed the file `build/container.tag`, but the container image is still usable, this will recreate the `container.tag` file and avoid rebuilding the container image.
 - `make container_kill` - If you have started a build using Podman Build, and you want to stop it, `Ctrl-C` may not be sufficient. Use this command to terminate the most recently created container.
@@ -147,6 +146,8 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make ur.recipe-name` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
 - `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
 - `make crp.recipe-name` - A shortcut for `make c.recipe r.recipe p.recipe`
+- `make repo_clean` - Clean all recipe binaries (alternative to `make c.--all`)
+- `make fetch_clean` - Clean all recipe binaries and sources (alternative to `make u.--all`)
 - `make x.--all` - Any recipe target (x) can be run in all recipes at `recipes` (like `make c.--all` which clean all recipe binaries, for example)
 - `make x.--category-folder-name` - Any recipe target (x) can be run in all recipes of some category folder at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` folder, for example), if you need to use a sub-category use `--category-folder-name/subfolder`
 
