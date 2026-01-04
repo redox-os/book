@@ -36,12 +36,15 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as
 | `QEMU_MEM` | Sets the QEMU RAM memory quantity, e.g., `QEMU_MEM=2048`. |
 | `QEMU_SMP` | Sets the QEMU CPU core quantity, e.g.,  `QEMU_SMP=4`. |
 | `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY=0`), the build system will build the Redox toolchain from source and will not download the toolchain binaries from the Redox build server. |
+| `PREFIX_USE_UPSTREAM_RUST_COMPILER` | If set to 1 (`PREFIX_BINARY=1`) the build system will download the Rust compiler from rustup (Rust upstream compiler binaries) instead of building it (only used with `PREFIX_BINARY=0`) |
 | `REPO_BINARY` | If set to 1 (`REPO_BINARY=1`), the build system will download/install pre-compiled packages from the Redox package server by default, rather than build them from source (i.e., recipes). |
 | `REPO_OFFLINE` | Enable the offline mode of Cookbook where recipe sources will not be updated and use less Internet connection as possible. |
 | `REPO_NONSTOP` | Enable the nonstop mode of Cookbook where recipe build failure will not stop the compilation of other recipes. |
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
 | `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
+| `FSTOOLS_IN_PODMAN` | If set to 1 (`FSTOOLS_IN_PODMAN=1`), the build system will build the installer inside Podman to avoid FUSE in the host system. See the [Installing without FUSE](./advanced-podman-build.md#installing-without-fuse) page for more information. |
+| `FSTOOLS_NO_MOUNT` | If set to 1 (`FSTOOLS_NO_MOUNT=1`), the installer will not use FUSE to create images. See the [Installing without FUSE](./advanced-podman-build.md#installing-without-fuse) section for more information. |
 | `CONTAINERFILE` | The Podman container configuration file. See the [Podman Build](./podman-build.md) page for more information. |
 | `COOKBOOK_MAKE_JOBS` | The number of maximum CPU cores used when building recipes, default is using all CPU cores from `nproc`. |
 | `CI` | If set to any value (`CI=1`), the build system will not activate TUI, and parallel execution of the build step is disabled .|
