@@ -1,8 +1,12 @@
 # Advanced Podman Build
 
-To make the Redox build process more consistent across platforms, we are using **Rootless Podman** for major parts of the build. The basics of using Podman are described in the [Building Redox](./podman-build.md) page. This chapter provides a detailed discussion, including tips, tricks and troubleshooting, as well as some extra detail for those who might want to leverage or improve Redox's use of Podman.
+To make the Redox build process more consistent across platforms, we are using **Rootless Podman** for major parts of the build.
 
-(Don't forget to read the [Build System](./build-system-reference.md) page to know our build system organization and how it works)
+Before reading through this section, make sure you have already read:
+- [Podman Build](./podman-build.md)
+- [Build System Reference](./build-system-reference.md)
+
+This chapter provides a detailed discussion, including tips, tricks and troubleshooting, as well as some extra detail for those who might want to leverage or improve Redox's use of Podman.
 
 ## Build Environment
 
@@ -12,27 +16,24 @@ To make the Redox build process more consistent across platforms, we are using *
 
 ## Installation
 
-Most of the packages required for the build are installed in the container as part of the build process. However, some packages need to be installed on the host computer. You may also need to install an emulator such as **QEMU**. For most Linux distributions, this is done for you in the `podman_bootstrap.sh` script.
+Most of the packages required for the build are installed in the container as part of the build process. However, some packages need to be installed on the host operating system. You may also need to install an emulator such as **QEMU**. For most Linux distributions, this is done for you in the `podman_bootstrap.sh` script.
 
-Note that the Redox filesystem parts are merged using [FUSE](https://github.com/libfuse/libfuse). `podman_bootstrap.sh` installs `libfuse` for most platforms, if it is not already included. If you have problems with the final image of Redox, verify if `libfuse` is installed and you are able to use it.
+If you can't use the `podman_bootstrap.sh` script, you need to install at least:
 
-### Ubuntu
+- Podman 4.0 or later
+- Rust
+- libfuse 3.x (to build an image)
+- QEMU (to run the image)
 
-```sh
-sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns qemu-system-x86 qemu-kvm qemu-system-arm qemu-system-riscv
-```
+You can attempt to install the necessary packages below.
 
-### Debian
-
-```sh
-sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns qemu-system-x86 qemu-kvm qemu-system-arm qemu-system-riscv
-```
-
-### Pop!_OS
+### Pop!_OS/Ubuntu/Debian
 
 ```sh
 sudo apt-get install git make curl podman fuse fuse-overlayfs slirp4netns qemu-system-x86 qemu-kvm qemu-system-arm qemu-system-riscv
 ```
+
+> ⚠️ **Warning:** Ubuntu 22.04 ships with old Podman (3.x version), which will have issues. The official [Podman installation guide](https://podman.io/docs/installation#ubuntu) requires Ubuntu 20.10 and newer to operate. If you do use the 22.04 version or older, please read [Gory Details](#gory-details).
 
 ### Arch Linux
 
@@ -58,7 +59,13 @@ sudo zypper install git make curl podman fuse fuse-overlayfs slipr4netns
 sudo pkg install git gmake curl fusefs-libs3 podman
 ```
 
-### MacOSX
+### MacOS
+
+Building Redox using MacOS is experimental at the moment, even if using Podman you will experience [clock skew](https://github.com/containers/podman/issues/26185) which breaks the Makefile caching mechanism.
+
+We recommend you to install QEMU, VirtualBox or [UTM](https://mac.getutm.app/) and create ARM64 or x86-64 Linux distribution virtual machine to build Redox and follow Podman or Native Build using the Linux distribution of your choice.
+
+If you insist on using MacOS, please read [Installing without FUSE](#installing-without-fuse). Otherwise, you will have a problem installing FUSE which requires you to turn off [SIP](https://en.wikipedia.org/wiki/System_Integrity_Protection) for Apple Silicon-based MacOS.
 
 - Homebrew
 
@@ -118,9 +125,9 @@ nix develop --no-warn-dirty --command $SHELL
 ```
 
 
-## build/container.tag
+## `build/container.tag`
 
-The building of the **image** is controlled by the *tag* file `build/container.tag`. If you run `make all` with `PODMAN_BUILD=1`, the file `build/container.tag` will be created after the image is built. This file tells `make` that it can skip updating the image after the first time.
+The building of the **image** is controlled by the *tag* file `build/container.tag`. If you run `make all` with `PODMAN_BUILD=1` in `.config`, the file `build/container.tag` will be created after the image is built. This file tells `make` that it can skip the image update after the first time.
 
 Many targets in the Makefiles `mk/*.mk` include `build/container.tag` as a dependency. If the *tag* file is missing, building any of those targets may trigger an image to be created, which can take some time.
 
@@ -131,6 +138,12 @@ make container_touch
 ```
 
 This will create the file `build/container.tag` without rebuilding the image. However, it will fail if the image does not exist. If it fails, just do a normal `make`, it will create the container when needed.
+
+## Installing without FUSE
+
+If installing FUSE is difficult for your operating system, you can avoid installing it by adding `FSTOOLS_IN_PODMAN=1` in the `.config` file. It makes the installer run inside Podman. If you do set it, then you can avoid installing FUSE and Rust altogether in your host system.
+
+An additional environment variable (`FSTOOLS_NO_MOUNT`) can also be set to not use FUSE during image creation, however image creation relies on correct files permission bit and ownership which means it only can be used within Podman. This configuration can be used as a last resort if FUSE is not working at all.
 
 ## Cleaning Up
 
@@ -158,24 +171,14 @@ podman images
 podman system reset
 ```
 
-In some rare instances, `poduser`'s home directory can have bad file permissions, and you may need to run:
-
-```sh
-sudo chown -R `id -un`:`id -gn` build/podman
-```
-
-Where `` `id -un` `` is your User ID and `` `id -gn` `` is your effective Group ID. Be sure to `make container_clean` after that.
-
 **Note:**
 
 - `make clean` does **not** run `make container_clean` and will **not** remove the container image.
-- If you already did `make container_clean`, doing `make clean` could trigger an image build and a Rust install in the container. It invokes `cargo clean` on various components, which it must run in a container, since the build is designed to not require **Cargo** on your host machine. If you have Cargo installed on the host and in your PATH, you can use `make PODMAN_BUILD=0 clean` to clean without building a container. 
+- If you already did `make container_clean`, doing `make clean` will not work.
 
 ## Debugging Your Build Process
 
 If you are developing your own components and wish to do one-time debugging to determine what library you are missing in the **Podman Build** environment, the following instructions can help. Note that your changes will not be persistent. After debugging, **you must** [Add your Libraries to the Build](#adding-packages-to-the-build). With `PODMAN_BUILD=1`, run the following command:
-
-- This will start a `bash` shell in the **Podman** container environment, as a normal user without `root` privileges.
 
 ```sh
 make container_shell
@@ -193,25 +196,15 @@ make repo
 ./build.sh -a ARCH -c CONFIG_NAME repo
 ```
 
-- If you need `root` privileges, while you are **still running** the above `bash` shell, go to a separate **Terminal** or **Console** window on the host, and type:
-
-```sh
-cd ~/tryredox/redox
-```
-
-```sh
-make container_su
-```
-
-You will then be running Bash with `root` privilege in the container, and you can use `apt-get` or whatever tools you need, and it will affect the environment of the user-level `container_shell` above. Do not precede the commands with `sudo` as you are already `root`. And remember that you are in an **Ubuntu** instance.
-
 **Note**: Your changes will not persist once both shells have been exited.
 
 Type `exit` on both shells once you have determined how to solve your problem.
 
 ## Adding Packages to the Build
 
-This method can be used if you want to make changes/testing inside the Debian container with `make env`.
+> 📝 **Note:** This section is no longer being recommended as the primary way to do development on new recipes. Any new dependencies should be compiled in a Cookbook recipe using the `host:recipe-name` syntax.
+
+This method can be used if you want to make changes/testing inside the Debian container with `make env`. 
 
 The default **Containerfile**, `podman/redox-base-containerfile`, imports all required packages for a normal Redox build.
 
@@ -248,7 +241,7 @@ If your Containerfile is newer than `build/container.tag`, a new **image** will 
 
 If you feel the need to have more than one image, you can change the variable `IMAGE_TAG` in `mk/podman.mk` to give the image a different name.
 
-If you just want to install the packages temporarily, run `make env`, open a new terminal tab/windows, run `make container_su` and use `apt install` on this tab/window.
+If you just want to install the packages temporarily, run `make env`, open a new terminal tab/windows, run `make container_shell` and use `apt install` on this tab/window.
 
 ## Summary of Podman-related Make Targets, Variables and Podman Commands
 
@@ -268,17 +261,15 @@ If you just want to install the packages temporarily, run `make env`, open a new
 
 - `make repo` or `./build.sh -a ARCH -c CONFIG repo` - Used while in a Podman shell to build all the Redox component packages. `make all` will not complete successfully, since part of the build process must take place on the host.
 
-- `podman exec --user=0 -it CONTAINER bash` - Use this command in combination with `make container_shell` or `make env` to get `root` access to the Podman build environment, so you can temporarily add packages to the environment. `CONTAINER` is the name of the active container as shown by `podman ps`. For temporary, debugging purposes only.
-
 - `podman system reset` - Use this command when `make container_clean` is not sufficient to solve problems caused by errors in the container image. It will remove all images, use with caution. If you are using **Podman** for any other purpose, those images will be deleted as well.
 
 ## Gory Details
 
 If you are interested in how we are able to use your working directory for builds in **Podman**, the following configuration details may be interesting.
 
-We are using **Rootless Podman**'s `--userns keep-id` feature. Because Podman is being run Rootless, the *container's* `root` user is actually mapped to your User ID on the host. Without the `keep-id` option, a regular user in the container maps to a phantom user outside the container. With the `keep-id` option, a user in the container that has the same User ID as your host User ID, will have the same permissions as you.
+Historically, we've used `--userns keep-id` which the *container's* `root` user is actually mapped to your User ID on the host system. It was necessary in Podman 3.x and previous versions as Podman user mapping was not quite good and often broke with [tar](https://github.com/containers/podman/issues/14655) and [buildah](https://github.com/containers/buildah/issues/1818). In Podman 4.x onwards that it no longer necessary and we can drop it.
 
-During the creation of the **base image**, Podman invokes [Buildah](https://buildah.io/) to build the image. Buildah does not allow User IDs to be shared between the host and the container in the same way that Podman does. So the base image is created without `keep-id`, then the first container created from the image, having `keep-id` enabled, triggers a remapping. Once that remapping is done, it is reused for each subsequent container.
+For Ubuntu 22.04 there's a temporary fix to it by [manually updating crun](https://github.com/microsoft/vscode-remote-release/issues/11042#issuecomment-3044713731).
 
 The working directory is made available in the container by **mounting** it as a **volume**. The **Podman** option:
 

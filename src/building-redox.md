@@ -1,8 +1,10 @@
 # Native Build
 
-This page explains how to build Redox in your operating system's native environment. Keep in mind that it's possible to encounter issues with the native build that don't occur with the Podman build, so this method is only recommended where Podman cannot be used.
+This page explains how to build Redox in your operating system's native environment, without Podman.
 
-> 📝 **Note:** be sure to read the [Build System](./build-system-reference.md) page for an explanation of the build system's organization and functionality.
+> ⚠️ **Warning:** Building outside Podman is not guaranteed to succeed. Unless you have problems using Podman, we recommend you to use the [Podman Build](./podman-build.md) before trying the Native Build to avoid build environment bugs.
+
+> 📝 **Note:** Read the [Build System Reference](./build-system-reference.md) page after installation for an explanation of the build system's organization and functionality.
 
 ## Supported Unix-like Distributions and Podman Build
 
@@ -14,11 +16,11 @@ The following Unix-like systems are supported:
 - Fedora
 - Arch Linux
 - OpenSUSE
-- Gentoo (basic support)
-- FreeBSD
-- MacOSX (require [workarounds](./advanced-build.md#macos-users))
-- Nix (under development)
-- Solus (basic support, not maintained)
+- Gentoo
+- FreeBSD (experimental)
+- MacOS (experimental, require [workarounds](./advanced-build.md#macos-users))
+- Nix (experimental)
+- Solus (not maintained)
 
 If you encounter a weird or difficult-to-fix problem, test the [Podman Build](./podman-build.md) to determine if the problem occurs there as well.
 
@@ -60,6 +62,8 @@ On supported Linux distributions, build system preparation can be performed auto
 
     Please be patient. The bootstrapping process can take anywhere from 5 minutes to an hour depending on the hardware and network it's being run on.
 
+    If the `native_bootstrap.sh` script does not work for you, please try reading the [Advanced Build](./advanced-build.md) page to install the right packages for your operating system.
+
  3. After bootstrapping is completed, update the `PATH` environment variable for the current shell:
 
     ```sh
@@ -68,9 +72,15 @@ On supported Linux distributions, build system preparation can be performed auto
 
 ### Setting Configuration Values
 
-The build system uses several configuration files, which contain settings that you may wish to change. These are detailed in the [Configuration Settings](./configuration-settings.md) page. By default the build system cross-compile to the `x86_64` CPU architecture, using the `desktop` configuration (at `config/x86_64/desktop.toml`). Set the desired `ARCH` and `CONFIG_FILE` in [.config](./configuration-settings.md#config).
+The build system uses several configuration files, which contain settings that you may wish to change. These are detailed in the [Configuration Settings](./configuration-settings.md) page. For the Native Build we recommend setting these in the `.config` file:
 
-The [build.sh](#buildsh) script also allows the user to specify the CPU architecture and filesystem contents to be used in the build, although these settings be re-specified every time the script is run.
+- `ARCH=x86_64`
+- `CONFIG_NAME=desktop`
+- `PODMAN_BUILD=0` to disable Podman Build
+- `PREFIX_BINARY=0` to disable [prebuilt prefix binary](./advanced-build.md#prefix)
+- `PREFIX_USE_UPSTREAM_RUST_COMPILER=1` to [avoid compiling Rust compiler](./advanced-build.md#prefix-rust)
+
+The [build.sh](./configuration-settings.md#buildsh) script also allows the user to specify the CPU architecture and filesystem contents to be used in the build, although these settings needs to be written again every time the script is executed.
 
 ## Compiling Redox
 

@@ -2,13 +2,14 @@
 
 In this section, we provide the gory details that may be handy to know if you are contributing to or developing for **Redox**.
 
-(Don't forget to read the [Build System](./build-system-reference.md) page to know our build system organization and how it works)
+Before reading through this section, make sure you have already read:
+- [Podman Build](./podman-build.md)
+- [Native Build](./building-redox.md)
+- [Build System Reference](./build-system-reference.md)
 
 ## Setup Your Environment
 
-Although it's recommended to read the [Building Redox](./building-redox.md) or [Podman Build](./podman-build.md) pages instead of the process described here, advanced users may accomplish the same as the **native_bootstrap.sh** script with the following steps, which are provided by way of example for Pop!_OS/Ubuntu/Debian. For other platforms, have a look at the [native_bootstrap.sh](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/native_bootstrap.sh) file to help determine what packages to install for your Unix-like system.
-
-The steps to perform are:
+Advanced users may accomplish the same as the [**native_bootstrap.sh**](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/native_bootstrap.sh) script with the following steps:
 
 - [Clone The Repository](#clone-the-repository)
 - [Install The Necessary Packages](#install-the-necessary-packages-and-emulators)
@@ -56,7 +57,21 @@ cd ~/tryredox/redox
 ./native_bootstrap.sh -d
 ```
 
-If you can't use `native_bootstrap.sh` script, you can attempt to install the necessary packages below.
+If you can't use the `native_bootstrap.sh` script, you need to install at least:
+
+- Essential compilers: GCC, Rust and Nasm
+- GNU search, text, and build tools: `find`, `grep`, `make`, `patch`, `pkg-config`, and `sed`
+- Other build tools: `autotools`, `cmake`, `meson`, `perl` and `python3`
+- Other file tooling: `curl`, `rsync`, `tar` and `wget`
+- Libraries to build GCC: `gmp`, `mpfr` and `mpc`
+- Rust tooling: `cbindgen` and `just`
+- FUSE (to build an image) and QEMU (to run the image)
+
+Additional programs or libraries might be needed to build more packages. You can attempt to install the necessary packages below.
+
+> ⚠️ **Warning:** The following commands may be outdated
+
+> 📝 **Note:** Always use the latest stable version of the Linux or Unix-like distribution of your choice, as any outdated tools might result in unexpected build errors. Redox cross-compilation is guaranteed to work reliably only in the current Podman environment, which is Debian 13 (Trixie). 
 
 ### Pop!_OS/Ubuntu/Debian Users
 
@@ -253,15 +268,7 @@ sudo pkg install virtualbox
 
 ### MacOS Users
 
-The MacOSX require workarounds because the Redox toolchain don't support ARM64 as host and MacOSX don't allow FUSE to work while [SIP](https://en.wikipedia.org/wiki/System_Integrity_Protection) is enabled.
-
-This is what you can do:
-
-- Install QEMU and create a x86-64 VM for a Linux distribution
-- Install VirtualBox and create a VM for a Linux distribution (only works with Apple computers using Intel CPUs)
-- Install [UTM](https://mac.getutm.app/) and create a x86-64 VM for a Linux distribution
-- [Disable SIP](https://developer.apple.com/documentation/security/disabling_and_enabling_system_integrity_protection) (Not recommended, only if you know what you are doing)
-- Install a Linux distribution
+Please read the MacOS warning in [Advanced Podman Build](./advanced-podman-build.md#macos). We recommend you to use the Podman Build if you insist on using MacOS.
 
 #### MacPorts
 
@@ -327,7 +334,7 @@ cpan install HTML::Entities
 
 ## Install Rust Stable And Nightly
 
-Install Rust, make the nightly version your default toolchain, then list the installed toolchains:
+Install Rust, make the nightly version your default toolchain, list the installed toolchains, then install more Rust tooling:
 
 ```sh
 curl https://sh.rustup.rs -sSf | sh
@@ -348,16 +355,71 @@ rustup toolchain list
 ```
 
 ```sh
-cargo install --force --version 0.1.1 cargo-config
+cargo install cbindgen just
 ```
-
-NOTE: `~/.cargo/bin` has been added to your `PATH` environment variable for the running session.
 
 The `. "$HOME/.cargo/env` command (equivalent to `source ~/.cargo/env`) have been added to your shell start-up file, `~/.bashrc`, but you may wish to add it elsewhere or modify it according to your own environment.
 
+## Customizing C compiler
+
+Redox requires a GCC-compatible compiler for the operating system to build additional host tools. GCC for the host system is searched automatically from `PATH` environment variable with a binary named as `$GNU_TARGET-gcc` (e.g. `x86_64-linux-gnu-gcc`).
+
+If your operating system is not Linux or if you want to use a different compiler, you can export [more environment variables](https://gitlab.redox-os.org/redox-os/redoxer#host-specific-customizations) in the `.config` file:
+
+```sh
+export REDOXER_HOST_AR=ar
+export REDOXER_HOST_AS=as
+export REDOXER_HOST_CC=cc
+export REDOXER_HOST_CXX=c++
+export REDOXER_HOST_LD=ld
+export REDOXER_HOST_NM=nm
+export REDOXER_HOST_OBJCOPY=objcopy
+export REDOXER_HOST_OBJDUMP=objdump
+export REDOXER_HOST_PKG_CONFIG=pkg-config
+export REDOXER_HOST_RANLIB=ranlib
+export REDOXER_HOST_READELF=readelf
+export REDOXER_HOST_STRIP=strip
+```
+
+> 📝 **Note:** FreeBSD and MacOS default compiler is Clang, so their support is experimental as also using a GCC version other than 14.x (i.e. the GCC version in Debian 13). Try to set these environment variables if you find any issues in any recipe compilation.
+
 ## Prefix
 
+In addition to build tools from the system, building Redox requires additional compilers and tools bootstrapped from your host compilers:
+
+- GCC
+- GNU Binutils
+- libtool
+- Rust
+- Relibc
+
 The tools that build Redox are specific to each CPU architecture. These tools are located in the directory `prefix`, in a subdirectory named for the architecture, e.g. `prefix/x86_64-unknown-redox`. If you have problems with these tools, you can remove the subdirectory or even the whole `prefix` directory, which will cause the tools to be re-downloaded or rebuilt. The variable `PREFIX_BINARY` in `mk/config.mk` controls whether they are downloaded or built.
+
+### Prebuilt Prefix
+
+Redox provides a [prebuilt prefix toolchain](https://static.redox-os.org/toolchain/) to make building fast. The prebuilt prefix is only suitable for use inside Podman requiring glibc version 2.41 or newer (as the Podman Build container is based on Debian 13) and not all CPU compiler targets are available for ARM-based Linux.
+
+If your Linux distribution is not using glibc or its version is older than 2.41, you need to set `PREFIX_BINARY=0` and build your own prefix toolchain.
+
+### Prefix: GCC
+
+Redox compiles its own GCC, GNU Binutils and Libtool to create a cross-compilation target to Redox. The whole build takes about a half hour or less if your hardware is relatively powerful. When it's completed it generates the `gcc-install` directory containing these cross-compilers.
+
+### Prefix: Rust
+
+Redox OS is listed as both Tier 2 and Tier 3 [platform support](https://doc.rust-lang.org/nightly/rustc/platform-support/redox.html) on Rust. The x86_64 architecture is listed as Tier 2 target which means that Rust's libstd is available for this target.
+
+Redox compiles its own Rust compiler to be able to build Tier 3 libstd. Fortunately, we can choose to download from rustup instead of building the Rust compiler using the environment variable: `PREFIX_USE_UPSTREAM_RUST_COMPILER` in `mk/config.mk`.
+
+Building Rust takes about 2 hours or more (if your hardware is relatively powerful) as it's also needed to compile LLVM. If you are building for the x86_64 target, downloading Rust from rustup (the official Rust binaries) might be preferable. When it's completed it generates the `rust-install` directory containing both GCC and Rust compiler.
+
+Note that there maybe some patches in [Redox Rust fork](https://gitlab.redox-os.org/redox-os/rust/) that has not been upstreamed, so your experience with using Rust from rustup might be different than building it.
+
+### Prefix: Relibc
+
+[Relibc](https://gitlab.redox-os.org/redox-os/relibc) is the [C standard library](https://en.wikipedia.org/wiki/C_standard_library) written for Redox. Relibc is needed for both GCC and Rust to compile programs.
+
+Relibc is very active in development even with `PREFIX_BINARY=1` it will be compiled anyway so we always have the updated libc. Fortunately, compiling it is very quick. When it's completed it generates the `relibc-install` directory containing GCC and Rust bundled with updated relibc.
 
 ## Cookbook
 
@@ -365,7 +427,7 @@ The **Cookbook** system is an essential part of the Redox build system. Each Red
 
 ## Creating a Build Environment Shell
 
-If you are working on specific components of the system, and will be using some of the tools in the `cookbook` directory and bypassing `make`, you may wish to create a build environment shell. This shell includes the `prefix` tools in your `PATH`. You can do this with:
+If you are working on specific components of the system, and will be using some of the tools in the `redox` directory and bypassing `make`, you may wish to create a build environment shell. This shell includes the `prefix` tools in your `PATH`. You can do this with:
 
 ```sh
 make env
