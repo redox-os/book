@@ -12,6 +12,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [How can I port a program?](#how-can-i-port-a-program)
     - [How can I write a driver?](#how-can-i-write-a-driver)
     - [How can I debug?](#how-can-i-debug)
+    - [What is the software and hardware requirements for development?](#what-is-the-software-and-hardware-requirements-for-development)
 - [Build System Questions](#build-system-questions)
     - [What is the correct way to update the build system?](#what-is-the-correct-way-to-update-the-build-system)
     - [How can I verify if my build system is up-to-date?](#how-can-i-verify-if-my-build-system-is-up-to-date)
@@ -148,6 +149,18 @@ Read the [drivers repository README](https://gitlab.redox-os.org/redox-os/driver
 ### How can I debug?
 
 Read the [Debug Methods](./troubleshooting.md#debug-methods) section.
+
+### What is the software and hardware requirements for development?
+
+- If you are using the Podman Build you need any Linux or Unix-like distribution supporting Podman 4.0 or newer and FUSE 3.x (if you have problems with FUSE in the host system there's [this](./advanced-podman-build.md#installing-without-fuse) workaround to run FUSE inside the Podman container instead of host system)
+- If you are using the Native Build a recent Ubuntu, PopOS or Fedora version is recommended
+
+The following hardware requirements are enough for fast compilation of the system and most programs, but some heavy programs may require more.
+
+- An Intel or AMD CPU newer than 10 years with 4 cores/threads or more
+- 4GB DDR4 or more (8GB or 16GB for heavy programs)
+- 50GB of storage space or more (a high-performance HDD, SSD, and NVMe is recommended)
+- An Internet connection good enough to not cause timeouts
 
 ## Build System Questions
 
