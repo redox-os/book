@@ -66,20 +66,9 @@ rustpython script-name.py
 
 The Periodic Table `/usr/bin/periodictable` is a demonstration of the **OrbTk** user interface toolkit.
 
-### Sodium
+### Kibi
 
-Sodium is Redox's Vi-like editor. To try it out, run the `sodium` command from a terminal.
-
-A short list of the Sodium defaults:
-
-| Keys | Function |
-|:---- |:-------- |
-| `h`, `j`, `k`, `l` | Navigation keys |
-| `i`, `a` | Enter "Insert" mode |
-| `;` | Enter "Prompt" mode |
-| `shift-space` | Enter "Normal" mode |
-
-For a more extensive list, run `:help` from within Sodium.
+Kibi is the default terminal text editor inpisred on GNU Nano but with more features, run the `kibi` command to use it.
 
 ### Rusthello
 

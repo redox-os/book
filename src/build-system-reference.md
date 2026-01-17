@@ -132,14 +132,14 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
 ### Recipe
 
-- `make f.recipe-name` - Download the recipe source.
+- `make f.recipe-name` - Download the recipe source
 - `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games` (you can't use this command to replace the `make all`, `make fstools` and `make prefix` commands because it don't trigger them, make sure to run them before to avoid errors)
 
   The package is built even if it is not in your filesystem configuration.
 
   (This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate)
 
-- `make p.recipe-name` - Add the recipe to an existing Redox image
+- `make p.recipe-name` - Install the recipe binaries to an existing Redox image
 - `make c.recipe-name` - Clean the recipe binaries.
 - `make u.recipe-name` - Clean the recipe source code and binaries (**please backup or submit your source changes before the execution of this command**).
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
@@ -151,26 +151,26 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make x.--all` - Any recipe target (x) can be run in all recipes at `recipes` (like `make c.--all` which clean all recipe binaries, for example)
 - `make x.--category-folder-name` - Any recipe target (x) can be run in all recipes of some category folder at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` folder, for example), if you need to use a sub-category use `--category-folder-name/subfolder`
 
-All recipe commands (f, r, c, u, cr, ucr) can be run with multiple recipes, just separate them with a comma. for example: `make f.recipe1,recipe2` will download the sources of `recipe1` and `recipe2`
+All recipe targets also support multiple recipe entries by separating each recipe name with a comma. for example: `make f.recipe1,recipe2` will download the sources of `recipe1` and `recipe2`
 
 ### QEMU/VirtualBox
 
-- `make qemu` - If a `build/harddrive.img` file exists, QEMU will run using that image. If you want to force a rebuild first, use `make rebuild qemu`. Sometimes `make qemu` will detect changes and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`
-- `make qemu gpu=no` - Start QEMU without a GUI (Orbital is disabled).
+- `make qemu` - Boot Redox in QEMU, if a `build/harddrive.img` file exists QEMU will run using that image. If you want to force a rebuild first, run the `make rebuild qemu` command. Sometimes `make qemu` will detect changes and rebuild, but this is not typical. If you are interested in a particular combination of QEMU command line options, have a look through `mk/qemu.mk`
+- `make qemu gpu=no` - Start QEMU without a GUI (disables Orbital).
 - `make qemu gpu=virtio` - Start QEMU with the VirtIO GPU driver.
 - `make qemu audio=no` - Disable all sound drivers.
 - `make qemu usb=no` - Disable all USB drivers.
 - `make qemu uefi=yes` - Enable the UEFI boot loader (it supports more screen resolutions).
 - `make qemu live=yes` - Fully load the Redox image to RAM.
-- `make qemu disk=nvme` - Boot Redox from a NVMe interface (SSD emulation).
+- `make qemu disk=nvme` - Boot Redox from a NVMe interface (high-performance SSD emulation).
 - `make qemu disk=usb` - Boot Redox from a virtual USB device.
 - `make qemu disk=cdrom` - Boot Redox from a virtual CD-ROM disk.
-- `make qemu kvm=no` - Start QEMU without the Linux KVM acceleration.
-- `make qemu iommu=no` - Start QEMU without IOMMU.
-- `make qemu gdb=yes` - Start QEMU with GDB support (you need to add the `gdbserver` recipe on your filesystem configuration before, then run the `make gdb` command in another shell)
-- `make gdb` - Connects the GDB from Linux/BSD/MacOSX to the GDB server (gdbserver) on Redox in QEMU.
+- `make qemu kvm=no` - Start QEMU without the [Linux KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine) acceleration if it's not supported.
+- `make qemu iommu=yes` - Start QEMU with [IOMMU](https://en.wikipedia.org/wiki/Input-output_memory_management_unit) enabled.
+- `make qemu gdb=yes` - Start QEMU with the GDB configuration enabled, you need to run the `make rp.gdbserver` command before to install the GDB server in the Redox image (persist until the next image creation) or add the `gdbserver` recipe on your filesystem configuration (`gdbserver = {}`) to persist in new images, then run the `make gdb` command in another shell to connect the GDB processes.
+- `make gdb` - Connects the host system GDB to the GDB server (`gdbserver` recipe) running inside of Redox in QEMU.
 - `make qemu option1=value option2=value` - Cumulative QEMU options are supported.
-- `make virtualbox` - The same as `make qemu`, but for VirtualBox (it requires the VirtualBox service to be running, run `systemctl status vboxdrv.service` to verify or `akmods; systemctl restart vboxdrv.service` to enable on systems using systemd).
+- `make virtualbox` - Boot Redox in VirtualBox, it requires the VirtualBox service to be running, run `systemctl status vboxdrv.service` to verify or `akmods; systemctl restart vboxdrv.service` to enable on systems using systemd.
 
 ## Environment Variables
 

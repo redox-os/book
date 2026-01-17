@@ -21,7 +21,6 @@ We also have some in-house tools, which are collections of small, useful command
 - [coreutils](https://gitlab.redox-os.org/redox-os/coreutils) -  Redox-specific core utilities such as `free`, `ps`, `shutdown`, and so on.
 - [extrautils](https://gitlab.redox-os.org/redox-os/extrautils) -  Redox-specific extra utilities such as `dmesg`, `less`, `which`, and so on.
 - [binutils](https://gitlab.redox-os.org/redox-os/binutils) - Utilities for working with binary files.
-- [sodium](https://gitlab.redox-os.org/redox-os/sodium) - A Vi-like editor.
 
 We also actively contribute to third-party projects that are heavily used in Redox.
 

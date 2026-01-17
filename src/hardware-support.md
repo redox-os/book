@@ -23,10 +23,10 @@ Redox itself will work normally if the CPU architecture is supported by the syst
 
 | **Category** | **Items** |
 |--------------|-----------|
-| CPU | - Intel 64-bit (x86_64) <br>- Intel 32-bit (i586) from Pentium I and after with limitations <br>- AMD 32/64-bit <br>- ARM 64-bit (Aarch64) with limitations <br>- RISC-V 64-bit (riscv64gc) with limitations |
+| CPU | - Intel 64-bit (x86_64) <br>- Intel 32-bit (i586) from Pentium I and after with limitations <br>- AMD 32/64-bit <br>- ARM 64-bit (aarch64) with limitations <br>- RISC-V 64-bit (riscv64gc) with limitations |
 | Hardware Interfaces | - ACPI, PCI, USB |
 | Storage | - IDE (PATA), SATA (AHCI), NVMe |
-| Video | - BIOS VESA, UEFI GOP |
+| Video | - BIOS VESA, UEFI GOP, Intel GPU |
 | Sound | - Intel, Realtek chipsets |
 | Input | - PS/2 keyboards, mouse, and touchpad <br> - USB keyboards, mouse and touchpad |
 | Ethernet | - Intel Gigabit and 10 Gigabit ethernet <br>- Realtek ethernet |

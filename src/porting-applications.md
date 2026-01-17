@@ -22,22 +22,22 @@ The [Including Programs in Redox](./including-programs.md) page gives an example
     - [CMake script](#cmake-script)
     - [Meson script](#meson-script)
     - [Cargo script](#cargo-script)
-        - [Analyze the source code of a Rust program](#analyze-the-source-code-of-a-rust-program)
-        - [Cargo packages command example](#cargo-packages-command-example)
-            - [Cargo package with flags](#cargo-package-with-flags)
-        - [Cargo bins script example](#cargo-bins-script-example)
-        - [Cargo flags command example](#cargo-flags-command-example)
-        - [Disable the default Cargo flags](#disable-the-default-cargo-flags)
-        - [Enable all Cargo flags](#enable-all-cargo-flags)
-        - [Cargo profiles command example](#cargo-profiles-command-example)
-        - [Cargo examples command example](#cargo-examples-command-example)
-            - [Cargo examples with flags](#cargo-examples-with-flags)
-        - [Rename binaries](#rename-binaries)
-        - [Change the active source code folder](#change-the-active-source-code-folder)
-        - [Configuration files](#configuration-files)
-        - [Script-based programs](#script-based-programs)
-            - [Adapted scripts](#adapted-scripts)
-            - [Non-adapted scripts](#non-adapted-scripts)
+    - [Analyze the source code of a Rust program](#analyze-the-source-code-of-a-rust-program)
+    - [Cargo packages command example](#cargo-packages-command-example)
+        - [Cargo package with flags](#cargo-package-with-flags)
+    - [Cargo bins script example](#cargo-bins-script-example)
+    - [Cargo flags command example](#cargo-flags-command-example)
+    - [Disable the default Cargo flags](#disable-the-default-cargo-flags)
+    - [Enable all Cargo flags](#enable-all-cargo-flags)
+    - [Cargo profiles command example](#cargo-profiles-command-example)
+    - [Cargo examples command example](#cargo-examples-command-example)
+        - [Cargo examples with flags](#cargo-examples-with-flags)
+    - [Rename binaries](#rename-binaries)
+    - [Change the active source code folder](#change-the-active-source-code-folder)
+    - [Configuration files](#configuration-files)
+    - [Script-based programs](#script-based-programs)
+        - [Adapted scripts](#adapted-scripts)
+        - [Non-adapted scripts](#non-adapted-scripts)
     - [Dynamically Linked Programs](#dynamically-linked-programs)
         - [Debugging](#debugging)
 - [Sources](#sources)
@@ -130,6 +130,10 @@ mesonflags = [ # build.mesonflags data type
     "-Doption1=text",
     "-Doption2=text",
 ]
+dev-dependencies = [ # build.dev-dependencies data type
+    "tool1",
+    "tool2",
+]
 dependencies = [ # build.dependencies data type
     "library1",
     "library2",
@@ -164,12 +168,13 @@ dependencies = [ # package.dependencies data type
 - `build.configureflags` : Data type for GNU Autotools flags (array)
 - `build.cmakeflags` : Data type for CMake flags (array)
 - `build.mesonflags` : Data type for Meson flags (array)
+- `build.dev-dependencies` : Data type to add the build tools needed by the program or library
 - `build.dependencies` : Data type to add dynamically or statically linked library dependencies
-- `"library1",` : Library recipe name (can be removed if the `dependencies` data type above is not present)
+- `build.dependencies = ["library1",]` : Library recipe name (can be removed if the `dependencies` data type above is not present)
 - `build.script` : Data type to load the custom commands for compilation and packaging
 - `[package]` : Section for data types that manage the program package
 - `package.dependencies` : Data type to add tools, interpreters or "data files" recipes to be installed by the package manager or build system installer
-- `"runtime-dependency1",` : Tool, interpreter or data recipe names (can be removed if the `dependencies` data type above is not present)
+- `package.dependencies = ["runtime-dependency1",]` : Tool, interpreter or data recipe names (can be removed if the `dependencies` data type above is not present)
 
 ### Quick Recipe Template
 
@@ -521,7 +526,7 @@ cookbook_cargo
 ```
 
 
-#### Analyze the source code of a Rust program
+### Analyze the source code of a Rust program
 
 Rust programs and libraries use the `Cargo.toml` configuration file to configure the build system and source code.
 
@@ -552,7 +557,7 @@ But some programs don't have the `[[bin]]` and `[[lib]]` data types, for these c
 
 (Some Rust programs use packages instead of example files for examples, to discover that see if the "examples" folder has `.rs` files (examples files) or folders with `Cargo.toml` files inside (packages) )
 
-#### Cargo packages command example
+### Cargo packages command example
 
 This command is used for Rust programs that use package folders inside the repository for compilation, you need to use the name on the `name` field below the `[package]` section of the `Cargo.toml` file inside the package folder (generally using the same name of the program).
 
@@ -566,7 +571,7 @@ cookbook_cargo_packages program-name
 
 (You can use `cookbook_cargo_packages program1 program2` if it's more than one package)
 
-##### Cargo package with flags
+#### Cargo package with flags
 
 If you need a script for a package with flags (customization), you can use this script:
 
@@ -588,7 +593,7 @@ package=package-name
 - The `package-name` after `package=` is where you will insert the Cargo package name of your program.
 - The `--add-your-flag-here` will be replaced by the program flag.
 
-#### Cargo bins script example
+### Cargo bins script example
 
 Some Rust programs use bins instead of packages to build, to build them you can use this script:
 
@@ -610,7 +615,7 @@ binary=bin-name
 - The `bin-name` after `binary=` is where you will insert the Cargo package name of your program.
 - The `--add-your-flag-here` will be replaced by the program flags.
 
-#### Cargo flags command example
+### Cargo flags command example
 
 Some Rust programs have flags for customization, you can find them below the `[features]` section in the `Cargo.toml` file.
 
@@ -620,7 +625,7 @@ cookbook_cargo --features flag-name
 """
 ```
 
-#### Disable the default Cargo flags
+### Disable the default Cargo flags
 
 It's common that some flag of the program doesn't work on Redox, if you don't want to spend much time testing flags that work and don't work, you can disable all of them to see if the most basic featureset of the program works with this script:
 
@@ -630,7 +635,7 @@ cookbook_cargo --no-default-features
 """
 ```
 
-#### Enable all Cargo flags
+### Enable all Cargo flags
 
 If you want to enable all flags of the program, use:
 
@@ -640,7 +645,7 @@ cookbook_cargo --all-features
 """
 ```
 
-#### Cargo profiles command example
+### Cargo profiles command example
 
 This script is used for Rust programs using Cargo profiles.
 
@@ -650,7 +655,7 @@ cookbook_cargo --profile profile-name
 """
 ```
 
-#### Cargo examples command example
+### Cargo examples command example
 
 This script is used for examples on Rust programs.
 
@@ -662,7 +667,7 @@ cookbook_cargo_examples example-name
 
 (You can use `cookbook_cargo_examples example1 example2` if it's more than one example)
 
-##### Cargo examples with flags
+#### Cargo examples with flags
 
 This script is used for Cargo examples with flags.
 
@@ -686,7 +691,7 @@ recipe="$(basename "${COOKBOOK_RECIPE}")"
 
 (Replace the `example1` item and others with the example names, if the program has only one example you can remove the `example2` item)
 
-#### Rename binaries
+### Rename binaries
 
 Some programs or examples use generic names for their executable files which could cause conflicts in the package installation process, to avoid this use the following command after the compilation or installation commands:
 
@@ -698,7 +703,7 @@ mv "${COOKBOOK_STAGE}/usr/bin/binary-name" "${COOKBOOK_STAGE}/usr/bin/new-binary
 
 Some recipes for Rust programs can duplicate the program name in the executable (`name_name`), you can also use the command above to fix these cases.
 
-#### Change the active source code folder
+### Change the active source code folder
 
 Sometimes a program don't store the source code on the root of the Git repository, but in a subfolder.
 
@@ -717,7 +722,7 @@ cookbook_cargo
 """
 ```
 
-#### Configuration Files
+### Configuration Files
 
 Some programs require to setup configuration files from the source code or tarball, to setup them use the following script example:
 
@@ -733,11 +738,11 @@ cp -rv "${COOKBOOK_SOURCE}"/configuration-file "${COOKBOOK_STAGE}"/usr/share # c
 
 Modify the script above to your needs.
 
-#### Script-based programs
+### Script-based programs
 
 Read the following scripts to package interpreted programs.
 
-##### Adapted scripts
+#### Adapted scripts
 
 This script is for scripts adapted to be packaged, they contain shebangs and renamed the file to remove the script extension.
 
@@ -769,7 +774,7 @@ chmod a+x "${COOKBOOK_STAGE}"/usr/bin/*
 
 This script will move the scripts from the `source` folder to the `stage` folder and mark them as executable to be packaged.
 
-##### Non-adapted scripts
+#### Non-adapted scripts
 
 You need to use the following script examples for scripts not adapted for packaging, you need to add shebangs, rename the file to remove the script extension (`.py`) and mark as executable (`chmod a+x`).
 
