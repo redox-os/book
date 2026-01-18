@@ -131,8 +131,8 @@ mesonflags = [ # build.mesonflags data type
     "-Doption2=text",
 ]
 dev-dependencies = [ # build.dev-dependencies data type
-    "tool1",
-    "tool2",
+    "host:tool1",
+    "host:tool2",
 ]
 dependencies = [ # build.dependencies data type
     "library1",
@@ -169,12 +169,13 @@ dependencies = [ # package.dependencies data type
 - `build.cmakeflags` : Data type for CMake flags (array)
 - `build.mesonflags` : Data type for Meson flags (array)
 - `build.dev-dependencies` : Data type to add the build tools needed by the program or library
+- `build.dev-dependencies = ["host:tool1",]` : Build tool recipe name (can be removed if the `build.dev-dependencies` data type is not present)
 - `build.dependencies` : Data type to add dynamically or statically linked library dependencies
-- `build.dependencies = ["library1",]` : Library recipe name (can be removed if the `dependencies` data type above is not present)
+- `build.dependencies = ["library1",]` : Library recipe name (can be removed if the `build.dependencies` data type is not present)
 - `build.script` : Data type to load the custom commands for compilation and packaging
 - `[package]` : Section for data types that manage the program package
 - `package.dependencies` : Data type to add tools, interpreters or "data files" recipes to be installed by the package manager or build system installer
-- `package.dependencies = ["runtime-dependency1",]` : Tool, interpreter or data recipe names (can be removed if the `dependencies` data type above is not present)
+- `package.dependencies = ["runtime-dependency1",]` : Tool, interpreter or data recipe names (can be removed if the `package.dependencies` data type above is not present)
 
 ### Quick Recipe Template
 
