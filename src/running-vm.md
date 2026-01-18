@@ -133,9 +133,9 @@ If you want to use the [Live ISO](https://static.redox-os.org/releases/0.9.0/x86
 
 ### Linux
 
-If you don't have QEMU installed use one of the following commands on Ubuntu, Debian or PopOS:
+If you don't have QEMU installed use one of the following commands on Ubuntu, Debian or PopOS based on the image that you want:
 
-- x86 (i586) and x86-64 images
+- x86-32 (i586) and x86-64 images
 
 ```sh
 sudo apt-get install qemu-system-x86 qemu-kvm
@@ -155,7 +155,9 @@ sudo apt-get install qemu-system-riscv
 
 Use one of the following commands to run QEMU with a Redox-compatible configuration:
 
-- x86 (i586) image
+> 💡 **Tip:** if you encounter an error with the file name, verify that the name passed into the previous command (i.e., `$HOME/Downloads/redox_demo_x86_64_*_harddrive.img`) matches the file you downloaded.
+
+#### x86-32 (i586) image
 
 ```
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 1 -m 2048 \
@@ -165,18 +167,30 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 1 -m 
     -drive file=`echo $HOME/Downloads/redox_demo_i586_*_harddrive.img`,format=raw
 ```
 
-- x86-64 image
+#### x86-64 image
+
+- Verify if the QEMU UEFI firmware is installed
+
+```
+ls -1 /usr/share/ovmf/OVMF.fd /usr/share/OVMF/OVMF_CODE.fd
+```
+
+At least one of them must be present, if the file location present on your system is different from the one used in the command you need to change it.
+
+- Run QEMU
 
 ```
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -enable-kvm -smp 4 -m 2048 \
     -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
-    uefi=yes -bios /usr/share/ovmf/OVMF.fd /usr/share/OVMF/OVMF_CODE.fd -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu/edk2-x86_64-code.fd,readonly=on -machine q35 -cpu host \
+    uefi=yes -bios /usr/share/ovmf/OVMF.fd -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu/edk2-x86_64-code.fd,readonly=on -machine q35 -cpu host \
     -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 \
     -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci \
     -drive file=`echo $HOME/Downloads/redox_demo_x86_64_*_harddrive.img`,format=raw
 ```
 
-- ARM64 image
+#### ARM64 image
+
+- Run QEMU
 
 ```
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-aarch64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
@@ -186,17 +200,33 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-aarch64 -d cpu_reset,guest_errors -smp 4 -m
     -drive file=`echo $HOME/Downloads/redox_demo_aarch64_*_harddrive.img`,format=raw
 ```
 
-- RISC-V image
+#### RISC-V image
+
+Verify if the QEMU UEFI firmware is installed
+
+- PFLASH0
+
+```
+ls -1 /usr/share/qemu-efi-riscv64/RISCV_VIRT_CODE.fd /usr/share/qemu/edk2-riscv-code.fd /usr/share/qemu-efi-riscv64/RISCV_VIRT_VARS.fd /usr/share/qemu/edk2-riscv-vars.fd
+```
+
+- PFLASH1
+
+```
+ls -1 /usr/share/qemu-efi-riscv64/RISCV_VIRT_VARS.fd /usr/share/qemu/edk2-riscv-vars.fd
+```
+
+At least one of each `PFLASH` command must be present, if the file location present on your system is different from the one used in the command you need to change it.
+
+- Run QEMU
 
 ```
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-riscv64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
     -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
-    -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu-efi-riscv64/RISCV_VIRT_CODE.fd,readonly=on -drive if=pflash,format=raw,unit=1,file=$(BUILD)/fw_vars.bin -machine virt,acpi=off -cpu max -vga none -device ramfb -audio none -netdev user,id=net0 \
+    -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu-efi-riscv64/RISCV_VIRT_CODE.fd,readonly=on -drive if=pflash,format=raw,unit=1,file=/usr/share/qemu-efi-riscv64/RISCV_VIRT_VARS.fd -machine virt,acpi=off -cpu max -vga none -device ramfb -audio none -netdev user,id=net0 \
     -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci \
     -drive file=`echo $HOME/Downloads/redox_demo_riscv64gc_*_harddrive.img`,format=raw
 ```
-
-> 💡 **Tip:** if you encounter an error with the file name, verify that the name passed into the previous command (i.e., `$HOME/Downloads/redox_demo_x86_64_*_harddrive.img`) matches the file you downloaded.
 
 ### Windows
 
@@ -204,7 +234,9 @@ To install **QEMU** on Windows, follow the instructions [here](https://www.qemu.
 
 Use one of the following commands to run QEMU with a Redox-compatible configuration:
 
-- x86 (i586) image
+TODO: insert missing UEFI firmware binaries after the `uefi=yes` option, find official edk2 binaries or download from Linux distribution packages?
+
+#### x86-32 (i586) image
 
 ```
 "C:\Program Files\qemu\qemu-system-x86.exe" -d cpu_reset,guest_errors -smp 1 -m 2048
@@ -214,7 +246,7 @@ Use one of the following commands to run QEMU with a Redox-compatible configurat
 -drive file=redox_demo_i586_*_harddrive.img,format=raw
 ```
 
-- x86-64 image
+#### x86-64 image
 
 ```
 "C:\Program Files\qemu\qemu-system-x86_64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048
@@ -224,7 +256,7 @@ uefi=yes -machine pc -cpu host -device ich9-intel-hda -device hda-duplex -netdev
 -drive file=redox_demo_x86_64_2024-09-07_1225_harddrive.img,format=raw
 ```
 
-- ARM64 image
+#### ARM64 image
 
 ```
 "C:\Program Files\qemu\qemu-system-aarch64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048
@@ -234,7 +266,7 @@ uefi=yes -machine virt -cpu max -vga none -device ramfb -netdev user,id=net0
 -drive file=redox_demo_aarch64_*_harddrive.img,format=raw
 ```
 
-- RISC-V image
+#### RISC-V image
 
 ```
 "C:\Program Files\qemu\qemu-system-riscv64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048
