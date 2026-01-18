@@ -4,6 +4,16 @@ There are billions of devices with hundreds of models and architectures in the w
 
 Have a look at the [HARDWARE.md](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/HARDWARE.md) document to see all tested computers.
 
+## CPU Requirements
+
+The following requirements are mandatory to make Redox work, non-x86 CPUs have equivalents for them.
+
+- [MMU](https://en.wikipedia.org/wiki/Memory_management_unit) : Introduced by the Intel 8086 CPU line in 1978 and present in all CPUs since then
+- [FPU](https://en.wikipedia.org/wiki/Floating-point_unit) : Introduced by the Intel 8087 coprocessor in 1980 for the Intel 8086 CPU line and present in almost all CPUs since then
+- FXSAVE extension or non-x86 CPU equivalent
+- [Page Size Extension](https://en.wikipedia.org/wiki/Page_Size_Extension) or non-x86 CPU equivalent
+- Paging global extension or non-x86 CPU equivalent
+
 ## I have a low-end computer, would Redox work on it?
 
 A CPU is the most complex machine of the world: even the oldest processors are powerful for some tasks but not for others.
@@ -23,7 +33,7 @@ Redox itself will work normally if the CPU architecture is supported by the syst
 
 | **Category** | **Items** |
 |--------------|-----------|
-| CPU | - Intel 64-bit (x86_64) <br>- Intel 32-bit (i586) from Pentium I and after with limitations <br>- AMD 32/64-bit <br>- ARM 64-bit (aarch64) with limitations <br>- RISC-V 64-bit (riscv64gc) with limitations |
+| CPU | - Intel 64-bit (x86_64) <br>- Intel 32-bit (i586) from Pentium II and after with limitations <br>- AMD 32/64-bit <br>- ARM 64-bit (aarch64) with limitations <br>- RISC-V 64-bit (riscv64gc) with limitations |
 | Hardware Interfaces | - ACPI, PCI, USB |
 | Storage | - IDE (PATA), SATA (AHCI), NVMe |
 | Video | - BIOS VESA, UEFI GOP, Intel GPU |

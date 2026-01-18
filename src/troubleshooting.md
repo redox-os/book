@@ -501,24 +501,30 @@ It will print the file and line number for each entry in the backtrace.
 
 #### GDB On QEMU
 
-Use the following instructions to debug a Rust recipe with GDB:
+Use the following instructions to debug a recipe with GDB:
 
-- Add the following environment variable to your `.config` file:
+- Build or rebuild the recipe with assertions/checking/symbols and install into the Redox image:
+
+```sh
+make crp.recipe-name REPO_DEBUG=1
+```
+
+If you want to permanently enable debug binaries add the following environment variable to your `.config` file:
 
 ```
 REPO_DEBUG?=1
 ```
 
-- Rebuild the recipe with assertions/checking/symbols and add into Redox image:
+- Build and install the GDB server into the Redox image
 
 ```sh
-make cr.recipe-name image
+make rp.gdbserver
 ```
 
-- Start QEMU with GDB enabled:
+- Start QEMU with the GDB configuration enabled:
 
 ```sh
-make qemu gdb=yes
+make qemu kvm=no QEMU_SMP=1 gdb=yes
 ```
 
 If the recipe has one executable, run the following command:
