@@ -182,7 +182,7 @@ At least one of them must be present, if the file location present on your syste
 ```
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -enable-kvm -smp 4 -m 2048 \
     -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
-    uefi=yes -bios /usr/share/ovmf/OVMF.fd -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu/edk2-x86_64-code.fd,readonly=on -machine q35 -cpu host \
+    -bios /usr/share/ovmf/OVMF.fd -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu/edk2-x86_64-code.fd,readonly=on -machine q35 -cpu host \
     -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 \
     -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci \
     -drive file=`echo $HOME/Downloads/redox_demo_x86_64_*_harddrive.img`,format=raw
@@ -195,7 +195,7 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -enable-kv
 ```
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-aarch64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
     -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
-    uefi=yes -bios /usr/share/AAVMF/AAVMF_CODE.fd -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu/edk2-aarch64-code.fd,readonly=on -machine virt -cpu max -vga none -device ramfb -netdev user,id=net0 \
+    -bios /usr/share/AAVMF/AAVMF_CODE.fd -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu/edk2-aarch64-code.fd,readonly=on -machine virt -cpu max -vga none -device ramfb -netdev user,id=net0 \
     -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci \
     -drive file=`echo $HOME/Downloads/redox_demo_aarch64_*_harddrive.img`,format=raw
 ```
@@ -261,7 +261,8 @@ uefi=yes -machine pc -cpu host -device ich9-intel-hda -device hda-duplex -netdev
 ```
 "C:\Program Files\qemu\qemu-system-aarch64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048
 -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug
-uefi=yes -machine virt -cpu max -vga none -device ramfb -netdev user,id=net0
+-drive if=pflash,format=raw,unit=0,file="C:\Program Files\qemu\share\edk2-aarch64-code.fd",readonly=on
+-machine virt -cpu max -vga none -device ramfb -netdev user,id=net0
 -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -device usb-tablet
 -drive file=redox_demo_aarch64_*_harddrive.img,format=raw
 ```
@@ -271,7 +272,8 @@ uefi=yes -machine virt -cpu max -vga none -device ramfb -netdev user,id=net0
 ```
 "C:\Program Files\qemu\qemu-system-riscv64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048
 -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug
--machine virt,acpi=off -cpu max -vga none -device ramfb -audio none -netdev user,id=net0
+-drive if=pflash,format=raw,unit=0,file="C:\Program Files\qemu\share\edk2-riscv-code.fd",readonly=on
+-machine virt,acpi=off -cpu max -vga none -device ramfb -audio none -netdev riscv,id=net0
 -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -device usb-tablet
 -drive file=redox_demo_riscv64gc_*_harddrive.img,format=raw
 ```
