@@ -17,7 +17,6 @@ The build system downloads and creates several files that you may want to know a
 - [Scripts](#scripts)
 - [Git Auto-checkout](#git-auto-checkout)
 - [Update The Build System](#update-the-build-system)
-- [Update Relibc](#update-relibc)
 - [Fix Breaking Changes](#fix-breaking-changes)
   - [All Recipes](#all-recipes)
   - [One Recipe](#one-recipe)
@@ -146,6 +145,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make ur.recipe-name` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
 - `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
 - `make crp.recipe-name` - A shortcut for `make c.recipe r.recipe p.recipe`
+- `make static_clean` - Clean all statically linked recipe binaries
 - `make repo_clean` - Clean all recipe binaries (alternative to `make c.--all`)
 - `make fetch_clean` - Clean all recipe binaries and sources (alternative to `make u.--all`)
 - `make x.--all` - Any recipe target (x) can be run in all recipes at `recipes` (like `make c.--all` which clean all recipe binaries, for example)
@@ -350,25 +350,9 @@ This is the recommended way to update your build system/recipe sources and binar
 make pull rebuild
 ```
 
-If the `make pull` command download new commits of the `relibc` submodule, you will need to run the commands of the [Update relibc](#update-relibc) section.
+Sometimes you need to update the statically linked recipes manually with the `make static_clean rebuild` command or also rebuild all dynamically linked recipes with the `make repo_clean all` command.
 
 (The Podman container is updated automatically if upstream add new packages to the Containerfile, but you can also force the container image to be updated with the `make container_clean` command)
-
-## Update Relibc
-
-An outdated relibc copy can contain bugs (already fixed on recent commits) or missing APIs, to update the relibc sources and build it, run:
-
-```sh
-make pull
-```
-
-```sh
-touch relibc
-```
-
-```sh
-make prefix
-```
 
 ## Fix Breaking Changes
 

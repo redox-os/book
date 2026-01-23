@@ -2,7 +2,15 @@
 
 Once you have [downloaded](./real-hardware.md#creating-a-bootable-usb-drive) or [built](./coding-and-building.md#testing-on-real-hardware) your ISO image, you can install it to your internal HDD or SSD. **Please back up your system** before attempting to install. Note that at this time (Release 0.8.0), you can't install onto a USB device, or use a USB device for your Redox filesystem, but you can install from it.
 
-After starting your *livedisk* system from a USB device or from CD/DVD, log in as the user named `user` with an empty password. Open a terminal window and type:
+After starting your *livedisk* system from a USB device or CD/DVD, log in as the user named `user` with an empty password, click on the Redox OS icon in the Orbital bottom bar to open the app menu, then open the "System" app category and click on the "Redox Installer" app. 
+
+Of if you want to launch it from the terminal run the following command:
+
+```sh
+sudo redox_installer_gui
+```
+
+If you are using the `server` variant or want to use the TUI interface open a terminal window and type:
 
 ```sh
 sudo redox_installer_tui

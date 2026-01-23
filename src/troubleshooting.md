@@ -4,6 +4,7 @@ This page covers all troubleshooting methods and tips for our build system.
 
 (You must read the [Build System](./build-system-reference.md) page before)
 
+- [Notes](#notes)
 - [Setup](#setup)
     - [Podman](#podman)
         - [Manual Configuration](#manual-configuration)
@@ -19,7 +20,6 @@ This page covers all troubleshooting methods and tips for our build system.
 - [Solving Compilation Problems](#solving-compilation-problems)
     - [Environment Leakage](#environment-leakage)
     - [Update Your Build System](#update-your-build-system)
-    - [Update Relibc](#update-relibc)
     - [Prevent and Fix Breaking Changes](#prevent-and-fix-breaking-changes)
     - [Update Your Branch](#update-your-branch)
     - [Update Crates](#update-crates)
@@ -30,9 +30,31 @@ This page covers all troubleshooting methods and tips for our build system.
     - [QEMU](#qemu)
     - [Real Hardware](#real-hardware)
 
+## Notes
+
+This section contain details that apply to Redox problems on virtual machines or real hardware.
+
+### General
+
+- If you aren't doing development and has a compilation or runtime problem be sure to verify if your build system/recipes sources and binaries are up-to-date or hold breaking changes, a build system update or single or complete recipe binary cleanup may fix your problems in most cases
+
+### Real Hardware
+
+- Test if your boot problem happens with live mode enabled and disabled, press the `L` key in the boot screen resolution menu to toggle
+- If possible verify if your boot problem happens in UEFI and BIOS (UEFI has BIOS emulation which is called "CSM mode" and can be enabled in the UEFI settings)
+- Photos are safer and faster to send boot logs than boot log text written by hand, which is error-prone and time consuming
+- Verify if your computer has enough RAM to load the whole Redox image because data streaming from USB is not supported yet, if it has 1GB or less of RAM we recommend the `server`, `desktop-minimal` or `desktop` image variants to avoid OOM panics
+- If you have a very weak 64 bits Intel or AMD CPU (single core and L cache smaller than 1MB, like Intel Atom CPUs released before 2010) and 1GB or less of RAM we recommended the [Intel/AMD 32 bits Redox images](https://static.redox-os.org/img/i586/) and the `server`, `desktop-minimal` or `desktop` variants to avoid OOM panics and have better performance
+
+### Reporting
+
+- Use Markdown code blocks to send logs, avoiding syntax breakage on Matrix clients or GitLab
+- Use the "fresh build" or "clean build" terms to easily/quickly explain that you rebuilt all build system and recipe binaries from scratch (`make clean all` command)
+- Use the "fresh clone" or "fresh copy" terms to easily/quickly explain that you downloaded a new build system copy from Git or bootstrap scripts
+
 ## Setup
 
-When you run `podman_bootstrap.sh` or `native_bootstrap.sh`, the Linux tools and libraries required to support the toolchain and build all recipes are installed. Then the `redox` project is downloaded from the Redox GitLab server. The `redox` project does not contain the system component sources, it only contains the build system.
+When you run `podman_bootstrap.sh` or `native_bootstrap.sh`, the Linux tools and libraries required to support the toolchain and build all recipes are installed. Then the `redox` project is downloaded from the Redox GitLab server. The `redox` project does not contain the system sources, it only contains the build system.
 
 ### Podman
 
@@ -194,10 +216,6 @@ To fix this problem you need to find where the program build system get the Open
 
 Sometimes your build system can be outdated because you forgot to run `make pull` before other commands, read [this](./build-system-reference.md#update-the-build-system) section to learn the complete way to update the build system.
 
-### Update Relibc
-
-An outdated relibc copy can contain bugs (already fixed on recent versions) or missing APIs, read [this](./build-system-reference.md#update-relibc) section to learn how to update it.
-
 ### Prevent and Fix Breaking Changes
 
 Sometimes build system or recipe breaking changes are merged (you need to monitor the Dev room in our [chat](./chat.md) to know if some commit or MR containing breaking changes were merged) and you need to cleanup your recipe or build system tooling binaries before the recipe or build system source updates to avoid conflicts with the new configuration.
@@ -296,10 +314,18 @@ make prefix cr.recipe-name
 
 Check if the compilation or runtime error continues after this command, if the error continues run the following command:
 
+- Wipe all statically linked recipe binaries and rebuild the system (run this command if the binaries of multiple recipes are broken)
+
+```sh
+make static_clean rebuild
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
+
 - Wipe all recipe binaries and rebuild the system (run this command if the binaries of multiple recipes are broken)
 
 ```sh
-make c.--all
+make repo_clean all
 ```
 
 Check if the compilation or runtime error continues after this command, if the error continues run the following command:
@@ -307,7 +333,7 @@ Check if the compilation or runtime error continues after this command, if the e
 - Wipe all recipe sources and binaries and rebuild the system (run this command if the sources and binaries of multiple recipes are broken)
 
 ```sh
-make u.--all
+make fetch_clean all
 ```
 
 Check if the compilation or runtime error continues after this command, if the error continues read the section below.
