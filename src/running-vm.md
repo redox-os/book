@@ -188,7 +188,7 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -enable-kv
 ```
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-aarch64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
     -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
-    -bios /usr/share/AAVMF/AAVMF_CODE.fd -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu/edk2-aarch64-code.fd,readonly=on -machine virt -cpu max -vga none -device ramfb -netdev user,id=net0 \
+    -bios /usr/share/AAVMF/AAVMF_CODE.fd -machine virt -cpu max -vga none -device ramfb -netdev user,id=net0 \
     -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci \
     -drive file=`echo $HOME/Downloads/redox_demo_aarch64_*_harddrive.img`,format=raw
 ```
@@ -200,13 +200,13 @@ Verify if the QEMU UEFI firmware is installed
 - PFLASH0
 
 ```
-ls -1 /usr/share/qemu-efi-riscv64/RISCV_VIRT_CODE.fd /usr/share/qemu/edk2-riscv-code.fd /usr/share/qemu-efi-riscv64/RISCV_VIRT_VARS.fd /usr/share/qemu/edk2-riscv-vars.fd
+ls -1 /usr/share/qemu-efi-riscv64/RISCV_VIRT_CODE.fd /usr/share/edk2/riscv/RISCV_VIRT_CODE.fd /usr/share/qemu/edk2-riscv-code.fd /usr/share/qemu-efi-riscv64/RISCV_VIRT_VARS.fd /usr/share/qemu/edk2-riscv-vars.fd
 ```
 
 - PFLASH1
 
 ```
-ls -1 /usr/share/qemu-efi-riscv64/RISCV_VIRT_VARS.fd /usr/share/qemu/edk2-riscv-vars.fd
+ls -1 /usr/share/qemu-efi-riscv64/RISCV_VIRT_VARS.fd /usr/share/edk2/riscv/RISCV_VIRT_VARS.fd /usr/share/qemu/edk2-riscv-vars.fd
 ```
 
 At least one of each `PFLASH` command must be present, if the file location present on your system is different from the one used in the command you need to change it.
