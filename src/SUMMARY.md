@@ -2,33 +2,19 @@
 
 [Introduction](./introduction.md)
 
-# Introduction and Getting Started
+# Introduction
 
 - [Introducing Redox](./introducing-redox.md)
   - [Our Goals](./our-goals.md)
   - [Our Philosophy](./philosophy.md)
   - [Why a New OS?](./why-a-new-os.md)
+  - [Why Rust?](./why-rust.md)
   - [Redox Use Cases](./redox-use-cases.md)
   - [Comparing Redox to Other OSes](./how-redox-compares.md)
-  - [Why Rust?](./why-rust.md)
-  - [Side Projects](./side-projects.md)
   - [Influences](./influences.md)
   - [Hardware Support](./hardware-support.md)
   - [Important Programs](./important-programs.md)
-
-- [Getting started](./getting-started.md)
-  - [Running Redox in a Virtual Machine](./running-vm.md)
-  - [Running Redox on Real Hardware](./real-hardware.md)
-  - [Installing Redox on a Drive](./installing.md)
-  - [Trying Out Redox](./trying-out-redox.md)
-  - [Building Redox](./podman-build.md)
-  - [Native Build](./building-redox.md)
-  - [From Nothing To Hello World](./nothing-to-hello-world.md)
-  - [Configuration Settings](./configuration-settings.md)
-  - [Package Management](./package-management.md)
-  - [Downloading Packages with pkg](./pkg.md)
-  - [Tasks](./tasks.md)
-  - [Questions and Feedback](./asking-questions.md)
+  - [Side Projects](./side-projects.md)
 
 # Architecture and Design
 
@@ -45,6 +31,7 @@
   - [Graphics and Windowing](./graphics-windowing.md)
   - [Security](./security.md)
   - [Features](./features.md)
+  - [Package Management](./package-management.md)
 
 - [Schemes and Resources](./schemes-resources.md)
   - [Scheme-rooted Paths](./scheme-rooted-paths.md)
@@ -62,9 +49,43 @@
   - [Shell](./shell.md)
   - [System Tools](./system-tools.md)
 
+# Getting Started
+
+- [Getting started](./getting-started.md)
+  - [Running Redox in a Virtual Machine](./running-vm.md)
+  - [Running Redox on Real Hardware](./real-hardware.md)
+  - [Installing Redox on a Drive](./installing.md)
+  - [Trying Out Redox](./trying-out-redox.md)
+  - [Tasks](./tasks.md)
+  - [Downloading Packages with pkg](./pkg.md)
+
+# Contributing
+
+- [Contributing](./contributing.md)
+  - [Chat](./chat.md)
+
+- [Best practices and guidelines](./best-practices.md)
+  - [Literate programming](./literate-programming.md)
+  - [Writing docs correctly](./writing-docs-correctly.md)
+  - [Style](./style.md)
+  - [Rusting properly](./rusting-properly.md)
+  - [Avoiding Panics](./avoiding-panics.md)
+  - [Testing Practices](./testing-practices.md)
+
+- [Using Redox GitLab](./using-redox-gitlab.md)
+  - [Signing in to GitLab](./signing-in-to-gitlab.md)
+  - [Repository Structure](./repository-structure.md)
+  - [Creating Proper Bug Reports](./creating-proper-bug-reports.md)
+  - [Creating Proper Pull Requests](./creating-proper-pull-requests.md)
+  - [Filing Issues](./filing-issues.md)
+
 # Developing with and for Redox
 
 - [The Redox Build Process](./build-process.md)
+  - [Building Redox](./podman-build.md)
+  - [Native Build](./building-redox.md)
+  - [From Nothing To Hello World](./nothing-to-hello-world.md)
+  - [Configuration Settings](./configuration-settings.md)
   - [Advanced Podman Build](./advanced-podman-build.md)
   - [Advanced Native Build](./advanced-build.md)
   - [Working with i586](./i686.md)
@@ -86,23 +107,4 @@
   - [Continuous Integration](./ci.md)
   - [Performance](./performance.md)
   - [System Call Tracing](./syscall-debug.md)
-
-# Contributing
-
-- [Contributing](./contributing.md)
-  - [Chat](./chat.md)
-
-- [Best practices and guidelines](./best-practices.md)
-  - [Literate programming](./literate-programming.md)
-  - [Writing docs correctly](./writing-docs-correctly.md)
-  - [Style](./style.md)
-  - [Rusting properly](./rusting-properly.md)
-  - [Avoiding Panics](./avoiding-panics.md)
-  - [Testing Practices](./testing-practices.md)
-
-- [Using Redox GitLab](./using-redox-gitlab.md)
-  - [Signing in to GitLab](./signing-in-to-gitlab.md)
-  - [Repository Structure](./repository-structure.md)
-  - [Creating Proper Bug Reports](./creating-proper-bug-reports.md)
-  - [Creating Proper Pull Requests](./creating-proper-pull-requests.md)
-  - [Filing Issues](./filing-issues.md)
+  - [Questions and Feedback](./asking-questions.md)

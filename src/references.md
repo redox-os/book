@@ -65,6 +65,7 @@ If you don't know how to port some program or library, you can see the build sys
 - [Linux Manual Pages (die.net)](https://linux.die.net/man/) - Another popular source for Linux documentation.
 - [OpenGroup Specification (POSIX and C Standard Library)](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/contents.html) - This is important to improve the support for Linux/BSD programs written in C/C++.
 - [POSIX errors](https://en.wikipedia.org/wiki/Errno.h#POSIX_errors)
+- [Linux FHS Directory Structure](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard#Directory_structure)
 
 ### Source Code
 

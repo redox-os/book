@@ -119,16 +119,16 @@ insert your script here
 template = "build-system" # build.template data type
 cargoflags = "--option-name" # build.cargoflags data type
 configureflags = [ # build.configureflags data type
-    "OPTION1=text",
-    "OPTION2=text",
+    "OPTION1=value",
+    "OPTION2=value",
 ]
 cmakeflags = [ # build.cmakeflags data type
-    "-DOPTION1=text",
-    "-DOPTION2=text",
+    "-DOPTION1=value",
+    "-DOPTION2=value",
 ]
 mesonflags = [ # build.mesonflags data type
-    "-Doption1=text",
-    "-Doption2=text",
+    "-Doption1=value",
+    "-Doption2=value",
 ]
 dev-dependencies = [ # build.dev-dependencies data type
     "host:tool1",
@@ -186,6 +186,8 @@ This is a recipe template for a quick porting workflow.
 [source]
 git = "repository-link"
 rev = "version-tag"
+branch = "version-branch"
+shallow_clone = true
 tar = "tarball-link"
 [build]
 template = "build-system"
@@ -418,7 +420,7 @@ function cookbook_configure {
 
 ### GNU Autotools configuration script
 
-Sometimes the program tarball or repository is lacking the `configure` script, so you will need to generate this script.
+Sometimes the program tarball or repository is lacking the `configure` script or it need to be recreated for dynamic linking, so you will need to generate this script.
 
 - Add the following code below the `[source]` section
 
@@ -439,8 +441,8 @@ Use this script for programs using the CMake build system, more CMake options ca
 script = """
 DYNAMIC_INIT
 COOKBOOK_CMAKE_FLAGS+=(
-    -DOPTION1=text
-    -DOPTION2=text
+    -DOPTION1=value
+    -DOPTION2=value
 )
 cookbook_cmake
 """
@@ -452,8 +454,8 @@ cookbook_cmake
 script = """
 DYNAMIC_INIT
 COOKBOOK_CMAKE_FLAGS+=(
-    -DOPTION1=text
-    -DOPTION2=text
+    -DOPTION1=value
+    -DOPTION2=value
 )
 cookbook_cmake "${COOKBOOK_SOURCE}"/subfolder
 """
@@ -485,8 +487,8 @@ Keep in mind that some programs and libraries need more configuration to work.
 script = """
 DYNAMIC_INIT
 COOKBOOK_MESON_FLAGS+=(
-    -Doption1
-    -Doption2
+    -Doption1=value
+    -Doption2=value
 )
 cookbook_meson
 """
@@ -498,8 +500,8 @@ cookbook_meson
 script = """
 DYNAMIC_INIT
 COOKBOOK_MESON_FLAGS+=(
-    -Doption1
-    -Doption2
+    -Doption1=value
+    -Doption2=value
 )
 cookbook_meson "${COOKBOOK_SOURCE}"/subfolder
 """
@@ -511,6 +513,7 @@ Use this script if you need to customize the `cookbook_cargo` function.
 
 ```toml
 script = """
+DYNAMIC_INIT
 COOKBOOK_CARGO_FLAGS=(
     --bin foo
 )
@@ -522,6 +525,7 @@ If the project is roughly a simple Cargo project then `cookbook_cargo` is all th
 
 ```toml
 script = """
+DYNAMIC_INIT
 cookbook_cargo
 """
 ```
@@ -566,6 +570,7 @@ This command is used for Rust programs that use package folders inside the repos
 
 ```toml
 script = """
+DYNAMIC_INIT
 cookbook_cargo_packages program-name
 """
 ```
@@ -578,6 +583,7 @@ If you need a script for a package with flags (customization), you can use this 
 
 ```toml
 script = """
+DYNAMIC_INIT
 package=package-name
 "${COOKBOOK_CARGO}" build \
             --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
@@ -600,6 +606,7 @@ Some Rust programs use bins instead of packages to build, to build them you can 
 
 ```toml
 script = """
+DYNAMIC_INIT
 binary=bin-name
 "${COOKBOOK_CARGO}" build \
             --manifest-path "${COOKBOOK_SOURCE}/Cargo.toml" \
@@ -622,6 +629,7 @@ Some Rust programs have flags for customization, you can find them below the `[f
 
 ```toml
 script = """
+DYNAMIC_INIT
 cookbook_cargo --features flag-name
 """
 ```
@@ -632,6 +640,7 @@ It's common that some flag of the program doesn't work on Redox, if you don't wa
 
 ```toml
 script = """
+DYNAMIC_INIT
 cookbook_cargo --no-default-features
 """
 ```
@@ -642,6 +651,7 @@ If you want to enable all flags of the program, use:
 
 ```toml
 script = """
+DYNAMIC_INIT
 cookbook_cargo --all-features
 """
 ```
@@ -652,6 +662,7 @@ This script is used for Rust programs using Cargo profiles.
 
 ```toml
 script = """
+DYNAMIC_INIT
 cookbook_cargo --profile profile-name
 """
 ```
@@ -662,6 +673,7 @@ This script is used for examples on Rust programs.
 
 ```toml
 script = """
+DYNAMIC_INIT
 cookbook_cargo_examples example-name
 """
 ```
@@ -674,6 +686,7 @@ This script is used for Cargo examples with flags.
 
 ```toml
 script = """
+DYNAMIC_INIT
 recipe="$(basename "${COOKBOOK_RECIPE}")"
     for example in example1 example2
     do
@@ -718,6 +731,7 @@ COOKBOOK_SOURCE="${COOKBOOK_SOURCE}/subfolder-name"
 
 ```toml
 script = """
+DYNAMIC_INIT
 COOKBOOK_SOURCE="${COOKBOOK_SOURCE}/subfolder-name"
 cookbook_cargo
 """
@@ -731,7 +745,8 @@ Some programs require to setup configuration files from the source code or tarba
 [build]
 template = "custom"
 script = """
-cookbook function or custom build system commands
+DYNAMIC_INIT
+cookbook build system function or custom build system commands
 mkdir -pv "${COOKBOOK_STAGE}"/usr/share # create the /usr/share folder inside the package
 cp -rv "${COOKBOOK_SOURCE}"/configuration-file "${COOKBOOK_STAGE}"/usr/share # copy the configuration file from the program source code to the package
 """
