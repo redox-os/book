@@ -159,6 +159,8 @@ Use one of the following commands to run QEMU with a Redox-compatible configurat
 
 #### x86-32 (i586) image
 
+- Run QEMU
+
 ```
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 1 -m 2048 \
     -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
@@ -169,21 +171,12 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 1 -m 
 
 #### x86-64 image
 
-- Verify if the QEMU UEFI firmware is installed
-
-```
-ls -1 /usr/share/ovmf/OVMF.fd /usr/share/OVMF/OVMF_CODE.fd
-```
-
-At least one of them must be present, if the file location present on your system is different from the one used in the command you need to change it.
-
 - Run QEMU
 
 ```
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -enable-kvm -smp 4 -m 2048 \
     -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
-    -bios /usr/share/ovmf/OVMF.fd -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu/edk2-x86_64-code.fd,readonly=on -machine q35 -cpu host \
-    -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 \
+    -machine q35 -cpu host -device ich9-intel-hda -device hda-duplex -netdev user,id=net0 \
     -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci \
     -drive file=`echo $HOME/Downloads/redox_demo_x86_64_*_harddrive.img`,format=raw
 ```
@@ -233,8 +226,6 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-riscv64 -d cpu_reset,guest_errors -smp 4 -m
 To install **QEMU** on Windows, follow the instructions [here](https://www.qemu.org/download/#windows). The installation of **QEMU** will probably not update your command path, so the necessary QEMU command needs to be specified using its full path. Or, you can add the installation folder to your `PATH` environment variable if you will be using it regularly.
 
 Use one of the following commands to run QEMU with a Redox-compatible configuration:
-
-TODO: insert missing UEFI firmware binaries after the `uefi=yes` option, find official edk2 binaries or download from Linux distribution packages?
 
 #### x86-32 (i586) image
 
