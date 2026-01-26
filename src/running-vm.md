@@ -162,7 +162,7 @@ Use one of the following commands to run QEMU with a Redox-compatible configurat
 - Run QEMU
 
 ```
-SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-x86_64 -d cpu_reset,guest_errors -smp 1 -m 2048 \
+SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-i386 -d cpu_reset,guest_errors -smp 1 -m 2048 \
     -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
     -machine pc -cpu pentium2 -device AC97 -netdev user,id=net0 \
     -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci \
