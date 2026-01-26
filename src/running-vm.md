@@ -251,7 +251,7 @@ TODO: insert missing UEFI firmware binaries after the `uefi=yes` option, find of
 ```
 "C:\Program Files\qemu\qemu-system-x86_64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048
 -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug
-uefi=yes -machine pc -cpu host -device ich9-intel-hda -device hda-duplex -netdev user,id=net0
+-machine pc -cpu host -device ich9-intel-hda -device hda-duplex -netdev user,id=net0
 -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -device usb-tablet
 -drive file=redox_demo_x86_64_2024-09-07_1225_harddrive.img,format=raw
 ```
