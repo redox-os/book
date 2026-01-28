@@ -32,11 +32,11 @@ This page covers all troubleshooting methods and tips for our build system.
 
 ## Notes
 
-This section contain details that apply to Redox problems on virtual machines or real hardware.
+This section contain details which apply to Redox problems on virtual machines and real hardware.
 
 ### General
 
-- If you aren't doing development and has a compilation or runtime problem be sure to verify if your build system/recipes sources and binaries are up-to-date or hold breaking changes, a build system update or single or complete recipe binary cleanup may fix your problems in most cases
+- If you aren't doing development and has a compilation or runtime problem be sure to verify if your build system/recipes sources and binaries are up-to-date or holding breaking changes, a build system update, single or complete recipe binary cleanup may fix your problems in most cases
 - If your boot hangs and the log don't show the reason, press the `E` key to open the boot environment editor and add the `INIT_LOG_LEVEL=DEBUG` (increase the init log verbosity) and `DRIVER_LOG_LEVEL=DEBUG` (increase the drivers log verbosity) environment variables in the last line and boot, like this:
 
 ```

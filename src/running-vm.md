@@ -213,6 +213,8 @@ At least one of each `PFLASH` command must be present, if the file location pres
 
 - Run QEMU
 
+TODO: fix not enough space for firmware error
+
 ```
 SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-riscv64 -d cpu_reset,guest_errors -smp 4 -m 2048 \
     -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug \
@@ -229,6 +231,10 @@ Use one of the following commands to run QEMU with a Redox-compatible configurat
 
 #### x86-32 (i586) image
 
+- Run QEMU
+
+TODO: test
+
 ```
 "C:\Program Files\qemu\qemu-system-x86.exe" -d cpu_reset,guest_errors -smp 1 -m 2048
 -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug
@@ -238,6 +244,10 @@ Use one of the following commands to run QEMU with a Redox-compatible configurat
 ```
 
 #### x86-64 image
+
+- Run QEMU
+
+TODO: test
 
 ```
 "C:\Program Files\qemu\qemu-system-x86_64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048
@@ -249,10 +259,14 @@ Use one of the following commands to run QEMU with a Redox-compatible configurat
 
 #### ARM64 image
 
+- Run QEMU
+
+TODO: test
+
 ```
 "C:\Program Files\qemu\qemu-system-aarch64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048
 -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug
--drive if=pflash,format=raw,unit=0,file="C:\Program Files\qemu\share\edk2-aarch64-code.fd",readonly=on
+-drive -bios "C:\Program Files\qemu\share\edk2-aarch64-code.fd" 
 -machine virt -cpu max -vga none -device ramfb -netdev user,id=net0
 -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -device usb-tablet
 -drive file=redox_demo_aarch64_*_harddrive.img,format=raw
@@ -260,10 +274,14 @@ Use one of the following commands to run QEMU with a Redox-compatible configurat
 
 #### RISC-V image
 
+- Run QEMU
+
+TODO: test
+
 ```
 "C:\Program Files\qemu\qemu-system-riscv64.exe" -d cpu_reset,guest_errors -smp 4 -m 2048
 -chardev stdio,id=debug,signal=off,mux=on,"" -serial chardev:debug -mon chardev=debug
--drive if=pflash,format=raw,unit=0,file="C:\Program Files\qemu\share\edk2-riscv-code.fd",readonly=on
+-drive -bios "C:\Program Files\qemu\share\edk2-riscv-code.fd"
 -machine virt,acpi=off -cpu max -vga none -device ramfb -audio none -netdev riscv,id=net0
 -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci -device usb-tablet
 -drive file=redox_demo_riscv64gc_*_harddrive.img,format=raw
