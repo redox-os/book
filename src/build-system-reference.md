@@ -65,7 +65,7 @@ The build system downloads and creates several files that you may want to know a
 
 - `build` - The directory where the build system will place the final image. Usually `build/$(ARCH)/$(CONFIG_NAME)`, e.g. `build/x86_64/desktop`
 - `build/your-cpu-arch/your-config/harddrive.img` - The Redox image file, to be used by QEMU or VirtualBox for virtual machine execution on a Unix-like host.
-- `build/your-cpu-arch/your-config/livedisk.iso` - The Redox bootable image file, to be used on real hardware for testing and possible installation.
+- `build/your-cpu-arch/your-config/redox-live.iso` - The Redox bootable image file, to be used on real hardware for testing and possible installation.
 - `build/your-cpu-arch/your-config/fetch.tag` - An empty file that, if present, tells the build system that the downloading of recipe sources is done.
 - `build/your-cpu-arch/your-config/repo.tag` - An empty file that, if present, tells the build system that all recipes required for the Redox image have been successfully built. **The build system will not check for changes to your code when this file is present.** Use `make rebuild` to force the build system to check for changes.
 - `build/podman` - The directory where Podman Build places the container user's home directory, including the container's Rust installation. Use `make container_clean` to remove it. In some situations, you may need to remove this directory manually, possibly with root privileges.

@@ -292,7 +292,7 @@ Congratulations! You have modified a program and built the system! Next, create 
 make live
 ```
 
-In the directory `build/x86_64/my-config`, you will find the file `livedisk.iso`. Follow the instructions on the [Testing on Real Hardware](#testing-on-real-hardware) section and test out your change.
+In the directory `build/x86_64/my-config`, you will find the file `redox-live.iso`. Follow the instructions on the [Testing on Real Hardware](#testing-on-real-hardware) section and test out your change.
 
 ### Test Your Changes (out of the Redox build system)
 
@@ -340,7 +340,7 @@ redoxer exec echo hello
 
 You can use the `make live` command to create bootable images, it will be used instead of `make image`
 
-This command will create the file `build/your-cpu-arch/your-config/livedisk.iso`, you will write this image on your USB, SSD or HDD drives and CD or DVD disks (if you have an USB device, [Popsicle](https://github.com/pop-os/popsicle) is the recommended method to flash your device).
+This command will create the file `build/your-cpu-arch/your-config/redox-live.iso`, you will write this image on your USB, SSD or HDD drives and CD or DVD disks (if you have an USB device, [Popsicle](https://github.com/pop-os/popsicle) is the recommended method to flash your device).
 
 #### Full bootable image creation
 
@@ -385,7 +385,7 @@ ls /dev/disk/by-id
 Search for the items beginning with `usb` and find your USB device model, you will copy and paste this ID on the `dd` command below (don't use the IDs with `part-x` in the end).
 
 ```sh
-sudo dd if=livedisk.iso of=/dev/disk/by-id/usb-your-device-model oflag=sync bs=4M status=progress
+sudo dd if=redox-live.iso of=/dev/disk/by-id/usb-your-device-model oflag=sync bs=4M status=progress
 ```
 
 In the `/dev/disk/by-id/usb-your-device-model` path you will replace the `usb-your-device-model` part with your USB device ID obtained before.
@@ -411,7 +411,7 @@ Check if the items "Can write" has `1` (Yes) or `0` (No), it also show the optic
 - Burn the disk with [xorriso](https://www.gnu.org/software/xorriso/)
 
 ```sh
-xorriso -as cdrecord -v -sao dev=/dev/srX livedisk.iso
+xorriso -as cdrecord -v -sao dev=/dev/srX redox-live.iso
 ```
 
 In the `/dev/srX` part, where `x` is your optical device number.

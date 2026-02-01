@@ -151,26 +151,26 @@ dependencies = [ # package.dependencies data type
 ```
 
 - `[source]` : Section for data types that manage the program source (only remove it if you have a `source` folder)
-- `source.git` : Git repository of the program (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a `git pull` or change the active branch to `master` or `main`
+- `source.git` : Git repository of the program (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a `git pull` or change the active branch to `master` or `main`. Read the [Git Repositories](#git-repositories) section for more details.
 - `source.upstream` : If you are using a fork of the program source with patches add the program upstream source here (can be removed if the upstream source is being used on the `git` data type)
 - `source.branch` : Program version Git branch or patched Git branch (can be removed if using a tarball or the `master` or `main` Git branches are being used)
 - `source.rev` : Git tag or commit hash of the latest stable version or last working commit of the program (can be removed if you are using a tarball or waiting Rust library version updates)
-- `source.shallow_clone` : Boolean data type to only download the current commit of source files (Git [shallow clone](https://github.blog/open-source/git/get-up-to-speed-with-partial-clone-and-shallow-clone/)), which can reduce the download/delta processing time a lot and save many storage space (insert `shallow_clone = true`)
-- `source.tar` : Program source tarball (can be removed if a tarball is not used)
+- `source.shallow_clone` : Boolean data type to only download the current commit of source files (Git [shallow clone](https://github.blog/open-source/git/get-up-to-speed-with-partial-clone-and-shallow-clone/)), which can reduce the download/delta processing time a lot and save many storage space (insert `shallow_clone = true`). Read the note in the [Git Repositories](#git-repositories) section if you are doing heavy development in a fork
+- `source.tar` : Program source tarball (can be removed if a tarball is not used), read the [Tarballs](#tarballs) section for more details.
 - `source.blake3` : Program source tarball BLAKE3 hash, can be generated using the `b3sum` tool, install with the `cargo install b3sum` command (can be removed if using a Git repository or under porting)
 - `source.patches` : Data type to load `.patch` files (can be removed if patch files aren't used)
 - `"patch1.patch",` : The patch file name (can be removed if the `patches` data type above is not present)
 - `source.same_as` : Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
 - `source.script` : Data type used when you need to change the build system configuration (to regenerate the GNU Autotools configuration, for example)
 - `[build]` : Section for data types that manage the program compilation and packaging
-- `build.template` : Insert the program build system (`cargo` for Rust programs, `configure` for programs using GNU Autotools and `custom` for advanced porting with custom commands)
+- `build.template` : Insert the program build system, read the [Templates](#templates) section for more details.
 - `build.cargoflags` : Data type for Cargo flags (string)
 - `build.configureflags` : Data type for GNU Autotools flags (array)
 - `build.cmakeflags` : Data type for CMake flags (array)
 - `build.mesonflags` : Data type for Meson flags (array)
 - `build.dev-dependencies` : Data type to add the build tools needed by the program or library
 - `build.dev-dependencies = ["host:tool1",]` : Build tool recipe name (can be removed if the `build.dev-dependencies` data type is not present)
-- `build.dependencies` : Data type to add dynamically or statically linked library dependencies
+- `build.dependencies` : Data type to add dynamically or statically linked library dependencies, read the [Dependencies](#dependencies) section for more details.
 - `build.dependencies = ["library1",]` : Library recipe name (can be removed if the `build.dependencies` data type is not present)
 - `build.script` : Data type to load the custom commands for compilation and packaging
 - `[package]` : Section for data types that manage the program package
@@ -356,7 +356,6 @@ You can quickly copy these environment variables from this section.
 "${COOKBOOK_STAGE}/"
 ```
 
-
 ### Packaging Behavior
 
 Cookbook download the recipe sources on the `source` folder (`recipe-name/source`), copy the contents of this folder to the `build` folder (`recipe-name/target/$TARGET/build`), build the sources and move the binaries to the `stage` folder (`recipe-name/target/$TARGET/stage`).
@@ -371,8 +370,10 @@ You can see path examples for most customized recipes below:
 
 ```sh
 "${COOKBOOK_STAGE}"/ # The root of the Redox build system
-"${COOKBOOK_STAGE}"/usr/bin # The folder where all system-wide executables go
-"${COOKBOOK_STAGE}"/usr/lib # The folder where all system-wide static and shared library objects go
+"${COOKBOOK_STAGE}"/usr/bin # System-wide executables directory
+"${COOKBOOK_STAGE}"/usr/lib # System-wide shared and static library objects directory
+"${COOKBOOK_STAGE}"/usr/share # System-wide application static data files
+"${COOKBOOK_STAGE}"/etc # System-wide application static configuration files
 ```
 
 ### GNU Autotools script
@@ -965,14 +966,22 @@ See the [nano package](https://gitlab.archlinux.org/archlinux/packaging/packages
 
 ### Git Repositories
 
-Some programs don't offer official tarballs for releases, thus you need to use their Git repository and pin the tag or commit hash of the latest stable version or last working commit.
+Some programs don't offer official tarballs for releases, thus you need to use their Git repository and the branch of the latest stable version (if available) or pin the tag or commit hash of the latest stable version or last working commit.
 
 Your `recipe.toml` will have the following content:
 
 ```toml
 [source]
 git = "repository-link"
+branch = "version-branch"
 rev = "version-tag"
+shallow_clone = true
+```
+
+- Shallow clone is not recommended if you forked the repository and is doing heavy development to port, if you don't want to change the recipe configuration after source fetch run the following command to disable shallow clone temporarily:
+
+```
+git fetch --unshallow
 ```
 
 #### GitHub release
@@ -1089,14 +1098,15 @@ Follow these steps to use the last stable version of the program when Git submod
 - Open the program/library Git repository.
 - Check the "Releases" or "Tags" buttons, in most cases the program have a stable release at "Releases".
 - In both pages the commit hash of the stable release will be the first item of the announcement below the version number.
-- Copy the repository link/release commit and paste on your `recipe.toml`, for example:
+- Copy the repository link/version branch or tag and paste on your `recipe.toml`, for example:
 
 ```toml
-git = "your-repository-link"
-rev = "your-release-commit"
+git = "repository-link"
+branch = "version-branch"
+rev = "version-tag"
 ```
 
-If the last stable release is years behind, we recommend that you ignore it and use the Git repository to download/build bug fixes sent after this old version, if you are concerned about the program upstream breaking the recipe, you can use the commit of the last successful CI test.
+If the last stable release is too old or lack important fixes due to low maintenance we recommend that you ignore it and use the Git repository to download/build bug fixes sent after this old version, if you are concerned about the program upstream breaking the recipe, you can use the commit of the last successful CI test.
 
 ### Configuration
 
@@ -1168,7 +1178,7 @@ You can find the feature flags below the `[features]` section in the `Cargo.toml
 
 ### GNU Autotools
 
-You can find the feature flags in the `INSTALL` or `configure` files.
+You can find the feature flags in the `INSTALL`, `README` or `configure` files.
 
 ### CMake
 
