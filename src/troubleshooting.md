@@ -25,6 +25,7 @@ This page covers all troubleshooting methods and tips for our build system.
     - [Update Crates](#update-crates)
     - [Verify The Dependency Tree](#verify-the-dependency-tree)
 - [Debug Methods](#debug-methods)
+    - [Boot](#boot)
 - [Kill A Frozen Redox VM](#kill-a-frozen-redox-vm)
 - [Kernel Panic](#kernel-panic)
     - [QEMU](#qemu)
@@ -577,7 +578,7 @@ If your boot hangs and the log don't show the reason, you can use the following 
 - `INIT_LOG_LEVEL=value` : Init logging verbosity level
 - `DRIVER_LOG_LEVEL=value` : Logging verbosity level of all drivers
 - `DRIVER_*_LOG_LEVEL=value` : Driver-specific logging verbosity level, for example: `DRIVER_PS2_LOG_LEVEL=value` for PS/2 logging and `DRIVER_USB_LOG_LEVEL=value` for USB logging
-- `RELIBC_LOG_LEVEL=value` : Relibc logging verbosity level, you need to disable the `no_trace` feature flag by removing it from the [default](https://gitlab.redox-os.org/redox-os/relibc/-/blob/7b9402783d6de31d3c749472027ce345aaff70fc/Cargo.toml#L82) feature group to use it
+- `RELIBC_LOG_LEVEL=value` : Relibc logging verbosity level, you need to disable the `no_trace` feature flag by removing it from the [default](https://gitlab.redox-os.org/redox-os/relibc/-/blob/7b9402783d6de31d3c749472027ce345aaff70fc/Cargo.toml#L82) feature group and run the `make static_clean rebuild` command to use it
 - `INIT_SKIP=executable-name` : Skip the execution of executables with hangs or errors, commas are supported if you want to skip multiple executables
 
 The accept the following values:
