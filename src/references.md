@@ -60,6 +60,7 @@ If you don't know how to port some program or library, you can see the build sys
 
 ### Manual Pages
 
+- [Unix Manual Sections](https://en.wikipedia.org/wiki/Man_page#Manual_sections)
 - [FreeBSD Manual Pages](https://man.freebsd.org/cgi/man.cgi) - Powerful source for Unix/BSD documentation.
 - [Linux Manual Pages (man7)](https://www.man7.org/linux/man-pages/) - Very popular source for Linux documentation.
 - [Linux Manual Pages (die.net)](https://linux.die.net/man/) - Another popular source for Linux documentation.

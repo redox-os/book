@@ -85,7 +85,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
 
 ### Why does Redox have unsafe Rust code?
 
-In some cases we must use `unsafe`, for example at certain parts in the kernel and drivers, these unsafe parts are generally wrapped with a safe interface.
+In some cases we must use `unsafe` declarations to allow some low-level tasks, for example at certain parts in the kernel and drivers, these unsafe parts are generally wrapped with a safe interface.
 
 These are the cases where unsafe Rust is mandatory:
 
@@ -95,9 +95,9 @@ These are the cases where unsafe Rust is mandatory:
 - Working with memory mapping and stack allocation
 - Working with hardware devices
 
-It is an important goal for Redox to minimize the amount of `unsafe` Rust code. If you want to use unsafe Rust code on Redox anywhere other than interfacing with system calls, ask for Jeremy Soller's approval before.
+It is an important goal for Redox to minimize the amount of `unsafe` declared Rust code. If you want to use unsafe Rust code on Redox anywhere other than interfacing with system calls, ask for Jeremy Soller's approval before.
 
-Unsafe Rust still has most of the compiler verification (thus more safe than C and C++).
+Unsafe Rust still has most of the compiler verification and allow some safe Rust syntax usage, thus still more safe than C and C++.
 
 Read the following pages to learn more about Unsafe Rust:
 

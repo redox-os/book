@@ -41,7 +41,7 @@ cd ~/redox-gitoxide
 ```
 
 ```sh
-git clone https://gitlab.redox-os.org:redox-os/redox --origin upstream
+git clone https://gitlab.redox-os.org/redox-os/redox --origin upstream
 ```
 
 The new recipe will be part of the `redox` repository, so we need to fork then branch it. To fork the `redox` repository:
@@ -64,7 +64,7 @@ git rebase upstream master
 ```
 
 ```sh
-git remote add origin https://gitlab.redox-os.org:MY_USERNAME/redox
+git remote add origin https://gitlab.redox-os.org/MY_USERNAME/redox
 ```
 
 ```sh
@@ -319,7 +319,7 @@ git rebase upstream master
 ```
 
 ```sh
-git remote add origin https://gitlab.redox-os.org:MY_USERNAME/relibc
+git remote add origin https://gitlab.redox-os.org/MY_USERNAME/relibc
 ```
 
 ```sh

@@ -32,6 +32,20 @@ cat /scheme/sys/cpu
 
 ## System
 
+### Change current keyboard layout (map)
+
+- Show all available layouts
+
+```sh
+inputd --keymaps
+```
+
+- Change current layout
+
+```sh
+inputd -K layout-name
+```
+
 ### Show system information
 
 ```sh

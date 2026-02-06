@@ -239,6 +239,8 @@ A recipe template is the build system of the program or library supported by Coo
 - `template = "remote"` - Download the remote Redox package of the recipe if available in the [package server](https://static.redox-os.org/pkg/)
 - `template = "custom"` - Run your commands on the `script =` field and build (Any build system or installation process).
 
+Keep in mind that some recipes may need build tools that aren't provided by the build system templates or not installed in the Podman container or your system and will need to be added in the `dev.dependencies` data type of the recipe, don't add build tools or compilers already provided by the templates.
+
 The `script =` field runs any terminal command supported by GNU Bash, it's important if the build system of the program don't support cross-compilation or need custom options to work on Redox (you can't use the `build.script` data type if the `custom` template is not used).
 
 Each template (except `custom`) script supports build flags, you can add flags as an array of strings:
@@ -248,9 +250,9 @@ Each template (except `custom`) script supports build flags, you can add flags a
 - `cmakeflags = [ "foo" ]`
 - `mesonflags = [ "foo" ]`
 
-To find the supported Cookbook Bash functions, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/-/tree/master/src).
+To find the supported Cookbook Bash functions, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/src).
 
-- [Recipes](https://gitlab.redox-os.org/redox-os/-/tree/master/recipes)
+- [Recipes](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/recipes)
 
 #### Cases
 
@@ -427,7 +429,6 @@ Sometimes the program tarball or repository is lacking the `configure` script or
 
 ```toml
 script = """
-DYNAMIC_INIT
 autotools_recursive_regenerate
 """
 ```
@@ -1030,7 +1031,7 @@ You can search them with Ctrl+F, all package names are clickable and their websi
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies.
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
 - The Debian naming policy use dashes as separators in packages with custom options (program or library variant) enabled (program-variant), check the source package to be sure
-- The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it don't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
+- The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it can't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
 - The recipe support recursive dependencies, thus you don't need to specify a dependency two times if some dependency already provide it
 - Don't add build tools in the `build.dependencies` data type, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
 - The compiler will build the development libraries as `.a` files (objects for static linking) or `.so` files (objects for dynamic linking), the `.a` files will be mixed in the final binary while the `.so` files will be installed out of the binary (stored on the `/lib` directory of the system).

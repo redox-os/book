@@ -37,13 +37,8 @@ This section contain details which apply to Redox problems on virtual machines a
 ### General
 
 - If you aren't doing development and has a compilation or runtime problem be sure to verify if your build system/recipes sources and binaries are up-to-date or holding breaking changes, a build system update, single or complete recipe binary cleanup may fix your problems in most cases
-- If your boot hangs and the log don't show the reason, press the `E` key to open the boot environment editor and add the `INIT_LOG_LEVEL=DEBUG` (increase the init log verbosity) and `DRIVER_LOG_LEVEL=DEBUG` (increase the drivers log verbosity) environment variables in the last line and boot, like this:
 
-```
-default environment variables here
-INIT_LOG_LEVEL=DEBUG
-DRIVER_LOG_LEVEL=DEBUG
-```
+Read the [Debug Methods](#debug-methods) and [Boot](#boot) sections for more details.
 
 ### Real Hardware
 
@@ -52,6 +47,8 @@ DRIVER_LOG_LEVEL=DEBUG
 - Photos are safer and faster to send boot logs than boot log text written by hand, which is error-prone and time consuming
 - Verify if your computer has enough RAM to load the whole Redox image because data streaming from USB is not supported yet, if it has 1GB or less of RAM we recommend the `server`, `desktop-minimal` or `desktop` image variants to avoid OOM panics
 - If you have a very weak 64 bits Intel or AMD CPU (single core and L cache smaller than 1MB, like Intel Atom CPUs released before 2010) and 1GB or less of RAM we recommended the [Intel/AMD 32 bits Redox images](https://static.redox-os.org/img/i586/) and the `server`, `desktop-minimal` or `desktop` variants to avoid OOM panics and have better performance
+
+Read the [Debug Methods](#debug-methods) and [Boot](#boot) sections for more details.
 
 ### Reporting
 
@@ -570,6 +567,40 @@ If the recipe has multiple executables use the following command:
 
 ```sh
 make debug.recipe-name DEBUG_BIN=executable-name
+```
+
+### Boot
+
+If your boot hangs and the log don't show the reason, you can use the following environment variables to help:
+
+- `BOOTSTRAP_LOG_LEVEL=value` : Bootstrap and process manager logging verbosity level
+- `INIT_LOG_LEVEL=value` : Init logging verbosity level
+- `DRIVER_LOG_LEVEL=value` : Logging verbosity level of all drivers
+- `DRIVER_*_LOG_LEVEL=value` : Driver-specific logging verbosity level, for example: `DRIVER_PS2_LOG_LEVEL=value` for PS/2 logging and `DRIVER_USB_LOG_LEVEL=value` for USB logging
+- `RELIBC_LOG_LEVEL=value` : Relibc logging verbosity level
+- `INIT_SKIP=executable-name` : Skip the execution of executables with hangs or errors, commas are supported if you want to skip multiple executables
+
+The accept the following values:
+
+- `ERROR` value: Known event that is a fatal error but recoverable.
+- `WARN` value: Unexpected event coming from unexpected condition.
+- `INFO` value: Significant event mostly useful for developer.
+- `DEBUG` value: Detailed event monitoring to show how the service is being used.
+- `TRACE` value: Very verbose information which is only useful when debugging.
+
+Once you determine what you need press the `E` key to open the boot environment editor and add in the last lines and boot, for example:
+
+```
+default environment variables here
+INIT_LOG_LEVEL=DEBUG
+DRIVER_LOG_LEVEL=DEBUG
+```
+
+You can see an example output below:
+
+```
+2026-01-12T22-27-51.758Z [@ps2d::controller:468 WARN] ps2d: post-test unexpected value: 9C
+2026-01-12T22-27-51.760Z [@ps2d::controller:337 ERROR] ps2d: keyboard failed to reset: 55
 ```
 
 ## Kill A Frozen Redox VM
