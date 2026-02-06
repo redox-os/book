@@ -70,7 +70,7 @@
   - [Style](./style.md)
   - [Rusting properly](./rusting-properly.md)
   - [Avoiding Panics](./avoiding-panics.md)
-  - [Testing Practices](./testing-practices.md)
+  - [Testing](./testing-practices.md)
 
 - [Using Redox GitLab](./using-redox-gitlab.md)
   - [Signing in to GitLab](./signing-in-to-gitlab.md)
