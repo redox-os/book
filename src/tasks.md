@@ -1,6 +1,6 @@
 # Tasks
 
-This page covers the commands used for common and specific tasks on Redox.
+This page contain commands used for common and specific tasks on Redox.
 
 - [Hardware](#hardware)
 - [System](#system)
@@ -52,13 +52,19 @@ inputd -K layout-name
 uname -a
 ```
 
-### Show memory (RAM) usage
+Or
+
+```sh
+screenfetch
+```
+
+### Show memory (RAM) information
 
 ```sh
 free -h
 ```
 
-### Show the storage usage
+### Show storage information
 
 ```sh
 df -h
@@ -79,7 +85,7 @@ ps
 ### Show system-wide common programs
 
 ```sh
-ls /bin
+ls /usr/bin
 ```
 
 ### Show all schemes
@@ -88,16 +94,22 @@ ls /bin
 ls /scheme
 ```
 
+### Show all scheme resources
+
+```sh
+ls /scheme/scheme-name
+```
+
 ### Show the system log
 
 ```sh
-cat /scheme/sys/log
+dmesg
 ```
 
 Or
 
 ```sh
-dmesg
+cat /scheme/sys/log
 ```
 
 ## Networking
@@ -117,19 +129,13 @@ hostname -I
 ### Ping a website or IP
 
 ```sh
-ping (website-link/ip-address)
+ping (website-url/ip-address)
 ```
 
 ### Show website information
 
 ```sh
 whois https://website-name.com
-```
-
-### Download a GitHub repository on the current directory
-
-```sh
-git clone https://github.com/user-name/repository-name.git
 ```
 
 ### Download a Git repository
@@ -290,19 +296,19 @@ ls ~/.local/share ~/.config
 echo text
 ```
 
-### Show the directories in the $PATH environment variable
+### Show the directory paths in the `PATH` environment variable
 
 ```sh
 echo $PATH
 ```
 
-### Show the dependencies (shared libraries) used by a program
+### Show the dynamically linked libraries used by a program
 
 ```sh
 ldd program-name
 ```
 
-### Add a new directory on the $PATH environment variable of the Ion shell
+### Add a new directory on the `PATH` environment variable of the Ion shell
 
 ```sh
 TODO
@@ -495,7 +501,7 @@ image-viewer image-name
 
 ## Graphics
 
-### Show the OpenGL driver information
+### Show the OpenGL information
 
 ```sh
 glxinfo | grep OpenGL

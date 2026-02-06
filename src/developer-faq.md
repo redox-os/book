@@ -52,7 +52,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [How does a userspace daemon provide file-like services?](#how-does-a-userspace-daemon-provide-file-like-services)
     - [How the system calls are used by userspace daemons?](#how-the-system-calls-are-used-by-userspace-daemons)
 - [GitLab Questions](#gitlab-questions)
-    - [How to properly review MRs?](#how-to-properly-review-mrs)
+    - [How to properly request a review or review MRs?](#how-to-properly-request-a-review-or-review-mrs)
     - [I have a merge request with many commits, should I squash them after merge?](#i-have-a-merge-request-with-many-commits-should-i-squash-them-after-merge)
     - [Should I delete my branch after merge?](#should-i-delete-my-branch-after-merge)
     - [How can I have an anonymous account?](#how-can-i-have-an-anonymous-account)
@@ -478,15 +478,17 @@ All userspace daemons use the system calls through [relibc](https://gitlab.redox
 
 ## GitLab Questions
 
-### How to properly review MRs?
+### How to properly request a review or review MRs?
 
-It's recommended to use code suggestions for normal text and code to help and save time for developers, that way they can quickly improve or apply the text or code.
+These rules prevent you from wasting time and stress.
+
+- **Don't edit your code suggestions without a warning before to prevent merge errors and review disorganization**
+- If you are requesting a review it's recommended that it's done by one reviewer per time to avoid extra coordination effort with multiple reviewers to confirm when each reviewer finished their review, but if you accept multiple reviewers at once **each reviewer should warn when started and finished its review to prevent code suggestion conflicts between reviewers due to possible different file states while you apply the code suggestions**
+- If you are requesint a review where code suggestions will not be used, you can accept multiple reviewers without coordination of when they started and finished their reviews
+- Once you finish your review warn to avoid conflicts with other reviewers
+- It's recommended to use code suggestions for normal text and code to help and save time for developers, that way they can quickly improve or apply the text or code.
 
 You can start a code suggestion by clicking on the file icon with the + symbol when you click to comment in some line of a file.
-
-- The review should be done by one reviewer per time to avoid conflict with other reviewers, each reviewer should warn when it start and finish a review
-- Once you finish your review warn to avoid conflict with other reviewers
-- **Don't edit your code suggestions without a warning to prevent merge errors and review desynchronization**
 
 ### I have a merge request with many commits, should I squash them after merge?
 
