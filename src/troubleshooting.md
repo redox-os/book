@@ -581,7 +581,7 @@ If your boot hangs and the log don't show the reason, you can use the following 
 - `RELIBC_LOG_LEVEL=value` : Relibc logging verbosity level, you need to disable the `no_trace` feature flag by removing it from the [default](https://gitlab.redox-os.org/redox-os/relibc/-/blob/7b9402783d6de31d3c749472027ce345aaff70fc/Cargo.toml#L82) feature group and run the `make static_clean rebuild` command to use it
 - `INIT_SKIP=executable-name` : Skip the execution of executables with hangs or errors, commas are supported if you want to skip multiple executables
 
-The accept the following values:
+They accept the following values:
 
 - `ERROR` value: Known event that is a fatal error but recoverable.
 - `WARN` value: Unexpected event coming from unexpected condition.
@@ -603,6 +603,8 @@ You can see an example output below:
 2026-01-12T22-27-51.758Z [@ps2d::controller:468 WARN] ps2d: post-test unexpected value: 9C
 2026-01-12T22-27-51.760Z [@ps2d::controller:337 ERROR] ps2d: keyboard failed to reset: 55
 ```
+
+To disable the environment variables after boot run the `export *_LOG_LEVEL=OFF` command, for example: the `export RELIBC_LOG_LEVEL=OFF` command will disable relibc logging.
 
 ## Kill A Frozen Redox VM
 

@@ -8,6 +8,6 @@
 
 - The real hardware testing is more rich in information than QEMU testing, thus catching more bugs
 
-- The [os-test] test suite has the largest number of tests and is the recommended method to test the system, use the `make r.os-test-bins` command to run it
+- The [os-test](https://sortix.org/os-test/) test suite has the largest number of tests and is the recommended method to test the system, use the `make r.os-test-bins` command to run it or the `make rp.os-test` command to add the source in the Redox image, build (`cd os-test` and `make all` commands) and run it (`make test` command) later inside of Redox for more testing.
 
-- There's also the [acid] test suite from Redox, run the `make rp.acid` command to install the suite in the Redox image and use the `cargo test` command to run correctness tests and `cargo bench` command to run stress tests.
+- There's also the [acid](https://gitlab.redox-os.org/redox-os/acid) test suite from Redox, to use it run the `make rp.acid` command from the build system to install the suite in the Redox image, run the `cd acid` command to go to the `acid` directory and use the `cargo test` command to run correctness tests and `cargo bench` command to run stress tests.
