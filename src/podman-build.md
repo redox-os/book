@@ -28,9 +28,9 @@ The build process is using **Podman**'s `keep-id` feature, which allows your reg
 
 ## TL;DR - [New](#new-working-directory) or [Existing](#existing-working-directory) Working Directory
 
-### New Working Directory
+Here are TL;DR instructions for **Podman Build** (recommended). [Native build](./building-redox.md) is also available.
 
-If you have already read the [Building Redox](./building-redox.md) instructions, but you wish to use **Podman Build**, follow these steps:
+### New Working Directory
 
  1. Ensure you have the `curl` program installed. e.g., for Pop!_OS/Ubuntu/Debian:
 
