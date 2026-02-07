@@ -53,7 +53,7 @@ If the code that you are working on includes directives like `#[cfg(target_os = 
 If you are browsing a codebase that contains native dependencies (e.g. the kernel repository), you might get analyzer errors because of lacking GCC toolchain. To fix it, install [Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) and its toolchain `redoxer toolchain`, then add the GCC toolchain to your `PATH` configuration (e.g. in `~/.bashrc`):
 
 ```sh
-export PATH="$PATH:$HOME/.redoxer/toolchain/bin"
+export PATH="$PATH:$HOME/.redoxer/x86_64-unknown-redox/toolchain/bin"
 ```
 
 The Redoxer toolchain is added as the last item of the `PATH` environment variable list to make sure it's not replacing the Rust toolchain that you're using.
