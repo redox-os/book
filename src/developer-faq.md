@@ -484,7 +484,7 @@ These rules prevent you from wasting time and stress.
 
 - **Don't edit your code suggestions without a warning before to prevent merge errors and review disorganization**
 - If you are requesting a review it's recommended that it's done by one reviewer per time to avoid extra coordination effort with multiple reviewers to confirm when each reviewer finished their review, but if you accept multiple reviewers at once **each reviewer should warn when started and finished its review to prevent code suggestion conflicts between reviewers due to possible different file states while you apply the code suggestions**
-- If you are requesint a review where code suggestions will not be used, you can accept multiple reviewers without coordination of when they started and finished their reviews
+- If you are requesting a review where code suggestions will not be used, you can accept multiple reviewers without coordination of when they started and finished their reviews
 - Once you finish your review warn to avoid conflicts with other reviewers
 - It's recommended to use code suggestions for normal text and code to help and save time for developers, that way they can quickly improve or apply the text or code.
 
@@ -515,8 +515,10 @@ Read the following pages:
 
 ### How can I write book documentation properly?
 
+**Read the entire book before writing new documentation and submiting MRs to avoid information duplication**
+
+- Only add work-in-progress information if really necessary, as it may unnecessarily increases maintenance cost
 - Don't use informal grammar abbreviations such as "config" (except technical terms such as "CPU")
-- Don't insert work-in-progress information, it unnecessarily increases maintenance cost
 - Use spaces instead of tabs to avoid formatting breakage with different text editor tab configurations
 - Use [Oxford commas](https://en.wikipedia.org/wiki/Serial_comma)
 - The documentation grammar is not strictly formal to allow better understanding and readability, the grammar is a mix of American, British and International English
