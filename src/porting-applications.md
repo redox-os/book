@@ -184,10 +184,10 @@ This is a recipe template for a quick porting workflow.
 ```toml
 #TODO not compiled or tested
 [source]
-tar = "tarball-link"
 git = "repository-link"
 rev = "version-tag"
 branch = "version-branch"
+tar = "tarball-link"
 shallow_clone = true
 [build]
 template = "build-system"
