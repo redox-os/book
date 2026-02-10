@@ -1060,7 +1060,7 @@ Generally programs with CMake use a `-DUSE_SYSTEM` flag to enable the "system li
 
 Sometimes specify the library recipe on the `dependencies = []` section is not enough, some build systems have environment variables to receive a custom path for external libraries.
 
-When you add a library on your `recipe.toml` the Cookbook will copy the library source code to the `sysroot` folder at `recipes/your-category/recipe-name/target/your-target`, this folder has an environment variable that can be used inside the `script =` field on your `recipe.toml`.
+When you add a library on your `recipe.toml` the Cookbook will copy the library source code to the `sysroot` folder at `recipes/your-category/recipe-name/target/$TARGET`, this folder has an environment variable that can be used inside the `script =` field on your `recipe.toml`.
 
 Example:
 
@@ -1225,7 +1225,7 @@ make r.recipe-name 2>&1 | tee recipe-name.log
 If the compilation was successful the recipe can be installed in the QEMU image and tested inside of Redox to find possible runtime errors or crashes.
 
 - To temporarily install the recipe to your QEMU image run `make p.recipe-name`
-- To permanently install the recipe to your QEMU image add your recipe name (`recipe-name = {}`) below the last item in the `[packages]` section of your TOML config at `config/your-cpu-arch/your-config.toml` and run `make image`
+- To permanently install the recipe to your QEMU image add your recipe name (`recipe-name = {}`) below the last item in the `[packages]` section of your TOML config at `config/$ARCH/your-config.toml` and run `make image`
 
 To test your recipe inside of Redox with Orbital, run:
 
@@ -1454,7 +1454,7 @@ It will print the generated BLAKE3 hash, copy and paste on the `blake3 =` field 
 To verify the size of your package use this command:
 
 ```sh
-ls -1sh recipes/your-category/recipe-name/target/your-target
+ls -1sh recipes/your-category/recipe-name/target/$TARGET
 ```
 
 See the size of the `stage.pkgar` and `stage.tar.gz` files.

@@ -228,8 +228,8 @@ make FILESYSTEM_SIZE=512 image qemu
 
 ### Filesystem Customization
 
-The Redox image can be customized by tweaking the configuration files at `config/your-cpu/*.toml`. However, it is recommended that you create your own configuration file and apply changes there.
-(The configuration files at `config/your-cpu` can override the data type values from the filesystem templates at `config`)
+The Redox image can be customized by tweaking the configuration files at `config/$ARCH/*.toml`. However, it is recommended that you create your own configuration file and apply changes there.
+(The configuration files at `config/$ARCH` can override the data type values from the filesystem templates at `config`)
 
 #### Creating a custom filesystem configuration
 
@@ -238,7 +238,7 @@ The following items describe the process for creating a custom filesystem config
 1. Create the `my-desktop.toml` file from an existing filesystem configuration:
 
     ```sh
-    cp config/your-cpu-arch/desktop.toml config/your-cpu-arch/my_desktop.toml
+    cp config/$ARCH/desktop.toml config/$ARCH/my_desktop.toml
     ```
 
 2. Add the following to the `.config` file to set the new configuration as the build system's default:
@@ -258,7 +258,7 @@ In the following example, the `acid` package is added to the `my_desktop.toml` c
 1. Open the `my-desktop.toml` file:
 
     ```sh
-    nano config/your-cpu/my-desktop.toml
+    nano config/$ARCH/my-desktop.toml
     ```
 
 2. Add the `acid` package to the `[packages]` section:
@@ -285,7 +285,7 @@ This is useful for some purposes, such as producing development builds, confirmi
 1. Open the `my-desktop.toml` file:
 
     ```sh
-    nano config/your-cpu/my-desktop.toml
+    nano config/$ARCH/my-desktop.toml
     ```
 
 2. Add the binary package below the `[packages]` section:

@@ -26,6 +26,11 @@ The build system downloads and creates several files that you may want to know a
 - [Cross-Compilation](#cross-compilation)
 - [Build Phases](#build-phases)
 
+## Context
+
+- `$ARCH` is the environment variable for a CPU architecture directory
+- `$TARGET` is the environment variable for CPU-specific recipe binaries
+
 ## Build System Organization
 
 ### Root Folder
@@ -48,28 +53,29 @@ The build system downloads and creates several files that you may want to know a
 
 - `config` - This folder contains all filesystem configurations.
 - `config/*.toml` - Filesystem templates used by the CPU target configurations (a template can use other template to reduce duplication)
-- `config/your-cpu-arch/your-config.toml` - The filesystem configuration of the QEMU image to be built, e.g. `config/x86_64/desktop.toml`
-- `config/your-cpu-arch/server.toml` - The variant with system components (without Orbital) and some important tools. Aimed for servers, low-end computers, testers and developers (try this config if you have boot problems on QEMU or real hardware).
-- `config/your-cpu-arch/desktop.toml` - The variant with system components, the Orbital desktop environment and some important programs (this is the default configuration of the build system). Aimed for end-users, gamers, testers and developers.
-- `config/your-cpu-arch/dev.toml` - The variant with development tools included. Aimed for developers.
-- `config/your-cpu-arch/demo.toml` - The variant with a complete system and optional programs and games. Aimed for end-users, gamers, testers and developers.
-- `config/your-cpu-arch/desktop-minimal.toml` - The minimal `desktop` variant for low-end computers and embedded hardware. Aimed for servers, low-end computers, embedded hardware and developers.
-- `config/your-cpu-arch/minimal.toml` - The variant without network support and Orbital. Aimed for low-end computers, embedded hardware, testers and developers.
-- `config/your-cpu-arch/minimal-net.toml` - The variant without Orbital and tools. Aimed for low-end computers, embedded hardware, testers and developers.
-- `config/your-cpu-arch/resist.toml` - The variant with the `resist` POSIX test suite. Aimed for developers.
-- `config/your-cpu-arch/acid.toml` - The variant with the `acid` general-purpose test suite. Aimed for developers.
-- `config/your-cpu-arch/ci.toml` - The continuous integration variant, recipes added here become packages on the [build server](https://static.redox-os.org/pkg/). Aimed for packagers and developers.
-- `config/your-cpu-arch/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing at the moment.
+- `config/$ARCH/your-config.toml` - The filesystem configuration of the QEMU image to be built, e.g. `config/x86_64/desktop.toml`
+- `config/$ARCH/server.toml` - The variant with system components (without Orbital) and some important tools. Aimed for servers, low-end computers, testers and developers (try this config if you have boot problems on QEMU or real hardware).
+- `config/$ARCH/desktop.toml` - The variant with system components, the Orbital desktop environment and some important programs (this is the default configuration of the build system). Aimed for end-users, gamers, testers and developers.
+- `config/$ARCH/dev.toml` - The variant with development tools included. Aimed for developers.
+- `config/$ARCH/demo.toml` - The variant with a complete system and optional programs and games. Aimed for end-users, gamers, testers and developers.
+- `config/$ARCH/desktop-minimal.toml` - The minimal `desktop` variant for low-end computers and embedded hardware. Aimed for servers, low-end computers, embedded hardware and developers.
+- `config/$ARCH/minimal.toml` - The variant without network support and Orbital. Aimed for low-end computers, embedded hardware, testers and developers.
+- `config/$ARCH/minimal-net.toml` - The variant without Orbital and tools. Aimed for low-end computers, embedded hardware, testers and developers.
+- `config/$ARCH/resist.toml` - The variant with the `resist` POSIX test suite. Aimed for developers.
+- `config/$ARCH/acid.toml` - The variant with the `acid` general-purpose test suite. Aimed for developers.
+- `config/$ARCH/ci.toml` - The continuous integration variant, recipes added here become packages on the [build server](https://static.redox-os.org/pkg/). Aimed for packagers and developers.
+- `config/$ARCH/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing at the moment.
 
 ### Build System Files
 
 - `build` - The directory where the build system will place the final image. Usually `build/$(ARCH)/$(CONFIG_NAME)`, e.g. `build/x86_64/desktop`
-- `build/your-cpu-arch/your-config/harddrive.img` - The Redox image file, to be used by QEMU or VirtualBox for virtual machine execution on a Unix-like host.
-- `build/your-cpu-arch/your-config/redox-live.iso` - The Redox bootable image file, to be used on real hardware for testing and possible installation.
-- `build/your-cpu-arch/your-config/fetch.tag` - An empty file that, if present, tells the build system that the downloading of recipe sources is done.
-- `build/your-cpu-arch/your-config/repo.tag` - An empty file that, if present, tells the build system that all recipes required for the Redox image have been successfully built. **The build system will not check for changes to your code when this file is present.** Use `make rebuild` to force the build system to check for changes.
+- `build/$ARCH/your-config/harddrive.img` - The Redox image file, to be used by QEMU or VirtualBox for virtual machine execution on a Unix-like host.
+- `build/$ARCH/your-config/redox-live.iso` - The Redox bootable image file, to be used on real hardware for testing and possible installation.
+- `build/$ARCH/your-config/fetch.tag` - An empty file that, if present, tells the build system that the downloading of recipe sources is done.
+- `build/$ARCH/your-config/repo.tag` - An empty file that, if present, tells the build system that all recipes required for the Redox image have been successfully built. **The build system will not check for changes to your code when this file is present.** Use `make rebuild` to force the build system to check for changes.
 - `build/podman` - The directory where Podman Build places the container user's home directory, including the container's Rust installation. Use `make container_clean` to remove it. In some situations, you may need to remove this directory manually, possibly with root privileges.
 - `build/container.tag` - An empty file, created during the first Podman build, so a Podman build knows when a reusable Podman image is available. Use `make container_clean` to force a rebuild of the Podman image on your next `make rebuild` run.
+- `build/logs/$TARGET/recipe-name.log` - Where recipe build logs are stored.
 
 ### Cookbook
 
@@ -177,7 +183,7 @@ All recipe targets also support multiple recipe entries by separating each recip
 - `$(BUILD)` - Represents the `build` folder.
 - `$(ARCH)` - Represents the CPU architecture folder at `build`
 - `${TARGET}` - Represents the CPU architecture folder at the `recipes/recipe-name/target` folder
-- `$(CONFIG_NAME)` - Represents your filesystem configuration folder at `build/your-cpu-arch`
+- `$(CONFIG_NAME)` - Represents your filesystem configuration folder at `build/$ARCH`
 
 We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the commands.
 

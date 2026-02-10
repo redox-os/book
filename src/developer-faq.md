@@ -200,13 +200,13 @@ Insert the `CONFIG_NAME?=your-config-name` environment variable to your `.config
 
 ### How can I increase the filesystem size of my QEMU image?
 
-Change the `filesystem_size` data type of your filesystem configuration at: `config/your-cpu-arch/your-config.toml` and run the `make image` command, read the [Filesystem Size](./configuration-settings.md#filesystem-size) section for more details.
+Change the `filesystem_size` data type of your filesystem configuration at: `config/$ARCH/your-config.toml` and run the `make image` command, read the [Filesystem Size](./configuration-settings.md#filesystem-size) section for more details.
 
 ### How can I change the CPU architecture of my build system?
 
 Insert the `ARCH?=your-cpu-arch` environment variable on your `.config` file and run the `make all` command, read the [config](./configuration-settings.md#config) section for more details.
 
-If you want to do it temporarily run the `make all ARCH=your-cpu-arch` command.
+If you want to do it temporarily run the `make all ARCH=$ARCH` command.
 
 If you want to clean the binaries of the previous CPU architecture run the following command:
 
@@ -239,7 +239,7 @@ If you want to permanently install the recipe on your image, read the following 
 - Go to your filesystem configuration and add the recipe:
 
 ```sh
-nano config/your-cpu-arch/your-config.toml
+nano config/$ARCH/your-config.toml
 ```
 
 ```toml
@@ -319,7 +319,7 @@ Insert the `REPO_BINARY?=1` environment variable to your `.config` file, it will
 After inserting the `REPO_BINARY?=1` environment variable to your `.config` file, go to your filesystem configuration and add the source-based variant of the recipe:
 
 ```sh
-nano config/your-cpu-arch/your-config.toml
+nano config/$ARCH/your-config.toml
 ```
 
 ```toml

@@ -173,7 +173,7 @@ mkdir recipes/other/myfiles/source
 ```
 
 ```sh
-nano config/your-cpu-arch/your-config.toml
+nano config/$ARCH/your-config.toml
 ```
 
 ```toml
@@ -190,7 +190,7 @@ Use Case: Quickly insert files on the Redox image or keep files between rebuilds
 #### Disable a recipe on the filesystem configuration
 
 ```sh
-nano config/your-cpu-arch/your-config.toml
+nano config/$ARCH/your-config.toml
 ```
 
 ```
@@ -218,7 +218,7 @@ Use Case: Test toolchain fixes.
 #### Build some filesystem configuration for some CPU architecture
 
 ```sh
-make all CONFIG_NAME=your-config ARCH=your-cpu-arch
+make all CONFIG_NAME=your-config ARCH=$ARCH
 ```
 
 Use Case: Quickly build Redox variants without manual intervention on configuration files.
@@ -228,7 +228,7 @@ Use Case: Quickly build Redox variants without manual intervention on configurat
 (Much faster than the option above)
 
 ```sh
-make all REPO_BINARY=1 CONFIG_NAME=your-config ARCH=your-cpu-arch
+make all REPO_BINARY=1 CONFIG_NAME=your-config ARCH=$ARCH
 ```
 
 Use Case: Quickly build Redox variants without system compilation and manual intervention on configuration files.

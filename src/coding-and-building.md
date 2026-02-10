@@ -340,7 +340,7 @@ redoxer exec echo hello
 
 You can use the `make live` command to create bootable images, it will be used instead of `make image`
 
-This command will create the file `build/your-cpu-arch/your-config/redox-live.iso`, you will write this image on your USB, SSD or HDD drives and CD or DVD disks (if you have an USB device, [Popsicle](https://github.com/pop-os/popsicle) is the recommended method to flash your device).
+This command will create the file `build/$ARCH/your-config/redox-live.iso`, you will write this image on your USB, SSD or HDD drives and CD or DVD disks (if you have an USB device, [Popsicle](https://github.com/pop-os/popsicle) is the recommended method to flash your device).
 
 #### Full bootable image creation
 
@@ -371,7 +371,7 @@ If you can't use Popsicle, you can use the `dd` tool, follow the steps below:
 - Go to the files of your Cookbook configuration:
 
 ```sh
-cd build/your-cpu-arch/your-config
+cd build/$ARCH/your-config
 ```
 
 - Flash your device with `dd`
@@ -397,7 +397,7 @@ In the `/dev/disk/by-id/usb-your-device-model` path you will replace the `usb-yo
 - Go to the files of your Cookbook configuration:
 
 ```sh
-cd build/your-cpu-arch/your-config
+cd build/$ARCH/your-config
 ```
 
 - Verify if your optical disk device can write on CD/DVD
@@ -562,7 +562,7 @@ mkdir recipes/other/myfiles/source
 make rp.myfiles
 ```
 
-- Add the `myfiles` recipe below the `[packages]` section of your filesystem configuration at: `config/your-cpu-arch/your-config.toml` (if you want your files to be automatically added to new images):
+- Add the `myfiles` recipe below the `[packages]` section of your filesystem configuration at: `config/$ARCH/your-config.toml` (if you want your files to be automatically added to new images):
 
 ```
 [packages]
