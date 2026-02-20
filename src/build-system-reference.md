@@ -17,6 +17,7 @@ The build system downloads and creates several files that you may want to know a
 - [Scripts](#scripts)
 - [Git Auto-checkout](#git-auto-checkout)
 - [Update The Build System](#update-the-build-system)
+  - [Update Redox](#update-redox)
 - [Fix Breaking Changes](#fix-breaking-changes)
   - [All Recipes](#all-recipes)
   - [One Recipe](#one-recipe)
@@ -353,10 +354,36 @@ If you are working in a separated branch on the recipe source you can't build yo
 This is the recommended way to update your build system/recipe sources and binaries.
 
 ```sh
-make pull rebuild
+make pull
+```
+
+### Update Redox
+
+This is the recommended way to update the system and applications sources and binaries.
+
+```sh
+make rebuild
+```
+
+If you want to just update the system without non-essential programs, run the following command:
+
+```sh
+make rp.bootloader,kernel,relibc,redoxfs,base,coreutils,orbital,base-initfs
+```
+
+Or if you are using Orbital:
+
+```sh
+make rp.bootloader,kernel,relibc,redoxfs,base,coreutils,orbital,base-initfs
 ```
 
 Sometimes you need to update the statically linked recipes manually with the `make static_clean rebuild` command or also rebuild all dynamically linked recipes with the `make repo_clean all` command.
+
+If you want to just rebuild the system without non-essential programs, run the following command:
+
+```sh
+make crp.bootloader,kernel,relibc,redoxfs,base,coreutils,base-initfs
+```
 
 (The Podman container is updated automatically if upstream add new packages to the Containerfile, but you can also force the container image to be updated with the `make container_clean` command)
 
