@@ -10,7 +10,7 @@ This page contains the most quick testing/development workflow for people that w
 - [Install the required dependencies for the build system](#install-the-required-dependencies-for-the-build-system)
 - [Download and run the "podman_bootstrap.sh" script](#download-and-run-the-podman_bootstrapsh-script)
 - [Build the system](#build-the-system)
-- [Update the build system and its submodules](#update-the-build-system-and-its-submodules)
+- [Update the build system](#update-the-build-system)
 - [Update the toolchain and relibc](#update-the-toolchain-and-relibc)
 - [Update recipes and Redox image](#update-recipes-and-redox-image)
 - [Update everything](#update-everything)
@@ -88,7 +88,7 @@ make all
 
 Use Case: Build the system from a clean build system copy.
 
-#### Update the build system and its submodules
+#### Update the build system
 
 ```sh
 make pull
@@ -112,6 +112,18 @@ make rebuild
 
 Use Case: Keep the Redox image up-to-date.
 
+#### Only update system recipes and install in Redox image
+
+```sh
+make rp.sys,sys-gui,--with-package-deps
+```
+
+Or if incremental compilation can't be used:
+
+```sh
+make crp.sys,sys-gui,--with-package-deps
+```
+
 #### Update everything
 
 Install the `topgrade` tool to update your system packages (you can install it with `cargo install topgrade`)
@@ -121,14 +133,22 @@ topgrade
 ```
 
 ```sh
-make pull
-```
-
-```sh
-make prefix rebuild
+make pull rebuild
 ```
 
 Use Case: Try to fix most problems caused by outdated recipes, toolchain and build system configuration.
+
+#### Wipe statically linked recipe binaries
+
+```sh
+make static_clean rebuild
+```
+
+#### Wipe and build all recipe binaries
+
+```sh
+make repo_clean repo
+```
 
 #### Wipe the toolchain and download again
 
@@ -214,6 +234,12 @@ make prefix PREFIX_BINARY=0
 ```
 
 Use Case: Test toolchain fixes.
+
+#### Build and install a meta-package
+
+```sh
+make rp.meta-package,--with-package-deps
+```
 
 #### Build some filesystem configuration for some CPU architecture
 

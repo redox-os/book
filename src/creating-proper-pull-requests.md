@@ -6,12 +6,13 @@ This is done by preparing a feature branch, and submitting a merge request.
 
 For small changes, it is sufficient to just submit a pull request. For larger changes, which may require planning or more extensive review, it is better to start by creating an [issue](./filing-issues.md). This provides a shared reference for proposed changes, and a place to collect discussion and feedback related to it.
 
-The steps given below are for the main Redox project repository - submodules and other projects may vary, though most of the approach is the same.
+The steps given below are for the main Redox project repository - other projects may vary, though most of the approach is the same.
 
 ### Please note:
 
-  - **Once you have marked your MR as ready, don't add new commits.**
-  - **If you need to add new commits mark the MR as draft again.**
+- **Once you have marked your MR as ready, don't add new commits.**
+- **If you need to add new commits mark the MR as draft again.**
+- Sometimes you need to rebase your MR to fix the CI testing
 
 ## Preparing your branch
 

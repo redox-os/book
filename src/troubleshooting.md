@@ -229,13 +229,31 @@ Sometimes build system or recipe breaking changes are merged (you need to monito
 
 The following methods can prevent a build system breakage after updates that change file configuration behavior.
 
-- Wipe all recipe binaries, update build system source and rebuild the system (most common prevention)
+- Wipe all statically linked recipe binaries, update build system source and rebuild the system (most common prevention)
 
 ```sh
-make clean pull all
+make static_clean pull rebuild
 ```
 
-- Wipe all recipe binaries and Podman container, update build system source and rebuild the system
+Or also clean the toolchain if needed:
+
+```sh
+make static_clean prefix_clean pull prefix rebuild
+```
+
+- Wipe all recipe binaries, update build system source and rebuild the system (second most common prevention)
+
+```sh
+make repo_clean pull repo
+```
+
+Or also clean the toolchain if needed:
+
+```sh
+make repo_clean prefix_clean pull prefix repo
+```
+
+- Wipe all recipe binaries, toolchain and Podman container, update build system source and rebuild the system
 
 ```sh
 make clean container_clean pull all
@@ -295,18 +313,6 @@ make ur.recipe-name
 
 Check if the compilation or runtime error continues after this command, if the error continues run the following command:
 
-- Update relibc and rebuild the recipe
-
-```sh
-touch relibc
-```
-
-```sh
-make prefix cr.recipe-name
-```
-
-Check if the compilation or runtime error continues after this command, if the error continues run the following command:
-
 - Reconfigure the Redox toolchain and rebuild the recipe
 
 ```sh
@@ -325,20 +331,40 @@ Check if the compilation or runtime error continues after this command, if the e
 make static_clean rebuild
 ```
 
+Or also clean the toolchain if needed:
+
+```sh
+make static_clean prefix_clean prefix rebuild
+```
+
 Check if the compilation or runtime error continues after this command, if the error continues run the following command:
 
 - Wipe all recipe binaries and rebuild the system (run this command if the binaries of multiple recipes are broken)
 
 ```sh
-make repo_clean all
+make repo_clean repo
 ```
 
 Check if the compilation or runtime error continues after this command, if the error continues run the following command:
 
-- Wipe all recipe sources and binaries and rebuild the system (run this command if the sources and binaries of multiple recipes are broken)
+- Wipe all build system binaries and rebuild the system (run this command if the binaries of multiple recipes are broken)
 
 ```sh
-make fetch_clean all
+make clean all
+```
+
+Or clean the Podman container if needed:
+
+```sh
+make clean container_clean all
+```
+
+Check if the compilation or runtime error continues after this command, if the error continues run the following command:
+
+- Wipe all recipe sources and build system binaries and rebuild the system (run this command if the sources and binaries of multiple recipes are broken)
+
+```sh
+make distclean all
 ```
 
 Check if the compilation or runtime error continues after this command, if the error continues read the section below.

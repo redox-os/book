@@ -138,22 +138,23 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
 ### Recipe
 
-- `make f.recipe-name` - Download the recipe source
-- `make r.recipe-name` - Build a single recipe, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games` (you can't use this command to replace the `make all`, `make fstools` and `make prefix` commands because it don't trigger them, make sure to run them before to avoid errors)
+- `make f.recipe-name` (abbreviation of `fetch`) - Download one or multiple recipe sources
+- `make r.recipe-name` (abbreviation of `repo`) - Build one or multiple recipes, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games` (you can't use this command to replace the `make all`, `make fstools` and `make prefix` commands because it don't trigger them, make sure to run them before to avoid errors)
 
-  The package is built even if it is not in your filesystem configuration.
+  - Meta-packages need the `--with-package-deps` option, for example: `make r.meta-package,--with-package-deps`
+  - The recipe is built even if it's not in your filesystem configuration.
+  - This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate
 
-  (This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate)
-
-- `make p.recipe-name` - Install the recipe binaries to an existing Redox image
-- `make c.recipe-name` - Clean the recipe binaries.
-- `make u.recipe-name` - Clean the recipe source code and binaries (**please backup or submit your source changes before the execution of this command**).
+- `make p.recipe-name` (abbreviation of `push`) - Install one or multiple recipe binaries to an existing Redox image
+- `make c.recipe-name` (abbreviation of `clean`) - Clean one or multiple recipe binaries.
+- `make u.recipe-name` (abbreviation of `unfetch`) - Clean one or multiple recipe source code and binaries (**please backup or submit your source changes before the execution of this command**).
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
 - `make ur.recipe-name` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
 - `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
 - `make crp.recipe-name` - A shortcut for `make c.recipe r.recipe p.recipe`
 - `make static_clean` - Clean all statically linked recipe binaries
 - `make repo_clean` - Clean all recipe binaries (alternative to `make c.--all`)
+- `make repo_clean_target` - Clean all recipe binaries compiled to the active CPU architecture (`ARCH=value` environment variable)
 - `make fetch_clean` - Clean all recipe binaries and sources (alternative to `make u.--all`)
 - `make x.--all` - Any recipe target (x) can be run in all recipes at `recipes` (like `make c.--all` which clean all recipe binaries, for example)
 - `make x.--category-folder-name` - Any recipe target (x) can be run in all recipes of some category folder at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` folder, for example), if you need to use a sub-category use `--category-folder-name/subfolder`
@@ -368,13 +369,13 @@ make rebuild
 If you want to just update the system without non-essential programs, run the following command:
 
 ```sh
-make rp.bootloader,kernel,relibc,redoxfs,base,coreutils,orbital,base-initfs
+make rp.sys,--with-package-deps
 ```
 
 Or if you are using Orbital:
 
 ```sh
-make rp.bootloader,kernel,relibc,redoxfs,base,coreutils,orbital,base-initfs
+make rp.sys,sys-gui,--with-package-deps
 ```
 
 Sometimes you need to update the statically linked recipes manually with the `make static_clean rebuild` command or also rebuild all dynamically linked recipes with the `make repo_clean all` command.
@@ -382,7 +383,13 @@ Sometimes you need to update the statically linked recipes manually with the `ma
 If you want to just rebuild the system without non-essential programs, run the following command:
 
 ```sh
-make crp.bootloader,kernel,relibc,redoxfs,base,coreutils,base-initfs
+make crp.sys,--with-package-deps
+```
+
+Or if you are using Orbital:
+
+```sh
+make crp.sys,sys-gui,--with-package-deps
 ```
 
 (The Podman container is updated automatically if upstream add new packages to the Containerfile, but you can also force the container image to be updated with the `make container_clean` command)
@@ -398,7 +405,7 @@ To pass the new relibc changes for all recipes (programs are the most common cas
 To clean all recipe binaries and trigger a complete rebuild, run:
 
 ```sh
-make clean all
+make repo_clean repo
 ```
 
 ### One Recipe

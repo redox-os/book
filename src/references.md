@@ -24,33 +24,30 @@ The sections are ordered by knowledge importance.
 
 ### Rust
 
-- [Rust Book](https://doc.rust-lang.org/stable/book/) - The most important source of information on the Rust programming language.
-- [Rust By Example](https://doc.rust-lang.org/stable/rust-by-example/) - Learn Rust with examples.
-- [Rustlings](https://github.com/rust-lang/rustlings) - Learn Rust with exercises.
+- [Learn Rust](https://rust-lang.org/learn/) - The official ways to learn the Rust programming language.
+- [Rust Playground](https://play.rust-lang.org/) - Test your Rust code in the web browser.
 - [Awesome Rust](https://github.com/rust-unofficial/awesome-rust) - Curated list of Rust programs, libraries and resources.
-- [No Boilerplate - Rust playlist](https://www.youtube.com/playlist?list=PLZaoyhMXgBzoM9bfb5pyUOT3zjnaDdSEP) - Amazing short documentaries about special things on Rust.
-- [Developer Roadmaps - Rust](https://roadmap.sh/rust) - A guide to learn Rust.
 - [rust-learning](https://github.com/ctjhoa/rust-learning) - A list with articles and videos to learn Rust.
-- [Rust Playground](https://play.rust-lang.org/) - Test your Rust code on the web browser.
-- [This Week in Rust](https://this-week-in-rust.org/) - Weekly updates on the Rust ecosystem, it covers language improvements, organization updates, community updates and articles.
-- [The Coded Message - Rust articles](https://www.thecodedmessage.com/tags/rust/)
-- [fasterthanlime - Rust articles](https://fasterthanli.me/tags/rust)
 - [Learn Rust With Entirely Too Many Linked Lists](https://rust-unofficial.github.io/too-many-lists/) - How to implement a linked list in Rust.
 - [Rust Design Patterns](https://rust-unofficial.github.io/patterns/intro.html) - About idioms, design patterns, and anti-pattern in Rust.
-- [Rust Reference Book](https://doc.rust-lang.org/reference/index.html) - References for people with background familiarity with Rust.
-- [Rustonomicon](https://doc.rust-lang.org/nomicon/) - To learn about unsafe Rust.
 - [Rust 101 - Exercises](https://101-rs.tweede.golf/) - A Rust university course (but lacking answers for exercises).
 - [teach-rs](https://teach-rs.tweede.golf/) - An university course to learn Rust.
 - [Rust Security Handbook](https://yevh.github.io/rust-security-handbook/) - Helpful security related practices when coding in Rust.
+- [Developer Roadmaps - Rust](https://roadmap.sh/rust) - A guide to learn Rust.
+- [No Boilerplate - Rust playlist](https://www.youtube.com/playlist?list=PLZaoyhMXgBzoM9bfb5pyUOT3zjnaDdSEP) - Short documentaries about special things on Rust.
+- [This Week in Rust](https://this-week-in-rust.org/) - Weekly updates on the Rust ecosystem, it covers the programming language improvements, organization updates, library/application updates and articles.
+- [The Coded Message - Rust articles](https://www.thecodedmessage.com/tags/rust/)
+- [fasterthanlime - Rust articles](https://fasterthanli.me/tags/rust)
 
 ### Porting
 
 If you don't know how to port some program or library, you can see the build system documentation or software ports of other operating systems.
 
+- [GNU Make](https://www.gnu.org/software/make/) - GNU command runner, the most used build system in the world.
+- [GNU Autotools](https://www.gnu.org/software/automake/) - GNU build system, used by most old POSIX/Linux programs.
+- [CMake](https://cmake.org/) - The second most used build system in the world.
+- [Meson](https://mesonbuild.com/) - A build system used by many POSIX/Linux programs.
 - [Cargo](https://doc.rust-lang.org/cargo/) - The project and dependency manager of the Rust programming language.
-- [GNU Autotools](https://www.gnu.org/software/automake/) - The GNU build system, used by most old POSIX programs.
-- [Meson](https://mesonbuild.com/) - A build system used by many Linux/POSIX programs.
-- [GNU Make](https://www.gnu.org/software/make/) - The GNU's command runner, used to build projects with many source code files.
 - [FreeBSD - Software Ports (cgit)](https://cgit.freebsd.org/ports/) - The official web interface for the software ports of FreeBSD.
 - [FreeBSD - Software Ports (GitHub mirror)](https://github.com/freebsd/freebsd-ports) - GitHub mirror for the software ports of FreeBSD.
 - [NetBSD - Software Ports (GitHub mirror)](https://github.com/NetBSD/pkgsrc) - GitHub mirror for the software ports of NetBSD.
