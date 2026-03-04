@@ -14,11 +14,15 @@ The following items summarize the Rust benefits:
 
 - Memory-Safety
 
-  All memory allocations are verified by the compiler to prevent bugs.
+  All memory allocations are verified by the compiler to prevent bugs, like buffer overflows and dangling pointers.
+
+- Type-safety
+
+  Invalid type usage is verified at compile-time and new types can be created to invalidate logic states that aren't allowed, which prevent and fix most logic bugs
 
 - Thread-Safety
 
-  Concurrent code in programs is immune to data races.
+  Concurrent code in userspace programs is immune to data races.
 
 - NULL-Safety
 

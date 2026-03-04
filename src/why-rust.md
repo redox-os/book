@@ -6,15 +6,15 @@ Rust has enormous advantages, because for operating systems, security and stabil
 
 Since operating systems are such an integrated part of computing, they are the most important piece of software.
 
-There have been numerous bugs and vulnerabilities in Linux, BSD, glibc, Bash, X11, etc. throughout time, simply due to the lack of memory allocation and type safety. Rust does this right, by enforcing memory safety statically.
+There have been numerous bugs and security vulnerabilities in Linux, BSDs, glibc, GNU Bash, X11, etc. throughout time, simply due to the lack of memory-safety and type-safety. Rust does this right, by enforcing memory and type safety statically (compile-time verification).
 
-Design does matter, but so does implementation. Rust attempts to avoid these unexpected memory unsafe conditions (which are a major source of security critical bugs). Design is a very transparent source of issues. You know what is going on, you know what was intended and what was not.
+Design does matter, but so does implementation. Rust attempts to avoid these unexpected unsafe memory conditions (which are a major source of security critical bugs). Design is a very transparent source of issues. You know what is going on, you know what was intended and what was not.
 
-The basic design of the kernel/user-space separation is fairly similar to Unix-like systems, at this point. The idea is roughly the same: you separate kernel and user-space, through strict enforcement by the kernel, which manages system resources.
+The basic design of the kernel/user-space separation is fairly similar to Unix-like systems, at this point. The idea is roughly the same: you separate kernel and user-space, through strict enforcement by the kernel (permission system with small attack surface) and CPU (memory address space isolation), which manages system resources.
 
-However, we have an advantage: enforced memory and type safety. This is Rust's strong side, a large number of "unexpected bugs" (for example, undefined behavior) are eliminated at compile-time.
+However, we have an advantage: enforced memory and type safety. This is Rust's strong side, a large number of "unexpected bugs" (for example, undefined behavior) are eliminated with compile-time verification.
 
-The design of Linux and BSD is secure. The implementation is not. Many bugs in Linux originate in unsafe conditions (which Rust effectively eliminates) like buffer overflows, not the overall design.
+The design of Linux and BSD is secure, the implementation is not. Many bugs in Linux originate in unsafe conditions (which Rust effectively eliminates) like buffer overflows, not the overall design.
 
 We hope that using Rust we will produce a more secure and stable operating system in the end.
 
@@ -36,30 +36,34 @@ The following sections explain the Rust benefits.
 
 The restrictive syntax and compiler requirements to build the code reduce the probability of bugs a lot.
 
+The borrow checker verifies all memory allocation at compile-time which eliminate most memory bugs, like buffer overflows or dangling pointers.
+
+The type system verifies invalid type usage at compile-time and allow the creation of new types to invalidade logic states that aren't allowed, which eliminate most logic bugs.
+
 ### Less vulnerable to data corruption
 
 The Rust compiler helps the programmer to avoid memory errors and race conditions, which reduces the probability of data corruption bugs.
 
-### No need for C/C++ exploit mitigations
+### No need for memory exploit mitigations
 
-The microkernel design written in Rust protects against memory defects that one might see in software written in C/C++.
+The microkernel design written in Rust protects against memory defects that one might see in software written in C/C++, which reduces the system complexity by not using memory exploit mitigations.
 
 By isolating the system components from the kernel, the [attack surface](https://en.wikipedia.org/wiki/Attack_surface) is very limited.
 
 ### Improved security and reliability without significant performance impact
 
-As the kernel is small, it uses less memory to do its work. The limited kernel code size helps us work towards a bug-free status ([KISS](https://en.wikipedia.org/wiki/KISS_principle)).
+As the kernel is small, it uses less memory to do its work. The limited kernel code size helps us to achieve a possible bug-free status ([KISS](https://en.wikipedia.org/wiki/KISS_principle)).
 
-Rust's safe and fast language design, combined with the small kernel code size, helps ensure a reliable, performant and easy to maintain core.
+Rust's safe and fast language design, combined with the small kernel code size, helps ensure a reliable, performant and easy to maintain the system core.
 
 ### Thread-safety
 
-The C/C++ support for thread-safety is quite fragile. As such, it is very easy to write a program that looks safe to run across multiple threads, but which introduces subtle bugs or security holes. If one thread accesses a piece of state at the same time that another thread is changing it, the whole program can exhibit some truly confusing and bizarre bugs.
+The C/C++ support for thread-safety is quite fragile. As such, it is very easy to write a program that looks safe to run across multiple CPU threads, but which introduces subtle bugs or security holes. If one thread accesses a piece of state at the same time that another thread is changing it, the whole program can exhibit some truly confusing and bizarre bugs.
 
 You can see [this example](https://en.wikipedia.org/wiki/Time_of_check_to_time_of_use) of a serious class of security bugs that thread-safety fixes.
 
-In Rust, this kind of bug is easy to avoid: the same type system that keeps us from writing memory unsafety prevents us from writing dangerous concurrent access patterns
+In Rust, this kind of bug is easy to avoid: the same type system that prevent us from writing memory mistakes also prevents us from writing dangerous concurrent access patterns
 
 ### Rust-written Drivers
 
-Drivers written in Rust are likely to have fewer bugs and are therefore more stable and secure.
+Drivers written in Rust reduces the probability of bugs, which increases their stability and security.
