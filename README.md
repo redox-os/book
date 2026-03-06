@@ -32,7 +32,7 @@ In the `book` directory, run
 
 Use the [lychee](https://lychee.cli.rs/) tool to verify broken links, it's very advanced and fast.
 
-Read [this](https://lychee.cli.rs/installation/) page to install the tool.
+Read [this](https://lychee.cli.rs/guides/getting-started/) page to install the tool.
 
 ### Usage
 
