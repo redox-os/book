@@ -52,14 +52,14 @@ Redox aims to support most software, especially those that are important. Softwa
 
 A well known example of software being too complicated to port is Chromium as it's heavily tuned to use OS-specific function calls and don't accept OS support beyond Linux in upstream, FreeBSD has to maintain [hundreds of patches](https://github.com/freebsd/freebsd-ports/tree/main/www/chromium/files) to make sure it's working. It's easier for us to port less complicated alternatives like Firefox, WebKit and Servo given that our limited resources are better spent on improving Redox itself.
 
-This doesn't stop us from porting more programs even if they are non-POSIX. For example, Wayland is challenging to port as it depends on many Linux features. But given enough time, it will became available in Redox, just like how X11 is working on Redox.
+This doesn't stop us from porting more programs even if they are non-POSIX. For example, Wayland is challenging to port as it depends on many Linux features. But given enough time, it will become available in Redox, just like how X11 is working on Redox.
 
 ### System Designs That Are Non-Goals
 
 Redox aims to have the answer to every system design challenge if possible. However, correctness and security is our top priority next to other aspect like "performance", "usability" or "stability". That may change as Redox get close to releasing the 1.0 stable version.
 
-Redox have gotten though many major system design changes since its inception. Historically Redox was not designed to be a microkernel nor POSIX-compliant, then both have changed in early times. We also recently switched our system service interface (scheme) design and about to change the security design to a capability-based system.
+Redox has gotten through many major system design changes since its inception. Historically Redox was not designed to be a microkernel nor POSIX-compliant, then both have changed in early times. We also recently switched our system service interface (scheme) design and are about to change the security design to a [Capability-based security](https://en.wikipedia.org/wiki/Capability-based_security).
 
-Nowadays all recent and future major changes into Redox is happening via [RFCs](https://gitlab.redox-os.org/redox-os/rfcs) and reviewed by Redox OS Board Members. Any Request For Changes that reduces correctness or security are likely not going to be accepted, but this terms are flexible and not enforced until the 1.0 stable version.
+Nowadays all recent and future major changes into Redox are happening via [RFCs](https://gitlab.redox-os.org/redox-os/rfcs) and reviewed by Redox OS Board Members. Any Request For Changes that reduces correctness or security are likely not going to be accepted, but these terms are flexible and not enforced until the 1.0 stable version.
 
-One example major design that trade security over "usability" is userspace exec which has been fully implemented. A userspace exec means `exec` are fully managed in userspace, it means that the kernel have no way to know how any software has been executed (e.g.their arguments and environment variables), as the kernel also have been restricted to not read any userspace memory.
+One major example where the design trades security over usability is userspace exec which has been fully implemented. A userspace exec means `exec` are fully managed in userspace, this means that the kernel has no way of knowing how software is being executed (e.g. software arguments and environment variables), as the kernel is restricted to read any userspace memory.
