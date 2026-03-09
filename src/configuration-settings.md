@@ -31,7 +31,7 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as
 |:---------|:-----------|
 |`ARCH`| Specifies the [CPU architecture](#architecture-names) that the system is to be built for. The default value is `x86_64`. |
 | `CONFIG_NAME` | Determines the name of the filesystem configuration, and is normally used to construct the `FILESYSTEM_CONFIG` name (the `desktop` variant is used by default). |
-| `BOARD` | For single board computers such as Raspberry Pi 3B+ (`raspi3bp`) that require special configuration. Defaults to empty. |
+| `BOARD` | For [supported QEMU single board computers](https://www.qemu.org/docs/master/system/targets.html) such as Raspberry Pi 3B+ (`raspi3bp`) that require special configuration. Defaults to empty. |
 | `FILESYSTEM_CONFIG` | Determines the filesystem configuration file location. See the [Filesystem Configuration](#filesystem-configuration) section below. The default value is `config/$ARCH/$BOARD/$CONFIG_NAME.toml` or `config/$ARCH/$CONFIG_NAME.toml` if `$BOARD` is empty, but this can be changed if the desired configuration file is in a different location. |
 | `QEMU_MEM` | Sets the QEMU RAM memory quantity, e.g., `QEMU_MEM=2048`. |
 | `QEMU_SMP` | Sets the QEMU CPU core quantity, e.g.,  `QEMU_SMP=4`. |
@@ -43,6 +43,7 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
 | `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
+| `PODMAN_CACHE_PULL` | If set to 1 will download the cached Podman container instead of creating one from scratch, disable if the cached container is broken
 | `FSTOOLS_IN_PODMAN` | If set to 1 (`FSTOOLS_IN_PODMAN=1`), the build system will build the installer inside Podman to avoid FUSE in the host system. See the [Installing without FUSE](./advanced-podman-build.md#installing-without-fuse) page for more information. |
 | `FSTOOLS_NO_MOUNT` | If set to 1 (`FSTOOLS_NO_MOUNT=1`), the installer will not use FUSE to create images. See the [Installing without FUSE](./advanced-podman-build.md#installing-without-fuse) section for more information. |
 | `CONTAINERFILE` | The Podman container configuration file. See the [Podman Build](./podman-build.md) page for more information. |

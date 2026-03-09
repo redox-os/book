@@ -117,7 +117,16 @@ insert your script here
 """
 [build]
 template = "build-system" # build.template data type
-cargoflags = "--option-name" # build.cargoflags data type
+cargopath = "package-directory" # build.cargopath
+cargopackages = [ # build.cargopackages
+    "package1",
+    "package2",
+]
+cargoexamples = [ # build.cargoexamples
+    "example1",
+    "example2",
+]
+cargoflags = ["--option-name"] # build.cargoflags data type
 configureflags = [ # build.configureflags data type
     "OPTION1=value",
     "OPTION2=value",
@@ -164,7 +173,10 @@ dependencies = [ # package.dependencies data type
 - `source.script` : Data type used when you need to change the build system configuration (to regenerate the GNU Autotools configuration, for example)
 - `[build]` : Section for data types that manage the program compilation and packaging
 - `build.template` : Insert the program build system, read the [Templates](#templates) section for more details.
-- `build.cargoflags` : Data type for Cargo flags (string)
+- `build.cargopath` : Data type for Cargo package directory path (when `Cargo.toml` is missing in repository/tarball root directory or when package is not declared in the root directory workspace)
+- `build.cargopackages` : Data type for Cargo packages
+- `build.cargoexamples` : Data type for Cargo examples
+- `build.cargoflags` : Data type for Cargo flags (array)
 - `build.configureflags` : Data type for GNU Autotools flags (array)
 - `build.cmakeflags` : Data type for CMake flags (array)
 - `build.mesonflags` : Data type for Meson flags (array)
