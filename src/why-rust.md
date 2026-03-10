@@ -38,7 +38,7 @@ The restrictive syntax and compiler requirements to build the code reduce the pr
 
 The borrow checker verifies all memory allocation at compile-time which eliminate most memory bugs, like buffer overflows or dangling pointers.
 
-The type system verifies invalid type usage at compile-time and allow the creation of new types to invalidate logic states that aren't allowed, which eliminate some logic bugs.
+The type system verifies invalid type usage at compile-time and allow the creation of new types to invalidate logic states that aren't allowed, which eliminate some logic bugs and reduce the formal verification effort.
 
 ### Less vulnerable to data corruption
 

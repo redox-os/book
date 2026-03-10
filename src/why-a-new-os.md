@@ -18,7 +18,7 @@ The following items summarize the Rust benefits:
 
 - Type-safety
 
-  Invalid type usage is verified at compile-time (NULLs can't cause undefined behavior, for example) and new types can be created to invalidate logic states that aren't allowed, which prevent and fix some logic bugs
+  Invalid type usage is verified at compile-time (NULLs can't cause undefined behavior, for example) and new types can be created to invalidate logic states that aren't allowed, which prevent/fix some logic bugs and reduce the formal verification effort
 
 - Thread-Safety
 
