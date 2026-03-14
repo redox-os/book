@@ -8,11 +8,12 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [Why does Redox have unsafe Rust code?](#why-does-redox-have-unsafe-rust-code)
     - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
     - [Why does Redox do cross-compilation?](#why-does-redox-do-cross-compilation)
-    - [Does Redox support OpenGL and Vulkan?](#does-redox-support-opengl-and-vulkan)
+    - [What are the CPU requirements of Redox?](#what-are-the-cpu-requirements-of-redox)
     - [How can I port a program?](#how-can-i-port-a-program)
     - [How can I write a driver?](#how-can-i-write-a-driver)
     - [How can I debug?](#how-can-i-debug)
     - [What is the software and hardware requirements for development?](#what-is-the-software-and-hardware-requirements-for-development)
+    - [Does Redox support OpenGL and Vulkan?](#does-redox-support-opengl-and-vulkan)
 - [Build System Questions](#build-system-questions)
     - [What is the correct way to update the build system?](#what-is-the-correct-way-to-update-the-build-system)
     - [How can I verify if my build system is up-to-date?](#how-can-i-verify-if-my-build-system-is-up-to-date)
@@ -134,9 +135,9 @@ Read some of the reasons below:
 
 (Interpreted programs and scripts don't need cross-compilation but the programming language's interpreter or possible compiled dependencies needs to be ported and cross-compiled to Redox)
 
-### Does Redox support OpenGL and Vulkan?
+### What are the CPU requirements of Redox?
 
-Read the [Software Rendering](./graphics-windowing.md#software-rendering) section.
+Read [this](./hardware-support.md#cpu-requirements) section.
 
 ### How can I port a program?
 
@@ -149,6 +150,10 @@ Read the [drivers repository README](https://gitlab.redox-os.org/redox-os/driver
 ### How can I debug?
 
 Read the [Debug Methods](./troubleshooting.md#debug-methods) section.
+
+### Does Redox support OpenGL and Vulkan?
+
+Read the [Software Rendering](./graphics-windowing.md#software-rendering) section.
 
 ### What is the software and hardware requirements for development?
 
