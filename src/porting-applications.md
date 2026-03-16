@@ -75,28 +75,28 @@ The [Including applications in Redox](./including-applications.md) page gives an
 
 ## Notes
 
-This section contain quick important information for porting.
+This section contains quick important information for porting.
 
 - Most or all build instructions were made for native compilation and not cross-compilation, with some poor documentation exceptions
 - If the application or library build tests in compilation you need to disable them for cross-compilation
 - If you are using dynamic linking and the `custom` recipe template, the `DYNAMIC_INIT` command need to be added in the first line of the `script` data type
-- We recommend to use the FreeBSD dependencies of the application if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy don't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
+- We recommend to use the FreeBSD dependencies of the application if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy doesn't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies.
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
 - The Debian naming policy use dashes as separators in packages with optional features: `application-name` (default application variant with compiled executables) and `application-name-dev` (application variant with objects for linking), also check the source package to be sure
 - The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it can't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
-- The recipe support recursive dependencies, thus you don't need to specify a dependency two times if some dependency already provide it
+- The recipe support recursive dependencies, thus you don't need to specify a dependency two times if some dependency already provides it
 - Don't add build tools in the `build.dependencies` data type, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
 - The compiler can build recipe dependency libraries as `.so` files (objects for dynamic linking) or `.a` files (objects for static linking): The `.so` files will be installed out of the binary (stored on the `/lib` directory of the system) while the `.a` files will be mixed in the final binary.
-- Linux distributions add a number after the `.so` files to avoid conflicts on the `/usr/lib` folder when applications use different API versions of the same library, for example: `library-name.so.6`
+- Linux distributions add a number after the `.so` files to avoid conflicts in the `/usr/lib` folder when applications use different API versions of the same library, for example: `library-name.so.6`
 
 You need to know the above information because each software is different, the major reason is the "Build Instructions" organization and context of each application or library.
 
 ## Recipe
 
-A recipe is how we call a software port on Redox, this section explain the recipe configuration and details to consider.
+A recipe is how we call a software port on Redox, this section explains the recipe configuration and details to consider.
 
-Create a folder at `recipes/application-category` with a file named as `recipe.toml` inside, we will modify this file to fit the application needs.
+Create a folder at `recipes/application-category` with a file named as `recipe.toml` inside, we will modify this file to fit the application's needs.
 
 - Recipe creation from terminal with GNU Nano:
 
@@ -114,7 +114,7 @@ nano recipes/application-category/application-name/recipe.toml
 
 ### Recipe Configuration Example
 
-The recipe configuration (`recipe.toml`) example below contain all supported recipe options. Adapt for your script, application, library or data files.
+The recipe configuration (`recipe.toml`) example below contains all supported recipe options. Adapt for your script, application, library or data files.
 
 TOML sections and data types can also be mentioned using the `section-name.data-type-name` format for easier explanation and better explanation writing.
 
@@ -230,10 +230,10 @@ dependencies = [
 
 You can quickly copy and paste this template on each `recipe.toml`, that way you spent less time writting and has less chances for typos.
 
-- If your application use a tarball, you can quickly remove the `git` and `rev` data types.
-- If your application use a Git repository, you can quickly remove the `tar` data type.
+- If your application uses a tarball, you can quickly remove the `git` and `rev` data types.
+- If your application uses a Git repository, you can quickly remove the `tar` data type.
 - If you don't need to pin a Git tag or commit hash for the latest stable release or last working commit, you can quickly remove the `rev` data type.
-- If the application don't need C, C++ or patched Rust dependencies, you can quickly remove the `dependencies = []` section.
+- If the application doesn't need C, C++ or patched Rust dependencies, you can quickly remove the `dependencies = []` section.
 
 After the `#TODO` comment you will write your current porting status.
 
@@ -241,7 +241,7 @@ After the `#TODO` comment you will write your current porting status.
 
 The GCC and LLVM compiler frontends on Linux use the Linux target triplet by default, it will create Linux ELF binaries that don't work on Redox because it can't undertstand them.
 
-Part of this process is to use `glibc` (GNU C Standard Library) which don't support Redox system calls, to make the compiler use `relibc` (Redox C Standard Library) Cookbook need to tell the build system of the application or library to use it, it's done with environment variables and target/platform flags for the Redox target.
+Part of this process is to use `glibc` (GNU C Standard Library) which doesn't support Redox system calls. To make the compiler use `relibc` (Redox C Standard Library) Cookbook needs to tell the build system of the application or library to use it, and this is done with environment variables and target/platform flags for the Redox target.
 
 Cookbook have build system templates to avoid custom commands for cross-compilation, but it's not always possible because some build systems or applications aren't standardized or adapted for cross-compilation.
 
@@ -249,7 +249,7 @@ Cookbook have build system templates to avoid custom commands for cross-compilat
 
 ### Cross Compiler
 
-Cookbook use Rust/GCC forks to do cross-compilation of recipes (applications) with `relibc` to any supported CPU architecture, you can check our cross-compilers on GitLab ([GCC](https://gitlab.redox-os.org/redox-os/gcc), [LLVM](https://gitlab.redox-os.org/redox-os/llvm-project), [Rust](https://gitlab.redox-os.org/redox-os/rust) and their [pre-compiled binaries](https://static.redox-os.org/toolchain/)).
+Cookbook uses Rust/GCC forks to do cross-compilation of recipes (applications) with `relibc` to any supported CPU architecture, you can check our cross-compilers on GitLab ([GCC](https://gitlab.redox-os.org/redox-os/gcc), [LLVM](https://gitlab.redox-os.org/redox-os/llvm-project), [Rust](https://gitlab.redox-os.org/redox-os/rust) and their [pre-compiled binaries](https://static.redox-os.org/toolchain/)).
 
 ### Cross Compilation
 
@@ -257,7 +257,7 @@ The Cookbook default compilation type is cross-compilation because it reduces th
 
 By default Cookbook use the CPU architecture of your host system but you can change it easily on your `.config` file (`ARCH?` environment variable).
 
-- Don't use a hardcoded CPU architecture in the `script` data types of your `recipe.toml`, it breaks cross-compilation with a different CPU architecture is used by the build system.
+- Don't use a hardcoded CPU architecture in the `script` data types of your `recipe.toml`, it breaks cross-compilation when a different CPU architecture is used by the build system.
 - All recipes must use our cross-compilers, a Cookbook template does this automatically but it's not always possible, read the build system configuration of your application/library to find these options or patch the configuration files.
 
 ### Templates
@@ -271,9 +271,9 @@ A recipe template is the build system of the application or library supported by
 - `template = "remote"` - Download the remote Redox package of the recipe if available in the [package server](https://static.redox-os.org/pkg/)
 - `template = "custom"` - Run your commands on the `script =` field and build (Any build system or installation process).
 
-Keep in mind that some recipes may need build tools that aren't provided by the build system templates or not installed in the Podman container or your system and will need to be added in the `dev.dependencies` data type of the recipe, don't add build tools or compilers already provided by the templates.
+Keep in mind that some recipes may need build tools that aren't provided by the build system templates or not installed in the Podman container or your system and will need to be added in the `dev.dependencies` data type of the recipe, but remember not to add build tools or compilers already provided by the templates.
 
-The `script =` field runs any terminal command supported by GNU Bash, it's important if the build system of the application don't support cross-compilation or need custom options to work on Redox (you can't use the `build.script` data type if the `custom` template is not used).
+The `script =` field runs any terminal command supported by GNU Bash, it's important if the build system of the application doesn't support cross-compilation or need custom options to work on Redox (you can't use the `build.script` data type if the `custom` template is not used).
 
 Each template (except `custom`) script supports build flags, you can add flags as an array of strings:
 
@@ -348,7 +348,7 @@ These variables available in the script:
 - `${COOKBOOK_STAGE}` - The `stage` folder at `recipe-name/target/$TARGET/stage` (recipe binaries).
 
 - For RISC-V, `${TARGET}` and `${GNU_TARGET}` is `riscv64gc-unknown-redox` and `riscv64-unknown-redox`, usually you want `${TARGET}` unless the script requires a GNU target triple.
-- To get `$ARCH`, you need to add `ARCH="${TARGET%%-*}"` to the beginning of the script. 
+- To get `$ARCH`, you need to add `ARCH="${TARGET%%-*}"` to the beginning of the script.
 
 There are more variables depending on the build script that you are using.
 
@@ -392,7 +392,7 @@ You can quickly copy these environment variables from this section.
 
 ### Packaging Behavior
 
-Cookbook download the recipe sources on the `source` folder (`recipe-name/source`), copy the contents of this folder to the `build` folder (`recipe-name/target/$TARGET/build`), build the sources and move the binaries to the `stage` folder (`recipe-name/target/$TARGET/stage`).
+Cookbook downloads the recipe sources on the `source` folder (`recipe-name/source`), copies the contents of this folder to the `build` folder (`recipe-name/target/$TARGET/build`), builds the sources and moves the binaries to the `stage` folder (`recipe-name/target/$TARGET/stage`).
 
 If your recipe has library dependencies, it will copy the library source and linker objects to the `sysroot` folder to be used by the `build` folder.
 
@@ -455,7 +455,7 @@ function cookbook_configure {
 
 ### GNU Autotools configuration script
 
-Sometimes the application tarball or repository is lacking the `configure` script or it need to be recreated for dynamic linking, so you will need to generate this script.
+Sometimes the application tarball or repository is lacking the `configure` script or it needs to be recreated for dynamic linking, so you will need to generate this script.
 
 - Add the following code below the `[source]` section
 
@@ -773,7 +773,7 @@ cookbook_cargo
 
 ### Configuration Files
 
-Some applications require to setup configuration files from the source code or tarball, to setup them use the following script example:
+Some applications require to setup configuration files from the source code or tarball, to set them up use the following script example:
 
 ```toml
 [build]
@@ -862,7 +862,7 @@ This script will rename all scripts to remove the `.py` extension, mark all scri
 
 - Shebang
 
-It's the magic behind executable scripts as it make the system interpret the script as an common executable, if your script doesn't have a shebang on the beginning it can't be launched like an conventional compiled application executable.
+It's the magic behind executable scripts as it make the system interpret the script as a common executable, if your script doesn't have a shebang on the beginning it can't be launched like a conventional compiled application executable.
 
 To allow this use the following script:
 
@@ -877,7 +877,7 @@ chmod a+x "${COOKBOOK_STAGE}"/usr/bin/script-name
 
 The `sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/usr/bin/script-name` command will add the shebang on the beginning of your script.
 
-The `python3` is the script interpreter in this case, use `bash` or `lua` or whatever interpreter is appropriate for your case.
+`python3` is the script interpreter in this case, use `bash` or `lua` or whatever interpreter is appropriate for your case.
 
 There are many combinations for these script examples: you can download scripts without the `[source]` section, make customized installations, etc.
 
@@ -889,7 +889,6 @@ dynamically linked, it does the following things:
 - Automatically sets `LDFLAGS` and `RUSTFLAGS` based on the preferred linkage
 - Change GNU Autotools defaults to emit `*.so` files and do not create `*.a` files. For executables it setup the appropriate `rpath` link so `*.so` files can be discovered and linked.
 
-
 See the environment variables section under configuration settings for more information.
 
 In most cases if you want to use dynamic linking for a recipe just prepend
@@ -898,7 +897,7 @@ this *should* suffice. However, sometimes you *may* need to regenerate the GNU A
 which you can do by invoking the `autotools_recursive_regenerate` helper function
 after `DYNAMIC_INIT` (See the examples below). This is to make sure the build
 system uses our `libtool` fork. In other cases, more
-recipe-specific modification may be required. 
+recipe-specific modification may be required.
 
 #### Example
 
@@ -946,7 +945,7 @@ dependencies = [
 
 ### Troubleshooting
 
-- Why the dynamic linker (`ld.so`) is not finding my library?
+- Why is the dynamic linker (`ld.so`) not finding my library?
 
 Set `LD_DEBUG=all` and re-run the application. It will show you where library objects are
 being found and loaded, as well as the library search paths. You probably
@@ -959,7 +958,7 @@ object (`patchelf --print-needed <path>`). It is available by default in the
 
 ### Tarballs
 
-Tarballs are the most easy way to build a C/C++ application or library because the build system is already configured (GNU Autotools is the most used), while being more fast to download and process than big Git repositories if shallow clone is not used (the system don't need to process many Git deltas).
+Tarballs are the most easy way to build a C/C++ application or library because the build system is already configured (GNU Autotools is the most used), while being more fast to download and process than big Git repositories if shallow clone is not used (the system doesn't need to process many Git deltas).
 
 Your `recipe.toml` will have the following content:
 
@@ -970,28 +969,28 @@ tar = "tarball-link"
 
 Copy the tarball link and paste in the `tarball-link` field.
 
-**Only use official tarballs**, GitHub auto-generate tarballs for each new release or tag of the application, but they [aren't static](https://github.blog/changelog/2023-01-30-git-archive-checksums-may-change/) (break the checksum) and [don't verify the archive integrity](https://github.blog/2023-02-21-update-on-the-future-stability-of-source-code-archives-and-hashes/).
+**Only use official tarballs**, GitHub auto-generates tarballs for each new release or tag of the application, but they [aren't static](https://github.blog/changelog/2023-01-30-git-archive-checksums-may-change/) (break the checksum) and [don't verify the archive integrity](https://github.blog/2023-02-21-update-on-the-future-stability-of-source-code-archives-and-hashes/).
 
 You can find the official tarballs in the release announcement assets with the application name and ending with `tar.gz` or `tar.xz` (their URLs contain "releases" instead of "archive"), while unstable tarballs can be found on the "Source code" buttons (their URLs contain "archive").
 
 - In most cases they are created using the [GNU Tar](https://www.gnu.org/software/tar/) tool.
 - Avoid files containing the names "linux" and "x86_64" on GitHub, they are pre-built binaries for some operating system and CPU architecture, not source code.
-- Some applications require Git submodules to work, you can't use tarballs if the official tarball don't bundle the submodules.
+- Some applications require Git submodules to work, you can't use tarballs if the official tarball doesn't bundle the submodules.
 - Archives with `tar.xz` and `tar.bz2` are preferred as they tend to have a higher compression level, thus smaller file size.
 
 #### Build System
 
-In most cases the tarballs use GNU Autotools to build, it's common that the tarball method of compilation is not well documented, causing confusion on new packagers.
+In most cases the tarballs use GNU Autotools to build, it's common that the tarball method of compilation is not well documented, causing confusion for new packagers.
 
 To investigate, you can do the following things:
 
-- Build with the `configure` template and see if it works (sometimes you need to use some flag or customize)
+- Build with the `configure` template and see if it works (sometimes you need to use some flags or customize)
 - Search the Git repository of the application or library for `autogen.sh` and `configure.ac` files, it means that support for GNU Autotools is available, when some tarball is created, it comes with a `configure` file inside, this file doesn't exist on the Git repository and you need to create it by running the `autogen.sh` script.
 - Sometimes these files are available but GNU Autotools is deprecated (because it's old), we recommend that you use the supported build system (CMake or Meson in most cases).
 
 #### Links
 
-Sometimes it's hard to find the official tarball of some software, as each project website organization is different.
+Sometimes it's hard to find the official tarball of some software, as each project website's organization is different.
 
 To help on this process, the [Arch Linux packages](https://archlinux.org/packages/) and [AUR](https://aur.archlinux.org/) are the most easy repositories to find tarball links in the configuration of packages.
 
@@ -1096,7 +1095,7 @@ cookbook_cargo
 """
 ```
 
-The `export` will active the `OPENSSL_DIR` variable on the environment, this variable is implemented by the application build system, it's a way to specify the custom OpenSSL path to the application's build system, as you can see, when the `òpenssl` recipe is added to the `dependencies = []` section its sources go to the `sysroot` folder.
+The `export` will activate the `OPENSSL_DIR` variable in the environment, this variable is implemented by the application build system. It's a way to specify the custom OpenSSL path to the application's build system, as you can see, when the `openssl` recipe is added to the `dependencies = []` section its sources go to the `sysroot` folder.
 
 Now the application build system is satisfied with the OpenSSL sources, the `cookbook_cargo` function calls Cargo to build it.
 
@@ -1117,7 +1116,7 @@ On this example the `-DOPENSSL_ROOT_DIR` option will have the custom OpenSSL pat
 
 In some applications or libraries you can't use tarballs because they don't carry the necessary Git submodules of the application (most common in GitHub generated tarballs), on these cases you will need to use the Git repository or the commit of the last stable release (Cookbook download the submodules automatically).
 
-To identify if the application use Git submodules, check if it have external folders to other repository (they appear with a commit hash on the right side) or the existence of a `.gitmodules` file.
+To identify if the application uses Git submodules, check if it has external folders to other repositories (they appear with a commit hash on the right side) or the existence of a `.gitmodules` file.
 
 Follow these steps to use the last stable version of the application when Git submodules are necessary:
 
@@ -1132,17 +1131,17 @@ branch = "version-branch"
 rev = "version-tag"
 ```
 
-If the last stable release is too old or lack important fixes due to low maintenance we recommend that you ignore it and use the Git repository to download/build bug fixes sent after this old version, if you are concerned about the application upstream breaking the recipe, you can use the commit of the last successful CI test.
+If the last stable release is too old or lacks important fixes due to low maintenance we recommend that you ignore it and use the Git repository to download/build bug fixes sent after this old version, if you are concerned about the application upstream breaking the recipe, you can use the commit of the last successful CI test.
 
 ### Configuration
 
 The determine the application dependencies you can use Arch Linux and Gentoo as reference.
 
 - The build instructions of C/C++ applications tend to mix necessary and optional dependencies together.
-- Most Rust applications have build instructions focused on Linux and force some dependencies, some crates could not need them to work, investigate which crates the application is using.
-- Some applications and libraries have bad documentation, lack build instructions or explain the dependencies, for these cases you will need to read third-party sources or examine the build system.
+- Most Rust applications have build instructions focused on Linux and force some dependencies, some crates could not need them to work, so investigate which crates the application is using.
+- Some applications and libraries have bad documentation, lack build instructions or don't explain the dependencies, for these cases you will need to read third-party sources or examine the build system.
 
-Arch Linux and AUR are the most simple references because they separate the build tools from runtimes and build dependencies, thus you make less mistakes.
+Arch Linux and AUR are the most simple references because they separate the build tools from runtimes and build dependencies, thus you make fewer mistakes.
 
 They also have less expanded packages, while on Debian is common to have highly expanded applications and libraries, sometimes causing confusion.
 
@@ -1312,7 +1311,7 @@ make cr.recipe-name
 
 Most unmaintained Rust applications carry very old crate versions with lacking/broken Redox support, this method will update all crates of the dependency chain to the latest possible version based on the `Cargo.toml` configuration.
 
-Be aware that some crates break the API stability frequently and make the applications stop to work, that's why you must try the "One crate" method first.
+Be aware that some crates break the API stability frequently and make the applications stop working - that's why you must try the "One crate" method first.
 
 - This method can fix locked crate versions on the dependency tree, if these locked crate versions don't change you need to bump the version of the crates locking the crate version, you will edit them in the `Cargo.toml` and run `cargo update` again (API breaks are expected).
 
@@ -1356,7 +1355,7 @@ If you use the above methods but the application is still using old crate versio
 
 ### Redox forks
 
-It's possible that some not ported crate have a Redox fork with patches, you can search the crate name on the [Redox GitLab](https://gitlab.redox-os.org/), generally the Redox patches stay in the `redox` branch or `redox-version` branch that follow the crate version.
+It's possible that some not ported crate has a Redox fork with patches, you can search the crate name on the [Redox GitLab](https://gitlab.redox-os.org/), generally the Redox patches stay in the `redox` branch or `redox-version` branch that follow the crate version.
 
 To use this Redox fork on your Rust application, add this text on the end of the `Cargo.toml` in the application source code:
 

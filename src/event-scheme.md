@@ -2,7 +2,7 @@
 
 The `event` scheme is a special scheme that is central to the operation of device drivers, schemes and other programs that receive events from multiple sources. It's like a "clearing house" for activity on multiple file descriptors. The daemon or client program performs a `read` operation on the `event` scheme, blocking until an event happens. It then examines the event to determine what file descriptor is active, and performs a non-blocking read of the active file descriptor. In this way, a program can have many sources to read from, and rather than blocking on one of those sources while another might be active, the program blocks only on the `event` scheme, and is unblocked if any one of the other sources become active.
 
-The `event` scheme is conceptually similar to Linux's [`epoll`](https://manpages.ubuntu.com/manpages/focal/en/man7/epoll.7.html) mechanism.
+The `event` scheme is conceptually similar to Linux's [`epoll`](https://manpages.ubuntu.com/manpages/noble/en/man7/epoll.7.html) mechanism.
 
 ## What is a Blocking Read
 

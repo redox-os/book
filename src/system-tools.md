@@ -4,36 +4,36 @@
 
 Coreutils is a collection of basic command line utilities included with Redox (or with Linux, BSD, etc.). This includes programs like `ls`, `cp`, `cat` and various other tools necessary for basic command line interaction.
 
-Redox use the Rust implementation of the GNU Coreutils, [uutils](https://github.com/uutils/coreutils).
+Redox uses the Rust implementation of the GNU Coreutils, [uutils](https://github.com/uutils/coreutils).
 
 Available programs:
 
-- `ls` - Show the files and folders of the current directory.
-- `cp` - Copy and paste some file or folder.
-- `cat` - Show the output of some text file.
-- `chmod` - Change the permissions of some file or directory.
-- `clear` - Clean the terminal output.
+- `ls` - Shows the files and folders of the current directory.
+- `cp` - Copies and pastes some file or folder.
+- `cat` - Shows the output of some text file.
+- `chmod` - Changes the permissions of some file or directory.
+- `clear` - Cleans the terminal output.
 - `dd` - Copies and converts a file.
-- `df` - Show the disk partitions information.
+- `df` - Shows the disk partitions information.
 - `du` - Shows disk usage on file systems.
 - `env` - Displays and modifies environment variables.
-- `free` - Show the RAM usage.
-- `kill` - Kill a process.
+- `free` - Shows the RAM usage.
+- `kill` - Kills a process.
 - `ln` - Creates a link to a file.
-- `mkdir` - Create a directory.
-- `ps` - Show all running processes.
-- `reset` - Restart the terminal to allow the command-line input.
-- `shutdown` - Shutdown the system.
-- `sort` - Sort, merge, or sequence check text files.
+- `mkdir` - Creates a directory.
+- `ps` - Shows all running processes.
+- `reset` - Restarts the terminal to allow the command-line input.
+- `shutdown` - Shuts the system down.
+- `sort` - Sorts, merges, or sequence checks text files.
 - `stat` - Returns data about an inode.
-- `tail` - Copy the last part of a file.
-- `tee` - Duplicate the standard output.
-- `test` - Evaluate expression.
-- `time` - Count the time that some command takes to finish it's operation.
-- `touch` - Update the timestamp of some file or folder.
-- `uname` - Show the system information, like kernel version and architecture type.
-- `uptime` - Show how much time your system is running.
-- `which` - Show the path where some program is located.
+- `tail` - Copies the last part of a file.
+- `tee` - Duplicates the standard output.
+- `test` - Evaluates expression.
+- `time` - Counts the time that some command takes to finish its operation.
+- `touch` - Updates the timestamp of some file or folder.
+- `uname` - Shows the system information, like kernel version and architecture type.
+- `uptime` - Shows how long your system has been running for.
+- `which` - Shows the path where some program is located.
 
 ### userutils
 
@@ -52,12 +52,12 @@ Available programs:
 - `passwd` - Allows users to modify their passwords.
 - `su` - Allows users to substitute identity.
 - `sudo` - Enables users to execute a command as another user.
-- `useradd` - Add a user
-- `usermod` - Modify user information
-- `userdel` - Delete a user
-- `groupadd` - Add a user group
-- `groupmod` - Modify group information
-- `groupdel` - Remove a user group
+- `useradd` - Adds a user
+- `usermod` - Modifies user information
+- `userdel` - Deletes a user
+- `groupadd` - Adds a user group
+- `groupmod` - Modifies group information
+- `groupdel` - Removes a user group
 
 ### extrautils
 

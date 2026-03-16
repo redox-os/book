@@ -1,6 +1,6 @@
 # Trying Out Redox
 
-There are several programs, games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the `demo` variant from the list of available Redox images. Currently, Redox does not have Wi-Fi support, so if you need Wi-Fi for some of the things you want to do, you are best to use an Ethernet cable or [run Redox in a virtual machine](./running-vm.md). Most of the suggestions below do not require Internet access.
+There are several programs, games, demos and other things to try on Redox. Most of these are not included in the regular Redox build, so you will need to run the `demo` variant from the list of available Redox images. Currently, Redox does not have Wi-Fi support, so if you need Internet access for some of the things you want to do, you are best to use an Ethernet cable or [run Redox in a virtual machine](./running-vm.md). Most of the suggestions below do not require Internet access.
 
 On the `demo` variant, click on the Redox symbol in the bottom left corner of the screen. This brings up a menu, which, for the `demo` variant, includes some games. Feel free to give them a try!
 

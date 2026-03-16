@@ -8,7 +8,7 @@
 
 - The real hardware testing is bigger than QEMU testing and thus detect more bugs.
 
-- The test suites can be executed in an automated way by running the `make rp.auto-test,--with-package-deps` command from the build system and running the `auto-test` command inside of Redox (testing on real hardware is more rich and thus cna have different results compared to QEMU).
+- The test suites can be executed in an automated way by running the `make rp.auto-test,--with-package-deps` command from the build system and running the `auto-test` command inside of Redox (testing on real hardware is more rich and thus can have different results compared to QEMU).
 
 ## Manual Test Suite Execution
 

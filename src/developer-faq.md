@@ -12,7 +12,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [How can I port a program?](#how-can-i-port-a-program)
     - [How can I write a driver?](#how-can-i-write-a-driver)
     - [How can I debug?](#how-can-i-debug)
-    - [What is the software and hardware requirements for development?](#what-is-the-software-and-hardware-requirements-for-development)
+    - [What are the software and hardware requirements for development?](#what-are-the-software-and-hardware-requirements-for-development)
     - [Does Redox support OpenGL and Vulkan?](#does-redox-support-opengl-and-vulkan)
 - [Build System Questions](#build-system-questions)
     - [What is the correct way to update the build system?](#what-is-the-correct-way-to-update-the-build-system)
@@ -20,7 +20,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [What is a recipe?](#what-is-a-recipe)
     - [When I should rebuild the build system or recipes from scratch?](#when-i-should-rebuild-the-build-system-or-recipes-from-scratch)
     - [How can I test my changes on real hardware?](#how-can-i-test-my-changes-on-real-hardware)
-    - [How can I insert files to the Redox image?](#how-can-i-insert-files-to-the-redox-image)
+    - [How can I insert files into the Redox image?](#how-can-i-insert-files-into-the-redox-image)
     - [How can I change my Redox variant?](#how-can-i-change-my-redox-variant)
     - [How can I increase the filesystem size of my QEMU image?](#how-can-i-increase-the-filesystem-size-of-my-qemu-image)
     - [How can I change the CPU architecture of my build system?](#how-can-i-change-the-cpu-architecture-of-my-build-system)
@@ -38,10 +38,10 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [How to determine if some program is portable to Redox?](#how-to-determine-if-some-program-is-portable-to-redox)
     - [How to determine the dependencies of some program?](#how-to-determine-the-dependencies-of-some-program)
     - [How can I configure the build system of the recipe?](#how-can-i-configure-the-build-system-of-the-recipe)
-    - [How can I search for functions on relibc?](#how-can-i-search-for-functions-on-relibc)
+    - [How can I search for functions in relibc?](#how-can-i-search-for-functions-in-relibc)
     - [Which are the upstream requirements to accept my recipe?](#which-are-the-upstream-requirements-to-accept-my-recipe)
     - [What are the possible problems when porting programs and libraries?](#what-are-the-possible-problems-when-porting-programs-and-libraries)
-    - [Why C/C++ programs and libraries are hard and time consuming to port?](#why-cc-programs-and-libraries-are-hard-and-time-consuming-to-port)
+    - [Why are C/C++ programs and libraries hard and time consuming to port?](#why-are-cc-programs-and-libraries-hard-and-time-consuming-to-port)
 - [Scheme Questions](#scheme-questions)
     - [What is a scheme?](#what-is-a-scheme)
     - [When does a regular program need to use a scheme?](#when-does-a-regular-program-need-to-use-a-scheme)
@@ -51,9 +51,9 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [How can I see all kernel schemes?](#how-can-i-see-all-kernel-schemes)
     - [What is the difference between kernel and userspace schemes?](#what-is-the-difference-between-kernel-and-userspace-schemes)
     - [How does a userspace daemon provide file-like services?](#how-does-a-userspace-daemon-provide-file-like-services)
-    - [How the system calls are used by userspace daemons?](#how-the-system-calls-are-used-by-userspace-daemons)
+    - [How are the system calls used by userspace daemons?](#how-are-the-system-calls-used-by-userspace-daemons)
 - [GitLab Questions](#gitlab-questions)
-    - [How to properly request a review or review MRs?](#how-to-properly-request-a-review-or-review-mrs)
+    - [How do I request a review or review MRs properly?](#how-do-i-request-a-review-or-review-mrs-properly)
     - [I have a merge request with many commits, should I squash them after merge?](#i-have-a-merge-request-with-many-commits-should-i-squash-them-after-merge)
     - [Should I delete my branch after merge?](#should-i-delete-my-branch-after-merge)
     - [How can I have an anonymous account?](#how-can-i-have-an-anonymous-account)
@@ -67,17 +67,17 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
         - [I can't download the build system bootstrap scripts, how can I fix this?](#i-cant-download-the-build-system-bootstrap-scripts-how-can-i-fix-this)
         - [I tried to run the "podman_bootstrap.sh" and "native_bootstrap.sh" scripts but got an error, how to fix this?](#i-tried-to-run-the-podman_bootstrapsh-and-native_bootstrapsh-scripts-but-got-an-error-how-to-fix-this)
     - [Build System](#build-system)
-        - [I ran "make all" but it show a "rustup can't be found" message, how can I fix this?](#i-ran-make-all-but-it-show-a-rustup-cant-be-found-message-how-can-i-fix-this)
+        - [I ran "make all" but it showed a "rustup can't be found" message, how can I fix this?](#i-ran-make-all-but-it-showed-a-rustup-cant-be-found-message-how-can-i-fix-this)
         - [I tried all troubleshooting methods but my build system is still broken, how can I fix that?](#i-tried-all-troubleshooting-methods-but-my-build-system-is-still-broken-how-can-i-fix-that)
     - [Recipes](#recipes)
         - [I had an error with a recipe, how can I fix that?](#i-had-an-error-with-a-recipe-how-can-i-fix-that)
         - [I tried all methods of the "Troubleshooting the Build" page and my recipe still doesn't build, what can I do?](#i-tried-all-methods-of-the-troubleshooting-the-build-page-and-my-recipe-still-doesnt-build-what-can-i-do)
         - [When I run "make r.recipe" I get a syntax error, how can I fix that?](#when-i-run-make-rrecipe-i-get-a-syntax-error-how-can-i-fix-that)
-        - [When I run "cargo update" on some recipe source it call Rustup to install other Rust toolchain version, how can I fix that?](#when-i-run-cargo-update-on-some-recipe-source-it-call-rustup-to-install-other-rust-toolchain-version-how-can-i-fix-that)
-        - [I added the dependency of my program in the "recipe.toml" file but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?](#i-added-the-dependency-of-my-program-in-the-recipetoml-file-but-the-program-build-system-doesnt-detect-it-then-i-installed-the-program-dependency-on-my-linux-distribution-and-it-detected-why)
+        - [When I run "cargo update" on some recipe source it calls Rustup to install other Rust toolchain version, how can I fix that?](#when-i-run-cargo-update-on-some-recipe-source-it-calls-rustup-to-install-other-rust-toolchain-version-how-can-i-fix-that)
+        - [I added the dependency of my program in the "recipe.toml" file but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected it, why?](#i-added-the-dependency-of-my-program-in-the-recipetoml-file-but-the-program-build-system-doesnt-detect-it-then-i-installed-the-program-dependency-on-my-linux-distribution-and-it-detected-it-why)
         - [I made changes to system daemons, drivers and RedoxFS but they aren't applied in the Redox image, how can I fix that?](#i-made-changes-to-system-daemons-drivers-and-redoxfs-but-they-arent-applied-in-the-redox-image-how-can-i-fix-that)
     - [QEMU](#qemu)
-        - [How can I kill the QEMU process if Redox freezes or get a kernel panic?](#how-can-i-kill-the-qemu-process-if-redox-freezes-or-get-a-kernel-panic)
+        - [How can I kill the QEMU process if Redox freezes or gets a kernel panic?](#how-can-i-kill-the-qemu-process-if-redox-freezes-or-gets-a-kernel-panic)
     - [Real Hardware](#real-hardware)
         - [I got a kernel panic, what can I do?](#i-got-a-kernel-panic-what-can-i-do)
         - [Some driver is not working with my hardware, what can I do?](#some-driver-is-not-working-with-my-hardware-what-can-i-do)
@@ -98,7 +98,7 @@ These are the cases where unsafe Rust is mandatory:
 
 It is an important goal for Redox to minimize the amount of `unsafe` declared Rust code. If you want to use unsafe Rust code on Redox anywhere other than interfacing with system calls, ask for Jeremy Soller's approval before.
 
-Unsafe Rust still has most of the compiler verification and allow some safe Rust syntax usage, thus still more safe than C and C++.
+Unsafe Rust still has most of the compiler verification and allows some safe Rust syntax usage, thus it is still more safe than C and C++.
 
 Read the following pages to learn more about Unsafe Rust:
 
@@ -107,7 +107,7 @@ Read the following pages to learn more about Unsafe Rust:
 
 ### Why does Redox have Assembly code?
 
-[Assembly](https://en.wikipedia.org/wiki/Assembly_language) is the core of low-level because it's a CPU-specific programming language and deal with things that aren't possible or feasible to do in high-level languages like Rust.
+[Assembly](https://en.wikipedia.org/wiki/Assembly_language) is the core of low-level because it's a CPU-specific programming language and deals with things that aren't possible or feasible to do in high-level languages like Rust.
 
 Sometimes required or preferred for accessing hardware, or for carefully optimized hot spots.
 
@@ -125,7 +125,7 @@ Places where Assembly is used:
 
 ### Why does Redox do cross-compilation?
 
-[Cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler) is when you build a program or library from one CPU architecture to another CPU architecture or one operating system to another operating system, but it require more configuration than native compilation.
+[Cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler) is when you build a program or library from one CPU architecture to another CPU architecture or one operating system to another operating system, but it requires more configuration than native compilation.
 
 Read some of the reasons below:
 
@@ -155,7 +155,7 @@ Read the [Debug Methods](./troubleshooting.md#debug-methods) section.
 
 Read the [Software Rendering](./graphics-windowing.md#software-rendering) section.
 
-### What is the software and hardware requirements for development?
+### What are the software and hardware requirements for development?
 
 - If you are using the Podman Build you need any Linux or Unix-like distribution supporting Podman 4.0 or newer and FUSE 3.x (if you have problems with FUSE in the host system there's [this](./advanced-podman-build.md#installing-without-fuse) workaround to run FUSE inside the Podman container instead of host system)
 - If you are using the Native Build a recent Ubuntu, PopOS or Fedora version is recommended
@@ -163,8 +163,8 @@ Read the [Software Rendering](./graphics-windowing.md#software-rendering) sectio
 The following hardware requirements are enough for fast compilation of the system and most programs, but some heavy programs may require more.
 
 - An Intel or AMD CPU newer than 10 years with 4 cores/threads or more
-- 4GB DDR4 or more (8GB or 16GB for heavy programs)
-- 50GB of storage space or more (a high-performance HDD, SSD, and NVMe is recommended)
+- 4GB DDR4 RAM or more (8GB or 16GB for heavy programs)
+- 50GB of storage space or more (a high-performance HDD, SATA SSD, and/or NVMe SSD is recommended)
 - An Internet connection good enough to not cause timeouts
 
 ## Build System Questions
@@ -175,17 +175,17 @@ Read the [Update The Build System](./build-system-reference.md#update-the-build-
 
 ### How can I verify if my build system is up-to-date?
 
-After the `make pull` command, run the `git rev-parse HEAD` command to verify if it match the latest commit hash on [GitLab](https://gitlab.redox-os.org/redox-os/redox/-/commits/master?ref_type=HEADS).
+After the `make pull` command, run the `git rev-parse HEAD` command to verify if it matches the latest commit hash on [GitLab](https://gitlab.redox-os.org/redox-os/redox/-/commits/master?ref_type=HEADS).
 
 ### What is a recipe?
 
-A software port to Redox
+A software port to Redox.
 
 ### When I should rebuild the build system or recipes from scratch?
 
 Sometimes the execution of the `make pull rebuild` command is not enough to update the build system and recipes because of breaking changes, learn what to do on the following changes:
 
-- New relibc functions and fixes: to allow a recipe to use the new relibc functions you need to rebuilt it with the `make cr.recipe-name` command, sometimes relibc fixes require a complete system rebuild by running the `make c.--all all` command
+- New relibc functions and fixes: to allow a recipe to use the new relibc functions you need to rebuild it with the `make cr.recipe-name` command, sometimes relibc fixes require a complete system rebuild by running the `make c.--all all` command
 - Dependency changes on recipes: if the shared objects had symbol changes or the recipe is statically linked, run the `make cr.recipe-name` command
 - Configuration changes on recipes: run the `make cr.recipe-name` command
 - Source code changes on recipes: if the shared objects had symbol changes or the recipe is statically linked, run the `make ucr.recipe-name` command
@@ -195,7 +195,7 @@ Sometimes the execution of the `make pull rebuild` command is not enough to upda
 
 Read the [Testing on Real Hardware](./coding-and-building.md#testing-on-real-hardware) section.
 
-### How can I insert files to the Redox image?
+### How can I insert files into the Redox image?
 
 If you use a [recipe](./coding-and-building.md#insert-files-on-the-qemu-image-using-a-recipe) your changes will persist after the `make image` command, but you can also [mount](./coding-and-building.md#insert-files-on-the-qemu-image) the Redox filesystem to insert them directly.
 
@@ -263,7 +263,7 @@ recipe-name = "binary"
 ...
 ```
 
-- Build the recipe and install in a existing image
+- Build the recipe and install in an existing image
 
 ```sh
 make rp.recipe-name
@@ -277,7 +277,7 @@ make rp.recipe-name REPO_BINARY=1
 
 ## How to update initfs?
 
-initfs don't automatically add your changes to system daemons, drivers or RedoxFS and need manual rebuild.
+initfs doesn't automatically add your changes to system daemons, drivers or RedoxFS and needs manual rebuild.
 
 Read [this](./coding-and-building.md#how-to-update-initfs) section to learn how to do it.
 
@@ -407,9 +407,9 @@ make c.--all all
 - The source code of the program must be available
 - The program should use cross-platform libraries (if not, more porting effort is required)
 - The program's build system should support cross-compilation (if not, more porting effort is required)
-- The program shouldn't directly use the Linux kernel API on its code (if not, more porting effort is required)
+- The program shouldn't directly use the Linux kernel API in its code (if not, more porting effort is required)
 
-Some APIs of the Linux kernel can be ported while others not, because they require a complete Linux kernel.
+Some APIs of the Linux kernel can be ported while others cannot, because they require a complete Linux kernel.
 
 ### How to determine the dependencies of some program?
 
@@ -419,9 +419,9 @@ Read the [Dependencies](./porting-applications.md#dependencies) section.
 
 Read the [Templates](./porting-applications.md#templates) section.
 
-### How can I search for functions on relibc?
+### How can I search for functions in relibc?
 
-Read the [Search For Functions on Relibc](./porting-applications.md#search-for-functions-on-relibc) section.
+Read the [Search For Functions in Relibc](./porting-applications.md#search-for-functions-in-relibc) section.
 
 ### Which are the upstream requirements to accept my recipe?
 
@@ -435,12 +435,12 @@ Read the [Package Policy](./porting-applications.md#package-policy) section.
 - Missing C, POSIX or Linux library functions in relibc
 - Runtime crashes or errors
 
-### Why C/C++ programs and libraries are hard and time consuming to port?
+### Why are C/C++ programs and libraries hard and time consuming to port?
 
 - C/C++ don't have an official, advanced and automatic dependency manager and build system which force programs and libraries to select competing build systems with different configurations (GNU Make, GNU Autotools, CMake, Meson and others), projects like [Conan](https://conan.io/) and [vcpkg](https://vcpkg.io/) tried to solve this problem but weren't adopted by most programs/libraries and lack many libraries
 - Programs and libraries need to manually manage the library versions, to workaround this some programs use bundled libraries which can difficult patching when needed
-- Some build systems lack a good cross-compilation support which require more tweaks and sometimes hacks
-- As libraries are manually managed programs with many dependencies can take hours to port depending on available library documentation/configuration and developer experience
+- Some build systems lack good cross-compilation support which means they require more tweaks and sometimes hacks
+- As libraries are manually managed programs with many dependencies, they can take hours to port depending on available library documentation/configuration and developer experience
 - Some programs and libraries have bad or lacking documentation about build instructions and configuration
 
 ## Scheme Questions
@@ -477,18 +477,18 @@ Read the [Kernel vs Userspace Schemes](./schemes.md#kernel-vs-userspace-schemes)
 
 When a regular program calls `open`, `read`, `write`, etc. on a file-like resource, the kernel translates that to a message of type `syscall::data::Packet`, describing the file operation, and makes it available for reading on the appropriate daemon's scheme file descriptor. See the [Providing A Scheme](./scheme-operation.md#providing-a-scheme) section for more information.
 
-### How the system calls are used by userspace daemons?
+### How are the system calls used by userspace daemons?
 
 All userspace daemons use the system calls through [relibc](https://gitlab.redox-os.org/redox-os/relibc) like any normal program.
 
 ## GitLab Questions
 
-### How to properly request a review or review MRs?
+### How do I request a review or review MRs properly?
 
 These rules prevent you from wasting time and stress.
 
 - **Don't edit your code suggestions without a warning before to prevent merge errors and review disorganization**
-- If you are requesting a review it's recommended that it's done by one reviewer per time to avoid extra coordination effort with multiple reviewers to confirm when each reviewer finished their review, but if you accept multiple reviewers at once **each reviewer should warn when started and finished its review to prevent code suggestion conflicts between reviewers due to possible different file states while you apply the code suggestions**
+- If you are requesting a review it's recommended that it's done by one reviewer per time to avoid extra coordination effort with multiple reviewers to confirm when each reviewer finished their review, but if you accept multiple reviewers at once **each reviewer should warn when they've started and finished their review to prevent code suggestion conflicts between reviewers due to possible different file states while you apply the code suggestions**
 - If you are requesting a review where code suggestions will not be used, you can accept multiple reviewers without coordination of when they started and finished their reviews
 - Once you finish your review warn to avoid conflicts with other reviewers
 - It's recommended to use code suggestions for normal text and code to help and save time for developers, that way they can quickly improve or apply the text or code.
@@ -497,7 +497,7 @@ You can start a code suggestion by clicking on the file icon with the + symbol w
 
 ### I have a merge request with many commits, should I squash them after merge?
 
-If they don't have relevant informaiton on titles, yes.
+If they don't have relevant information in the titles, yes.
 
 ### Should I delete my branch after merge?
 
@@ -522,7 +522,7 @@ Read the following pages:
 
 **Read the entire book before writing new documentation and submiting MRs to avoid information duplication**
 
-- Only add work-in-progress information if really necessary, as it may unnecessarily increases maintenance cost
+- Only add work-in-progress information if really necessary, as it may unnecessarily increase maintenance cost
 - Don't use informal grammar abbreviations such as "config" (except technical terms such as "CPU")
 - Use spaces instead of tabs to avoid formatting breakage with different text editor tab configurations
 - Use [Oxford commas](https://en.wikipedia.org/wiki/Serial_comma)
@@ -543,7 +543,7 @@ your-command-or-code
 
 For diagrams to this book read [this](https://gohugo.io/content-management/diagrams/) article.
 
-For diagrams to the GitLab web interface the GitLab Markdown has support for some diagram syntaxes, read [this](https://docs.gitlab.com/user/markdown/#diagrams-and-flowcharts) article to learn how to use them.
+For diagrams in the GitLab web interface the GitLab Markdown has support for some diagram syntaxes, read [this](https://docs.gitlab.com/user/markdown/#diagrams-and-flowcharts) article to learn how to use them.
 
 ## Troubleshooting Questions
 
@@ -561,7 +561,7 @@ Verify if you have `curl` installed or download the script from your web browser
 
 ### Build System
 
-#### I ran "make all" but it show a "rustup can't be found" message, how can I fix this?
+#### I ran "make all" but it showed a "rustup can't be found" message, how can I fix this?
 
 Run the following command:
 
@@ -581,7 +581,7 @@ If the `make clean pull container_clean all` command doesn't work download a new
 
 Read the [Solving Compilation Problems](./troubleshooting.md#solving-compilation-problems) section.
 
-#### I tried all methods of the "Troubleshooting the Build" page and my recipe still doesn't build, what it can be?
+#### I tried all methods of the "Troubleshooting the Build" page and my recipe still doesn't build, what can I do?
 
 - Missing dependencies
 - Environment leakage: when some part of the recipe build system does native Linux compilation instead of cross-compilation to Redox
@@ -592,13 +592,13 @@ Read the [Solving Compilation Problems](./troubleshooting.md#solving-compilation
 
 Verify if your `recipe.toml` file has some typo, missing data type or value.
 
-#### When I run "cargo update" on some recipe source it call rustup to install other Rust toolchain version, how can I fix that?
+#### When I run "cargo update" on some recipe source it calls rustup to install other Rust toolchain version, how can I fix that?
 
 It happens because Cargo is not using the Redox fork of the Rust compiler, to fix that run `make env` from the Redox build system root.
 
 It will import the Redox Makefile environment variables to your active shell (it already does that when you run other `make` commands from the Redox build system root).
 
-#### I added the dependency of my program in the "recipe.toml" file but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected, why?
+#### I added the dependency of my program in the "recipe.toml" file but the program build system doesn't detect it, then I installed the program dependency on my Linux distribution and it detected it, why?
 
 Read the [Environment Leakage](./troubleshooting.md#environment-leakage) section.
 
@@ -608,7 +608,7 @@ You forgot to update initfs which is manual, read [this](./coding-and-building.m
 
 ### QEMU
 
-#### How can I kill the QEMU process if Redox freezes or get a kernel panic?
+#### How can I kill the QEMU process if Redox freezes or gets a kernel panic?
 
 Read the [Kill A Frozen Redox VM](./troubleshooting.md#kill-a-frozen-redox-vm) section.
 

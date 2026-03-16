@@ -1,6 +1,6 @@
 # Why Rust?
 
-Why we wrote an operating system in Rust? Why even write in Rust?
+Why did we write an operating system in Rust? Why even write in Rust?
 
 Rust has enormous advantages, because for operating systems, security and stability matters a lot.
 

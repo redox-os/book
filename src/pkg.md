@@ -4,7 +4,7 @@
 
 Due to limited device support, you may get better results in an virtual machine than on real hardware.
 
-The most commonly used `pkg` commands are show below:
+The most commonly used `pkg` commands are shown below:
 
 - Install a package:
 

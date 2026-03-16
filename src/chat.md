@@ -6,7 +6,7 @@ When your invitation is sent, you will receive a notification on Matrix.
 
 After you accept the invitation, you can open the [Redox Matrix space](https://matrix.to/#/#redox:matrix.org) and see the rooms that are available.
 
-These rooms are English-only, we cannot offer support in other languages because the maintainers will not be able to verify the correctness of your responses. But if you post translator-generated messages, we will do our best to understand them.
+These rooms are English-only, we cannot offer support in other languages because the maintainers will not be able to verify the correctness of your responses, but if you post translator-generated messages, we will do our best to understand them.
 
 ## About Matrix
 
@@ -52,9 +52,9 @@ All rooms available on the Redox space:
 
 ### Troubleshooting
 
-If you don't to deal with the Element problems, try [Nheko](https://nheko-reborn.github.io/) or [Fractal](https://gitlab.gnome.org/World/fractal).
+If you don't want to deal with the Element problems, try [Nheko](https://nheko-reborn.github.io/) or [Fractal](https://gitlab.gnome.org/World/fractal).
 
-If you have connection problems see [this](https://status.matrix.org/) website to see if the `matrix.org` homeserver is normal.
+If you have connection problems see [this](https://status.matrix.org/) website to see if the `matrix.org` homeserver is running normally.
 
 #### Element
 
@@ -70,7 +70,7 @@ If you have connection problems see [this](https://status.matrix.org/) website t
 
 - When entering a room where you have previously received replies in a thread, you may hear a notification bell, even though there is no new message.
 
-- Due to bugs, a thread you have previously read can show a dot and possibly count as unread messages. Click on the thread and make sure you have read it, and  to clear it. If it is still not cleared, click on the "Thread options" `...` button on the top right and select "Show in room". This will often clear it.
+- Due to bugs, a thread you have previously read can show a dot and possibly count as unread messages. Click on the thread and make sure you have read it, and to clear it. If it is still not cleared, click on the "Thread options" `...` button on the top right and select "Show in room". This will often clear it.
 
 You can also mark an entire room as "Read" by mousing over the room name and selecting "Mark as read" from the "Room options" `...` button.
 
