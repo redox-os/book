@@ -8,7 +8,7 @@ The kernel's main task is to act as a medium for communication and segregation o
 
 Microkernels are more secure and less prone to crashes and driver bugs than monolithic kernels. This is because most kernel components are moved to user-space and use different memory address spaces, and thus can't do damage to the system. Furthermore, microkernels are extremely maintainable, due to their small code size the number of bugs in the kernel is reduced a lot.
 
-As anything else, microkernels do also have disadvantages.
+As with anything else, microkernels do also have disadvantages.
 
 ## Advantages of microkernels
 
@@ -16,7 +16,7 @@ There are quite a lot of advantages (and some disadvantages) with microkernels, 
 
 ### Better Stability
 
-When compared to microkernels, Monolithic kernels tend to be prone to crashes and driver bugs. A buggy driver in a Monolithic kernel can crash the whole system because the driver code is running on the same memory address space of the kernel, thus the kernel process can't continue to run (to avoid memory corruption) and crash (kernel panic). Or the bugs in a driver can spread to other drivers without causing crashes, which is hard to ensure stability and a headache to investigate the root of the problems.
+When compared to microkernels, monolithic kernels tend to be prone to crashes and driver bugs. A buggy driver in a monolithic kernel can crash the whole system because the driver code is running on the same memory address space of the kernel, thus the kernel process can't continue to run (to avoid memory corruption) and crashes (kernel panic). Or the bugs in a driver can spread to other drivers without causing crashes, which makes it hard to ensure stability and also makes it a headache to investigate the root cause of the problems.
 
 While in a microkernel the drivers run in different memory address spaces (separation of concerns) which allows the system to handle any crash safely and isolate driver bugs.
 
@@ -67,9 +67,9 @@ Any modern operating system needs basic security mechanisms such as memory isola
 - Putting CPU in another mode (kernel mode and user mode, also known as ring 0 and ring 3)
 - Restoring callee registers (callee: process invoked by syscall or IPC)
 
-These are not inherently slower on microkernels, but microkernels need to perform these operations more frequently. Many of the system functionality is performed by user-space processes, requiring additional context switches.
+These are not inherently slower on microkernels, but microkernels need to perform these operations more frequently. Much of the system functionality is performed by user-space processes, requiring additional context switches.
 
-The performance difference between monolithic and microkernels has been marginalized over time, making their performance comparable. This is partly due to a smaller surface area which can be easier to optimize.
+The performance difference between monolithic and microkernels has shrunk over time, making their performance comparable. This is partly due to a smaller surface area which can be easier to optimize.
 
 - [Context Switch Documentation](https://wiki.osdev.org/Context_Switching)
 - [Microkernels Performance Paper](https://os.inf.tu-dresden.de/pubs/sosp97/)

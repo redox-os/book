@@ -16,7 +16,7 @@ Redox is largely influenced by Minix - it has a similar architecture but with a 
 
 The most performant and simplest microkernel of the world.
 
-Redox follow the same principle, trying to make the kernel-space small as possible (moving components to user-space and reducing the number of system calls, passing the complexity to user-space) and keeping the overall performance good (reducing the context switch cost).
+Redox follows the same principles, trying to make the kernel-space small as possible (moving components to user-space and reducing the number of system calls, passing the complexity to user-space) and keeping the overall performance good (reducing the context switch cost).
 
 ## [Plan 9](http://9p.io/plan9/index.html)
 

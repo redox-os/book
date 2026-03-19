@@ -35,7 +35,7 @@ Here are TL;DR instructions for **Podman Build** (recommended). [Native build](.
  1. Ensure you have the `curl` program installed. e.g., for Pop!_OS/Ubuntu/Debian:
 
     ```sh
-    which curl || sudo apt-get install curl 
+    which curl || sudo apt-get install curl
     ```
 
  2. Create a new directory and run `podman_bootstrap.sh` inside of it. This will clone the repository and install **Podman**.
@@ -129,7 +129,7 @@ make qemu
 ```
 
 > 📝 **Note:** if you are building the system using `build.sh` to change the CPU architecture or filesystem contents, you can also provide the `qemu` option to run the virtual machine:
-> 
+>
 > ```sh
 > ./build.sh -a i586 -c demo qemu
 > ```
@@ -182,7 +182,6 @@ The following builds the `server` variant of Redox for the `i586` (32-bit Intel/
 ```
 
 The resulting image is `build/i586/server/livedisk.iso`, which can be used to install Redox from a USB device.
-
 
 #### Example 2
 

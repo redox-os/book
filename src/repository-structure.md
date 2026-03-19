@@ -4,7 +4,7 @@ The [Redox GitLab](https://gitlab.redox-os.org/) consists of a large number of *
 
 ## The Redox Project
 
-The `redox` project is actually just the root of the build system. It does not contain any of the code that the final Redox image will include. It includes the Makefiles, configuration files, package system and a few scripts to simplify setup and building. The `redox` project can be found on the [GitLab repository](https://gitlab.redox-os.org/redox-os/redox).
+The `redox` project is actually just the root of the build system. It does not contain any of the code that the final Redox image will include. It includes the Makefiles, configuration files, package system and a few scripts to simplify setup and building. The `redox` project can be found at the [GitLab repository](https://gitlab.redox-os.org/redox-os/redox).
 
 ## Recipes
 

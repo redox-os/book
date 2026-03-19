@@ -1,6 +1,6 @@
 # Components of Redox
 
-Redox is made up of several discrete components. 
+Redox is made up of several discrete components.
 
 ## Core
 
@@ -10,7 +10,7 @@ Redox is made up of several discrete components.
 - init
 - initfs
 - drivers - Device drivers
-- redoxfS - Filesystem
+- redoxfs - Filesystem
 - audiod - Audio daemon
 - netstack - TCP/UDP stack
 - ps2d - PS/2 driver

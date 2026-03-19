@@ -108,7 +108,7 @@ Before building Redox with NixOS, you must have configured Podman on your system
     podman-compose # start group of containers for dev
   ];
 }
-        
+
 ```
 
 You will then have to configure your user to be able to use Podman:
@@ -204,11 +204,11 @@ Type `exit` on both shells once you have determined how to solve your problem.
 
 > 📝 **Note:** This section is no longer being recommended as the primary way to do development on new recipes. Any new dependencies should be compiled in a Cookbook recipe using the `host:recipe-name` syntax.
 
-This method can be used if you want to make changes/testing inside the Debian container with `make env`. 
+This method can be used if you want to make changes/testing inside the Debian container with `make env`.
 
 The default **Containerfile**, `podman/redox-base-containerfile`, imports all required packages for a normal Redox build.
 
-However, you cannot easily add packages after the **base image** is created. You must add them to your own Containerfile and rebuild the container image. 
+However, you cannot easily add packages after the **base image** is created. You must add them to your own Containerfile and rebuild the container image.
 
 Copy `podman/redox-base-containerfile` and add to the list of packages in the initial `apt-get`.
 
@@ -267,9 +267,9 @@ If you just want to install the packages temporarily, run `make env`, open a new
 
 If you are interested in how we are able to use your working directory for builds in **Podman**, the following configuration details may be interesting.
 
-Historically, we've used `--userns keep-id` which the *container's* `root` user is actually mapped to your User ID on the host system. It was necessary in Podman 3.x and previous versions as Podman user mapping was not quite good and often broke with [tar](https://github.com/containers/podman/issues/14655) and [buildah](https://github.com/containers/buildah/issues/1818). In Podman 4.x onwards that it no longer necessary and we can drop it.
+Historically, we've used `--userns keep-id` which means the *container's* `root` user is actually mapped to your User ID on the host system. It was necessary in Podman 3.x and previous versions as Podman user mapping was not quite as good and often broke with [tar](https://github.com/containers/podman/issues/14655) and [buildah](https://github.com/containers/buildah/issues/1818). In Podman 4.x onwards the workaround is no longer necessary and we can drop it.
 
-For Ubuntu 22.04 there's a temporary fix to it by [manually updating crun](https://github.com/microsoft/vscode-remote-release/issues/11042#issuecomment-3044713731).
+For Ubuntu 22.04 there's a temporary fix by [manually updating crun](https://github.com/microsoft/vscode-remote-release/issues/11042#issuecomment-3044713731).
 
 The working directory is made available in the container by **mounting** it as a **volume**. The **Podman** option:
 
@@ -283,7 +283,7 @@ For our invocation of Podman, we set the PATH environment variable as an option 
 
 We also set `PODMAN_BUILD=0` in the environment, to ensure that the instance of `make` running in the container knows not to invoke **Podman**. This overrides the value set in `.config`.
 
-In the **Containerfile**, we use as few `RUN` commands as possible, as **Podman** commits the image after each command. And we avoid using `ENTRYPOINT` to allow us to specify the `podman run` command as a list of arguments, rather than just a string to be processed by the entrypoint shell.
+In the **Containerfile**, we use as few `RUN` commands as possible, as **Podman** commits the image after each command. We also avoid using `ENTRYPOINT` to allow us to specify the `podman run` command as a list of arguments, rather than just a string to be processed by the entrypoint shell.
 
 Containers in our build process are run with `--rm` to ensure the container is discarded after each use. This prevents a proliferation of used containers. However, when you use `make container_clean`, you may notice multiple items being deleted. These are the partial images created as each `RUN` command is executed while building.
 

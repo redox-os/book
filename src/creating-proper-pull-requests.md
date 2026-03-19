@@ -58,7 +58,7 @@ The steps given below are for the main Redox project repository - other projects
     git submodule update --recursive --init
     ```
 
-    Usually, when syncing your local copy with the master branch, you will want to rebase instead of merge. This is because it will create duplicate commits that don't actually do anything when merged into the master branch.
+    Usually, when syncing your local copy with the master branch, you will want to rebase instead of merge. This is because otherwise it will create duplicate commits that don't actually do anything when merged into the master branch.
 
 6. Before you start to make changes, you will want to create a separate branch, and keep the `master` branch of your fork identical to the main repository, so that you can compare your changes with the main branch and test out a more stable build if you need to. Create a separate branch:
 
@@ -120,7 +120,6 @@ Sometimes a reviewer will request modifications. If changes are required:
 5. Mark the merge request as "Ready"
 
 This process communicates that the branch may be changing, and prevents reviewers from expending time and effort reviewing changes that are still in progress.
-
 
 ## Using GitLab web interface
 

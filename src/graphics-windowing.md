@@ -10,9 +10,9 @@ Because we don't have GPU drivers yet, we rely on what firmware gives to us.
 
 ### GPUs
 
-On Linux/BSDs, the GPU communication with the kernel is done by the DRM system (Direct Rendering Manager, `libdrm` library), that Mesa3D drivers use to work (Mesa3D implement OpenGL/Vulkan drivers, DRM expose the hardware interfaces).
+On Linux/BSDs, the GPU communication with the kernel is done by the DRM system (Direct Rendering Manager, `libdrm` library), that Mesa3D drivers use to work (Mesa3D implements OpenGL/Vulkan drivers, DRM exposes the hardware interfaces).
 
-Said this, in Redox a "DRM driver" needs to be an user-space driver which use the system calls/schemes to communicate with the hardware.
+That said, in Redox a "DRM driver" needs to be a user-space driver daemon which uses the system calls/schemes to communicate with the hardware.
 
 The last step is to implement the Redox backend in our Mesa3D [fork](https://gitlab.redox-os.org/redox-os/mesa)/[recipe](https://gitlab.redox-os.org/redox-os/cookbook/-/blob/master/recipes/mesa/recipe.toml) to use these user-space drivers.
 
@@ -28,7 +28,7 @@ The Orbital desktop environment provides a display server, window manager and co
 
 This display server is more simple than X11 and Wayland making the porting task more quick and easy, it's not advanced like X11 and Wayland yet but enough to port most Linux/BSD programs.
 
-Compared to Wayland, Orbital has one server implementation, while Wayland provide protocols for compositors.
+Compared to Wayland, Orbital has one protocol server implementation (like X11 for a long time), while Wayland provides protocols for compositors (servers and window managers) and clients (applications if the compositor is not bundled).
 
 ### Features
 
@@ -43,7 +43,7 @@ If you hold the **Super** key (generally the key with a Windows logo) it will sh
 
 ### Libraries
 
-The programs using these libraries can work on Orbital.
+Programs using the following libraries can work on Orbital.
 
 - winit
 - softbuffer
@@ -73,6 +73,6 @@ folder.
 
 If you want to port a program to Orbital, see below:
 
-- If the program is written in Rust probably it works on Orbital because the `winit` crate is used in most places, but there are programs that access X11 or Wayland directly. You need to port these programs to `winit` and merge on upstream.
+- If the program is written in Rust it probably works on Orbital because the `winit` crate is used in most places, but there are programs that access X11 or Wayland directly. You need to port these programs to `winit` and merge to upstream.
 
-- If the program is written in C or C++ and access X11 or Wayland directly, it must be ported to the [Orbital library](https://gitlab.redox-os.org/redox-os/liborbital).
+- If the program is written in C or C++ and accesses X11 or Wayland directly, it must be ported to the [Orbital library](https://gitlab.redox-os.org/redox-os/liborbital).

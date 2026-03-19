@@ -91,15 +91,15 @@ The build system downloads and creates several files that you may want to know a
 - `recipes/recipe-name/source.tar` - The tarball of the recipe (renamed).
 - `recipes/recipe-name/source` - The directory where the recipe source is extracted or downloaded.
 - `recipes/recipe-name/target` - The directory where the recipe binaries are stored.
-- `recipes/recipe-name/target/${TARGET}` - The directory for the recipes binaries of the CPU architecture (`${TARGET}` is the environment variable of your CPU architecture).
-- `recipes/recipe-name/target/${TARGET}/build` - The directory where the recipe build system run its commands.
+- `recipes/recipe-name/target/${TARGET}` - The directory for the recipe's binaries of the CPU architecture (`${TARGET}` is the environment variable set to your CPU architecture).
+- `recipes/recipe-name/target/${TARGET}/build` - The directory where the recipe build system runs its commands.
 - `recipes/recipe-name/target/${TARGET}/stage` - The directory where recipe binaries go before the packaging, after `make all`, `make rebuild` and `make image` the [installer](https://gitlab.redox-os.org/redox-os/installer) will extract the recipe package on the QEMU image, generally at `/usr/bin` or `/usr/lib` in a Redox filesystem hierarchy.
 - `recipes/recipe-name/target/${TARGET}/sysroot` - The folder where recipe build dependencies (libraries) goes, for example: `library-name/src/example.c`
 - `recipes/recipe-name/target/${TARGET}/stage.pkgar` - Redox package file.
 - `recipes/recipe-name/target/${TARGET}/stage.sig` - Signature for the `tar` package format.
 - `recipes/recipe-name/target/${TARGET}/stage.tar.gz` - Legacy `tar` package format, produced for compatibility reasons as we are working to make the package manager use the `pkgar` format.
 - `recipes/recipe-name/target/${TARGET}/stage.toml` - Contains the runtime dependencies of the package and is part of both package formats.
-  
+
 ## GNU Make Commands
 
 You can combine `make` commands, but order is significant. For example, `make r.games image` will build the `games` recipe and create a new Redox image, but `make image r.games` will make the Redox image before the recipe building, thus the new recipe binary will not be included on your Redox filesystem.
@@ -108,7 +108,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
 - `make pull` - Update the source code of the build system without building.
 - `make all` - Builds the entire system, checking for changes and only building as required. Only use this for the first build. If the system was successfully built previously, this command may report `Nothing to be done for 'all'`, even if some recipes have changed. Use `make rebuild` instead.
-- `make rebuild` - Update all binaries from recipes with source code changes (it don't detect changes on the Redox toolchain), it should be your normal `make` target.
+- `make rebuild` - Update all binaries from recipes with source code changes (it doesn't detect changes on the Redox toolchain). This should be your normal `make` target.
 - `make prefix` - Download the Rust/GCC forks and build relibc.
 - `make fstools` - Build the Redox image builder (installer), Cookbook and RedoxFS.
 - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are downloaded. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
@@ -291,9 +291,9 @@ scripts/recipe-path.sh recipe-name
 
 ### Recipe Match
 
-Search some text inside the `recipe.toml` of all recipes and show their content.
+Search for some text inside the `recipe.toml` of all recipes and show their content.
 
-(Require `bat` and `ripgrep` installed, run `cargo install bat ripgrep` to install)
+(Requires `bat` and `ripgrep` to be installed, run `cargo install bat ripgrep` to install)
 
 ```sh
 scripts/recipe-match.sh "text"
@@ -333,7 +333,7 @@ scripts/cargo-update.sh recipe-name
 
 ### Ventoy
 
-- `scripts/ventoy.sh` - Create and copy the Redox bootable image to an [Ventoy](https://www.ventoy.net/en/index.html)-formatted device.
+- `scripts/ventoy.sh` - Create and copy the Redox bootable image to a [Ventoy](https://www.ventoy.net/en/index.html)-formatted device.
 
 ### Recipe Debugging (Rust)
 
@@ -422,7 +422,7 @@ You can find the global settings on the [Configuration Settings](./configuration
 
 ### Format
 
-The Redox configuration files use the [TOML](https://toml.io/en/) format, it has a very easy syntax and is very flexbile.
+The Redox configuration files use the [TOML](https://toml.io/en/) format, which has a very easy syntax and is very flexbile.
 
 You can see what the format supports on the [TOML](https://toml.io/en/v1.0.0) website.
 

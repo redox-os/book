@@ -1,6 +1,6 @@
 # Creating Proper Bug Reports
 
-If you identify a problem with the system that has not been identified previously, please create a GitLab Issue. In general, we prefer that you are able to reproduce your problem with the latest build of the system. 
+If you identify a problem with the system that has not been identified previously, please create a GitLab Issue. In general, we prefer that you are able to reproduce your problem with the latest build of the system.
 
 - Make sure the code you are seeing the issue with is up to date with `upstream/master`. This helps to weed out reports for bugs that have already been addressed.
 - Search Redox Issues to see if a similar problem has been reported before. Then search outstanding merge requests to see if a fix is pending.
@@ -65,8 +65,8 @@ exit
 
 - Create a GitLab issue following the template. Non-bug report issues may ignore this template.
 
-- Once you create the issue don't forget to post the link on the Dev or Support rooms of the chat, because the GitLab email notifications have distractions (service messages or spam) and most developers don't left their GitLab pages open to receive desktop notifications from the web browser (which require a custom setting to receive issue notifications).
+- Once you create the issue don't forget to post the link on the Dev or Support rooms of the chat, because the GitLab email notifications have distractions (service messages or spam) and most developers don't leave their GitLab pages open to receive desktop notifications from the web browser (which require a custom setting to receive issue notifications).
 
-By doing this you help us to pay attention to your issues and avoid them to be accidentally forgotten.
+By doing this you help us to pay attention to your issues and avoid them being accidentally forgotten.
 
 - Watch the issue and be available for questions.
