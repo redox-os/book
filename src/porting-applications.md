@@ -1,6 +1,6 @@
 # Application Porting
 
-The [Including applications in Redox](./including-applications.md) page gives an example to port/modify a pure Rust application, in this page we explain the advanced way to port pure Rust applications, mixed Rust applications (Rust and C/C++ libraries, for example), C/C++ applications and others.
+The [Including applications in Redox](./including-programs.md) page gives an example to port/modify a pure Rust application, in this page we explain the advanced way to port pure Rust applications, mixed Rust applications (Rust and C/C++ libraries, for example), C/C++ applications and others.
 
 (Before reading this page you must read the [Build System](./build-system-reference.md) page)
 
