@@ -2,7 +2,7 @@
 
 (Before reading this page you must read the [Build System](./build-system-reference.md) page)
 
-This page explain common development tasks on the Redox build system.
+This page explains common development tasks on the Redox build system.
 
 - [Visual Studio Code Configuration](#visual-studio-code-configuration)
 - [VS Code Tips and Tricks](#vs-code-tips-and-tricks)
@@ -23,7 +23,7 @@ This page explain common development tasks on the Redox build system.
     - [Flash the bootable image on your USB device](#flash-the-bootable-image-on-your-usb-device)
     - [Burn your CD/DVD with the bootable image](#burn-your-cddvd-with-the-bootable-image)
 - [Update crates](#update-crates)
-- [Search Text On Files](#search-text-on-files)
+- [Search For Text In Files](#search-for-text-in-files)
 - [Redox Image](#redox-image)
   - [Build Your Recipe for Redox](#build-your-recipe-for-redox)
   - [Make A New Redox Image](#make-a-new-redox-image)
@@ -42,7 +42,7 @@ Before you start the VS Code IDE to do Redox development you need to run the fol
 rustup target add x86_64-unknown-redox
 ```
 
-(If you aren't building Redox to x86_64 change `x86_64` in `x86_64-unknown-redox` to the CPU code that you are using)
+(If you aren't building Redox for x86_64 change `x86_64` in `x86_64-unknown-redox` to the CPU architecture that you are using)
 
 If the code that you are working on includes directives like `#[cfg(target_os = "redox)]`, that code will be disabled by default. To enable live syntax and compiler warnings for that code, add the following line to your VS Code config file (`.vscode/settings.json`):
 
@@ -73,7 +73,7 @@ After installing the `rust-analyzer` extension as described in the overview, you
 - Visual Debugger (if your code can run on Linux)
 - Compare/Revert against the repository with the Git extension
 
-Using VS Code on recipes works pretty well, although it sometimes take a couple of minutes to kick in. Here are some things to know:
+Using VS Code on recipes works pretty well, although it sometimes takes a couple of minutes to kick in. Here are some things to know:
 
 ### Start in the "source" folder
 
@@ -105,7 +105,7 @@ VS Code cannot grok the gestalt of Redox, so it doesn't work very well if you st
 
 ### Don't Build the System in a VS Code Terminal
 
-In general, it's not recommended to do a system build from within VS Code. Use your "Build" window. This gives you the flexibility to exit Code without terminating the build.
+In general, it's not recommended to do a system build from within VS Code. Use your "Build" window. This gives you the flexibility to exit VS Code without terminating the build.
 
 ## Working with Git
 
@@ -115,7 +115,7 @@ In this example, we will discuss how to create a **fork** of the `games` recipe,
 
 ### Anonymous commits
 
-If you are new to Git it request your username and email before the first commit on some offline repository, if you don't want to insert your personal information, run:
+If you are new to Git it will request your username and email before the first commit on some offline repository, if you don't want to insert your personal information, run:
 
 - One repository
 
@@ -200,7 +200,7 @@ nano recipe.toml
 To setup this recipe for contributing, do the following in your "Coding" shell.
 
 - Delete the `source` and `target` directories in `recipes/games/redox-games`
-- Clone the package into the `source` directory, either specifying it in the `git clone` or by moving it after `clone`
+- Clone the package into the `source` directory, either specifying it in the `git clone` command or by moving it after `clone`
 
 ```sh
 rm -rf source target
@@ -254,7 +254,7 @@ cargo check
 
 (Since much of the code in `redox-games` is older (pre-2018 Rust), you will get several warnings. They can be ignored)
 
-  You could also use `cargo clippy`, but `minesweeper` is not clean enough to pass.
+- You could also use `cargo clippy`, but `minesweeper` is not clean enough to pass.
 - The `redox-games` recipe creates more than one executable, so to test `minesweeper` on Linux, you need to specify it to `cargo`. In the `source` directory, run:
 
 ```sh
@@ -263,7 +263,7 @@ cargo run --bin minesweeper
 
 ## Update The Redox Image
 
-After making changes to your recipe you can use the `make rp.redox-games` command, which will check for any changes in the recipe, rebuilt it and update the existing Redox image. The `make all` and `make qemu` commands do not check for recipes that need to be rebuilt, so if you use them, your changes may not be included in the system.
+After making changes to your recipe you can use the `make rp.redox-games` command, which will check for any changes in the recipe, rebuild it and update the existing Redox image. The `make all` and `make qemu` commands do not check for recipes that need to be rebuilt, so if you use them, your changes may not be included in the system.
 
 - Within your "Build" shell, in your `redox` directory, run:
 
@@ -296,7 +296,7 @@ In the directory `build/x86_64/my-config`, you will find the file `redox-live.is
 
 ### Test Your Changes (out of the Redox build system)
 
-[Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) is the tool used to quickly build and run Rust, C and C++ programs for Redox, it downloads the Redox toolchain, build the program and ru inside of a Redox VM.
+[Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) is the tool used to quickly build and run Rust, C and C++ programs for Redox, it downloads the Redox toolchain, builds the program and runs it inside of a Redox VM.
 
 #### Commands
 
@@ -406,7 +406,7 @@ cd build/$ARCH/your-config
 cat /proc/sys/dev/cdrom/info
 ```
 
-Check if the items "Can write" has `1` (Yes) or `0` (No), it also show the optical disk devices on the computer: `/dev/srX`
+Check if the item "Can write" has `1` (Yes) or `0` (No), it also show the optical disk devices on the computer: `/dev/srX`
 
 - Burn the disk with [xorriso](https://www.gnu.org/software/xorriso/)
 
@@ -420,7 +420,7 @@ In the `/dev/srX` part, where `x` is your optical device number.
 
 Read [this](./porting-applications.md#update-crates) page to learn how to update crates.
 
-## Search Text On Files
+## Search For Text In Files
 
 To find which file contains a particular command, crate or function call, you can use the `grep` command.
 

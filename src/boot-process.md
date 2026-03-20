@@ -14,13 +14,13 @@ These three boot loader stages are combined in one executable written to the fir
 
 ### UEFI Boot
 
-Redox supports UEFI booting on x86-64, ARM64, and RISC-V 64-bit machines. UEFI starts up in 64-bit mode; thus, the boot process doesn't need multiple stages. The firmware will find the EFI System Partition (ESP) on the storage device, then load and execute PE32+ UEFI programs typically located at `/EFI/BOOT/BOOTX64.efi` ([OSDev Wiki](https://wiki.osdev.org/UEFI#Bootable_UEFI_applications)). 
+Redox supports UEFI booting on x86-64, ARM64, and RISC-V 64-bit machines. UEFI starts up in 64-bit mode; thus, the boot process doesn't need multiple stages. The firmware will find the EFI System Partition (ESP) on the storage device, then load and execute PE32+ UEFI programs typically located at `/EFI/BOOT/BOOTX64.efi` ([OSDev Wiki](https://wiki.osdev.org/UEFI#Bootable_UEFI_applications)).
 
-In the case of our bootloader, the first code that is executed is `pub extern "C" fn main()` in `src/os/uefi/mod.rs`. At this point, the bootloader follows the same common boot process on all boot methods, which can be seen in a later section.
+In the case of our bootloader, the first code that is executed is `pub extern "C" fn main()` in `src/os/uefi/mod.rs`. At this point, the bootloader follows the same common boot process on all boot methods, which can be seen in the section below.
 
 ### Common boot process
 
-The bootloader initializes the memory map and the display mode, both of which rely on firmware mechanisms that are not accessible after control is switched to the kernel. The bootloader then finds the RedoxFS boot partition on the disk and loads `/boot/kernel` and `/boot/initfs` files into memory. 
+The bootloader initializes the memory map and the display mode, both of which rely on firmware mechanisms that are not accessible after control is switched to the kernel. The bootloader then finds the RedoxFS boot partition on the disk and loads `/boot/kernel` and `/boot/initfs` files into memory.
 
 For a live disk, it does load the whole partition into memory. It then loads `/boot/kernel` and `/boot/initfs` also at a different location in memory.
 
@@ -64,14 +64,14 @@ The ramdisk init has the job of loading the drivers and daemons required to acce
     - `nulld` null handler, creates `/scheme/null`
     - `zero` zero handler, creates `/scheme/zero`
     - `randd` rand handler, creates `/scheme/rand`
-2. Logging 
+2. Logging
     - `logd` system log handler, creates `/scheme/log`
     - `ramfs` loads in-memory FS handling into `/scheme/memory`
 3. Graphics buffers
     - `inputd` virtual terminal (VT) handler, creates `/scheme/input`
     - `vesad` VESA interface handler, creates `/scheme/display.vesa`
     - `fbbootlogd` forwards log from logd to VT
-    - `fbcond` handles keyboard interaction to VT
+    - `fbcond` handles keyboard interaction for VT
 4. Live daemon
     - `lived` livedisk handler, creates `/scheme/disk.live`
 5. Drivers in `/etc/init_drivers.rc`

@@ -4,7 +4,7 @@ This page covers important programs and libraries supported by Redox as of Octob
 
 Redox is designed to be source-compatible with POSIX and Linux applications, only requiring compilation or small patches.
 
-This page contain programs that are known to work well on Redox or how well it was tested. All programs are compiled through our package cross-compilation system called Cookbook, which includes the configuration of all kinds of patches and forks that are required to make them run on Redox.
+This page contains programs that are known to work well on Redox and documents how well they were tested. All programs are compiled through our package cross-compilation system called Cookbook, which includes the configuration of all kinds of patches and forks that are required to make them run on Redox.
 
 Everything on the following lists are tested on the x86_64 (Intel/AMD) CPU architecture, other CPU architectures may not have been tested yet.
 

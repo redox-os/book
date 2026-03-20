@@ -1,8 +1,8 @@
 # Continuous Integration
 
-The [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) helps developers to automate the program testing as the code evolves, it detects broken things or regressions.
+The [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) system helps developers to automate the program testing as the code evolves, as it detects broken things or regressions.
 
-The developer add a configuration file on the Git repository root with the commands to test the things.
+The developer adds a configuration file on the Git repository root with the commands to test the things.
 
 Most known as "CI", it's provided by a Git service (like GitHub and GitLab) in most cases.
 

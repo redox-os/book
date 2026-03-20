@@ -6,7 +6,7 @@ Most ARM motherboards do not use the default image for booting, which requires u
 
 ## Raspberry Pi 3 Model B+
 
-It is easy to port Raspberry Pi 3 Model B+ (raspi3b+) since the bootloader of Raspberry Pi family uses the similar filesystem (FAT32) for booting.
+It is easy to port Raspberry Pi 3 Model B+ (raspi3b+) since the bootloader of Raspberry Pi family uses a similar filesystem (FAT32) for booting.
 
 
 In order to build a RasPi3B+ image:

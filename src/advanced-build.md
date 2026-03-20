@@ -43,7 +43,7 @@ make pull
 
 Please be patient, this can take minutes to hours depending on the hardware and network you're using.
 
-In addition to installing the various packages needed for building Redox, **native_bootstrap.sh** and **podman_bootstrap.sh** both clone the repository, so if you used either script, you have completed Step 1. 
+In addition to installing the various packages needed for building Redox, **native_bootstrap.sh** and **podman_bootstrap.sh** both clone the repository, so if you used either script, you have completed Step 1.
 
 ## Install The Necessary Packages and Emulator
 
@@ -71,7 +71,7 @@ Additional programs or libraries might be needed to build more packages. You can
 
 > ⚠️ **Warning:** The following commands may be outdated
 
-> 📝 **Note:** Always use the latest stable version of the Linux or Unix-like distribution of your choice, as any outdated tools might result in unexpected build errors. Redox cross-compilation is guaranteed to work reliably only in the current Podman environment, which is Debian 13 (Trixie). 
+> 📝 **Note:** Always use the latest stable version of the Linux or Unix-like distribution of your choice, as any outdated tools might result in unexpected build errors. Redox cross-compilation is guaranteed to work reliably only in the current Podman environment, which is Debian 13 (Trixie).
 
 ### Pop!_OS/Ubuntu/Debian Users
 
@@ -183,7 +183,7 @@ sudo emerge app-emulation/qemu
 ### GNU Guix Users
 
 Rust nightly isn't packaged in Guix currently, so you need a
-FHS-enabled container to use rustup:
+FHS-enabled (Filesystem Hierarchy Standard) container to use rustup:
 
 ```sh
 guix shell --pure --container --emulate-fhs --network --share=$HOME \
@@ -381,7 +381,7 @@ export REDOXER_HOST_READELF=readelf
 export REDOXER_HOST_STRIP=strip
 ```
 
-> 📝 **Note:** FreeBSD and MacOS default compiler is Clang, so their support is experimental as also using a GCC version other than 14.x (i.e. the GCC version in Debian 13). Try to set these environment variables if you find any issues in any recipe compilation.
+> 📝 **Note:** FreeBSD and MacOS default compiler is Clang, so their support is experimental, as is using a GCC version other than 14.x (i.e. the GCC version in Debian 13). Try to set these environment variables if you find any issues in any recipe compilation.
 
 ## Prefix
 
@@ -411,7 +411,7 @@ Redox OS is listed as both Tier 2 and Tier 3 [platform support](https://doc.rust
 
 Redox compiles its own Rust compiler to be able to build Tier 3 libstd. Fortunately, we can choose to download from rustup instead of building the Rust compiler using the environment variable: `PREFIX_USE_UPSTREAM_RUST_COMPILER` in `mk/config.mk`.
 
-Building Rust takes about 2 hours or more (if your hardware is relatively powerful) as it's also needed to compile LLVM. If you are building for the x86_64 target, downloading Rust from rustup (the official Rust binaries) might be preferable. When it's completed it generates the `rust-install` directory containing both GCC and Rust compiler.
+Building Rust takes about 2 hours or more (if your hardware is relatively powerful) and it's also needed to compile LLVM. If you are building for the x86_64 target, downloading Rust from rustup (the official Rust binaries) might be preferable. When it's completed it generates the `rust-install` directory containing both GCC and Rust compiler.
 
 Note that there maybe some patches in [Redox Rust fork](https://gitlab.redox-os.org/redox-os/rust/) that has not been upstreamed, so your experience with using Rust from rustup might be different than building it.
 
@@ -419,7 +419,7 @@ Note that there maybe some patches in [Redox Rust fork](https://gitlab.redox-os.
 
 [Relibc](https://gitlab.redox-os.org/redox-os/relibc) is the [C standard library](https://en.wikipedia.org/wiki/C_standard_library) written for Redox. Relibc is needed for both GCC and Rust to compile programs.
 
-Relibc is very active in development even with `PREFIX_BINARY=1` it will be compiled anyway so we always have the updated libc. Fortunately, compiling it is very quick. When it's completed it generates the `relibc-install` directory containing GCC and Rust bundled with updated relibc.
+Relibc is very active in development, so even with `PREFIX_BINARY=1` it will be compiled anyway to make sure we always have the updated libc. Fortunately, compiling it is very quick. When it's completed it generates the `relibc-install` directory containing GCC and Rust bundled with updated relibc.
 
 ## Cookbook
 

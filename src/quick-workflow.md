@@ -2,7 +2,7 @@
 
 This page contains the most quick testing/development workflow for people that want an direct list to do things.
 
-**You need to fully understand the build system to use this workflow, as it don't give a detailed explanation of each command to save time and space**
+**You need to fully understand the build system to use this workflow, as it doesn't give a detailed explanation of each command to save time and space**
 
 - [Install Rust Nightly](#install-rust-nightly)
 - [Update Rust](#update-rust)
@@ -50,7 +50,7 @@ Use Case: Try to fix Rust problems.
 git clone https://gitlab.redox-os.org/redox-os/redox.git --origin upstream
 ```
 
-Use Case: Commonly used when a big build system breakage was not prevented before an update or wipe leftovers.
+Use Case: Commonly used when a big build system breakage was not prevented before an update or to wipe leftovers.
 
 ### Install the required dependencies for the build system
 
