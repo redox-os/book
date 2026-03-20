@@ -95,8 +95,8 @@ The build system downloads and creates several files that you may want to know a
 - `recipes/recipe-name/target/${TARGET}` - The directory for the recipes binaries of the CPU architecture (`${TARGET}` is the environment variable of your CPU architecture).
 - `recipes/recipe-name/target/${TARGET}/build` - The directory where the recipe build system run its commands.
 - `recipes/recipe-name/target/${TARGET}/stage` - The directory where recipe binaries go before the packaging, after `make all`, `make rebuild` and `make image` the [installer](https://gitlab.redox-os.org/redox-os/installer) will extract the recipe package on the QEMU image, generally at `/usr/bin` or `/usr/lib` in a Redox filesystem hierarchy.
-- `recipes/recipe-name/target/${TARGET}/sysroot` - The folder where recipe build dependencies (libraries) goes, for example `*.so` and `cmake` files.
-- `recipes/recipe-name/target/${TARGET}/toolchain` - The folder where recipe tool dependencies (toolchain) goes, for example binaries.
+- `recipes/recipe-name/target/${TARGET}/sysroot` - The folder where recipe build dependencies (libraries) are shared, for example: `*.so`, `*.a` and `cmake` files.
+- `recipes/recipe-name/target/${TARGET}/toolchain` - The folder where recipe tool dependencies (toolchain) are shared, for example: binaries.
 - `recipes/recipe-name/target/${TARGET}/stage.pkgar` - Redox package file.
 - `recipes/recipe-name/target/${TARGET}/stage.toml` - Contains the runtime dependencies of the package and is part of both package formats.
 
