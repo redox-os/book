@@ -81,29 +81,29 @@ CONFIG_NAME?=desktop-minimal
 
 ### Cookbook Environment Variables
 
-Cookbook (the build system) has environment variables that can be tuned up for more customization. To set this environment variable, write `export KEY=VALUE` to `.config`. Note that these are environment not Makefile variables, so `export` keyword is necessary.
+Cookbook (the build system) has environment variables that can be tuned for more customization. To set this environment variable, write `export KEY=VALUE` to `.config`. Note that these are environment, not Makefile variables, so `export` keyword is necessary.
 
-Each Cookbook configuration defaults to environment variables which are:
+Each Cookbook configuration defaults to environment variables:
 
-| Environment Variable  | How to use the variable    | Description                            |
-|-:---------------------|-:--------------------------|-:--------------------------------------|
-| `CI`                  | `CI=1`, `CI=`              | Disables TUI                           |
-| `COOKBOOK_MAKE_JOBS`  | `COOKBOOK_MAKE_JOBS=4`     | Override build job count               |
-| `COOKBOOK_LOGS`       | `COOKBOOK_LOGS=true`       | Override whether to save logs          |
-| `COOKBOOK_OFFLINE`    | `COOKBOOK_OFFLINE=true`    | Override offline behaviour (see notes) |
-| `COOKBOOK_VERBOSE`    | `COOKBOOK_VERBOSE=false`   | Override verbosity                     |
-| `COOKBOOK_NONSTOP`    | `COOKBOOK_NONSTOP=true`    | Override nonstop (see notes)           |
-| `COOKBOOK_CLEAN_TARGET` | `COOKBOOK_CLEAN_TARGET=true`    | Clean target directory after build          |
-| `COOKBOOK_CLEAN_BUILD` | `COOKBOOK_CLEAN_BUILD=true`    | Clean build directory before build          |
-| `COOKBOOK_COMPRESSED` | `COOKBOOK_COMPRESSED=true` | Override package compression           |
-| `COOKBOOK_WEB`        | `COOKBOOK_WEB=true`        | Override web content generation        |
+| Environment Variable    | How to use the variable      | Description                            |
+|--:----------------------|--:---------------------------|--:-------------------------------------|
+| `CI`                    | `CI=1`, `CI=`                | Disables TUI                           |
+| `COOKBOOK_MAKE_JOBS`    | `COOKBOOK_MAKE_JOBS=4`       | Override build job count               |
+| `COOKBOOK_LOGS`         | `COOKBOOK_LOGS=true`         | Override whether to save logs          |
+| `COOKBOOK_OFFLINE`      | `COOKBOOK_OFFLINE=true`      | Override offline behaviour (see notes) |
+| `COOKBOOK_VERBOSE`      | `COOKBOOK_VERBOSE=false`     | Override verbosity                     |
+| `COOKBOOK_NONSTOP`      | `COOKBOOK_NONSTOP=true`      | Override nonstop (see notes)           |
+| `COOKBOOK_CLEAN_TARGET` | `COOKBOOK_CLEAN_TARGET=true` | Clean target directory after build     |
+| `COOKBOOK_CLEAN_BUILD`  | `COOKBOOK_CLEAN_BUILD=true`  | Clean build directory before build     |
+| `COOKBOOK_COMPRESSED`   | `COOKBOOK_COMPRESSED=true`   | Override package compression           |
+| `COOKBOOK_WEB`          | `COOKBOOK_WEB=true`          | Override web content generation        |
 
 > 📝 **Note:** `REPO_OFFLINE=1` and `REPO_NONSTOP=1` are the recommended ways to set options instead of `export COOKBOOK_OFFLINE=true` and `export COOKBOOK_NONSTOP=true`
 > 💡 **Tip:** Running Cookbook with `CI=1 COOKBOOK_LOGS=true COOKBOOK_VERBOSE=false` will hide successful build logs in the terminal
 
 #### `cookbook.toml`
 
-Cookbook also has secondary option file. This file is rarely used even with our seasoned dev as `.config` should be sufficient. Any configuration in this file will override configuration from `.config` or environment variables. The `cookbook.toml` configuration below can be used as a template:
+Cookbook also has secondary option file. This file is rarely used as `.config` should be sufficient. Any configuration in this file will override configuration from `.config` or environment variables. The `cookbook.toml` configuration below can be used as a template:
 
 The `cookbook.toml` file mainly configures Cookbook options (`[cook]`) and mirrors (`[mirror]`). Mirrors are used to replace code and binary sources used across Cookbook, useful for a quick way to use alternative sources when the main server is offline or slow. 
 

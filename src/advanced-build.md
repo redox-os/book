@@ -363,7 +363,7 @@ The `. "$HOME/.cargo/env` command (equivalent to `source ~/.cargo/env`) have bee
 
 Redox requires a GCC-compatible compiler for the operating system to build additional host tools. GCC for the host system is searched automatically from `PATH` environment variable with a binary named as `$GNU_TARGET-gcc` (e.g. `x86_64-linux-gnu-gcc`).
 
-If you have to use a different compiler because `gcc` is not exist or compatible, you can export [more environment variables](https://gitlab.redox-os.org/redox-os/redoxer#host-specific-customizations) in the `.config` file:
+If you have to use a different compiler because `gcc` does not exist or is incompatible, you can export [more environment variables](https://gitlab.redox-os.org/redox-os/redoxer#host-specific-customizations) in the `.config` file:
 
 ```sh
 export REDOXER_HOST_AR=ar
@@ -426,7 +426,7 @@ The **Cookbook** system is an essential part of the Redox build system. Each Red
 
 ## Sccache
 
-[Sccache](https://github.com/mozilla/sccache/) is an important cache optimization to make rebuild fast. It is automatically installed and enabled in Podman Build, however it's not the case not native build as it has some caveats.
+[Sccache](https://github.com/mozilla/sccache/) is an important cache optimization to make rebuilds fast. It is automatically installed and enabled in Podman Build, but it's not the case with native build, as it has some caveats.
 
 To enable it, download prebuilt binaries in their [releases page](https://github.com/mozilla/sccache/releases) and move it to a directory where it is added to `PATH` (typically `~/.cargo/bin`) then add this to `.config`:
 
@@ -434,13 +434,13 @@ To enable it, download prebuilt binaries in their [releases page](https://github
 SCCACHE_BUILD=1
 ```
 
-Sccache will ran automatically in background after first time it ran. See [their configuration file](https://github.com/mozilla/sccache/blob/main/docs/Configuration.md) to customize many aspect of it. Do note that, when running Podman build while Native `sccache` exist and started, you have to turn it off, because it interferes with `sccache` inside podman and caused port conflicts:
+Sccache will run automatically in the background after the first time it runs. See [their configuration file](https://github.com/mozilla/sccache/blob/main/docs/Configuration.md) to customize many aspects of it. Do note that, when running Podman build while Native `sccache` exists and is started, you have to turn it off, because it interferes with `sccache` inside podman and causes port conflicts:
 
 ```
 sccache --stop-server
 ```
 
-There is a very rare occasion where sccache won't pickup build cache, such as when [platform ABI changed](https://gitlab.redox-os.org/redox-os/bootloader/-/merge_requests/42). In this case you have to remove sccache cache (`~/.cache/sccache`) manually. This is not a problem with podman build as sccache cache is contained to the podman container.
+There is a very rare occasion where sccache won't pick up build cache, such as when [platform ABI changed](https://gitlab.redox-os.org/redox-os/bootloader/-/merge_requests/42). In this case, you have to remove sccache cache (`~/.cache/sccache`) manually. This is not a problem with podman build as sccache cache is contained in the podman container.
 
 ## Creating a Build Environment Shell
 
