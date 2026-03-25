@@ -1,20 +1,20 @@
 # Continuous Integration
 
-The [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration) system helps developers to automate the program testing as the code evolves, it detects build failures and regressions.
+The [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration) helps developers to automate the software testing as the code evolves, it detects build failures, bugs and regressions.
 
-In Redox, we use the [Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) program to set up our GitLab CI configuration file. It downloads our toolchain, builds the program for the Redox target using Cargo, and runs the program inside a Redox virtual machine. Redoxer helps test software for Redox OS without having to bootstrap a full build system.
+In Redox, we use the [Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) program to set up our GitLab CI configuration file. It downloads our toolchain, builds the program or library for the Redox target using Cargo, and runs the program inside a Redox virtual machine. Redoxer helps developers to test software for Redox OS without having to bootstrap the full build system.
 
 Refer to the repository [README](https://gitlab.redox-os.org/redox-os/redoxer#user-content-redoxer) for command line instructions. This page assumes you have read them.
 
 ## Installing Redoxer
 
-We provide two options to install Redoxer: via Docker Container or Cargo. To install via `redoxer` crate:
+We provide two options to install Redoxer: Docker container or Cargo. To install via `redoxer` crate in `crates.io` :
 
 ```sh
 cargo install redoxer
 ```
 
-Then download the toolchain and QEMU image, and test if installation works with `true` from uutils:
+Then download the toolchain, QEMU image and test if installation works with `true` from `uutils` :
 
 ```sh
 redoxer exec true
@@ -26,9 +26,9 @@ To install and run Redoxer via [the official Docker container](https://hub.docke
 docker run -ti --rm docker.io/redoxos/redoxer redoxer exec true
 ```
 
-Compared to redoxer via cargo, a Docker variant is very recommended for CI to use since it's **guaranteed to boot**, as the toolchain and QEMU image for testing is already inside it and tested before being published. The Docker variant is only available for `x86_64` Linux at this time.
+Compared to Redoxer via Cargo,  the Docker variant is very recommended for use in CI since it's **guaranteed to boot**, because the Redox toolchain and QEMU image for testing is already inside it and tested before being published. The Docker variant is only available for `x86_64` Linux at this time.
 
-All commands below will refer `redoxer` as the command to run redoxer. For installations via Docker, you need to prefix it with `docker run`, or alias it in `.bashrc`:
+All commands below will refer `redoxer` as the command to run Redoxer. For installations via Docker you need to prefix it using the `docker run` command or alias it in `.bashrc`:
 
 ```sh
 redoxer() {
@@ -37,9 +37,9 @@ redoxer() {
 }
 ```
 
-## Build and Test Rust project with Redoxer
+## Build and test a Rust project with Redoxer
 
-Redoxer has a first-class integration with Rust Cargo. Here's how to check and build a Rust project targeting Redox OS:
+Redoxer has a first-class integration with Cargo. Here's how to check and build a Rust project targeting Redox OS:
 
 ```sh
 redoxer check
@@ -55,9 +55,9 @@ Here's how to test a Rust project in Redox OS, which will run an actual test ins
 redoxer test
 ```
 
-All cargo commands are shorthanded; the complete list can be seen from README or just run `redoxer`.
+All Cargo commands are shorthanded; the complete list can be seen in the README or just run `redoxer`.
 
-## Build and Test C project with Redoxer
+## Build and test a C or C++ project with Redoxer
 
 Redoxer has a shorthand for `ar`, `cc`, `cxx` for the AR/GCC/G++ compiler. Here's how to build a single `main.c` file targeting Redox OS:
 
@@ -71,7 +71,7 @@ Here's how to test that single executable on Redox OS, which will run an actual 
 redoxer exec ./main
 ```
 
-You can wrap redoxer to the CC compiler, which you can then use to compile larger C projects using Makefile, CMake, and so on:
+You can wrap Redoxer to the C and C++ compiler, which you can then use to compile larger C or C++ projects using GNU Make, CMake, Meson and so on:
 
 ```sh
 export AR="redoxer ar"
@@ -81,15 +81,15 @@ export CXX="redoxer cxx"
 
 ## Building with native libraries
 
-Sometimes a project needs native libraries such as openssl or zlib. To have them included for compiling, run:
+Sometimes a project needs native libraries such as OpenSSL or zlib. To have them included for compilation, run:
 
 ```sh
 redoxer pkg openssl3 zlib
 ```
 
-It will download and extract the compiled library to `target/$TARGET/sysroot` or configured from `REDOXER_SYSROOT`. After it does, all subsequent redoxer calls will automatically be linked to them via RUSTFLAGS, LDFLAGS, etc.
+It will download and extract the compiled library to `target/$TARGET/sysroot` or configured from `REDOXER_SYSROOT`. After it does, all subsequent Redoxer calls will automatically be linked to them via `RUSTFLAGS`, `LDFLAGS`, etc.
 
-To verify how build works, run `redoxer env` and examine how environment variables are produced. You can also debug it with interactive bash using `redoxer env bash`:
+To verify how the build works run the `redoxer env` command and examine how environment variables are produced. You can also debug it with a interactive GNU Bash using `redoxer env bash` :
 
 ```sh
 [user@local ~]$ docker run -ti --rm docker.io/redoxos/redoxer redoxer env bash
@@ -102,7 +102,9 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 ## Testing with additional files
 
-To include files inside redoxer, use `--folder`, which will copy contents into `/root`:
+To add files inside Redoxer use the `--folder` option, which will copy the contents of the specified directory path into `/root`:
+
+- Add the contents of the current directory
 
 ```sh
 redoxer exec --folder . true
@@ -115,11 +117,13 @@ REDOXER_SYSROOT=sysroot redoxer pkg curl
 ```
 
 ```sh
-# note the end / in ./sysroot/usr/ matters (rsync behavior)
+# note that the ending "/" in ./sysroot/usr/ matters (rsync behavior)
 redoxer exec --folder ./sysroot/usr/:/usr curl --version
 ```
 
-You can extract files out of QEMU image with `--artifact` when execution is successful. It also can be combined with `--folder`:
+You can copy files from the QEMU image to the specified directory path with the `--artifact` option when execution is successful. It also can be combined with `--folder` :
+
+- Add and copy the current directory back
 
 ```sh
 redoxer exec --folder . --artifact . touch file
@@ -127,7 +131,7 @@ redoxer exec --folder . --artifact . touch file
 
 ## CI templates
 
-This is a template for use in GitHub CI:
+- GitHub CI template:
 
 ```yml
 jobs:
@@ -142,7 +146,7 @@ jobs:
       - run: redoxer test
 ```
 
-And another one for GitLab CI:
+- GitLab CI template:
 
 ```yml
 redox_test:
@@ -153,7 +157,7 @@ redox_test:
     - redoxer test
 ```
 
-This addresses two issues:
+This solve two issues:
 
--  `REDOXER_QEMU_ARGS: "-smp 1"` ensures there's no flaky test caused by high contention in kernel multicore, which is an open issue to this day.
--  `ln -sf /root/.redoxer ~/.redoxer` fixes missing toolchain and image because GitHub does not run as `/root`, but as `/github/home`. GitLab does not have this problem.
+-  `REDOXER_QEMU_ARGS: "-smp 1"` ensures there's no flaky test caused by high contention in kernel multi-threading, which is an open issue to this day.
+-  `ln -sf /root/.redoxer ~/.redoxer` fixes a missing toolchain and image problem because GitHub does not run as `/root`, but as `/github/home`. GitLab does not have this problem.
