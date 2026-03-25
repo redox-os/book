@@ -46,13 +46,13 @@ Three important Makefile variables of interest are `ARCH`, `CONFIG_NAME`, and `B
 | `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY=0`), the build system will build the Redox toolchain from source and will not download the toolchain binaries from the Redox build server. |
 | `PREFIX_USE_UPSTREAM_RUST_COMPILER` | If set to 1 (`PREFIX_BINARY=1`) the build system will download the Rust compiler from rustup (Rust upstream compiler binaries) instead of building it (only used with `PREFIX_BINARY=0`) |
 | `REPO_BINARY` | If set to 1 (`REPO_BINARY=1`), the build system will download/install pre-compiled packages from the Redox package server by default, rather than build them from source (i.e., recipes). |
-| `REPO_OFFLINE` | Enable the offline mode of Cookbook where recipe sources will not be updated and use less Internet connection as possible. |
+| `REPO_OFFLINE` | Enable the offline mode of Cookbook where recipe sources will not be updated and download the smallest amount of data from the Internet as possible. |
 | `REPO_NONSTOP` | Enable the nonstop mode of Cookbook where recipe build failure will not stop the compilation of other recipes. |
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
 | `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
-| `SCCACHE_BUILD` | If set to 1 it will enable the [sccache](https://github.com/mozilla/sccache) object cache for Native Build. See [Sccache in Native Build](./advanced-build.md#sccache) page for more information.
-| `PODMAN_CACHE_PULL` | If set to 1 will download the cached Podman container instead of creating one from scratch, disable if the cached container is broken
+| `SCCACHE_BUILD` | If set to 1 it will enable the [sccache](https://github.com/mozilla/sccache) object cache for Native Build. See [Sccache in Native Build](./advanced-build.md#sccache) page for more information. |
+| `PODMAN_CACHE_PULL` | If set to 1 the build system will download the cached Podman container instead of creating one from scratch, disable if the cached container is broken |
 | `FSTOOLS_IN_PODMAN` | If set to 1 (`FSTOOLS_IN_PODMAN=1`), the build system will build the installer inside Podman to avoid FUSE in the host system. See the [Installing without FUSE](./advanced-podman-build.md#installing-without-fuse) page for more information. |
 | `FSTOOLS_NO_MOUNT` | If set to 1 (`FSTOOLS_NO_MOUNT=1`), the installer will not use FUSE to create images. See the [Installing without FUSE](./advanced-podman-build.md#installing-without-fuse) section for more information. |
 | `CONTAINERFILE` | The Podman container configuration file. See the [Podman Build](./podman-build.md) page for more information. |
@@ -105,7 +105,7 @@ Each Cookbook configuration defaults to environment variables:
 
 Cookbook also has secondary option file. This file is rarely used as `.config` should be sufficient. Any configuration in this file will override configuration from `.config` or environment variables. The `cookbook.toml` configuration below can be used as a template:
 
-The `cookbook.toml` file mainly configures Cookbook options (`[cook]`) and mirrors (`[mirror]`). Mirrors are used to replace code and binary sources used across Cookbook, useful for a quick way to use alternative sources when the main server is offline or slow. 
+The `cookbook.toml` file mainly configures Cookbook options (`[cook]`) and mirrors (`[mirror]`). Mirrors are used to replace code and binary sources used across Cookbook, useful for a quick way to use alternative sources when the main server is offline or slow.
 
 
 ```toml
@@ -124,7 +124,7 @@ The `cookbook.toml` file mainly configures Cookbook options (`[cook]`) and mirro
 # The uncommented option below is the default if [mirrors] is not set
 # see the list of GNU FTP mirrors at: https://www.gnu.org/prep/ftp.en.html
 "ftp.gnu.org/gnu" = "mirrors.ocf.berkeley.edu/gnu"
-# "github.com/foo/bar" = "github.com/baz/bar" 
+# "github.com/foo/bar" = "github.com/baz/bar"
 ```
 
 > 💡 **Tip:** Mirrors option can also be used to override [binary builds](#repo_binary) source URL.
@@ -161,7 +161,7 @@ gdb?=<yes|nonblock|no>
 
 ### Command Line
 
-The default settings in `mk/config.mk` can be manually overridden by explicitly setting them on the `make` command line.
+The default settings in `mk/config.mk` can be overridden by explicitly setting them on the `make` command line.
 
 For example, the following command builds the `demo` image variant and loads it into QEMU:
 
@@ -260,7 +260,7 @@ make FILESYSTEM_SIZE=512 image qemu
 ```
 
 > ⚠️ **Warning:** setting the `filesystem_size` value too low will produce an error resembling the following:
-> 
+>
 > ```
 > thread 'main' panicked at src/lib.rs:94:53:
 > called `Result::unwrap()` on an `Err` value: Error(Path("/tmp/redox_installer_759506/include/openssl/.pkgar.srtp.h"), State { next_error: Some(Os { code: 28, kind: StorageFull, message: "No space left on device" }), backtrace: InternalBacktrace { backtrace: None } })
@@ -368,7 +368,7 @@ package-name3 = "source" # source-based recipe
 
 ### Local Recipe Changes
 
-By default every time a recipe build is triggered Cookbook will update the recipe source. Cookbook will check the tarball BLAKE3 hash from the recipe configuration (`recipe.toml`), or pull from the `origin` remote when the recipe source is a Git repository. This will also remove local changes that are not saved in a branch.
+By default every time a recipe build is triggered, Cookbook will update the recipe source. Cookbook will check the tarball BLAKE3 hash from the recipe configuration (`recipe.toml`), or pull from the `origin` remote when the recipe source is a Git repository. This will also remove local changes that are not saved in a branch.
 
 To preserve and use local changes and skip updating the source for a specific recipe, change the recipe type to `"local"` in the filesystem configuration, for example:
 
@@ -396,7 +396,7 @@ Cookbook has a TUI mode which is enabled by default. This mode actually speeding
 
 ### Cookbook Offline Mode
 
-Cookbook also has a mode where it will reduce Internet activity by adding `REPO_OFFLINE=1` into `.config`. This mode is useful when you are in places where the Internet is slow or absent, or when you want a fixed build system state or faster incremental compilation.
+Cookbook also has a mode where it will reduce Internet activity by adding `REPO_OFFLINE=1` into `.config`. This mode is useful when you are in places where the Internet connection is slow or absent, or when you want a fixed build system state or faster incremental compilation.
 
 In this mode, Cookbook will not update the source of any recipe or a package binary if also set with `REPO_BINARY=1`. It also adds the `--offline` option to some Cargo build methods inside recipes where it is supported. When Cookbook or Cargo must access the Internet because sources do not exist locally it will throw an error instead.
 

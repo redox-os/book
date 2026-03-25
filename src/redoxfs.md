@@ -84,9 +84,9 @@ You can also convert a non-bootable disk into bootable using `redoxfs-clone`:
 redoxfs-clone redox.img redox-bootable.img bootloader/build/bootloader.bin
 ```
 
-It's not possible to create a bootable UEFI using this option because it creates a GPT-partitioned disk, which currently is only implemented in [redox-installer](https://gitlab.redox-os.org/redox-os/installer/). A dual boot option in the same disk is also impossible if booting from a BIOS firmware.
+It's not possible to create a UEFI-bootable disk using this option because it creates a GPT-partitioned disk, which currently is only implemented in [redox-installer](https://gitlab.redox-os.org/redox-os/installer/). A dual boot option in the same disk is also impossible if booting from BIOS firmware.
 
-Note that you need to have `boot/kernel` and `boot/initfs` in the image to make it actually bootable. You can build those from the [main build system](./podman-build.md) or the [kernel](https://gitlab.redox-os.org/redox-os/kernel) and [base](https://gitlab.redox-os.org/redox-os/base) repositories. 
+Note that you need to have `boot/kernel` and `boot/initfs` in the image to make it actually bootable. You can build those from the [main build system](./podman-build.md) or the [kernel](https://gitlab.redox-os.org/redox-os/kernel) and [base](https://gitlab.redox-os.org/redox-os/base) repositories.
 
 ### Mount a disk
 
@@ -114,7 +114,7 @@ fusermount3 ./redox-img
 
 ### Extend the disk
 
-> ⚠️ **Warning:** Experimental, please backup before
+> ⚠️ **Warning:** Experimental, please backup first.
 
 To extend an existing disk, you need to extend the file before:
 
@@ -122,7 +122,7 @@ To extend an existing disk, you need to extend the file before:
 truncate -s 2GB redox.img
 ```
 
-Then you can run the `redoxfs-resize [disk] [size]` command. The `[size]` option can be `max` (the default), `min`, or a fixed size defined in the [parse-size](https://crates.io/crates/parse-size) library. 
+Then you can run the `redoxfs-resize [disk] [size]` command. The `[size]` option can be `max` (the default), `min`, or a fixed size defined in the [parse-size](https://crates.io/crates/parse-size) library.
 
 ```sh
 redoxfs-resize ./redox.img
@@ -142,7 +142,7 @@ redoxfs-resize: resized filesystem on redox.img
 
 ### Shrink the disk
 
-> ⚠️ **Warning:** Experimental, please backup before
+> ⚠️ **Warning:** Experimental, please backup first.
 
 To shrink an existing disk you can use the `redoxfs-resize` tool:
 

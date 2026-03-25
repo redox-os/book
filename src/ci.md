@@ -1,6 +1,6 @@
 # Continuous Integration
 
-The [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration) helps developers to automate the program testing as the code evolves, it detects build failures and regressions.
+The [Continuous Integration](https://en.wikipedia.org/wiki/Continuous_integration) system helps developers to automate the program testing as the code evolves, it detects build failures and regressions.
 
 In Redox, we use the [Redoxer](https://gitlab.redox-os.org/redox-os/redoxer) program to set up our GitLab CI configuration file. It downloads our toolchain, builds the program for the Redox target using Cargo, and runs the program inside a Redox virtual machine. Redoxer helps test software for Redox OS without having to bootstrap a full build system.
 

@@ -19,7 +19,7 @@ The sections are ordered by knowledge importance.
 ### OS development
 
 - [OSDev Wiki](https://wiki.osdev.org/Expanded_Main_Page) - The best wiki about OS development of the world.
-- [Writing an OS in Rust](https://os.phil-opp.com/) - Blog series to write an operating system in Rust.
+- [Writing an OS in Rust](https://os.phil-opp.com/) - Blog series about writing an operating system in Rust.
 - [Rust OSDev](https://rust-osdev.com/) - Monthly reports with updates on the Rust low-level ecosystem libraries and operating systems.
 
 ### Rust
@@ -31,7 +31,7 @@ The sections are ordered by knowledge importance.
 - [Learn Rust With Entirely Too Many Linked Lists](https://rust-unofficial.github.io/too-many-lists/) - How to implement a linked list in Rust.
 - [Rust Design Patterns](https://rust-unofficial.github.io/patterns/intro.html) - About idioms, design patterns, and anti-pattern in Rust.
 - [Rust 101 - Exercises](https://101-rs.tweede.golf/) - A Rust university course (but lacking answers for exercises).
-- [teach-rs](https://teach-rs.tweede.golf/) - An university course to learn Rust.
+- [teach-rs](https://teach-rs.tweede.golf/) - A university course to learn Rust.
 - [Rust Security Handbook](https://yevh.github.io/rust-security-handbook/) - Helpful security related practices when coding in Rust.
 - [Developer Roadmaps - Rust](https://roadmap.sh/rust) - A guide to learn Rust.
 - [No Boilerplate - Rust playlist](https://www.youtube.com/playlist?list=PLZaoyhMXgBzoM9bfb5pyUOT3zjnaDdSEP) - Short documentaries about special things on Rust.
@@ -82,7 +82,7 @@ If you want to implement something (drivers, hardware interfaces, fix bugs, etc)
 
 ### Ideas
 
-- [Linux](https://www.kernel.org/) - The Linux kernel contain lots of ideas that improved the Unix design (POSIX) and system engineering.
+- [Linux](https://www.kernel.org/) - The Linux kernel contains lots of ideas that improved the Unix design (POSIX) and system engineering.
 - [Android](https://developer.android.com/) - Android created many ideas to improve the system security and power efficiency.
 - [FreeBSD - Ideas](https://wiki.freebsd.org/IdeasPage) - The future ideas of FreeBSD.
 - [FreeBSD - Documentation](https://docs.freebsd.org/en/)

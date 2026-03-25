@@ -1,6 +1,6 @@
 # Build Process
 
-This page explain what each build system command does in detail.
+This page explains what each build system command does in detail.
 
 (Read the [Build System](./build-system-reference.md) to know the context of each command)
 
@@ -98,4 +98,4 @@ If the `build/$ARCH/$CONFIG/repo.tag` file is up to date, it won't do anything. 
 - A command with custom arguments is passed to QEMU to boot Redox without problems.
 - The QEMU window is shown with a menu to choose the resolution.
 - The bootloader does a bootstrap of the kernel, the kernel starts the init, the init starts the user-space daemons and Orbital.
-- The Orbital login screen appear.
+- The Orbital login screen appears.

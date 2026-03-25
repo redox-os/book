@@ -39,7 +39,7 @@ make qemu
 
 Assuming you built the default configuration `desktop` for `x86_64`, none of the Redox games (e.g. `/usr/bin/minesweeper`) have been included yet.
 
-- On your Redox emulation, log into the system as user `user` with an empty password.
+- On your Redox VM, log into the system as the user: `user`, with an empty password.
 - Open a `Terminal` window by clicking on the icon in the toolbar at the bottom of the Redox screen, and type `ls /usr/bin`. You will see that `minesweeper` **is not** listed.
 - Type `Ctrl-Alt-G` to regain control of your cursor, and click the upper right corner of the Redox window to exit QEMU.
 
@@ -106,7 +106,7 @@ If you had a problem, use this command to log any possible errors on your termin
 make r.recipe-name 2>&1 | tee recipe-name.log
 ```
 
-And that's it! Sort of. 
+And that's it! Sort of.
 
 ### Dependencies
 

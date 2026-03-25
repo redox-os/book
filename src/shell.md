@@ -1,6 +1,6 @@
 # Ion
 
-Ion is a terminal shell and library for shells/command execution in Redox, it's used by default. Ion has it's own manual, which you can find on the [Ion Manual](https://doc.redox-os.org/ion-manual/).
+Ion is a terminal shell and library for shells/command execution in Redox, and it's used by default. Ion has it's own manual, which you can find on the [Ion Manual](https://doc.redox-os.org/ion-manual/).
 
 ## 1. The default shell in Redox
 
@@ -21,7 +21,7 @@ There are many more shell implementations, but these two form the base of two fu
 - Bourne shell syntax (bash, sh, zsh)
 - C shell syntax (csh, tcsh)
 
-Of course these two groups are not exhaustive; it is worth mentioning at least the **fish** shell and **xonsh**. These shells are trying to abandon some features of old-school shell to make the language safer and more sane.
+Of course these two groups are not exhaustive; it is worth mentioning at least the **fish** shell and **xonsh**. These shells are trying to abandon some features of old-school shells to make the language safer and more sane.
 
 ### Fancy features
 
@@ -35,7 +35,7 @@ Ion can also be used to write simple scripts for common tasks or system configur
 
 Early [terminals](https://en.wikipedia.org/wiki/Computer_terminal) were devices used to communicate with large computer systems like [IBM mainframes](https://en.wikipedia.org/wiki/IBM_mainframe). Nowadays Unix-like operating systems usually implement so called virtual terminals (tty stands for teletypewriter ... whoa!) and terminal emulators (e.g. xterm, gnome-terminal).
 
-Terminals are used to read input from a keyboard and display textual output of the shell and other programs running inside it. This means that a terminal converts key strokes into control codes that are further used by the shell. The shell provides the user with a command line prompt (for instance: user name and working directory), line editing capabilities (Ctrl + a,e,u,k...), history, and the ability to run other programs (ls, uname, vim, etc.) according to user's input.  
+Terminals are used to read input from a keyboard and display textual output of the shell and other programs running inside it. This means that a terminal converts key strokes into control codes that are further used by the shell. The shell provides the user with a command line prompt (for instance: user name and working directory), line editing capabilities (Ctrl + a,e,u,k...), history, and the ability to run other programs (ls, uname, vim, etc.) according to user's input.
 
 TODO: In Linux we have device files like `/dev/tty`, how is this concept handled in Redox?
 

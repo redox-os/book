@@ -137,7 +137,7 @@ When you run `make all`, the following steps occur.
 
 ### Prefix
 
-The Redox toolchain, referred to as **prefix** because it is prefixed with the CPU architecture name, is downloaded and/or built. Modified versions of `cargo`, `rustc`, `gcc` and many other tools are created. They are placed in the `prefix` directory. 
+The Redox toolchain, referred to as **prefix** because it is prefixed with the CPU architecture name, is downloaded and/or built. Modified versions of `cargo`, `rustc`, `gcc` and many other tools are created. They are placed in the `prefix` directory.
 
 If you have a problem with the toolchain, try the `rm -rf prefix` and `make prefix` or `make clean all` (if `make prefix` is not enough) commands.
 
@@ -207,7 +207,7 @@ Environment leakage is when some program or library is not fully cross-compiled 
 
 It usually happens when the program or library get objects from outside the Redox build system PATH.
 
-- The Redox build system PATH only read at `/usr/bin` and `/bin` to use the host system build tools
+- The Redox build system PATH only reads at `/usr/bin` and `/bin` to use the host system build tools
 - The program build system must use the host system build tools and the Cookbook recipe dependencies, not the host system libraries.
 - The most common way to detect this is to install the `*-dev` dependency package equivalent to the program recipe dependency, for example:
 
@@ -215,7 +215,7 @@ The program named "my-program" needs to use the OpenSSL library, thus you add th
 
 Then you install the `libssl-dev` package on your Ubuntu system and rebuild the program with the `make cr.my-program` command, then it finish the build process successfully.
 
-But when you try to open the executable of the program inside of Redox, it doesn't work. Because it contain Linux references.
+But when you try to open the executable of the program inside of Redox, it doesn't work. Because it contains Linux references.
 
 To fix this problem you need to find where the program build system get the OpenSSL source code and patch it with `${COOKBOOK_SYSROOT}` environment variable (where the `openssl` recipe contents were copied)
 
@@ -429,7 +429,7 @@ If you want an anonymous merge, read the [Anonymous Commits](./coding-and-buildi
 
 ### Update Crates
 
-Sometimes a Rust program use an old crate version lacking Redox support, read [this](./porting-applications.md#update-crates) section to learn how to update them.
+Sometimes a Rust program uses an old crate version lacking Redox support, read [this](./porting-applications.md#update-crates) section to learn how to update them.
 
 ### Verify The Dependency Tree
 
@@ -443,7 +443,7 @@ To identify which crates are using old versions of Redox crates you will need to
 cargo tree --target=x86_64-unknown-redox
 ```
 
-(If you aren't building Redox to x86_64 change `x86_64` in `x86_64-unknown-redox` to the CPU code that you are using)
+(If you aren't building Redox for x86_64 change `x86_64` in `x86_64-unknown-redox` to the CPU architecture that you are using)
 
 This command will draw the dependency tree and you will need to find the crate name on the tree.
 
@@ -461,11 +461,11 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 
 - Use the `dmesg` command to read the kernel and userspace daemons log
 
-- If Orbital hangs you need to verify if the system also freezed by pressing Super+F1 to see the boot log or Super+F2 to switch to other `tty`, login as `root` and run `dmesg` to read the system log ("Super" is the key with Windows logo)
+- If Orbital hangs you need to verify if the system also froze by pressing Super+F1 to see the boot log or Super+F2 to switch to other `tty`, login as `root` and run `dmesg` to read the system log ("Super" is the key with Windows logo)
 
 - You can start the QEMU with the `make qemu gpu=no` command to easily copy the terminal text
 
-- You can write to the `debug:` scheme, which will output on the console, but you must be the `root` user. This is useful if you are debugging an program where you need to use Orbital but still want to capture messages
+- You can write to the `debug:` scheme, which will output on the console, but you must be the `root` user. This is useful if you are debugging a program where you need to use Orbital but still want to capture messages
 
 - Currently, the build system strips function names and other symbols from programs, as support for symbols is not implemented yet
 
@@ -528,7 +528,7 @@ cookbook_cargo
 
 - Backtrace
 
-A backtrace helps you to detect bugs that happen with not expected input parameters, you can trace back through the callers to see where the bad data is coming from.
+A backtrace helps you to detect bugs that happen with unexpected input parameters, and allow you to trace back through the callers to see where the bad data is coming from.
 
 You can see how to use it below:
 
@@ -644,7 +644,7 @@ pkill qemu-system
 
 ## Kernel Panic
 
-A kernel panic is when some bug avoid the safe execution of the kernel code, thus the system needs to be restarted to avoid memory corruption.
+A kernel panic is when some bug prevents the safe execution of the kernel code, thus the system needs to be restarted to avoid memory corruption.
 
 We use the following kernel panic message format:
 
