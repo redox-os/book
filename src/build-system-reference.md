@@ -82,6 +82,7 @@ The build system downloads and creates several files that you may want to know a
 
 - `prefix/*` - Tools used by the Cookbook system. They are normally downloaded during the first system build (if you are having a problem with the build system, you can remove the `prefix` directory and it will be recreated during the next build).
 - `repo` - Contains all packaged recipes.
+- `web` - Contains optional generated web content for `repo`.
 - `recipes/recipe-name` - A recipe (software port) directory (represented as `recipe-name`), this directory holds the `recipe.toml` file.
 - `recipes/recipe-name/recipe.toml` - The recipe configuration file, this configuration contains instructions for downloading Git repositories or tarballs, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
 
@@ -94,10 +95,9 @@ The build system downloads and creates several files that you may want to know a
 - `recipes/recipe-name/target/${TARGET}` - The directory for the recipe's binaries of the CPU architecture (`${TARGET}` is the environment variable set to your CPU architecture).
 - `recipes/recipe-name/target/${TARGET}/build` - The directory where the recipe build system runs its commands.
 - `recipes/recipe-name/target/${TARGET}/stage` - The directory where recipe binaries go before the packaging, after `make all`, `make rebuild` and `make image` the [installer](https://gitlab.redox-os.org/redox-os/installer) will extract the recipe package on the QEMU image, generally at `/usr/bin` or `/usr/lib` in a Redox filesystem hierarchy.
-- `recipes/recipe-name/target/${TARGET}/sysroot` - The folder where recipe build dependencies (libraries) goes, for example: `library-name/src/example.c`
+- `recipes/recipe-name/target/${TARGET}/sysroot` - The folder where recipe build dependencies (libraries) are shared, for example: `*.so`, `*.a` and `cmake` files.
+- `recipes/recipe-name/target/${TARGET}/toolchain` - The folder where recipe tool dependencies (toolchain) are shared, for example: binaries.
 - `recipes/recipe-name/target/${TARGET}/stage.pkgar` - Redox package file.
-- `recipes/recipe-name/target/${TARGET}/stage.sig` - Signature for the `tar` package format.
-- `recipes/recipe-name/target/${TARGET}/stage.tar.gz` - Legacy `tar` package format, produced for compatibility reasons as we are working to make the package manager use the `pkgar` format.
 - `recipes/recipe-name/target/${TARGET}/stage.toml` - Contains the runtime dependencies of the package and is part of both package formats.
 
 ## GNU Make Commands

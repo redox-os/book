@@ -17,15 +17,23 @@ The Redox build system applies configuration settings from various places to det
   - [Binary Packages](#binary-packages)
     - [REPO_BINARY](#repo_binary)
   - [Local Recipe Changes](#local-recipe-changes)
+- [Advanced Cookbook Options](#advanced-cookbook-options)
+  - [Cookbook TUI Mode](#cookbook-tui-mode)
   - [Cookbook Offline Mode](#cookbook-offline-mode)
+  - [Cookbook Logs](#cookbook-logs)
+  - [Cookbook Verbosity](#cookbook-verbosity)
+  - [Cookbook Compressed Packages](#cookbook-compressed-packages)
+  - [Cookbook Clean Build](#cookbook-clean-build)
+  - [Cookbook Clean Target](#cookbook-clean-target)
+  - [Cookbook Web Generator](#cookbook-web-generator)
 
 ## Environment Variables
 
-The default values for the build system's environment variables are mostly defined in the `mk` directory&mdash;particularly in [`mk/config.mk`](#mkconfigmk). Local changes from the default values, however, should be applied in the [`.config`](#config) file, or temporarily on the `make` [command line](#command-line).
+The default values for the build system's Makefile variables are mostly defined in the `mk` directory&mdash;particularly in [`mk/config.mk`](#mkconfigmk). Local changes from the default values, however, should be applied in the [`.config`](#config) file, or temporarily on the `make` [command line](#command-line).
 
 The build system uses GNU Make and Cookbook to coordinate the build system in order. The [build system reference](./build-system-reference.md#cookbook) and [porting application guide](./porting-applications.md#cookbook) have more information about Cookbook.
 
-Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as they specify the system to be built. These, and other important environment variables, can be seen in the following table:
+Three important Makefile variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as they specify the system to be built. These, and other important environment variables, can be seen in the following table:
 
 | Variable | Definition |
 |:---------|:-----------|
@@ -35,7 +43,6 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as
 | `FILESYSTEM_CONFIG` | Determines the filesystem configuration file location. See the [Filesystem Configuration](#filesystem-configuration) section below. The default value is `config/$ARCH/$BOARD/$CONFIG_NAME.toml` or `config/$ARCH/$CONFIG_NAME.toml` if `$BOARD` is empty, but this can be changed if the desired configuration file is in a different location. |
 | `QEMU_MEM` | Sets the QEMU RAM memory quantity, e.g., `QEMU_MEM=2048`. |
 | `QEMU_SMP` | Sets the QEMU CPU core quantity, e.g.,  `QEMU_SMP=4`. |
-| `SCCACHE_BUILD` | If set to 1 it will enable the [sccache](https://github.com/mozilla/sccache) object cache for Native Build (not recommended)
 | `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY=0`), the build system will build the Redox toolchain from source and will not download the toolchain binaries from the Redox build server. |
 | `PREFIX_USE_UPSTREAM_RUST_COMPILER` | If set to 1 (`PREFIX_BINARY=1`) the build system will download the Rust compiler from rustup (Rust upstream compiler binaries) instead of building it (only used with `PREFIX_BINARY=0`) |
 | `REPO_BINARY` | If set to 1 (`REPO_BINARY=1`), the build system will download/install pre-compiled packages from the Redox package server by default, rather than build them from source (i.e., recipes). |
@@ -44,14 +51,13 @@ Three important variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
 | `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
-| `PODMAN_CACHE_PULL` | If set to 1 the build system will download the cached Podman container instead of creating one from scratch, disable if the cached container is broken
+| `SCCACHE_BUILD` | If set to 1 it will enable the [sccache](https://github.com/mozilla/sccache) object cache for Native Build. See [sccache in Native Build](./advanced-build.md#sccache) page for more information.
+| `PODMAN_CACHE_PULL` | If set to 1 will download the cached Podman container instead of creating one from scratch, disable if the cached container is broken
 | `FSTOOLS_IN_PODMAN` | If set to 1 (`FSTOOLS_IN_PODMAN=1`), the build system will build the installer inside Podman to avoid FUSE in the host system. See the [Installing without FUSE](./advanced-podman-build.md#installing-without-fuse) page for more information. |
 | `FSTOOLS_NO_MOUNT` | If set to 1 (`FSTOOLS_NO_MOUNT=1`), the installer will not use FUSE to create images. See the [Installing without FUSE](./advanced-podman-build.md#installing-without-fuse) section for more information. |
 | `CONTAINERFILE` | The Podman container configuration file. See the [Podman Build](./podman-build.md) page for more information. |
 | `COOKBOOK_MAKE_JOBS` | The number of maximum CPU cores used when building recipes, default is using all CPU cores from `nproc`. |
 | `CI` | If set to any value (`CI=1`), the build system will not activate TUI, and parallel execution of the build step is disabled .|
-| `COOKBOOK_LOGS` | A boolean option (`true`/`false`) to let the build system save build logs in `build/logs/$TARGET` directory. The default value is `true` if TUI is enabled, `false` otherwise. |
-| `COOKBOOK_VERBOSE` | A boolean option (`true`/`false`) to print more information about the build process. The default value is `true`. |
 
 The Redox image that is built is typically named `build/$ARCH/$CONFIG_NAME/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`.
 
@@ -73,9 +79,34 @@ CONFIG_NAME?=desktop-minimal
 > 📝 **Note:** if [`podman_bootstrap.sh`](./podman-build.md#new-working-directory) was run previously, the `.config` file may already exist.
 > 💡 **Tip:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. This allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` *must* include the question mark to function correctly.
 
-### Cookbook Configuration
+### Cookbook Environment Variables
 
-In addition to `.config`, `cookbook.toml` is a configuration file that is used by Cookbook and has more customization. Any configuration in this file will override configuration from `.config` or environment variables. The `cookbook.toml` configuration below can be used as a template:
+Cookbook (the build system) has environment variables that can be tuned for more customization. To set these environment variables, write `export KEY=VALUE` to `.config`. Note that these are environment, not Makefile variables, so the `export` keyword is necessary.
+
+Each Cookbook configuration defaults to environment variables:
+
+| Environment Variable    | How to use the variable      | Description                            |
+|--:----------------------|--:---------------------------|--:-------------------------------------|
+| `CI`                    | `CI=1`, `CI=`                | Disables TUI                           |
+| `COOKBOOK_MAKE_JOBS`    | `COOKBOOK_MAKE_JOBS=4`       | Override build job count               |
+| `COOKBOOK_LOGS`         | `COOKBOOK_LOGS=true`         | Override whether to save logs          |
+| `COOKBOOK_OFFLINE`      | `COOKBOOK_OFFLINE=true`      | Override offline behaviour (see notes) |
+| `COOKBOOK_VERBOSE`      | `COOKBOOK_VERBOSE=false`     | Override verbosity                     |
+| `COOKBOOK_NONSTOP`      | `COOKBOOK_NONSTOP=true`      | Override nonstop (see notes)           |
+| `COOKBOOK_CLEAN_TARGET` | `COOKBOOK_CLEAN_TARGET=true` | Clean target directory after build     |
+| `COOKBOOK_CLEAN_BUILD`  | `COOKBOOK_CLEAN_BUILD=true`  | Clean build directory before build     |
+| `COOKBOOK_COMPRESSED`   | `COOKBOOK_COMPRESSED=true`   | Override package compression           |
+| `COOKBOOK_WEB`          | `COOKBOOK_WEB=true`          | Override web content generation        |
+
+> 📝 **Note:** `REPO_OFFLINE=1` and `REPO_NONSTOP=1` are the recommended ways to set options instead of `export COOKBOOK_OFFLINE=true` and `export COOKBOOK_NONSTOP=true`
+> 💡 **Tip:** Running Cookbook with `CI=1 COOKBOOK_LOGS=true COOKBOOK_VERBOSE=false` will hide successful build logs in the terminal
+
+#### `cookbook.toml`
+
+Cookbook also has a configuration file. This file is rarely used because `.config` should be sufficient. Any configuration in this file will override configuration from `.config` or environment variables. The `cookbook.toml` configuration below can be used as a template:
+
+The `cookbook.toml` file mainly configures Cookbook options (`[cook]`) and mirrors (`[mirror]`). Mirrors are used to replace the main code and binary source URLs used in Cookbook recipes, useful for a quick way to use alternative sources when the main server is offline or slow. 
+
 
 ```toml
 # These options have defaults set below
@@ -86,6 +117,8 @@ In addition to `.config`, `cookbook.toml` is a configuration file that is used b
 #tui = true
 #logs = true
 #verbose = true
+#web = false
+#compressed = false
 
 [mirrors]
 # The uncommented option below is the default if [mirrors] is not set
@@ -94,31 +127,36 @@ In addition to `.config`, `cookbook.toml` is a configuration file that is used b
 # "github.com/foo/bar" = "github.com/baz/bar"
 ```
 
-The `cookbook.toml` file mainly configures Cookbook options (`[cook]`) and mirrors (`[mirror]`). Mirrors are used to replace code and binary sources used across Cookbook, useful for a quick way to use alternative sources when the main server is offline or slow.
+> 💡 **Tip:** Mirrors option can also be used to override [precompiled Redox packages](#repo_binary) source URL.
 
-Each Cookbook configuration defaults to environment variables which are:
+#### Changing the QEMU Properties
 
-| Environment Variable | How to use the variable | Definition in cookbook.toml |
-|:---------------------|:------------------------|:----------------------------|
-|`CI` | `CI=1`, `CI=` | `cook.tui` (disables TUI if variable is set) |
-|`COOKBOOK_MAKE_JOBS` |  `COOKBOOK_MAKE_JOBS=4` | `cook.jobs`|
-|`COOKBOOK_LOGS`  | `COOKBOOK_LOGS=true` | `cook.logs`|
-|`COOKBOOK_OFFLINE`  | `COOKBOOK_OFFLINE=true` (see notes) | `cook.logs`|
-|`COOKBOOK_VERBOSE`  | `COOKBOOK_VERBOSE=false` (see notes) | `cook.verbose`|
-|`COOKBOOK_NONSTOP`  | `COOKBOOK_NONSTOP=true` | `cook.nonstop`|
-
-> 📝 **Note:** `REPO_OFFLINE=1` and `REPO_NONSTOP=1` are the recommended ways to set options instead of `COOKBOOK_OFFLINE=true` and `COOKBOOK_NONSTOP=true`
-> 📝 **Note:** `.config` cannot be used to save `COOKBOOK_*` options as those are not Makefile variables, so you need to use `cookbook.toml` to make options persist
-> 💡 **Tip:** Running Cookbook with `CI=1 COOKBOOK_LOGS=true COOKBOOK_NONSTOP=true COOKBOOK_VERBOSE=false` will hide successful build logs in the terminal
-> 💡 **Tip:** Mirrors option can also be used to override [binary builds](#repo_binary) source URL.
-
-#### Changing the QEMU CPU Core and Memory Quantity
-
-For example, to change the CPU core and RAM memory quantities used when running the Redox image in QEMU, add the following environment variables to your `.config` file:
+To change the CPU core and RAM memory quantities used when running the Redox image in QEMU, add the following environment variables to your `.config` file:
 
 ```
-QEMU_SMP?=<number-of-threads>
-QEMU_MEM?=<number-in-mb>
+QEMU_SMP?=<number-of-cpu-threads>
+QEMU_MEM?=<number-of-memory-in-mib>
+```
+
+There's also an option to customize the QEMU machine and CPU type, which is influenced by how `ARCH` and `BOARD` is set. Read the QEMU documentation for more information:
+
+```
+QEMU_MACHINE?=<qemu-machine>
+QEMU_CPU?=<qemu-cpu-type>
+```
+
+There is more options that can be customized, these are defined in `mk/qemu.mk`:
+
+```
+audio?=<no|ac97|hda>
+disk?=<ata|nvme|usb|virtio|cdrom|sdcard>
+net?=<e1000|rtl8139|virtio|usb-net|redir>
+netboot?=<yes|no>
+kvm?=<yes|no>
+bridge?=...
+gpu?=<no|vga|ramfb|multi|virtio|virtio-sdl|virtio-gl>
+uefi?=<yes|no>
+gdb?=<yes|nonblock|no>
 ```
 
 ### Command Line
@@ -348,6 +386,13 @@ An old way for preserving and using local changes by commenting out the `[source
 # git = "https://gitlab.redox-os.org/redox-os/games.git"
 ```
 
+## Advanced Cookbook Options
+
+This section has details of the [Cookbook Environment Variables](#cookbook-environment-variables) options.
+
+### Cookbook TUI Mode
+
+Cookbook has a TUI mode which is enabled by default. This mode speedup the build process because it allows the source fetch and compilation to be done in parallel. When the `CI` environment variable is set the TUI mode will be disabled, which is desired for builds under Continuous Integration (CI).
 
 ### Cookbook Offline Mode
 
@@ -356,3 +401,35 @@ Cookbook also has a mode where it will reduce Internet activity by adding `REPO_
 In this mode, Cookbook will not update the source of any recipe or a package binary if also set with `REPO_BINARY=1`. It also adds the `--offline` option to some Cargo build methods inside recipes where it is supported. When Cookbook or Cargo must access the Internet because sources do not exist locally it will throw an error instead.
 
 To temporarily allow Cookbook and Cargo to have Internet activity and update sources, run `make f.package-name` (single recipe source fetch) or `make fetch` (to fetch all enabled recipe sources), as these commands will ignore the `REPO_OFFLINE` environment variable.
+
+### Cookbook Logs
+
+When `export COOKBOOK_LOGS=true` is set, all build logs will be written into the `build/logs/$TARGET` directory. This is enabled by default when TUI mode is enabled because build logs are captured anyway. When logs are enabled it can alter the build script and maybe hide some essential progress bar. Which is why when `CI=1`, logs are disabled.
+
+Under the hood when the TUI mode or log capture is enabled, Cookbook will try to provide pseudo-terminal support and pipe them as-is to the terminal, then strip colors before saving them to logs.
+
+### Cookbook Verbosity
+
+When `export COOKBOOK_VERBOSE=false` is set, it disables certain debug logs and disables the GNU Bash's `set -x` command, if combined with `CI=1 COOKBOOK_LOGS=true`, it will hide success build logs to the terminal. 
+
+Usually you want to combine `CI=1 COOKBOOK_LOGS=true COOKBOOK_VERBOSE=false` because it will not replace build logs that are doing the build instead of caching it and creating a minimally distracting build output on terminal.
+
+## Cookbook Compressed Packages
+
+When `export COOKBOOK_COMPRESSED=true` is set, it will package software with compression turned on. Under the hood it's compressing with the [LZMA2](https://en.wikipedia.org/wiki/LZMA) algorithm which is quick to decompress but slow to compress. 
+
+It is not enabled by default because it uses considerable CPU time to compress and storage saving is negligible compared to [Cookbook Clean Target](#cookbook-clean-target).
+
+## Cookbook Clean Build
+
+When `export COOKBOOK_CLEAN_BUILD=true` is set, it will always remove [the build directory](./build-system-reference.md#cookbook) before building. This is intended for build servers where build consistency matters and avoid a build failure due to a stale `build` directory. It has the side effect of disabling incremental compilation thus generally avoided for local development.
+
+## Cookbook Clean Target
+
+When `export COOKBOOK_CLEAN_TARGET=true` is set, it will remove [the build, stage, and sysroot directories](./build-system-reference.md#cookbook) after a build success. This is intended to save storage space for local development that frequently jumps between recipes.
+
+Unlike `COOKBOOK_CLEAN_BUILD`, it allows inspection of `build` directory and allows incremental compilation if build is failing. It does not allow visualization of the `build` and `stage` directories but creates `stage.files` which contains tree of files in the `stage` directory before deletion.
+
+## Cookbook Web Generator
+
+When `export COOKBOOK_WEB=true` is set, it will create a `web` directory containing HTML files for published `repo`. It contains much more information including the published file tree and dependents, intended for easy browsing.
