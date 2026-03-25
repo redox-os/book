@@ -31,10 +31,7 @@ Compared to Redoxer via Cargo,  the Docker variant is very recommended for use i
 All commands below will refer `redoxer` as the command to run Redoxer. For installations via Docker you need to prefix it using the `docker run` command or alias it in `.bashrc`:
 
 ```sh
-redoxer() {
-    docker run -ti --rm -v "$(pwd):/mnt" -w /mnt -e REDOXER_SYSROOT --device /dev/kvm \
-        docker.io/redoxos/redoxer redoxer "$@"
-}
+alias redoxer='docker run -ti --rm -v ".:/mnt" -w /mnt -e REDOXER_SYSROOT --device /dev/kvm docker.io/redoxos/redoxer redoxer'
 ```
 
 ## Build and test a Rust project with Redoxer
