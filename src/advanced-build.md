@@ -62,8 +62,7 @@ If you can't use the `native_bootstrap.sh` script, you need to install at least:
 - Essential compilers: GCC, Rust and Nasm
 - GNU search, text, and build tools: `find`, `grep`, `make`, `patch`, `pkg-config`, and `sed`
 - Other build tools: `autotools`, `cmake`, `meson`, `perl` and `python3`
-- Other file tooling: `curl`, `rsync`, `tar` and `wget`
-- Libraries to build GCC: `gmp`, `mpfr` and `mpc`
+- Other file tooling: `curl`, `git`, `rsync`, `tar` and `wget`
 - Rust tooling: `cbindgen` and `just`
 - FUSE (to build an image) and QEMU (to run the image)
 
@@ -364,7 +363,7 @@ The `. "$HOME/.cargo/env` command (equivalent to `source ~/.cargo/env`) have bee
 
 Redox requires a GCC-compatible compiler for the operating system to build additional host tools. GCC for the host system is searched automatically from `PATH` environment variable with a binary named as `$GNU_TARGET-gcc` (e.g. `x86_64-linux-gnu-gcc`).
 
-If your operating system is not Linux or if you want to use a different compiler, you can export [more environment variables](https://gitlab.redox-os.org/redox-os/redoxer#host-specific-customizations) in the `.config` file:
+If you have to use a different compiler because GCC is not installed or is incompatible, you can export [more environment variables](https://gitlab.redox-os.org/redox-os/redoxer#host-specific-customizations) in the `.config` file:
 
 ```sh
 export REDOXER_HOST_AR=ar
@@ -424,6 +423,24 @@ Relibc is very active in development, so even with `PREFIX_BINARY=1` it will be 
 ## Cookbook
 
 The **Cookbook** system is an essential part of the Redox build system. Each Redox component package  is built and managed by the Cookbook toolset. The variable `REPO_BINARY` in `mk/config.mk` controls if the recipes are compiled from sources or use binary packages from Redox CI server, read the section [REPO_BINARY](./configuration-settings.md#repo_binary) for more details. See the [Including Programs in Redox](./including-programs.md) page for examples of using the Cookbook toolset. If you will be developing recipes to include in Redox.
+
+## sccache
+
+[sccache](https://github.com/mozilla/sccache/) is an important object compilation cache optimization to make rebuilds fast. It is automatically installed and enabled in Podman Build, but it's not the case with Native Build, as it has some caveats.
+
+To enable it, download the prebuilt binaries in their [releases page](https://github.com/mozilla/sccache/releases) to a directory read by the `PATH` environment variable (typically `~/.cargo/bin`) and add this to `.config`:
+
+```
+SCCACHE_BUILD=1
+```
+
+`sccache` will run automatically in the background after the first time it runs. See [their configuration file](https://github.com/mozilla/sccache/blob/main/docs/Configuration.md) to customize many aspects of it. Do note that when running Podman build while native `sccache` exists and is started, you have to turn it off because it conflicts with `sccache` inside Podman which causes port conflicts:
+
+```
+sccache --stop-server
+```
+
+There is a very rare occasion where `sccache` won't pick up build cache, such as when [platform ABI changed](https://gitlab.redox-os.org/redox-os/bootloader/-/merge_requests/42). In this case, you have to remove `sccache` cache (`~/.cache/sccache`) manually. This is not a problem with Podman build as `sccache` cache is contained in the Podman container.
 
 ## Creating a Build Environment Shell
 
