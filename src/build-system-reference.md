@@ -48,7 +48,7 @@ The build system downloads and creates several files that you may want to know a
 
 ### Podman Configuration
 
-- `podman/redox-base-containerfile` - The file used to create the image used by the Podman build. The installation of Ubuntu packages needed for the build is done here. See the [Adding Packages to the Build](./advanced-podman-build.md#adding-packages-to-the-build) section if you need to add additional Ubuntu packages.
+- `podman/redox-base-containerfile` - The file used to create the image used by the Podman build. The installation of packages needed for the build is done here. See the [Adding Packages to the Build](./advanced-podman-build.md#adding-packages-to-the-build) section if you need to add additional packages.
 
 ### Filesystem Configuration
 
@@ -436,7 +436,7 @@ The Redox build system is an example of [cross-compilation](https://en.wikipedia
 
 In the background, the `make all` command downloads the Redox toolchain to build all recipes (patched forks of rustc, GCC and LLVM).
 
-If you are using Podman, the `podman_bootstrap.sh` script will download an Ubuntu container and `make all` will install the Redox toolchain, all recipes will be compiled in the container.
+If you are using Podman (e.g. by using the `podman_bootstrap.sh` script), `make all` will install the Redox toolchain and compile all recipes in a container.
 
 The recipes produce Redox-specific executables. At the end of the build process, these executables are installed inside the QEMU image.
 
