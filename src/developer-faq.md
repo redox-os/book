@@ -40,8 +40,8 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [How can I configure the build system of the recipe?](#how-can-i-configure-the-build-system-of-the-recipe)
     - [How can I search for functions in relibc?](#how-can-i-search-for-functions-in-relibc)
     - [Which are the upstream requirements to accept my recipe?](#which-are-the-upstream-requirements-to-accept-my-recipe)
-    - [What are the possible problems when porting programs and libraries?](#what-are-the-possible-problems-when-porting-programs-and-libraries)
-    - [Why are C/C++ programs and libraries hard and time consuming to port?](#why-are-cc-programs-and-libraries-hard-and-time-consuming-to-port)
+    - [What are the possible problems when porting applications and libraries?](#what-are-the-possible-problems-when-porting-applications-and-libraries)
+    - [Why are C/C++ applications and libraries hard and time consuming to port?](#why-are-cc-applications-and-libraries-hard-and-time-consuming-to-port)
 - [Scheme Questions](#scheme-questions)
     - [What is a scheme?](#what-is-a-scheme)
     - [When does a regular program need to use a scheme?](#when-does-a-regular-program-need-to-use-a-scheme)
@@ -129,11 +129,11 @@ Places where Assembly is used:
 
 Read some of the reasons below:
 
-- When developing a new operating system you can't build programs inside of it because the system interfaces are premature. Thus you need to build the programs from your host system to the new OS and transfer the binaries to the filesystem of the new OS.
+- When developing a new operating system you can't build applications inside of it because the system interfaces are premature. Thus you need to build the applications from your host system to the new OS and transfer the binaries to the filesystem of the new OS.
 - Cross-compilation reduces the porting requirements because you don't need to support the compiler of the program's programming language, the program's build system and build tools. You just need to port the programming language standard library (if used), program libraries or the program source code (dependency-free).
 - Some developers prefer to develop from other operating systems like Linux, MacOS, FreeBSD or Windows, the same applies for Linux where some developers write code on MacOS and test their kernel builds in a virtual machine (mostly QEMU) or real hardware.
 
-(Interpreted programs and scripts don't need cross-compilation but the programming language's interpreter or possible compiled dependencies needs to be ported and cross-compiled to Redox)
+(Interpreted applications and scripts don't need cross-compilation but the programming language's interpreter or possible compiled dependencies needs to be ported and cross-compiled to Redox)
 
 ### What are the CPU requirements of Redox?
 
@@ -160,10 +160,10 @@ Read the [Software Rendering](./graphics-windowing.md#software-rendering) sectio
 - If you are using the Podman Build you need any Linux or Unix-like distribution supporting Podman 4.0 or newer and FUSE 3.x (if you have problems with FUSE in the host system there's [this](./advanced-podman-build.md#installing-without-fuse) workaround to run FUSE inside the Podman container instead of host system)
 - If you are using the Native Build a recent Ubuntu, PopOS or Fedora version is recommended
 
-The following hardware requirements are enough for fast compilation of the system and most programs, but some heavy programs may require more.
+The following hardware requirements are enough for fast compilation of the system and most applications, but some heavy applications may require more.
 
 - An Intel or AMD CPU newer than 10 years with 4 cores/threads or more
-- 4GB DDR4 RAM or more (8GB or 16GB for heavy programs)
+- 4GB DDR4 RAM or more (8GB or 16GB for heavy applications)
 - 50GB of storage space or more (a high-performance HDD, SATA SSD, and/or NVMe SSD is recommended)
 - An Internet connection good enough to not cause timeouts
 
@@ -427,7 +427,7 @@ Read the [Search For Functions in Relibc](./porting-applications.md#search-for-f
 
 Read the [Package Policy](./porting-applications.md#package-policy) section.
 
-### What are the possible problems when porting programs and libraries?
+### What are the possible problems when porting applications and libraries?
 
 - Missing build tools
 - Cross-compilation configuration problems
@@ -435,13 +435,13 @@ Read the [Package Policy](./porting-applications.md#package-policy) section.
 - Missing C, POSIX or Linux library functions in relibc
 - Runtime crashes or errors
 
-### Why are C/C++ programs and libraries hard and time consuming to port?
+### Why are C/C++ applications and libraries hard and time consuming to port?
 
-- C/C++ don't have an official, advanced and automatic dependency manager and build system which force programs and libraries to select competing build systems with different configurations (GNU Make, GNU Autotools, CMake, Meson and others), projects like [Conan](https://conan.io/) and [vcpkg](https://vcpkg.io/) tried to solve this problem but weren't adopted by most programs/libraries and lack many libraries
-- Programs and libraries need to manually manage the library versions, to workaround this some programs use bundled libraries which can difficult patching when needed
+- C/C++ don't have an official, advanced and automatic dependency manager and build system which force applications and libraries to select competing build systems with different configurations (GNU Make, GNU Autotools, CMake, Meson and others), projects like [Conan](https://conan.io/) and [vcpkg](https://vcpkg.io/) tried to solve this problem but weren't adopted by most applications/libraries and lack many libraries
+- applications and libraries need to manually manage the library versions, to workaround this some applications use bundled libraries which can difficult patching when needed
 - Some build systems lack good cross-compilation support which means they require more tweaks and sometimes hacks
-- As libraries are manually managed programs with many dependencies, they can take hours to port depending on available library documentation/configuration and developer experience
-- Some programs and libraries have bad or lacking documentation about build instructions and configuration
+- As libraries are manually managed applications with many dependencies, they can take hours to port depending on available library documentation/configuration and developer experience
+- Some applications and libraries have bad or lacking documentation about build instructions and configuration
 
 ## Scheme Questions
 

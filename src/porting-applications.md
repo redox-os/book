@@ -1,10 +1,12 @@
 # Application Porting
 
-The [Including applications in Redox](./including-programs.md) page gives an example to port/modify a pure Rust application, in this page we explain the advanced way to port pure Rust applications, mixed Rust applications (Rust and C/C++ libraries, for example), C/C++ applications and others.
+The [Including Applications in Redox](./including-programs.md) page gives an example to port/modify a pure Rust application, in this page we explain the advanced way to port pure Rust applications, mixed Rust applications (Rust and C/C++ libraries, for example), C/C++ applications and others.
 
 (Before reading this page you must read the [Build System](./build-system-reference.md) page)
 
 - [Notes](#notes)
+- [Packaging Policy](#packaging-policy)
+- [Testing Area](#testing-area)
 - [Recipe](#recipe)
     - [Recipe Configuration Example](#recipe-configuration-example)
     - [Quick Recipe Template](#quick-recipe-template)
@@ -71,26 +73,93 @@ The [Including applications in Redox](./including-programs.md) page gives an exa
 - [Create a BLAKE3 hash for your recipe](#create-a-blake3-hash-for-your-recipe)
 - [Verify the size of your package](#verify-the-size-of-your-package)
 - [Submitting MRs](#submitting-mrs)
-- [Package Policy](#package-policy)
 
 ## Notes
 
 This section contains quick important information for porting.
 
+- The Redox build system does cross-compilation and the application or library need to be configured for that, read [this](./developer-faq.md#why-does-redox-do-cross-compilation) section to learn why it's needed
+- Meson and CMake configurations have better cross-compilation support than GNU Autotools and GNU Make configurations, in case the application or library allows you to choose them
+- The cross-compilation configuration of GNU Make configuration may require extensive and time-consuming patching, thus it's recommend to search if a version, branch, fork or patch with GNU Autotools, CMake or Meson support exist
 - Most or all build instructions were made for native compilation and not cross-compilation, with some poor documentation exceptions
 - If the application or library build tests in compilation you need to disable them for cross-compilation
 - If you are using dynamic linking and the `custom` recipe template, the `DYNAMIC_INIT` command need to be added in the first line of the `script` data type
 - We recommend to use the FreeBSD dependencies of the application if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy doesn't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies.
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
-- The Debian naming policy use dashes as separators in packages with optional features: `application-name` (default application variant with compiled executables) and `application-name-dev` (application variant with objects for linking), also check the source package to be sure
+- The Debian naming policy use dashes as separators in packages with optional features: `application-name` (default application variant with compiled executables) and `application-name-dev` (application variant with objects for compilation linking), also check the source package to be sure
 - The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it can't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
 - The recipe support recursive dependencies, thus you don't need to specify a dependency two times if some dependency already provides it
 - Don't add build tools in the `build.dependencies` data type, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
 - The compiler can build recipe dependency libraries as `.so` files (objects for dynamic linking) or `.a` files (objects for static linking): The `.so` files will be installed out of the binary (stored on the `/lib` directory of the system) while the `.a` files will be mixed in the final binary.
 - Linux distributions add a number after the `.so` files to avoid conflicts in the `/usr/lib` folder when applications use different API versions of the same library, for example: `library-name.so.6`
+- Sometimes the releases of Git repositories are abandoned, verify if the tags have newer versions
+- Sometimes tarballs of the official application or library website are abandoned in favor of Git repository tarballs, verify if the Git repository tarballs are more recent
 
 You need to know the above information because each software is different, the major reason is the "Build Instructions" organization and context of each application or library.
+
+## Packaging Policy
+
+Before sending your recipe to upstream (to become a public package), you must follow the following rules:
+
+### Naming
+
+- The recipe name can't have dots, backslashes, and NULLs
+
+### Cross-Compilation
+
+- All recipes must use our cross-compilers, a Cookbook [template](#templates) does cross-compilation automatically but it's not always possible, study the build system of your application or library to find the options for this or patch the configuration files.
+- Don't hardcode the CPU architecture in the recipe script (this would break the multi-arch support).
+
+### Tarballs
+
+- Don't use the auto-generated tarballs from GitHub, they aren't static and don't verify the archive integrity.
+
+### Versioning
+
+- Stable versions with point releases are prefered if possible for more stability
+
+### API Compatibility
+
+- Respect the API compatibility of C/C++ libraries in case of major version changes, for example: if the `openssl1` recipe is available and some application need `openssl3`, you will create a recipe for `openssl3` and not rename the `openssl1` recipe, because it may break some dependent recipes.
+
+The exception for this rule is if some recipe don't need the previous major version of the library.
+
+Read [this](./developer-faq.md#why-are-cc-applications-and-libraries-hard-and-time-consuming-to-port) section to know why it's needed
+
+### Checksum
+
+- If your recipe download a tarball, you will need to create a BLAKE3 hash for it. You can learn how to do it [here](#create-a-blake3-hash-for-your-recipe).
+
+### License
+
+- Don't package applications or libraries lacking a license.
+- Verify if the application has a known license violation, in case of doubt ask us on the [chat](https://doc.redox-os.org/book/chat.html).
+- Non-free applications and assets should be approved by Jeremy Soller before and added to a subcategory of the `nonfree` category.
+
+## Testing Area
+
+Work-in-progress software ports goes to the `wip` category, be aware of the following conditions during your packaging process:
+
+- A recipe is considered ready if it's mostly working inside of Redox.
+- All WIP recipes must have a `#TODO:` on the beginning of the `recipe.toml` and explain what is missing.
+- BLAKE3 hashes for tarballs are optional in the `wip` category (quick testing workflow)
+- Try to keep the recipe with the latest stable version of the application, but not if the latest stable version is too recent (the porting process can take months).
+- Once the recipe is ready, add the BLAKE3 hash if needed and move the folder to the appropriate category.
+
+### Suggestions for TODOs
+
+These TODOs improve the packagers cooperation and understanding.
+
+- `not compiled or tested` - It means that your recipe may be fully or partially configured and with necessary dependencies.
+- `missing script for x: insert-the-link-for-build-instructions-here` - It means that your recipe is lacking the cross-compilation script for some build system, where `x` is the build system name. After `:` you will insert the link for the build instructions of the application or library, it will help other packagers to create the script for you.
+- `missing dependencies: insert-the-link-for-required-dependencies-here` - It means that the `build.dependencies` or `package.dependencies` data types are incomplete.
+- `probably wrong script: insert-the-link-for-build-instructions-here` - It means that you don't know yet if your script is working.
+- `probably wrong template: insert-the-link-for-build-instructions-here` - It means that you don't know yet if the Cookbook template is working.
+- `probably missing dependencies: insert-the-link-for-required-dependencies-here` - It means that you don't know yet if the required dependencies are satisfied.
+- `promote` - It means that the recipe is working and should be moved to the equivalent category at `recipes/*`
+
+Other TODOs are specific and won't be covered on this list.
 
 ## Recipe
 
@@ -1488,60 +1557,3 @@ See the size of the `stage.pkgar` and `stage.tar.gz` files.
 If you want to add your recipe on the [build system](https://gitlab.redox-os.org/redox-os/redox) to become a Redox package on the [build server](https://static.redox-os.org/pkg/), read the [package policy](#package-policy) below.
 
 After this you can submit your merge request with proper category, dependencies and comments.
-
-### Package Policy
-
-Before sending your recipe to upstream (to become a public package), you must follow these rules:
-
-#### Naming
-
-- The recipe name can't have dots, backslashes, and NULs
-
-#### Cross-Compilation
-
-- All recipes must use our cross-compilers, a Cookbook [template](#templates) does this automatically but it's not always possible, study the build system of your application or library to find these options or patch the configuration files.
-- Don't hardcode the CPU architecture on the recipe script (this would break the multi-arch support).
-
-#### Tarballs
-
-- Don't use the auto-generated tarballs from GitHub, they aren't static and don't verify the archive integrity.
-
-#### API Compatibility
-
-- Respect the API compatibility of C/C++ libraries, for example: if `openssl1` is available and some application need `openssl3`, you will create a recipe for `openssl3` and not rename the `openssl1`, as it will break the dependent packages.
-
-(Read [this](./developer-faq.md#why-cc-applications-and-libraries-are-hard-and-time-consuming-to-port) section to know why it's needed)
-
-#### Checksum
-
-- If your recipe download a tarball, you will need to create a BLAKE3 hash for it. You can learn how to do it [here](#create-a-blake3-hash-for-your-recipe).
-
-#### License
-
-- Don't package applications or libraries lacking a license.
-- Verify if the application has some license violation, in case of doubt ask us on the [chat](https://doc.redox-os.org/book/chat.html).
-- Non-free applications and assets should go to a subcategory of the `nonfree` category and be approved per license.
-
-### Testing Area
-
-Work-in-progress software ports goes to the `wip` category, be aware of these items during your packaging process:
-
-- A recipe is considered ready if it's mostly working inside of Redox.
-- All WIP recipes must have a `#TODO` on the beginning of the `recipe.toml` and explain what is missing.
-- BLAKE3 hashes for tarballs are optional (quick testing workflow)
-- Try to keep the recipe with the latest stable version of the application (the porting process can take months).
-- Once the recipe is ready, add the BLAKE3 hash if needed and move the folder to the appropriate category.
-
-#### Suggestions for TODOs
-
-These TODOs improve the packagers cooperation and understanding.
-
-- `not compiled or tested` - It means that your recipe may be fully or partially configured and with necessary dependencies.
-- `missing script for x: insert-the-link-for-build-instructions-here` - It means that your recipe is lacking the cross-compilation script for some build system, where `x` is the build system name. After `:` you will insert the link for the build instructions of the application or library, it will help other packagers to create the script for you.
-- `missing dependencies: insert-the-link-for-required-dependencies-here` - It means that the `build.dependencies` or `package.dependencies` data types are incomplete.
-- `probably wrong script: insert-the-link-for-build-instructions-here` - It means that you don't know yet if your script is working.
-- `probably wrong template: insert-the-link-for-build-instructions-here` - It means that you don't know yet if the Cookbook template is working.
-- `probably missing dependencies: insert-the-link-for-required-dependencies-here` - It means that you don't know yet if the required dependencies are satisfied.
-- `promote` - It means that the recipe is working and should be moved to the equivalent category at `recipes/*`
-
-Other TODOs are specific and won't be covered on this list.

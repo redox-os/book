@@ -92,7 +92,7 @@ The build system downloads and creates several files that you may want to know a
 - `recipes/recipe-name/source.tar` - The tarball of the recipe (renamed).
 - `recipes/recipe-name/source` - The directory where the recipe source is extracted or downloaded.
 - `recipes/recipe-name/target` - The directory where the recipe binaries are stored.
-- `recipes/recipe-name/target/${TARGET}` - The directory for the recipe's binaries of the CPU architecture (`${TARGET}` is the environment variable set to your CPU architecture).
+- `recipes/recipe-name/target/${TARGET}` - The directory for the recipe's binaries of the CPU architecture.
 - `recipes/recipe-name/target/${TARGET}/build` - The directory where the recipe build system runs its commands.
 - `recipes/recipe-name/target/${TARGET}/stage` - The directory where recipe binaries go before the packaging, after `make all`, `make rebuild` and `make image` the [installer](https://gitlab.redox-os.org/redox-os/installer) will extract the recipe package on the QEMU image, generally at `/usr/bin` or `/usr/lib` in a Redox filesystem hierarchy.
 - `recipes/recipe-name/target/${TARGET}/sysroot` - The folder where recipe build dependencies (libraries) are shared, for example: `*.so`, `*.a` and `cmake` files.
