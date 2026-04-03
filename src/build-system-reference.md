@@ -3,7 +3,7 @@
 The build system downloads and creates several files that you may want to know about. There are also several `make` commands mentioned below, and a few extras that you may find useful. Here's a quick summary. All file paths are relative to your `redox` base directory.
 
 - [Build System Organization](#build-system-organization)
-  - [Root Folder](#root-folder)
+  - [Root directory](#root-directory)
   - [GNU Make Configuration](#gnu-make-configuration)
   - [Podman Configuration](#podman-configuration)
   - [Filesystem Configuration](#filesystem-configuration)
@@ -30,11 +30,12 @@ The build system downloads and creates several files that you may want to know a
 ## Context
 
 - `$ARCH` is the environment variable for a CPU architecture directory
+- `$BOARD` is the environment variable for a board model directory
 - `$TARGET` is the environment variable for CPU-specific recipe binaries
 
 ## Build System Organization
 
-### Root Folder
+### Root directory
 
 - `podman_bootstrap.sh` - The script used to configure the Podman build
 - `native_bootstrap.sh` - The script used to configure the Native build
@@ -52,20 +53,32 @@ The build system downloads and creates several files that you may want to know a
 
 ### Filesystem Configuration
 
-- `config` - This folder contains all filesystem configurations.
-- `config/*.toml` - Filesystem templates used by the CPU target configurations (a template can use other template to reduce duplication)
-- `config/$ARCH/your-config.toml` - The filesystem configuration of the QEMU image to be built, e.g. `config/x86_64/desktop.toml`
-- `config/$ARCH/server.toml` - The variant with system components (without Orbital) and some important tools. Aimed for servers, low-end computers, testers and developers (try this config if you have boot problems on QEMU or real hardware).
-- `config/$ARCH/desktop.toml` - The variant with system components, the Orbital desktop environment and some important programs (this is the default configuration of the build system). Aimed for end-users, gamers, testers and developers.
-- `config/$ARCH/dev.toml` - The variant with development tools included. Aimed for developers.
-- `config/$ARCH/demo.toml` - The variant with a complete system and optional programs and games. Aimed for end-users, gamers, testers and developers.
-- `config/$ARCH/desktop-minimal.toml` - The minimal `desktop` variant for low-end computers and embedded hardware. Aimed for servers, low-end computers, embedded hardware and developers.
-- `config/$ARCH/minimal.toml` - The variant without network support and Orbital. Aimed for low-end computers, embedded hardware, testers and developers.
-- `config/$ARCH/minimal-net.toml` - The variant without Orbital and tools. Aimed for low-end computers, embedded hardware, testers and developers.
-- `config/$ARCH/resist.toml` - The variant with the `resist` POSIX test suite. Aimed for developers.
-- `config/$ARCH/acid.toml` - The variant with the `acid` general-purpose test suite. Aimed for developers.
-- `config/$ARCH/ci.toml` - The continuous integration variant, recipes added here become packages on the [build server](https://static.redox-os.org/pkg/). Aimed for packagers and developers.
-- `config/$ARCH/jeremy.toml` - The build of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing at the moment.
+- `config` - This directory contains all filesystem configurations.
+- `config/*.toml` - Filesystem configurations (a template can use other template to reduce duplication)
+- `config/base.toml` - Essential configuration
+- `config/minimal.toml` - The variant without server tools and Orbital. Aimed for low-end computers, embedded hardware, testers and developers.
+- `config/server.toml` - The variant with some important tools without Orbital. Aimed for servers, low-end computers, testers and developers (try this config if you have boot problems on QEMU or real hardware).
+- `config/$ARCH/server-demo.toml` - Configuration with for server demonstration
+- `config/desktop-minimal.toml` - The minimal `desktop` variant for low-end computers and embedded hardware. Aimed for servers, low-end computers, embedded hardware and developers.
+- `config/desktop.toml` - The variant with some important CLI and GUI programs (this is the default configuration of the build system). Aimed for end-users, gamers, testers and developers.
+- `config/$ARCH/desktop-contain.toml` - `desktop` variant with sandbox enabled by default
+- `config/dev.toml` - The variant with development tools included. Aimed for developers.
+- `config/demo.toml` - The variant with a complete system and optional programs and games. Aimed for end-users, gamers, testers and developers.
+- `config/x11.toml` - Configuration for X11 sessions and applications
+- `config/wayland.toml` - Configuration for Wayland sessions and applications
+- `config/acid.toml` - Configuration with the `acid` Redox test suite. Aimed for developers.
+- `config/os-test.toml` - Configuration with the `os-test` test suite
+- `config/auto-test.toml` - Configuration with automated test suites execution
+- `config/sys-build.toml` - Configuration with automated system compilation testing
+- `config/tests.toml` - Configuration for tests
+- `config/redoxer.toml` - Configuration used to create the Redoxer image
+- `config/redoxer-gui.toml` - Configuration used to create the Redoxer GUI image
+- `config/aarch64/$BOARD/*.toml` - ARM64 board model specific configurations
+- `config/riscv64gc/$BOARD/*.toml` - RISC-V board model specific configurations
+- `config/$ARCH/redoxer.toml` - CPU-specific Redoxer configuration
+- `config/$ARCH/full.toml` - Configuration with all recipes enabled in the package server
+- `config/$ARCH/ci.toml` - Package server configuration, recipes added here become packages on the [build server](https://static.redox-os.org/pkg/). Aimed for packagers and developers.
+- `config/$ARCH/jeremy.toml` - The configuration of [Jeremy Soller](https://soller.dev/) (creator/BDFL of Redox) with the recipes that he is testing in the moment.
 
 ### Build System Files
 
@@ -95,8 +108,8 @@ The build system downloads and creates several files that you may want to know a
 - `recipes/recipe-name/target/${TARGET}` - The directory for the recipe's binaries of the CPU architecture.
 - `recipes/recipe-name/target/${TARGET}/build` - The directory where the recipe build system runs its commands.
 - `recipes/recipe-name/target/${TARGET}/stage` - The directory where recipe binaries go before the packaging, after `make all`, `make rebuild` and `make image` the [installer](https://gitlab.redox-os.org/redox-os/installer) will extract the recipe package on the QEMU image, generally at `/usr/bin` or `/usr/lib` in a Redox filesystem hierarchy.
-- `recipes/recipe-name/target/${TARGET}/sysroot` - The folder where recipe build dependencies (libraries) are shared, for example: `*.so`, `*.a` and `cmake` files.
-- `recipes/recipe-name/target/${TARGET}/toolchain` - The folder where recipe tool dependencies (toolchain) are shared, for example: binaries.
+- `recipes/recipe-name/target/${TARGET}/sysroot` - The directory where recipe build dependencies (libraries) are shared, for example: `*.so`, `*.a` and `cmake` files.
+- `recipes/recipe-name/target/${TARGET}/toolchain` - The directory where recipe tool dependencies (toolchain) are shared, for example: binaries.
 - `recipes/recipe-name/target/${TARGET}/stage.pkgar` - Redox package file.
 - `recipes/recipe-name/target/${TARGET}/stage.toml` - Contains the runtime dependencies of the package and is part of both package formats.
 
@@ -157,7 +170,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make repo_clean_target` - Clean all recipe binaries compiled to the active CPU architecture (`ARCH=value` environment variable)
 - `make fetch_clean` - Clean all recipe binaries and sources (alternative to `make u.--all`)
 - `make x.--all` - Any recipe target (x) can be run in all recipes at `recipes` (like `make c.--all` which clean all recipe binaries, for example)
-- `make x.--category-folder-name` - Any recipe target (x) can be run in all recipes of some category folder at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` folder, for example), if you need to use a sub-category use `--category-folder-name/subfolder`
+- `make x.--category-directory-name` - Any recipe target (x) can be run in all recipes of some category directory at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` directory, for example), if you need to use a sub-category use `--category-directory-name/subdirectory`
 
 All recipe targets also support multiple recipe entries by separating each recipe name with a comma. for example: `make f.recipe1,recipe2` will download the sources of `recipe1` and `recipe2`
 
@@ -182,10 +195,10 @@ All recipe targets also support multiple recipe entries by separating each recip
 
 ## Environment Variables
 
-- `$(BUILD)` - Represents the `build` folder.
-- `$(ARCH)` - Represents the CPU architecture folder at `build`
-- `${TARGET}` - Represents the CPU architecture folder at the `recipes/recipe-name/target` folder
-- `$(CONFIG_NAME)` - Represents your filesystem configuration folder at `build/$ARCH`
+- `$(BUILD)` - Represents the `build` directory.
+- `$(ARCH)` - Represents the CPU architecture directory at `build`
+- `${TARGET}` - Represents the CPU architecture directory at the `recipes/recipe-name/target` directory
+- `$(CONFIG_NAME)` - Represents your filesystem configuration directory at `build/$ARCH`
 
 We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the commands.
 
@@ -195,16 +208,16 @@ Example:
 "${VARIABLE_NAME}"
 ```
 
-If you have a folder inside the variable folder you can call it with:
+If you have a directory inside the variable directory you can call it with:
 
 ```
-"${VARIABLE_NAME}"/folder-name
+"${VARIABLE_NAME}"/directory-name
 ```
 
 Or
 
 ```
-"${VARIABLE_NAME}/folder-name"
+"${VARIABLE_NAME}/directory-name"
 ```
 
 ## Scripts
@@ -259,7 +272,7 @@ scripts/include-recipes.sh "TODO.text" | sort
 
 ### Recipe Analysis
 
-Show the folders and files on the `stage` and `sysroot` folders of some recipe (to identify packaging issues or violations).
+Show the directorys and files on the `stage` and `sysroot` directorys of some recipe (to identify packaging issues or violations).
 
 ```sh
 scripts/show-package.sh recipe-name

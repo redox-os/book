@@ -909,7 +909,7 @@ chmod a+x "${COOKBOOK_STAGE}"/usr/bin/script-name
 """
 ```
 
-(Rename the "script-name" parts with your script name and the `.py` extension for your script applicationming language extension if needed)
+(Rename the "script-name" parts with your script name and the `.py` extension for your script programming language extension if needed)
 
 This script will rename your script name, make it executable and package.
 
@@ -950,7 +950,7 @@ The `sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/usr/bin/script-name
 
 There are many combinations for these script examples: you can download scripts without the `[source]` section, make customized installations, etc.
 
-### Dynamically Linked applications
+### Dynamically Linked Applications
 
 The `DYNAMIC_INIT` acts as a marker that indicates the recipe can be
 dynamically linked, it does the following things:
@@ -963,9 +963,8 @@ See the environment variables section under configuration settings for more info
 In most cases if you want to use dynamic linking for a recipe just prepend
 `DYNAMIC_INIT` in the recipe script. Depending on the recipe,
 this *should* suffice. However, sometimes you *may* need to regenerate the GNU Autotools configuration,
-which you can do by invoking the `autotools_recursive_regenerate` helper function
-after `DYNAMIC_INIT` (See the examples below). This is to make sure the build
-system uses our `libtool` fork. In other cases, more
+which you can do by invoking the `autotools_recursive_regenerate` helper function (See the examples below).
+This is to make sure the build system uses our `libtool` fork. In other cases, more
 recipe-specific modification may be required.
 
 #### Example
@@ -985,7 +984,6 @@ cookbook_configure
 # <...snip...>
 [source]
 +script = """
-+DYNAMIC_INIT
 +autotools_recursive_regenerate
 +"""
 

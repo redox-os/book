@@ -4,10 +4,12 @@ The Redox build system applies configuration settings from various places to det
 
 - [Environment Variables](#environment-variables)
   - [.config](#config)
-  - [Cookbook Configuration](#cookbook-configuration)
+  - [Cookbook Environment Variables](#cookbook-environment-variables)
+    - [cookbook.toml](#cookbooktoml)
+  - [Changing the QEMU Properties](#changing-the-qemu-properties)
   - [Command Line](#command-line)
   - [mk/config.mk](#mkconfigmk)
-  - [build.sh](#buildsh)
+    - [build.sh](#buildsh)
 - [Filesystem Configuration](#filesystem-configuration)
   - [CPU Architecture Codenames](#cpu-architecture-codenames)
   - [Filesystem Size](#filesystem-size)
@@ -129,7 +131,7 @@ The `cookbook.toml` file mainly configures Cookbook options (`[cook]`) and mirro
 
 > 💡 **Tip:** Mirrors option can also be used to override [precompiled Redox packages](#repo_binary) source URL.
 
-#### Changing the QEMU Properties
+### Changing the QEMU Properties
 
 To change the CPU core and RAM memory quantities used when running the Redox image in QEMU, add the following environment variables to your `.config` file:
 
