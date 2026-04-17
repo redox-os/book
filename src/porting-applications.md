@@ -81,6 +81,7 @@ This section contains quick important information for porting.
 - The Redox build system does cross-compilation and the application or library need to be configured for that, read [this](./developer-faq.md#why-does-redox-do-cross-compilation) section to learn why it's needed
 - Meson and CMake configurations have better cross-compilation support than GNU Autotools and GNU Make configurations, in case the application or library allows you to choose them
 - The cross-compilation configuration of GNU Make configuration may require extensive and time-consuming patching, thus it's recommend to search if a version, branch, fork or patch with GNU Autotools, CMake or Meson support exist
+- Some Rust programs use CMake or Meson to find C/C++ libraries instead of `-sys` crates
 - Most or all build instructions were made for native compilation and not cross-compilation, with some poor documentation exceptions
 - If the application or library build tests in compilation you need to disable them for cross-compilation
 - If you are using dynamic linking and the `custom` recipe template, the `DYNAMIC_INIT` command need to be added in the first line of the `script` data type
