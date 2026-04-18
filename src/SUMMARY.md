@@ -9,7 +9,7 @@
   - [Our Philosophy](./philosophy.md)
   - [Why a New OS?](./why-a-new-os.md)
   - [Why Rust?](./why-rust.md)
-  - [Redox Use Cases](./redox-use-cases.md)
+  - [Use Cases](./redox-use-cases.md)
   - [Comparing Redox to Other OSes](./how-redox-compares.md)
   - [Influences](./influences.md)
   - [Hardware Support](./hardware-support.md)

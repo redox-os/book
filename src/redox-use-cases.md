@@ -1,6 +1,6 @@
-# Redox Use Cases
+# Use Cases
 
-Redox is a general-purpose operating system that can be used in many situations. Some of the key use cases for Redox are as follows.
+Redox is a general-purpose operating system that can be used in many scenarios. Some of the key use cases for Redox are as follows.
 
 ## Server
 
@@ -14,11 +14,11 @@ The development of Redox for the desktop is well underway. Although support for 
 
 A demo version of Redox is available with several games and programs to try. However, the most important objective for desktop is to host the development of Redox. We are working through issues with some of our build tools, and other developer tools such as editors have not been tested under daily use, but we continue to make this a priority.
 
-Due to a fairly limited list of currently supported hardware, once self-hosted development is available the development can be done inside of Redox with more quick testing. We are adding more hardware compatibility as quickly as we can, and we hope to be able to support the development on a wide array of desktops and notebooks in the near future.
+Due to a fairly limited list of currently supported hardware, once self-hosted development is available the development can be done inside of Redox with more quick testing. We are adding more hardware compatibility as quickly as we can, and we hope to be able to support the development on a wide array of desktops and laptops in the near future.
 
 ## Infrastructure
 
-Redox's modular architecture make it ideal for many telecom infrastructure applications, such as routers, telecom components, edge servers, etc., especially as more functionality is added to these devices. There are no specific plans for remote management yet, but Redox's potential for security and reliability make it ideal for this type of application.
+Redox's modular architecture make it ideal for many telecom infrastructure applications, such as routers, telecom components, edge servers, etc. specially as more functionality is added to these devices. The Redox's potential for security and reliability make it ideal for this type of application.
 
 ## Embedded and IoT
 
