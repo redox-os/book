@@ -84,13 +84,13 @@ cd /usr/share/relibc-tests
 - Run all tests
 
 ```
-TODO
+make run
 ```
 
 Or a single test:
 
 ```
-TODO
+make run-once TESTBIN=test-name
 ```
 
 Or if you also want to build from source for more testing:

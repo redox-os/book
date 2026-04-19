@@ -368,6 +368,8 @@ package-name3 = "source" # source-based recipe
 ...
 ```
 
+If you just want to use pre-built packages in one filesystem configuration you can add the `repo_binary = true` data type below the `[general]` section on it.
+
 ### Local Recipe Changes
 
 By default every time a recipe build is triggered, Cookbook will update the recipe source. Cookbook will check the tarball BLAKE3 hash from the recipe configuration (`recipe.toml`), or pull from the `origin` remote when the recipe source is a Git repository. This will also remove local changes that are not saved in a branch.
