@@ -26,7 +26,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [How can I change the CPU architecture of my build system?](#how-can-i-change-the-cpu-architecture-of-my-build-system)
     - [How can I cross-compile to ARM64 from a x86-64 computer?](#how-can-i-cross-compile-to-arm64-from-a-x86-64-computer)
     - [How can I use a recipe in my Redox image?](#how-can-i-use-a-recipe-in-my-redox-image)
-    - [How to update initfs?](#how-to-update-initfs)
+    - [How to update RedoxFS?](#how-to-update-redoxfs)
     - [I made changes to my recipe. What is the quickest way to test it in QEMU?](#i-made-changes-to-my-recipe-what-is-the-quickest-way-to-test-it-in-qemu)
     - [I made changes to multiple recipes. What is the quickest way to test it in QEMU?](#i-made-changes-to-multiple-recipes-what-is-the-quickest-way-to-test-it-in-qemu)
     - [How can I disable recipe compilation?](#how-can-i-disable-recipe-compilation)
@@ -275,11 +275,11 @@ Or (for a remote package)
 make rp.recipe-name REPO_BINARY=1
 ```
 
-## How to update initfs?
+## How to update RedoxFS?
 
-initfs doesn't automatically add your changes to system daemons, drivers or RedoxFS and needs manual rebuild.
+The `base` recipe doesn't automatically add your RedoxFS changes to `initfs`, thus it need a manual update.
 
-Read [this](./coding-and-building.md#how-to-update-initfs) section to learn how to do it.
+Read [this](./coding-and-building.md#how-to-update-redoxfs) section to learn how to do it.
 
 ### I made changes to my recipe. What is the quickest way to test it in QEMU?
 

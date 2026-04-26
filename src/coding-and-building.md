@@ -32,7 +32,7 @@ This page explains common development tasks on the Redox build system.
   - [Insert Files In The Redox image Using a Recipe](#insert-files-in-the-redox-image-using-a-recipe)
   - [Insert Files In The QEMU Image](#insert-files-in-the-qemu-image)
 - [Working with an unpublished version of a crate](#working-with-an-unpublished-version-of-a-crate)
-- [How to update initfs](#how-to-update-initfs)
+- [How to update RedoxFS](#how-to-update-redoxfs)
 
 ## Visual Studio Code Configuration
 
@@ -616,20 +616,10 @@ To test your changes quickly, follow the following tutorials on Cargo documentat
 - [Overriding Dependencies](https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html)
 - [Working with an unpublished minor version](https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html#working-with-an-unpublished-minor-version)
 
-## How to update initfs
+## How to update RedoxFS
 
-The `base` and `base-initfs` recipes share the `source` folder, thus your changes on the `base` recipe source code will be added on the `base-initfs` recipe automatically.
-
-(The `recipe.toml` of the `base-initfs` recipe use the `same_as` data type to symlink the source, you can read the second line of the [base-initfs recipe](https://gitlab.redox-os.org/redox-os/redox/-/blob/master/recipes/core/base-initfs/recipe.toml#L2))
-
-When you are about to test a change on the `base` recipe, double check if you're applying for daemons in `base-initfs` by checking its recipe file in the former link. If you do, you need to trigger build changes for `base-initfs` manually so it can save `initfs` daemons into `base-initfs`:
+if you make changes in the RedoxFS recipe source you also need to manually update the `base` recipe to include your changes in `initfs`, to update the `base` recipe with your changes and install in the existing Redox image, run the following command:
 
 ```sh
-make rp.base,base-initfs
-```
-
-RedoxFS is also included in the `base-initfs` recipe, to update them with your changes run the following command:
-
-```sh
-make rp.redoxfs,base-initfs
+make rp.redoxfs,base
 ```

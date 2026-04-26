@@ -84,6 +84,7 @@
 - [The Redox Build Process](./build-process.md)
   - [Building Redox](./podman-build.md)
   - [Native Build](./building-redox.md)
+  - [Self-hosted Development](./self-hosted.md)
   - [From Nothing To Hello World](./nothing-to-hello-world.md)
   - [Configuration Settings](./configuration-settings.md)
   - [Build System Reference](./build-system-reference.md)

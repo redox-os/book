@@ -131,6 +131,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make tree` - Show the filesystem configuration recipes and recipe dependencies tree
 - `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`
 - `make push` - Only install recipes with new changes in an existing Redox image
+- `make install` - Install the recipe binaries in the system for self-hosted development testing
 - `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
 - `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
 - `make live` - Creates a bootable image, `build/livedisk.iso`. Recipes are not usually rebuilt.
@@ -159,6 +160,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
   - This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate
 
 - `make p.recipe-name` (abbreviation of `push`) - Install one or multiple recipe binaries to an existing Redox image
+- `make i.recipe-name` (abbreviation of `install`) - Install a recipe in the system for self-hosted development testing
 - `make c.recipe-name` (abbreviation of `clean`) - Clean one or multiple recipe binaries.
 - `make u.recipe-name` (abbreviation of `unfetch`) - Clean one or multiple recipe source code and binaries (**please backup or submit your source changes before the execution of this command**).
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
