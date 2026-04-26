@@ -25,21 +25,19 @@ make prefix r.sys
 - Build and install your system changes
 
 ```
+make ri.recipe-name
+```
+
+Or (if you changed multiple recipes)
+
+```
 make ri.sys
 ```
 
 If the process is successful you can reboot the system to load your changes:
 
-- Shutdown the system (reboot is not reliable yet)
-
 ```
 sudo shutdown -r
-```
-
-- Launch QEMU again
-
-```
-make qemu
 ```
 
 ## Real Hardware
