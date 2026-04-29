@@ -70,6 +70,12 @@ free -h
 df -h
 ```
 
+### Restart the computer
+
+```sh
+sudo shutdown -r
+```
+
 ### Shutdown the computer
 
 ```sh
