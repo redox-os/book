@@ -18,7 +18,7 @@ You can find out more about Podman on the [Podman documentation](https://docs.po
 
 The build process is performed in your normal working directory, e.g., `~/tryredox/redox`. Compilation of the Redox components is performed in the container, but the final Redox image (`build/$ARCH/$CONFIG/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`) is constructed using [FUSE](https://github.com/libfuse/libfuse) running directly on your host machine.
 
-Setting `PODMAN_BUILD` to 1 in [.config](./configuration-settings.md#config), on the `make` command line (e.g., `make PODMAN_BUILD=1 all`) or in the environment (e.g., `export PODMAN_BUILD=1; make all`) will enable Podman.
+Setting `PODMAN_BUILD?` to 1 in [.config](./configuration-settings.md#config), on the `make` command line (e.g., `make PODMAN_BUILD=1 all`) or in the environment (e.g., `export PODMAN_BUILD=1; make all`) will enable Podman.
 
 First, a **base image** called `redox_base` will be constructed, with all the necessary packages for the build system. A "home" directory will also be created in `build/podman`. This is the home directory of your container alter ego, `poduser`. It will contain the `rustup` install, and the `.bashrc`. This takes some time, but is only done when necessary. The *tag* file [build/container.tag](./advanced-podman-build.md#buildcontainertag) is also created at this time to prevent unnecessary image builds.
 
@@ -153,7 +153,7 @@ If you want to capture the terminal output, read the [Debug Methods](./troublesh
 
 #### QEMU Tap For Network Testing
 
-Expose Redox to other computers within a LAN. Configure QEMU with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
+Expose Redox to other computers in the same local network. Configure QEMU with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
 
 Please join the [chat](./chat.md) if this is something you are interested in pursuing.
 

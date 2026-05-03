@@ -245,7 +245,7 @@ If you just want to install the packages temporarily, run `make env`, open a new
 
 ## Summary of Podman-related Make Targets, Variables and Podman Commands
 
-- `PODMAN_BUILD` - If set to 1 in [.config](./configuration-settings.md#config), or in the environment, or on the `make` command line, much of the build process takes place in **Podman**.
+- `PODMAN_BUILD?` - If set to 1 in [.config](./configuration-settings.md#config), or in the environment, or on the `make` command line, much of the build process takes place in **Podman**.
 
 - `CONTAINERFILE`-  The name of the containerfile used to build the image. This file includes the `apt-get` command that installs all the necessary packages into the image. If you need to add packages to the build, edit your own containerfile and change this variable to point to it.
 

@@ -52,7 +52,7 @@ Three important Makefile variables of interest are `ARCH`, `CONFIG_NAME`, and `B
 | `REPO_NONSTOP` | Enable the nonstop mode of Cookbook where recipe build failure will not stop the compilation of other recipes. |
 | `FILESYSTEM_SIZE` | The size in MB of the filesystem contained in the final Redox image. See the [Filesystem Size](#filesystem-size) section before changing it. |
 | `REDOXFS_MKFS_FLAGS` | Flags to the program that builds the Redox filesystem. The `--encrypt` option enables disk encryption. |
-| `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman. See the [Native Build](./building-redox.md) page for more information. |
+| `PODMAN_BUILD` | If set to 0 (`PODMAN_BUILD?=0`), the build system will use the build environment from your Linux distribution or Unix-like system instead of Podman, see the [Native Build](./building-redox.md) page for more information. If used in the `.config` file it *must* include the `?` symbol in the end of the variable name to work correctly (`PODMAN_BUILD?=1`) |
 | `SCCACHE_BUILD` | If set to 1 it will enable the [sccache](https://github.com/mozilla/sccache) object cache for Native Build. See [sccache in Native Build](./advanced-build.md#sccache) page for more information.
 | `PODMAN_CACHE_PULL` | If set to 1 will download the cached Podman container instead of creating one from scratch, disable if the cached container is broken
 | `FSTOOLS_IN_PODMAN` | If set to 1 (`FSTOOLS_IN_PODMAN=1`), the build system will build the installer inside Podman to avoid FUSE in the host system. See the [Installing without FUSE](./advanced-podman-build.md#installing-without-fuse) page for more information. |
@@ -76,10 +76,11 @@ ARCH?=i586
 CONFIG_NAME?=desktop-minimal
 ```
 
+> 📝 **Note:** `PODMAN_BUILD?=1` *must* include the question mark to work correctly
 > 📝 **Note:** Comments are supported using the `#` character
 > 📝 **Note:** Any QEMU option can be inserted
 > 📝 **Note:** if [`podman_bootstrap.sh`](./podman-build.md#new-working-directory) was run previously, the `.config` file may already exist.
-> 💡 **Tip:** when adding environment variables in the `.config` file, don't forget the `?` symbol at the end of variable names. This allows the variable to be overridden on the command line or in the environment. In particular, `PODMAN_BUILD?=1` *must* include the question mark to function correctly.
+> 💡 **Tip:** When adding environment variables in the `.config` file you can add the `?` symbol at the end of variable names to allow the variable value to be overridden on the command line shell environment.
 
 ### Cookbook Environment Variables
 
