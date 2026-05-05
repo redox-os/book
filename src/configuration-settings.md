@@ -16,7 +16,7 @@ The Redox build system applies configuration settings from various places to det
   - [Filesystem Customization](#filesystem-customization)
     - [Creating a custom filesystem configuration](#creating-a-custom-filesystem-configuration)
     - [Adding a package to the filesystem configuration](#adding-a-package-to-the-filesystem-configuration)
-  - [Binary Packages](#binary-packages)
+  - [Binary Recipe Mode](#binary-recipe-mode)
     - [REPO_BINARY](#repo_binary)
   - [Local Recipe Changes](#local-recipe-changes)
 - [Advanced Cookbook Options](#advanced-cookbook-options)
@@ -319,11 +319,16 @@ In the following example, the `acid` package is added to the `my_desktop.toml` c
 
 Done! The `acid` package is now included in your Redox image.
 
-### Binary Packages
+### Binary Recipe Mode
 
-By default, the Redox build system builds all packages from source (i.e., recipes). If you want to use [pre-compiled packages](https://static.redox-os.org/pkg/) from our build server, however, there's a TOML option for it.
+By default, the Redox build system builds all packages from source (i.e., recipes). If you want to use [pre-built packages](https://static.redox-os.org/pkg/) from our build server, however, there's a TOML option for it.
 
-This is useful for some purposes, such as producing development builds, confirming package status from the Redox package server, and reducing image build time with large programs.
+This is useful for some purposes, such as producing development builds, confirming package status from the package server, and reducing image build time with large programs.
+
+- This mode will use the pre-built packages of recipe dependencies if compilation is needed
+- If a pre-built package of the recipe is not available, it will fallback to source compilation
+
+You can learn how to enable this mode in one recipe below:
 
 1. Open the `my-desktop.toml` file:
 
@@ -357,6 +362,8 @@ This is useful for some purposes, such as producing development builds, confirmi
 In the previous example, the build system's default behavior was overridden by explicitly setting a package to use a pre-built binary. To configure the build system to download pre-built packages by *default*, however, we can set the `REPO_BINARY` environment variable (`REPO_BINARY?=1`).
 
 When `REPO_BINARY` is enabled, the Redox image is made to use pre-built binaries for all packages assigned to `{}`; when `REPO_BINARY` is *disabled*, however, those same packages are compiled from source (i.e., recipes).
+
+(This environment variable has the same source compilation behavior of `recipe = "binary"` seen above)
 
 For example:
 
