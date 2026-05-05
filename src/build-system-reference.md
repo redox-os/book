@@ -14,7 +14,6 @@ The build system downloads and creates several files that you may want to know a
   - [Podman](#podman)
   - [QEMU/VirtualBox](#qemuvirtualbox)
 - [Environment Variables](#environment-variables)
-- [Scripts](#scripts)
 - [Git Auto-checkout](#git-auto-checkout)
 - [Update The Build System](#update-the-build-system)
   - [Update Redox](#update-redox)
@@ -26,6 +25,7 @@ The build system downloads and creates several files that you may want to know a
   - [Filesystem Customization](#filesystem-customization)
 - [Cross-Compilation](#cross-compilation)
 - [Build Phases](#build-phases)
+- [Scripts](#scripts)
 
 ## Context
 
@@ -222,6 +222,125 @@ Or
 "${VARIABLE_NAME}/directory-name"
 ```
 
+## Git Auto-checkout
+
+The `make rebuild` and `make r.recipe` commands will Git checkout (change the active branch) of the recipe source to `master` (only recipes that fetch Git repositories are affected, thus all Redox components).
+
+If you are working in a separated branch on the recipe source and want to disable this, change the type of your recipe on your filesystem configuration :
+
+```
+[packages]
+...
+your-recipe-name = "local"
+...
+```
+
+## Update The Build System
+
+This is the recommended way to update your build system/recipe sources and binaries.
+
+```sh
+make pull
+```
+
+### Update Redox
+
+This is the recommended way to update the system and applications sources and binaries.
+
+```sh
+make rebuild
+```
+
+Or (if you enabled the `REPO_BINARY` environment variable)
+
+```sh
+make fetch image
+```
+
+If you want to just update the system without non-essential programs, run the following command:
+
+```sh
+make rp.sys,--with-package-deps
+```
+
+Or if you are using Orbital:
+
+```sh
+make rp.sys,sys-gui,--with-package-deps
+```
+
+Sometimes you need to update the statically linked recipes manually with the `make static_clean rebuild` command or also rebuild all dynamically linked recipes with the `make repo_clean all` command.
+
+If you want to just rebuild the system without non-essential programs, run the following command:
+
+```sh
+make crp.sys,--with-package-deps
+```
+
+Or if you are using Orbital:
+
+```sh
+make crp.sys,sys-gui,--with-package-deps
+```
+
+(The Podman container is updated automatically if upstream add new packages to the Containerfile, but you can also force the container image to be updated with the `make container_clean` command)
+
+## Fix Breaking Changes
+
+To learn how to fix breaking changes before and after build system updates read [this](./troubleshooting.md#fix-breaking-changes) section.
+
+### All recipes
+
+To pass the new relibc changes for all recipes (programs are the most common case) you will need to rebuild all recipes, unfortunately it's not possible to use `make rebuild` because it can't detect the relibc changes to trigger a complete rebuild.
+
+To clean all recipe binaries and trigger a complete rebuild, run:
+
+```sh
+make repo_clean repo
+```
+
+### One Recipe
+
+To pass the new relibc changes to one recipe, run:
+
+```sh
+make cr.recipe-name
+```
+
+## Configuration
+
+You can find the global settings on the [Configuration Settings](./configuration-settings.md) page.
+
+### Format
+
+The Redox configuration files use the [TOML](https://toml.io/en/) format, which has a very easy syntax and is very flexbile.
+
+You can see what the format supports on the [TOML](https://toml.io/en/v1.0.0) website.
+
+### Filesystem Customization
+
+Read the [Filesystem Customization](./configuration-settings.md#filesystem-customization) section.
+
+## Cross-Compilation
+
+The Redox build system is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox [toolchain](https://static.redox-os.org/toolchain/) runs on Linux, and produces Redox executables. Anything that is installed with your package manager is just part of the toolchain and does not go on Redox.
+
+In the background, the `make all` command downloads the Redox toolchain to build all recipes (patched forks of rustc, GCC and LLVM).
+
+If you are using Podman (e.g. by using the `podman_bootstrap.sh` script), `make all` will install the Redox toolchain and compile all recipes in a container.
+
+The recipes produce Redox-specific executables. At the end of the build process, these executables are installed inside the QEMU image.
+
+The `relibc` (Redox C Library) provides the Redox [system calls](https://docs.rs/redox_syscall/latest/syscall/) to any software.
+
+- [OSDev article about cross-compilation](https://wiki.osdev.org/Why_do_I_need_a_Cross_Compiler%3F)
+
+## Build Phases
+
+Every build system command/script has phases, read this page to know them.
+
+- [Build Phases](./build-phases.md)
+
 ## Scripts
 
 You can use these scripts to perform actions not implemented as `make` commands in the build system.
@@ -353,114 +472,3 @@ scripts/cargo-update.sh recipe-name
 ### Recipe Debugging (Rust)
 
 - `scripts/backtrace.sh` - Allow the user to copy a Rust backtrace from Redox and retrieve the symbols (use the `-h` option to show the "Usage" message).
-
-## Git Auto-checkout
-
-The `make rebuild` and `make r.recipe` commands will Git checkout (change the active branch) of the recipe source to `master` (only recipes that fetch Git repositories are affected, thus all Redox components).
-
-If you are working in a separated branch on the recipe source you can't build your changes, to avoid this comment out the `[source]` and `git =` fields from your `recipe.toml` :
-
-```
-#[source]
-#git = "some-repository-link"
-```
-
-## Update The Build System
-
-This is the recommended way to update your build system/recipe sources and binaries.
-
-```sh
-make pull
-```
-
-### Update Redox
-
-This is the recommended way to update the system and applications sources and binaries.
-
-```sh
-make rebuild
-```
-
-If you want to just update the system without non-essential programs, run the following command:
-
-```sh
-make rp.sys,--with-package-deps
-```
-
-Or if you are using Orbital:
-
-```sh
-make rp.sys,sys-gui,--with-package-deps
-```
-
-Sometimes you need to update the statically linked recipes manually with the `make static_clean rebuild` command or also rebuild all dynamically linked recipes with the `make repo_clean all` command.
-
-If you want to just rebuild the system without non-essential programs, run the following command:
-
-```sh
-make crp.sys,--with-package-deps
-```
-
-Or if you are using Orbital:
-
-```sh
-make crp.sys,sys-gui,--with-package-deps
-```
-
-(The Podman container is updated automatically if upstream add new packages to the Containerfile, but you can also force the container image to be updated with the `make container_clean` command)
-
-## Fix Breaking Changes
-
-To learn how to fix breaking changes before and after build system updates read [this](./troubleshooting.md#fix-breaking-changes) section.
-
-### All recipes
-
-To pass the new relibc changes for all recipes (programs are the most common case) you will need to rebuild all recipes, unfortunately it's not possible to use `make rebuild` because it can't detect the relibc changes to trigger a complete rebuild.
-
-To clean all recipe binaries and trigger a complete rebuild, run:
-
-```sh
-make repo_clean repo
-```
-
-### One Recipe
-
-To pass the new relibc changes to one recipe, run:
-
-```sh
-make cr.recipe-name
-```
-
-## Configuration
-
-You can find the global settings on the [Configuration Settings](./configuration-settings.md) page.
-
-### Format
-
-The Redox configuration files use the [TOML](https://toml.io/en/) format, which has a very easy syntax and is very flexbile.
-
-You can see what the format supports on the [TOML](https://toml.io/en/v1.0.0) website.
-
-### Filesystem Customization
-
-Read the [Filesystem Customization](./configuration-settings.md#filesystem-customization) section.
-
-## Cross-Compilation
-
-The Redox build system is an example of [cross-compilation](https://en.wikipedia.org/wiki/Cross_compiler). The Redox [toolchain](https://static.redox-os.org/toolchain/) runs on Linux, and produces Redox executables. Anything that is installed with your package manager is just part of the toolchain and does not go on Redox.
-
-In the background, the `make all` command downloads the Redox toolchain to build all recipes (patched forks of rustc, GCC and LLVM).
-
-If you are using Podman (e.g. by using the `podman_bootstrap.sh` script), `make all` will install the Redox toolchain and compile all recipes in a container.
-
-The recipes produce Redox-specific executables. At the end of the build process, these executables are installed inside the QEMU image.
-
-The `relibc` (Redox C Library) provides the Redox [system calls](https://docs.rs/redox_syscall/latest/syscall/) to any software.
-
-- [OSDev article about cross-compilation](https://wiki.osdev.org/Why_do_I_need_a_Cross_Compiler%3F)
-
-## Build Phases
-
-Every build system command/script has phases, read this page to know them.
-
-- [Build Phases](./build-phases.md)
