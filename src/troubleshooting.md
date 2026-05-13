@@ -632,6 +632,8 @@ You can see an example output below:
 2026-01-12T22-27-51.760Z [@ps2d::controller:337 ERROR] ps2d: keyboard failed to reset: 55
 ```
 
+Press Shift+Up or Shift+Down to scroll the log, if nothing happens probably the input is not working.
+
 To disable the environment variables after boot run the `export *_LOG_LEVEL=OFF` command, for example: the `export RELIBC_LOG_LEVEL=OFF` command will disable relibc logging.
 
 ## Kill A Frozen Redox VM

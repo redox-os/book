@@ -1,113 +1,238 @@
 # ARM64
 
-The build system supports building for multiple CPU architectures in the same directory tree. Building for `aarch64` only requires that you set the `ARCH` environment variable to the correct value. Normally, you would do this in [.config](./configuration-settings.md#config), but you can also do this temporarily with the `make ARCH=aarch64` command, in the shell environment (`export ARCH=aarch64`) or with the [build.sh](./configuration-settings.md#buildsh) script.
+- [Boards](#boards)
+  - [Raspberry Pi](#raspberry-pi)
+
+The build system support cross-compilation for multiple CPU architectures in the same directory. Building for `aarch64` only requires that you set the `ARCH` environment variable to the correct value. Normally, you would do this in [.config](./configuration-settings.md#config), but you can also do this temporarily with the `make ARCH=aarch64` command, in the shell environment (`export ARCH=aarch64`) or with the [build.sh](./configuration-settings.md#buildsh) script.
 
 (ARM64 has limited support)
 
-## First Time Build
+# Boards
 
-### Bootstrap Pre-Requisites and Download Sources
+## Raspberry Pi
 
-Follow the instructions for running **bootstrap.sh** to setup your environment, read the [Building Redox](./building-redox.md) page or the [Podman Build](./podman-build.md) page.
+### QEMU
 
-### Install QEMU
+TODO: update outdated information
 
-The **ARM64** emulator is not installed by `bootstrap.sh`. You can add it like this:  
+#### Build and run device-specific images
 
-(Pop!_OS/Ubuntu/Debian)
+Most ARM motherboards do not use the default image for booting, which requires us to do some extra steps with building images.
 
-```sh
-sudo apt-get install qemu-system-aarch64
-```
+#### Raspberry Pi 3 Model B+
 
-### Install Additional Tools To Build And Run ARM 64-bit Redox OS Image
+It is easy to port Raspberry Pi 3 Model B+ (raspi3b+) since the bootloader of Raspberry Pi family uses a similar filesystem (FAT32) for booting.
 
-```sh
-sudo apt-get install u-boot-tools qemu-system-arm qemu-efi
-```
 
-### Configuration Values
+In order to build a RasPi3B+ image:
 
-Before your first build, be sure to set the `ARCH` variable in [.config](./configuration-settings.md#config) to your CPU architecture type, in this case `aarch64`. You can change several other configurable settings, such as the filesystem contents, etc. See [Configuration Settings](./configuration-settings.md).
-
-### Add packages to the filesystem.
-
-You can add programs to the filesystem by following the instructions on the [Including Programs in Redox](./including-programs.md) page.
-
-### Advanced Users
-
-For more details on the build process, please read the [Advanced Build](./advanced-build.md) page.
-
-## Compiling Redox
-
-Now we have:
-
- - Downloaded the sources
- - Set the `ARCH` to `aarch64`
- - Selected a filesystem config, e.g. `desktop`
- - Tweaked the settings to our liking
- - Probably added our recipe to the filesystem
-
-We are ready to build the a Redox image.
-
-### Building an image for emulation
+- Add `BOARD?=raspi3bp` and `CONFIG_NAME?=minimal` to `.config`
+- Run `make all`
+- Download the firmware
 
 ```sh
-cd ~/tryredox/redox
-```
-
-This command will create the image, e.g. `build/aarch64/desktop/harddrive.img`, which you can run with an emulator. See the [Running Redox](#running-redox) page.
-
-```sh
-time make all
-```
-
-Give it a while. Redox is big.
-
-Read the [make all (first run)](./build-phases.md#make-all-first-run) section to know what the command above does.
-
-### Cleaning Previous Build Cycles
-
-#### Cleaning Intended For Rebuilding Core Packages And Entire System
-
-When you need to rebuild core-packages like relibc, gcc and related tools, clean the entire previous build cycle with:
-
-```sh
-cd ~/tryredox/redox/
+cd ~/tryredox
 ```
 
 ```sh
-rm -rf prefix/aarch64-unknown-redox/relibc-install/ cookbook/recipes/gcc/{build,sysroot,stage*} build/aarch64/*/{harddrive.img,livedisk.iso}
+git clone https://gitlab.redox-os.org/Ivan/redox_firmware.git
 ```
 
-#### Cleaning Intended For Only Rebuilding Non-Core Package(s)
+#### Run in QEMU
 
-If you're only rebuilding a non-core package, you can partially clean the previous build cycle just enough to force the rebuilding of the Non-Core Package:
+Assume that we are using the `server-minimal` configuration and built the image successfully, run:
+
+- Add two additional dtb files to EFI system partition:
+
+```
+DISK=build/aarch64/server-minimal/harddrive.img
+MOUNT_DIR=/mnt/efi_boot
+DTB_DIR=$MOUNT_DIR/dtb/broadcom
+WORKPLACE=/home/redox/tryredox
+DTS=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/bcm2837-rpi-3-b-plus.dts
+```
 
 ```sh
-cd ~/tryredox/redox/
+mkdir -p $MOUNT_DIR
 ```
 
 ```sh
-rm build/aarch64/*/{fetch.tag,harddrive.img}
+mount -o loop,offset=$((2048*512)) $DISK $MOUNT_DIR
 ```
-
-## Running Redox
-
-To open QEMU, run:
 
 ```sh
-make qemu kvm=no gpu=no
+mkdir -p $DTB_DIR
 ```
 
-This should boot to Redox. The desktop GUI will be disabled, but you will be prompted to login to the Redox console.
+```sh
+dtc -I dts -O dtb $DTS > $DTB_DIR/bcm2837-rpi-3-b.dtb
+```
 
-### QEMU Tap For Network Testing
+```sh
+cp $DTB_DIR/bcm2837-rpi-3-b.dtb $DTB_DIR/bcm2837-rpi-3-b-plus.dtb
+```
 
-Expose Redox to other computers within a LAN. Configure QEMU with a "TAP" which will allow other computers to test Redox client/server/networking capabilities.
+```sh
+sync
+```
 
-Join the [Chat](./chat.md) if this is something you are interested in pursuing.
+```sh
+umount $MOUNT_DIR
+```
 
-### Note
+- Run `make qemu_raspi live=no`
 
-If you encounter any bugs, errors, obstructions, or other annoying things, please send a message in the [Chat](./chat.md) or [report the issue on GitLab](./creating-proper-bug-reports.md). Thanks!
+### Real Hardware
+
+#### Booting from USB
+
+Assume that we are using the `server-minimal` configuration and access serial console using GPIOs 14 and 15 (pins 8 and 10 on the 40-pin header). Do the following:
+
+- Run `make live`
+- Download the firmware from [official repository](https://github.com/raspberrypi/firmware/tree/master/boot)
+
+```sh
+cd ~/tryredox
+```
+
+```sh
+git clone --depth=1 https://github.com/raspberrypi/firmware.git
+```
+
+- Copy all required firmware to EFI system partition
+
+```
+DISK=build/aarch64/server-minimal/livedisk.iso
+MOUNT_DIR=/mnt/efi_boot
+DTB_DIR=$MOUNT_DIR/dtb/broadcom
+WORKPLACE=/home/redox/tryredox
+DTS=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/bcm2837-rpi-3-b-plus.dts
+UBOOT=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/u-boot-rpi-3-b-plus.bin
+CONFIG_TXT=$WORKPLACE/redox_firmware/platform/raspberry_pi/rpi3/config.txt
+FW_DIR=$WORKPLACE/firmware/boot
+```
+
+```sh
+mkdir -p $MOUNT_DIR
+```
+
+```sh
+mount -o loop,offset=$((2048*512)) $DISK $MOUNT_DIR
+```
+
+```sh
+cp -rf $FW_DIR/* $MOUNT_DIR
+```
+
+```sh
+mkdir -p $DTB_DIR
+```
+
+```sh
+dtc -I dts -O dtb $DTS > $DTB_DIR/bcm2837-rpi-3-b.dtb
+```
+
+```sh
+cp $DTB_DIR/bcm2837-rpi-3-b.dtb $DTB_DIR/bcm2837-rpi-3-b-plus.dtb
+```
+
+```sh
+cp $UBOOT $MOUNT_DIR/u-boot.bin
+```
+
+```sh
+cp $CONFIG_TXT $MOUNT_DIR
+```
+
+```sh
+sync
+```
+
+```sh
+umount $MOUNT_DIR
+```
+
+- Run:
+
+```sh
+dd if=build/aarch64/server-minimal/livedisk.iso of=/dev/sdX
+```
+
+(`/dev/sdX` is your USB device.)
+
+#### Booting from SD Card
+
+This process is similar to that of "Booting from USB", but has some differences:
+
+- Use `harddrive.img` instead of `livedisk.iso`
+- After `dd` command, try to make the EFI system partition of the SD card become a hybrid MBR. See [this post](https://www.eisfunke.com/posts/2023/uefi-boot-on-raspberry-pi-3.html) for more details
+
+```
+root@dev-pc:/home/ivan/code/os/redox# gdisk /dev/sdc
+GPT fdisk (gdisk) version 1.0.8
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: present
+
+Found valid GPT with protective MBR; using GPT.
+
+Command (? for help): r
+
+Recovery/transformation command (? for help): p
+Disk /dev/sdc: 61067264 sectors, 29.1 GiB
+Model: MassStorageClass
+Sector size (logical/physical): 512/512 bytes
+Disk identifier (GUID): B37FD04D-B67D-48AA-900B-884F0E3B2EAD
+Partition table holds up to 128 entries
+Main partition table begins at sector 2 and ends at sector 33
+First usable sector is 34, last usable sector is 524254
+Partitions will be aligned on 2-sector boundaries
+Total free space is 2015 sectors (1007.5 KiB)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1              34            2047   1007.0 KiB  EF02  BIOS
+   2            2048          264191   128.0 MiB   EF00  EFI
+   3          264192          522239   126.0 MiB   8300  REDOX
+
+Recovery/transformation command (? for help): h
+
+WARNING! Hybrid MBRs are flaky and dangerous! If you decide not to use one,
+just hit the Enter key at the below prompt and your MBR partition table will
+be untouched.
+
+Type from one to three GPT partition numbers, separated by spaces, to be
+added to the hybrid MBR, in sequence: 2
+Place EFI GPT (0xEE) partition first in MBR (good for GRUB)? (Y/N): n
+
+Creating entry for GPT partition #2 (MBR partition #1)
+Enter an MBR hex code (default EF): 0c
+Set the bootable flag? (Y/N): n
+
+Unused partition space(s) found. Use one to protect more partitions? (Y/N): n
+
+Recovery/transformation command (? for help): o
+
+Disk size is 61067264 sectors (29.1 GiB)
+MBR disk identifier: 0x00000000
+MBR partitions:
+
+Number  Boot  Start Sector   End Sector   Status      Code
+   1                  2048       264191   primary     0x0C
+   2                     1         2047   primary     0xEE
+
+Recovery/transformation command (? for help): w
+Warning! Secondary header is placed too early on the disk! Do you want to
+correct this problem? (Y/N): y
+Have moved second header and partition table to correct location.
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? (Y/N): y
+OK; writing new GUID partition table (GPT) to /dev/sdc.
+The operation has completed successfully.
+root@dev-pc:/home/ivan/code/os/redox#
+```

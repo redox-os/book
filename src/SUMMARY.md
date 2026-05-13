@@ -90,9 +90,7 @@
   - [Build System Reference](./build-system-reference.md)
   - [Advanced Podman Build](./advanced-podman-build.md)
   - [Advanced Native Build](./advanced-build.md)
-  - [Working with i586](./i686.md)
   - [Working with ARM64](./aarch64.md)
-  - [Raspberry Pi](./raspi.md)
   - [Troubleshooting the Build](./troubleshooting.md)
   - [Build Process](./build-phases.md)
 

@@ -122,13 +122,26 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make pull` - Update the source code of the build system without building.
 - `make all` - Builds the entire system, checking for changes and only building as required. Only use this for the first build. If the system was successfully built previously, this command may report `Nothing to be done for 'all'`, even if some recipes have changed. Use `make rebuild` instead.
 - `make rebuild` - Update all binaries from recipes with source code changes (it doesn't detect changes on the Redox toolchain). This should be your normal `make` target.
+- `make rebuild-push` - Similar to `make rebuild` but push updated recipes instead of a image rebuild, use this to preserve your changes on the Redox image after a full update
 - `make prefix` - Download the Rust/GCC forks and build relibc.
 - `make fstools` - Build the Redox image builder (installer), Cookbook and RedoxFS.
+- `make fstools_clean` - Clean the image builder, Cookbook and RedoxFS binaries.
 - `make fetch` - Update recipe sources, according to each recipe, without building them. Only the recipes that are included in your `(CONFIG_NAME).toml` are downloaded. Does nothing if `$(BUILD)/fetch.tag` is present. You won't need this.
+- `make unfetch` - Clean all recipe sources.
 - `make cook` - Build recipes enabled in the active filesystem configuration
 - `make repo` - Package the recipe binaries, according to each recipe. Does nothing if `$(BUILD)/repo.tag` is present. You won't need this.
+- `make repo_clean` - Clean all recipe binaries
+- `make repo_clean_target` - Clean all recipe binaries compiled to the active CPU architecture (`ARCH=value` environment variable)
+- `make repo-lock` - Lock the commit hashes of recipe sources using a Git repositories
+- `make repo-unlock` - Unlock the commit hashes of recipe sources using a Git repositories
+- `make repo-rollback` - Return to a specific Cookbook commit hash for debugging, don't work with commits from before 2026
+- `make clean` - Clean all recipe binaries (Note that `make clean` may require some tools to be built).
+- `make static_clean` - Clean all statically linked recipe binaries
+- `make distclean` - Clean all recipe sources and binaries (**please backup or submit your source changes before the execution of this command**).
 - `make find` - Show the recipe packages location
-- `make tree` - Show the filesystem configuration recipes and recipe dependencies tree
+- `make tree` - Show all recipe and package dependencies from the current filesystem configuration that will be built and pushed
+- `make repo-tree` - Show all recipe dependencies (`build.dependencies` data type) that will be built, also check what dependencies were built or not
+- `make image-tree` - Show the package dependencies (`package.dependencies` data type) that will be pushed into the Redox image
 - `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`
 - `make push` - Only install recipes with new changes in an existing Redox image
 - `make install` - Install the recipe binaries in the system for self-hosted development testing
@@ -138,10 +151,6 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make popsicle` - Flash the Redox bootable image on your USB device using the [Popsicle](https://github.com/pop-os/popsicle) tool (the program executable must be present on your shell `$PATH` environment variable, you can get the executable by extracting the AppImage, installing from the package manager or building from source)
 - `make mount_live` - Mount the live disk ISO
 - `make env` - Creates a shell with a build environment configured to use the Redox toolchain. If you are using Podman Build it will change your current terminal shell to the container shell, you can use it to update crates of Rust programs or debug build issues such as missing packages (if you are using the Podman Build you can only use this command in one terminal shell, because it will block the build system directory access from other Podman shell)
-- `make fstools_clean` - Clean the image builder, Cookbook and RedoxFS binaries.
-- `make clean` - Clean all recipe binaries (Note that `make clean` may require some tools to be built).
-- `make unfetch` - Clean all recipe sources.
-- `make distclean` - Clean all recipe sources and binaries (**please backup or submit your source changes before the execution of this command**).
 
 ### Podman
 
@@ -159,18 +168,28 @@ You can combine `make` commands, but order is significant. For example, `make r.
   - The recipe is built even if it's not in your filesystem configuration.
   - This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate
 
+- `make ri.recipe-name` - Build or rebuild and install the recipe to Redox
 - `make p.recipe-name` (abbreviation of `push`) - Install one or multiple recipe binaries to an existing Redox image
-- `make i.recipe-name` (abbreviation of `install`) - Install a recipe in the system for self-hosted development testing
+- `make i.recipe-name` (abbreviation of `install`) - Install a recipe to Redox for self-hosted development testing
+- `make bc.recipe-name` - Set the recipe rule to `binary` (pre-built package) and clean existing recipe binaries
+- `make bcr.recipe-name` - A shortcut for `make bc.recipe r.recipe`
+- `make sc.recipe-name` - Set the recipe rule to `source` (enable compilation) and clean existing recipe binaries
+- `make scr.recipe-name` - A shortcut for `make sc.recipe r.recipe`
+- `make cc.recipe-name` - Reset recipe rule to default (`source`) and clean existing recipe binaries
 - `make c.recipe-name` (abbreviation of `clean`) - Clean one or multiple recipe binaries.
-- `make u.recipe-name` (abbreviation of `unfetch`) - Clean one or multiple recipe source code and binaries (**please backup or submit your source changes before the execution of this command**).
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
+- `make crp.recipe-name` - A shortcut for `make c.recipe r.recipe p.recipe`
+- `make cri.recipe-name` - A shortcut for `make c.recipe r.recipe i.recipe`
+- `make u.recipe-name` (abbreviation of `unfetch`) - Clean one or multiple recipe source code and binaries (**please backup or submit your source changes before the execution of this command**).
+- `make uc.recipe-name` - A shortcut for `make u.recipe c.recipe`
+- `make ucr.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe`
+- `make ucrp.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe p.recipe`
+- `make ucri.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe i.recipe`
+- `make ucf.recipe-name` - A shortcut for `make u.recipe c.recipe f.recipe`
+- `make rt.recipe-name` (abbreviation of `repo-tree`) - Show the recipe dependencies that will be built, also check what dependencies were built or not
+- `make pt.recipe-name` (abbreviation of `push-tree`) - Show the package dependencies that will be pushed into the Redox image
 - `make ur.recipe-name` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
 - `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
-- `make crp.recipe-name` - A shortcut for `make c.recipe r.recipe p.recipe`
-- `make static_clean` - Clean all statically linked recipe binaries
-- `make repo_clean` - Clean all recipe binaries (alternative to `make c.--all`)
-- `make repo_clean_target` - Clean all recipe binaries compiled to the active CPU architecture (`ARCH=value` environment variable)
-- `make fetch_clean` - Clean all recipe binaries and sources (alternative to `make u.--all`)
 - `make x.--all` - Any recipe target (x) can be run in all recipes at `recipes` (like `make c.--all` which clean all recipe binaries, for example)
 - `make x.--category-directory-name` - Any recipe target (x) can be run in all recipes of some category directory at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` directory, for example), if you need to use a sub-category use `--category-directory-name/subdirectory`
 
