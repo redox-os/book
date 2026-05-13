@@ -121,6 +121,8 @@ shutdown
 """
 ```
 
+If you don't want to use the `99_tests` file configuration, you can use the `kprof_record` command (can't be used in multiple commands) from `profiled` recipe.
+
 5. In the `redox` directory, create the file `.config` with the following content:
 
 ```make
