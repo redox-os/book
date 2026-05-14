@@ -8,7 +8,8 @@ The [Including Applications in Redox](./including-programs.md) page gives an exa
 - [Packaging Policy](#packaging-policy)
 - [Testing Area](#testing-area)
 - [Recipe](#recipe)
-    - [Recipe Configuration Example](#recipe-configuration-example)
+    - [Configuration Example](#configuration-example)
+    - [Sections and Data Types](#sections-and-data-types)
     - [Quick Recipe Template](#quick-recipe-template)
 - [Cookbook](#cookbook)
     - [Cross Compiler](#cross-compiler)
@@ -85,6 +86,7 @@ This section contains quick important information for porting.
 - Most or all build instructions were made for native compilation and not cross-compilation, with some poor documentation exceptions
 - If the application or library build tests in compilation you need to disable them for cross-compilation
 - If you are using dynamic linking and the `custom` recipe template, the `DYNAMIC_INIT` command need to be added in the first line of the `script` data type
+- If you don't know if some application or library can be ported to Redox, check if a package for it exist in the [FreeBSD ports](https://github.com/freebsd/freebsd-ports) or other BSD ports to have a reference, but it may give false-positives like the portable application or library is just not packaged to FreeBSD. Read [this](./developer-faq.md#how-to-determine-if-some-program-is-portable-to-redox) question to learn more about this.
 - We recommend to use the FreeBSD dependencies of the application if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy doesn't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies.
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
@@ -182,7 +184,7 @@ mkdir recipes/application-category/application-name
 nano recipes/application-category/application-name/recipe.toml
 ```
 
-### Recipe Configuration Example
+### Configuration Example
 
 The recipe configuration (`recipe.toml`) example below contains all supported recipe options. Adapt for your script, application, library or data files.
 
@@ -247,7 +249,19 @@ dependencies = [ # package.dependencies data type
     "runtime-dependency1",
     "runtime-dependency2",
 ]
+[[optional-packages]]
+name = "option-name"
+files = [
+    "path1",
+    "path2",
+]
+dependencies = [
+    ".option1",
+    ".option2",
+]
 ```
+
+## Sections and Data Types
 
 - `[source]` : Section for data types that manage the application source (only remove it if you have a `source` folder)
 - `source.git` : Git repository of the application (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a `git pull` or change the active branch to `master` or `main`. Read the [Git Repositories](#git-repositories) section for more details.
@@ -278,6 +292,10 @@ dependencies = [ # package.dependencies data type
 - `[package]` : Section for data types that manage the application package
 - `package.dependencies` : Data type to add tools, interpreters or "data files" recipes to be installed by the package manager or build system installer
 - `package.dependencies = ["runtime-dependency1",]` : Tool, interpreter or data recipe names (can be removed if the `package.dependencies` data type above is not present)
+- `[[optional-packages]]` : Section for optional package configuration
+- `optional-packages.name` : Data type with the name of the optional package option, for example: `recipe-name.option-name`
+- `optional-packages.files` : Data type with directories or file paths (`"/home/user"`, for example) to be included in the optional package, glob patterns are supported (`"/home/user/file*"`, for example)
+- `optional-packages.dependencies` : Data type with the optional package option dependencies in the same recipe
 
 ### Quick Recipe Template
 

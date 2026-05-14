@@ -179,13 +179,13 @@ After the `make pull` command, run the `git rev-parse HEAD` command to verify if
 
 ### What is a recipe?
 
-A software port to Redox.
+A system component or tooling, application or library port, and meta-package to Redox.
 
 ### When I should rebuild the build system or recipes from scratch?
 
 Sometimes the execution of the `make pull rebuild` command is not enough to update the build system and recipes because of breaking changes, learn what to do on the following changes:
 
-- New relibc functions and fixes: to allow a recipe to use the new relibc functions you need to rebuild it with the `make cr.recipe-name` command, sometimes relibc fixes require a complete system rebuild by running the `make c.--all all` command
+- New relibc functions and fixes: to allow a recipe to use the new relibc functions you need to rebuild it with the `make cr.recipe-name` command, sometimes relibc fixes require a complete system rebuild by running the `make repo_clean all` command
 - Dependency changes on recipes: if the shared objects had symbol changes or the recipe is statically linked, run the `make cr.recipe-name` command
 - Configuration changes on recipes: run the `make cr.recipe-name` command
 - Source code changes on recipes: if the shared objects had symbol changes or the recipe is statically linked, run the `make ucr.recipe-name` command
@@ -216,7 +216,7 @@ If you want to do it temporarily run the `make all ARCH=$ARCH` command.
 If you want to clean the binaries of the previous CPU architecture run the following command:
 
 ```sh
-make c.--all ARCH=previous-cpu-arch
+make repo_clean ARCH=previous-cpu-arch
 ```
 
 ### How can I cross-compile to ARM64 from a x86-64 computer?
@@ -312,16 +312,28 @@ If you don't want to specify all modified recipes run the following command:
 - Rebuild the modified recipes, install to an existing image and launch QEMU:
 
 ```sh
-make repo push qemu
+make rebuild-push qemu
 ```
 
 ### How can I disable the recipe compilation?
 
-Insert the `REPO_BINARY?=1` environment variable to your `.config` file, it will download pre-compiled recipe packages from the [build server](https://static.redox-os.org/pkg/) if available.
+If you just want to download the pre-built package of one recipe, run the following command:
+
+```sh
+make bcr.recipe-name
+```
+
+If you want to download the pre-built packages of all recipes, insert the `REPO_BINARY?=1` environment variable to your `.config` file, it will download pre-compiled packages from the [build server](https://static.redox-os.org/pkg/) if available.
 
 ### How can I disable recipe compilation except for a specific recipe?
 
-After inserting the `REPO_BINARY?=1` environment variable to your `.config` file, go to your filesystem configuration and add the source-based variant of the recipe:
+After inserting the `REPO_BINARY?=1` environment variable to your `.config` file, run the following command:
+
+```sh
+make scr.recipe-name
+```
+
+Or go to your filesystem configuration and change the recipe type to `source` :
 
 ```sh
 nano config/$ARCH/your-config.toml
@@ -384,20 +396,10 @@ nano .config
 PREFIX_BINARY?=0
 ```
 
-- Clean the previous toolchain binaries and build new ones:
+- Clean the previous toolchain and recipe binaries and build new ones:
 
 ```sh
-rm -rf prefix
-```
-
-```sh
-make prefix
-```
-
-- Clean the previous recipe binaries and build again with the new toolchain:
-
-```sh
-make c.--all all
+make prefix_clean repo_clean prefix all
 ```
 
 ## Porting Questions

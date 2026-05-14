@@ -36,6 +36,12 @@ dd bs=1M count=256 if=/usr/games/neverball/neverball of=/scheme/null conv=fdatas
 dd bs=1M count=256 if=/usr/games/neverball/neverball of=fs_write_speed_bench conv=fdatasync
 ```
 
+- Userspace IPC performance
+
+```sh
+dd bs=4k count=100000 < /scheme/zero > /scheme/null
+```
+
 ## Profiling
 
 This section explain how to configure and do system performance profiling.
@@ -66,13 +72,7 @@ cargo install redox-kprofiling
 cargo install inferno
 ```
 
-3. Rename the `kernel = {}` item at `config/base.toml` to `profiling-kernel = {}` or add the `profiling-kernel = {}` and `kernel = "ignore"` items to your filesystem configuration:
-
-```
-[packages]
-kernel = "ignore"
-profiling-kernel = {}
-```
+3. Rename the `kernel = {}` item at `config/base.toml` to `profiling-kernel = {}`
 
 4. In your first terminal window, from the `redox` directory, create the filesystem configuration (`config/my_profiler.toml`, for example) or adapt your existing configuration with the following content:
 
