@@ -267,14 +267,18 @@ make pull
 This is the recommended way to update the system and applications sources and binaries.
 
 ```sh
-make rebuild
+make rebuild-push
 ```
+
+(If you need a new Redox image, run the `make rebuild` command)
 
 Or (if you enabled the `REPO_BINARY` environment variable)
 
 ```sh
-make fetch image
+make fetch push
 ```
+
+(If you need a new Redox image, run the `make fetch push` command)
 
 If you want to just update the system without non-essential programs, run the following command:
 
@@ -288,7 +292,7 @@ Or if you are using Orbital:
 make rp.sys,sys-gui,--with-package-deps
 ```
 
-Sometimes you need to update the statically linked recipes manually with the `make static_clean rebuild` command or also rebuild all dynamically linked recipes with the `make repo_clean all` command.
+Sometimes you need to update the statically linked recipes manually with the `make static_clean rebuild` command or also rebuild all dynamically linked recipes with the `make repo_clean all` command (not needed if `REPO_BINARY` is enabled, except compiled recipes).
 
 If you want to just rebuild the system without non-essential programs, run the following command:
 
