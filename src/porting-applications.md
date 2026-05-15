@@ -154,7 +154,7 @@ Work-in-progress software ports goes to the `wip` category, be aware of the foll
 
 These TODOs improve the packagers cooperation and understanding.
 
-- `not compiled or tested` - It means that your recipe may be fully or partially configured and with necessary dependencies.
+- `compile and test` - It means that your recipe may be fully or partially configured and with necessary dependencies.
 - `missing script for x: insert-the-link-for-build-instructions-here` - It means that your recipe is lacking the cross-compilation script for some build system, where `x` is the build system name. After `:` you will insert the link for the build instructions of the application or library, it will help other packagers to create the script for you.
 - `missing dependencies: insert-the-link-for-required-dependencies-here` - It means that the `build.dependencies` or `package.dependencies` data types are incomplete.
 - `probably wrong script: insert-the-link-for-build-instructions-here` - It means that you don't know yet if your script is working.
@@ -302,7 +302,7 @@ dependencies = [
 This is a recipe template for a quick porting workflow.
 
 ```toml
-#TODO not compiled or tested
+#TODO compile and test
 [source]
 git = "repository-link"
 rev = "version-tag"
