@@ -173,8 +173,12 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make i.recipe-name` (abbreviation of `install`) - Install a recipe to Redox for self-hosted development testing
 - `make bc.recipe-name` - Set the recipe rule to `binary` (pre-built package) and clean existing recipe binaries
 - `make bcr.recipe-name` - A shortcut for `make bc.recipe r.recipe`
+- `make bcrp.recipe-name` - A shortcut for `make bc.recipe rp.recipe`
 - `make sc.recipe-name` - Set the recipe rule to `source` (enable compilation) and clean existing recipe binaries
 - `make scr.recipe-name` - A shortcut for `make sc.recipe r.recipe`
+- `make scrp.recipe-name` - A shortcut for `make sc.recipe rp.recipe`
+- `make lc.recipe-name` - Set the recipe rule to `local` (disable automatic remote Git repository fetch to prevent the breakage of local changes) and clean existing recipe binaries
+- `make nc.recipe-name` - Set the recipe rule to `ignore` (disable installation on Redox image) and clean existing recipe binaries
 - `make cc.recipe-name` - Reset recipe rule to default (`source`) and clean existing recipe binaries
 - `make c.recipe-name` (abbreviation of `clean`) - Clean one or multiple recipe binaries.
 - `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`

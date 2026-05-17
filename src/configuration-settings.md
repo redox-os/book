@@ -19,6 +19,7 @@ The Redox build system applies configuration settings from various places to det
   - [Binary Recipe Mode](#binary-recipe-mode)
     - [REPO_BINARY](#repo_binary)
   - [Local Recipe Changes](#local-recipe-changes)
+  - [Ignored Recipes](#ignored-recipes)
 - [Advanced Cookbook Options](#advanced-cookbook-options)
   - [Cookbook TUI Mode](#cookbook-tui-mode)
   - [Cookbook Offline Mode](#cookbook-offline-mode)
@@ -321,7 +322,7 @@ Done! The `acid` package is now included in your Redox image.
 
 ### Binary Recipe Mode
 
-By default, the Redox build system builds all packages from source (i.e., recipes). If you want to use [pre-built packages](https://static.redox-os.org/pkg/) from our build server, however, there's a TOML option for it.
+By default, the Redox build system builds all packages from source (i.e., recipes). If you want to use [pre-built packages](https://static.redox-os.org/pkg/) from our build server, however, there's a recipe rule and filesystem configuration option for it.
 
 This is useful for some purposes, such as producing development builds, confirming package status from the package server, and reducing image build time with large programs.
 
@@ -330,10 +331,20 @@ This is useful for some purposes, such as producing development builds, confirmi
 
 You can learn how to enable this mode in one recipe below:
 
-1. Open the `my-desktop.toml` file:
+- Temporary pre-built recipe package
+
+The following command will change the recipe rule to `binary` and install to a existing Redox image, the package will be removed once a new Redox image is created.
 
     ```sh
-    nano config/$ARCH/my-desktop.toml
+    make bcrp.recipe-name
+    ```
+
+- Permanent pre-built recipe package
+
+1. Open the `my-config.toml` file:
+
+    ```sh
+    nano config/my-config.toml
     ```
 
 2. Add the binary package below the `[packages]` section:
@@ -341,17 +352,17 @@ You can learn how to enable this mode in one recipe below:
     ```toml
     [packages]
     ...
-    new-package = "binary"
+    recipe-name = "binary"
     ...
     ```
 
 3. Download and add the binary package on your Redox image:
 
     ```sh
-    make image
+    make bc.recipe-name p.recipe-name
     ```
 
-4. Open QEMU to verify your binary package:
+4. Open QEMU to verify your package:
 
     ```sh
     make qemu
@@ -370,19 +381,35 @@ For example:
 ```toml
 [packages]
 ...
-package-name1 = {} # use the REPO_BINARY setting ("source" if 0; "binary" if 1)
-package-name2 = "binary" # pre-built package
-package-name3 = "source" # source-based recipe
+recipe-name1 = {} # use the REPO_BINARY setting ("source" if 0; "binary" if 1)
+recipe-name2 = "binary" # pre-built package
+recipe-name3 = "source" # source-based recipe
 ...
 ```
 
 If you just want to use pre-built packages in one filesystem configuration you can add the `repo_binary = true` data type below the `[general]` section on it.
 
+You can also use the following command to quickly enable source compilation in one recipe:
+
+```sh
+make sc.recipe-name
+```
+
 ### Local Recipe Changes
 
 By default every time a recipe build is triggered, Cookbook will update the recipe source. Cookbook will check the tarball BLAKE3 hash from the recipe configuration (`recipe.toml`), or pull from the `origin` remote when the recipe source is a Git repository. This will also remove local changes that are not saved in a branch.
 
-To preserve and use local changes and skip updating the source for a specific recipe, change the recipe type to `"local"` in the filesystem configuration, for example:
+To preserve and use local changes and skip updating the source for a specific recipe, change the recipe rule or type to `"local"`. Use one of the following methods:
+
+- Command line
+
+```sh
+make lc.recipe-name
+```
+
+- Filesystem configuration
+
+You can also use this method to prevent accidents.
 
 ```toml
 [packages]
@@ -391,11 +418,32 @@ package-name = "local"
 ...
 ```
 
-An old way for preserving and using local changes by commenting out the `[source]` section at the top of the file of a `recipe.toml` is also working but less recommended as it's prone to merge conflicts when pulling Redox repository:
+The old way for preserving and using local changes is by commenting out the `[source]` section at the top of the file of a `recipe.toml` is also working but less recommended as it's prone to merge conflicts when pulling Redox repository.
+
+Use this if you want to prevent accidents.
+
+Example:
 
 ```toml
 # [source]
 # git = "https://gitlab.redox-os.org/redox-os/games.git"
+```
+
+### Ignored Recipes
+
+You can disable the installation of some recipes in the Redox image by ignoring, this is commonly used to disable recipes imported from other filesystem configurations to yours using the `include` data type.
+
+To quickly ignore them use the following command:
+
+```sh
+make nc.recipe-name
+```
+
+You can also do this on your filesystem configuration:
+
+```toml
+[packages]
+recipe-name = "ignore"
 ```
 
 ## Advanced Cookbook Options
