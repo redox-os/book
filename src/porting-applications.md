@@ -15,7 +15,7 @@ The [Including Applications in Redox](./including-programs.md) page gives an exa
     - [Cross Compiler](#cross-compiler)
     - [Cross Compilation](#cross-compilation)
     - [Templates](#templates)
-    - [Metapackages](#metapackages)
+    - [Meta-packages](#meta-packages)
 - [Cookbook - Custom Template](#cookbook-custom-template)
     - [Functions](#functions)
     - [Environment Variables](#environment-variables)
@@ -86,7 +86,7 @@ This section contains quick important information for porting.
 - Most or all build instructions were made for native compilation and not cross-compilation, with some poor documentation exceptions
 - If the application or library build tests in compilation you need to disable them for cross-compilation
 - If you are using dynamic linking and the `custom` recipe template, the `DYNAMIC_INIT` command need to be added in the first line of the `script` data type
-- If you don't know if some application or library can be ported to Redox, check if a package for it exist in the [FreeBSD ports](https://github.com/freebsd/freebsd-ports) or other BSD ports to have a reference, but it may give false-positives like the portable application or library is just not packaged to FreeBSD. Read [this](./developer-faq.md#how-to-determine-if-some-program-is-portable-to-redox) question to learn more about this.
+- If you don't know if some application or library can be ported to Redox, check if a package for it exist in the [FreeBSD](https://github.com/freebsd/freebsd-ports), [OpenBSD](https://github.com/openbsd/ports), [NetBSD](https://www.pkgsrc.se/), and [Haiku](https://github.com/haikuports/haikuports) ports to have a reference, but it may give false-positives like the portable application or library is just not packaged to them or FreeBSD use its Linux compatiblity (Linuxlator) because it prefer the Linux codepath of a library or application. Read [this](./developer-faq.md#how-to-determine-if-some-program-is-portable-to-redox) question to learn more about this.
 - We recommend to use the FreeBSD dependencies of the application if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy doesn't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies.
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
@@ -381,9 +381,9 @@ To find the supported Cookbook Bash functions, look the recipes using a `script 
 - applications using the CMake build system have a `CMakeLists.txt` file
 - applications using the Meson build system have a `meson.build` file
 
-### Metapackages
+### Meta-packages
 
-Metapackages are packages without any files, just dependencies. Use the following recipe example to create a metapackage:
+Meta-packages are packages without any files, just dependencies. Use the following recipe example to create a metapackage:
 
 ```toml
 [package]
