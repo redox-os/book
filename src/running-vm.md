@@ -291,6 +291,47 @@ TODO: test
 
 > 💡 **Tip:** if necessary, change `"C:\Program Files\qemu\qemu-system-x86_64.exe"` to reflect where **QEMU** was installed. The quotes are needed if the path contains spaces.
 
+### Apple
+
+If you don't have QEMU installed use one of the following commands:
+
+```sh
+brew install qemu
+```
+
+Install [UTM](https://mac.getutm.app/) for a GUI
+
+```sh
+brew install --cask utm
+```
+
+If you are using Apple silicon choose to *Emulate* instead of *virtualize*.
+
+Enable *Force PS/2 controller* or the keyboard and mouse do not work
+
+Here an example of the *QEMU* arguments for Mac M2:
+
+```
+qemu-system-x86_64 -L /Users/***/Library/Containers/com.utmapp.UTM/Data/Library/Caches/qemu -S -spice unix=on,
+addr=***.spice,disable-ticketing=on,image-compression=off,playback-compression=off,
+streaming-video=off,gl=off -chardev spiceport,name=org.qemu.monitor.qmp.0,id=org.qemu.monitor.qmp -mon chardev=org.qemu.monitor.qmp,
+mode=control -nodefaults -vga none -device e1000,mac=***,netdev=net0 -netdev vmnet-shared,
+id=net0 -device virtio-vga -cpu Skylake-Client -smp cpus=2,sockets=1,cores=2,threads=1 -machine q35,vmport=off,
+hpet=off -accel tcg,tb-size=1024 -global PIIX4_PM.disable_s3=1 -global ICH9-LPC.disable_s3=1 -drive if=pflash,format=raw,
+unit=0,file.filename=/Users/***/Library/Containers/com.utmapp.UTM/Data/Library/Caches/qemu/edk2-x86_64-code.fd,file.locking=off,
+readonly=on -drive if=pflash,unit=1,file.filename=/Users/***/Library/Containers/com.utmapp.UTM/Data/Documents/Redox-Desktop-0.9.0.utm/Data/efi_vars.fd -m 4096 -audiodev spice,
+id=audio0 -device ich9-intel-hda -device hda-duplex,audiodev=audio0 -usb -device usb-tablet,bus=usb-bus.0 -device nec-usb-xhci,id=usb-controller-0 -chardev spicevmc,
+name=usbredir,id=usbredirchardev0 -device usb-redir,chardev=usbredirchardev0,id=usbredirdev0,bus=usb-controller-0.0 -chardev spicevmc,
+name=usbredir,id=usbredirchardev1 -device usb-redir,chardev=usbredirchardev1,id=usbredirdev1,bus=usb-controller-0.0 -chardev spicevmc,
+name=usbredir,id=usbredirchardev2 -device usb-redir,chardev=usbredirchardev2,id=usbredirdev2,bus=usb-controller-0.0 -device ide-hd,bus=ide.0,
+drive=drive***,bootindex=0 -drive if=none,media=disk,id=drive***,
+file.filename=/Users/***/Library/Containers/com.utmapp.UTM/Data/Documents/Redox-Desktop-0.9.0.utm/Data/redox_desktop_x86_64_2024-09-07_1225_harddrive.qcow2,
+discard=unmap,detect-zeroes=unmap -device virtio-serial -device virtserialport,chardev=org.qemu.guest_agent,name=org.qemu.guest_agent.0 -chardev spiceport,
+name=org.qemu.guest_agent.0,id=org.qemu.guest_agent -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 -chardev spicevmc,id=vdagent,debug=0,
+name=vdagent -device virtserialport,chardev=charchannel1,id=channel1,name=org.spice-space.webdav.0 -chardev spiceport,name=org.spice-space.webdav.0,
+id=charchannel1 -name RedoxDesktop090 -uuid *** -device virtio-rng-pci
+```
+
 ### Using the QEMU emulation
 
 As the system boots, it will ask you for a screen resolution to use, for example `1024x768`. After selecting a screen size, the system will complete the boot, start the **Orbital** GUI, and display a Redox login screen. Login as user `user` with no password. The password for `root` is `password`. Use **Ctrl+Alt+G** to toggle the mouse behavior if you need to zoom out or exit the emulation. If your emulated cursor is out of alignment with your mouse position, type **Ctrl+Alt+G** to regain full cursor control, then click on your emulated cursor. **Ctrl+Alt+F** toggles between full screen and window views.
