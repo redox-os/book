@@ -81,9 +81,9 @@ cargo install inferno
 profiled = {}
 ```
 
-4. Boot QEMU and use the `kprof_record <app-command> [APP-ARGS...]` command to profile the kernel when running the specified application (can't be used with multiple applications in the same command).
+5. Boot QEMU and use the `kprof_record <app-command> [APP-ARGS...]` command to profile the kernel when running the specified application (can't be used with multiple applications in the same command).
 
-5. (Optional) The following filesystem configuration is used for automated profiling: create the filesystem configuration (`config/my_profiler.toml`, for example) or adapt your existing configuration with the following content:
+6. (Optional) The following filesystem configuration is used for automated profiling: create the filesystem configuration (`config/my_profiler.toml`, for example) or adapt your existing configuration with the following content:
 
 ```toml
 include = [ "minimal.toml" ]
@@ -121,7 +121,7 @@ shutdown
 """
 ```
 
-5. (Optional) In the `redox` directory, create the file `.config` with the following content:
+7. (Optional) In the `redox` directory, create the file `.config` with the following content:
 
 ```make
 # This needs to match the name of your filesystem configuration file
@@ -132,7 +132,7 @@ QEMU_SMP=5
 gpu=no
 ```
 
-6. In the `redox` terminal window, run the `make r.profiling-kernel,profiled image` command.
+8. In the `redox` terminal window, run the `make r.profiling-kernel,profiled image` command.
 
 #### Profiling
 
