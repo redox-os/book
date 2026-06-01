@@ -56,7 +56,7 @@ This is an example flamegraph. If you open the image in a new tab, there is usef
 
 The steps below are for profiling on `x86_64`, running in `QEMU`. It is possible to run the tests on real hardware, although retrieving the data require additional effort.
 
-The profiling code is written primarily for QEMU, but for real hardware, consider commenting out the `serio_command` code in the `src/profiling.rs` file.
+If you use PS/2 input devices in real hardware you need to disable the `serio_command` code in the `src/profiling.rs` file.
 
 #### Setup
 
@@ -74,7 +74,16 @@ cargo install inferno
 
 3. Rename the `kernel = {}` item at `config/base.toml` to `profiling-kernel = {}`
 
-4. In your first terminal window, from the `redox` directory, create the filesystem configuration (`config/my_profiler.toml`, for example) or adapt your existing configuration with the following content:
+4. Temporarily install the `profiled` recipe with the `make rp.profiled` command or permanently install by adding it in the `[packages]` section of your filesystem configuration and run `make rp.profiled` :
+
+```toml
+[packages]
+profiled = {}
+```
+
+4. Boot QEMU and use the `kprof_record <app-command> [APP-ARGS...]` command to profile the kernel when running the specified application (can't be used with multiple applications in the same command).
+
+5. (Optional) The following filesystem configuration is used for automated profiling: create the filesystem configuration (`config/my_profiler.toml`, for example) or adapt your existing configuration with the following content:
 
 ```toml
 include = [ "minimal.toml" ]
@@ -86,23 +95,14 @@ filesystem_size = 256
 
 # Package settings
 [packages]
-# The kernel recipe with profiling code enabled
-profiling-kernel = {}
-# This is the profiling daemon
-profiled = {}
+bash = {}
+profiled = {} # Profiling daemon
 # Add any other recipes you need for testing here
-
-# Init script to start the profile daemon
-# The sequence number "01" ensures it will be started right after the drivers
-[[files]]
-path = "/usr/lib/init.d/01_profile"
-data = """
-profiled
-"""
 
 [[files]]
 path = "/usr/bin/perf_tests.sh"
 data = """
+#!/usr/bin/env bash
 dd bs=4k count=100000 < /scheme/zero > /scheme/null
 """
 
@@ -115,15 +115,13 @@ echo Waiting for startup to complete...
 sleep 5
 echo
 echo Running tests...
-ion -x /usr/bin/perf_tests.sh
+kprof_record /usr/bin/perf_tests.sh
 echo Shutting down...
 shutdown
 """
 ```
 
-If you don't want to use the `99_tests` file configuration, you can use the `kprof_record` command (can't be used in multiple commands) from `profiled` recipe.
-
-5. In the `redox` directory, create the file `.config` with the following content:
+5. (Optional) In the `redox` directory, create the file `.config` with the following content:
 
 ```make
 # This needs to match the name of your filesystem configuration file
@@ -134,64 +132,36 @@ QEMU_SMP=5
 gpu=no
 ```
 
-6. In the `redox` terminal window, run the `make r.profiling-kernel image` command.
+6. In the `redox` terminal window, run the `make r.profiling-kernel,profiled image` command.
 
 #### Profiling
 
-7. In your `redox` terminal window, run `make qemu` or your preferred QEMU command, and perform your testing. You will see console messages indicating that profile data is being logged. **Exit QEMU** before proceeding, if it did not exit automatically.
+**QEMU can't be running during this step, verify if it's closed beforehand to prevent data corruption**
 
-8. In the `redox` directory, run the following commands.
+9. The `make flamegraph` command will create a SVG of profiling data collected inside of Redox, the SVG location is: `build/flamegraph/$(TARGET)-$(CONFIG_NAME)-kflamegraph.svg`
+
+Use the `KPROF_OPTIONS=option-value` environment variable to determine what formatting options you want for your flamegraph:
+
+- 'i' for relaxed checking of function length
+- 'o' for reporting function plus offset rather than just function
+- 'x' for both grouping by function and with offset
+
+Replace the "option-value" with your preferred formatting options.
+
+Example:
 
 ```sh
-# Create a directory for your data
-mkdir my_profiler_data
+make flamegraph KPROF_OPTIONS=xo
 ```
 
-```sh
-# Make the Redox filesystem accessible at the path based on CONFIG_NAME
-make mount
-```
+10. View your flamegraph SVG in a web browser.
 
 ```sh
-# Copy the profiling data from the Redox image to your directory
-cp build/x86_64/my_profiler/filesystem/root/profiling.txt my_profiler_data
-```
-
-```sh
-# Important - unmount the Redox filesystem
-make unmount
-```
-
-9. `cd` into the new directory and generate a symbol table for the kernel.
-
-```sh
-cd my_profiler_data
-```
-
-```sh
-nm -CS recipes/core/profiling-kernel/target/x86_64-unknown-redox/build/profiling-kernel > kernel_syms.txt
-```
-
-10. The next step is to determine the TSC frequency. TL;DR - just use your CPU clock rate in GHz. The TSC is a counter that tracks the clock cycles since the system was powered on. The TSC frequency can vary based when power saving is enabled, but Redox does not implement this yet, so CPU GHz should work fine.
-
-11. Determine what formatting options you want for your flamegraph - 'i' for relaxed checking of function length, 'o' for reporting function plus offset rather than just function, 'x' for both grouping by function and with offset.
-
-12. In the directory `my_profiler_data`, generate the flamegraph.
-
-```sh
-redox-kprofiling profiling.txt kernel_syms.txt x y.z | inferno-collapse-perf | inferno-flamegraph > kernel_flamegraph.svg
-```
-
-Replace the `x` with your preferred formatting options. Replace the `y.z` with your TSC/CPU clock frequency in GHz (`2.2`, for example).
-
-Then view your flamegraph in a web browser.
-
-```sh
-firefox kernel_flamegraph.svg
+firefox build/flamegraph/$(TARGET)-$(CONFIG_NAME)-kflamegraph.svg
 ```
 
 #### Real Hardware
 
 TODO: test
 
-Boot the system, and when you're done profiling, kill `profiled` and extract `/root/profiling.txt` (Details TBD)
+Boot the system, and when you're done profiling, kill `profiled` and extract the `/root/profiling.txt` file (Details TBD)
