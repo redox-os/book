@@ -57,7 +57,7 @@
   - [Installing Redox on a Drive](./installing.md)
   - [Trying Out Redox](./trying-out-redox.md)
   - [Tasks](./tasks.md)
-  - [Downloading Packages with pkg](./pkg.md)
+  - [Package Manager](./pkg.md)
 
 # Contributing
 
