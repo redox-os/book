@@ -65,11 +65,7 @@ If you use PS/2 input devices in real hardware you need to disable the `serio_co
 2. Install the tools: 
 
 ```sh
-cargo install redox-kprofiling
-```
-
-```sh
-cargo install inferno
+cargo install redox-kprofiling inferno
 ```
 
 3. Rename the `kernel = {}` item at `config/base.toml` to `profiling-kernel = {}`
@@ -81,7 +77,7 @@ cargo install inferno
 profiled = {}
 ```
 
-5. Boot QEMU and use the `kprof_record <app-command> [APP-ARGS...]` command to profile the kernel when running the specified application (can't be used with multiple applications in the same command).
+5. Boot QEMU and use the `sudo kprof_record <app-command> [APP-ARGS...]` command to profile the kernel when running the specified application (can't be used with multiple applications in the same command).
 
 6. (Optional) The following filesystem configuration is used for automated profiling: create the filesystem configuration (`config/my_profiler.toml`, for example) or adapt your existing configuration with the following content:
 
