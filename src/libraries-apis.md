@@ -17,10 +17,8 @@ This page covers the context of the libraries and APIs on Redox.
 
 ## Terms
 
-| **Interface**                                                     | **Explanation**                                                                                           |
-|-------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| [API](https://en.wikipedia.org/wiki/API)                          | The interface of the library **source code** (the programs use the API to obtain the library functions)   |
-| [ABI](https://en.wikipedia.org/wiki/Application_binary_interface) | The interface of the program **binary** and system services (normally the system call interface)          |
+- [API](https://en.wikipedia.org/wiki/API)
+- [ABI](https://en.wikipedia.org/wiki/Application_binary_interface)
 
 ## Versions
 
