@@ -93,6 +93,7 @@ This section contains quick important information for porting.
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies.
 - Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
 - The Debian naming policy use dashes as separators in packages with optional features: `application-name` (default application variant with compiled executables) and `application-name-dev` (application variant with objects for compilation linking), also check the source package to be sure
+- If you can't find the project or source tarball of a splitted Debian package the Debian package information web page has the package project website URL ("Homepage") and the source tarball name used to create the package ("Download Source Package")
 - The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it can't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
 - The recipe support recursive dependencies, thus you don't need to specify a dependency two times if some dependency already provides it
 - Don't add build tools in the `build.dependencies` data type, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
