@@ -12,7 +12,7 @@ Some unsafe Rust code is using safe Rust code in some parts, we are looking more
 
 ## Applications and Libraries
 
-The POSIX and Linux source code compatibility don't downgrade the system security, `relibc` translate POSIX APIs and try to improve the compatibility security where possible:
+The POSIX and Linux source code compatibility don't reduce the system security, `relibc` translate POSIX APIs and try to improve the compatibility security where possible:
 
 - The microkernel architecture greatly reduce the potential to use system bugs to get application or library sensitive data or inject malicious code
 - POSIX and Linux functions are written in Rust, which prevent many bugs
