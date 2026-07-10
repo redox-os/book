@@ -79,32 +79,52 @@ The [Including Applications in Redox](./including-programs.md) page gives an exa
 
 This section contains quick important information for porting.
 
+### Portability
+
+- If a application or library ha support for operating systems beyond Linux, it's considered portable (with some exceptions using system call translation or virtualization in the non-Linux ports). If you don't know if some application or library can be ported to Redox, check if a package for it exist in the [FreeBSD](https://github.com/freebsd/freebsd-ports), [OpenBSD](https://github.com/openbsd/ports), [NetBSD](https://www.pkgsrc.se/), and [Haiku](https://github.com/haikuports/haikuports) ports to have a reference, but it may give false-positives like the portable application or library is just not packaged to them or FreeBSD use its Linux compatiblity (Linuxlator) because it prefer the Linux codepath of a library or application. Read [this](./developer-faq.md#how-to-determine-if-some-program-is-portable-to-redox) question to learn more about this.
+
+- We recommend to use the FreeBSD or OpenBSD dependencies of the application if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy doesn't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
+
+### Cross-compilation
+
 - The Redox build system does cross-compilation and the application or library need to be configured for that, read [this](./developer-faq.md#why-does-redox-do-cross-compilation) section to learn why it's needed
 - Meson and CMake build system configurations have better cross-compilation support than GNU Autotools and GNU Make configurations, in case the application or library allows you to choose them
 - The cross-compilation configuration of GNU Make configuration may require extensive and time-consuming patching, thus it's recommend to search if a version, branch, fork or patch with GNU Autotools, CMake or Meson support exist
-- It's not recommended to use tarballs, version branches or pin Git revisions/commits in Rust applications waiting for Redox patches in their dependencies, to allow the recipe to receive the dependency updates that will fix the Redox support
-- Some Rust programs use CMake or Meson to find C/C++ libraries instead of `-sys` crates
-- Most or all build instructions were made for native compilation and not cross-compilation, with some poor documentation exceptions
-- Build instructions in the application or library website tends to be outdated, in case of doubt always prefer the source tarball or repository documentation (commonly a section in the `README.md` or `INSTALL` files)
+- Most build instructions were made for native compilation and not cross-compilation, with some poor documentation exceptions
 - If the application or library build tests in compilation you need to disable them for cross-compilation
-- If you are using dynamic linking and the `custom` recipe template, the `DYNAMIC_INIT` command need to be added in the first line of the `script` data type
-- If a application or library ha support for operating systems beyond Linux, it's considered portable (with some exceptions using system call translation or virtualization in the non-Linux ports). If you don't know if some application or library can be ported to Redox, check if a package for it exist in the [FreeBSD](https://github.com/freebsd/freebsd-ports), [OpenBSD](https://github.com/openbsd/ports), [NetBSD](https://www.pkgsrc.se/), and [Haiku](https://github.com/haikuports/haikuports) ports to have a reference, but it may give false-positives like the portable application or library is just not packaged to them or FreeBSD use its Linux compatiblity (Linuxlator) because it prefer the Linux codepath of a library or application. Read [this](./developer-faq.md#how-to-determine-if-some-program-is-portable-to-redox) question to learn more about this.
-- We recommend to use the FreeBSD or OpenBSD dependencies of the application if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy doesn't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
-- Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies.
-- Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
-- The Debian naming policy use dashes as separators in packages with optional features: `application-name` (default application variant with compiled executables) and `application-name-dev` (application variant with objects for compilation linking), also check the source package to be sure
-- If you can't find the project or source tarball of a splitted Debian package the Debian package information web page has the package project website URL ("Homepage") and the source tarball name used to create the package ("Download Source Package")
+
+### Dependencies
+
+- Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies, they also separate build tooling from library dependencies in packaging naming
 - The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it can't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
 - The recipe support recursive dependencies, thus you don't need to specify a dependency two times if some dependency already provides it
 - Don't add build tools in the `build.dependencies` data type, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
+
+### Linking
+
+- If you are using dynamic linking and the `custom` recipe template, the `DYNAMIC_INIT` command need to be added in the first line of the `script` data type
 - The compiler can build recipe dependency libraries as `.so` files (objects for dynamic linking) or `.a` files (objects for static linking): The `.so` files will be installed out of the binary (stored on the `/lib` directory of the system) while the `.a` files will be mixed in the final binary.
 - Linux distributions add a number after the `.so` files to avoid conflicts in the `/usr/lib` folder when applications use different API versions of the same library, for example: `library-name.so.6`
+
+### Build Instructions
+
+- Build instructions in the application or library website tends to be outdated, in case of doubt always prefer the source tarball or repository documentation (commonly a section in the `README.md` or `INSTALL` files)
+- Don't use the `.deb` packages to create recipes, they are adapted for the Debian environment.
+- The Debian naming policy use dashes as separators in packages with optional features: `application-name` (default application variant with compiled executables) and `application-name-dev` (application variant with objects for compilation linking), also check the source package to be sure
+- Use the [Arch Linux package search](https://archlinux.org/packages/) for a up-to-date dependency versioning reference due to being rolling-release
+- If you can't find the project or source tarball of a splitted Debian package the Debian package information web page has the package project website URL ("Homepage") and the source tarball name used to create the package ("Download Source Package")
 - Many applications and libraries lack build instructions and/or good dependency information (build tool, mandatory nad optional dependency category separation), determine the build system configuration on their tarball or Git repository and use the build system log to discover or determine the minimum/mandatory dependencies (not using the `build.dependencies` and `package.dependencies` data types)
 - Tarballs with source code don't have a operating system or CPU architecture on its name
 - Sometimes the releases of Git repositories are abandoned, verify if the tags have newer versions
 - Sometimes tarballs of the official application or library website are abandoned in favor of Git repository tarballs, verify if the Git repository tarballs are more recent
 
 You need to know the above information because each software is different, the major reason is the "Build Instructions" organization and context of each application or library.
+
+### Rust
+
+- It's not recommended to use tarballs, version branches or pin Git revisions/commits in Rust applications waiting for Redox patches in their dependencies, to allow the recipe to receive the dependency updates that will fix the Redox support
+- Some Rust programs use CMake or Meson to find C/C++ libraries instead of `-sys` crates
+- If some Rust application with multiple Cargo packages don't declare the tooling or example packages (some applications and libraries use Cargo packages instead of Rust files for examples) in the `workspace.members` data type, you need to specify the package path in the `cargopath` using the `cargo` template
 
 ## Packaging Policy
 

@@ -122,7 +122,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make pull` - Update the source code of the build system without building.
 - `make all` - Builds the entire system, checking for changes and only building as required. Only use this for the first build. If the system was successfully built previously, this command may report `Nothing to be done for 'all'`, even if some recipes have changed. Use `make rebuild` instead.
 - `make rebuild` - Update all binaries from recipes with source code changes (it doesn't detect changes on the Redox toolchain). This should be your normal `make` target.
-- `make rebuild-push` - Similar to `make rebuild` but push updated recipes instead of a image rebuild, use this to preserve your changes on the Redox image after a full update
+- `make rebuild-push` - Similar to `make rebuild` but push updated recipes instead of a image rebuild, use this to preserve your changes on the Redox image after a full update (it will update downloaded packages if `REPO_BINARY` is enabled)
 - `make prefix` - Download the Rust/GCC forks and build relibc.
 - `make fstools` - Build the Redox image builder (installer), Cookbook and RedoxFS.
 - `make fstools_clean` - Clean the image builder, Cookbook and RedoxFS binaries.
@@ -177,7 +177,13 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make sc.recipe-name` - Set the recipe rule to `source` (enable compilation) and clean existing recipe binaries
 - `make scr.recipe-name` - A shortcut for `make sc.recipe r.recipe`
 - `make scrp.recipe-name` - A shortcut for `make sc.recipe rp.recipe`
-- `make lc.recipe-name` - Set the recipe rule to `local` (disable automatic remote Git repository fetch to prevent the breakage of local changes) and clean existing recipe binaries
+- `make lc.recipe-name` - Set the recipe rule to `local`, which dies the following things:
+
+  - Disable automatic remote Git repository fetch to prevent the breakage of local changes and clean existing recipe binaries
+  - Automatically download sources if they don't exist
+  - Enable source compilation with pre-built dependencies when when `REPO_BINARY` is enabled
+
+- `make lcrp.recipe-name` - A shortcut for `make lc.recipe rp.recipe`
 - `make nc.recipe-name` - Set the recipe rule to `ignore` (disable installation on Redox image) and clean existing recipe binaries
 - `make cc.recipe-name` - Reset recipe rule to default (`source`) and clean existing recipe binaries
 - `make c.recipe-name` (abbreviation of `clean`) - Clean one or multiple recipe binaries.
@@ -194,8 +200,11 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make pt.recipe-name` (abbreviation of `push-tree`) - Show the package dependencies that will be pushed into the Redox image
 - `make ur.recipe-name` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
 - `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
-- `make x.--all` - Any recipe target (x) can be run in all recipes at `recipes` (like `make c.--all` which clean all recipe binaries, for example)
-- `make x.--category-directory-name` - Any recipe target (x) can be run in all recipes of some category directory at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` directory, for example), if you need to use a sub-category use `--category-directory-name/subdirectory`
+- `make x.--all` - Any recipe target (x) can be run in all previously used recipes (remembered at `cookbook.lock`)
+- `make f.--all-binaries` - Update all previously downloaded pre-built packages when `REPO_BINARY` is enabled
+- `make u.--all` - Remove all previously downloaded source and built binaries, when `REPO_BINARY` is enabled it only clean downloaded sources and preserve pre-built packages 
+- `make x.--category` - Run any recipe target (x) in all recipes
+- `make x.--category-directory-name` - Run any recipe target (x) in all recipes of some category directory at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` directory, for example), if you need to use a sub-category use `--category-directory-name/subdirectory`
 
 All recipe targets also support multiple recipe entries by separating each recipe name with a comma. for example: `make f.recipe1,recipe2` will download the sources of `recipe1` and `recipe2`
 
@@ -420,7 +429,7 @@ scripts/include-recipes.sh "TODO.text" | sort
 
 ### Recipe Analysis
 
-Show the directorys and files on the `stage` and `sysroot` directorys of some recipe (to identify packaging issues or violations).
+Show the directories and files on the `stage` and `sysroot` directorys of some recipe (to identify packaging issues or violations).
 
 ```sh
 scripts/show-package.sh recipe-name
