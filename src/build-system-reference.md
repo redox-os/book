@@ -89,29 +89,29 @@ The build system downloads and creates several files that you may want to know a
 - `build/$ARCH/your-config/repo.tag` - An empty file that, if present, tells the build system that all recipes required for the Redox image have been successfully built. **The build system will not check for changes to your code when this file is present.** Use `make rebuild` to force the build system to check for changes.
 - `build/podman` - The directory where Podman Build places the container user's home directory, including the container's Rust installation. Use `make container_clean` to remove it. In some situations, you may need to remove this directory manually, possibly with root privileges.
 - `build/container.tag` - An empty file, created during the first Podman build, so a Podman build knows when a reusable Podman image is available. Use `make container_clean` to force a rebuild of the Podman image on your next `make rebuild` run.
-- `build/logs/$TARGET/recipe-name.log` - Where recipe build logs are stored.
+- `build/logs/$TARGET/recipe.log` - Where recipe build logs are stored.
 
 ### Cookbook
 
 - `prefix/*` - Tools used by the Cookbook system. They are normally downloaded during the first system build (if you are having a problem with the build system, you can remove the `prefix` directory and it will be recreated during the next build).
 - `repo` - Contains all packaged recipes.
 - `web` - Contains optional generated web content for `repo`.
-- `recipes/recipe-name` - A recipe (software port) directory (represented as `recipe-name`), this directory holds the `recipe.toml` file.
-- `recipes/recipe-name/recipe.toml` - The recipe configuration file, this configuration contains instructions for downloading Git repositories or tarballs, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
+- `recipes/recipe` - A recipe (software port) directory (represented as `recipe`), this directory holds the `recipe.toml` file.
+- `recipes/recipe/recipe.toml` - The recipe configuration file, this configuration contains instructions for downloading Git repositories or tarballs, then creating executables or other files to include in the Redox filesystem. Note that a recipe can contain dependencies that cause other recipes to be built, even if the dependencies are not otherwise part of your Redox build.
 
 (To learn more about the recipe system read the [Porting Applications using Recipes](./porting-applications.md) page)
 
-- `recipes/recipe-name/recipe.sh` - The old recipe configuration format (can't be used as dependency of a recipe with a TOML syntax).
-- `recipes/recipe-name/source.tar` - The tarball of the recipe (renamed).
-- `recipes/recipe-name/source` - The directory where the recipe source is extracted or downloaded.
-- `recipes/recipe-name/target` - The directory where the recipe binaries are stored.
-- `recipes/recipe-name/target/${TARGET}` - The directory for the recipe's binaries of the CPU architecture.
-- `recipes/recipe-name/target/${TARGET}/build` - The directory where the recipe build system runs its commands.
-- `recipes/recipe-name/target/${TARGET}/stage` - The directory where recipe binaries go before the packaging, after `make all`, `make rebuild` and `make image` the [installer](https://gitlab.redox-os.org/redox-os/installer) will extract the recipe package on the QEMU image, generally at `/usr/bin` or `/usr/lib` in a Redox filesystem hierarchy.
-- `recipes/recipe-name/target/${TARGET}/sysroot` - The directory where recipe build dependencies (libraries) are shared, for example: `*.so`, `*.a` and `cmake` files.
-- `recipes/recipe-name/target/${TARGET}/toolchain` - The directory where recipe tool dependencies (toolchain) are shared, for example: binaries.
-- `recipes/recipe-name/target/${TARGET}/stage.pkgar` - Redox package file.
-- `recipes/recipe-name/target/${TARGET}/stage.toml` - Contains the runtime dependencies of the package and is part of both package formats.
+- `recipes/recipe/recipe.sh` - The old recipe configuration format (can't be used as dependency of a recipe with a TOML syntax).
+- `recipes/recipe/source.tar` - The tarball of the recipe (renamed).
+- `recipes/recipe/source` - The directory where the recipe source is extracted or downloaded.
+- `recipes/recipe/target` - The directory where the recipe binaries are stored.
+- `recipes/recipe/target/${TARGET}` - The directory for the recipe's binaries of the CPU architecture.
+- `recipes/recipe/target/${TARGET}/build` - The directory where the recipe build system runs its commands.
+- `recipes/recipe/target/${TARGET}/stage` - The directory where recipe binaries go before the packaging, after `make all`, `make rebuild` and `make image` the [installer](https://gitlab.redox-os.org/redox-os/installer) will extract the recipe package on the QEMU image, generally at `/usr/bin` or `/usr/lib` in a Redox filesystem hierarchy.
+- `recipes/recipe/target/${TARGET}/sysroot` - The directory where recipe build dependencies (libraries) are shared, for example: `*.so`, `*.a` and `cmake` files.
+- `recipes/recipe/target/${TARGET}/toolchain` - The directory where recipe tool dependencies (toolchain) are shared, for example: binaries.
+- `recipes/recipe/target/${TARGET}/stage.pkgar` - Redox package file.
+- `recipes/recipe/target/${TARGET}/stage.toml` - Contains the runtime dependencies of the package and is part of both package formats.
 
 ## GNU Make Commands
 
@@ -135,15 +135,15 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make repo-lock` - Lock the commit hashes of recipe sources using a Git repositories
 - `make repo-unlock` - Unlock the commit hashes of recipe sources using a Git repositories
 - `make repo-rollback` - Return to a specific Cookbook commit hash for debugging, don't work with commits from before 2026
-- `make clean` - Clean all recipe binaries (Note that `make clean` may require some tools to be built).
+- `make clean` - Clean all recipe binaries and packages (Note that `make clean` may require some tools to be built).
 - `make static_clean` - Clean all statically linked recipe binaries
-- `make distclean` - Clean all recipe sources and binaries (**please backup or submit your source changes before the execution of this command**).
+- `make distclean` - Clean all recipe sources, binaries, and packages (**please backup or submit your source changes before the execution of this command**).
 - `make find` - Show the recipe packages location
 - `make tree` - Show all recipe and package dependencies from the current filesystem configuration that will be built and pushed
 - `make repo-tree` - Show all recipe dependencies (`build.dependencies` data type) that will be built, also check what dependencies were built or not
 - `make image-tree` - Show the package dependencies (`package.dependencies` data type) that will be pushed into the Redox image
-- `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe-name`
-- `make push` - Only install recipes with new changes in an existing Redox image
+- `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe`
+- `make push` - Only install recipes with new changes in an existing Redox image (it can still be used after `make c.--all` or `make u.--all` execution)
 - `make install` - Install the recipe binaries in the system for self-hosted development testing
 - `make mount` - Mounts the Redox image as a filesystem at `$(BUILD)/filesystem`. **Do not use this if QEMU is running**, and remember to use `make unmount` as soon as you are done. This is not recommended, but if you need to get a large file onto or off of your Redox image, this is available as a workaround.
 - `make unmount` - Unmounts the Redox image filesystem. Use this as soon as you are done with `make mount`, and **do not start QEMU** until this is done.
@@ -161,45 +161,47 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
 ### Recipe
 
-- `make f.recipe-name` (abbreviation of `fetch`) - Download one or multiple recipe sources
-- `make r.recipe-name` (abbreviation of `repo`) - Build one or multiple recipes, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games` (you can't use this command to replace the `make all`, `make fstools` and `make prefix` commands because it don't trigger them, make sure to run them before to avoid errors)
+(The `recipe` in `make x.recipe` is the recipe directory name)
+
+- `make f.recipe` (abbreviation of `fetch`) - Download one or multiple recipe sources
+- `make r.recipe` (abbreviation of `repo`) - Build one or multiple recipes, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games` (you can't use this command to replace the `make all`, `make fstools` and `make prefix` commands because it don't trigger them, make sure to run them before to avoid errors)
 
   - Meta-packages need the `--with-package-deps` option, for example: `make r.meta-package,--with-package-deps`
   - The recipe is built even if it's not in your filesystem configuration.
   - This command will continue where you stopped the build process, it's useful to save time if you had a compilation error and patched a crate
 
-- `make ri.recipe-name` - Build or rebuild and install the recipe to Redox
-- `make p.recipe-name` (abbreviation of `push`) - Install one or multiple recipe binaries to an existing Redox image
-- `make i.recipe-name` (abbreviation of `install`) - Install a recipe to Redox for self-hosted development testing
-- `make bc.recipe-name` - Set the recipe rule to `binary` (pre-built package) and clean existing recipe binaries
-- `make bcr.recipe-name` - A shortcut for `make bc.recipe r.recipe`
-- `make bcrp.recipe-name` - A shortcut for `make bc.recipe rp.recipe`
-- `make sc.recipe-name` - Set the recipe rule to `source` (enable compilation) and clean existing recipe binaries
-- `make scr.recipe-name` - A shortcut for `make sc.recipe r.recipe`
-- `make scrp.recipe-name` - A shortcut for `make sc.recipe rp.recipe`
-- `make lc.recipe-name` - Set the recipe rule to `local`, which dies the following things:
+- `make ri.recipe` - Build or rebuild and install the recipe to Redox
+- `make p.recipe` (abbreviation of `push`) - Install one or multiple recipe packages to an existing Redox image (it can still be used after `make c.recipe` or `make u.recipe` execution)
+- `make i.recipe` (abbreviation of `install`) - Install a recipe to Redox for self-hosted development testing
+- `make bc.recipe` - Set the recipe rule to `binary` (pre-built package) and clean existing recipe binaries
+- `make bcr.recipe` - A shortcut for `make bc.recipe r.recipe`
+- `make bcrp.recipe` - A shortcut for `make bc.recipe rp.recipe`
+- `make sc.recipe` - Set the recipe rule to `source` (enable compilation) and clean existing recipe binaries
+- `make scr.recipe` - A shortcut for `make sc.recipe r.recipe`
+- `make scrp.recipe` - A shortcut for `make sc.recipe rp.recipe`
+- `make lc.recipe` - Set the recipe rule to `local`, which dies the following things:
 
   - Disable automatic remote Git repository fetch to prevent the breakage of local changes and clean existing recipe binaries
   - Automatically download sources if they don't exist
   - Enable source compilation with pre-built dependencies when when `REPO_BINARY` is enabled
 
-- `make lcrp.recipe-name` - A shortcut for `make lc.recipe rp.recipe`
-- `make nc.recipe-name` - Set the recipe rule to `ignore` (disable installation on Redox image) and clean existing recipe binaries
-- `make cc.recipe-name` - Reset recipe rule to default (`source`) and clean existing recipe binaries
-- `make c.recipe-name` (abbreviation of `clean`) - Clean one or multiple recipe binaries.
-- `make cr.recipe-name` - A shortcut for `make c.recipe r.recipe`
-- `make crp.recipe-name` - A shortcut for `make c.recipe r.recipe p.recipe`
-- `make cri.recipe-name` - A shortcut for `make c.recipe r.recipe i.recipe`
-- `make u.recipe-name` (abbreviation of `unfetch`) - Clean one or multiple recipe source code and binaries (**please backup or submit your source changes before the execution of this command**).
-- `make uc.recipe-name` - A shortcut for `make u.recipe c.recipe`
-- `make ucr.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe`
-- `make ucrp.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe p.recipe`
-- `make ucri.recipe-name` - A shortcut for `make u.recipe c.recipe r.recipe i.recipe`
-- `make ucf.recipe-name` - A shortcut for `make u.recipe c.recipe f.recipe`
-- `make rt.recipe-name` (abbreviation of `repo-tree`) - Show the recipe dependencies that will be built, also check what dependencies were built or not
-- `make pt.recipe-name` (abbreviation of `push-tree`) - Show the package dependencies that will be pushed into the Redox image
-- `make ur.recipe-name` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
-- `make rp.recipe-name` - A shortcut for `make r.recipe p.recipe`
+- `make lcrp.recipe` - A shortcut for `make lc.recipe rp.recipe`
+- `make nc.recipe` - Set the recipe rule to `ignore` (disable installation on Redox image) and clean existing recipe binaries
+- `make cc.recipe` - Reset recipe rule to default (`source`) and clean existing recipe binaries
+- `make c.recipe` (abbreviation of `clean`) - Clean one or multiple recipe binaries, while preserving packages.
+- `make cr.recipe` - A shortcut for `make c.recipe r.recipe`
+- `make crp.recipe` - A shortcut for `make c.recipe r.recipe p.recipe`
+- `make cri.recipe` - A shortcut for `make c.recipe r.recipe i.recipe`
+- `make u.recipe` (abbreviation of `unfetch`) - Clean one or multiple recipe source code and binaries, while preserving packages (**please backup or submit your source changes before the execution of this command**).
+- `make uc.recipe` - A shortcut for `make u.recipe c.recipe`
+- `make ucr.recipe` - A shortcut for `make u.recipe c.recipe r.recipe`
+- `make ucrp.recipe` - A shortcut for `make u.recipe c.recipe r.recipe p.recipe`
+- `make ucri.recipe` - A shortcut for `make u.recipe c.recipe r.recipe i.recipe`
+- `make ucf.recipe` - A shortcut for `make u.recipe c.recipe f.recipe`
+- `make rt.recipe` (abbreviation of `repo-tree`) - Show the recipe dependencies that will be built, also check what dependencies were built or not
+- `make pt.recipe` (abbreviation of `push-tree`) - Show the package dependencies that will be pushed into the Redox image
+- `make ur.recipe` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
+- `make rp.recipe` - A shortcut for `make r.recipe p.recipe`
 - `make x.--all` - Any recipe target (x) can be run in all previously used recipes (remembered at `cookbook.lock`)
 - `make f.--all-binaries` - Update all previously downloaded pre-built packages when `REPO_BINARY` is enabled
 - `make u.--all` - Remove all previously downloaded source and built binaries, when `REPO_BINARY` is enabled it only clean downloaded sources and preserve pre-built packages 
@@ -231,7 +233,7 @@ All recipe targets also support multiple recipe entries by separating each recip
 
 - `$(BUILD)` - Represents the `build` directory.
 - `$(ARCH)` - Represents the CPU architecture directory at `build`
-- `${TARGET}` - Represents the CPU architecture directory at the `recipes/recipe-name/target` directory
+- `${TARGET}` - Represents the CPU architecture directory at the `recipes/recipe/target` directory
 - `$(CONFIG_NAME)` - Represents your filesystem configuration directory at `build/$ARCH`
 
 We recommend that you use these variables with the `"` symbol to clean any spaces on the path, spaces are interpreted as command separators and will break the commands.
@@ -263,7 +265,7 @@ If you are working in a separated branch on the recipe source and want to disabl
 ```
 [packages]
 ...
-your-recipe-name = "local"
+your-recipe = "local"
 ...
 ```
 
@@ -340,7 +342,7 @@ make repo_clean repo
 To pass the new relibc changes to one recipe, run:
 
 ```sh
-make cr.recipe-name
+make cr.recipe
 ```
 
 ## Configuration
@@ -398,7 +400,7 @@ The "input-text" is the word used by the script.
 Show all files installed by a recipe.
 
 ```sh
-scripts/find-recipe.sh recipe-name
+scripts/find-recipe.sh recipe
 ```
 
 ### Recipe Categories
@@ -413,7 +415,7 @@ Where `x` is your `make` option, it can be `f`, `r`, `c`, `u`, `cr`, `ur` or `uf
 
 ### Include Recipes
 
-Create a list with `recipe-name = {} #TODO` for quick testing of WIP recipes.
+Create a list with `recipe = {} #TODO` for quick testing of WIP recipes.
 
 ```sh
 scripts/include-recipes.sh "TODO.text"
@@ -432,7 +434,7 @@ scripts/include-recipes.sh "TODO.text" | sort
 Show the directories and files on the `stage` and `sysroot` directorys of some recipe (to identify packaging issues or violations).
 
 ```sh
-scripts/show-package.sh recipe-name
+scripts/show-package.sh recipe
 ```
 
 ### Recipe Commit Hash
@@ -440,7 +442,7 @@ scripts/show-package.sh recipe-name
 Show the current Git branch and commit of the recipe source.
 
 ```sh
-scripts/commit-hash.sh recipe-name
+scripts/commit-hash.sh recipe
 ```
 
 ### Package Size
@@ -448,7 +450,7 @@ scripts/commit-hash.sh recipe-name
 Show the package size of the recipes (`stage.pkgar` and `stage.tar.gz`), it must be used by package maintainers to enforce the [library linking size policy](https://gitlab.redox-os.org/redox-os/cookbook#library-linking).
 
 ```sh
-scripts/pkg-size.sh recipe-name
+scripts/pkg-size.sh recipe
 ```
 
 ### Recipe Location
@@ -456,7 +458,7 @@ scripts/pkg-size.sh recipe-name
 Show the location of the written recipe.
 
 ```sh
-scripts/recipe-path.sh recipe-name
+scripts/recipe-path.sh recipe
 ```
 
 ### Recipe Match
@@ -474,7 +476,7 @@ scripts/recipe-match.sh "text"
 Show the content of the recipe configuration.
 
 ```sh
-scripts/print-recipe.sh recipe-name
+scripts/print-recipe.sh recipe
 ```
 
 ### Recipe Executables
@@ -494,7 +496,7 @@ scripts/executables.sh
 Download the recipe source and run `cargo update`
 
 ```sh
-scripts/cargo-update.sh recipe-name
+scripts/cargo-update.sh recipe
 ```
 
 ### Dual Boot
