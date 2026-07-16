@@ -124,7 +124,7 @@ You need to know the above information because each software is different, the m
 
 - It's not recommended to use tarballs, version branches or pin Git revisions/commits in Rust applications waiting for Redox patches in their dependencies, to allow the recipe to receive the dependency updates that will fix the Redox support
 - Some Rust programs use CMake or Meson to find C/C++ libraries instead of `-sys` crates
-- If some Rust application with multiple Cargo packages don't declare the tooling or example packages (some applications and libraries use Cargo packages instead of Rust files for examples) in the `workspace.members` data type, you need to specify the package path in the `cargopath` using the `cargo` template
+- If some Rust application with multiple Cargo packages don't declare the tooling or example packages (some applications and libraries use Cargo packages instead of Rust files for examples, or exclude them with the `exclude` data type) in the `workspace.members` data type, you need to specify the package path in the `cargopath` using the `cargo` template
 
 ## Packaging Policy
 
@@ -381,6 +381,7 @@ A recipe template is the build system of the application or library supported by
 - `template = "configure"` - Build with GNU Autotools/GNU Make using cross-compilation and dynamic linking.
 - `template = "cmake"` - Build with CMake using cross-compilation and dynamic linking.
 - `template = "meson"` - Build with Meson using cross-compilation and dynamic linking.
+- `template = "python"` - Install a Python `pip` project and cross-compile/dynamic link C/C++ dependencies if they have recipes
 - `template = "remote"` - Download the remote Redox package of the recipe if available in the [package server](https://static.redox-os.org/pkg/)
 - `template = "custom"` - Run your commands on the `script =` field and build (Any build system or installation process).
 
@@ -390,7 +391,7 @@ The `script =` field runs any terminal command supported by GNU Bash, it's impor
 
 Each template (except `custom`) script supports build flags, you can add flags as an array of strings:
 
-- `cargoflags = "foo"`
+- `cargoflags = [ "foo" ]`
 - `configureflags = [ "foo" ]`
 - `cmakeflags = [ "foo" ]`
 - `mesonflags = [ "foo" ]`
@@ -401,10 +402,11 @@ To find the supported Cookbook Bash functions, look the recipes using a `script 
 
 #### Cases
 
-- applications using the Cargo build system have a `Cargo.toml` file
-- applications using the GNU Autotools build system have a `configure` or `autogen.sh` file in the source tarball
-- applications using the CMake build system have a `CMakeLists.txt` file
-- applications using the Meson build system have a `meson.build` file
+- Applications using the Cargo build system have a `Cargo.toml` file
+- Applications using the GNU Autotools build system have a `configure` or `autogen.sh` file in the source tarball
+- Applications using the CMake build system have a `CMakeLists.txt` file
+- Applications using the Meson build system have a `meson.build` file
+- Applications using the Python `pip` build system have a `pyproject.toml` file
 
 ### Meta-packages
 
@@ -422,6 +424,9 @@ dependencies = [
 
 The `custom` template enable the `build.script =` data type to be used, this data type will run any command supported by the [GNU Bash](https://www.gnu.org/software/bash/) shell. The shell script will be wrapped with Bash functions and variables to aid the build script. The wrapper can be found in [this Cookbook source file](https://gitlab.redox-os.org/redox-os/-/blob/master/src/bin/cook.rs).
 
+This template should be used if the template data types in the [Configuration Example](#configuration-example) section can't fully configure the application or library, like advanced configuration.
+
+The script examples below are the data type equivalents and also used to customize/expand their default configuration.
 
 - Script example
 
@@ -443,6 +448,7 @@ Each template has a Bash function to be used in the `script` data type when you 
 - `cookbook_configure` - Bash function of the `configure` template
 - `cookbook_cmake` - Bash function of the `cmake` template
 - `cookbook_meson` - Bash function of the `meson` template
+- `cookbook_python` - Bash function of the `python` template
 - `DYNAMIC_INIT` - Bash function to configure the recipe to be dynamically linked
 - `DYNAMIC_STATIC_INIT` - Bash function to configure the recipe to be both statically and dynamically linked (library recipe only)
 

@@ -8,6 +8,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [Why does Redox have unsafe Rust code?](#why-does-redox-have-unsafe-rust-code)
     - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
     - [Why does Redox do cross-compilation?](#why-does-redox-do-cross-compilation)
+    - [When relibc ABI breaks?](#when-relibc-abi-breaks)
     - [What are the CPU requirements of Redox?](#what-are-the-cpu-requirements-of-redox)
     - [How can I port a program?](#how-can-i-port-a-program)
     - [How can I write a driver?](#how-can-i-write-a-driver)
@@ -134,6 +135,19 @@ Read some of the reasons below:
 - Some developers prefer to develop from other operating systems like Linux, MacOS, FreeBSD or Windows, the same applies for Linux where some developers write code on MacOS and test their kernel builds in a virtual machine (mostly QEMU) or real hardware.
 
 (Interpreted applications and scripts don't need cross-compilation but the programming language's interpreter or possible compiled dependencies needs to be ported and cross-compiled to Redox)
+
+### When relibc ABI breaks?
+
+When dynamically linked (most cases) it breaks when:
+
+- A function is renamed
+- A function is removed
+- Any function with `extern C` have their arguments changed
+- The size or alignment of any struct is changed
+
+New functions don't break ABI but are backwards-incompatible (programs compiled to previous relibc API can't use them).
+
+When statically linked, the kernel ABI can't break.
 
 ### What are the CPU requirements of Redox?
 
