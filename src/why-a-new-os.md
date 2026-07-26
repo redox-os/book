@@ -62,17 +62,21 @@ The following items summarize the microkernel benefits:
 
   Since most system components are in userspace they can be restarted/updated on-the-fly, reducing the downtime of servers a lot.
 
-- Easy to develop and debug
+- Easier to develop and test
 
-  Most system components run in userspace, simplifying the testing and debugging.
+  As most system components are separated daemons in userspace and the kernel is small, they can be developed and tested independently before integration.
 
 - Easy and quick to expand
 
-  New system components and drivers are easily and quickly added as userspace daemons.
+  New drivers or system components can be easily and quickly added as userspace daemons using the scheme protocol.
 
 - True modularity
 
   You can enable/disable/update most system components without a system restart, similar to but safer than some modules on monolithic kernels and [livepatching](https://en.wikipedia.org/wiki/Kpatch).
+
+- Less maintenance cost
+
+Subsystems, system components and drivers can use different versions of the scheme protocol to stay working without source code modification after possible system API/ABI changes on updates
 
 You can read more about the above benefits on the [Microkernels](./microkernels.md) page.
 

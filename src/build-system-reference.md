@@ -120,6 +120,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 ### Build System
 
 - `make pull` - Update the source code of the build system without building.
+- `make cookbook` - Update Cookbook binaries with local changes (when `make pull` is not used)
 - `make all` - Builds the entire system, checking for changes and only building as required. Only use this for the first build. If the system was successfully built previously, this command may report `Nothing to be done for 'all'`, even if some recipes have changed. Use `make rebuild` instead.
 - `make rebuild` - Update all binaries from recipes with source code changes (it doesn't detect changes on the Redox toolchain). This should be your normal `make` target.
 - `make rebuild-push` - Similar to `make rebuild` but push updated recipes instead of a image rebuild, use this to preserve your changes on the Redox image after a full update (it will update downloaded packages if `REPO_BINARY` is enabled)

@@ -67,3 +67,7 @@ In Rust, this kind of bug is easy to avoid: the same type system that prevent us
 ### Rust-written Drivers
 
 Drivers written in Rust reduces the probability of bugs, which increases their stability and security.
+
+### Better code quality with much less effort
+
+The combination of more compiler verification and official testing (`cargo test`), linting (Clippy) and formatting (`cargo fmt`) tooling enabled/installed by default reduces the effort to improve code quality and testing coverage.

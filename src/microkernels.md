@@ -44,15 +44,21 @@ Modern monolithic kernels try to solve this issue using kernel modules but still
 
 In microkernels new system components and drivers can be easily added using daemons, while in monolithic kernels the entire kernel needs to be updated to add them which can introduce bugs to other system components or drivers.
 
-### Sane Debugging
+### Less Maintenance Cost
+
+In monolithic kernels many subsystems and drivers need to be updated after API changes, which increase the effort to improve and maintain the system if it has many subsystems or drivers and increases.
+
+While in microkernels the subsystems and drivers can use different protocol versions to keep backwards compatibility on API/ABI changes.
+
+### Better and Cheaper Debugging On Real Hardware
 
 In microkernels most kernel components (drivers, filesystems, etc) are moved to user-space, thus bugs on them can't crash the kernel (kernel panic).
 
-The "component panics" (where "component" is the name of the system component) are more common in microkernels than kernel panics because the kernel code size is very small, the log of a component panic can be saved which ease debugging a lot.
+The "system component panics" (where each system component has a separated panic log) are more common in microkernels than kernel panics because the kernel code size is very small. The log of a component panic can be saved without expensive dedicated hardware, which ease debugging.
 
-This is very important to debug in real hardware, because if a kernel panic happens the log can't be saved to find the cause of the bug.
+This is very important to debug in real hardware, because if a kernel panic happens the log can't be easily saved to help the search of the cause of the bug.
 
-While in monolithic kernels a bug in a system component or driver can cause a kernel panic and freeze the system (if it happens in real hardware, you can't debug without serial output support)
+While in monolithic kernels a bug in a system component or driver can cause a kernel panic and freeze the system (if it happens in real hardware you can't debug without serial output support, which is expensive)
 
 (Buggy drivers are the main cause of kernel panics)
 
