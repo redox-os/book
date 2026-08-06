@@ -33,13 +33,19 @@ This page covers all troubleshooting methods and tips for our build system.
 
 ## Notes
 
-This section contain details which apply to Redox problems on virtual machines and real hardware.
+This section contain details that apply to Redox problems on virtual machines and real hardware.
 
 ### General
 
-- If you aren't doing development and has a compilation or runtime problem be sure to verify if your build system/recipes sources and binaries are up-to-date or holding breaking changes, a build system update, single or complete recipe binary cleanup may fix your problems in most cases
+Problems in both virtual machines and real hardware.
+
+- If you aren't doing development and has a compilation or runtime problem be sure to verify if your build system/recipes sources and binaries are up-to-date or holding breaking changes. A build system update, single or complete recipe binary cleanup may fix your problems in most cases
 
 Read the [Debug Methods](#debug-methods) and [Boot](#boot) sections for more details.
+
+### Virtual Machine
+
+- CPU acceleration (Linux KVM or Windows Hyper-V) may hide or trigger bugs because accelerated and emulated CPU virtualization have different timings that may change bug behavior, disable/enable them to verify if the bug still happen or is easier to reproduce (you can use the `kvm=no` option to disable Linux KVM in Redox build system, for example: `make qemu kvm=no` )
 
 ### Real Hardware
 

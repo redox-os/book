@@ -81,7 +81,7 @@ This section contains quick important information for porting.
 
 ### Portability
 
-- If a application or library ha support for operating systems beyond Linux, it's considered portable (with some exceptions using system call translation or virtualization in the non-Linux ports). If you don't know if some application or library can be ported to Redox, check if a package for it exist in the [FreeBSD](https://github.com/freebsd/freebsd-ports), [OpenBSD](https://github.com/openbsd/ports), [NetBSD](https://www.pkgsrc.se/), and [Haiku](https://github.com/haikuports/haikuports) ports to have a reference, but it may give false-positives like the portable application or library is just not packaged to them or FreeBSD use its Linux compatiblity (Linuxlator) because it prefer the Linux codepath of a library or application. Read [this](./developer-faq.md#how-to-determine-if-some-program-is-portable-to-redox) question to learn more about this.
+- If a application or library have support for operating systems beyond Linux, it's considered portable (with some exceptions using system call translation or virtualization in the non-Linux ports). If you don't know if some application or library can be ported to Redox, check if a package for it exist in the [FreeBSD](https://github.com/freebsd/freebsd-ports), [OpenBSD](https://github.com/openbsd/ports), [NetBSD](https://www.pkgsrc.se/), and [Haiku](https://github.com/haikuports/haikuports) ports to have a reference, but it may give false-positives like the portable application or library is just not packaged to them or FreeBSD use its Linux compatiblity (Linuxlator) because it prefer the Linux codepath of a library or application. Read [this](./developer-faq.md#how-to-determine-if-some-program-is-portable-to-redox) question to learn more about this.
 
 - We recommend to use the FreeBSD or OpenBSD dependencies of the application if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy doesn't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
 
@@ -221,7 +221,7 @@ git = "repository-link" # source.git data type
 upstream = "repository-link" # source.upstream data type
 branch = "branch-name" # source.branch data type
 rev = "version-tag" # source.rev data type
-shallow_clone = true # source.shallow_clone data type
+shallow_clone = bool # source.shallow_clone data type
 tar = "tarball-link.tar.gz" # source.tar data type
 blake3 = "source-hash" # source.blake3 data type
 patches = [ # source.patches data type
@@ -235,6 +235,10 @@ insert your script here
 [build]
 template = "build-system" # build.template data type
 cargopath = "package-directory" # build.cargopath
+clearlocked = bool # build.clearlocked
+cargopackageprefixed = bool # build.cargopackageprefixed
+pyprojectpath = "directory" # build.pyprojectpath
+legacysetup = bool # build.legacysetup
 cargopackages = [ # build.cargopackages
     "package1",
     "package2",
@@ -245,8 +249,8 @@ cargoexamples = [ # build.cargoexamples
 ]
 cargoflags = ["--option-name"] # build.cargoflags data type
 configureflags = [ # build.configureflags data type
-    "OPTION1=value",
-    "OPTION2=value",
+    "--option1",
+    "--option2=value",
 ]
 cmakeflags = [ # build.cmakeflags data type
     "-DOPTION1=value",
@@ -255,6 +259,10 @@ cmakeflags = [ # build.cmakeflags data type
 mesonflags = [ # build.mesonflags data type
     "-Doption1=value",
     "-Doption2=value",
+]
+pipflags = [ # build.pipflags data type
+    "--option1",
+    "--option2=value",
 ]
 dev-dependencies = [ # build.dev-dependencies data type
     "host:tool1",
@@ -302,13 +310,18 @@ dependencies = [
 - `source.script` : Data type used when you need to change the build system configuration (to regenerate the GNU Autotools configuration, for example)
 - `[build]` : Section for data types that manage the application compilation and packaging
 - `build.template` : Insert the application build system, read the [Templates](#templates) section for more details.
-- `build.cargopath` : Data type for Cargo package directory path (when `Cargo.toml` is missing in repository/tarball root directory or when package is not declared in the root directory workspace)
+- `build.cargopath` : Data type to set Cargo package directory path (when `Cargo.toml` is missing in repository/tarball root directory or when package is not declared in the root directory workspace)
+- `build.pyprojectpath` : Data type to set Python `pip` project directory
+- `build.legacysetup` : TODO
+- `build.clearlocked` : Boolean data type to remove Cargo `--locked` option (insert `clearlocked = true`)
+- `build.cargopackageprefixed` : Boolean data type to use prefixed Cargo packages (insert `cargopackageprefixed = true`)
 - `build.cargopackages` : Data type for Cargo packages
 - `build.cargoexamples` : Data type for Cargo examples
 - `build.cargoflags` : Data type for Cargo flags (array)
 - `build.configureflags` : Data type for GNU Autotools flags (array)
 - `build.cmakeflags` : Data type for CMake flags (array)
 - `build.mesonflags` : Data type for Meson flags (array)
+- `build.pipflags` : Data type for Python `pip` flags (array)
 - `build.dev-dependencies` : Data type to add the build tools needed by the application or library
 - `build.dev-dependencies = ["host:tool1",]` : Build tool recipe name (can be removed if the `build.dev-dependencies` data type is not present)
 - `build.dependencies` : Data type to add dynamically or statically linked library dependencies, read the [Dependencies](#dependencies) section for more details.
@@ -381,7 +394,7 @@ A recipe template is the build system of the application or library supported by
 - `template = "configure"` - Build with GNU Autotools/GNU Make using cross-compilation and dynamic linking.
 - `template = "cmake"` - Build with CMake using cross-compilation and dynamic linking.
 - `template = "meson"` - Build with Meson using cross-compilation and dynamic linking.
-- `template = "python"` - Install a Python `pip` project and cross-compile/dynamic link C/C++ dependencies if they have recipes
+- `template = "python"` - Install a Python `pip` project or cross-compile/dynamic link C/C++ dependencies if they have recipes
 - `template = "remote"` - Download the remote Redox package of the recipe if available in the [package server](https://static.redox-os.org/pkg/)
 - `template = "custom"` - Run your commands on the `script =` field and build (Any build system or installation process).
 
@@ -395,6 +408,7 @@ Each template (except `custom`) script supports build flags, you can add flags a
 - `configureflags = [ "foo" ]`
 - `cmakeflags = [ "foo" ]`
 - `mesonflags = [ "foo" ]`
+- `pipflags = [ "foo" ]`
 
 To find the supported Cookbook Bash functions, look the recipes using a `script =` field on their `recipe.toml` or read the [source code](https://gitlab.redox-os.org/redox-os/redox/-/tree/master/src).
 

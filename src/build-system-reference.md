@@ -141,8 +141,9 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make distclean` - Clean all recipe sources, binaries, and packages (**please backup or submit your source changes before the execution of this command**).
 - `make find` - Show the recipe packages location
 - `make tree` - Show all recipe and package dependencies from the current filesystem configuration that will be built and pushed
-- `make repo-tree` - Show all recipe dependencies (`build.dependencies` data type) that will be built, also check what dependencies were built or not
-- `make image-tree` - Show the package dependencies (`package.dependencies` data type) that will be pushed into the Redox image
+- `make repo-list` - Show all recipes that will be built or installed to the Redox image
+- `make cook-list` - Show all recipes and their dependencies (`build.dependencies` data type) that will be built or installed to the Redox image, and check what recipe dependencies were built or not
+- `make push-list` - Show all package dependencies (`package.dependencies` data type) that will be installed to the Redox image
 - `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe`
 - `make push` - Only install recipes with new changes in an existing Redox image (it can still be used after `make c.--all` or `make u.--all` execution)
 - `make install` - Install the recipe binaries in the system for self-hosted development testing
@@ -162,9 +163,18 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
 ### Recipe
 
-(The `recipe` in `make x.recipe` is the recipe directory name)
+(The `recipe` part in `make x.recipe` is the recipe directory name)
+
+(Recipe target options use the `make x.--option-name` syntax, any recipe target (x) can be run in all previously used recipes (remembered at `cookbook.lock`) using the `--all` option, which has variants)
+
+- `make lc.recipe` (**use before doing local changes to a recipe source**) - Set the recipe rule to `local`, which does the following things:
+
+  - Disable automatic remote Git repository fetch to prevent the breakage of local changes and clean existing recipe binaries
+  - Automatically download sources if they don't exist
+  - Enable source compilation with pre-built dependencies when when `REPO_BINARY` is enabled
 
 - `make f.recipe` (abbreviation of `fetch`) - Download one or multiple recipe sources
+- `make f.--all-binaries` - Update all previously downloaded recipe packages
 - `make r.recipe` (abbreviation of `repo`) - Build one or multiple recipes, checking if the recipe source has changed, and creating the executable, etc. e.g. `make r.games` (you can't use this command to replace the `make all`, `make fstools` and `make prefix` commands because it don't trigger them, make sure to run them before to avoid errors)
 
   - Meta-packages need the `--with-package-deps` option, for example: `make r.meta-package,--with-package-deps`
@@ -173,39 +183,32 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
 - `make ri.recipe` - Build or rebuild and install the recipe to Redox
 - `make p.recipe` (abbreviation of `push`) - Install one or multiple recipe packages to an existing Redox image (it can still be used after `make c.recipe` or `make u.recipe` execution)
+- `make p.--all-compiled` - Install all compiled recipes to Redox image
 - `make i.recipe` (abbreviation of `install`) - Install a recipe to Redox for self-hosted development testing
 - `make bc.recipe` - Set the recipe rule to `binary` (pre-built package) and clean existing recipe binaries
-- `make bcr.recipe` - A shortcut for `make bc.recipe r.recipe`
-- `make bcrp.recipe` - A shortcut for `make bc.recipe rp.recipe`
 - `make sc.recipe` - Set the recipe rule to `source` (enable compilation) and clean existing recipe binaries
-- `make scr.recipe` - A shortcut for `make sc.recipe r.recipe`
-- `make scrp.recipe` - A shortcut for `make sc.recipe rp.recipe`
-- `make lc.recipe` - Set the recipe rule to `local`, which dies the following things:
-
-  - Disable automatic remote Git repository fetch to prevent the breakage of local changes and clean existing recipe binaries
-  - Automatically download sources if they don't exist
-  - Enable source compilation with pre-built dependencies when when `REPO_BINARY` is enabled
-
-- `make lcrp.recipe` - A shortcut for `make lc.recipe rp.recipe`
 - `make nc.recipe` - Set the recipe rule to `ignore` (disable installation on Redox image) and clean existing recipe binaries
 - `make cc.recipe` - Reset recipe rule to default (`source`) and clean existing recipe binaries
 - `make c.recipe` (abbreviation of `clean`) - Clean one or multiple recipe binaries, while preserving packages.
+- `make u.recipe` (abbreviation of `unfetch`) - Clean one or multiple recipe source code and binaries, while preserving packages (**please backup or submit your source changes before the execution of this command**)
+- `make u.--all` - Remove all previously downloaded source/binaries and preserve recipe packages
+- `make rt.recipe` (abbreviation of `repo-tree`) - Show the recipe dependencies that will be built, also check what dependencies were built or not
+- `make pt.recipe` (abbreviation of `push-tree`) - Show the package dependencies that will be pushed into the Redox image
+- `make rp.recipe` - A shortcut for `make r.recipe p.recipe`
+- `make rp.--all-binaries` - Install all downloaded recipe packages to Redox image
 - `make cr.recipe` - A shortcut for `make c.recipe r.recipe`
 - `make crp.recipe` - A shortcut for `make c.recipe r.recipe p.recipe`
 - `make cri.recipe` - A shortcut for `make c.recipe r.recipe i.recipe`
-- `make u.recipe` (abbreviation of `unfetch`) - Clean one or multiple recipe source code and binaries, while preserving packages (**please backup or submit your source changes before the execution of this command**).
 - `make uc.recipe` - A shortcut for `make u.recipe c.recipe`
-- `make ucr.recipe` - A shortcut for `make u.recipe c.recipe r.recipe`
+- `make ur.recipe` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**)
 - `make ucrp.recipe` - A shortcut for `make u.recipe c.recipe r.recipe p.recipe`
 - `make ucri.recipe` - A shortcut for `make u.recipe c.recipe r.recipe i.recipe`
 - `make ucf.recipe` - A shortcut for `make u.recipe c.recipe f.recipe`
-- `make rt.recipe` (abbreviation of `repo-tree`) - Show the recipe dependencies that will be built, also check what dependencies were built or not
-- `make pt.recipe` (abbreviation of `push-tree`) - Show the package dependencies that will be pushed into the Redox image
-- `make ur.recipe` - A shortcut for `make u.recipe r.recipe` (**please backup or submit your source changes before the execution of this command**).
-- `make rp.recipe` - A shortcut for `make r.recipe p.recipe`
-- `make x.--all` - Any recipe target (x) can be run in all previously used recipes (remembered at `cookbook.lock`)
-- `make f.--all-binaries` - Update all previously downloaded pre-built packages when `REPO_BINARY` is enabled
-- `make u.--all` - Remove all previously downloaded source and built binaries, when `REPO_BINARY` is enabled it only clean downloaded sources and preserve pre-built packages 
+- `make bcr.recipe` - A shortcut for `make bc.recipe r.recipe`
+- `make bcrp.recipe` - A shortcut for `make bc.recipe rp.recipe`
+- `make scr.recipe` - A shortcut for `make sc.recipe r.recipe`
+- `make scrp.recipe` - A shortcut for `make sc.recipe rp.recipe`
+- `make lcrp.recipe` - A shortcut for `make lc.recipe rp.recipe`
 - `make x.--category` - Run any recipe target (x) in all recipes
 - `make x.--category-directory-name` - Run any recipe target (x) in all recipes of some category directory at `recipes` (like `make u.--category-wip` which clean all recipe sources and binaries from the `wip` directory, for example), if you need to use a sub-category use `--category-directory-name/subdirectory`
 
