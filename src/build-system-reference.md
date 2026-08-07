@@ -170,7 +170,7 @@ You can combine `make` commands, but order is significant. For example, `make r.
 
   - Disable automatic remote Git repository fetch to prevent the breakage of local changes and clean existing recipe binaries
   - Automatically download sources if they don't exist
-  - Enable source compilation with pre-built dependencies when when `REPO_BINARY` is enabled
+  - Enable source compilation with pre-built dependencies when `REPO_BINARY` is enabled
 
 - `make f.recipe` (abbreviation of `fetch`) - Download one or multiple recipe sources
 - `make f.--all-binaries` - Update all previously downloaded recipe packages
