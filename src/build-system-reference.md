@@ -141,9 +141,8 @@ You can combine `make` commands, but order is significant. For example, `make r.
 - `make distclean` - Clean all recipe sources, binaries, and packages (**please backup or submit your source changes before the execution of this command**).
 - `make find` - Show the recipe packages location
 - `make tree` - Show all recipe and package dependencies from the current filesystem configuration that will be built and pushed
-- `make repo-list` - Show all recipes that will be built or installed to the Redox image
-- `make cook-list` - Show all recipes and their dependencies (`build.dependencies` data type) that will be built or installed to the Redox image, and check what recipe dependencies were built or not
-- `make push-list` - Show all package dependencies (`package.dependencies` data type) that will be installed to the Redox image
+- `make repo-tree` - Show all recipe dependencies (`build.dependencies` data type) that will be built, also check what dependencies were built or not
+- `make image-tree` - Show the package dependencies (`package.dependencies` data type) that will be pushed into the Redox image
 - `make image` - Builds a new QEMU image, `build/harddrive.img`, without checking if any recipes have changed. It can save you some time if you are just updating one recipe with `make r.recipe`
 - `make push` - Only install recipes with new changes in an existing Redox image (it can still be used after `make c.--all` or `make u.--all` execution)
 - `make install` - Install the recipe binaries in the system for self-hosted development testing
