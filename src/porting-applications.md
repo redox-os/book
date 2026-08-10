@@ -26,6 +26,7 @@ The [Including Applications in Redox](./including-programs.md) page gives an exa
     - [GNU Autotools script](#gnu-autotools-script)
     - [CMake script](#cmake-script)
     - [Meson script](#meson-script)
+    - [Python script](#python-script)
     - [Cargo script](#cargo-script)
     - [Analyze the source code of a Rust application](#analyze-the-source-code-of-a-rust-application)
     - [Cargo packages command example](#cargo-packages-command-example)
@@ -623,15 +624,18 @@ Use this script if the application or library build system uses the GNU Make com
 - Dynamically linked compilation without build options
 
 ```
+script = """
 rsync -av --delete "${COOKBOOK_SOURCE}/" ./
 DYNAMIC_INIT
 "${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}" \
 "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}/usr"
+"""
 ```
 
 - Dynamically linked compilation with build options
 
 ```
+script = """
 rsync -av --delete "${COOKBOOK_SOURCE}/" ./
 DYNAMIC_INIT
 MAKEFLAGS=(
@@ -639,11 +643,12 @@ MAKEFLAGS=(
 )
 "${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}" "${MAKEFLAGS[@]}" \
 "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}/usr"
+"""
 ```
 
 ### GNU Autotools script
 
-Use this script if the application or library needs to be compiled with custom options
+Use this script for applications and libraries using the GNU Autotools build system.
 
 - Dynamically linked compilation without build options
 
@@ -679,7 +684,7 @@ autotools_recursive_regenerate
 
 ### CMake script
 
-Use this script for applications using the CMake build system, more CMake options can be added with a `-D` before them, the customization of CMake compilation is very easy.
+Use this script for applications and libraries using the CMake build system, more CMake options can be added with a `-D` before them.
 
 - Dynamically linked compilation without build options
 
@@ -740,7 +745,7 @@ function cookbook_cmake {
 
 ### Meson script
 
-Use this script for applications using the Meson build system, more Meson options can be added with a `-D` before them, the customization of Meson compilation is very easy.
+Use this script for applications and libraries using the Meson build system, more Meson options can be added with a `-D` before them.
 
 Keep in mind that some applications and libraries need more configuration to work.
 
@@ -785,6 +790,19 @@ COOKBOOK_MESON_FLAGS+=(
     -Doption2=value
 )
 cookbook_meson "${COOKBOOK_SOURCE}"/subfolder
+"""
+```
+
+### Python script
+
+Use this script for applications and libraries using the `pip` project manager.
+
+- Dynamically linked compilation without build options
+
+```toml
+script = """
+DYNAMIC_INIT
+cookbook_python
 """
 ```
 
