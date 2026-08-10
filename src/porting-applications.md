@@ -21,8 +21,9 @@ The [Including Applications in Redox](./including-programs.md) page gives an exa
     - [Environment Variables](#environment-variables)
         - [Quick Template](#quick-template)
     - [Packaging Behavior](#packaging-behavior)
+    - [Dynamically Linked applications](#dynamically-linked-applications)
+    - [GNU Make script](#gnu-make-script)
     - [GNU Autotools script](#gnu-autotools-script)
-    - [GNU Autotools configuration script](#gnu-autotools-configuration-script)
     - [CMake script](#cmake-script)
     - [Meson script](#meson-script)
     - [Cargo script](#cargo-script)
@@ -42,7 +43,6 @@ The [Including Applications in Redox](./including-programs.md) page gives an exa
     - [Script-based applications](#script-based-applications)
         - [Adapted scripts](#adapted-scripts)
         - [Non-adapted scripts](#non-adapted-scripts)
-    - [Dynamically Linked applications](#dynamically-linked-applications)
         - [Debugging](#debugging)
 - [Sources](#sources)
     - [Tarballs](#tarballs)
@@ -99,6 +99,7 @@ This section contains quick important information for porting.
 - The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it can't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
 - The recipe support recursive dependencies, thus you don't need to specify a dependency two times if some dependency already provides it
 - Don't add build tools in the `build.dependencies` data type, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
+- The Arch Linux package dependency information page show the dependencies of all available package variants (feature sets) and not just the default feature set, which can be misleading. Check the package names and functions in the `PKGBUILD` file of the package to determine if it has dependencies from non-minimal and non-default feature sets
 
 ### Linking
 
@@ -543,11 +544,117 @@ You can see path examples for most customized recipes below:
 "${COOKBOOK_STAGE}"/etc # System-wide application static configuration files
 ```
 
+### Dynamically Linked Applications
+
+The `DYNAMIC_INIT` acts as a marker that indicates the recipe can be
+dynamically linked, it does the following things:
+
+- Automatically sets `LDFLAGS` and `RUSTFLAGS` based on the preferred linkage
+- Change GNU Autotools defaults to emit `*.so` files and do not create `*.a` files. For executables it setup the appropriate `rpath` link so `*.so` files can be discovered and linked.
+
+See the environment variables section under configuration settings for more information.
+
+In most cases if you want to use dynamic linking for a recipe just prepend
+`DYNAMIC_INIT` in the recipe script. Depending on the recipe,
+this *should* suffice. However, sometimes you *may* need to regenerate the GNU Autotools configuration,
+which you can do by invoking the `autotools_recursive_regenerate` helper function (See the examples below).
+This is to make sure the build system uses our `libtool` fork. In other cases, more
+recipe-specific modification may be required.
+
+#### Example
+
+```diff
+# <...snip...>
+
+[build]
+template = "custom"
+script = """
++DYNAMIC_INIT
+cookbook_configure
+"""
+```
+
+```diff
+# <...snip...>
+[source]
++script = """
++autotools_recursive_regenerate
++"""
+
+[build]
+template = "custom"
+script = """
++DYNAMIC_INIT
++cookbook_configure
+"""
+```
+
+Dynamically linked applications depend on shared libraries at runtime. To
+include these libraries, you must add them in the `build.dependencies` data type.
+
+#### Example
+
+```toml
+# <...snip...>
+
+[build]
+dependencies = [
+    "libmpc",
+    "libgmp",
+]
+```
+
+### Troubleshooting
+
+- Why is the dynamic linker (`ld.so`) not finding my library?
+
+Set `LD_DEBUG=all` and re-run the application. It will show you where library objects are
+being found and loaded, as well as the library search paths. You probably
+forgot to add a library in the `build.dependencies` list. You can also use
+`patchelf` on your host or on Redox to display all `DT_NEEDED` entries of an
+object (`patchelf --print-needed <path>`). It is available by default in the
+`desktop` variant.
+
+
+### GNU Make script
+
+Use this script if the application or library build system uses the GNU Make command runner.
+
+- Dynamically linked compilation without build options
+
+```
+rsync -av --delete "${COOKBOOK_SOURCE}/" ./
+DYNAMIC_INIT
+"${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}" \
+"${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}/usr"
+```
+
+- Dynamically linked compilation with build options
+
+```
+rsync -av --delete "${COOKBOOK_SOURCE}/" ./
+DYNAMIC_INIT
+MAKEFLAGS=(
+    OPTION=value
+)
+"${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}" "${MAKEFLAGS[@]}" \
+"${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}/usr"
+```
+
 ### GNU Autotools script
 
 Use this script if the application or library needs to be compiled with custom options
 
-- Configure with dynamic linking
+- Dynamically linked compilation without build options
+
+```toml
+script = """
+DYNAMIC_INIT
+cookbook_configure
+"""
+```
+
+- Dynamically linked compilation with build options
 
 ```toml
 script = """
@@ -559,34 +666,6 @@ COOKBOOK_CONFIGURE_FLAGS+=(
 cookbook_configure
 """
 ```
-
-- GNU Make without Configure
-
-```toml
-script = """
-DYNAMIC_INIT
-COOKBOOK_CONFIGURE_FLAGS+=(
-    --option1
-    --option2
-)
-COOKBOOK_CONFIGURE="true"
-
-rsync -av --delete "${COOKBOOK_SOURCE}/" ./
-cookbook_configure
-"""
-```
-
-Definition of `cookbook_configure` is roughly:
-
-```sh
-function cookbook_configure {
-    "${COOKBOOK_CONFIGURE}" "${COOKBOOK_CONFIGURE_FLAGS[@]}" "$@"
-    "${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}"
-    "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}"
-}
-```
-
-### GNU Autotools configuration script
 
 Sometimes the application tarball or repository is lacking the `configure` script or it needs to be recreated for dynamic linking, so you will need to generate this script.
 
@@ -602,7 +681,25 @@ autotools_recursive_regenerate
 
 Use this script for applications using the CMake build system, more CMake options can be added with a `-D` before them, the customization of CMake compilation is very easy.
 
-- CMake using dynamic linking
+- Dynamically linked compilation without build options
+
+```toml
+script = """
+DYNAMIC_INIT
+cookbook_cmake
+"""
+```
+
+Or inside a subfolder:
+
+```toml
+script = """
+DYNAMIC_INIT
+cookbook_cmake "${COOKBOOK_SOURCE}"/subfolder
+"""
+```
+
+- Dynamically linked compilation with build options
 
 ```toml
 script = """
@@ -615,7 +712,7 @@ cookbook_cmake
 """
 ```
 
-- CMake inside a subfolder
+Or inside a subfolder:
 
 ```toml
 script = """
@@ -641,14 +738,31 @@ function cookbook_cmake {
 }
 ```
 
-
 ### Meson script
 
 Use this script for applications using the Meson build system, more Meson options can be added with a `-D` before them, the customization of Meson compilation is very easy.
 
 Keep in mind that some applications and libraries need more configuration to work.
 
-- Meson using dynamic linking
+- Dynamically linked compilation without build options
+
+```toml
+script = """
+DYNAMIC_INIT
+cookbook_meson
+"""
+```
+
+Or inside a subfolder:
+
+```toml
+script = """
+DYNAMIC_INIT
+cookbook_meson "${COOKBOOK_SOURCE}"/subfolder
+"""
+```
+
+- Dynamically linked compilation with build options
 
 ```toml
 script = """
@@ -661,7 +775,7 @@ cookbook_meson
 """
 ```
 
-- Meson inside a subfolder
+Or inside a subfolder:
 
 ```toml
 script = """
@@ -676,19 +790,7 @@ cookbook_meson "${COOKBOOK_SOURCE}"/subfolder
 
 ### Cargo script
 
-Use this script if you need to customize the `cookbook_cargo` function.
-
-```toml
-script = """
-DYNAMIC_INIT
-COOKBOOK_CARGO_FLAGS=(
-    --bin foo
-)
-PACKAGE_PATH="subfolder" cookbook_cargo "${COOKBOOK_CARGO_FLAGS[@]}"
-"""
-```
-
-If the project is roughly a simple Cargo project then `cookbook_cargo` is all that you need.
+- Dynamically linked compilation without build options
 
 ```toml
 script = """
@@ -697,6 +799,17 @@ cookbook_cargo
 """
 ```
 
+- Dynamically linked compilation with build options
+
+```toml
+script = """
+DYNAMIC_INIT
+COOKBOOK_CARGO_FLAGS=(
+    --option=value
+)
+cookbook_cargo "${COOKBOOK_CARGO_FLAGS[@]}"
+"""
+```
 
 ### Analyze the source code of a Rust application
 
@@ -743,6 +856,16 @@ cookbook_cargo_packages application-name
 ```
 
 (You can use `cookbook_cargo_packages application1 application2` if it's more than one package)
+
+Or (if you can't use `cookbook_cargo_packages` and need to manually specify the package path)
+
+```toml
+script = """
+PACKAGE_PATH="subfolder"
+DYNAMIC_INIT
+cookbook_cargo
+"""
+```
 
 #### Cargo package with flags
 
@@ -1013,77 +1136,6 @@ The `sed -i '1 i\#!/usr/bin/env python3' "${COOKBOOK_STAGE}"/usr/bin/script-name
 `python3` is the script interpreter in this case, use `bash` or `lua` or whatever interpreter is appropriate for your case.
 
 There are many combinations for these script examples: you can download scripts without the `[source]` section, make customized installations, etc.
-
-### Dynamically Linked Applications
-
-The `DYNAMIC_INIT` acts as a marker that indicates the recipe can be
-dynamically linked, it does the following things:
-
-- Automatically sets `LDFLAGS` and `RUSTFLAGS` based on the preferred linkage
-- Change GNU Autotools defaults to emit `*.so` files and do not create `*.a` files. For executables it setup the appropriate `rpath` link so `*.so` files can be discovered and linked.
-
-See the environment variables section under configuration settings for more information.
-
-In most cases if you want to use dynamic linking for a recipe just prepend
-`DYNAMIC_INIT` in the recipe script. Depending on the recipe,
-this *should* suffice. However, sometimes you *may* need to regenerate the GNU Autotools configuration,
-which you can do by invoking the `autotools_recursive_regenerate` helper function (See the examples below).
-This is to make sure the build system uses our `libtool` fork. In other cases, more
-recipe-specific modification may be required.
-
-#### Example
-
-```diff
-# <...snip...>
-
-[build]
-template = "custom"
-script = """
-+DYNAMIC_INIT
-cookbook_configure
-"""
-```
-
-```diff
-# <...snip...>
-[source]
-+script = """
-+autotools_recursive_regenerate
-+"""
-
-[build]
-template = "custom"
-script = """
-+DYNAMIC_INIT
-+cookbook_configure
-"""
-```
-
-Dynamically linked applications depend on shared libraries at runtime. To
-include these libraries, you must add them in the `build.dependencies` data type.
-
-#### Example
-
-```toml
-# <...snip...>
-
-[build]
-dependencies = [
-    "libmpc",
-    "libgmp",
-]
-```
-
-### Troubleshooting
-
-- Why is the dynamic linker (`ld.so`) not finding my library?
-
-Set `LD_DEBUG=all` and re-run the application. It will show you where library objects are
-being found and loaded, as well as the library search paths. You probably
-forgot to add a library in the `build.dependencies` list. You can also use
-`patchelf` on your host or on Redox to display all `DT_NEEDED` entries of an
-object (`patchelf --print-needed <path>`). It is available by default in the
-`desktop` variant.
 
 ## Sources
 
