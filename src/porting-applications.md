@@ -623,7 +623,7 @@ Use this script if the application or library build system uses the GNU Make com
 
 - Dynamically linked compilation without build options
 
-```
+```toml
 script = """
 rsync -av --delete "${COOKBOOK_SOURCE}/" ./
 DYNAMIC_INIT
@@ -634,7 +634,7 @@ DYNAMIC_INIT
 
 - Dynamically linked compilation with build options
 
-```
+```toml
 script = """
 rsync -av --delete "${COOKBOOK_SOURCE}/" ./
 DYNAMIC_INIT
