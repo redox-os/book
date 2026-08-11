@@ -238,7 +238,7 @@ insert your script here
 template = "build-system" # build.template data type
 cargopath = "package-directory" # build.cargopath
 clearlocked = bool # build.clearlocked
-cargopackageprefixed = bool # build.cargopackageprefixed
+cargopackagesprefixed = bool # build.cargopackagesprefixed
 pyprojectpath = "directory" # build.pyprojectpath
 legacysetup = bool # build.legacysetup
 cargopackages = [ # build.cargopackages
@@ -316,7 +316,7 @@ dependencies = [
 - `build.pyprojectpath` : Data type to set Python `pip` project directory
 - `build.legacysetup` : TODO
 - `build.clearlocked` : Boolean data type to remove Cargo `--locked` option (insert `clearlocked = true`)
-- `build.cargopackageprefixed` : Boolean data type to use prefixed Cargo packages (insert `cargopackageprefixed = true`)
+- `build.cargopackagesprefixed` : Boolean data type to use executables of Cargo packages prefixed with recipe name for easy search (insert `cargopackagesprefixed = true`)
 - `build.cargopackages` : Data type for Cargo packages
 - `build.cargoexamples` : Data type for Cargo examples
 - `build.cargoflags` : Data type for Cargo flags (array)
