@@ -8,6 +8,7 @@ The [General FAQ](https://www.redox-os.org/faq/) have questions and answers of/f
     - [Why does Redox have unsafe Rust code?](#why-does-redox-have-unsafe-rust-code)
     - [Why does Redox have Assembly code?](#why-does-redox-have-assembly-code)
     - [Why does Redox do cross-compilation?](#why-does-redox-do-cross-compilation)
+    - [Why Redox prefer to port software from source instead of binary compatibility](#why-redox-prefer-to-port-software-from-source-instead-of-binary-compatibility)
     - [When relibc ABI breaks?](#when-relibc-abi-breaks)
     - [What are the CPU requirements of Redox?](#what-are-the-cpu-requirements-of-redox)
     - [How can I port a program?](#how-can-i-port-a-program)
@@ -135,6 +136,24 @@ Read some of the reasons below:
 - Some developers prefer to develop from other operating systems like Linux, MacOS, FreeBSD or Windows, the same applies for Linux where some developers write code on MacOS and test their kernel builds in a virtual machine (mostly QEMU) or real hardware.
 
 (Interpreted applications and scripts don't need cross-compilation but the programming language's interpreter or possible compiled dependencies needs to be ported and cross-compiled to Redox)
+
+### Why Redox prefer to port software from source instead of binary compatibility
+
+Ports using POSIX/Linux source compatibility require much less effort, are easier and have less maintenace cost than BSD or Linux binary compatibility. Which force the API complexity and feature sets.
+
+This decision allow us to:
+
+- Keep the system more simple and improve faster, greatly reducing possible bugs
+- Easily improve system API by not relaying on the behavior of GNU POSIX/C Standard Library (glibc) APIs
+- Improve the reliability and security of programs when possible
+- Greatly reduce porting effort by not needing to support a big feature set
+- Greatly reduce maintenance cost
+- Avoid GNU POSIX/C Standard Library complexity
+- Avoid Linux kernel code that can't work
+
+Read [this](https://www.redox-os.org/news/porting-strategy/) post for more details about this decision.
+
+We plan to port (when possible) the best and widely used FOSS programs present in Linux and BSD distributions or virtualization to not need binary compatibility.
 
 ### When relibc ABI breaks?
 
