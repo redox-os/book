@@ -39,7 +39,7 @@ The [Including Applications in Redox](./including-programs.md) page gives an exa
     - [Cargo examples command example](#cargo-examples-command-example)
         - [Cargo examples with flags](#cargo-examples-with-flags)
     - [Rename binaries](#rename-binaries)
-    - [Change the active source code folder](#change-the-active-source-code-folder)
+    - [Change the active source code directory](#change-the-active-source-code-directory)
     - [Configuration files](#configuration-files)
     - [Script-based applications](#script-based-applications)
         - [Adapted scripts](#adapted-scripts)
@@ -97,7 +97,7 @@ This section contains quick important information for porting.
 ### Dependencies
 
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies, they also separate build tooling from library dependencies in packaging naming
-- The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it can't read the `/usr/lib` and `/include` folders because the Linux library objects don't work on Redox.
+- The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it can't read the `/usr/lib` and `/include` directorys because the Linux library objects don't work on Redox.
 - The recipe support recursive dependencies, thus you don't need to specify a dependency two times if some dependency already provides it
 - Don't add build tools in the `build.dependencies` data type, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
 - The Arch Linux package dependency information page show the dependencies of all available package variants (feature sets) and not just the default feature set, which can be misleading. Check the package names and functions in the `PKGBUILD` file of the package to determine if it has dependencies from non-minimal and non-default feature sets
@@ -106,7 +106,7 @@ This section contains quick important information for porting.
 
 - If you are using dynamic linking and the `custom` recipe template, the `DYNAMIC_INIT` command need to be added in the first line of the `script` data type
 - The compiler can build recipe dependency libraries as `.so` files (objects for dynamic linking) or `.a` files (objects for static linking): The `.so` files will be installed out of the binary (stored on the `/lib` directory of the system) while the `.a` files will be mixed in the final binary.
-- Linux distributions add a number after the `.so` files to avoid conflicts in the `/usr/lib` folder when applications use different API versions of the same library, for example: `library-name.so.6`
+- Linux distributions add a number after the `.so` files to avoid conflicts in the `/usr/lib` directory when applications use different API versions of the same library, for example: `library-name.so.6`
 
 ### Build Instructions
 
@@ -175,7 +175,7 @@ Work-in-progress software ports goes to the `wip` category, be aware of the foll
 - All WIP recipes must have a `#TODO:` on the beginning of the `recipe.toml` and explain what is missing.
 - BLAKE3 hashes for tarballs are optional in the `wip` category (quick testing workflow)
 - Try to keep the recipe with the latest stable version of the application, but not if the latest stable version is too recent (the porting process can take months).
-- Once the recipe is ready, add the BLAKE3 hash if needed and move the folder to the appropriate category.
+- Once the recipe is ready, add the BLAKE3 hash if needed and move the directory to the appropriate category.
 
 ### Suggestions for TODOs
 
@@ -195,7 +195,7 @@ Other TODOs are specific and won't be covered on this list.
 
 A recipe is how we call a software port on Redox, this section explains the recipe configuration and details to consider.
 
-Create a folder at `recipes/application-category` with a file named as `recipe.toml` inside, we will modify this file to fit the application's needs.
+Create a directory at `recipes/application-category` with a file named as `recipe.toml` inside, we will modify this file to fit the application's needs.
 
 - Recipe creation from terminal with GNU Nano:
 
@@ -298,7 +298,7 @@ dependencies = [
 
 ## Sections and Data Types
 
-- `[source]` : Section for data types that manage the application source (only remove it if you have a `source` folder)
+- `[source]` : Section for data types that manage the application source (only remove it if you have a `source` directory)
 - `source.git` : Git repository of the application (can be removed if a Git repository is not used), you can comment out it to not allow Cookbook to force a `git pull` or change the active branch to `master` or `main`. Read the [Git Repositories](#git-repositories) section for more details.
 - `source.upstream` : If you are using a fork of the application source with patches add the application upstream source here (can be removed if the upstream source is being used on the `git` data type)
 - `source.branch` : application version Git branch or patched Git branch (can be removed if using a tarball or the `master` or `main` Git branches are being used)
@@ -308,7 +308,7 @@ dependencies = [
 - `source.blake3` : application source tarball BLAKE3 hash, can be generated using the `b3sum` tool, install with the `cargo install b3sum` command (can be removed if using a Git repository or under porting)
 - `source.patches` : Data type to load `.patch` files (can be removed if patch files aren't used)
 - `"patch1.patch",` : The patch file name (can be removed if the `patches` data type above is not present)
-- `source.same_as` : Insert the folder of other recipe to make a symbolic link to the `source` folder of other recipe, useful if you want modularity with synchronization
+- `source.same_as` : Insert the directory of other recipe to make a symbolic link to the `source` directory of other recipe, useful if you want modularity with synchronization
 - `source.script` : Data type used when you need to change the build system configuration (to regenerate the GNU Autotools configuration, for example)
 - `[build]` : Section for data types that manage the application compilation and packaging
 - `build.template` : Insert the application build system, read the [Templates](#templates) section for more details.
@@ -454,7 +454,7 @@ second-command
 """
 ```
 
-The script section starts at the location of the `${COOKBOOK_BUILD}` environment variable (`recipe-name/target/$TARGET/build`). This `${COOKBOOK_BUILD}` will be an empty folder, while recipe sources are in `${COOKBOOK_SOURCE}`. It is expected that the build script will not modify anything in `${COOKBOOK_SOURCE}`, otherwise, please use the `source.script = ` data type.
+The script section starts at the location of the `${COOKBOOK_BUILD}` environment variable (`recipe-name/target/$TARGET/build`). This `${COOKBOOK_BUILD}` will be an empty directory, while recipe sources are in `${COOKBOOK_SOURCE}`. It is expected that the build script will not modify anything in `${COOKBOOK_SOURCE}`, otherwise, please use the `source.script = ` data type.
 
 ### Functions
 
@@ -475,12 +475,12 @@ These variables available in the script:
 - `${TARGET}` - Redox compiler triple target (`$ARCH-unknown-redox`)
 - `${GNU_TARGET}` - Redox compiler triple target (GNU variant)
 - `${COOKBOOK_MAKE_JOBS}` - Total CPU threads available
-- `${COOKBOOK_RECIPE}` - Recipe folder.
+- `${COOKBOOK_RECIPE}` - Recipe directory.
 - `${COOKBOOK_ROOT}` - The Cookbook directory.
-- `${COOKBOOK_SOURCE}` - The `source` folder at `recipe-name/source` (application source).
-- `${COOKBOOK_SYSROOT}` - The `sysroot` folder at `recipe-name/target/$TARGET/sysroot` (library sources).
-- `${COOKBOOK_BUILD}` - The `build` folder at `recipe-name/target/$TARGET/build` (recipe build system).
-- `${COOKBOOK_STAGE}` - The `stage` folder at `recipe-name/target/$TARGET/stage` (recipe binaries).
+- `${COOKBOOK_SOURCE}` - The `source` directory at `recipe-name/source` (application source).
+- `${COOKBOOK_SYSROOT}` - The `sysroot` directory at `recipe-name/target/$TARGET/sysroot` (library sources).
+- `${COOKBOOK_BUILD}` - The `build` directory at `recipe-name/target/$TARGET/build` (recipe build system).
+- `${COOKBOOK_STAGE}` - The `stage` directory at `recipe-name/target/$TARGET/stage` (recipe binaries).
 
 - For RISC-V, `${TARGET}` and `${GNU_TARGET}` is `riscv64gc-unknown-redox` and `riscv64-unknown-redox`, usually you want `${TARGET}` unless the script requires a GNU target triple.
 - To get `$ARCH`, you need to add `ARCH="${TARGET%%-*}"` to the beginning of the script.
@@ -495,14 +495,14 @@ Example:
 "${VARIABLE_NAME}"
 ```
 
-If you have a folder inside the variable folder you can call it with:
+If you have a directory inside the variable directory you can call it with:
 
 ```sh
-"${VARIABLE_NAME}"/folder-name
+"${VARIABLE_NAME}"/directory-name
 ```
 Or
 ```sh
-"${VARIABLE_NAME}/folder-name"
+"${VARIABLE_NAME}/directory-name"
 ```
 
 #### Quick Template
@@ -527,9 +527,9 @@ You can quickly copy these environment variables from this section.
 
 ### Packaging Behavior
 
-Cookbook downloads the recipe sources on the `source` folder (`recipe-name/source`), copies the contents of this folder to the `build` folder (`recipe-name/target/$TARGET/build`), builds the sources and moves the binaries to the `stage` folder (`recipe-name/target/$TARGET/stage`).
+Cookbook downloads the recipe sources on the `source` directory (`recipe-name/source`), copies the contents of this directory to the `build` directory (`recipe-name/target/$TARGET/build`), builds the sources and moves the binaries to the `stage` directory (`recipe-name/target/$TARGET/stage`).
 
-If your recipe has library dependencies, it will copy the library source and linker objects to the `sysroot` folder to be used by the `build` folder.
+If your recipe has library dependencies, it will copy the library source and linker objects to the `sysroot` directory to be used by the `build` directory.
 
 - Moving the application files to the Redox filesystem
 
@@ -695,12 +695,12 @@ cookbook_cmake
 """
 ```
 
-Or inside a subfolder:
+Or inside a subdirectory:
 
 ```toml
 script = """
 DYNAMIC_INIT
-cookbook_cmake "${COOKBOOK_SOURCE}"/subfolder
+cookbook_cmake "${COOKBOOK_SOURCE}"/subdirectory
 """
 ```
 
@@ -717,7 +717,7 @@ cookbook_cmake
 """
 ```
 
-Or inside a subfolder:
+Or inside a subdirectory:
 
 ```toml
 script = """
@@ -726,7 +726,7 @@ COOKBOOK_CMAKE_FLAGS+=(
     -DOPTION1=value
     -DOPTION2=value
 )
-cookbook_cmake "${COOKBOOK_SOURCE}"/subfolder
+cookbook_cmake "${COOKBOOK_SOURCE}"/subdirectory
 """
 ```
 
@@ -758,12 +758,12 @@ cookbook_meson
 """
 ```
 
-Or inside a subfolder:
+Or inside a subdirectory:
 
 ```toml
 script = """
 DYNAMIC_INIT
-cookbook_meson "${COOKBOOK_SOURCE}"/subfolder
+cookbook_meson "${COOKBOOK_SOURCE}"/subdirectory
 """
 ```
 
@@ -780,7 +780,7 @@ cookbook_meson
 """
 ```
 
-Or inside a subfolder:
+Or inside a subdirectory:
 
 ```toml
 script = """
@@ -789,7 +789,7 @@ COOKBOOK_MESON_FLAGS+=(
     -Doption1=value
     -Doption2=value
 )
-cookbook_meson "${COOKBOOK_SOURCE}"/subfolder
+cookbook_meson "${COOKBOOK_SOURCE}"/subdirectory
 """
 ```
 
@@ -837,7 +837,7 @@ While packaging Rust applications you need to know where the main executable is 
 
 A Rust application can have one or more Cargo packages to build, read the common assumptions below:
 
-- Most Rust applications with a `src` folder use one Cargo package, thus you can use the `cargo` template.
+- Most Rust applications with a `src` directory use one Cargo package, thus you can use the `cargo` template.
 - Most Rust applications with multiple Cargo packages name the main package with the name of the application.
 
 Beyond these common source code organization, there are special cases.
@@ -853,16 +853,16 @@ name = "library-object-name"
 
 The `[[bin]]` is what you need, the application executable is built by this Cargo package.
 
-But some applications don't have the `[[bin]]` and `[[lib]]` data types, for these cases you need to see the source code files, in most cases at the `src` folder.
+But some applications don't have the `[[bin]]` and `[[lib]]` data types, for these cases you need to see the source code files, in most cases at the `src` directory.
 
 - The file named `main.rs` contains the application executable code.
 - The file named `lib.rs` contains the library object code (ignore it).
 
-(Some Rust applications use packages instead of example files for examples, to discover that see if the "examples" folder has `.rs` files (examples files) or folders with `Cargo.toml` files inside (packages) )
+(Some Rust applications use packages instead of example files for examples, to discover that see if the "examples" directory has `.rs` files (examples files) or directorys with `Cargo.toml` files inside (packages) )
 
 ### Cargo packages command example
 
-This command is used for Rust applications that use package folders inside the repository for compilation, you need to use the name on the `name` field below the `[package]` section of the `Cargo.toml` file inside the package folder (generally using the same name of the application).
+This command is used for Rust applications that use package directorys inside the repository for compilation, you need to use the name on the `name` field below the `[package]` section of the `Cargo.toml` file inside the package directory (generally using the same name of the application).
 
 (This will fix the "found virtual manifest instead of package manifest" error)
 
@@ -879,7 +879,7 @@ Or (if you can't use `cookbook_cargo_packages` and need to manually specify the 
 
 ```toml
 script = """
-PACKAGE_PATH="subfolder"
+PACKAGE_PATH="subdirectory"
 DYNAMIC_INIT
 cookbook_cargo
 """
@@ -1025,14 +1025,14 @@ mv "${COOKBOOK_STAGE}/usr/bin/binary-name" "${COOKBOOK_STAGE}/usr/bin/new-binary
 
 Some recipes for Rust applications can duplicate the application name in the executable (`name_name`), you can also use the command above to fix these cases.
 
-### Change the active source code folder
+### Change the active source code directory
 
-Sometimes a application don't store the source code on the root of the Git repository, but in a subfolder.
+Sometimes a application don't store the source code on the root of the Git repository, but in a subdirectory.
 
 For these cases you need to change the directory of the `${COOKBOOK_SOURCE}` environment variable in the beginning of the `build.script` data type, to do this add the following command on your recipe script:
 
 ```sh
-COOKBOOK_SOURCE="${COOKBOOK_SOURCE}/subfolder-name"
+COOKBOOK_SOURCE="${COOKBOOK_SOURCE}/subdirectory-name"
 ```
 
 - An example for a Rust application:
@@ -1040,7 +1040,7 @@ COOKBOOK_SOURCE="${COOKBOOK_SOURCE}/subfolder-name"
 ```toml
 script = """
 DYNAMIC_INIT
-COOKBOOK_SOURCE="${COOKBOOK_SOURCE}/subfolder-name"
+COOKBOOK_SOURCE="${COOKBOOK_SOURCE}/subdirectory-name"
 cookbook_cargo
 """
 ```
@@ -1055,7 +1055,7 @@ template = "custom"
 script = """
 DYNAMIC_INIT
 cookbook build system function or custom build system commands
-mkdir -pv "${COOKBOOK_STAGE}"/usr/share # create the /usr/share folder inside the package
+mkdir -pv "${COOKBOOK_STAGE}"/usr/share # create the /usr/share directory inside the package
 cp -rv "${COOKBOOK_SOURCE}"/configuration-file "${COOKBOOK_STAGE}"/usr/share # copy the configuration file from the application source code to the package
 """
 ```
@@ -1082,7 +1082,7 @@ chmod a+x "${COOKBOOK_STAGE}"/usr/bin/script-name
 """
 ```
 
-This script will move the script from the `source` folder to the `stage` folder and mark it as executable to be packaged.
+This script will move the script from the `source` directory to the `stage` directory and mark it as executable to be packaged.
 
 (Probably you need to mark it as executable, we don't know if all scripts carry executable permission)
 
@@ -1096,7 +1096,7 @@ chmod a+x "${COOKBOOK_STAGE}"/usr/bin/*
 """
 ```
 
-This script will move the scripts from the `source` folder to the `stage` folder and mark them as executable to be packaged.
+This script will move the scripts from the `source` directory to the `stage` directory and mark them as executable to be packaged.
 
 #### Non-adapted scripts
 
@@ -1277,7 +1277,7 @@ Most applications using CMake will try to detect the system libraries on the bui
 
 The "system libraries" on this case is the recipes specified on the `build.dependencies = []` section of your `recipe.toml`.
 
-To determine if you need to use a Redox recipe as dependency check if you find a `.patch` file on the recipe folder or if the `recipe.toml` has a `git =` field pointing to the Redox GitLab, if not you can probably use the bundled libraries without problems.
+To determine if you need to use a Redox recipe as dependency check if you find a `.patch` file on the recipe directory or if the `recipe.toml` has a `git =` field pointing to the Redox GitLab, if not you can probably use the bundled libraries without problems.
 
 Generally applications with CMake use a `-DUSE_SYSTEM` flag to enable the "system libraries" behavior.
 
@@ -1285,7 +1285,7 @@ Generally applications with CMake use a `-DUSE_SYSTEM` flag to enable the "syste
 
 Sometimes specify the library recipe on the `dependencies = []` section is not enough, some build systems have environment variables to receive a custom path for external libraries.
 
-When you add a library on your `recipe.toml` the Cookbook will copy the library source code to the `sysroot` folder at `recipes/your-category/recipe-name/target/$TARGET`, this folder has an environment variable that can be used inside the `script =` field on your `recipe.toml`.
+When you add a library on your `recipe.toml` the Cookbook will copy the library source code to the `sysroot` directory at `recipes/your-category/recipe-name/target/$TARGET`, this directory has an environment variable that can be used inside the `script =` field on your `recipe.toml`.
 
 Example:
 
@@ -1296,7 +1296,7 @@ cookbook_cargo
 """
 ```
 
-The `export` will activate the `OPENSSL_DIR` variable in the environment, this variable is implemented by the application build system. It's a way to specify the custom OpenSSL path to the application's build system, as you can see, when the `openssl` recipe is added to the `dependencies = []` section its sources go to the `sysroot` folder.
+The `export` will activate the `OPENSSL_DIR` variable in the environment, this variable is implemented by the application build system. It's a way to specify the custom OpenSSL path to the application's build system, as you can see, when the `openssl` recipe is added to the `dependencies = []` section its sources go to the `sysroot` directory.
 
 Now the application build system is satisfied with the OpenSSL sources, the `cookbook_cargo` function calls Cargo to build it.
 
@@ -1317,7 +1317,7 @@ On this example the `-DOPENSSL_ROOT_DIR` option will have the custom OpenSSL pat
 
 In some applications or libraries you can't use tarballs because they don't carry the necessary Git submodules of the application (most common in GitHub generated tarballs), on these cases you will need to use the Git repository or the commit of the last stable release (Cookbook download the submodules automatically).
 
-To identify if the application uses Git submodules, check if it has external folders to other repositories (they appear with a commit hash on the right side) or the existence of a `.gitmodules` file.
+To identify if the application uses Git submodules, check if it has external directorys to other repositories (they appear with a commit hash on the right side) or the existence of a `.gitmodules` file.
 
 Follow these steps to use the last stable version of the application when Git submodules are necessary:
 
@@ -1480,7 +1480,7 @@ In maintained Rust applications you just need to update some crates to have Redo
 
 We recommend that you do this based on the errors you get during the compilation, this method is recommended for maintained applications.
 
-- Expose the Redox build system environment variables to the current shell, go to the `source` folder of your recipe and update the crates, example:
+- Expose the Redox build system environment variables to the current shell, go to the `source` directory of your recipe and update the crates, example:
 
 ```sh
 make env
@@ -1518,7 +1518,7 @@ Be aware that some crates break the API stability frequently and make the applic
 
 (Also good to test the latest improvements of the libraries)
 
-- Expose the Redox build system environment variables to the current shell, go to the `source` folder of your recipe and update the crates, example:
+- Expose the Redox build system environment variables to the current shell, go to the `source` directory of your recipe and update the crates, example:
 
 ```sh
 make env
@@ -1611,12 +1611,12 @@ If you want to patch some crate offline with your patches, add this text on the 
 
 ```toml
 [patch.crates-io]
-crate-name = { path = "patched-crate-folder" }
+crate-name = { path = "patched-crate-directory" }
 ```
 
-It will make Cargo replace the crate based on this folder in the application source code - `recipes/your-category/your-recipe/source/patched-crate-folder` (you don't need to manually create this folder if you `git clone` the crate source code on the application source directory)
+It will make Cargo replace the crate based on this directory in the application source code - `recipes/your-category/your-recipe/source/patched-crate-directory` (you don't need to manually create this directory if you `git clone` the crate source code on the application source directory)
 
-Inside this folder you will apply the patches on the crate source and rebuild the recipe.
+Inside this directory you will apply the patches on the crate source and rebuild the recipe.
 
 ## Cleanup
 
@@ -1639,25 +1639,19 @@ make ur.recipe-name
 To speed up your porting workflow you can use the `grep` tool to search the recipe configuration:
 
 ```sh
-cd recipes
+grep -rnwi "text" --include "recipe.toml" recipes
 ```
 
-```sh
-grep -rnwi "text" --include "recipe.toml"
-```
+This command will search all text matches in the `recipe.toml` files of each recipe directory.
 
-This command will search all match texts in the `recipe.toml` files of each recipe folder.
+(You need to use the `\` character if searching text with option characters (`-`) )
 
 ## Search for functions on relibc
 
 Sometimes your application is not building because relibc lack the necessary functions, to verify if they are implemented run the following commands:
 
 ```sh
-cd relibc
-```
-
-```sh
-grep -nrw "function-name" --include "*.rs"
+grep -nrw "function-name" --include "*.rs" recipes/core/relibc/source
 ```
 
 You will insert the function name in `function-name`

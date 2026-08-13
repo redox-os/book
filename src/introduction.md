@@ -29,7 +29,7 @@ Redox OS is a general-purpose operating system written in [Rust](https://www.rus
 
 We have modest compatibility with [POSIX](https://en.wikipedia.org/wiki/POSIX), allowing Redox to run many programs without porting.
 
-We take inspiration from [Plan 9](http://9p.io/plan9/index.html), [Minix](http://www.minix3.org/), [seL4](https://sel4.systems/), [Linux](https://www.kernel.org/), [OpenBSD](https://openbsd.org) and [FreeBSD](https://freebsd.org). Redox aims to synthesize years of research and hard won experience into a system that feels modern and familiar.
+We took and take inspiration from [Minix](http://www.minix3.org/), [seL4](https://sel4.systems/), [Plan 9](http://9p.io/plan9/index.html), [Linux](https://www.kernel.org/), [FreeBSD](https://freebsd.org), and [OpenBSD](https://openbsd.org). Redox aims to synthesize years of research and hard won experience into a system that feels modern and familiar.
 
 This book is written in such a way that you don't require any prior knowledge of Rust or OS development.
 
