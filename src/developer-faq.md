@@ -139,7 +139,7 @@ Read some of the reasons below:
 
 ### Why Redox prefer to port software from source instead of binary compatibility
 
-Ports using POSIX/Linux source compatibility require much less effort, are easier and have less maintenace cost than BSD or Linux binary compatibility. Which force the API complexity and feature sets.
+Ports using POSIX/Linux source compatibility require much less effort, are easier and have less maintenace cost than BSD or Linux binary compatibility (which would increase API complexity and feature sets and make them mandatory).
 
 This decision allow us to:
 
