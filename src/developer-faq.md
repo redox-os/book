@@ -149,7 +149,7 @@ This decision allow us to:
 - Greatly reduce porting effort by not needing to support a big feature set
 - Greatly reduce maintenance cost
 - Avoid GNU POSIX/C Standard Library complexity
-- Avoid Linux kernel code that can't work
+- Avoid porting parts of BSD or Linux kernel APIs, which is very complex and hard
 
 Read [this](https://www.redox-os.org/news/porting-strategy/) post for more details about this decision.
 
