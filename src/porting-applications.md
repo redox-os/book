@@ -627,7 +627,7 @@ Use this script if the application or library build system uses the GNU Make com
 script = """
 rsync -av --delete "${COOKBOOK_SOURCE}/" ./
 DYNAMIC_INIT
-"${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}" \
+"${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}"
 "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}/usr"
 """
 ```
@@ -641,10 +641,12 @@ DYNAMIC_INIT
 MAKEFLAGS=(
     OPTION=value
 )
-"${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}" "${MAKEFLAGS[@]}" \
+"${COOKBOOK_MAKE}" -j "${COOKBOOK_MAKE_JOBS}" "${MAKEFLAGS[@]}"
 "${COOKBOOK_MAKE}" install DESTDIR="${COOKBOOK_STAGE}/usr"
 """
 ```
+
+If `DESTDIR` doesn't work, try `PREFIX`
 
 ### GNU Autotools script
 
