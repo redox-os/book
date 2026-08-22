@@ -103,7 +103,7 @@ The steps given below are for the main Redox project repository - other projects
 
 ## Submitting a merge request
 
-1. On [Redox GitLab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Add a short title and explain your changes on description (if long enough to be necessary) in a easy way, use a bullet item list if you did multiple changes that aren't explained in commit titles. **Submit!**
+1. On [Redox GitLab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Add a short title and explain your changes on description (if long enough to be necessary) in a easy way and what they fixed or/and improved, use a bullet item list if you did multiple changes that aren't explained in commit titles. **Submit!**
 2. Once your merge request is ready, notify reviewers by sending the link to the [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room.
 
 ## Incorporating feedback
