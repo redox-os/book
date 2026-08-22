@@ -1,10 +1,10 @@
-# Creating Proper Pull Requests
+# Creating Proper Merge Requests
 
 In order for changes you have made to be added to Redox, or other related projects, it is necessary to have someone review your changes, and merge them into the official repository.
 
 This is done by preparing a feature branch, and submitting a merge request.
 
-For small changes, it is sufficient to just submit a pull request. For larger changes, which may require planning or more extensive review, it is better to start by creating an [issue](./filing-issues.md). This provides a shared reference for proposed changes, and a place to collect discussion and feedback related to it.
+For small changes, it is sufficient to just submit a merge request. For larger changes, which may require planning or more extensive review, it is better to start by creating an [issue](./filing-issues.md). This provides a shared reference for proposed changes, and a place to collect discussion and feedback related to it.
 
 The steps given below are for the main Redox project repository - other projects may vary, though most of the approach is the same.
 
@@ -82,7 +82,7 @@ The steps given below are for the main Redox project repository - other projects
 9.  Optionally run [rustfmt](https://github.com/rust-lang/rustfmt) on the files you changed and commit again if it did anything (check with `git diff` first).
 
 10. Test your changes with `make qemu` or `make virtualbox`
-11. Pull from upstream:
+11. merge from upstream:
 
     ```sh
     git fetch upstream
@@ -92,7 +92,7 @@ The steps given below are for the main Redox project repository - other projects
     git rebase upstream/master
     ```
 
-  - Note: try not to use `git pull`, it is equivalent to doing `git fetch upstream; git merge master upstream/master`
+  - Note: try not to use `git merge`, it is equivalent to doing `git fetch upstream; git merge master upstream/master`
 
 12. Repeat step 10 to make sure the rebase still builds and starts.
 13. Push your changes to your fork:
@@ -103,7 +103,7 @@ The steps given below are for the main Redox project repository - other projects
 
 ## Submitting a merge request
 
-1. On [Redox GitLab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Explain your changes in the title in an easy way and write a short statement in the description if you did multiple changes. **Submit!**
+1. On [Redox GitLab](https://gitlab.redox-os.org/), create a Merge Request, following the template. Add a short title and explain your changes on description (if long enough to be necessary) in a easy way, use a bullet item list if you did multiple changes that aren't explained in commit titles. **Submit!**
 2. Once your merge request is ready, notify reviewers by sending the link to the [Redox Merge Requests](https://matrix.to/#/#redox-mrs:matrix.org) room.
 
 ## Incorporating feedback

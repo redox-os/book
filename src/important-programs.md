@@ -1,6 +1,6 @@
 # Important Programs
 
-This page covers important programs and libraries supported by Redox as of October 2025. <!-- don't forget to update this date -->
+This page covers important programs and libraries supported by Redox as of August 2026. <!-- don't forget to update this date -->
 
 Redox is designed to be source-compatible with POSIX and Linux applications, only requiring compilation or small patches.
 
@@ -8,16 +8,18 @@ This page contains programs that are known to work well on Redox and documents h
 
 Everything on the following lists are tested on the x86_64 (Intel/AMD) CPU architecture, other CPU architectures may not have been tested yet.
 
+(The broken or bad status may be outdated, consider to verify yourself to confirm and possibly report regressions to us)
+
 ## Compilers
 
 The following compilers have been tested to build on Redox, but the runtime status varies:
 
-| Name | Can cross-compile from Linux? | Can compile programs on Redox? | Compiled programs can run on Redox? |
-|---|---|---|---|
-| GCC 13 | Yes | Yes | Working Well |
-| Rust 1.90 | Yes | Always Crashing | Working Well |
-| Go 1.25 | Yes | Always Crashing | Always Crashing |
-| Zig 0.15 | Not Known | Not Known | Not Known |
+| Name | Can cross-compile from Linux? | Can compile programs on Redox? | Compiled programs can run on Redox? | Works on Redox? |
+|---|---|---|---|---|
+| GCC 13 | Yes | Yes | Working Well | Yes |
+| Rust 1.90 | Yes | Always Crashing | Working | Yes |
+| Go 1.25 | Yes | Always Crashing | Always Crashing | No |
+| Zig 0.15 | Not Known | Not Known | Not Known | No |
 
 ## Interpreters
 
@@ -27,9 +29,9 @@ The following interpreters have been tested to build on Redox, but the runtime s
 |---|---|---|
 | RustPython | Yes | Working Well |
 | CPython 3.12 | Yes | Working Well |
-| Lua 5.4 | Yes | Not Known |
+| Lua 5.4 | Yes | Working |
 | LuaJit 2.1 | Yes | Often Crashing |
-| Node.js 24 | Yes | Always Crashing |
+| Node.js 24 | Yes | Working |
 | PHP 8.4 | Yes | Mostly Well |
 
 ## GUI Libraries
@@ -54,7 +56,7 @@ The following programs are well known to be working:
 | COSMIC Terminal | winit | Working Well |
 | Netsurf | SDL1 | Working Well |
 | FFplay | SDL2 | Working Well |
-| Servo | Mesa3D | Often Crashes |
+| Servo | winit | Often Crashes |
 | xterm | X11 | Working Well |
 | xeyes | X11 | Working Well |
 
@@ -100,8 +102,8 @@ The following CLI tools are known to be working. Programs listed below may not i
 |---|---|
 | GNU Bash | Working Well |
 | Ion | Working Well |
-| Nushell | Not Tested |
-| Fish | Hangs |
+| Nushell | Working |
+| Fish | Working |
 | Zsh | Hangs |
 
 ### Text Editors
@@ -158,7 +160,7 @@ The following CLI tools are known to be working. Programs listed below may not i
 
 | Name | Working Status |
 |---|---|
-| OpenSSH Client | Not Tested |
+| OpenSSH Client | Working |
 | Curl | Working Well |
 | GoAccess | Working Well |
 | Rsync | Working Well |
@@ -167,4 +169,4 @@ The following CLI tools are known to be working. Programs listed below may not i
 
 ## Other Programs
 
-You can see all Redox components and ported programs on the [build server list](https://static.redox-os.org/pkg/x86_64-unknown-redox/).
+You can see all Redox components and ported programs on the [package server list](https://static.redox-os.org/pkg/x86_64-unknown-redox/).

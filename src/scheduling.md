@@ -1,5 +1,6 @@
-Scheduling on Redox
-===================
+# Scheduling on Redox
+
+TODO: update to EEVDF scheduler and write a short explanation of how it works on Redox
 
 The Redox kernel uses a scheduling algorithm called [Round Robin](https://wiki.osdev.org/Scheduling_Algorithms#Round_Robin).
 

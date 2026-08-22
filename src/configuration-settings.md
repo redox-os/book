@@ -34,6 +34,8 @@ The Redox build system applies configuration settings from various places to det
 
 The default values for the build system's Makefile variables are mostly defined in the `mk` directory&mdash;particularly in [`mk/config.mk`](#mkconfigmk). Local changes from the default values, however, should be applied in the [`.config`](#config) file, or temporarily on the `make` [command line](#command-line).
 
+While if you are using Cookbook environment variables in `.config` you need to use the `export` command.
+
 The build system uses GNU Make and Cookbook to coordinate the build system in order. The [build system reference](./build-system-reference.md#cookbook) and [porting application guide](./porting-applications.md#cookbook) have more information about Cookbook.
 
 Three important Makefile variables of interest are `ARCH`, `CONFIG_NAME`, and `BOARD`, as they specify the system to be built. These, and other important environment variables, can be seen in the following table:
@@ -48,6 +50,7 @@ Three important Makefile variables of interest are `ARCH`, `CONFIG_NAME`, and `B
 | `QEMU_SMP` | Sets the QEMU CPU core quantity, e.g.,  `QEMU_SMP=4`. |
 | `PREFIX_BINARY` | If set to 0 (`PREFIX_BINARY=0`), the build system will build the Redox toolchain from source and will not download the toolchain binaries from the Redox build server. |
 | `PREFIX_USE_UPSTREAM_RUST_COMPILER` | If set to 1 (`PREFIX_BINARY=1`) the build system will download the Rust compiler from rustup (Rust upstream compiler binaries) instead of building it (only used with `PREFIX_BINARY=0`) |
+| `export COOKBOOK_GIT_TREELESS` | If set to `true` it will enable treeless Git source clone in all recipes to reduce testing time and save storage |
 | `REPO_BINARY` | If set to 1 (`REPO_BINARY=1`), the build system will download/install pre-compiled packages from the Redox package server by default, rather than build them from source (i.e., recipes). |
 | `REPO_OFFLINE` | Enable the offline mode of Cookbook where recipe sources will not be updated and download the smallest amount of data from the Internet as possible. |
 | `REPO_NONSTOP` | Enable the nonstop mode of Cookbook where recipe build failure will not stop the compilation of other recipes. |
@@ -94,6 +97,7 @@ Each Cookbook configuration defaults to environment variables:
 | `CI`                    | `CI=1`, `CI=`                | Disables TUI                           |
 | `COOKBOOK_MAKE_JOBS`    | `COOKBOOK_MAKE_JOBS=4`       | Override build job count               |
 | `COOKBOOK_LOGS`         | `COOKBOOK_LOGS=true`         | Override whether to save logs          |
+| `COOKBOOK_GIT_TREELESS` | `COOKBOOK_GIT_TREELESS=true` | Globally enable treeless Git clone     |
 | `COOKBOOK_OFFLINE`      | `COOKBOOK_OFFLINE=true`      | Override offline behaviour (see notes) |
 | `COOKBOOK_VERBOSE`      | `COOKBOOK_VERBOSE=false`     | Override verbosity                     |
 | `COOKBOOK_NONSTOP`      | `COOKBOOK_NONSTOP=true`      | Override nonstop (see notes)           |

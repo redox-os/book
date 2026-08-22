@@ -1,5 +1,7 @@
 # Schemes and Resources
 
+TODO: update outdated information on this chapter pages
+
 An essential design choice made for Redox is to refer to resources using scheme-rooted paths.
 This gives Redox the ability to:
 

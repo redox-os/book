@@ -76,7 +76,7 @@
   - [Signing in to GitLab](./signing-in-to-gitlab.md)
   - [Repository Structure](./repository-structure.md)
   - [Creating Proper Bug Reports](./creating-proper-bug-reports.md)
-  - [Creating Proper Pull Requests](./creating-proper-pull-requests.md)
+  - [Creating Proper Merge Requests](./creating-proper-pull-requests.md)
   - [Filing Issues](./filing-issues.md)
 
 # Developing with and for Redox
