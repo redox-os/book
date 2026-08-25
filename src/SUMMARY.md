@@ -54,7 +54,7 @@
 - [Getting started](./getting-started.md)
   - [Running Redox in a Virtual Machine](./running-vm.md)
   - [Running Redox on Real Hardware](./real-hardware.md)
-  - [Installing Redox on a Drive](./installing.md)
+  - [Installing Redox](./installing.md)
   - [Trying Out Redox](./trying-out-redox.md)
   - [Tasks](./tasks.md)
   - [Package Manager](./pkg.md)
