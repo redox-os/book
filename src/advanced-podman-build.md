@@ -267,6 +267,14 @@ If you just want to install the packages temporarily, run `make env`, open a new
 
 If you are interested in how we are able to use your working directory for builds in **Podman**, the following configuration details may be interesting.
 
+The build process is performed in your normal working directory, e.g., `~/tryredox/redox`. Compilation of the Redox components is performed in the container, but the final Redox image (`build/$ARCH/$CONFIG/harddrive.img` or `build/$ARCH/$CONFIG/livedisk.iso`) is constructed using [FUSE](https://github.com/libfuse/libfuse) running directly on your host machine.
+
+Setting `PODMAN_BUILD?` to 1 in [.config](./configuration-settings.md#config), on the `make` command line (e.g., `make PODMAN_BUILD=1 all`) or in the environment (e.g., `export PODMAN_BUILD=1; make all`) will enable Podman.
+
+First, a **base image** called `redox_base` will be constructed, with all the necessary packages for the build system. A "home" directory will also be created in `build/podman`. This is the home directory of your container alter ego, `poduser`. It will contain the `rustup` install, and the `.bashrc`. This takes some time, but is only done when necessary. The *tag* file [build/container.tag](./advanced-podman-build.md#buildcontainertag) is also created at this time to prevent unnecessary image builds.
+
+Then, various `make` commands are executed in **containers** built from the **base image**. The files are constructed in your working directory tree, just as they would for a non-Podman build. In fact, if all necessary packages are installed on your host system, you can switch Podman on and off relatively seamlessly, although there is no benefit of doing so.
+
 Historically, we've used `--userns keep-id` which means the *container's* `root` user is actually mapped to your User ID on the host system. It was necessary in Podman 3.x and previous versions as Podman user mapping was not quite as good and often broke with [tar](https://github.com/containers/podman/issues/14655) and [buildah](https://github.com/containers/buildah/issues/1818). In Podman 4.x onwards the workaround is no longer necessary and we can drop it.
 
 For Ubuntu 22.04 there's a temporary fix by [manually updating crun](https://github.com/microsoft/vscode-remote-release/issues/11042#issuecomment-3044713731).
