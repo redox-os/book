@@ -8,32 +8,41 @@ The approval of your GitLab account may take some minutes or hours, in the meant
 
 ## Setting up 2FA
 
-Your new GitLab account will not require 2 Factor Authentication at the beginning, but it will eventually insist. Some details and options are described in detail [below](#2fa-apps).
+Your new GitLab account will not require 2 Factor Authentication at the beginning, but it will eventually insist. Some details and options are described below.
+
+Before logging-in, you will need:
+
+- Your web browser open at [Redox GitLab](https://gitlab.redox-os.org/redox-os/)
+- Your phone
+- Your 2FA App installed on your phone.
+- Add https://gitlab.redox-os.org/redox-os/ as a site in your 2FA App.  Once added and the site listed, underneath you'll see 2 sets of 3 digits, 6 digits in all. i.e. **258 687**. That's the 2FA Verification Code.  It changes every so often around every minute.
 
 ## 2FA Apps
 
-### Requirements Before Logging Into GitLab
+### Web Browser
 
-Before logging-in, you'll need:
- - your web browser open at [Redox GitLab](https://gitlab.redox-os.org/redox-os/)
- - your phone
- - your 2FA App installed on your phone.
- - to add https://gitlab.redox-os.org/redox-os/ as a site in your 2FA App.  Once added and the site listed, underneath you'll see 2 sets of 3 digits, 6 digits in all. i.e. **258 687**. That's the 2FA Verification Code.  It changes every so often around every minute.
+- [Authenticator extension](https://authenticator.cc/) (open-source)
 
-### Available 2FA Apps for Android
+### Linux/Windows
 
- On Android, you may use:
- - Aegis Authenticator - [F-Droid](https://f-droid.org/en/packages/com.beemdevelopment.aegis)/[Play Store](https://play.google.com/store/apps/details?id=com.beemdevelopment.aegis)
- - [Google Authenticator](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en_CA&gl=US)
+All open-source/free software.
 
-### Available 2FA Apps for iPhone
+- [Proton Authenticator](https://proton.me/authenticator)
+- [Authme](https://authme.levminer.com/)
+- [cotp](https://github.com/replydev/cotp) (CLI)
 
- On iPhone iOS, you may use:
-  - [Google Authenticator](https://apps.apple.com/us/app/google-authenticator/id388497605)
-  - [Tofu Authenticator (open-source)](https://apps.apple.com/us/app/tofu-authenticator/id1082229305)
-  - [iOS built-in authenticator](https://support.apple.com/guide/iphone/automatically-fill-in-verification-codes-ipha6173c19f/ios)
+### Android
 
-### Logging-In With An Android Phone
+- [Aegis Authenticator](https://getaegis.app/) (open-source)
+- [Google Authenticator](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en_CA&gl=US)
+
+### iOS
+
+- [Tofu Authenticator](https://apps.apple.com/us/app/tofu-authenticator/id1082229305) (open-source)
+- [Google Authenticator](https://apps.apple.com/us/app/google-authenticator/id388497605)
+- [iOS built-in authenticator](https://support.apple.com/guide/iphone/automatically-fill-in-verification-codes-ipha6173c19f/ios)
+
+### Logging-In in Android
 
 Here are the steps:
  - From your computer web browser, open the [Redox GitLab](https://gitlab.redox-os.org/redox-os/)
@@ -43,7 +52,7 @@ Here are the steps:
  - Click the Submit button
  - Finally you will be prompted for a 2FA verification code from your phone. Go to your Android phone, go to Google/Aegis Authenticator, find the site gitlab redox and underneith those 6 digits in looking something like **258 687** that's your 2FA code.  Enter those 6 digits into the prompt on your computer.  Click Verify.  Done.  You're logged into Gitlab.
 
-### Logging-In With An iPhone
+### Logging-In in iOS
 
 Here are the steps:
  - From your computer web browser, open the [Redox GitLab](https://gitlab.redox-os.org/redox-os/)

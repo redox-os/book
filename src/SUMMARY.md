@@ -28,7 +28,7 @@
   - [Scheduling](./scheduling.md)
   - [Drivers](./drivers.md)
   - [RedoxFS](./redoxfs.md)
-  - [Graphics and Windowing](./graphics-windowing.md)
+  - [Windowing and Graphics](./graphics-windowing.md)
   - [Security](./security.md)
   - [Features](./features.md)
   - [Package Management](./package-management.md)
