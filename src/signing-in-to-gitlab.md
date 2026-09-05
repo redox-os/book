@@ -68,11 +68,11 @@ Personal Access Token (PAT) is a replacement for passwords when authenticating v
 
 Here are the steps needed to create a PAT after logging in to GitLab:
 - Open [Personal access tokens in User settings](https://gitlab.redox-os.org/-/user_settings/personal_access_tokens)
-- Click "Add new Token" at the top right of the page
+- Click "Generate Token" at the top right of the "Personal access tokens" section, and select "Legacy token"
 - Enter the token name (can be anything) and expiration date (max is 1 year from today)
 - Check `read_repository` and `write_repository` scopes
-- Click "Create Token"
-- Copy the PAT (displayed as masked password) under the section "Your Token"
+- Click "Generate Token"
+- Copy the PAT (displayed as masked password) under the section "Token details"
 - Save the PAT somewhere safe, like your password manager
 
 When doing `git push`, you'll be asked for username and password. Enter the password from the PAT token you've created. This will happen every time you run `git push`. To remember it forever, run the command below to store it later in `~/.git-credentials`:
