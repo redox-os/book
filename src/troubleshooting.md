@@ -26,6 +26,8 @@ This page covers all troubleshooting methods and tips for our build system.
     - [Verify The Dependency Tree](#verify-the-dependency-tree)
 - [Debug Methods](#debug-methods)
     - [Boot](#boot)
+    - [Applications](#applications)
+    - [Symbols](#symbols)
 - [Kill A Frozen Redox VM](#kill-a-frozen-redox-vm)
 - [Kernel Panic](#kernel-panic)
     - [QEMU](#qemu)
@@ -463,19 +465,67 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 
 ## Debug Methods
 
-- Read [this](https://en.wikipedia.org/wiki/Debugging#Techniques) Wikipedia section to learn about debugging techniques
+### Boot
 
-- Use the `dmesg` command to read the kernel and userspace daemons log
+If your boot hangs and the log don't show the reason, you can use the following environment variables to help:
 
-- If Orbital hangs you need to verify if the system also froze by pressing Super+F1 to see the boot log or Super+F2 to switch to other `tty`, login as `root` and run `dmesg` to read the system log ("Super" is the key with Windows logo)
+- `BOOTSTRAP_LOG_LEVEL=value` : Bootstrap and process manager logging verbosity level
+- `INIT_LOG_LEVEL=value` : Init logging verbosity level
+- `DRIVER_LOG_LEVEL=value` : Logging verbosity level of all drivers
+- `DRIVER_*_LOG_LEVEL=value` : Driver-specific logging verbosity level, for example: `DRIVER_PS2_LOG_LEVEL=value` for PS/2 logging and `DRIVER_USB_LOG_LEVEL=value` for USB logging
+- `RELIBC_LOG_LEVEL=value` : Relibc logging verbosity level, you need to disable the `no_trace` feature flag by removing it from the [default](https://gitlab.redox-os.org/redox-os/relibc/-/blob/7b9402783d6de31d3c749472027ce345aaff70fc/Cargo.toml#L82) feature group and run the `make rp.relibc` (if the application is dynamically linked) or `make crp.relibc,app-name` (if the application is statically linked) command to use it
+- `INIT_SKIP=executable-name` : Skip the execution of executables with hangs or errors, commas are supported if you want to skip multiple executables
 
-- You can start the QEMU with the `make qemu gpu=no` command to easily copy the terminal text
+They accept the following values:
 
-- You can write to the `debug:` scheme, which will output on the console, but you must be the `root` user. This is useful if you are debugging a program where you need to use Orbital but still want to capture messages
+- `ERROR` value: Known event that is a fatal error but recoverable.
+- `WARN` value: Unexpected event coming from unexpected condition.
+- `INFO` value: Significant event mostly useful for developer.
+- `DEBUG` value: Detailed event monitoring to show how the service is being used.
+- `TRACE` value: Very verbose information which is only useful when debugging.
 
-- Currently, the build system strips function names and other symbols from programs, as support for symbols is not implemented yet
+Once you determine what you need press the `E` key to open the boot environment editor and add in the last lines and boot, for example:
 
-- To use GDB add the `gdbserver` recipe in your filesystem configuration, run the `make qemu gdb=yes` command in one shell, start the `gdbserver` program on QEMU and run the `make gdb` command in another shell
+```
+default environment variables here
+INIT_LOG_LEVEL=DEBUG
+DRIVER_LOG_LEVEL=DEBUG
+```
+
+You can see an example output below:
+
+```
+2026-01-12T22-27-51.758Z [@ps2d::controller:468 WARN] ps2d: post-test unexpected value: 9C
+2026-01-12T22-27-51.760Z [@ps2d::controller:337 ERROR] ps2d: keyboard failed to reset: 55
+```
+
+Press Shift+Up or Shift+Down to scroll the log, if nothing happens probably the input is not working.
+
+To disable the environment variables after boot run the `export *_LOG_LEVEL=OFF` command, for example: the `export RELIBC_LOG_LEVEL=OFF` command will disable relibc logging.
+
+### Applications
+
+- Use the `LD_DEBUG=all app-name` environment variable and value to show all called dynamically linked libraries on application execution and in what library a dynamically linked application crashed.
+
+- Disable the `no_trace` relibc feature flag (by removing it from the [default](https://gitlab.redox-os.org/redox-os/relibc/-/blob/7b9402783d6de31d3c749472027ce345aaff70fc/Cargo.toml#L82) feature group and run the `make rp.relibc` (if the application is dynamically linked) or `make crp.relibc,app-name` (if the application is statically linked) command to use it) and use the `RELIBC_LOG_LEVEL=trace app-name` environment variable and value to possibly show where a application error and panic (like if you get the `EINVAL` error where it shouldn't be) or hang happens, it's only useful for hangs if the current called function is completed to be shown in the log.
+
+  - If the application is waiting for the last file descriptor shown in relibc log, run `cat /scheme/sys/iostat` for more details.
+
+- Run the `cat /scheme/sys/block` command to know in what system function a hanging application did blocking.
+
+- If you see a unexpected system slowdown when running a application and the `ps` command log don't give a clue, run the `cat /scheme/sys/stat` command to show kernel statistics and know more details.
+
+- Use the `dmesg` command to read the kernel and userspace daemons log.
+
+- If Orbital hangs you need to verify if the system also froze by pressing Super+F1 to see the boot log or Super+F2 to switch to other `tty`, login as `root` and run `dmesg` to read the system log ("Super" is the key with Windows logo).
+
+- You can start the QEMU with the `make qemu gpu=no` command to easily copy the terminal text.
+
+- You can write to the `/scheme/debug` scheme, which will output on the console, but you must be the `root` user. This is useful if you are debugging a program where you need to use Orbital but still want to capture messages.
+
+- Currently, the build system strips function names and other symbols from programs, as support for symbols is not implemented yet.
+
+- To use GDB add the `gdbserver` recipe in your filesystem configuration, run the `make qemu gdb=yes` command in one shell, start the `gdbserver` program on QEMU and run the `make gdb` command in another shell.
 
 - Use the following command for advanced logging:
 
@@ -483,7 +533,9 @@ cargo tree --target=x86_64-unknown-redox | grep crate-name
 make some-command 2>&1 | tee file-name.log
 ```
 
-### Recipes
+- Read [this](https://en.wikipedia.org/wiki/Debugging#Techniques) Wikipedia section to learn more/about debugging techniques.
+
+### Symbols
 
 You will see the available debug methods for recipes on this section.
 
@@ -603,44 +655,6 @@ If the recipe has multiple executables use the following command:
 ```sh
 make debug.recipe-name DEBUG_BIN=executable-name
 ```
-
-### Boot
-
-If your boot hangs and the log don't show the reason, you can use the following environment variables to help:
-
-- `BOOTSTRAP_LOG_LEVEL=value` : Bootstrap and process manager logging verbosity level
-- `INIT_LOG_LEVEL=value` : Init logging verbosity level
-- `DRIVER_LOG_LEVEL=value` : Logging verbosity level of all drivers
-- `DRIVER_*_LOG_LEVEL=value` : Driver-specific logging verbosity level, for example: `DRIVER_PS2_LOG_LEVEL=value` for PS/2 logging and `DRIVER_USB_LOG_LEVEL=value` for USB logging
-- `RELIBC_LOG_LEVEL=value` : Relibc logging verbosity level, you need to disable the `no_trace` feature flag by removing it from the [default](https://gitlab.redox-os.org/redox-os/relibc/-/blob/7b9402783d6de31d3c749472027ce345aaff70fc/Cargo.toml#L82) feature group and run the `make static_clean rebuild` command to use it
-- `INIT_SKIP=executable-name` : Skip the execution of executables with hangs or errors, commas are supported if you want to skip multiple executables
-
-They accept the following values:
-
-- `ERROR` value: Known event that is a fatal error but recoverable.
-- `WARN` value: Unexpected event coming from unexpected condition.
-- `INFO` value: Significant event mostly useful for developer.
-- `DEBUG` value: Detailed event monitoring to show how the service is being used.
-- `TRACE` value: Very verbose information which is only useful when debugging.
-
-Once you determine what you need press the `E` key to open the boot environment editor and add in the last lines and boot, for example:
-
-```
-default environment variables here
-INIT_LOG_LEVEL=DEBUG
-DRIVER_LOG_LEVEL=DEBUG
-```
-
-You can see an example output below:
-
-```
-2026-01-12T22-27-51.758Z [@ps2d::controller:468 WARN] ps2d: post-test unexpected value: 9C
-2026-01-12T22-27-51.760Z [@ps2d::controller:337 ERROR] ps2d: keyboard failed to reset: 55
-```
-
-Press Shift+Up or Shift+Down to scroll the log, if nothing happens probably the input is not working.
-
-To disable the environment variables after boot run the `export *_LOG_LEVEL=OFF` command, for example: the `export RELIBC_LOG_LEVEL=OFF` command will disable relibc logging.
 
 ## Kill A Frozen Redox VM
 
