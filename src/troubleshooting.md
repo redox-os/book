@@ -511,7 +511,7 @@ To disable the environment variables after boot run the `export *_LOG_LEVEL=OFF`
 
   - If the application is waiting for the last file descriptor shown in relibc log, run `cat /scheme/sys/iostat` for more details.
 
-- Run the `cat /scheme/sys/block` command to know in what system function a hanging application did blocking.
+- Run the `cat /scheme/sys/block` command to know in what kernel function makes the application blocked.
 
 - If you see a unexpected system slowdown when running a application and the `ps` command log don't give a clue, run the `cat /scheme/sys/stat` command to show kernel statistics and know more details.
 
@@ -541,11 +541,7 @@ You will see the available debug methods for recipes on this section.
 
 - If you change the recipe build mode (`release` to `debug` or the opposite) while debugging, don't forget to rebuild with `make cr.recipe-name` because the build system may not detect the changes.
 
-#### Rust
-
-Rust programs can carry assertions, checking and symbols, but they are disabled by default.
-
-- `REPO_DEBUG` - This environment variable will build the Rust program with assertions, checking and symbols.
+- `REPO_DEBUG` - This environment variable will build the recipe binaries with assertions, checking and symbols.
 
 (Debugging with symbols inside of Redox is not supported yet)
 
@@ -560,7 +556,7 @@ REPO_DEBUG?=1
 - Enable the `REPO_DEBUG` environment variable for one command, rebuild/package a recipe and add to the Redox image:
 
 ```sh
-REPO_DEBUG=1 make cr.recipe-name image
+REPO_DEBUG=1 make crp.recipe-name
 ```
 
 - Enable the `REPO_DEBUG` environment variable for multiple commands, rebuild/package a recipe and add to the Redox image:
@@ -570,7 +566,7 @@ export REPO_DEBUG=1
 ```
 
 ```sh
-make cr.recipe-name image
+make crp.recipe-name
 ```
 
 - Enable the `COOKBOOK_DEBUG` and `COOKBOOK_NOSTRIP` (they are equivalent to `REPO_DEBUG` environment variable) inside the `recipe.toml` :
@@ -580,11 +576,10 @@ template = "custom"
 script = """
 COOKBOOK_DEBUG=true
 COOKBOOK_NOSTRIP=true
-cookbook_cargo
 """
 ```
 
-- Backtrace
+#### Rust Backtrace
 
 A backtrace helps you to detect bugs that happen with unexpected input parameters, and allow you to trace back through the callers to see where the bad data is coming from.
 
