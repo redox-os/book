@@ -1,26 +1,34 @@
 # Native Build
 
-This page explains how to build Redox in your operating system's native environment, without Podman.
+This page explains how to build Redox in your operating system's native environment, without Podman. Building in native environment may useful in some environment, such as platforms where Podman support is poor or isolated such as inside CI or Nix.
 
-> ⚠️ **Warning:** Building outside Podman is not guaranteed to succeed. Unless you have problems using Podman, we recommend you to use the [Podman Build](./podman-build.md) before trying the Native Build to avoid build environment bugs.
+> ⚠️ **Warning:** Building outside Podman requires experience with toolchain and is not guaranteed to succeed. Unless you have problems using Podman, we recommend you to use the [Podman Build](./podman-build.md) before trying the Native Build to avoid build environment bugs.
 
-> 📝 **Note:** Read the [Build System Reference](./build-system-reference.md) page after installation for an explanation of the build system's organization and functionality.
+## Support Matrix for Native Build
 
-## Supported Unix-like Distributions and Podman Build
+The following section explain how well supported an operating system support will be to use Native Build.
 
-The following Unix-like systems are supported:
+| Operating System | Status | [Prebuilt Toolchain](./advanced-build.md#prefix) |
+|---|---|---|
+| Debian | Supported | Version >= 13 |
+| Ubuntu | Supported | Version >= 24 |
+| Fedora | Supported | Version >= 42 |
+| RHEL | Supported | No support |
+| Arch Linux | Supported | Supported |
+| OpenSUSE | Supported | Rolling only |
+| Gentoo | No Support[^3] | Supported |
+| Void Linux | No Support[^3] | Supported |
+| Solus | No Support[^3] | Supported |
+| FreeBSD | Experimental | No support |
+| MacOS | No Support[^1] | No support |
+| Windows | No Support[^2] | No support |
+| Nix | Experimental | No support |
+| Redox OS | Experimental[^4] | Supported |
 
-- Pop_OS!
-- Ubuntu
-- Debian
-- Fedora
-- Arch Linux
-- OpenSUSE
-- Gentoo
-- FreeBSD (experimental)
-- MacOS (experimental, require [workarounds](./advanced-build.md#macos-users))
-- Nix (experimental)
-- Solus (not maintained)
+[^1]: MacOS native build cannot work. See [workarounds](./advanced-build.md#macos-users)
+[^2]: Windows require WSL 2, which then depends on the WSL operating system
+[^3]: It may work, but the `native_bootstrap` script does not support it. We welcome contribution!
+[^4]: See [Self hosted development](./self-hosted.md)
 
 If you encounter a weird or difficult-to-fix problem, test the [Podman Build](./podman-build.md) to determine if the problem occurs there as well.
 
@@ -39,15 +47,11 @@ On supported Linux distributions, build system preparation can be performed auto
  2. Create a new directory and run the `native_bootstrap.sh` script in it.
 
     ```sh
-    mkdir -p ~/tryredox
+    mkdir -p ~/tryredox && cd $_
     ```
 
     ```sh
-    cd ~/tryredox
-    ```
-
-    ```sh
-    curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/native_bootstrap.sh -o native_bootstrap.sh
+    curl -sSf https://gitlab.redox-os.org/redox-os/redox/raw/master/native_bootstrap.sh -o native_bootstrap.sh
     ```
 
     ```sh
@@ -57,8 +61,6 @@ On supported Linux distributions, build system preparation can be performed auto
     You will be asked to confirm some steps: answer with `y` or `1`.
 
     For an explanation of what the `native_bootstrap.sh` script does, read [this](./build-phases.md#native_bootstrapsh) section.
-
-    Note that `curl -sf` operates silently, so if there are errors, you may get an empty or incorrect version of `native_bootstrap.sh`. Check for typos in the command and try again. If you continue to have problems, join the [chat](./chat.md) and let us know.
 
     Please be patient. The bootstrapping process can take anywhere from 5 minutes to an hour depending on the hardware and network it's being run on.
 
@@ -77,10 +79,12 @@ The build system uses several configuration files, which contain settings that y
 - `ARCH=x86_64`
 - `CONFIG_NAME=desktop`
 - `PODMAN_BUILD=0` to disable Podman Build
-- `PREFIX_BINARY=0` to disable [prebuilt prefix binary](./advanced-build.md#prefix)
+- `PREFIX_BINARY=0` to disable prebuilt toolchain [if not supported](#support-matrix-for-native-build)
 - `PREFIX_USE_UPSTREAM_RUST_COMPILER=1` to [avoid compiling Rust compiler](./advanced-build.md#prefix-rust)
 
 The [build.sh](./configuration-settings.md#buildsh) script also allows the user to specify the CPU architecture and filesystem contents to be used in the build, although these settings needs to be written again every time the script is executed.
+
+Building with `PREFIX_BINARY=0` can add hours into the build time because it has to compile GCC, Rust and Clang. [See Advanced Build: Prefix Toolchain](./advanced-build.md#prefix) for more information about the process.
 
 ## Compiling Redox
 
