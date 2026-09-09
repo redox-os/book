@@ -2,6 +2,9 @@
 
 - [VirtualBox Instructions](#virtualbox-instructions)
 - [QEMU Instructions](#qemu-instructions)
+  - [Linux](#linux-1)
+  - [Redox](#redox)
+  - [Windows](#windows-1)
 
 ## Download the bootable images
 
@@ -221,6 +224,22 @@ SDL_VIDEO_X11_DGAMOUSE=0 qemu-system-riscv64 -d cpu_reset,guest_errors -smp 4 -m
     -drive if=pflash,format=raw,unit=0,file=/usr/share/qemu-efi-riscv64/RISCV_VIRT_CODE.fd,readonly=on -drive if=pflash,format=raw,unit=1,file=/usr/share/qemu-efi-riscv64/RISCV_VIRT_VARS.fd -machine virt,acpi=off -cpu max -vga none -device ramfb -audio none -netdev user,id=net0 \
     -device e1000,netdev=net0 -device nec-usb-xhci,id=xhci \
     -drive file=`echo $HOME/Downloads/redox_demo_riscv64gc_*_harddrive.img`,format=raw
+```
+
+### Redox
+
+- Install QEMU
+
+```
+sudo pkg install qemu
+```
+
+#### x86-64 Image
+
+- Run QEMU
+
+```
+qemu-system-x86_64 -nographic -vga none -m 1024 -machine q35 -cpu Broadwell,-pcid,-x2apic,-tsc-deadline,-hle,-rtm,-invpcid -drive file=Downloads/redox_desktop_x86_64_*_harddrive.img,format=raw,if=virtio
 ```
 
 ### Windows
