@@ -388,8 +388,10 @@ In addition to build tools from the system, building Redox requires additional c
 
 - GCC
 - GNU Binutils
-- libtool
+- Libtool
+- LLVM
 - Rust
+- Clang
 - Relibc
 
 The tools that build Redox are specific to each CPU architecture. These tools are located in the directory `prefix`, in a subdirectory named for the architecture, e.g. `prefix/x86_64-unknown-redox`. If you have problems with these tools, you can remove the subdirectory or even the whole `prefix` directory, which will cause the tools to be re-downloaded or rebuilt. The variable `PREFIX_BINARY` in `mk/config.mk` controls whether they are downloaded or built.
@@ -413,6 +415,14 @@ Redox compiles its own Rust compiler to be able to build Tier 3 libstd. Fortunat
 Building Rust takes about 2 hours or more (if your hardware is relatively powerful) and it's also needed to compile LLVM. If you are building for the x86_64 target, downloading Rust from rustup (the official Rust binaries) might be preferable. When it's completed it generates the `rust-install` directory containing both GCC and Rust compiler.
 
 Note that there maybe some patches in [Redox Rust fork](https://gitlab.redox-os.org/redox-os/rust/) that has not been upstreamed, so your experience with using Rust from rustup might be different than building it.
+
+### Prefix: Clang
+
+Redox OS provides clang for additional compiler that's known to work better with Rust. The use of Clang is currently experimental but already being used for additional compilation stages such as compiling to WASM/WASI or compiling components that only known to work using Clang by some recipes.
+
+The Clang contained in this toolchain also provides LLD, Compiler-RT and LibCXX for Redox OS target so that the compilation is independent with GCC, however the use of that is currently experimental: Using Clang as the default compiler replacing GCC require `export REDOXER_USE_CLANG=true` in `.config`.
+
+When it's completed it generates the `clang-install` directory containing Clang and its component.
 
 ### Prefix: Relibc
 

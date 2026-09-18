@@ -167,3 +167,60 @@ You can use the value from "shrinking by ..." to accurately tell how much bytes 
 ```sh
 truncate -s -1559135232 redox.img
 ```
+
+### Working with Linux Partition
+
+> ⚠️ **Warning:** Experimental and dangerous, always double check your command before executing it.
+
+On Linux, RedoxFS support formatting and mounting directly from `/dev` partition. [Redox OS GUI installer](./installing.md) also support formatting and installing into a whole disk or specific partition. This guide only cover manual process using `redoxfs` CLI tools.
+
+### Creating an empty partition for RedoxFS
+
+First thing you need to do is that you need to create an empty space for RedoxFS partition to fit in. Use [GParted](https://gparted.org/) and create an empty partition, then identify the partition using `lsblk`
+
+```sh
+lsblk
+```
+
+```
+NAME          MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINTS
+zram0         251:0    0  7.7G  0 disk  [SWAP]
+vda           253:0    0  2.7G  0 disk
+vdb           253:16   0  200G  0 disk
+├─vdb1        253:17   0 1022M  0 part  /boot/efi
+├─vdb2        253:18   0  3.9G  0 part
+├─vdb3        253:19   0  191G  0 part  /
+├─vdb4        253:20   0    4G  0 part
+│ └─cryptswap 252:0    0    4G  0 crypt [SWAP]
+└─vdb5        253:21   0   98M  0 part
+```
+
+Here for example we want to install redox partition in `/dev/vdb2`. format it using redoxfs-mkfs:
+
+```sh
+sudo $(which redoxfs-mkfs) /dev/vdb2
+```
+
+After completed, GParted should detecting the new partition type as `unknown`.
+
+### Mounting RedoxFS partition
+
+After format completed, you can mount it by creating an empty directory
+
+```sh
+mkdir myredoxfs
+```
+
+Then mount the new Redox partition into the new directory
+
+```sh
+sudo REDOXFS_FUSE_SHARE=1 $(which redoxfs) /dev/vdb2 ./myredoxfs
+```
+
+The environment variable `REDOXFS_FUSE_SHARE=1` is used to share FUSE mount from root into other non-root user. The FUSE option applied is `default_permission` and `allow_other`. See [FUSE manpage](https://man.archlinux.org/man/mount.fuse.8.en#default_permissions) for details.
+
+To unmount from the shared partition use the similar command with sudo.
+
+```sh
+sudo fusermount3 ./myredoxfs
+```
