@@ -56,7 +56,7 @@ Redox build system is using **Rootless Podman**. **Podman** is used to avoid bug
     REPO_BINARY=1
     ```
 
- 5. Build the system. For the first time, it may take about 20 minutes depending on network condition.
+ 5. Build the system. The time needed in the first execution depends on computer, system, and network performance/condition.
 
     ```sh
     time make all
@@ -84,7 +84,7 @@ If you already have the build system, simply perform the following steps:
     ./podman_bootstrap.sh -d
     ```
 
- 4. Make sure the configuration for podman build stays enabled
+ 4. Make sure the configuration for Podman Build stays enabled
 
     ```sh
     nano .config
@@ -130,7 +130,7 @@ Please join the [chat](./chat.md) if this is something you are interested in pur
 
 ## Using build.sh script
 
-`build.sh` is a shell script for quickly invoking `make` for a specified variant, CPU architecture, and output file. It is created for quick one-off command to build everything without changing settings from `.config` file.
+`build.sh` is a shell script for quickly invoking `make` for a specified variant, CPU architecture, and output file. It is created for quick one-off commands to build everything without changing settings from `.config` file.
 
 > 💡 **Tip:** for doing Redox development, such settings should usually be configured in the `.config` file (see the [Configuration Settings](./configuration-settings.md) page). But for users who are just trying things out, the `build.sh` script can be used to run `make` for you.
 
