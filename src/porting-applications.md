@@ -82,7 +82,7 @@ This section contains quick important information for porting.
 
 ### Portability
 
-- If a application or library have support for operating systems beyond Linux, it's considered portable (with some exceptions using system call translation or virtualization in the non-Linux ports). If you don't know if some application or library can be ported to Redox, check if a package for it exist in the [FreeBSD](https://github.com/freebsd/freebsd-ports), [OpenBSD](https://github.com/openbsd/ports), [NetBSD](https://www.pkgsrc.se/), and [Haiku](https://github.com/haikuports/haikuports) ports to have a reference, but it may give false-positives like the portable application or library is just not packaged to them or FreeBSD use its Linux compatiblity (Linuxlator) because it prefer the Linux codepath of a library or application. Read [this](./developer-faq.md#how-to-determine-if-some-program-is-portable-to-redox) question to learn more about this.
+- If a application or library have support for operating systems beyond Linux, it's considered portable (with some exceptions using system call translation or virtualization in the non-Linux ports). If you don't know if some application or library can be ported to Redox, check if a package for it exist in the [FreeBSD](https://github.com/freebsd/freebsd-ports), [OpenBSD](https://github.com/openbsd/ports), [NetBSD](https://www.pkgsrc.se/), and [Haiku](https://github.com/haikuports/haikuports) ports to have a reference, but it may give false-positives like the portable application or library is just not packaged to them or FreeBSD use its Linux compatibility (Linuxlator) because it prefer the Linux codepath of a library or application. Read [this](./developer-faq.md#how-to-determine-if-some-program-is-portable-to-redox) question to learn more about this.
 
 - We recommend to use the FreeBSD or OpenBSD dependencies of the application if available because Linux dependencies tend to contain Linux-specific kernel features not available on Redox (unfortunately the FreeBSD package naming policy doesn't separate library objects/interpreters from build tools in all cases, thus you need to know or search each item to know if it's a library, interpreter or build tool)
 
@@ -97,7 +97,7 @@ This section contains quick important information for porting.
 ### Dependencies
 
 - Debian packages are the most easy way to find dependencies because they are the most used by software developers to describe "Build Instructions" dependencies, they also separate build tooling from library dependencies in packaging naming
-- The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it can't read the `/usr/lib` and `/include` directorys because the Linux library objects don't work on Redox.
+- The recipe `PATH` environment variable only read build tool recipes declared in the `build.dev-dependencies` data type or the host system's `/usr/bin` directory, it can't read the `/usr/lib` and `/include` directories because the Linux library objects don't work on Redox.
 - The recipe support recursive dependencies, thus you don't need to specify a dependency two times if some dependency already provides it
 - Don't add build tools in the `build.dependencies` data type, check the [Debian](https://packages.debian.org/stable/build-essential) and [Arch Linux](https://archlinux.org/packages/core/any/base-devel/) meta-packages for a common reference of build tools.
 - The Arch Linux package dependency information page show the dependencies of all available package variants (feature sets) and not just the default feature set, which can be misleading. Check the package names and functions in the `PKGBUILD` file of the package to determine if it has dependencies from non-minimal and non-default feature sets
@@ -115,7 +115,7 @@ This section contains quick important information for porting.
 - The Debian naming policy use dashes as separators in packages with optional features: `application-name` (default application variant with compiled executables) and `application-name-dev` (application variant with objects for compilation linking), also check the source package to be sure
 - Use the [Arch Linux package search](https://archlinux.org/packages/) for a up-to-date dependency versioning reference due to being rolling-release
 - If you can't find the project or source tarball of a splitted Debian package the Debian package information web page has the package project website URL ("Homepage") and the source tarball name used to create the package ("Download Source Package")
-- Many applications and libraries lack build instructions and/or good dependency information (build tool, mandatory nad optional dependency category separation), determine the build system configuration on their tarball or Git repository and use the build system log to discover or determine the minimum/mandatory dependencies (not using the `build.dependencies` and `package.dependencies` data types)
+- Many applications and libraries lack build instructions and/or good dependency information (build tool, mandatory and optional dependency category separation), determine the build system configuration on their tarball or Git repository and use the build system log to discover or determine the minimum/mandatory dependencies (not using the `build.dependencies` and `package.dependencies` data types)
 - Tarballs with source code don't have a operating system or CPU architecture on its name
 - Sometimes the releases of Git repositories are abandoned, verify if the tags have newer versions
 - Sometimes tarballs of the official application or library website are abandoned in favor of Git repository tarballs, verify if the Git repository tarballs are more recent
@@ -147,7 +147,7 @@ Before sending your recipe to upstream (to become a public package), you must fo
 
 ### Versioning
 
-- Stable versions with point releases are prefered if possible for more stability
+- Stable versions with point releases are preferred if possible for more stability
 
 ### API Compatibility
 
@@ -356,7 +356,7 @@ dependencies = [
 ]
 ```
 
-You can quickly copy and paste this template on each `recipe.toml`, that way you spent less time writting and has less chances for typos.
+You can quickly copy and paste this template on each `recipe.toml`, that way you spent less time writing and has less chances for typos.
 
 - If your application uses a tarball, you can quickly remove the `git` and `rev` data types.
 - If your application uses a Git repository, you can quickly remove the `tar` data type.
@@ -367,7 +367,7 @@ After the `#TODO` comment you will write your current porting status.
 
 ## Cookbook
 
-The GCC and LLVM compiler frontends on Linux use the Linux target triplet by default, it will create Linux ELF binaries that don't work on Redox because it can't undertstand them.
+The GCC and LLVM compiler frontends on Linux use the Linux target triplet by default, it will create Linux ELF binaries that don't work on Redox because it can't understand them.
 
 Part of this process is to use `glibc` (GNU C Standard Library) which doesn't support Redox system calls. To make the compiler use `relibc` (Redox C Standard Library) Cookbook needs to tell the build system of the application or library to use it, and this is done with environment variables and target/platform flags for the Redox target.
 
@@ -860,11 +860,11 @@ But some applications don't have the `[[bin]]` and `[[lib]]` data types, for the
 - The file named `main.rs` contains the application executable code.
 - The file named `lib.rs` contains the library object code (ignore it).
 
-(Some Rust applications use packages instead of example files for examples, to discover that see if the "examples" directory has `.rs` files (examples files) or directorys with `Cargo.toml` files inside (packages) )
+(Some Rust applications use packages instead of example files for examples, to discover that see if the "examples" directory has `.rs` files (examples files) or directories with `Cargo.toml` files inside (packages) )
 
 ### Cargo packages command example
 
-This command is used for Rust applications that use package directorys inside the repository for compilation, you need to use the name on the `name` field below the `[package]` section of the `Cargo.toml` file inside the package directory (generally using the same name of the application).
+This command is used for Rust applications that use package directories inside the repository for compilation, you need to use the name on the `name` field below the `[package]` section of the `Cargo.toml` file inside the package directory (generally using the same name of the application).
 
 (This will fix the "found virtual manifest instead of package manifest" error)
 
@@ -1225,7 +1225,7 @@ git fetch --unshallow
 
 #### GitHub release
 
-Each GitHub release has a tag or commit hash, you will use it to pin the lastest stable version of the application to keep code stability.
+Each GitHub release has a tag or commit hash, you will use it to pin the latest stable version of the application to keep code stability.
 
 Example:
 
@@ -1234,7 +1234,7 @@ Example:
 
 #### GitLab release commit hash
 
-Each GitLab release has a tag or commit hash, you will use it to pin the lastest stable version of the application to keep code stability.
+Each GitLab release has a tag or commit hash, you will use it to pin the latest stable version of the application to keep code stability.
 
 Example:
 
@@ -1319,7 +1319,7 @@ On this example the `-DOPENSSL_ROOT_DIR` option will have the custom OpenSSL pat
 
 In some applications or libraries you can't use tarballs because they don't carry the necessary Git submodules of the application (most common in GitHub generated tarballs), on these cases you will need to use the Git repository or the commit of the last stable release (Cookbook download the submodules automatically).
 
-To identify if the application uses Git submodules, check if it has external directorys to other repositories (they appear with a commit hash on the right side) or the existence of a `.gitmodules` file.
+To identify if the application uses Git submodules, check if it has external directories to other repositories (they appear with a commit hash on the right side) or the existence of a `.gitmodules` file.
 
 Follow these steps to use the last stable version of the application when Git submodules are necessary:
 
@@ -1418,7 +1418,7 @@ You can find the feature flags in the `meson_options` file.
 
 ### FreeBSD Reference
 
-If you can't find the application build system flags the FreeBSD port Makefiles are the best reference for feature flags to Redox as they tend to disable Linux-specific features and are adapted to cross-compilation, increasing the application/library compatiblity with non-Linux systems.
+If you can't find the application build system flags the FreeBSD port Makefiles are the best reference for feature flags to Redox as they tend to disable Linux-specific features and are adapted to cross-compilation, increasing the application/library compatibility with non-Linux systems.
 
 (You need to disable the application/library's build system tests to make cross-compilation work)
 

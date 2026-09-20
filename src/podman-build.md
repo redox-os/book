@@ -18,7 +18,7 @@ Redox build system is using **Rootless Podman**. **Podman** is used to avoid bug
     which curl || sudo apt-get install curl
     ```
 
- 2. Create a new directory and run `podman_bootstrap.sh` inside of it. This will clone the repository, install **Podman** and extra software such as **Rust**, **Git** and **QEMU**. It's a good practice to check the content of [the script](https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.sh) before lauching it.
+ 2. Create a new directory and run `podman_bootstrap.sh` inside of it. This will clone the repository, install **Podman** and extra software such as **Rust**, **Git** and **QEMU**. It's a good practice to check the content of [the script](https://gitlab.redox-os.org/redox-os/redox/raw/master/podman_bootstrap.sh) before launching it.
 
     ```sh
     mkdir -p ~/tryredox && cd $_
