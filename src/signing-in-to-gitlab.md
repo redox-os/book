@@ -50,7 +50,7 @@ Here are the steps:
  - Enter your username/email
  - Enter your password
  - Click the Submit button
- - Finally you will be prompted for a 2FA verification code from your phone. Go to your Android phone, go to Google/Aegis Authenticator, find the site gitlab redox and underneith those 6 digits in looking something like **258 687** that's your 2FA code.  Enter those 6 digits into the prompt on your computer.  Click Verify.  Done.  You're logged into Gitlab.
+ - Finally you will be prompted for a 2FA verification code from your phone. Go to your Android phone, go to Google/Aegis Authenticator, find the site gitlab redox and underneath those 6 digits in looking something like **258 687** that's your 2FA code.  Enter those 6 digits into the prompt on your computer.  Click Verify.  Done.  You're logged into Gitlab.
 
 ### Logging-In in iOS
 

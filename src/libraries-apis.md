@@ -34,7 +34,7 @@ This section covers the versioning system of Redox and important components.
 
 - Redox OS: `x.y.z`
 
-`x` is ABI version, `y` is API updates with backward compatibility and `z` is fixes with backward compatiblity.
+`x` is ABI version, `y` is API updates with backward compatibility and `z` is fixes with backward compatibility.
 
 - libredox: Currently it don't follow the SemVer model but will in the future
 

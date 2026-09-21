@@ -30,7 +30,7 @@ As we don't support 2D/3D hardware acceleration yet, we use [LLVMpipe](https://d
 
 Orbital is the default Redox desktop environment which have a display server, window manager, wallpaper daemon, effects compositor, image viewer and basic terminal.
 
-It was prefered over Wayland and X11 to avoid their requirements, dependencies, and limitations (EGL on Wayland and GLX on X11). Orbital was much more simple ans easier for the immature Redox API and had the fastest native software rendering performance.
+It was preferred over Wayland and X11 to avoid their requirements, dependencies, and limitations (EGL on Wayland and GLX on X11). Orbital was much more simple and easier for the immature Redox API and had the fastest native software rendering performance.
 
 ### Comparison with X11/Wayland
 

@@ -68,7 +68,7 @@ The Periodic Table `/usr/bin/periodictable` is a demonstration of the **OrbTk** 
 
 ### Kibi
 
-Kibi is the default terminal text editor inpisred on GNU Nano but with more features, run the `kibi` command to use it.
+Kibi is the default terminal text editor inspired on GNU Nano but with more features, run the `kibi` command to use it.
 
 ### Rusthello
 

@@ -9,7 +9,7 @@ TODO: verify if outdated information is present
 - A scheme is a system service
 - SQE means "Submission Queue Entry"
 - CQE means "Completion Queue Entry"
-- POSIX and Linux functions are implemented by relibc using Redox services provided by schemes, they work with the Applicationropriate schemes to implement the function. It might involve opening a scheme, maybe writing to a scheme, or maybe calling `mmap` on the scheme after opening (this is pretty common).
+- POSIX and Linux functions are implemented by relibc using Redox services provided by schemes, they work with the application-appropriate schemes to implement the function. It might involve opening a scheme, maybe writing to a scheme, or maybe calling `mmap` on the scheme after opening (this is pretty common).
 - relibc and redox-rt talk to the scheme via a system call - open, read, write, mmap, etc.
 - A system component (userspace daemon) uses the Scheme API (from the `redox-scheme` library) to implement the system service. The Scheme API also is doing system calls like `open`, `read` and `write`, but the message format for reading and writing is a special format. The latest version of the Scheme API reads SQE messages and writes CQE messages. SQE is basically the parameters to the system call that the caller originally did, packaged into a message. CQE is the response that the daemon sends back.
 - The kernel is responsible for creating the SQE messages, and for unpacking the CQE messages.
