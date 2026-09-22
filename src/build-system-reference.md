@@ -354,7 +354,7 @@ You can find the global settings on the [Configuration Settings](./configuration
 
 ### Format
 
-The Redox configuration files use the [TOML](https://toml.io/en/) format, which has a very easy syntax and is very flexbile.
+The Redox configuration files use the [TOML](https://toml.io/en/) format, which has a very easy syntax and is very flexible.
 
 You can see what the format supports on the [TOML](https://toml.io/en/v1.0.0) website.
 
@@ -434,7 +434,7 @@ scripts/include-recipes.sh "TODO.text" | sort
 
 ### Recipe Analysis
 
-Show the directories and files on the `stage` and `sysroot` directorys of some recipe (to identify packaging issues or violations).
+Show the directories and files on the `stage` and `sysroot` directories of some recipe (to identify packaging issues or violations).
 
 ```sh
 scripts/show-package.sh recipe

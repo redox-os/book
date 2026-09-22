@@ -78,7 +78,7 @@ impl VecScheme {
 Before implementing the scheme operations on our scheme struct, let's briefly
 discuss the way that this struct will be used. Our program (`vec_scheme`) will
 create the `vec` scheme by opening the corresponding scheme handler in the root
-scheme (`:vec`).  Let's implement a `main()` function that intializes our scheme
+scheme (`:vec`).  Let's implement a `main()` function that initializes our scheme
 struct and registers the new scheme:
 
 ```rust
