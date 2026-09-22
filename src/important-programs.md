@@ -94,7 +94,7 @@ The following programs are well known to be working:
 
 ## CLI Tools
 
-The following CLI tools are known to be working. Programs listed below may not include [core utilites](./side-projects.md):
+The following CLI tools are known to be working. Programs listed below may not include [core utilities](./side-projects.md):
 
 ### Terminal Shells
 

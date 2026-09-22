@@ -1,6 +1,6 @@
 # Our Goals
 
-Redox is an attempt to make a complete, fully-functioning, general-purpose operating system with a focus on safety, freedom, stabillity, correctness, and pragmatism.
+Redox is an attempt to make a complete, fully-functioning, general-purpose operating system with a focus on safety, freedom, stability, correctness, and pragmatism.
 
 We want to be able to use it, without obstructions, as a complete alternative to Linux/BSD on our computers. It should be able to run most Linux/BSD programs with minimal modifications.
 

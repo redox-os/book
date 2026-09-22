@@ -74,7 +74,7 @@ To run Redox in a VirtualBox virtual machine you need to do the following steps:
  7. Go to the storage settings of the VM, create an IDE controller and add the Redox bootable image on it
  8. Start the VM!
 
-If you want to install Redox on the VM create a VDI disk of 5GB (or less if you are using a simplier Redox image variant).
+If you want to install Redox on the VM create a VDI disk of 5GB (or less if you are using a simpler Redox image variant).
 
 ### Command for the pre-installed image
 

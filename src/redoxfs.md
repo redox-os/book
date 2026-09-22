@@ -162,7 +162,7 @@ redoxfs-resize: resized filesystem on redox.img
 	free: 122.88 kB (120 KiB)
 ```
 
-You can use the value from "shrinking by ..." to accurately tell how much bytes can be shrinked:
+You can use the value from "shrinking by ..." to accurately tell how many bytes can be shrinked:
 
 ```sh
 truncate -s -1559135232 redox.img

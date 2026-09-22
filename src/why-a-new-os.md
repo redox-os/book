@@ -26,7 +26,7 @@ The following items summarize the Rust benefits:
 
 ## Microkernel Architecture
 
-The [Microkernel Architecture](https://en.wikipedia.org/wiki/Microkernel) moves as much system components as possible out of the operating system kernel. Drivers, subsystems and other operating system functionality are excuted as independent processes on user-space (daemons). The kernel's main responsibility is the coordination of these processes, and the management of system resources to the processes.
+The [Microkernel Architecture](https://en.wikipedia.org/wiki/Microkernel) moves as much system components as possible out of the operating system kernel. Drivers, subsystems and other operating system functionality are executed as independent processes on user-space (daemons). The kernel's main responsibility is the coordination of these processes, and the management of system resources to the processes.
 
 Most kernels, other than some real-time operating systems, use an event-handler design. Hardware interrupts and application system calls, each one triggers an event invoking the appropriate handler. The kernel runs in supervisor-mode, with access to all system's resources. In [Monolithic Kernels](https://en.wikipedia.org/wiki/Monolithic_kernel), the operating system's entire response to an event must be completed in supervisor mode. A bug in the kernel, drivers or hardware, can cause the system to enter a state where it can't to respond to *any* event. And because of the large amount of code in the kernel, the potential for vulnerabilities while in supervisor mode is vastly greater than for a microkernel design.
 
@@ -34,7 +34,7 @@ Beyond monolithic kernels being much more vulnerable to bugs there's also the mu
 
 In Redox, drivers and many system services can run in user-mode, similar to user programs, and the system can restrict them so they can only access the resources that they require for their designated purpose. If a driver fails or panics, it could be ignored or restarted with no impact on the rest of the system. A misbehaving piece of hardware might impact system performance or cause the loss of a service with a small chance of data corruption, but the kernel and maybe the essential system components will continue to function and to provide whatever services remain available.
 
-Thus Redox has an unique opportunity to show the microkernel potential for the mainstream operating systems universe with the features and comodity that you would expect from them.
+Thus Redox has an unique opportunity to show the microkernel potential for the mainstream operating systems universe with the features and convenience that you would expect from them.
 
 ### Benefits
 

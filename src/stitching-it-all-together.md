@@ -1,4 +1,4 @@
-# Stiching It All Together
+# Stitching It All Together
 
 The "path, scheme, resource" model is simply a unified interface for efficient inter-process communication.
 Paths are simply resource descriptors. Schemes are simply resource types, provided by scheme managers.

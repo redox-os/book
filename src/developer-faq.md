@@ -139,7 +139,7 @@ Read some of the reasons below:
 
 ### Why Redox prefer to port software from source instead of binary compatibility?
 
-Ports using POSIX/Linux source compatibility require much less effort, are easier and have less maintenace cost than supporting BSD (BSD libc and kernel ABIs) or Linux (glibc/musl and kernel ABIs) binary compatibility (which would increase API complexity and feature sets and make them mandatory).
+Ports using POSIX/Linux source compatibility require much less effort, are easier and have less maintenance cost than supporting BSD (BSD libc and kernel ABIs) or Linux (glibc/musl and kernel ABIs) binary compatibility (which would increase API complexity and feature sets and make them mandatory).
 
 - glibc = GNU C Standard Library, with some POSIX APIs
 - BSD libc = BSD C Standard Library, with some POSIX APIs
@@ -553,11 +553,11 @@ Read the [Anonymous Commits](./coding-and-building.md#anonymous-commits) section
 Read the following pages:
 
 - [Literate programming](./literate-programming.md)
-- [Writting Documentation Correctly](./writing-docs-correctly.md)
+- [Writing Documentation Correctly](./writing-docs-correctly.md)
 
 ### How can I write book documentation properly?
 
-**Read the entire book before writing new documentation and submiting MRs to avoid information duplication**
+**Read the entire book before writing new documentation and submitting MRs to avoid information duplication**
 
 - Only add work-in-progress information if really necessary, as it may unnecessarily increase maintenance cost
 - Don't use informal grammar abbreviations such as "config" (except technical terms such as "CPU")

@@ -101,7 +101,7 @@ In this example we will use a "Hello World" program written in Rust.
     hello-world = "source"
     ```
 
-16. Build the Hello World program and updae the Redox image.
+16. Build the Hello World program and update the Redox image.
 
     ```sh
     time make prefix rp.hello-world
