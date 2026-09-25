@@ -236,10 +236,16 @@ sudo pkg install qemu
 
 #### x86-64 Image
 
-- Run QEMU
+- Run `server` variant on QEMU terminal mode
 
 ```
-qemu-system-x86_64 -nographic -vga none -m 1024 -machine q35 -cpu Broadwell,-pcid,-x2apic,-tsc-deadline,-hle,-rtm,-invpcid -drive file=Downloads/redox_desktop_x86_64_*_harddrive.img,format=raw,if=virtio
+qemu-system-x86_64 -nographic -vga none -m 512 -machine q35 -cpu Broadwell,-pcid,-x2apic,-tsc-deadline,-hle,-rtm,-invpcid -drive file=Downloads/redox_server_x86_64_*_harddrive.img,format=raw,if=virtio
+```
+
+- Run `desktop` variant on QEMU GTK GUI
+
+```
+qemu-system-x86_64 -display gtk -vga std -m 1024 -machine q35 -cpu Broadwell,-pcid,-x2apic,-tsc-deadline,-hle,-rtm,-invpcid -drive file=Downloads/redox_desktop_x86_64_*_harddrive.img,format=raw,if=virtio
 ```
 
 ### Windows
