@@ -3,6 +3,7 @@
 - [Benchmarks](#benchmarks)
 - [Profiling](#profiling)
   - [Kernel](#kernel)
+- [Compare Performance Difference Between Commits](#compare-performance-difference-between-commits)
 
 ## Benchmarks
 
@@ -41,6 +42,15 @@ dd bs=1M count=256 if=/usr/games/neverball/neverball of=fs_write_speed_bench con
 ```sh
 dd bs=4k count=100000 < /scheme/zero > /scheme/null
 ```
+
+## Targets
+
+- `make flamegraph` : TODO
+- `make rotate-flamegraph` : TODO
+- `make differential-flamegraph` : TODO
+- `make acid-output` : TODO
+- `make rotate-acid-output` : TODO
+- `make compare-acid-output` : TODO
 
 ## Profiling
 
@@ -161,3 +171,31 @@ firefox build/flamegraph/$(TARGET)-$(CONFIG_NAME)-kflamegraph.svg
 TODO: test
 
 Boot the system, and when you're done profiling, kill `profiled` and extract the `/root/profiling.txt` file (Details TBD)
+
+## Compare Performance Difference Between Commits
+
+To measure improvements or detect regressions.
+
+### Kernel
+
+This section explain how to measure performance difference between kernel commit A and B.
+
+1. Checkout commit A, rebuild recipe (`make cr.kernel`), and login as `root` user
+
+2. Run one of the following commands and shutdown once finished:
+
+```sh
+kprof_record ACID_BENCH_OUTPUT=acid.txt
+```
+
+```sh
+acid ACID_BENCH_OUTPUT=acid.txt
+```
+
+3. Run `make acid-output` and `make rotate-acid-output`
+
+4. Checkout commit B, rebuild recipe (`make cr.kernel`), login as `root` user, and repeat step 2
+
+5. Run `make acid-output` and `make compare-acid-output`
+
+The comparison data is stored at: `build/$ARCH/$CONFIG_NAME/acid-output` (newer) and `build/$ARCH/$CONFIG_NAME/acid-output.old` (older)

@@ -94,11 +94,10 @@ These are the cases where unsafe Rust is mandatory:
 
 - Implementing a foreign function interface (FFI) (for example the relibc API)
 - Working with system calls directly (you should use `libredox`, `relibc` or Rust `libstd` library instead of `redox_syscall`)
-- Creating or managing processes and threads
 - Working with memory mapping and stack allocation
 - Working with hardware devices
 
-It is an important goal for Redox to minimize the amount of `unsafe` declared Rust code. If you want to use unsafe Rust code on Redox anywhere other than interfacing with system calls, ask for Jeremy Soller's approval before.
+It is an important goal for Redox to minimize the amount of `unsafe` declared Rust code.
 
 Unsafe Rust still has most of the compiler verification and allows some safe Rust syntax usage, thus it is still more safe than C and C++.
 
@@ -113,7 +112,7 @@ Read the following pages to learn more about Unsafe Rust:
 
 Sometimes required or preferred for accessing hardware, or for carefully optimized hot spots.
 
-Reasons to use Assembly instead of Rust:
+Reasons to use Assembly instead of a higher level programming language:
 
 - Deal with low-level things (those that can't be handled by Rust)
 - Writing constant time algorithms for cryptography
