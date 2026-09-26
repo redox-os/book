@@ -11,7 +11,7 @@ This page contains an operating system comparison table for common/important fea
 | **Feature**                                                            | **Redox**                      | **Linux (GNU/Linux)**  | **FreeBSD** | **Plan 9** |
 |------------------------------------------------------------------------|--------------------------------|------------------------|-------------|------------|
 | [SMP](https://en.wikipedia.org/wiki/Symmetric_multiprocessing)         | Yes                            | Yes                    | Yes         | Yes        |
-| [NUMA](https://en.wikipedia.org/wiki/Non-uniform_memory_access)        | No (planned)                   | Yes                    | Yes         | No         |
+| [NUMA](https://en.wikipedia.org/wiki/Non-uniform_memory_access)        | Yes                            | Yes                    | Yes         | No         |
 | Full Disk Encryption                                                   | Yes                            | Yes                    | Yes         | No         |
 | Exploit Mitigations                                                    | No (planned)                   | Yes                    | Yes         | No         |
 | OpenGL/Vulkan                                                          | Only OpenGL with CPU emulation | Yes                    | Yes         | No         |
