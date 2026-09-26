@@ -274,12 +274,15 @@ dependencies = [ # build.dependencies data type
     "library1",
     "library2",
 ]
+compiler = "name" # If present expects one of: "gcc", "clang", "gcc-no-lto", "clang-no-lto", "no-lto"
 script = """ # build.script data type
 # Uncomment the following if the package can be dynamically linked
 #DYNAMIC_INIT
 insert your script here
 """
 [package]
+version = "1.2.3"
+description = "Human-readable description here"
 dependencies = [ # package.dependencies data type
     "runtime-dependency1",
     "runtime-dependency2",
